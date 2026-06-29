@@ -89,6 +89,15 @@ const defaultEdgeOptions = {
   }
 } as const;
 
+// React Flow's fitView tries to fill the available canvas. With only one or two
+// nodes this can zoom the viewport aggressively and make the inline editor look
+// giant, even when the component CSS is rem-based and compact. Keep automatic
+// viewport fitting capped so node size remains proportional to the app viewport.
+const CANVAS_FIT_PADDING = 0.16;
+const CANVAS_MIN_ZOOM = 0.32;
+const CANVAS_MAX_ZOOM = 1.2;
+const CANVAS_MAX_AUTO_FIT_ZOOM = 1;
+
 export const nodeTypes = {
   tdm: TdmNodeView
 } satisfies NodeTypes;
@@ -185,7 +194,7 @@ export function TdmCanvasInner() {
         x: window.innerWidth / 2,
         y: window.innerHeight / 2
       });
-      fitView({ padding: 0.18, duration: 250 });
+      fitView({ padding: CANVAS_FIT_PADDING, duration: 250, maxZoom: CANVAS_MAX_AUTO_FIT_ZOOM });
     });
   }, [fitView, nodes.length, screenToFlowPosition, viewMode]);
 
@@ -351,7 +360,7 @@ export function TdmCanvasInner() {
     setNodes((currentNodes) => layoutNodesByStage(currentNodes));
     setCanvasVariant('custom');
     window.requestAnimationFrame(() => {
-      fitView({ padding: 0.18, duration: 250 });
+      fitView({ padding: CANVAS_FIT_PADDING, duration: 250, maxZoom: CANVAS_MAX_AUTO_FIT_ZOOM });
     });
   }, [fitView, setNodes]);
 
@@ -1091,10 +1100,10 @@ export function TdmCanvasInner() {
               zoomOnDoubleClick={false}
               snapToGrid
               snapGrid={[20, 20]}
-              minZoom={0.2}
-              maxZoom={2.5}
+              minZoom={CANVAS_MIN_ZOOM}
+              maxZoom={CANVAS_MAX_ZOOM}
               fitView
-              fitViewOptions={{ padding: 0.18 }}
+              fitViewOptions={{ padding: CANVAS_FIT_PADDING, maxZoom: CANVAS_MAX_AUTO_FIT_ZOOM }}
               colorMode="dark"
               attributionPosition="bottom-left"
             >

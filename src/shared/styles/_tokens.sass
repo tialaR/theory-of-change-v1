@@ -18,3 +18,21 @@ $radius-sm: 12px
 $sidebar-width: clamp(24rem, 27vw, 28rem)
 $sidebar-gap: clamp(1rem, 1.25vw, 1.25rem)
 $sidebar-width-collapsed: 0px
+
+
+// Fluid scale tokens. The app uses rem-based component sizing and a viewport-aware
+// root font-size in globals.sass so canvas nodes and sidebar elements shrink/grow
+// together without transform hacks.
+$app-rem-fluid-min: 15px
+$app-rem-fluid-max: 16.5px
+$node-compact-width-fluid: clamp(11.75rem, 12.5vw, 13.25rem)
+$node-compact-min-height-fluid: clamp(5rem, 5.4vw, 5.9rem)
+$node-compact-padding-y-fluid: clamp(0.74rem, 0.78vw, 0.9rem)
+$node-compact-padding-x-fluid: clamp(0.86rem, 0.92vw, 1.05rem)
+$node-compact-radius-fluid: clamp(0.98rem, 1.04vw, 1.18rem)
+$node-edit-width: clamp(15.75rem, 16.4vw, 17.25rem)
+$node-edit-padding: clamp(0.78rem, 0.82vw, 0.94rem)
+$node-edit-radius: clamp(0.92rem, 1vw, 1.12rem)
+$node-edit-field-height: clamp(2.28rem, 2.45vw, 2.58rem)
+$node-edit-textarea-height: clamp(3.3rem, 3.7vw, 4.05rem)
+$node-edit-button-height: clamp(2.15rem, 2.35vw, 2.42rem)
