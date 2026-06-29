@@ -13,7 +13,18 @@ import {
 import { TDM_STAGE_LABELS } from '../../domain/tdm-stages';
 import { getTdmStageTheme } from '../../domain/tdm-theme';
 import type { TdmNode as TdmNodeModel, TdmNodeDraft } from '../../domain/tdm-types';
+import { TdmBlockFormFields } from '../form-field/tdm-form-field';
 import styles from './tdm-node.module.sass';
+
+const nodeEditFieldClassNames = {
+  field: styles.nodeEditField,
+  label: styles.nodeEditLabel,
+  control: styles.nodeEditFieldControl,
+  input: styles.nodeEditInput,
+  textarea: styles.nodeEditTextarea,
+  clearButton: styles.nodeEditClearButton,
+  clearIcon: styles.nodeEditClearIcon
+} as const;
 
 type TdmNodeInteractionContextValue = {
   editingNodeId: string | null;
@@ -75,14 +86,6 @@ export function TdmNode({ id, data, selected }: NodeProps<TdmNodeModel>) {
   const canSend = data.stage !== 'outcome';
   const theme = getTdmStageTheme(data.stage);
   const compactDescription = data.shortNotes || data.description;
-  const updateField = (field: keyof TdmNodeDraft, value: string) => {
-    setErrorMessage(null);
-    setDraft((currentDraft) => ({
-      ...currentDraft,
-      [field]: value
-    }));
-  };
-
   const beginInlineEdit = () => {
     setDraft({
       title: data.title,
@@ -218,62 +221,28 @@ export function TdmNode({ id, data, selected }: NodeProps<TdmNodeModel>) {
       ) : null}
       {isEditingInline ? (
         <div
-          className={[styles.editor, 'nodrag', 'nopan'].join(' ')}
+          className={[styles.nodeEditForm, 'nodrag', 'nopan'].join(' ')}
           onPointerDown={(event) => event.stopPropagation()}
           onMouseDown={(event) => event.stopPropagation()}
           onClick={(event) => event.stopPropagation()}
         >
-          <div className={styles.editorHeader}>
-            <div>
-              <div className={styles.stage}>{TDM_STAGE_LABELS[data.stage]}</div>
-              <h3 className={styles.title}>Editar bloco</h3>
-            </div>
+          <div className={styles.nodeEditStage}>{TDM_STAGE_LABELS[data.stage]}</div>
+          <div className={styles.nodeEditFields}>
+            <TdmBlockFormFields
+              draft={draft}
+              onDraftChange={(nextDraft) => {
+                setErrorMessage(null);
+                setDraft(nextDraft);
+              }}
+              inputClassName="nodrag nopan"
+              classNames={nodeEditFieldClassNames}
+            />
           </div>
-          <label className={styles.field}>
-            <span>Título</span>
-            <input
-              className="nodrag nopan"
-              type="text"
-              value={draft.title}
-              onChange={(event) => updateField('title', event.target.value)}
-              placeholder="Título do bloco"
-            />
-          </label>
-          <label className={styles.field}>
-            <span>Descrição breve</span>
-            <textarea
-              className="nodrag nopan"
-              rows={2}
-              value={draft.description}
-              onChange={(event) => updateField('description', event.target.value)}
-              placeholder="Descrição curta"
-            />
-          </label>
-          <label className={styles.field}>
-            <span>Detalhes avançados</span>
-            <textarea
-              className="nodrag nopan"
-              rows={2}
-              value={draft.advancedDetails}
-              onChange={(event) => updateField('advancedDetails', event.target.value)}
-              placeholder="Detalhes complementares"
-            />
-          </label>
-          <label className={styles.field}>
-            <span>Notas curtas</span>
-            <input
-              className="nodrag nopan"
-              type="text"
-              value={draft.shortNotes}
-              onChange={(event) => updateField('shortNotes', event.target.value)}
-              placeholder="Notas rápidas"
-            />
-          </label>
-          {errorMessage ? <p className={styles.errorMessage}>{errorMessage}</p> : null}
-          <div className={styles.inlineEditActions}>
+          {errorMessage ? <p className={styles.nodeEditErrorMessage}>{errorMessage}</p> : null}
+          <div className={styles.nodeEditActions}>
             <button
               type="button"
-              className={[styles.primaryButton, 'nodrag', 'nopan'].join(' ')}
+              className={[styles.nodeEditActionButton, styles.nodeEditActionButtonPrimary, 'nodrag', 'nopan'].join(' ')}
               onPointerDown={(event) => event.stopPropagation()}
               onMouseDown={(event) => event.stopPropagation()}
               onClick={(event) => {
@@ -292,11 +261,11 @@ export function TdmNode({ id, data, selected }: NodeProps<TdmNodeModel>) {
                 setErrorMessage(null);
               }}
             >
-              Salvar alterações
+              Salvar
             </button>
             <button
               type="button"
-              className={[styles.secondaryButton, 'nodrag', 'nopan'].join(' ')}
+              className={[styles.nodeEditActionButton, styles.nodeEditActionButtonSecondary, 'nodrag', 'nopan'].join(' ')}
               onPointerDown={(event) => event.stopPropagation()}
               onMouseDown={(event) => event.stopPropagation()}
               onClick={(event) => {

@@ -1,0 +1,47 @@
+.nodeEditActions
+  display: flex
+  width: 100%
+  gap: 0.625rem
+
+.nodeEditActionButton
+  flex: 1
+  min-width: 0
+  min-height: 2.625rem
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  gap: 0.5rem
+  padding: 0.75rem 1rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.12)
+  border-radius: 0.875rem
+  background: rgba(255, 255, 255, 0.035)
+  color: rgba(245, 247, 251, 0.92)
+  font: inherit
+  font-size: 0.78rem
+  font-weight: 600
+  line-height: 1
+  letter-spacing: 0.08em
+  text-transform: uppercase
+  cursor: pointer
+  appearance: none
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, color 180ms ease, box-shadow 180ms ease
+
+  &:hover,
+  &:focus-visible
+    transform: translateY(-0.0625rem)
+    border-color: rgba(196, 181, 253, 0.32)
+    background: rgba(255, 255, 255, 0.055)
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.18)
+    outline: none
+
+  &:active
+    transform: translateY(0) scale(0.985)
+
+.nodeEditActionButtonPrimary
+  border-color: rgba(196, 181, 253, 0.38)
+  background: linear-gradient(180deg, rgba(167, 139, 250, 0.22), rgba(124, 58, 237, 0.12))
+  color: rgba(255, 255, 255, 0.95)
+
+.nodeEditActionButtonSecondary
+  border-color: rgba(255, 255, 255, 0.12)
+  background: rgba(255, 255, 255, 0.035)

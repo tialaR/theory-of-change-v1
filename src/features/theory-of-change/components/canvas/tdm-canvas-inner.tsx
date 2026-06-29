@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState, type DragEvent, type MouseEvent } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent, type MouseEvent } from 'react';
 import {
   addEdge,
   Background,
@@ -22,14 +22,12 @@ import { ResultView } from '../result-view/result-view';
 import { TdmNode as TdmNodeView, TdmNodeInteractionProvider } from '../node/tdm-node';
 import { SidebarToggleIcon, TdmSidebar, type TdmBlockForms, type TdmSidebarContext } from '../sidebar/tdm-sidebar';
 import {
-  connectionToast,
-  nodeAddedToast,
-  nodeSelectionToast,
+  stageAdvancedFlowTooltipEvent,
   stageAdvancedToast,
-  validationToast
+  theoryCompleteToast
 } from '../toast/tdm-toast-messages';
 import { TdmToastViewport } from '../toast/tdm-toast';
-import { useTdmToast } from '../toast/use-tdm-toast';
+import { useContextualFlowTooltip } from '../toast/use-contextual-flow-tooltip';
 import { isAllowedTdmConnection } from '../../domain/tdm-connection-rules';
 import { type TdmStage } from '../../domain/tdm-stages';
 import { getTdmStageTheme } from '../../domain/tdm-theme';
@@ -43,11 +41,11 @@ import {
   getStageCounts,
   getStageCreationActionLabel,
   getStageCreationAdvanceLabel,
-  getStageCreationPosition,
   isReadyToConnect,
   type StageCreation
 } from '../../utils/stage-creation';
 import { layoutNodesByStage } from '../../utils/layout-nodes-by-stage';
+import { getCreateNodePosition, getDuplicateNodePosition } from '../../utils/node-placement';
 import styles from './tdm-canvas.module.sass';
 
 const EMPTY_DRAFT: TdmNodeDraft = {
@@ -55,13 +53,6 @@ const EMPTY_DRAFT: TdmNodeDraft = {
   description: '',
   advancedDetails: '',
   shortNotes: ''
-};
-
-const NODE_SELECTION_HINTS: Record<TdmStage, string> = {
-  input: 'Você selecionou um insumo. Agora conecte com uma atividade.',
-  activity: 'Você selecionou uma atividade. Agora conecte com um produto.',
-  output: 'Você selecionou um produto. Agora conecte com um resultado.',
-  outcome: 'Resultado é a etapa final. Ele recebe conexões, mas não cria uma nova etapa.'
 };
 
 const QUICK_STAGE_DRAFTS: Record<TdmStage, TdmNodeDraft> = {
@@ -134,7 +125,7 @@ export function TdmCanvasInner() {
   const [nodes, setNodes, onNodesChange] = useNodesState<TdmNodeModel>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<TdmEdgeModel>([]);
   const [stageCreation, setStageCreation] = useState<StageCreation>('input');
-  const { activeToast, showToast, closeToast } = useTdmToast();
+  const { activeFlowTooltip, showFlowTooltip, closeFlowTooltip, clearFlowTooltipEvent } = useContextualFlowTooltip();
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [toolbarNodeId, setToolbarNodeId] = useState<string | null>(null);
   const [selectedEdgeId, setSelectedEdgeId] = useState<string | null>(null);
@@ -163,6 +154,26 @@ export function TdmCanvasInner() {
   const canGenerateResult = canViewTdmResult(nodes, edges);
   const resultAvailabilityMessage = getTdmResultAvailabilityMessage(nodes, edges);
   const canRestoreTheory = canvasVariant === 'example' && previousTheorySnapshot !== null;
+  const hasInitializedFlowTooltipRef = useRef(false);
+  const previousCanGenerateResultRef = useRef(canGenerateResult);
+
+  useEffect(() => {
+    if (!hasInitializedFlowTooltipRef.current) {
+      hasInitializedFlowTooltipRef.current = true;
+      previousCanGenerateResultRef.current = canGenerateResult;
+      return;
+    }
+
+    if (canGenerateResult && !previousCanGenerateResultRef.current) {
+      showFlowTooltip('theory-complete', theoryCompleteToast());
+    }
+
+    if (!canGenerateResult && previousCanGenerateResultRef.current) {
+      clearFlowTooltipEvent('theory-complete');
+    }
+
+    previousCanGenerateResultRef.current = canGenerateResult;
+  }, [canGenerateResult, clearFlowTooltipEvent, showFlowTooltip]);
 
   const fitCanvasToVisibleArea = useCallback(() => {
     if (viewMode !== 'canvas' || nodes.length === 0) {
@@ -249,11 +260,6 @@ export function TdmCanvasInner() {
     resetCanvasSelection();
     setEditingNodeId(null);
     setCanvasVariant('example');
-    showToast({
-      status: 'info',
-      title: 'Teoria exemplo carregada',
-      description: 'Agora conecte os blocos da esquerda para a direita para mostrar como a mudança acontece.'
-    });
     setViewMode('canvas');
     bumpViewportReset();
   }, [
@@ -268,8 +274,7 @@ export function TdmCanvasInner() {
     setNodes,
     stageCreation,
     theoryTitle,
-    bumpViewportReset,
-    showToast
+    bumpViewportReset
   ]);
 
   const restorePreviousTheory = useCallback(() => {
@@ -304,14 +309,9 @@ export function TdmCanvasInner() {
     setEditingNodeId(null);
     setCanvasVariant('custom');
     setPreviousTheorySnapshot(null);
-    showToast({
-      status: 'success',
-      title: 'Teoria restaurada',
-      description: 'Sua teoria anterior foi restaurada.'
-    });
     setViewMode('canvas');
     bumpViewportReset();
-  }, [bumpViewportReset, previousTheorySnapshot, setEdges, setNodes, showToast]);
+  }, [bumpViewportReset, previousTheorySnapshot, setEdges, setNodes]);
 
   const viewExampleCanvas = useCallback(() => {
     replaceCanvasWithExample();
@@ -339,27 +339,13 @@ export function TdmCanvasInner() {
 
   const openResultView = useCallback(() => {
     if (!canGenerateResult) {
-      showToast({
-        status: 'warning',
-        title: 'Resultado indisponível',
-        description: 'Crie a cadeia mínima de conexões antes de visualizar o resultado.'
-      });
       return;
     }
 
     setViewMode('result');
-  }, [canGenerateResult, showToast]);
+  }, [canGenerateResult]);
 
-  const exportStub = useCallback(
-    (format: 'pdf' | 'png' | 'jpeg' | 'svg') => {
-      showToast({
-        status: 'info',
-        title: 'Exportação em breve',
-        description: `Exportação em ${format.toUpperCase()} será conectada na próxima etapa.`
-      });
-    },
-    [showToast]
-  );
+  const exportStub = useCallback((_format: 'pdf' | 'png' | 'jpeg' | 'svg') => {}, []);
 
   const centerNodes = useCallback(() => {
     setNodes((currentNodes) => layoutNodesByStage(currentNodes));
@@ -394,13 +380,8 @@ export function TdmCanvasInner() {
       setEditingNodeId(node.id);
       setIsEditAccordionOpen(true);
       setIsCreateAccordionOpen(false);
-      showToast({
-        status: 'info',
-        title: 'Edição no canvas',
-        description: 'Edite o bloco diretamente no canvas.'
-      });
     },
-    [nodes, showToast, syncEditDraftFromNode]
+    [nodes, syncEditDraftFromNode]
   );
 
   const cancelNodeEditor = useCallback(() => {
@@ -448,11 +429,6 @@ export function TdmCanvasInner() {
       setEditingNodeId(null);
       setToolbarNodeId(nodeId);
       setEditError(undefined);
-      showToast({
-        status: 'success',
-        title: 'Bloco atualizado',
-        description: `${title} foi atualizado.`
-      });
 
       if (selectedNodeId === nodeId) {
         setEditDraft(nextDraft);
@@ -460,7 +436,7 @@ export function TdmCanvasInner() {
 
       return true;
     },
-    [selectedNodeId, setNodes, showToast]
+    [selectedNodeId, setNodes]
   );
 
   const deleteNodeById = useCallback(
@@ -475,14 +451,9 @@ export function TdmCanvasInner() {
       setEditDraft({ ...EMPTY_DRAFT });
       setEditError(undefined);
       setIsEditAccordionOpen(false);
-      showToast({
-        status: 'success',
-        title: 'Bloco excluído',
-        description: 'O bloco foi removido do canvas.'
-      });
       bumpViewportReset();
     },
-    [bumpViewportReset, setEdges, setNodes, showToast]
+    [bumpViewportReset, setEdges, setNodes]
   );
 
   const duplicateNodeById = useCallback(
@@ -493,8 +464,7 @@ export function TdmCanvasInner() {
         return;
       }
 
-      const nextIndex = stageCounts[sourceNode.stage];
-      const position = getStageCreationPosition(sourceNode.stage, nextIndex);
+      const position = getDuplicateNodePosition(sourceNode, nodes);
       const clonedNode = createNode({
         title: `${sourceNode.title} cópia`,
         stage: sourceNode.stage,
@@ -518,14 +488,9 @@ export function TdmCanvasInner() {
       });
       setIsEditAccordionOpen(true);
       setIsCreateAccordionOpen(false);
-      showToast({
-        status: 'success',
-        title: 'Bloco duplicado',
-        description: 'Uma cópia foi adicionada à etapa atual.'
-      });
       bumpViewportReset();
     },
-    [bumpViewportReset, nodes, setNodes, showToast, stageCounts]
+    [bumpViewportReset, nodes, setNodes]
   );
 
   const duplicateSelectedNode = useCallback(() => {
@@ -552,12 +517,7 @@ export function TdmCanvasInner() {
     setEdges((currentEdges) => currentEdges.filter((edge) => edge.id !== selectedEdge.id));
     setSelectedEdgeId(null);
     setMarkerDraft('');
-    showToast({
-      status: 'success',
-      title: 'Conexão excluída',
-      description: 'A ligação entre os blocos foi removida.'
-    });
-  }, [selectedEdge, setEdges, showToast]);
+  }, [selectedEdge, setEdges]);
 
   const addMarkerToSelectedEdge = useCallback(
     (markerType: 'risk' | 'hypothesis') => {
@@ -586,13 +546,8 @@ export function TdmCanvasInner() {
         })
       );
       setMarkerDraft(markerType === 'risk' ? 'Risco' : 'Hipótese');
-      showToast({
-        status: 'success',
-        title: 'Marcador adicionado',
-        description: markerType === 'risk' ? 'Risco adicionado à conexão.' : 'Hipótese adicionada à conexão.'
-      });
     },
-    [selectedEdge, setEdges, showToast]
+    [selectedEdge, setEdges]
   );
 
   const saveMarkerOnSelectedEdge = useCallback(() => {
@@ -621,12 +576,7 @@ export function TdmCanvasInner() {
         } satisfies TdmEdgeModel;
       })
     );
-    showToast({
-      status: 'success',
-      title: 'Marcador salvo',
-      description: 'As alterações foram aplicadas à conexão.'
-    });
-  }, [markerDraft, selectedEdge, setEdges, showToast]);
+  }, [markerDraft, selectedEdge, setEdges]);
 
   const deleteMarkerFromSelectedEdge = useCallback(() => {
     if (!selectedEdge) {
@@ -655,12 +605,7 @@ export function TdmCanvasInner() {
     );
     setSelectedEdgeId(selectedEdge.id);
     setMarkerDraft('');
-    showToast({
-      status: 'info',
-      title: 'Marcador removido',
-      description: 'O marcador foi retirado da conexão.'
-    });
-  }, [selectedEdge, setEdges, showToast]);
+  }, [selectedEdge, setEdges]);
 
   const advanceStage = useCallback(() => {
     if (stageCreation === 'ready-to-connect') {
@@ -668,15 +613,14 @@ export function TdmCanvasInner() {
     }
 
     if (currentStageCount === 0) {
-      showToast({
-        status: 'warning',
-        title: 'Complete a etapa atual',
-        description: 'Adicione pelo menos um bloco antes de avançar.'
-      });
       return;
     }
 
     const nextStage = getNextStageCreation(stageCreation);
+    if (nextStage === stageCreation) {
+      return;
+    }
+
     setStageCreation(nextStage);
     setSelectedNodeId(null);
     setToolbarNodeId(null);
@@ -688,8 +632,14 @@ export function TdmCanvasInner() {
     setMarkerDraft('');
     setIsCreateAccordionOpen(true);
     setIsEditAccordionOpen(false);
-    showToast(stageAdvancedToast(nextStage));
-  }, [currentStageCount, showToast, stageCreation]);
+
+    const flowTooltipEvent = stageAdvancedFlowTooltipEvent(nextStage);
+    const flowTooltip = stageAdvancedToast(nextStage);
+
+    if (flowTooltipEvent && flowTooltip) {
+      showFlowTooltip(flowTooltipEvent, flowTooltip);
+    }
+  }, [currentStageCount, showFlowTooltip, stageCreation]);
 
   const handleCreateDraftChange = useCallback(
     (nextDraft: TdmNodeDraft) => {
@@ -717,20 +667,18 @@ export function TdmCanvasInner() {
       if (!title) {
         const message = 'Preencha o título do bloco antes de adicionar ao canvas.';
         setCreationError(message);
-        showToast(validationToast(message));
         return null;
       }
 
-      const nextIndex = stageCounts[stage];
-      const fallbackPosition = getStageCreationPosition(stage, nextIndex);
+      const smartPosition = getCreateNodePosition(stage, nodes);
       const createdNode = createNode({
         title,
         stage,
         description: draft.description.trim(),
         advancedDetails: draft.advancedDetails.trim(),
         shortNotes: draft.shortNotes.trim(),
-        x: x ?? fallbackPosition.x,
-        y: y ?? fallbackPosition.y
+        x: x ?? smartPosition.x,
+        y: y ?? smartPosition.y
       });
 
       setNodes((currentNodes) => [...currentNodes, createdNode]);
@@ -746,11 +694,10 @@ export function TdmCanvasInner() {
         }));
       }
       setCreationError(undefined);
-      showToast(nodeAddedToast(title, stage));
       bumpViewportReset();
       return createdNode;
     },
-    [bumpViewportReset, clearEditFormState, creationDrafts, setNodes, showToast, stageCounts]
+    [bumpViewportReset, clearEditFormState, creationDrafts, nodes, setNodes]
   );
 
   const handleCreateNode = useCallback(() => {
@@ -777,12 +724,11 @@ export function TdmCanvasInner() {
     if (!title) {
       const message = 'Dê um nome para este bloco antes de adicioná-lo ao canvas.';
       setEditError(message);
-      showToast(validationToast(message));
       return;
     }
 
     updateNodeById(selectedNode.id, editDraft);
-  }, [editDraft, selectedNode, showToast, updateNodeById]);
+  }, [editDraft, selectedNode, updateNodeById]);
 
   const handleCreateAccordionOpenChange = useCallback((open: boolean) => {
     setIsCreateAccordionOpen(open);
@@ -829,18 +775,13 @@ export function TdmCanvasInner() {
       }
 
       if (stageCreation === 'ready-to-connect' || stage !== stageCreation) {
-        showToast({
-          status: 'warning',
-          title: 'Etapa incorreta',
-          description: 'Arraste apenas o bloco da etapa atual para manter a ordem da teoria.'
-        });
         return;
       }
 
       const position = screenToFlowPosition({ x: event.clientX, y: event.clientY });
       createNodeFromDraft({ stage, x: position.x, y: position.y, useQuickDraft: true });
     },
-    [createNodeFromDraft, screenToFlowPosition, showToast, stageCreation]
+    [createNodeFromDraft, screenToFlowPosition, stageCreation]
   );
 
   const isValidConnection: IsValidConnection<TdmEdgeModel> = useCallback(
@@ -875,7 +816,6 @@ export function TdmCanvasInner() {
       }
 
       if (!isAllowedTdmConnection(sourceNode.stage, targetNode.stage)) {
-        showToast(connectionToast(sourceNode.stage, targetNode.stage));
         return;
       }
 
@@ -890,9 +830,8 @@ export function TdmCanvasInner() {
       setSelectedNodeId(null);
       setToolbarNodeId(null);
       setSelectedEdgeId(nextEdge.id);
-      showToast(connectionToast(sourceNode.stage, targetNode.stage));
     },
-    [nodes, setEdges, showToast]
+    [nodes, setEdges]
   );
 
   const handleCloseToolbar = useCallback(() => {
@@ -955,9 +894,8 @@ export function TdmCanvasInner() {
       syncEditDraftFromNode(node);
       setIsEditAccordionOpen(true);
       setIsCreateAccordionOpen(false);
-      showToast(nodeSelectionToast(NODE_SELECTION_HINTS[node.stage]));
     },
-    [nodes, showToast, syncEditDraftFromNode]
+    [nodes, syncEditDraftFromNode]
   );
 
   const handleNodeClick = useCallback(
@@ -1106,7 +1044,7 @@ export function TdmCanvasInner() {
         <SidebarToggleIcon direction={isSidebarOpen ? 'right' : 'left'} className={styles.sidebarToggleSvg} />
       </button>
       <div className={styles.canvasArea}>
-        <TdmToastViewport toast={activeToast} onClose={closeToast} />
+        <TdmToastViewport toast={activeFlowTooltip} onClose={closeFlowTooltip} />
         <div className={styles.flowFrame} onClick={handleFlowBackgroundClick}>
           <TdmNodeInteractionProvider
             value={{
@@ -1130,13 +1068,6 @@ export function TdmCanvasInner() {
               onConnect={handleConnect}
               onDragOver={handleDragOver}
               onDrop={handleDrop}
-              onNodeDragStop={() => {
-                showToast({
-                  status: 'info',
-                  title: 'Bloco reposicionado',
-                  description: 'O bloco foi movido no canvas.'
-                });
-              }}
               onNodeDoubleClick={(_, node) => openNodeEditor(node.id)}
               onNodeClick={handleNodeClick}
               onEdgeClick={(_, edge) => {
@@ -1149,12 +1080,6 @@ export function TdmCanvasInner() {
                 setEditDraft({ ...EMPTY_DRAFT });
                 setIsEditAccordionOpen(false);
                 setMarkerDraft(edge.markerText ?? (edge.markerType === 'risk' ? 'Risco' : 'Hipótese'));
-                showToast({
-                  status: 'info',
-                  title: 'Conexão selecionada',
-                  description:
-                    edge.data?.validationMessage ?? 'Conexão válida. Agora você pode explicar o vínculo entre esses blocos.'
-                });
               }}
               onPaneClick={handlePaneClick}
               nodesDraggable

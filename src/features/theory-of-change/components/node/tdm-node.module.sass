@@ -5,9 +5,7 @@ $node-compact-min-height: 2.6rem
 $node-compact-padding-y: 0.3rem
 $node-compact-padding-x: 0.4rem
 $node-compact-radius: 0.55rem
-$node-edit-width: 9.5rem
-$node-edit-padding: 0.5rem
-$node-edit-min-height: 8.75rem
+$node-edit-width: 15.5rem
 
 .nodeWrapper,
 .node
@@ -54,8 +52,7 @@ $node-edit-min-height: 8.75rem
   width: $node-edit-width
   min-width: $node-edit-width
   max-width: $node-edit-width
-  min-height: $node-edit-min-height
-  padding: $node-edit-padding
+  padding: 0
   overflow: visible
 
 .compactBody,
@@ -68,126 +65,13 @@ $node-edit-min-height: 8.75rem
   display: grid
   gap: 0.1rem
 
-.headerRow,
-.editorHeader
+.headerRow
   position: relative
   z-index: 1
   display: flex
   align-items: flex-start
   justify-content: space-between
-
-.headerRow
   gap: 0.4rem
-
-.editorHeader
-  gap: 0.25rem
-
-.editor
-  position: relative
-  z-index: 1
-  display: grid
-  gap: 0.25rem
-
-.field
-  display: grid
-  gap: 0.15625rem
-  color: $color-text-muted
-  font-size: 0.34375rem
-
-  span
-    color: $color-text-soft
-    font-size: 0.28125rem
-    font-weight: 800
-    letter-spacing: 0.08em
-    text-transform: uppercase
-
-  input,
-  textarea
-    width: 100%
-    border: 0.0625rem solid rgba(255, 255, 255, 0.08)
-    border-radius: 0.3125rem
-    padding: 0.21875rem 0.28125rem
-    background: rgba(5, 7, 12, 0.72)
-    color: $color-text
-    outline: none
-    resize: none
-    font: inherit
-    font-size: 0.34375rem
-    line-height: 1.35
-
-    &::placeholder
-      color: rgba(244, 247, 251, 0.34)
-
-    &:focus
-      border-color: rgba(167, 139, 250, 0.72)
-      box-shadow: 0 0 0 0.09375rem rgba(167, 139, 250, 0.12)
-
-.errorMessage
-  margin: 0
-  padding: 0.21875rem 0.28125rem
-  border: 0.0625rem solid rgba(244, 114, 182, 0.32)
-  border-radius: 0.3125rem
-  background: rgba(244, 114, 182, 0.09)
-  color: #fecdd3
-  font-size: 0.34375rem
-  line-height: 1.35
-
-.inlineActions
-  display: flex
-  flex-wrap: wrap
-  gap: 0.375rem
-  margin-top: 0.0625rem
-
-.inlineEditActions
-  display: flex
-  width: 100%
-  gap: 0.375rem
-  margin-top: 0.03125rem
-
-  button
-    flex: 1
-    min-width: 0
-
-.iconButton,
-.primaryButton,
-.secondaryButton
-  appearance: none
-  border: 0.0625rem solid $color-border
-  border-radius: 999rem
-  padding: 0.21875rem 0.28125rem
-  font: inherit
-  font-size: 0.34375rem
-  cursor: pointer
-  color: $color-text
-  background: rgba(255, 255, 255, 0.04)
-  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease
-
-.iconButton
-  display: inline-grid
-  place-items: center
-  width: 0.78125rem
-  height: 0.78125rem
-  padding: 0
-  color: $color-text-soft
-
-  &:hover
-    color: $color-text
-
-.primaryButton
-  background: linear-gradient(180deg, rgba(167, 139, 250, 0.28), rgba(99, 102, 241, 0.18))
-  border-color: rgba(167, 139, 250, 0.34)
-
-.secondaryButton
-  background: rgba(255, 255, 255, 0.03)
-
-.iconButton:hover,
-.secondaryButton:hover,
-.primaryButton:hover,
-.iconButton:focus-visible,
-.secondaryButton:focus-visible,
-.primaryButton:focus-visible
-  transform: translateY(-0.03125rem)
-  border-color: $color-border-strong
 
 .stage
   position: relative
@@ -202,8 +86,160 @@ $node-edit-min-height: 8.75rem
 .compactBody .stage
   font-size: 0.3rem
 
-.editor .stage
-  font-size: 0.1875rem
+.nodeEditForm
+  position: relative
+  z-index: 1
+  box-sizing: border-box
+  width: $node-edit-width
+  max-width: $node-edit-width
+  max-height: min(28rem, calc(100vh - 6rem))
+  padding: 0.75rem
+  border-radius: 0.875rem
+  overflow: auto
+
+.nodeEditStage
+  margin: 0 0 0.45rem
+  color: var(--node-accent, #a78bfa)
+  font-size: 0.55rem
+  font-weight: 700
+  line-height: 1
+  letter-spacing: 0.16em
+  text-transform: uppercase
+
+.nodeEditFields
+  display: grid
+  gap: 0.5rem
+
+.nodeEditField
+  display: grid
+  gap: 0.25rem
+
+.nodeEditLabel
+  margin: 0 0 0.25rem
+  color: rgba(245, 247, 251, 0.58)
+  font-size: 0.48rem
+  font-weight: 600
+  line-height: 1
+  letter-spacing: 0.14em
+  text-transform: uppercase
+
+.nodeEditFieldControl
+  position: relative
+
+.nodeEditInput,
+.nodeEditTextarea
+  width: 100%
+  border: 0.0625rem solid rgba(255, 255, 255, 0.10)
+  border-radius: 0.625rem
+  background: rgba(4, 7, 12, 0.72)
+  color: rgba(245, 247, 251, 0.95)
+  font-size: 0.7rem
+  font-weight: 400
+  line-height: 1.3
+  outline: none
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.035)
+
+  &::placeholder
+    color: rgba(245, 247, 251, 0.36)
+
+  &:focus
+    border-color: var(--node-border, rgba(167, 139, 250, 0.72))
+    box-shadow: 0 0 0 0.125rem var(--node-accent-soft, rgba(167, 139, 250, 0.12))
+
+.nodeEditInput
+  min-height: 2rem
+  padding: 0.55rem 1.8rem 0.55rem 0.7rem
+
+.nodeEditTextarea
+  min-height: 3rem
+  padding: 0.6rem 1.8rem 0.6rem 0.7rem
+  resize: vertical
+
+.nodeEditClearButton
+  position: absolute
+  top: 0.55rem
+  right: 0.55rem
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  width: 1rem
+  height: 1rem
+  padding: 0
+  border: 0
+  border-radius: 999rem
+  background: transparent
+  color: rgba(245, 247, 251, 0.46)
+  cursor: pointer
+  transition: color 160ms ease, background 160ms ease, transform 160ms ease
+
+  &:hover,
+  &:focus-visible
+    color: rgba(245, 247, 251, 0.9)
+    background: rgba(255, 255, 255, 0.055)
+    transform: translateY(-0.03125rem)
+    outline: none
+
+.nodeEditClearIcon
+  width: 0.7rem
+  height: 0.7rem
+  display: block
+
+.nodeEditErrorMessage
+  margin: 0.35rem 0 0
+  padding: 0.45rem 0.55rem
+  border: 0.0625rem solid rgba(244, 114, 182, 0.32)
+  border-radius: 0.625rem
+  background: rgba(244, 114, 182, 0.09)
+  color: #fecdd3
+  font-size: 0.62rem
+  line-height: 1.35
+
+.nodeEditActions
+  display: flex
+  width: 100%
+  gap: 0.5rem
+  margin-top: 0.65rem
+
+.nodeEditActionButton
+  flex: 1
+  min-width: 0
+  min-height: 2.1rem
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  padding: 0.6rem 0.75rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.12)
+  border-radius: 0.75rem
+  background: rgba(255, 255, 255, 0.035)
+  color: rgba(245, 247, 251, 0.92)
+  font-size: 0.68rem
+  font-weight: 560
+  line-height: 1
+  letter-spacing: 0.08em
+  text-transform: uppercase
+  cursor: pointer
+  appearance: none
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, color 180ms ease, box-shadow 180ms ease
+
+  &:hover,
+  &:focus-visible
+    transform: translateY(-0.0625rem)
+    border-color: rgba(196, 181, 253, 0.32)
+    background: rgba(255, 255, 255, 0.055)
+    box-shadow: 0 0.65rem 1.25rem rgba(0, 0, 0, 0.18)
+    outline: none
+
+  &:active
+    transform: translateY(0) scale(0.985)
+
+.nodeEditActionButtonPrimary
+  border-color: rgba(196, 181, 253, 0.38)
+  background: linear-gradient(180deg, rgba(167, 139, 250, 0.22), rgba(124, 58, 237, 0.12))
+  color: rgba(255, 255, 255, 0.95)
+
+.nodeEditActionButtonSecondary
+  border-color: rgba(255, 255, 255, 0.12)
+  background: rgba(255, 255, 255, 0.035)
 
 .title
   position: relative
@@ -221,9 +257,6 @@ $node-edit-min-height: 8.75rem
 
 .compactBody .title
   font-size: 0.5rem
-
-.editor .title
-  font-size: 0.3125rem
 
 .description
   position: relative
@@ -360,12 +393,6 @@ $node-edit-min-height: 8.75rem
 
 .nodeToolbarButtonDanger .nodeToolbarIcon
   color: rgba(239, 79, 122, 0.86)
-
-.primaryButton,
-.secondaryButton,
-.inlineEditActions button
-  text-transform: uppercase
-  letter-spacing: 0.06em
 
 .nodeToolbarButton,
 .nodeToolbarButtonDanger

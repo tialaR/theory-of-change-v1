@@ -1,12 +1,17 @@
 'use client';
 
-import { useId, useMemo, useState, type CSSProperties, type DragEvent, type PointerEvent, type ReactNode } from 'react';
+import { useId, useMemo, useState, type CSSProperties, type DragEvent, type ReactNode } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Surface } from '@/shared/ui/surface/surface';
 import type { TdmNodeDraft } from '../../domain/tdm-types';
 import { TDM_STAGE_ORDER, type TdmStage } from '../../domain/tdm-stages';
 import { getTdmStageTheme } from '../../domain/tdm-theme';
 import type { StageCreation } from '../../utils/stage-creation';
+import {
+  TdmBlockFormFields,
+  TdmFormField
+} from '../form-field/tdm-form-field';
+import fieldStyles from '../form-field/tdm-form-field.module.sass';
 import styles from './tdm-sidebar.module.sass';
 
 export type ExportFormat = 'pdf' | 'png' | 'jpeg' | 'svg';
@@ -144,20 +149,6 @@ const STAGE_EDIT_LABELS: Record<TdmStage, string> = {
   outcome: 'Editar resultado selecionado'
 };
 
-const FIELD_PLACEHOLDERS = {
-  title: 'Nome do bloco',
-  description: 'Descreva rapidamente este bloco.',
-  advancedDetails: 'Detalhes complementares do bloco.',
-  shortNotes: 'Notas de apoio para leitura rápida.'
-} as const;
-
-const FIELD_CLEAR_LABELS: Record<keyof TdmNodeDraft, string> = {
-  title: 'Limpar título',
-  description: 'Limpar descrição breve',
-  advancedDetails: 'Limpar detalhes avançados',
-  shortNotes: 'Limpar notas curtas'
-};
-
 export function SidebarToggleIcon({
   direction,
   className
@@ -263,30 +254,6 @@ function TimelineChevron({ isOpen }: { isOpen: boolean }) {
         <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </span>
-  );
-}
-
-function ClearFieldButton({ ariaLabel, onClear }: { ariaLabel: string; onClear: () => void }) {
-  const handlePointerDown = (event: PointerEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-  };
-
-  return (
-    <button
-      type="button"
-      className={styles.clearFieldButton}
-      aria-label={ariaLabel}
-      onPointerDown={handlePointerDown}
-      onClick={(event) => {
-        event.stopPropagation();
-        onClear();
-      }}
-    >
-      <svg aria-hidden="true" viewBox="0 0 12 12">
-        <path d="M3 3l6 6M9 3 3 9" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    </button>
   );
 }
 
@@ -578,81 +545,6 @@ function SidebarAccordion({
   );
 }
 
-function BlockFormFields({
-  draft,
-  onDraftChange
-}: {
-  draft: TdmNodeDraft;
-  onDraftChange: (nextDraft: TdmNodeDraft) => void;
-}) {
-  const updateField = (field: keyof TdmNodeDraft, value: string) => {
-    onDraftChange({ ...draft, [field]: value });
-  };
-
-  const clearField = (field: keyof TdmNodeDraft) => {
-    onDraftChange({ ...draft, [field]: '' });
-  };
-
-  return (
-    <>
-      <label className={styles.field}>
-        <span>Título</span>
-        <div className={styles.fieldControl}>
-          <input
-            type="text"
-            value={draft.title}
-            placeholder={FIELD_PLACEHOLDERS.title}
-            onChange={(event) => updateField('title', event.target.value)}
-          />
-          {draft.title ? <ClearFieldButton ariaLabel={FIELD_CLEAR_LABELS.title} onClear={() => clearField('title')} /> : null}
-        </div>
-      </label>
-      <label className={styles.field}>
-        <span>Descrição breve</span>
-        <div className={styles.fieldControl}>
-          <textarea
-            rows={3}
-            value={draft.description}
-            placeholder={FIELD_PLACEHOLDERS.description}
-            onChange={(event) => updateField('description', event.target.value)}
-          />
-          {draft.description ? (
-            <ClearFieldButton ariaLabel={FIELD_CLEAR_LABELS.description} onClear={() => clearField('description')} />
-          ) : null}
-        </div>
-      </label>
-      <label className={styles.field}>
-        <span>Detalhes avançados</span>
-        <div className={styles.fieldControl}>
-          <textarea
-            rows={3}
-            value={draft.advancedDetails}
-            placeholder={FIELD_PLACEHOLDERS.advancedDetails}
-            onChange={(event) => updateField('advancedDetails', event.target.value)}
-          />
-          {draft.advancedDetails ? (
-            <ClearFieldButton ariaLabel={FIELD_CLEAR_LABELS.advancedDetails} onClear={() => clearField('advancedDetails')} />
-          ) : null}
-        </div>
-      </label>
-      <label className={styles.field}>
-        <span>Notas curtas</span>
-        <div className={styles.fieldControl}>
-          <input
-            type="text"
-            value={draft.shortNotes}
-            placeholder={FIELD_PLACEHOLDERS.shortNotes}
-            onChange={(event) => updateField('shortNotes', event.target.value)}
-          />
-          {draft.shortNotes ? (
-            <ClearFieldButton ariaLabel={FIELD_CLEAR_LABELS.shortNotes} onClear={() => clearField('shortNotes')} />
-          ) : null}
-        </div>
-      </label>
-    </>
-  );
-}
-
 function CreateBlockForm({
   stage,
   draft,
@@ -667,9 +559,9 @@ function CreateBlockForm({
   onSubmit: () => void;
 }) {
   return (
-    <div className={styles.sidebarForm}>
-      {errorMessage ? <p className={styles.errorMessage}>{errorMessage}</p> : null}
-      <BlockFormFields draft={draft} onDraftChange={onDraftChange} />
+    <div className={fieldStyles.form}>
+      {errorMessage ? <p className={fieldStyles.errorMessage}>{errorMessage}</p> : null}
+      <TdmBlockFormFields draft={draft} onDraftChange={onDraftChange} />
       <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaStage}`} onClick={onSubmit}>
         {STAGE_CREATE_LABELS[stage]}
       </button>
@@ -695,13 +587,13 @@ function EditBlockForm({
   onDelete: () => void;
 }) {
   return (
-    <div className={styles.sidebarForm}>
+    <div className={fieldStyles.form}>
       {!hasSelection ? (
         <p className={styles.sectionHint}>Selecione um bloco no canvas para editar.</p>
       ) : (
         <>
-          {errorMessage ? <p className={styles.errorMessage}>{errorMessage}</p> : null}
-          <BlockFormFields draft={draft} onDraftChange={onDraftChange} />
+          {errorMessage ? <p className={fieldStyles.errorMessage}>{errorMessage}</p> : null}
+          <TdmBlockFormFields draft={draft} onDraftChange={onDraftChange} />
           <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaStage}`} onClick={onSubmit}>
             Salvar alterações
           </button>
@@ -1164,15 +1056,14 @@ function MarkerBlock({
       <p className={styles.detailValue}>
         {sourceLabel} → {targetLabel}
       </p>
-      <label className={styles.field}>
-        <span>Texto do marcador</span>
-        <div className={styles.fieldControl}>
-          <input type="text" value={markerText} onChange={(event) => onDraftChange(event.target.value)} placeholder="Risco ou hipótese" />
-          {markerText ? (
-            <ClearFieldButton ariaLabel="Limpar texto do marcador" onClear={() => onDraftChange('')} />
-          ) : null}
-        </div>
-      </label>
+      <TdmFormField
+        label="Texto do marcador"
+        value={markerText}
+        placeholder="Risco ou hipótese"
+        clearAriaLabel="Limpar texto do marcador"
+        onChange={onDraftChange}
+        onClear={() => onDraftChange('')}
+      />
       <div className={styles.contextActions}>
         <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaPrimary}`} onClick={onSubmit}>
           Salvar marcador

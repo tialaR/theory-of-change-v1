@@ -1,55 +1,47 @@
-import { getTdmConnectionMessage, isAllowedTdmConnection } from '../../domain/tdm-connection-rules';
-import { TDM_STAGE_LABELS, type TdmStage } from '../../domain/tdm-stages';
 import type { StageCreation } from '../../utils/stage-creation';
-import { getStageCreationCopy } from '../../utils/stage-creation';
 import type { TdmToastInput } from './tdm-toast-types';
 
-export function connectionToast(sourceStage: TdmStage, targetStage: TdmStage): TdmToastInput {
-  const description = getTdmConnectionMessage(sourceStage, targetStage);
+const STAGE_ADVANCE_FLOW_DESCRIPTIONS: Partial<Record<StageCreation, string>> = {
+  activity: 'Agora descreva as atividades realizadas com os insumos.',
+  output: 'Agora registre as entregas concretas geradas pelas atividades.',
+  outcome: 'Agora descreva as mudanças esperadas após as entregas.'
+};
 
-  if (isAllowedTdmConnection(sourceStage, targetStage)) {
-    return {
-      status: 'success',
-      title: 'Conexão criada',
-      description
-    };
+export function stageAdvancedFlowTooltipEvent(
+  nextStage: StageCreation
+): 'advance-stage-activity' | 'advance-stage-output' | 'advance-stage-outcome' | null {
+  switch (nextStage) {
+    case 'activity':
+      return 'advance-stage-activity';
+    case 'output':
+      return 'advance-stage-output';
+    case 'outcome':
+      return 'advance-stage-outcome';
+    default:
+      return null;
+  }
+}
+
+export function stageAdvancedToast(nextStage: StageCreation): TdmToastInput | null {
+  const description = STAGE_ADVANCE_FLOW_DESCRIPTIONS[nextStage];
+
+  if (!description) {
+    return null;
   }
 
   return {
-    status: 'error',
-    title: 'Conexão não permitida',
-    description
-  };
-}
-
-export function stageAdvancedToast(nextStage: StageCreation): TdmToastInput {
-  return {
     status: 'success',
     title: 'Etapa atualizada',
-    description: getStageCreationCopy(nextStage)
+    description,
+    duration: 4900
   };
 }
 
-export function nodeAddedToast(title: string, stage: TdmStage): TdmToastInput {
+export function theoryCompleteToast(): TdmToastInput {
   return {
     status: 'success',
-    title: 'Bloco adicionado',
-    description: `${title} foi adicionado em ${TDM_STAGE_LABELS[stage].toLowerCase()}.`
-  };
-}
-
-export function nodeSelectionToast(hint: string): TdmToastInput {
-  return {
-    status: 'info',
-    title: 'Dica da etapa',
-    description: hint
-  };
-}
-
-export function validationToast(message: string): TdmToastInput {
-  return {
-    status: 'warning',
-    title: 'Complete os campos',
-    description: message
+    title: 'Teoria pronta',
+    description: 'Você já pode visualizar o resultado final da sua teoria da mudança.',
+    duration: 6200
   };
 }
