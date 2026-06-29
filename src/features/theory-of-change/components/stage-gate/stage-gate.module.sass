@@ -1,0 +1,72 @@
+@use '../../../../shared/styles/tokens' as *
+
+.gate
+  padding: 18px
+  border: 1px solid $color-border
+  border-radius: 20px
+  background: linear-gradient(180deg, rgba(16, 21, 33, 0.92), rgba(9, 12, 20, 0.96))
+
+.kicker
+  margin: 0 0 8px
+  color: $color-text-soft
+  font-size: 11px
+  font-weight: 700
+  letter-spacing: 0.16em
+  text-transform: uppercase
+
+.title
+  margin: 0
+  color: $color-text
+  font-size: 15px
+  font-weight: 600
+
+.description
+  margin: 10px 0 0
+  color: $color-text-muted
+  font-size: 13px
+  line-height: 1.5
+
+.insight
+  margin: 12px 0 0
+  padding: 12px 14px
+  border: 1px solid rgba(124, 136, 255, 0.22)
+  border-radius: 16px
+  background: rgba(124, 136, 255, 0.08)
+  color: $color-text
+  font-size: 13px
+  line-height: 1.5
+
+.actions
+  display: grid
+  gap: 10px
+  margin-top: 16px
+
+.primaryAction,
+.secondaryAction
+  appearance: none
+  border: 1px solid $color-border
+  border-radius: 14px
+  padding: 12px 14px
+  font: inherit
+  cursor: pointer
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease
+
+.primaryAction
+  background: linear-gradient(180deg, rgba(124, 136, 255, 0.2), rgba(124, 136, 255, 0.12))
+  color: $color-text
+  font-weight: 600
+
+  &:hover
+    transform: translateY(-1px)
+    border-color: rgba(124, 136, 255, 0.55)
+
+.secondaryAction
+  background: rgba(255, 255, 255, 0.03)
+  color: $color-text
+
+  &:hover
+    transform: translateY(-1px)
+    border-color: $color-border-strong
+
+.secondaryActionMuted
+  opacity: 0.7

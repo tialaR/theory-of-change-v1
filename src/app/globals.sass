@@ -1,0 +1,39 @@
+@use '../shared/styles/tokens' as *
+
+:root
+  color-scheme: dark
+
+*,
+*::before,
+*::after
+  box-sizing: border-box
+
+html,
+body
+  width: 100%
+  height: 100%
+  margin: 0
+  background: $color-bg
+  color: $color-text
+
+body
+  min-height: 100vh
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif
+  overflow: hidden
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+  background: radial-gradient(circle at top left, rgba(167, 139, 250, 0.14), transparent 32%), radial-gradient(circle at bottom right, rgba(52, 211, 153, 0.08), transparent 28%), $color-bg
+
+a
+  color: inherit
+  text-decoration: none
+
+button,
+input,
+textarea,
+select
+  font: inherit
+
+::selection
+  background: rgba(167, 139, 250, 0.28)
+  color: $color-text

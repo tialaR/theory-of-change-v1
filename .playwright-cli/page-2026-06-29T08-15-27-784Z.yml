@@ -1,0 +1,128 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - button "Fechar sidebar" [ref=e3] [cursor=pointer]:
+      - img [ref=e4]
+    - application [ref=e9]:
+      - img
+      - generic "Control Panel" [ref=e13]:
+        - button "Zoom In" [ref=e14] [cursor=pointer]:
+          - img [ref=e15]
+        - button "Zoom Out" [ref=e17] [cursor=pointer]:
+          - img [ref=e18]
+        - button "Fit View" [ref=e20] [cursor=pointer]:
+          - img [ref=e21]
+      - generic:
+        - img "Mini Map"
+    - complementary [ref=e24]:
+      - generic [ref=e25]:
+        - generic [ref=e27]:
+          - paragraph [ref=e28]: Teoria da mudança
+          - button "Editar nome da teoria" [ref=e30] [cursor=pointer]:
+            - heading "Nova teoria da mudança" [level=2] [ref=e31]
+            - generic [ref=e32]: Editar nome
+          - paragraph [ref=e33]: Construa a cadeia em ordem e conecte os blocos quando a base estiver pronta.
+        - generic [ref=e34]:
+          - generic [ref=e35]:
+            - paragraph [ref=e36]: Progresso da teoria
+            - heading "1. Insumos" [level=3] [ref=e37]
+            - paragraph [ref=e38]: Liste os recursos que tornam a política possível.
+            - generic "Progresso da teoria" [ref=e39]:
+              - group [ref=e40]:
+                - generic "1 1. Insumos Recursos necessários para a política acontecer. 0" [ref=e41] [cursor=pointer]:
+                  - generic [ref=e42]: "1"
+                  - generic [ref=e43]:
+                    - strong [ref=e44]: 1. Insumos
+                    - generic [ref=e45]: Recursos necessários para a política acontecer.
+                  - generic [ref=e46]: "0"
+                - generic [ref=e47]:
+                  - paragraph [ref=e48]: Insumos são recursos, capacidades e condições de partida. Eles não são ações. São aquilo que permite que as atividades aconteçam.
+                  - list [ref=e49]:
+                    - listitem [ref=e50]: equipe técnica
+                    - listitem [ref=e51]: orçamento
+                    - listitem [ref=e52]: dados educacionais
+                    - listitem [ref=e53]: materiais
+                    - listitem [ref=e54]: tecnologia
+                    - listitem [ref=e55]: parcerias
+              - group [ref=e56]:
+                - generic "2 2. Atividades Ações realizadas com os insumos. 0" [ref=e57] [cursor=pointer]:
+                  - generic [ref=e58]: "2"
+                  - generic [ref=e59]:
+                    - strong [ref=e60]: 2. Atividades
+                    - generic [ref=e61]: Ações realizadas com os insumos.
+                  - generic [ref=e62]: "0"
+              - group [ref=e63]:
+                - generic "3 3. Produtos Entregas concretas geradas pelas atividades. 0" [ref=e64] [cursor=pointer]:
+                  - generic [ref=e65]: "3"
+                  - generic [ref=e66]:
+                    - strong [ref=e67]: 3. Produtos
+                    - generic [ref=e68]: Entregas concretas geradas pelas atividades.
+                  - generic [ref=e69]: "0"
+              - group [ref=e70]:
+                - generic "4 4. Resultados Mudanças esperadas após as entregas. 0" [ref=e71] [cursor=pointer]:
+                  - generic [ref=e72]: "4"
+                  - generic [ref=e73]:
+                    - strong [ref=e74]: 4. Resultados
+                    - generic [ref=e75]: Mudanças esperadas após as entregas.
+                  - generic [ref=e76]: "0"
+            - button "Avançar para próxima etapa" [disabled] [ref=e77]
+            - paragraph [ref=e78]: A etapa atual precisa de pelo menos 1 bloco para avançar.
+          - generic [ref=e79]:
+            - paragraph [ref=e80]: Ações da etapa
+            - paragraph [ref=e81]: Crie um novo bloco da etapa atual. Arraste este card para o canvas e solte-o na posição desejada. Personalize o conteúdo clicando no botão de editar do card ou através do formulário editar na sidebar.
+            - button "Adicionar insumo Arraste, solte para criar este bloco." [ref=e82]:
+              - img [ref=e84]
+              - generic [ref=e89]:
+                - strong [ref=e90]: Adicionar insumo
+                - generic [ref=e91]: Arraste, solte para criar este bloco.
+          - generic [ref=e92]:
+            - button "Organização do canvas" [expanded] [ref=e93] [cursor=pointer]:
+              - generic [ref=e94]: Organização do canvas
+              - img [ref=e95]
+            - generic [ref=e97]:
+              - paragraph [ref=e98]: Organize o canvas automaticamente. Alinhe os blocos por etapa para visualizar a teoria com mais clareza.
+              - generic "Prévia do alinhamento por etapas" [ref=e99]
+              - button "Centralizar colunas do canvas" [ref=e108] [cursor=pointer]:
+                - img [ref=e109]
+                - generic [ref=e111]: Centralizar colunas
+          - generic [ref=e112]:
+            - generic [ref=e113]:
+              - button "Criar novo insumo" [expanded] [ref=e114] [cursor=pointer]:
+                - generic [ref=e115]: Criar novo insumo
+                - img [ref=e116]
+              - generic [ref=e120]:
+                - generic [ref=e121]:
+                  - generic [ref=e122]: Título
+                  - textbox "Título" [ref=e124]:
+                    - /placeholder: Nome do bloco
+                - generic [ref=e125]:
+                  - generic [ref=e126]: Descrição breve
+                  - textbox "Descrição breve" [ref=e128]:
+                    - /placeholder: Descreva rapidamente este bloco.
+                - generic [ref=e129]:
+                  - generic [ref=e130]: Detalhes avançados
+                  - textbox "Detalhes avançados" [ref=e132]:
+                    - /placeholder: Detalhes complementares do bloco.
+                - generic [ref=e133]:
+                  - generic [ref=e134]: Notas curtas
+                  - textbox "Notas curtas" [ref=e136]:
+                    - /placeholder: Notas de apoio para leitura rápida.
+                - button "Criar novo insumo" [ref=e137] [cursor=pointer]
+            - generic [ref=e138]:
+              - button "Editar insumo selecionado" [ref=e139] [cursor=pointer]:
+                - generic [ref=e140]: Editar insumo selecionado
+                - img [ref=e141]
+              - paragraph [ref=e144]: Selecione um bloco no canvas para editar.
+          - generic [ref=e145]:
+            - paragraph [ref=e146]: Aprender com exemplo
+            - paragraph [ref=e147]: Veja uma teoria pronta sem perder seu trabalho ou substitua o canvas com confirmação.
+            - generic [ref=e148]:
+              - button "Visualizar exemplo" [ref=e149] [cursor=pointer]
+              - button "Carregar exemplo" [ref=e150] [cursor=pointer]
+          - generic [ref=e151]:
+            - paragraph [ref=e152]: Resultado final
+            - paragraph [ref=e153]: Crie pelo menos um bloco em cada etapa antes de visualizar a teoria.
+          - generic [ref=e154]:
+            - paragraph [ref=e155]: Mensagem do fluxo
+            - paragraph [ref=e156]: Liste os recursos que tornam a política possível.
+  - button "Open Next.js Dev Tools" [ref=e162] [cursor=pointer]:
+    - img [ref=e163]

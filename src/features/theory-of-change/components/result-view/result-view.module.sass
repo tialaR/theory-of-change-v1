@@ -1,0 +1,144 @@
+@use '../../../../shared/styles/tokens' as *
+
+.view
+  min-height: 100vh
+  padding: 0
+  background: $color-bg
+  color: $color-text
+
+.card
+  min-height: 100vh
+  padding: 24px
+  background: radial-gradient(circle at top left, rgba(167, 139, 250, 0.11), transparent 32%), linear-gradient(180deg, rgba(10, 14, 22, 1), rgba(6, 8, 13, 1))
+
+.kicker
+  margin: 0 0 10px
+  color: $color-text-soft
+  font-size: 11px
+  font-weight: 700
+  letter-spacing: 0.18em
+  text-transform: uppercase
+
+.title
+  margin: 0
+  color: $color-text
+  font-size: clamp(28px, 4vw, 42px)
+  line-height: 1.08
+
+.description
+  max-width: 54ch
+  margin: 16px 0 0
+  color: $color-text-muted
+  font-size: 16px
+  line-height: 1.7
+
+.topRow
+  display: flex
+  align-items: flex-start
+  justify-content: space-between
+  gap: 20px
+
+.backButton,
+.columnList .nodeItem,
+.edgeRow
+  border: 1px solid $color-border
+  border-radius: 16px
+  background: rgba(255, 255, 255, 0.03)
+
+.backButton
+  padding: 12px 16px
+  color: $color-text
+  cursor: pointer
+
+.grid
+  display: grid
+  grid-template-columns: repeat(4, minmax(0, 1fr))
+  gap: 14px
+  margin-top: 24px
+
+.column
+  padding: 16px
+  border: 1px solid $color-border
+  border-radius: 18px
+  background: rgba(255, 255, 255, 0.02)
+
+.columnKicker
+  margin: 0 0 12px
+  color: $color-text-soft
+  font-size: 11px
+  font-weight: 700
+  letter-spacing: 0.16em
+  text-transform: uppercase
+
+.columnList
+  display: grid
+  gap: 10px
+
+.nodeItem
+  display: grid
+  gap: 6px
+  padding: 12px
+  color: $color-text
+  text-align: left
+  cursor: pointer
+
+  strong
+    font-size: 14px
+
+  span
+    color: $color-text-muted
+    font-size: 12px
+    line-height: 1.5
+
+.active
+  border-color: rgba(167, 139, 250, 0.5)
+  box-shadow: 0 0 0 1px rgba(167, 139, 250, 0.18)
+
+.dimmed
+  opacity: 0.35
+
+.sideNote
+  margin-top: 18px
+  padding: 18px
+  border: 1px solid $color-border
+  border-radius: 18px
+  background: rgba(255, 255, 255, 0.02)
+
+.sideNoteTitle
+  margin: 0 0 8px
+  color: $color-text
+  font-size: 14px
+  font-weight: 600
+
+.sideNoteText
+  margin: 0
+  color: $color-text-muted
+  font-size: 13px
+  line-height: 1.6
+
+.edgeList
+  display: grid
+  gap: 8px
+  margin-top: 14px
+
+.edgeRow
+  display: flex
+  justify-content: space-between
+  gap: 12px
+  padding: 10px 12px
+  color: $color-text-muted
+  font-size: 12px
+
+.exportActions
+  display: grid
+  grid-template-columns: repeat(2, minmax(0, 1fr))
+  gap: 10px
+  margin-top: 16px
+
+.exportButton
+  border: 1px solid $color-border
+  border-radius: 14px
+  padding: 10px 12px
+  background: rgba(255, 255, 255, 0.03)
+  color: $color-text
+  cursor: pointer

@@ -1,0 +1,194 @@
+@use '../../../../shared/styles/tokens' as *
+
+.shell
+  position: relative
+  display: grid
+  width: 100%
+  height: 100vh
+  min-height: 100vh
+  overflow: hidden
+  background: radial-gradient(circle at 20% 0%, rgba(167, 139, 250, 0.11), transparent 34%), linear-gradient(180deg, rgba(7, 9, 15, 1), rgba(5, 7, 12, 1))
+  transition: grid-template-columns 220ms ease
+
+.sidebarOpen
+  grid-template-columns: minmax(0, 1fr) $sidebar-width
+
+.sidebarClosed
+  grid-template-columns: minmax(0, 1fr) 0px
+
+.canvasArea
+  position: relative
+  width: 100%
+  min-width: 0
+  height: 100%
+
+.flowFrame
+  position: absolute
+  inset: 0
+  width: 100%
+  height: 100%
+  overflow: hidden
+
+  :global(.react-flow)
+    width: 100%
+    height: 100%
+    background: radial-gradient(circle at top left, rgba(167, 139, 250, 0.09), transparent 30%), radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.06), transparent 28%), linear-gradient(180deg, rgba(10, 14, 22, 0.96), rgba(5, 7, 12, 0.99))
+
+  :global(.react-flow__renderer)
+    touch-action: none
+    pointer-events: auto
+
+  :global(.react-flow__viewport)
+    pointer-events: auto
+
+  :global(.react-flow__background)
+    pointer-events: none
+
+  :global(.react-flow__controls)
+    left: 16px
+    right: auto
+    bottom: 16px
+    top: auto
+    display: inline-flex
+    flex-direction: column
+    width: auto
+    z-index: 12
+    border: 1px solid $color-border
+    border-radius: 14px
+    background: rgba(10, 14, 22, 0.9)
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4)
+    overflow: hidden
+
+  :global(.react-flow__controls-button)
+    width: 32px
+    height: 32px
+    border: 0
+    background: transparent
+    color: $color-text
+    fill: currentColor
+
+    &:hover
+      background: rgba(255, 255, 255, 0.06)
+
+  :global(.react-flow__minimap)
+    right: 16px
+    bottom: 16px
+    top: auto
+    z-index: 11
+    border: 1px solid $color-border
+    border-radius: 14px
+    background: rgba(10, 14, 22, 0.84)
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.32)
+    overflow: hidden
+    pointer-events: none
+
+.controls
+  margin: 0
+
+.minimap
+  opacity: 0.84
+
+.sidebarToggleButton
+  position: absolute
+  top: 18px
+  right: 18px
+  z-index: 20
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  width: 2.25rem
+  height: 2.25rem
+  padding: 0
+  border: 0
+  border-radius: 0.9rem
+  background: transparent
+  cursor: pointer
+  transition: transform 180ms ease, opacity 180ms ease, filter 180ms ease
+  color: #fff
+
+  &:hover
+    transform: translateY(-0.0625rem)
+    filter: brightness(1.06)
+
+  &:active
+    transform: translateY(0) scale(0.97)
+
+  &:focus-visible
+    outline: 2px solid rgba(167, 139, 250, 0.72)
+    outline-offset: 2px
+
+.sidebarToggleSvg
+  width: 2.25rem
+  height: 2.25rem
+  display: block
+  filter: drop-shadow(0 0.75rem 1.25rem rgba(0, 0, 0, 0.32))
+
+.confirmOverlay
+  position: absolute
+  inset: 0
+  z-index: 16
+  display: grid
+  place-items: center
+  padding: 20px
+  background: rgba(5, 7, 12, 0.56)
+  backdrop-filter: blur(8px)
+
+.confirmCard
+  width: min(100%, 420px)
+  padding: 18px
+  border: 1px solid $color-border
+  border-radius: 20px
+  background: $color-surface-strong
+  box-shadow: $shadow-elevated
+
+.confirmTitle
+  margin: 0
+  color: $color-text
+  font-size: 15px
+  line-height: 1.5
+
+.confirmActions
+  display: flex
+  justify-content: flex-end
+  gap: 12px
+  margin-top: 16px
+
+.flowFrame
+  :global(.react-flow__panel.react-flow__controls)
+    top: auto !important
+    right: auto !important
+    bottom: 16px !important
+    left: 16px !important
+    width: auto !important
+    height: auto !important
+
+  :global(.react-flow__panel.react-flow__minimap)
+    top: auto !important
+    left: auto !important
+    bottom: 16px !important
+    right: 16px !important
+
+  :global(.react-flow__attribution)
+    display: none
+
+  :global(.react-flow__pane)
+    cursor: grab
+
+  :global(.react-flow__pane.dragging)
+    cursor: grabbing
+
+  :global(.react-flow__viewport-portal)
+    pointer-events: none
+
+    > *
+      pointer-events: auto
+
+  :global(.react-flow__node)
+    overflow: visible
+    cursor: grab
+    width: fit-content !important
+    height: fit-content !important
+    max-width: none
+
+  :global(.react-flow__node.dragging)
+    cursor: grabbing
