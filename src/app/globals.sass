@@ -8,7 +8,12 @@
 *::after
   box-sizing: border-box
 
-html,
+html
+  width: 100%
+  height: 100%
+  margin: 0
+  font-size: clamp(15px, calc(13.65px + 0.1vw), 16.5px)
+
 body
   width: 100%
   height: 100%
@@ -37,3 +42,12 @@ select
 ::selection
   background: rgba(167, 139, 250, 0.28)
   color: $color-text
+
+
+@media (max-width: 48rem)
+  html
+    font-size: clamp(14px, calc(12.5px + 0.45vw), 15px)
+
+@media (min-width: 120rem)
+  html
+    font-size: 16.5px

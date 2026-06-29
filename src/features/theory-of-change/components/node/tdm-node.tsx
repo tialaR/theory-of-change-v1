@@ -146,8 +146,6 @@ export function TdmNode({ id, data, selected }: NodeProps<TdmNodeModel>) {
         event.stopPropagation();
         beginInlineEdit();
       }}
-      onPointerDown={(event) => event.stopPropagation()}
-      onMouseDown={(event) => event.stopPropagation()}
       onClick={handleSelectNode}
     >
       {isToolbarVisible && !isEditingInline ? (
@@ -221,9 +219,7 @@ export function TdmNode({ id, data, selected }: NodeProps<TdmNodeModel>) {
       ) : null}
       {isEditingInline ? (
         <div
-          className={[styles.nodeEditForm, 'nodrag', 'nopan'].join(' ')}
-          onPointerDown={(event) => event.stopPropagation()}
-          onMouseDown={(event) => event.stopPropagation()}
+          className={styles.nodeEditForm}
           onClick={(event) => event.stopPropagation()}
         >
           <div className={styles.nodeEditStage}>{TDM_STAGE_LABELS[data.stage]}</div>
@@ -261,7 +257,7 @@ export function TdmNode({ id, data, selected }: NodeProps<TdmNodeModel>) {
                 setErrorMessage(null);
               }}
             >
-              Salvar
+              SALVAR
             </button>
             <button
               type="button"
@@ -273,7 +269,7 @@ export function TdmNode({ id, data, selected }: NodeProps<TdmNodeModel>) {
                 onCancelNodeEdit();
               }}
             >
-              Fechar
+              FECHAR
             </button>
           </div>
         </div>
