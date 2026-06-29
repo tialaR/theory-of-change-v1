@@ -21,8 +21,17 @@ import { TdmEdge as TdmEdgeView } from '../edge/tdm-edge';
 import { ResultView } from '../result-view/result-view';
 import { TdmNode as TdmNodeView, TdmNodeInteractionProvider } from '../node/tdm-node';
 import { SidebarToggleIcon, TdmSidebar, type TdmBlockForms, type TdmSidebarContext } from '../sidebar/tdm-sidebar';
-import { getTdmConnectionMessage, isAllowedTdmConnection } from '../../domain/tdm-connection-rules';
-import { TDM_STAGE_LABELS, type TdmStage } from '../../domain/tdm-stages';
+import {
+  connectionToast,
+  nodeAddedToast,
+  nodeSelectionToast,
+  stageAdvancedToast,
+  validationToast
+} from '../toast/tdm-toast-messages';
+import { TdmToastViewport } from '../toast/tdm-toast';
+import { useTdmToast } from '../toast/use-tdm-toast';
+import { isAllowedTdmConnection } from '../../domain/tdm-connection-rules';
+import { type TdmStage } from '../../domain/tdm-stages';
 import { getTdmStageTheme } from '../../domain/tdm-theme';
 import type { TdmEdge as TdmEdgeModel, TdmNode as TdmNodeModel, TdmNodeDraft } from '../../domain/tdm-types';
 import { exampleTheory } from '../../data/example-theory';
@@ -34,7 +43,6 @@ import {
   getStageCounts,
   getStageCreationActionLabel,
   getStageCreationAdvanceLabel,
-  getStageCreationCopy,
   getStageCreationPosition,
   isReadyToConnect,
   type StageCreation
@@ -126,7 +134,7 @@ export function TdmCanvasInner() {
   const [nodes, setNodes, onNodesChange] = useNodesState<TdmNodeModel>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<TdmEdgeModel>([]);
   const [stageCreation, setStageCreation] = useState<StageCreation>('input');
-  const [insightMessage, setInsightMessage] = useState(getStageCreationCopy('input'));
+  const { activeToast, showToast, closeToast } = useTdmToast();
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [toolbarNodeId, setToolbarNodeId] = useState<string | null>(null);
   const [selectedEdgeId, setSelectedEdgeId] = useState<string | null>(null);
@@ -138,7 +146,6 @@ export function TdmCanvasInner() {
   const [isCreateAccordionOpen, setIsCreateAccordionOpen] = useState(true);
   const [isEditAccordionOpen, setIsEditAccordionOpen] = useState(false);
   const [markerDraft, setMarkerDraft] = useState('');
-  const [showExampleConfirm, setShowExampleConfirm] = useState(false);
   const [canvasVariant, setCanvasVariant] = useState<'custom' | 'example'>('custom');
   const [previousTheorySnapshot, setPreviousTheorySnapshot] = useState<TheorySnapshot | null>(null);
   const [viewportResetToken, setViewportResetToken] = useState(0);
@@ -155,7 +162,6 @@ export function TdmCanvasInner() {
 
   const canGenerateResult = canViewTdmResult(nodes, edges);
   const resultAvailabilityMessage = getTdmResultAvailabilityMessage(nodes, edges);
-  const hasCanvasContent = nodes.length > 0 || edges.length > 0;
   const canRestoreTheory = canvasVariant === 'example' && previousTheorySnapshot !== null;
 
   const fitCanvasToVisibleArea = useCallback(() => {
@@ -243,8 +249,11 @@ export function TdmCanvasInner() {
     resetCanvasSelection();
     setEditingNodeId(null);
     setCanvasVariant('example');
-    setInsightMessage(getStageCreationCopy('ready-to-connect'));
-    setShowExampleConfirm(false);
+    showToast({
+      status: 'info',
+      title: 'Teoria exemplo carregada',
+      description: 'Agora conecte os blocos da esquerda para a direita para mostrar como a mudança acontece.'
+    });
     setViewMode('canvas');
     bumpViewportReset();
   }, [
@@ -259,7 +268,8 @@ export function TdmCanvasInner() {
     setNodes,
     stageCreation,
     theoryTitle,
-    bumpViewportReset
+    bumpViewportReset,
+    showToast
   ]);
 
   const restorePreviousTheory = useCallback(() => {
@@ -294,41 +304,62 @@ export function TdmCanvasInner() {
     setEditingNodeId(null);
     setCanvasVariant('custom');
     setPreviousTheorySnapshot(null);
-    setInsightMessage('Sua teoria anterior foi restaurada.');
+    showToast({
+      status: 'success',
+      title: 'Teoria restaurada',
+      description: 'Sua teoria anterior foi restaurada.'
+    });
     setViewMode('canvas');
     bumpViewportReset();
-  }, [bumpViewportReset, previousTheorySnapshot, setEdges, setNodes]);
+  }, [bumpViewportReset, previousTheorySnapshot, setEdges, setNodes, showToast]);
 
-  const requestLoadExample = useCallback(() => {
-    if (hasCanvasContent) {
-      setShowExampleConfirm(true);
-      return;
+  const viewExampleCanvas = useCallback(() => {
+    replaceCanvasWithExample();
+  }, [replaceCanvasWithExample]);
+
+  const viewExampleResult = useCallback(() => {
+    if (canvasVariant === 'custom') {
+      setPreviousTheorySnapshot({
+        nodes,
+        edges,
+        theoryTitle,
+        stageCreation,
+        creationDrafts,
+        selectedNodeId,
+        selectedEdgeId
+      });
     }
 
-    replaceCanvasWithExample();
-  }, [hasCanvasContent, replaceCanvasWithExample]);
-
-  const previewExample = useCallback(() => {
-    setShowExampleConfirm(false);
     setViewMode('example-preview');
-  }, []);
+  }, [canvasVariant, creationDrafts, edges, nodes, selectedEdgeId, selectedNodeId, stageCreation, theoryTitle]);
 
   const closeExamplePreview = useCallback(() => {
-    setViewMode('canvas');
-  }, []);
+    restorePreviousTheory();
+  }, [restorePreviousTheory]);
 
   const openResultView = useCallback(() => {
     if (!canGenerateResult) {
-      setInsightMessage('Crie a cadeia mínima de conexões antes de visualizar o resultado.');
+      showToast({
+        status: 'warning',
+        title: 'Resultado indisponível',
+        description: 'Crie a cadeia mínima de conexões antes de visualizar o resultado.'
+      });
       return;
     }
 
     setViewMode('result');
-  }, [canGenerateResult]);
+  }, [canGenerateResult, showToast]);
 
-  const exportStub = useCallback((format: 'pdf' | 'png' | 'jpeg' | 'svg') => {
-    setInsightMessage(`Exportação em ${format.toUpperCase()} será conectada na próxima etapa.`);
-  }, []);
+  const exportStub = useCallback(
+    (format: 'pdf' | 'png' | 'jpeg' | 'svg') => {
+      showToast({
+        status: 'info',
+        title: 'Exportação em breve',
+        description: `Exportação em ${format.toUpperCase()} será conectada na próxima etapa.`
+      });
+    },
+    [showToast]
+  );
 
   const centerNodes = useCallback(() => {
     setNodes((currentNodes) => layoutNodesByStage(currentNodes));
@@ -363,9 +394,13 @@ export function TdmCanvasInner() {
       setEditingNodeId(node.id);
       setIsEditAccordionOpen(true);
       setIsCreateAccordionOpen(false);
-      setInsightMessage('Edite o bloco diretamente no canvas.');
+      showToast({
+        status: 'info',
+        title: 'Edição no canvas',
+        description: 'Edite o bloco diretamente no canvas.'
+      });
     },
-    [nodes, syncEditDraftFromNode]
+    [nodes, showToast, syncEditDraftFromNode]
   );
 
   const cancelNodeEditor = useCallback(() => {
@@ -413,7 +448,11 @@ export function TdmCanvasInner() {
       setEditingNodeId(null);
       setToolbarNodeId(nodeId);
       setEditError(undefined);
-      setInsightMessage(`${title} foi atualizado.`);
+      showToast({
+        status: 'success',
+        title: 'Bloco atualizado',
+        description: `${title} foi atualizado.`
+      });
 
       if (selectedNodeId === nodeId) {
         setEditDraft(nextDraft);
@@ -421,7 +460,7 @@ export function TdmCanvasInner() {
 
       return true;
     },
-    [selectedNodeId, setNodes]
+    [selectedNodeId, setNodes, showToast]
   );
 
   const deleteNodeById = useCallback(
@@ -436,10 +475,14 @@ export function TdmCanvasInner() {
       setEditDraft({ ...EMPTY_DRAFT });
       setEditError(undefined);
       setIsEditAccordionOpen(false);
-      setInsightMessage('O bloco foi excluído.');
+      showToast({
+        status: 'success',
+        title: 'Bloco excluído',
+        description: 'O bloco foi removido do canvas.'
+      });
       bumpViewportReset();
     },
-    [bumpViewportReset, setEdges, setNodes]
+    [bumpViewportReset, setEdges, setNodes, showToast]
   );
 
   const duplicateNodeById = useCallback(
@@ -475,10 +518,14 @@ export function TdmCanvasInner() {
       });
       setIsEditAccordionOpen(true);
       setIsCreateAccordionOpen(false);
-      setInsightMessage('O bloco foi duplicado.');
+      showToast({
+        status: 'success',
+        title: 'Bloco duplicado',
+        description: 'Uma cópia foi adicionada à etapa atual.'
+      });
       bumpViewportReset();
     },
-    [bumpViewportReset, nodes, setNodes, stageCounts]
+    [bumpViewportReset, nodes, setNodes, showToast, stageCounts]
   );
 
   const duplicateSelectedNode = useCallback(() => {
@@ -505,8 +552,12 @@ export function TdmCanvasInner() {
     setEdges((currentEdges) => currentEdges.filter((edge) => edge.id !== selectedEdge.id));
     setSelectedEdgeId(null);
     setMarkerDraft('');
-    setInsightMessage('A conexão foi excluída.');
-  }, [selectedEdge, setEdges]);
+    showToast({
+      status: 'success',
+      title: 'Conexão excluída',
+      description: 'A ligação entre os blocos foi removida.'
+    });
+  }, [selectedEdge, setEdges, showToast]);
 
   const addMarkerToSelectedEdge = useCallback(
     (markerType: 'risk' | 'hypothesis') => {
@@ -535,9 +586,13 @@ export function TdmCanvasInner() {
         })
       );
       setMarkerDraft(markerType === 'risk' ? 'Risco' : 'Hipótese');
-      setInsightMessage(markerType === 'risk' ? 'Risco adicionado à conexão.' : 'Hipótese adicionada à conexão.');
+      showToast({
+        status: 'success',
+        title: 'Marcador adicionado',
+        description: markerType === 'risk' ? 'Risco adicionado à conexão.' : 'Hipótese adicionada à conexão.'
+      });
     },
-    [selectedEdge, setEdges]
+    [selectedEdge, setEdges, showToast]
   );
 
   const saveMarkerOnSelectedEdge = useCallback(() => {
@@ -566,8 +621,12 @@ export function TdmCanvasInner() {
         } satisfies TdmEdgeModel;
       })
     );
-    setInsightMessage('Marcador salvo.');
-  }, [markerDraft, selectedEdge, setEdges]);
+    showToast({
+      status: 'success',
+      title: 'Marcador salvo',
+      description: 'As alterações foram aplicadas à conexão.'
+    });
+  }, [markerDraft, selectedEdge, setEdges, showToast]);
 
   const deleteMarkerFromSelectedEdge = useCallback(() => {
     if (!selectedEdge) {
@@ -596,8 +655,12 @@ export function TdmCanvasInner() {
     );
     setSelectedEdgeId(selectedEdge.id);
     setMarkerDraft('');
-    setInsightMessage('Marcador excluído.');
-  }, [selectedEdge, setEdges]);
+    showToast({
+      status: 'info',
+      title: 'Marcador removido',
+      description: 'O marcador foi retirado da conexão.'
+    });
+  }, [selectedEdge, setEdges, showToast]);
 
   const advanceStage = useCallback(() => {
     if (stageCreation === 'ready-to-connect') {
@@ -605,7 +668,11 @@ export function TdmCanvasInner() {
     }
 
     if (currentStageCount === 0) {
-      setInsightMessage('Adicione pelo menos 1 bloco nesta fase antes de avançar.');
+      showToast({
+        status: 'warning',
+        title: 'Complete a etapa atual',
+        description: 'Adicione pelo menos um bloco antes de avançar.'
+      });
       return;
     }
 
@@ -621,8 +688,8 @@ export function TdmCanvasInner() {
     setMarkerDraft('');
     setIsCreateAccordionOpen(true);
     setIsEditAccordionOpen(false);
-    setInsightMessage(getStageCreationCopy(nextStage));
-  }, [currentStageCount, stageCreation]);
+    showToast(stageAdvancedToast(nextStage));
+  }, [currentStageCount, showToast, stageCreation]);
 
   const handleCreateDraftChange = useCallback(
     (nextDraft: TdmNodeDraft) => {
@@ -650,7 +717,7 @@ export function TdmCanvasInner() {
       if (!title) {
         const message = 'Preencha o título do bloco antes de adicionar ao canvas.';
         setCreationError(message);
-        setInsightMessage(message);
+        showToast(validationToast(message));
         return null;
       }
 
@@ -679,11 +746,11 @@ export function TdmCanvasInner() {
         }));
       }
       setCreationError(undefined);
-      setInsightMessage(`${title} foi adicionado em ${TDM_STAGE_LABELS[stage].toLowerCase()}.`);
+      showToast(nodeAddedToast(title, stage));
       bumpViewportReset();
       return createdNode;
     },
-    [bumpViewportReset, clearEditFormState, creationDrafts, setNodes, stageCounts]
+    [bumpViewportReset, clearEditFormState, creationDrafts, setNodes, showToast, stageCounts]
   );
 
   const handleCreateNode = useCallback(() => {
@@ -710,12 +777,12 @@ export function TdmCanvasInner() {
     if (!title) {
       const message = 'Dê um nome para este bloco antes de adicioná-lo ao canvas.';
       setEditError(message);
-      setInsightMessage(message);
+      showToast(validationToast(message));
       return;
     }
 
     updateNodeById(selectedNode.id, editDraft);
-  }, [editDraft, selectedNode, updateNodeById]);
+  }, [editDraft, selectedNode, showToast, updateNodeById]);
 
   const handleCreateAccordionOpenChange = useCallback((open: boolean) => {
     setIsCreateAccordionOpen(open);
@@ -762,14 +829,18 @@ export function TdmCanvasInner() {
       }
 
       if (stageCreation === 'ready-to-connect' || stage !== stageCreation) {
-        setInsightMessage('Arraste apenas o bloco da etapa atual para manter a ordem da teoria.');
+        showToast({
+          status: 'warning',
+          title: 'Etapa incorreta',
+          description: 'Arraste apenas o bloco da etapa atual para manter a ordem da teoria.'
+        });
         return;
       }
 
       const position = screenToFlowPosition({ x: event.clientX, y: event.clientY });
       createNodeFromDraft({ stage, x: position.x, y: position.y, useQuickDraft: true });
     },
-    [createNodeFromDraft, screenToFlowPosition, stageCreation]
+    [createNodeFromDraft, screenToFlowPosition, showToast, stageCreation]
   );
 
   const isValidConnection: IsValidConnection<TdmEdgeModel> = useCallback(
@@ -804,7 +875,7 @@ export function TdmCanvasInner() {
       }
 
       if (!isAllowedTdmConnection(sourceNode.stage, targetNode.stage)) {
-        setInsightMessage(getTdmConnectionMessage(sourceNode.stage, targetNode.stage));
+        showToast(connectionToast(sourceNode.stage, targetNode.stage));
         return;
       }
 
@@ -819,9 +890,9 @@ export function TdmCanvasInner() {
       setSelectedNodeId(null);
       setToolbarNodeId(null);
       setSelectedEdgeId(nextEdge.id);
-      setInsightMessage('Conexão válida. Agora você pode explicar o vínculo entre esses blocos.');
+      showToast(connectionToast(sourceNode.stage, targetNode.stage));
     },
-    [nodes, setEdges]
+    [nodes, setEdges, showToast]
   );
 
   const handleCloseToolbar = useCallback(() => {
@@ -847,8 +918,7 @@ export function TdmCanvasInner() {
     setMarkerDraft('');
     setCreationError(undefined);
     setEditError(undefined);
-    setInsightMessage(stageCreation === 'ready-to-connect' ? getStageCreationCopy('ready-to-connect') : getStageCreationCopy(stageCreation));
-  }, [closeToolbarSelection, editingNodeId, stageCreation]);
+  }, [closeToolbarSelection, editingNodeId]);
 
   const handleFlowBackgroundClick = useCallback(
     (event: MouseEvent<HTMLDivElement>) => {
@@ -885,9 +955,9 @@ export function TdmCanvasInner() {
       syncEditDraftFromNode(node);
       setIsEditAccordionOpen(true);
       setIsCreateAccordionOpen(false);
-      setInsightMessage(NODE_SELECTION_HINTS[node.stage]);
+      showToast(nodeSelectionToast(NODE_SELECTION_HINTS[node.stage]));
     },
-    [nodes, syncEditDraftFromNode]
+    [nodes, showToast, syncEditDraftFromNode]
   );
 
   const handleNodeClick = useCallback(
@@ -1036,6 +1106,7 @@ export function TdmCanvasInner() {
         <SidebarToggleIcon direction={isSidebarOpen ? 'right' : 'left'} className={styles.sidebarToggleSvg} />
       </button>
       <div className={styles.canvasArea}>
+        <TdmToastViewport toast={activeToast} onClose={closeToast} />
         <div className={styles.flowFrame} onClick={handleFlowBackgroundClick}>
           <TdmNodeInteractionProvider
             value={{
@@ -1060,7 +1131,11 @@ export function TdmCanvasInner() {
               onDragOver={handleDragOver}
               onDrop={handleDrop}
               onNodeDragStop={() => {
-                setInsightMessage('Bloco movido.');
+                showToast({
+                  status: 'info',
+                  title: 'Bloco reposicionado',
+                  description: 'O bloco foi movido no canvas.'
+                });
               }}
               onNodeDoubleClick={(_, node) => openNodeEditor(node.id)}
               onNodeClick={handleNodeClick}
@@ -1074,7 +1149,12 @@ export function TdmCanvasInner() {
                 setEditDraft({ ...EMPTY_DRAFT });
                 setIsEditAccordionOpen(false);
                 setMarkerDraft(edge.markerText ?? (edge.markerType === 'risk' ? 'Risco' : 'Hipótese'));
-                setInsightMessage(edge.data?.validationMessage ?? 'Conexão válida. Agora você pode explicar o vínculo entre esses blocos.');
+                showToast({
+                  status: 'info',
+                  title: 'Conexão selecionada',
+                  description:
+                    edge.data?.validationMessage ?? 'Conexão válida. Agora você pode explicar o vínculo entre esses blocos.'
+                });
               }}
               onPaneClick={handlePaneClick}
               nodesDraggable
@@ -1115,21 +1195,6 @@ export function TdmCanvasInner() {
               />
             </ReactFlow>
           </TdmNodeInteractionProvider>
-          {showExampleConfirm ? (
-            <div className={styles.confirmOverlay} role="dialog" aria-modal="true" aria-label="Confirmar carregamento do exemplo">
-              <div className={styles.confirmCard}>
-                <p className={styles.confirmTitle}>Carregar o exemplo vai substituir os blocos atuais. Deseja continuar?</p>
-                <div className={styles.confirmActions}>
-                  <button type="button" className={styles.secondaryAction} onClick={() => setShowExampleConfirm(false)}>
-                    Cancelar
-                  </button>
-                  <button type="button" className={styles.primaryAction} onClick={replaceCanvasWithExample}>
-                    Substituir pelo exemplo
-                  </button>
-                </div>
-              </div>
-            </div>
-          ) : null}
         </div>
       </div>
       <TdmSidebar
@@ -1139,7 +1204,6 @@ export function TdmCanvasInner() {
         onTheoryNameChange={setTheoryTitle}
         stageCreation={stageCreation}
         stageCounts={stageCounts}
-        insightMessage={insightMessage}
         actionLabel={stageCreation === 'ready-to-connect' ? undefined : getStageCreationActionLabel(stageCreation)}
         onOrganize={centerNodes}
         advanceLabel={stageCreation === 'ready-to-connect' ? undefined : getStageCreationAdvanceLabel()}
@@ -1147,8 +1211,8 @@ export function TdmCanvasInner() {
         canAdvance={canAdvance}
         canViewTdmResult={canGenerateResult}
         resultAvailabilityMessage={resultAvailabilityMessage}
-        onLoadExample={requestLoadExample}
-        onPreviewExample={previewExample}
+        onViewExampleCanvas={viewExampleCanvas}
+        onViewExampleResult={viewExampleResult}
         canRestoreTheory={canRestoreTheory}
         onRestoreTheory={restorePreviousTheory}
         onViewResult={openResultView}

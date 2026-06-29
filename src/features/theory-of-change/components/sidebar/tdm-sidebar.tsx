@@ -228,15 +228,41 @@ function StageDragIcon() {
   );
 }
 
-function AccordionChevron({ isOpen }: { isOpen: boolean }) {
+function AccordionChevron({
+  isOpen,
+  className
+}: {
+  isOpen: boolean;
+  className?: string;
+}) {
   return (
     <svg
       aria-hidden="true"
-      viewBox="0 0 16 16"
-      className={[styles.sidebarAccordionChevron, isOpen ? styles.sidebarAccordionChevronOpen : ''].join(' ')}
+      viewBox="0 0 24 24"
+      className={[
+        styles.sidebarAccordionChevron,
+        isOpen ? styles.sidebarAccordionChevronOpen : '',
+        className
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      fill="none"
     >
-      <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
+  );
+}
+
+function TimelineChevron({ isOpen }: { isOpen: boolean }) {
+  return (
+    <span
+      className={[styles.timelineChevronButton, isOpen ? styles.timelineChevronOpen : ''].filter(Boolean).join(' ')}
+      aria-hidden="true"
+    >
+      <svg aria-hidden="true" viewBox="0 0 24 24" className={styles.timelineChevronIcon} fill="none">
+        <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </span>
   );
 }
 
@@ -266,7 +292,7 @@ function ClearFieldButton({ ariaLabel, onClear }: { ariaLabel: string; onClear: 
 
 function DuplicateIcon() {
   return (
-    <svg aria-hidden="true" viewBox="0 0 16 16" className={styles.actionButtonIcon}>
+    <svg aria-hidden="true" viewBox="0 0 16 16" className={styles.sidebarCtaIcon}>
       <rect x="5.5" y="5.5" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.35" />
       <path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5" fill="none" stroke="currentColor" strokeWidth="1.35" />
     </svg>
@@ -275,7 +301,7 @@ function DuplicateIcon() {
 
 function TrashIcon() {
   return (
-    <svg aria-hidden="true" viewBox="0 0 16 16" className={styles.actionButtonIcon}>
+    <svg aria-hidden="true" viewBox="0 0 16 16" className={styles.sidebarCtaIcon}>
       <path d="M3.5 4.5h9M6 4.5V3.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
       <path d="M4.5 4.5l.5 7.5a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1l.5-7.5" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
@@ -284,11 +310,67 @@ function TrashIcon() {
 
 function ColumnsAlignIcon() {
   return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" className={styles.canvasOrganizationButtonIcon} fill="none">
+    <svg viewBox="0 0 32 32" aria-hidden="true" className={styles.sidebarCtaIcon} fill="none">
       <rect x="6" y="5" width="20" height="22" rx="6" stroke="currentColor" strokeWidth="2.2" />
       <path d="M12 10V22" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
       <path d="M16 10V22" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
       <path d="M20 10V22" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function PencilIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 16 16" className={styles.editTheoryTitleIcon}>
+      <path
+        d="M10.5 2.5 13.5 5.5 5.5 13.5H2.5V10.5L10.5 2.5Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.35"
+        strokeLinejoin="round"
+      />
+      <path d="M9 4 12 7" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function ClearTitleIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 12 12">
+      <path d="M3 3l6 6M9 3 3 9" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function EyeOpenIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 16 16" className={styles.sidebarCtaIcon}>
+      <path
+        d="M1.5 8s2.5-4.5 6.5-4.5S14.5 8 14.5 8s-2.5 4.5-6.5 4.5S1.5 8 1.5 8Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.35"
+        strokeLinejoin="round"
+      />
+      <circle cx="8" cy="8" r="2" fill="none" stroke="currentColor" strokeWidth="1.35" />
+    </svg>
+  );
+}
+
+function ResultTrendIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 16 16" className={styles.sidebarCtaIcon}>
+      <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" strokeWidth="1.25" />
+      <path d="M5 10V7.5M8 10V6M11 10V5" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
+      <path d="M4.5 5.5 8 3.5 11.5 5.5" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function BackArrowIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 16 16" className={styles.sidebarCtaIcon}>
+      <path d="M10 3.5 5.5 8 10 12.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -428,7 +510,7 @@ function CanvasOrganizationAccordion({
           <CanvasAlignmentPreview stageCounts={stageCounts} />
           <button
             type="button"
-            className={styles.canvasOrganizationButton}
+            className={`${styles.sidebarCta} ${styles.sidebarCtaSecondary}`}
             aria-label="Centralizar colunas do canvas"
             onClick={() => onOrganize?.()}
           >
@@ -447,6 +529,7 @@ function SidebarAccordion({
   isOpen,
   onToggle,
   stage,
+  variant = 'default',
   children
 }: {
   id: string;
@@ -454,6 +537,7 @@ function SidebarAccordion({
   isOpen: boolean;
   onToggle: () => void;
   stage: TdmStage;
+  variant?: 'default' | 'block';
   children: ReactNode;
 }) {
   const theme = getTdmStageTheme(stage);
@@ -472,7 +556,10 @@ function SidebarAccordion({
     >
       <button
         type="button"
-        className={styles.sidebarAccordionHeader}
+        className={[
+          styles.sidebarAccordionHeader,
+          variant === 'block' ? styles.blockAccordionHeader : ''
+        ].join(' ')}
         aria-expanded={isOpen}
         aria-controls={contentId}
         onClick={onToggle}
@@ -583,7 +670,7 @@ function CreateBlockForm({
     <div className={styles.sidebarForm}>
       {errorMessage ? <p className={styles.errorMessage}>{errorMessage}</p> : null}
       <BlockFormFields draft={draft} onDraftChange={onDraftChange} />
-      <button type="button" className={styles.primaryStageButton} onClick={onSubmit}>
+      <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaStage}`} onClick={onSubmit}>
         {STAGE_CREATE_LABELS[stage]}
       </button>
     </div>
@@ -615,15 +702,15 @@ function EditBlockForm({
         <>
           {errorMessage ? <p className={styles.errorMessage}>{errorMessage}</p> : null}
           <BlockFormFields draft={draft} onDraftChange={onDraftChange} />
-          <button type="button" className={styles.primaryStageButton} onClick={onSubmit}>
+          <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaStage}`} onClick={onSubmit}>
             Salvar alterações
           </button>
-          <div className={styles.editSecondaryActions}>
-            <button type="button" className={styles.secondaryActionButton} onClick={onDuplicate}>
+          <div className={styles.sidebarCtaRow}>
+            <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaSecondary}`} onClick={onDuplicate}>
               <span>Duplicar</span>
               <DuplicateIcon />
             </button>
-            <button type="button" className={styles.dangerActionButton} onClick={onDelete}>
+            <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaDanger}`} onClick={onDelete}>
               <span>Deletar</span>
               <TrashIcon />
             </button>
@@ -649,7 +736,6 @@ export function TdmSidebar({
   onTheoryNameChange,
   stageCreation,
   stageCounts,
-  insightMessage,
   actionLabel,
   onOrganize,
   advanceLabel,
@@ -657,8 +743,8 @@ export function TdmSidebar({
   canAdvance,
   canViewTdmResult,
   resultAvailabilityMessage,
-  onLoadExample,
-  onPreviewExample,
+  onViewExampleCanvas,
+  onViewExampleResult,
   canRestoreTheory,
   onRestoreTheory,
   onViewResult,
@@ -672,7 +758,6 @@ export function TdmSidebar({
   onTheoryNameChange: (nextValue: string) => void;
   stageCreation: StageCreation;
   stageCounts: Record<TdmStage, number>;
-  insightMessage?: string;
   actionLabel?: string;
   onOrganize?: () => void;
   advanceLabel?: string;
@@ -680,8 +765,8 @@ export function TdmSidebar({
   canAdvance?: boolean;
   canViewTdmResult: boolean;
   resultAvailabilityMessage: string;
-  onLoadExample: () => void;
-  onPreviewExample: () => void;
+  onViewExampleCanvas: () => void;
+  onViewExampleResult: () => void;
   canRestoreTheory: boolean;
   onRestoreTheory: () => void;
   onViewResult: () => void;
@@ -689,22 +774,28 @@ export function TdmSidebar({
   blockForms?: TdmBlockForms | null;
   onStageDragStart?: (event: DragEvent<HTMLElement>, stage: TdmStage) => void;
 }) {
-  const [isEditingName, setIsEditingName] = useState(false);
-  const [draftName, setDraftName] = useState(theoryName);
+  const [isEditingTheoryTitle, setIsEditingTheoryTitle] = useState(false);
+  const [draftTheoryTitle, setDraftTheoryTitle] = useState(theoryName);
   const [openStage, setOpenStage] = useState<TdmStage>(stageCreation === 'ready-to-connect' ? 'outcome' : stageCreation);
   const createAccordionId = useId();
   const editAccordionId = useId();
   const canvasOrganizationAccordionId = useId();
 
-  const commitTheoryName = () => {
-    const nextName = draftName.trim() || theoryName;
+  const commitTheoryTitle = () => {
+    const nextName = draftTheoryTitle.trim() || theoryName;
     if (nextName !== theoryName) onTheoryNameChange(nextName);
-    setIsEditingName(false);
+    setDraftTheoryTitle(nextName);
+    setIsEditingTheoryTitle(false);
   };
 
-  const cancelTheoryName = () => {
-    setDraftName(theoryName);
-    setIsEditingName(false);
+  const cancelTheoryTitle = () => {
+    setDraftTheoryTitle(theoryName);
+    setIsEditingTheoryTitle(false);
+  };
+
+  const handleStartEditingTheoryTitle = () => {
+    setDraftTheoryTitle(theoryName);
+    setIsEditingTheoryTitle(true);
   };
 
   const currentGuide = STAGE_CREATION_HINTS[stageCreation];
@@ -733,42 +824,54 @@ export function TdmSidebar({
         <header className={styles.header}>
           <div className={styles.headerCopy}>
             <p className={styles.kicker}>Teoria da mudança</p>
-            <div className={styles.titleRow}>
-              {isEditingName ? (
-                <input
-                  aria-label="Nome da teoria"
-                  className={styles.titleInput}
-                  type="text"
-                  value={draftName}
-                  placeholder="Nova teoria da mudança"
-                  onChange={(event) => setDraftName(event.target.value)}
-                  onBlur={commitTheoryName}
-                  onKeyDown={(event) => {
-                    if (event.key === 'Enter') {
-                      event.preventDefault();
-                      commitTheoryName();
-                    }
-                    if (event.key === 'Escape') {
-                      event.preventDefault();
-                      cancelTheoryName();
-                    }
-                  }}
-                  autoFocus
-                />
+            <div className={styles.sidebarTitleRow}>
+              {isEditingTheoryTitle ? (
+                <div className={styles.theoryTitleInputWrap}>
+                  <input
+                    aria-label="Editar nome da teoria"
+                    className={styles.titleInput}
+                    type="text"
+                    value={draftTheoryTitle}
+                    placeholder="Nova teoria da mudança"
+                    onChange={(event) => setDraftTheoryTitle(event.target.value)}
+                    onBlur={commitTheoryTitle}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter') {
+                        event.preventDefault();
+                        commitTheoryTitle();
+                      }
+                      if (event.key === 'Escape') {
+                        event.preventDefault();
+                        cancelTheoryTitle();
+                      }
+                    }}
+                    autoFocus
+                  />
+                  {draftTheoryTitle ? (
+                    <button
+                      type="button"
+                      className={styles.clearTheoryTitleButton}
+                      aria-label="Limpar título da teoria"
+                      onMouseDown={(event) => event.preventDefault()}
+                      onClick={() => setDraftTheoryTitle('')}
+                    >
+                      <ClearTitleIcon />
+                    </button>
+                  ) : null}
+                </div>
               ) : (
-                <button
-                  type="button"
-                  className={styles.titleButton}
-                  onClick={() => {
-                    setDraftName(theoryName);
-                    setIsEditingName(true);
-                  }}
-                  aria-label="Editar nome da teoria"
-                  title="Editar nome da teoria"
-                >
+                <>
                   <h2 className={styles.title}>{theoryName}</h2>
-                  <span className={styles.titleAction}>Editar nome</span>
-                </button>
+                  <button
+                    type="button"
+                    className={styles.editTheoryTitleButton}
+                    aria-label="Alterar título da teoria"
+                    onClick={handleStartEditingTheoryTitle}
+                  >
+                    <PencilIcon />
+                    <span className={styles.editTheoryTitleTooltip}>Alterar título da teoria</span>
+                  </button>
+                </>
               )}
             </div>
             <p className={styles.headerDescription}>Construa a cadeia em ordem e conecte os blocos quando a base estiver pronta.</p>
@@ -785,11 +888,13 @@ export function TdmSidebar({
                 const guide = STAGE_GUIDE[stage];
                 const theme = getTdmStageTheme(stage);
                 const status = getStageStatus(stage, stageCreation, index);
+                const isCurrentStage = stageCreation !== 'ready-to-connect' && stageCreation === stage;
+                const isStageExpanded = openStage === stage || isCurrentStage;
 
                 return (
                   <details
                     key={stage}
-                    open={openStage === stage || stageCreation === stage}
+                    open={isStageExpanded}
                     className={[styles.stageAccordion, styles[`stage${status}`] as string].join(' ')}
                     style={
                       {
@@ -798,16 +903,29 @@ export function TdmSidebar({
                       } as CSSProperties
                     }
                     onToggle={(event) => {
-                      if (event.currentTarget.open) setOpenStage(stage);
+                      if (event.currentTarget.open) {
+                        setOpenStage(stage);
+                        return;
+                      }
+
+                      if (isCurrentStage) {
+                        setOpenStage(stage);
+                        return;
+                      }
+
+                      if (openStage === stage) {
+                        setOpenStage(stageCreation !== 'ready-to-connect' ? stageCreation : 'outcome');
+                      }
                     }}
                   >
                     <summary className={styles.stageSummary}>
                       <span className={styles.stageDot}>{status === 'completed' ? '✓' : index + 1}</span>
-                      <span>
+                      <span className={styles.stageSummaryCopy}>
                         <strong>{guide.title}</strong>
                         <small>{guide.summary}</small>
                       </span>
                       <span className={styles.stageCount}>{stageCounts[stage]}</span>
+                      <TimelineChevron isOpen={isStageExpanded} />
                     </summary>
                     <div className={styles.stageBody}>
                       <p>{guide.technical}</p>
@@ -821,7 +939,12 @@ export function TdmSidebar({
                 );
               })}
             </div>
-            <button type="button" className={styles.primaryAction} disabled={!canAdvance} onClick={onAdvance}>
+            <button
+              type="button"
+              className={`${styles.sidebarCta} ${styles.sidebarCtaPrimary}`}
+              disabled={!canAdvance}
+              onClick={onAdvance}
+            >
               {advanceLabel ?? 'Avançar para próxima etapa'}
             </button>
             {!canAdvance ? <p className={styles.sectionHint}>A etapa atual precisa de pelo menos 1 bloco para avançar.</p> : null}
@@ -842,7 +965,7 @@ export function TdmSidebar({
             <p className={styles.sectionKicker}>Ações da etapa</p>
             {canUseStageActions && dragStage ? (
               <>
-                <p className={styles.sectionText}>Crie um novo bloco da etapa atual. Arraste este card para o canvas e solte-o na posição desejada. Personalize o conteúdo clicando no botão de editar do card ou através do formulário editar na sidebar.</p>
+                <p className={styles.sectionText}>Crie um novo bloco arrastando esse card para o canvas e solte-o na posição desejada. Personalize o conteúdo clicando no card ou através do formulário logo abaixo.</p>
                 <button
                   type="button"
                   className={styles.dragCard}
@@ -852,7 +975,7 @@ export function TdmSidebar({
                   <span className={styles.dragIcon}><StageDragIcon /></span>
                   <span>
                     <strong>{actionLabel ?? 'Adicionar bloco'}</strong>
-                    <small>Arraste, solte para criar este bloco.</small>
+                    <small>Arraste, solte e crie.</small>
                   </span>
                 </button>
               </>
@@ -869,39 +992,47 @@ export function TdmSidebar({
 
           {blockForms ? (
             <section className={[styles.card, styles.blockFormsCard].join(' ')}>
-              <SidebarAccordion
-                id={createAccordionId}
-                title={STAGE_CREATE_LABELS[blockForms.stage]}
-                isOpen={blockForms.create.isOpen}
-                onToggle={handleCreateAccordionToggle}
-                stage={blockForms.stage}
-              >
-                <CreateBlockForm
+              <div className={styles.blockFormGroup}>
+                <p className={styles.blockFormGroupTitle}>Criar bloco</p>
+                <SidebarAccordion
+                  id={createAccordionId}
+                  title={STAGE_CREATE_LABELS[blockForms.stage]}
+                  isOpen={blockForms.create.isOpen}
+                  onToggle={handleCreateAccordionToggle}
                   stage={blockForms.stage}
-                  draft={blockForms.create.draft}
-                  errorMessage={blockForms.create.errorMessage}
-                  onDraftChange={blockForms.create.onDraftChange}
-                  onSubmit={blockForms.create.onSubmit}
-                />
-              </SidebarAccordion>
+                  variant="block"
+                >
+                  <CreateBlockForm
+                    stage={blockForms.stage}
+                    draft={blockForms.create.draft}
+                    errorMessage={blockForms.create.errorMessage}
+                    onDraftChange={blockForms.create.onDraftChange}
+                    onSubmit={blockForms.create.onSubmit}
+                  />
+                </SidebarAccordion>
+              </div>
 
-              <SidebarAccordion
-                id={editAccordionId}
-                title={editAccordionTitle}
-                isOpen={blockForms.edit.isOpen}
-                onToggle={handleEditAccordionToggle}
-                stage={editStage}
-              >
-                <EditBlockForm
-                  draft={blockForms.edit.draft}
-                  errorMessage={blockForms.edit.errorMessage}
-                  hasSelection={blockForms.edit.selectedStage !== null}
-                  onDraftChange={blockForms.edit.onDraftChange}
-                  onSubmit={blockForms.edit.onSubmit}
-                  onDuplicate={blockForms.edit.onDuplicate}
-                  onDelete={blockForms.edit.onDelete}
-                />
-              </SidebarAccordion>
+              <div className={styles.blockFormGroup}>
+                <p className={styles.blockFormGroupTitle}>Editar bloco</p>
+                <SidebarAccordion
+                  id={editAccordionId}
+                  title={editAccordionTitle}
+                  isOpen={blockForms.edit.isOpen}
+                  onToggle={handleEditAccordionToggle}
+                  stage={editStage}
+                  variant="block"
+                >
+                  <EditBlockForm
+                    draft={blockForms.edit.draft}
+                    errorMessage={blockForms.edit.errorMessage}
+                    hasSelection={blockForms.edit.selectedStage !== null}
+                    onDraftChange={blockForms.edit.onDraftChange}
+                    onSubmit={blockForms.edit.onSubmit}
+                    onDuplicate={blockForms.edit.onDuplicate}
+                    onDelete={blockForms.edit.onDelete}
+                  />
+                </SidebarAccordion>
+              </div>
             </section>
           ) : null}
 
@@ -925,16 +1056,28 @@ export function TdmSidebar({
                   ) : null}
                   <div className={styles.contextActions}>
                     {context.edge.canAddRisk ? (
-                      <button type="button" className={styles.secondaryAction} onClick={context.onAddRisk}>
+                      <button
+                        type="button"
+                        className={`${styles.sidebarCta} ${styles.sidebarCtaSecondary}`}
+                        onClick={context.onAddRisk}
+                      >
                         Adicionar risco
                       </button>
                     ) : null}
                     {context.edge.canAddHypothesis ? (
-                      <button type="button" className={styles.secondaryAction} onClick={context.onAddHypothesis}>
+                      <button
+                        type="button"
+                        className={`${styles.sidebarCta} ${styles.sidebarCtaSecondary}`}
+                        onClick={context.onAddHypothesis}
+                      >
                         Adicionar hipótese
                       </button>
                     ) : null}
-                    <button type="button" className={styles.secondaryAction} onClick={context.onDelete}>
+                    <button
+                      type="button"
+                      className={`${styles.sidebarCta} ${styles.sidebarCtaDanger}`}
+                      onClick={context.onDelete}
+                    >
                       Excluir conexão
                     </button>
                   </div>
@@ -956,20 +1099,29 @@ export function TdmSidebar({
 
           <section className={styles.card}>
             <p className={styles.sectionKicker}>Aprender com exemplo</p>
-            <p className={styles.sectionText}>Veja uma teoria pronta sem perder seu trabalho ou substitua o canvas com confirmação.</p>
-            <div className={styles.exampleActions}>
-              <button type="button" className={styles.secondaryAction} onClick={onPreviewExample}>
-                Visualizar exemplo
+            <p className={styles.sectionText}>
+              Veja o exemplo de uma teoria pronta no canvas e o seu resultado após a finalização.
+            </p>
+            <div className={styles.sidebarCtaRow}>
+              <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaSecondary}`} onClick={onViewExampleCanvas}>
+                <EyeOpenIcon />
+                <span>Canvas</span>
               </button>
-              <button type="button" className={styles.secondaryAction} onClick={onLoadExample}>
-                Carregar exemplo
+              <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaSecondary}`} onClick={onViewExampleResult}>
+                <ResultTrendIcon />
+                <span>Resultado</span>
               </button>
-              {canRestoreTheory ? (
-                <button type="button" className={styles.secondaryAction} onClick={onRestoreTheory}>
-                  Voltar para minha teoria
-                </button>
-              ) : null}
             </div>
+            {canRestoreTheory ? (
+              <button
+                type="button"
+                className={`${styles.sidebarCta} ${styles.sidebarCtaGhost} ${styles.sidebarCtaSpaced}`}
+                onClick={onRestoreTheory}
+              >
+                <BackArrowIcon />
+                <span>Voltar para minha teoria</span>
+              </button>
+            ) : null}
           </section>
 
           <section className={styles.card}>
@@ -977,18 +1129,13 @@ export function TdmSidebar({
             {canViewTdmResult ? (
               <>
                 <p className={styles.sectionText}>Sua teoria está pronta para ser visualizada.</p>
-                <button type="button" className={styles.primaryAction} onClick={onViewResult}>
+                <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaPrimary}`} onClick={onViewResult}>
                   Visualizar resultado
                 </button>
               </>
             ) : (
               <p className={styles.sectionHint}>{resultAvailabilityMessage}</p>
             )}
-          </section>
-
-          <section className={styles.card}>
-            <p className={styles.sectionKicker}>Mensagem do fluxo</p>
-            <p className={styles.sectionText}>{insightMessage}</p>
           </section>
         </div>
       </Surface>
@@ -1027,10 +1174,10 @@ function MarkerBlock({
         </div>
       </label>
       <div className={styles.contextActions}>
-        <button type="button" className={styles.primaryAction} onClick={onSubmit}>
+        <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaPrimary}`} onClick={onSubmit}>
           Salvar marcador
         </button>
-        <button type="button" className={styles.secondaryAction} onClick={onDelete}>
+        <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaDanger}`} onClick={onDelete}>
           Excluir marcador
         </button>
       </div>

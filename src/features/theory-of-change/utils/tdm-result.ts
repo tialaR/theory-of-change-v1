@@ -41,7 +41,7 @@ export function getTdmResultAvailabilityMessage(nodes: TdmNode[], edges: TdmEdge
 
   const hasAllStages = Object.values(stageCounts).every((count) => count > 0);
   if (!hasAllStages) {
-    return 'Crie pelo menos um bloco em cada etapa antes de visualizar a teoria.';
+    return 'Crie pelo menos um bloco em cada etapa para concluir e visualizar a teoria.';
   }
 
   const hasInputToActivityConnection = edges.some((edge) => edge.sourceStage === 'input' && edge.targetStage === 'activity');

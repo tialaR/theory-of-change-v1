@@ -12,15 +12,18 @@
 
 .sidebarOpen
   grid-template-columns: minmax(0, 1fr) $sidebar-width
+  column-gap: $sidebar-gap
 
 .sidebarClosed
   grid-template-columns: minmax(0, 1fr) 0px
+  column-gap: 0
 
 .canvasArea
   position: relative
   width: 100%
   min-width: 0
   height: 100%
+  padding-right: clamp(1rem, 1.25vw, 1.25rem)
 
 .flowFrame
   position: absolute
