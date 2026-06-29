@@ -1,12 +1,11 @@
 @use '../../../../shared/styles/tokens' as *
 
-$node-compact-width: 6.4rem
-$node-compact-min-height: 2.6rem
-$node-compact-padding-y: 0.3rem
-$node-compact-padding-x: 0.4rem
-$node-compact-radius: 0.55rem
-$node-edit-width: 15.5rem
-
+$node-compact-width: $node-compact-width-fluid
+$node-compact-min-height: $node-compact-min-height-fluid
+$node-compact-padding-y: $node-compact-padding-y-fluid
+$node-compact-padding-x: $node-compact-padding-x-fluid
+$node-compact-radius: $node-compact-radius-fluid
+$inline-editor-width: $node-edit-width
 .nodeWrapper,
 .node
   position: relative
@@ -49,9 +48,9 @@ $node-edit-width: 15.5rem
   box-shadow: 0 0 0 0.0625rem var(--node-border, rgba(167, 139, 250, 0.42)), 0 0.6rem 1.4rem rgba(0, 0, 0, 0.28)
 
 .editing
-  width: $node-edit-width
-  min-width: $node-edit-width
-  max-width: $node-edit-width
+  width: $inline-editor-width
+  min-width: $inline-editor-width
+  max-width: $inline-editor-width
   padding: 0
   overflow: visible
 
@@ -63,7 +62,7 @@ $node-edit-width: 15.5rem
 .compactBody
   z-index: 1
   display: grid
-  gap: 0.1rem
+  gap: clamp(0.34rem, 0.38vw, 0.46rem)
 
 .headerRow
   position: relative
@@ -84,58 +83,62 @@ $node-edit-width: 15.5rem
   text-transform: uppercase
 
 .compactBody .stage
-  font-size: 0.3rem
+  font-size: clamp(0.68rem, 0.72vw, 0.78rem)
 
 .nodeEditForm
   position: relative
   z-index: 1
   box-sizing: border-box
-  width: $node-edit-width
-  max-width: $node-edit-width
-  max-height: min(28rem, calc(100vh - 6rem))
-  padding: 0.75rem
-  border-radius: 0.875rem
-  overflow: auto
+  display: grid
+  gap: clamp(0.52rem, 0.58vw, 0.68rem)
+  width: $inline-editor-width
+  max-width: $inline-editor-width
+  max-height: min(31rem, calc(100vh - 5rem))
+  padding: $node-edit-padding
+  border-radius: $node-edit-radius
+  overflow: hidden
 
 .nodeEditStage
-  margin: 0 0 0.45rem
+  margin: 0
   color: var(--node-accent, #a78bfa)
-  font-size: 0.55rem
-  font-weight: 700
+  font-size: clamp(0.58rem, 0.62vw, 0.7rem)
+  font-weight: 760
   line-height: 1
-  letter-spacing: 0.16em
+  letter-spacing: 0.17em
   text-transform: uppercase
 
 .nodeEditFields
   display: grid
-  gap: 0.5rem
+  gap: clamp(0.48rem, 0.56vw, 0.62rem)
 
 .nodeEditField
   display: grid
-  gap: 0.25rem
+  gap: clamp(0.25rem, 0.28vw, 0.32rem)
+  min-width: 0
 
 .nodeEditLabel
-  margin: 0 0 0.25rem
+  margin: 0
   color: rgba(245, 247, 251, 0.58)
-  font-size: 0.48rem
-  font-weight: 600
+  font-size: clamp(0.55rem, 0.58vw, 0.64rem)
+  font-weight: 650
   line-height: 1
   letter-spacing: 0.14em
   text-transform: uppercase
 
 .nodeEditFieldControl
   position: relative
+  min-width: 0
 
 .nodeEditInput,
 .nodeEditTextarea
   width: 100%
   border: 0.0625rem solid rgba(255, 255, 255, 0.10)
-  border-radius: 0.625rem
+  border-radius: clamp(0.54rem, 0.56vw, 0.66rem)
   background: rgba(4, 7, 12, 0.72)
   color: rgba(245, 247, 251, 0.95)
-  font-size: 0.7rem
+  font-size: clamp(0.78rem, 0.82vw, 0.9rem)
   font-weight: 400
-  line-height: 1.3
+  line-height: 1.32
   outline: none
   box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.035)
 
@@ -147,23 +150,26 @@ $node-edit-width: 15.5rem
     box-shadow: 0 0 0 0.125rem var(--node-accent-soft, rgba(167, 139, 250, 0.12))
 
 .nodeEditInput
-  min-height: 2rem
-  padding: 0.55rem 1.8rem 0.55rem 0.7rem
+  min-height: $node-edit-field-height
+  padding: 0.6rem 2rem 0.6rem 0.78rem
 
 .nodeEditTextarea
-  min-height: 3rem
-  padding: 0.6rem 1.8rem 0.6rem 0.7rem
-  resize: vertical
+  min-height: $node-edit-textarea-height
+  max-height: $node-edit-textarea-height
+  padding: 0.68rem 2rem 0.68rem 0.78rem
+  resize: none
+  overflow: hidden
 
 .nodeEditClearButton
   position: absolute
-  top: 0.55rem
-  right: 0.55rem
+  top: 50%
+  right: 0.58rem
   display: inline-flex
   align-items: center
   justify-content: center
-  width: 1rem
-  height: 1rem
+  width: clamp(1rem, 1.05vw, 1.18rem)
+  height: clamp(1rem, 1.05vw, 1.18rem)
+  transform: translateY(-50%)
   padding: 0
   border: 0
   border-radius: 999rem
@@ -176,12 +182,12 @@ $node-edit-width: 15.5rem
   &:focus-visible
     color: rgba(245, 247, 251, 0.9)
     background: rgba(255, 255, 255, 0.055)
-    transform: translateY(-0.03125rem)
+    transform: translateY(-50%) scale(1.04)
     outline: none
 
 .nodeEditClearIcon
-  width: 0.7rem
-  height: 0.7rem
+  width: clamp(0.68rem, 0.72vw, 0.82rem)
+  height: clamp(0.68rem, 0.72vw, 0.82rem)
   display: block
 
 .nodeEditErrorMessage
@@ -197,23 +203,23 @@ $node-edit-width: 15.5rem
 .nodeEditActions
   display: flex
   width: 100%
-  gap: 0.5rem
-  margin-top: 0.65rem
+  gap: clamp(0.55rem, 0.62vw, 0.72rem)
+  margin-top: 0.12rem
 
 .nodeEditActionButton
   flex: 1
   min-width: 0
-  min-height: 2.1rem
+  min-height: $node-edit-button-height
   display: inline-flex
   align-items: center
   justify-content: center
-  padding: 0.6rem 0.75rem
+  padding: 0.62rem 0.78rem
   border: 0.0625rem solid rgba(255, 255, 255, 0.12)
   border-radius: 0.75rem
   background: rgba(255, 255, 255, 0.035)
   color: rgba(245, 247, 251, 0.92)
-  font-size: 0.68rem
-  font-weight: 560
+  font-size: clamp(0.68rem, 0.72vw, 0.78rem)
+  font-weight: 620
   line-height: 1
   letter-spacing: 0.08em
   text-transform: uppercase
@@ -256,7 +262,7 @@ $node-edit-width: 15.5rem
   -webkit-box-orient: vertical
 
 .compactBody .title
-  font-size: 0.5rem
+  font-size: clamp(0.95rem, 1vw, 1.08rem)
 
 .description
   position: relative
@@ -264,16 +270,16 @@ $node-edit-width: 15.5rem
   display: -webkit-box
   margin: 0.05rem 0 0
   color: $color-text-muted
-  font-size: 0.4rem
-  line-height: 1.24
+  font-size: clamp(0.76rem, 0.8vw, 0.86rem)
+  line-height: 1.32
   overflow: hidden
   -webkit-line-clamp: 2
   -webkit-box-orient: vertical
 
 .handle
   z-index: 2
-  width: 0.3rem
-  height: 0.3rem
+  width: clamp(0.56rem, 0.6vw, 0.68rem)
+  height: clamp(0.56rem, 0.6vw, 0.68rem)
   border-width: 0.075rem
   border-style: solid
   border-color: rgba(255, 255, 255, 0.58)
@@ -309,19 +315,20 @@ $node-edit-width: 15.5rem
 
 .nodeToolbar
   position: absolute
-  top: calc(-1.05rem - 0.75rem)
+  top: calc(-2.15rem - 0.72rem)
   left: 50%
   z-index: 999
   display: flex
   align-items: stretch
   width: max-content
-  height: 1.05rem
+  min-width: min(20rem, calc(100vw - 3rem))
+  height: 2.15rem
   overflow: hidden
   transform: translateX(-50%)
   border: 0.0625rem solid rgba(255, 255, 255, 0.06)
-  border-radius: 0.375rem
+  border-radius: 0.625rem
   background: #141318
-  box-shadow: 0 0.225rem 0.45rem rgba(0, 0, 0, 0.22), 0 0.075rem 0.15rem rgba(0, 0, 0, 0.28), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.07)
+  box-shadow: 0 0.45rem 0.9rem rgba(0, 0, 0, 0.24), 0 0.12rem 0.25rem rgba(0, 0, 0, 0.3), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.07)
   pointer-events: auto
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", Arial, sans-serif
   -webkit-font-smoothing: antialiased
@@ -331,18 +338,18 @@ $node-edit-width: 15.5rem
   display: inline-flex
   align-items: center
   justify-content: center
-  gap: 0.15rem
+  gap: 0.36rem
   height: 100%
   min-width: 0
-  padding: 0 0.3rem
+  padding: 0 0.84rem
   border: 0
   border-radius: 0
   background: none
   color: #e2e2e6
-  font-size: 0.27rem
-  font-weight: 300
+  font-size: clamp(0.62rem, 0.68vw, 0.72rem)
+  font-weight: 420
   line-height: 1
-  letter-spacing: -0.006rem
+  letter-spacing: 0.035em
   cursor: pointer
   appearance: none
   transition: color 0.16s, transform 0.16s, opacity 0.16s, font-weight 0.16s
@@ -380,8 +387,8 @@ $node-edit-width: 15.5rem
   display: inline-flex
   align-items: center
   justify-content: center
-  width: 0.42rem
-  height: 0.525rem
+  width: clamp(0.78rem, 0.84vw, 0.9rem)
+  height: clamp(0.78rem, 0.84vw, 0.9rem)
   flex: 0 0 auto
   color: rgba(191, 192, 199, 0.78)
   transition: color 160ms ease, transform 160ms ease, opacity 160ms ease
@@ -397,10 +404,10 @@ $node-edit-width: 15.5rem
 .nodeToolbarButton,
 .nodeToolbarButtonDanger
   text-transform: uppercase
-  letter-spacing: 0.04em
+  letter-spacing: 0.055em
 
 .nodeToolbarSvg,
 .nodeToolbarSvgClose
-  width: 0.42rem
-  height: 0.525rem
+  width: clamp(0.78rem, 0.84vw, 0.9rem)
+  height: clamp(0.78rem, 0.84vw, 0.9rem)
   display: block
