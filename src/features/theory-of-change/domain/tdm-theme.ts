@@ -11,32 +11,32 @@ export const TDM_STAGE_THEME: Record<
   }
 > = {
   input: {
-    accent: '#a78bfa',
-    accentSoft: 'rgba(167, 139, 250, 0.16)',
-    border: 'rgba(167, 139, 250, 0.42)',
-    glow: 'rgba(167, 139, 250, 0.28)',
-    surface: 'rgba(167, 139, 250, 0.08)'
+    accent: '#8B7CFF',
+    accentSoft: 'rgba(139, 124, 255, 0.18)',
+    border: 'rgba(139, 124, 255, 0.38)',
+    glow: 'rgba(139, 124, 255, 0.24)',
+    surface: 'rgba(139, 124, 255, 0.10)'
   },
   activity: {
-    accent: '#38bdf8',
-    accentSoft: 'rgba(56, 189, 248, 0.16)',
-    border: 'rgba(56, 189, 248, 0.42)',
-    glow: 'rgba(56, 189, 248, 0.26)',
-    surface: 'rgba(56, 189, 248, 0.08)'
+    accent: '#49B3FF',
+    accentSoft: 'rgba(73, 179, 255, 0.16)',
+    border: 'rgba(73, 179, 255, 0.34)',
+    glow: 'rgba(73, 179, 255, 0.22)',
+    surface: 'rgba(73, 179, 255, 0.09)'
   },
   output: {
-    accent: '#f472b6',
-    accentSoft: 'rgba(244, 114, 182, 0.16)',
-    border: 'rgba(244, 114, 182, 0.42)',
-    glow: 'rgba(244, 114, 182, 0.24)',
-    surface: 'rgba(244, 114, 182, 0.08)'
+    accent: '#F2A65A',
+    accentSoft: 'rgba(242, 166, 90, 0.16)',
+    border: 'rgba(242, 166, 90, 0.34)',
+    glow: 'rgba(242, 166, 90, 0.22)',
+    surface: 'rgba(242, 166, 90, 0.09)'
   },
   outcome: {
-    accent: '#34d399',
-    accentSoft: 'rgba(52, 211, 153, 0.16)',
-    border: 'rgba(52, 211, 153, 0.42)',
-    glow: 'rgba(52, 211, 153, 0.24)',
-    surface: 'rgba(52, 211, 153, 0.08)'
+    accent: '#37C893',
+    accentSoft: 'rgba(55, 200, 147, 0.16)',
+    border: 'rgba(55, 200, 147, 0.34)',
+    glow: 'rgba(55, 200, 147, 0.22)',
+    surface: 'rgba(55, 200, 147, 0.09)'
   }
 };
 
