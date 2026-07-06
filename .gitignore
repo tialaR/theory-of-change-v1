@@ -20,3 +20,4 @@ build
 .validation-screenshots
 .sidebar-polish-screenshots
 tsconfig.tsbuildinfo
+.migration-screenshots
