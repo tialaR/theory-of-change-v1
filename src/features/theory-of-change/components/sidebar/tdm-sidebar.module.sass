@@ -1,5 +1,32 @@
 @use '../../../../shared/styles/tokens' as *
 
+// ─── Sidebar premium noir glass mixins ───────────────────────────────────────
+
+=sidebar-glass-surface
+  position: relative
+  isolation: isolate
+  border: 0.0625rem solid rgba(255, 255, 255, 0.09)
+  background: radial-gradient(ellipse 130% 70% at 50% 0%, rgba(255, 255, 255, 0.05), transparent 52%), linear-gradient(178deg, rgba(26, 26, 28, 0.96), rgba(8, 8, 10, 0.99))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.07), 0 1rem 2.5rem rgba(0, 0, 0, 0.34)
+  overflow: hidden
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0
+    z-index: 0
+    border-radius: inherit
+    pointer-events: none
+    background: linear-gradient(128deg, rgba(255, 255, 255, 0.045) 0%, transparent 38%, transparent 62%, rgba(255, 255, 255, 0.02) 100%)
+
+=sidebar-inner-surface
+  border: 0.0625rem solid rgba(255, 255, 255, 0.07)
+  border-radius: 1rem
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.008))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04)
+
+// ─── Shell ───────────────────────────────────────────────────────────────────
+
 .sidebar
   position: relative
   z-index: 18
@@ -35,54 +62,35 @@
   border: 0
   border-radius: 0
   overflow: hidden
-  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04), transparent 32%), linear-gradient(180deg, rgba(11, 11, 11, 0.98), rgba(0, 0, 0, 0.99))
+  background: radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255, 255, 255, 0.035), transparent 42%), linear-gradient(180deg, rgba(9, 9, 11, 0.99), rgba(0, 0, 0, 1))
   box-shadow: none
-  backdrop-filter: blur($ds-blur-heavy) saturate(1.02)
-  -webkit-backdrop-filter: blur($ds-blur-heavy) saturate(1.02)
+  backdrop-filter: blur($ds-blur-heavy) saturate(1.04)
+  -webkit-backdrop-filter: blur($ds-blur-heavy) saturate(1.04)
 
   &::before
     content: ''
     position: absolute
     inset: 0
     pointer-events: none
-    background: radial-gradient(circle at 50% 6%, rgba(255, 255, 255, 0.04), transparent 20%)
-    opacity: 0.5
+    background: radial-gradient(ellipse 60% 24% at 50% 0%, rgba(255, 255, 255, 0.03), transparent 70%)
+    opacity: 0.65
 
 .header
   position: sticky
   top: 0
   z-index: 9
   flex: 0 0 auto
-  padding: 1.125rem calc(1.125rem + 0.375rem) 0.875rem 1.125rem
+  padding: 1rem calc(1rem + 0.375rem) 0.75rem 1rem
   background: transparent
   backdrop-filter: none
   -webkit-backdrop-filter: none
   transition: background 200ms ease, backdrop-filter 200ms ease, box-shadow 200ms ease
 
 .headerScrolled
-  background: linear-gradient(180deg, rgba(27, 27, 29, 0.82), rgba(27, 27, 29, 0.52))
-  backdrop-filter: blur(1.25rem) saturate(1.18)
-  -webkit-backdrop-filter: blur(1.25rem) saturate(1.18)
-  box-shadow: 0 0.75rem 1.75rem rgba(0, 0, 0, 0.2)
-
-.headerGlassMark
-  position: absolute
-  right: 1.125rem
-  top: 1.125rem
-  display: grid
-  place-items: center
-  width: 1.875rem
-  height: 1.875rem
-  border: 0.0625rem solid $ds-glass-stroke
-  border-radius: $ds-btn-radius
-  background: radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.12), transparent 52%), linear-gradient(180deg, rgba(37, 37, 37, 0.68), rgba(22, 22, 24, 0.82))
-  color: rgba(244, 244, 244, 0.52)
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08)
-  opacity: 0.82
-
-.premiumGlassGlyph
-  width: 1.05rem
-  height: 1.05rem
+  background: linear-gradient(180deg, rgba(18, 18, 20, 0.88), rgba(18, 18, 20, 0.55))
+  backdrop-filter: blur(1.125rem) saturate(1.2)
+  -webkit-backdrop-filter: blur(1.125rem) saturate(1.2)
+  box-shadow: 0 0.625rem 1.5rem rgba(0, 0, 0, 0.28)
 
 .headerCopy
   display: grid
@@ -91,145 +99,9 @@
   min-width: 0
   box-sizing: border-box
 
-.sidebarTitleRow
-  display: inline-flex
-  align-items: center
-  gap: 0.5rem
-  width: fit-content
-  min-width: 0
-
-.theoryTitleInputWrap
-  position: relative
-  display: flex
-  align-items: center
-  flex: 1
-  min-width: 0
-
-  .titleInput
-    width: 100%
-    padding-right: 2.25rem
-
-.clearTheoryTitleButton
-  position: absolute
-  right: 0.4375rem
-  display: inline-grid
-  place-items: center
-  width: 1.375rem
-  height: 1.375rem
-  padding: 0
-  border: 0
-  border-radius: $ds-radius-pill
-  background: transparent
-  color: $ds-text-subtle
-  cursor: pointer
-  transition: color 160ms ease, background 160ms ease
-
-  svg
-    width: 0.6875rem
-    height: 0.6875rem
-
-  &:hover,
-  &:focus-visible
-    color: $ds-text-secondary
-    background: rgba(255, 255, 255, 0.06)
-    outline: none
-
-.editTheoryTitleButton
-  position: relative
-  flex: 0 0 auto
-  display: inline-grid
-  place-items: center
-  width: 1.75rem
-  height: 1.75rem
-  padding: 0
-  border: 0.0625rem solid $ds-glass-stroke
-  border-radius: $ds-radius-pill
-  background: rgba(255, 255, 255, 0.03)
-  color: $ds-text-muted
-  cursor: pointer
-  transition: color 160ms ease, border-color 160ms ease, background 160ms ease
-
-  &:hover,
-  &:focus-visible
-    color: $ds-text-primary
-    border-color: $ds-glass-stroke-strong
-    background: rgba(255, 255, 255, 0.06)
-    outline: none
-
-    .editTheoryTitleTooltip
-      opacity: 1
-      visibility: visible
-      transform: translate(-50%, 0)
-
-.editTheoryTitleIcon
-  width: 0.8125rem
-  height: 0.8125rem
-
-.editTheoryTitleTooltip
-  position: absolute
-  top: calc(100% + 0.4375rem)
-  left: 50%
-  z-index: 2
-  transform: translate(-50%, -0.125rem)
-  padding: 0.3125rem 0.5rem
-  border-radius: 0.4375rem
-  background: rgba(11, 11, 11, 0.96)
-  border: 0.0625rem solid $ds-glass-stroke
-  box-shadow: 0 0.375rem 1rem rgba(0, 0, 0, 0.28)
-  color: $ds-text-primary
-  font-size: 0.6875rem
-  font-weight: 600
-  line-height: 1.2
-  white-space: nowrap
-  pointer-events: none
-  opacity: 0
-  visibility: hidden
-  transition: opacity 160ms ease, transform 160ms ease, visibility 160ms ease
-
-.titleInput
-  width: 100%
-  +ds-editable-field
-  border-radius: 0.875rem
-  padding: 0.6875rem 0.75rem
-  color: $ds-text-primary
-  min-width: 0
-
-  &:focus,
-  &:focus-visible
-    +ds-editable-field-focus-neutral
-
-.sidebarTitleRow .titleInput
-  flex: 1
-  min-width: 0
-
-.sidebarToggleSvg
-  width: 2.25rem
-  height: 2.25rem
-  display: block
-  filter: drop-shadow(0 0.75rem 1.25rem rgba(0, 0, 0, 0.32))
-
-.kicker
-  margin: 0 0 0.375rem
-  color: $ds-text-muted
-  font-size: 0.625rem
-  font-weight: 700
-  letter-spacing: 0.18em
-  text-transform: uppercase
-
-.title
-  margin: 0
-  color: $ds-text-primary
-  font-size: 1.125rem
-  font-weight: 650
-  letter-spacing: 0.01em
-  line-height: 1.18
-
-.headerDescription
-  margin: 0
-  min-width: 0
-  color: $ds-text-muted
-  font-size: 0.75rem
-  line-height: 1.5
+.premiumGlassGlyph
+  width: 1rem
+  height: 1rem
 
 .content
   position: relative
@@ -237,152 +109,126 @@
   display: grid
   grid-auto-rows: min-content
   flex: 1
-  gap: 0.875rem
+  gap: $sidebar-section-gap
   align-content: start
   min-height: 0
   overflow-y: auto
   overflow-x: hidden
-  padding: 0 1.125rem 1.125rem
+  padding: 0 1rem 1rem
   overscroll-behavior: contain
   scrollbar-gutter: stable
   scrollbar-width: thin
-  scrollbar-color: rgba(255, 255, 255, 0.16) transparent
+  scrollbar-color: rgba(255, 255, 255, 0.14) transparent
 
   &::-webkit-scrollbar
-    width: 0.375rem
+    width: 0.3125rem
 
   &::-webkit-scrollbar-track
     background: transparent
 
   &::-webkit-scrollbar-thumb
-    border-radius: $ds-radius-pill
-    background: rgba(255, 255, 255, 0.16)
+    border-radius: 62.4375rem
+    background: rgba(255, 255, 255, 0.14)
+
+// ─── Cards (redesigned) ──────────────────────────────────────────────────────
 
 .card
-  position: relative
-  isolation: isolate
+  +sidebar-glass-surface
   display: grid
-  gap: 0.625rem
+  gap: 0.75rem
   width: 100%
   max-width: 100%
   min-width: 0
-  padding: 1rem
-  border: 0.0625rem solid $ds-glass-stroke
-  border-radius: 1.25rem
-  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.05), transparent 46%), linear-gradient(180deg, $ds-glass-dark, rgba(17, 17, 18, 0.9))
-  box-shadow: $ds-shadow-card-soft
-  overflow: hidden
+  padding: $sidebar-card-padding
+  border-radius: 1.625rem
 
-  &::before
-    content: ''
-    position: absolute
-    inset: 0
-    z-index: -1
-    border-radius: inherit
-    pointer-events: none
-    background: linear-gradient(115deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.015))
-    opacity: 0.24
+  > *
+    position: relative
+    z-index: 1
 
 .sectionHeader
   display: flex
   align-items: center
-  gap: 0.4375rem
+  gap: 0.5rem
   justify-content: flex-start
   width: 100%
 
 .sectionGlassGlyph
   display: grid
   place-items: center
-  width: 2.5rem
-  height: 2.5rem
+  width: 2.25rem
+  height: 2.25rem
   flex: 0 0 auto
   color: $ds-text-subtle
   overflow: visible
 
 .sectionKicker
   margin: 0
-  color: rgba(196, 196, 200, 0.78)
+  color: rgba(180, 180, 186, 0.82)
   font-size: 0.625rem
   font-weight: 800
-  letter-spacing: 0.16em
+  letter-spacing: 0.18em
   text-transform: uppercase
   text-align: left
 
-.sectionTitle
-  margin: 0
-  color: $ds-text-primary
-  font-size: 0.9375rem
-  font-weight: 650
-  line-height: 1.3
-
 .sectionText
   margin: 0
-  color: $ds-text-secondary
+  color: rgba(168, 168, 174, 0.92)
   font-size: 0.8125rem
-  line-height: 1.55
+  line-height: 1.6
 
 .sectionHint
   margin: 0
   color: $ds-text-muted
   font-size: 0.75rem
-  line-height: 1.5
+  line-height: 1.55
   padding: 0.625rem 0.75rem
-  border-left: 0.125rem solid $ds-glass-stroke-strong
-  border-radius: 0.75rem
-  background: rgba(255, 255, 255, 0.025)
+  border-left: 0.125rem solid rgba(255, 255, 255, 0.1)
+  border-radius: 0.625rem
+  background: rgba(255, 255, 255, 0.02)
 
 .contextualHint
   display: flex
-  align-items: center
+  align-items: flex-start
   gap: 0.4375rem
-  margin: 0.4375rem 0.625rem 0 0
-  padding-right: 0.125rem
+  margin: 0.25rem 0 0
+  padding: 0
   font-size: 0.6875rem
-  line-height: 1.45
+  line-height: 1.5
+  color: rgba(168, 168, 174, 0.88)
 
 .contextualHintIcon
   flex: 0 0 auto
   display: inline-flex
   align-items: center
   justify-content: center
-  color: var(--stage-accent, #{$stage-1})
+  color: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 72%, rgba(180, 180, 186, 0.9))
 
-.contextualHintInfoSvg
-  width: 0.875rem
-  height: 0.875rem
-  display: block
-
-.contextualHintText
-  color: $ds-text-muted
+// ─── Progress card ───────────────────────────────────────────────────────────
 
 .progressCard
-  position: relative
-  z-index: 2
-  overflow: hidden
-  isolation: isolate
-  border-color: $ds-glass-stroke
+  border-color: rgba(255, 255, 255, 0.1)
+  gap: 0.6875rem
 
   .sectionHeader
-    gap: 0.5rem
-    align-items: center
-    justify-content: flex-start
+    gap: 0.5625rem
 
   .sectionGlassGlyph
-    width: 3.25rem
-    height: 3.25rem
+    width: 2.75rem
+    height: 2.75rem
     color: var(--stage-accent, #{$stage-1})
 
 .progressOverview
   display: flex
   align-items: center
   gap: 0.875rem
-  margin-top: 0.25rem
+  margin-top: 0.125rem
 
 .progressRingWrap
   position: relative
   flex: 0 0 auto
-  width: 3rem
-  height: 3rem
+  width: 2.875rem
+  height: 2.875rem
   overflow: visible
 
 .progressRing
@@ -392,25 +238,25 @@
 
 .progressRingTrackOuter
   fill: none
-  stroke: rgba(255, 255, 255, 0.04)
+  stroke: rgba(255, 255, 255, 0.03)
   stroke-width: 1
 
 .progressRingTrack
   fill: none
-  stroke: rgba(255, 255, 255, 0.07)
-  stroke-width: 3
+  stroke: rgba(255, 255, 255, 0.06)
+  stroke-width: 2.5
 
 .progressRingFill
   fill: none
   stroke: var(--stage-accent, #{$stage-1})
-  stroke-width: 3
+  stroke-width: 2.5
   stroke-linecap: round
   transition: stroke-dashoffset 420ms cubic-bezier(0.22, 1, 0.36, 1), stroke 280ms ease
 
 .progressPercent
   margin: 0
   color: $ds-text-primary
-  font-size: 1.125rem
+  font-size: 1.0625rem
   font-weight: 700
   line-height: 1
   font-variant-numeric: tabular-nums
@@ -426,67 +272,47 @@
   color: $ds-text-primary
   font-size: 0.8125rem
   font-weight: 650
-  line-height: 1.25
+  line-height: 1.3
+  letter-spacing: 0.01em
 
 .progressOverviewMeta
   margin: 0
   color: $ds-text-muted
   font-size: 0.6875rem
-  line-height: 1.3
+  line-height: 1.35
 
 .progressBar
   width: 100%
-  height: 0.1875rem
-  margin-top: 0.125rem
-  border-radius: $ds-radius-pill
-  background: rgba(255, 255, 255, 0.07)
+  height: 0.125rem
+  margin-top: 0.0625rem
+  border-radius: 62.4375rem
+  background: rgba(255, 255, 255, 0.06)
   overflow: hidden
 
 .progressBarFill
   height: 100%
   border-radius: inherit
-  background: linear-gradient(90deg, var(--stage-accent, #{$stage-1}), color-mix(in srgb, var(--stage-accent, #{$stage-1}) 62%, white 38%))
+  background: linear-gradient(90deg, var(--stage-accent, #{$stage-1}), color-mix(in srgb, var(--stage-accent, #{$stage-1}) 55%, white 45%))
   transition: width 320ms ease
 
-.sidebarCtaRow
-  display: flex
-  width: 100%
-  gap: 0.625rem
-
-  > *
-    flex: 1
-    min-width: 0
-
-.sidebarCtaSpaced
-  margin-top: 0.625rem
-
-.contextActions
-  display: flex
-  flex-wrap: wrap
-  gap: 0.625rem
-  margin-top: 0.25rem
-
-  > *
-    width: auto
-    flex: 1 1 calc(50% - 0.3125rem)
-    min-width: 0
+// ─── Stage timeline ────────────────────────────────────────────────────────────
 
 .timeline
   position: relative
   display: grid
-  gap: 0.4375rem
-  margin: 0.125rem 0 0.25rem
+  gap: 0.5rem
+  margin: 0.125rem 0 0.375rem
 
   &::before
     content: ''
     position: absolute
-    left: calc(0.75rem + 0.6875rem - 0.03125rem)
-    top: calc(0.625rem + 0.6875rem)
-    bottom: calc(0.625rem + 0.6875rem)
+    left: calc(0.6875rem + 0.625rem - 0.03125rem)
+    top: calc(0.75rem + 0.625rem)
+    bottom: calc(0.75rem + 0.625rem)
     width: 0.0625rem
-    border-radius: $ds-radius-pill
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.04) 55%, rgba(255, 255, 255, 0.08) 100%)
-    opacity: 0.55
+    border-radius: 62.4375rem
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 55%, rgba(255, 255, 255, 0.06) 100%)
+    opacity: 0.5
     pointer-events: none
     z-index: 0
 
@@ -495,24 +321,21 @@
   z-index: 1
   width: 100%
   max-width: 100%
-  border: 0.0625rem solid $ds-glass-stroke
-  border-radius: $ds-btn-radius
-  background: rgba(255, 255, 255, 0.018)
-  overflow: hidden
-  transition: border-color 200ms ease, background 200ms ease
+  +sidebar-inner-surface
+  transition: border-color 200ms ease, background 200ms ease, box-shadow 200ms ease
 
 .stageSummary
   position: relative
   display: grid
   grid-template-columns: auto auto minmax(0, 1fr) auto auto
   align-items: center
-  gap: 0.375rem
+  gap: 0.4375rem
   min-width: 0
-  min-height: 3rem
-  padding: 0.625rem 0.6875rem 0.625rem 0.75rem
+  min-height: 2.875rem
+  padding: 0.5625rem 0.625rem 0.5625rem 0.6875rem
   cursor: pointer
   list-style: none
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.012))
+  background: transparent
 
   &::-webkit-details-marker
     display: none
@@ -520,51 +343,51 @@
 .stageColorBar
   position: absolute
   top: 0
-  left: 0.75rem
-  right: 0.75rem
-  height: 0.125rem
-  border-radius: 0 0 0.125rem 0.125rem
+  left: 0.625rem
+  right: 0.625rem
+  height: 0.09375rem
+  border-radius: 0 0 0.0625rem 0.0625rem
   background: var(--stage-accent, #{$stage-1})
   opacity: 0
   transition: opacity 200ms ease
 
 .stageSummaryCopy
   display: grid
-  gap: 0.125rem
+  gap: 0.1875rem
   min-width: 0
 
   strong
     display: block
-    color: $ds-text-primary
+    color: rgba(244, 244, 246, 0.94)
     font-size: 0.6875rem
     font-weight: 750
-    letter-spacing: 0.08em
+    letter-spacing: 0.1em
     text-transform: uppercase
-    line-height: 1.25
+    line-height: 1.3
 
   small
     display: block
-    color: $ds-text-muted
+    color: rgba(148, 148, 154, 0.92)
     font-size: 0.6875rem
-    line-height: 1.35
+    line-height: 1.4
 
 .timelineChevronButton
   display: inline-flex
   align-items: center
   justify-content: center
-  width: 1.25rem
-  height: 1.25rem
+  width: 1.125rem
+  height: 1.125rem
   flex: 0 0 auto
   border: 0.0625rem solid transparent
-  border-radius: $ds-btn-radius
-  color: $ds-text-subtle
-  background: rgba(255, 255, 255, 0.02)
+  border-radius: 0.4375rem
+  color: rgba(148, 148, 154, 0.88)
+  background: rgba(255, 255, 255, 0.015)
   padding: 0
   transition: border-color 180ms ease, color 180ms ease, background 180ms ease
 
 .timelineChevronIcon
-  width: 0.8125rem
-  height: 0.8125rem
+  width: 0.75rem
+  height: 0.75rem
   display: block
   transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), color 180ms ease
   transform: rotate(-90deg)
@@ -574,292 +397,143 @@
     transform: rotate(0deg)
 
 .timelineChevronActive
-  color: var(--stage-accent, #{$stage-1})
-  border-color: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 18%, transparent)
-  background: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 8%, transparent)
+  color: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 80%, white 20%)
+  border-color: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 14%, transparent)
+  background: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 6%, transparent)
 
 .timelineChevronBlocked
-  color: $ds-text-subtle
+  color: rgba(120, 120, 126, 0.72)
   border-color: transparent
-  background: rgba(255, 255, 255, 0.02)
+  background: rgba(255, 255, 255, 0.01)
 
 .stageDot
   position: relative
   z-index: 1
   display: inline-grid
   place-items: center
-  width: 1.375rem
-  height: 1.375rem
-  border: 0.0625rem solid $ds-glass-stroke
+  width: 1.25rem
+  height: 1.25rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1)
   border-radius: 50%
-  color: $ds-text-muted
-  font-size: 0.6875rem
+  color: rgba(148, 148, 154, 0.92)
+  font-size: 0.625rem
   font-weight: 800
-  background: rgba(14, 14, 16, 0.92)
-  box-shadow: 0 0 0 0.125rem rgba(14, 14, 16, 0.65)
+  background: rgba(12, 12, 14, 0.95)
+  box-shadow: 0 0 0 0.09375rem rgba(8, 8, 10, 0.8)
   transition: color 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease
 
 .stageLockIcon
   display: inline-flex
   align-items: center
   justify-content: center
-  width: 1.25rem
-  height: 1.25rem
+  width: 1.125rem
+  height: 1.125rem
   flex: 0 0 auto
   border: 0.0625rem solid transparent
-  border-radius: $ds-btn-radius
-  color: $ds-text-subtle
-  background: rgba(255, 255, 255, 0.02)
+  border-radius: 0.4375rem
+  color: rgba(120, 120, 126, 0.72)
+  background: rgba(255, 255, 255, 0.015)
   cursor: help
   transition: color 180ms ease, border-color 180ms ease, background 180ms ease
 
   &:hover,
   &:focus-visible
-    color: $ds-text-muted
-    border-color: $ds-glass-stroke
-    background: rgba(255, 255, 255, 0.04)
+    color: rgba(168, 168, 174, 0.92)
+    border-color: rgba(255, 255, 255, 0.08)
+    background: rgba(255, 255, 255, 0.03)
     outline: none
 
 .stageLockSvg
-  width: 0.8125rem
-  height: 0.8125rem
+  width: 0.75rem
+  height: 0.75rem
   display: block
-
-.stageLockPlaceholder
-  display: none
 
 .stageCountBadge
   flex-shrink: 0
   display: inline-grid
   place-items: center
-  min-width: 1.375rem
-  height: 1.375rem
+  min-width: 1.25rem
+  height: 1.25rem
   padding: 0 0.3125rem
-  border: 0.0625rem solid color-mix(in srgb, #{$ds-glass-stroke} 38%, transparent)
-  border-radius: $ds-btn-radius
-  color: color-mix(in srgb, #{$ds-text-primary} 58%, #{$ds-text-muted})
-  font-size: 0.6875rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.08)
+  border-radius: 0.4375rem
+  color: rgba(200, 200, 206, 0.82)
+  font-size: 0.625rem
   font-weight: 650
   line-height: 1
   font-variant-numeric: tabular-nums
-  background: color-mix(in srgb, #{$ds-bg-surface-soft} 52%, transparent)
+  background: rgba(255, 255, 255, 0.025)
   transition: color 180ms ease, border-color 180ms ease, background 180ms ease
 
 .stageBody
   display: grid
-  gap: 0.5rem
-  padding: 0.375rem 0.75rem 0.875rem 2.75rem
+  gap: 0.5625rem
+  padding: 0.25rem 0.6875rem 0.875rem 2.625rem
 
   p
     margin: 0
-    color: $ds-text-muted
+    color: rgba(148, 148, 154, 0.95)
     font-size: 0.75rem
-    line-height: 1.55
+    line-height: 1.6
 
   ul
     margin: 0
-    padding-left: 1rem
-    color: $ds-text-secondary
+    padding-left: 0.875rem
+    color: rgba(180, 180, 186, 0.88)
     font-size: 0.75rem
-    line-height: 1.45
+    line-height: 1.55
+
+    li
+      padding-left: 0.125rem
+
+      &::marker
+        color: rgba(148, 148, 154, 0.72)
 
 .stageAccordion[open]:not(.stageblocked)
   .stageColorBar
-    opacity: 0.48
+    opacity: 0.35
 
 .stageExpanded.stagecurrent
   .stageColorBar
-    opacity: 1
-
-  .timelineChevronActive
-    color: var(--stage-accent, #{$stage-1})
-    border-color: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 18%, transparent)
-    background: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 8%, transparent)
+    opacity: 0.85
 
 .stagecompleted
   .stageColorBar
-    opacity: 0.72
+    opacity: 0.55
 
   .stageDot
     color: var(--stage-accent)
-    border-color: color-mix(in srgb, var(--stage-accent) 32%, transparent)
-    background: color-mix(in srgb, var(--stage-accent) 10%, rgba(14, 14, 16, 0.92))
-    box-shadow: 0 0 0 0.125rem color-mix(in srgb, var(--stage-accent) 6%, rgba(14, 14, 16, 0.65))
-
-  .stageCountBadge
-    color: color-mix(in srgb, #{$ds-text-primary} 54%, #{$ds-text-muted})
-    border-color: color-mix(in srgb, var(--stage-accent) 8%, color-mix(in srgb, #{$ds-glass-stroke} 32%, transparent))
-    background: color-mix(in srgb, var(--stage-accent) 4%, color-mix(in srgb, #{$ds-bg-surface-soft} 46%, transparent))
+    border-color: color-mix(in srgb, var(--stage-accent) 28%, transparent)
+    background: color-mix(in srgb, var(--stage-accent) 8%, rgba(12, 12, 14, 0.95))
 
 .stagecurrent
-  border-color: color-mix(in srgb, var(--stage-accent) 22%, transparent)
+  border-color: color-mix(in srgb, var(--stage-accent) 16%, rgba(255, 255, 255, 0.07))
+  background: radial-gradient(ellipse 80% 60% at 0% 50%, color-mix(in srgb, var(--stage-accent) 5%, transparent), transparent 55%), linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.008))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05), 0 0.5rem 1.25rem rgba(0, 0, 0, 0.18)
 
   .stageColorBar
-    opacity: 1
+    opacity: 0.85
 
-  .stageSummary
-    background: radial-gradient(circle at 0% 50%, color-mix(in srgb, var(--stage-accent) 8%, transparent), transparent 52%), linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015))
+  .stageSummaryCopy strong
+    color: rgba(250, 250, 252, 0.98)
 
   .stageDot
-    color: color-mix(in srgb, var(--stage-accent) 78%, $ds-text-subtle)
-    border-color: color-mix(in srgb, var(--stage-accent) 22%, transparent)
-    background: color-mix(in srgb, var(--stage-accent) 6%, rgba(14, 14, 16, 0.92))
-    box-shadow: 0 0 0 0.125rem color-mix(in srgb, var(--stage-accent) 8%, rgba(14, 14, 16, 0.65))
+    color: color-mix(in srgb, var(--stage-accent) 75%, white 25%)
+    border-color: color-mix(in srgb, var(--stage-accent) 18%, transparent)
+    background: color-mix(in srgb, var(--stage-accent) 5%, rgba(12, 12, 14, 0.95))
 
   .stageCountBadge
-    color: color-mix(in srgb, #{$ds-text-primary} 68%, #{$ds-text-muted})
-    border-color: color-mix(in srgb, var(--stage-accent) 10%, color-mix(in srgb, #{$ds-glass-stroke} 34%, transparent))
-    background: color-mix(in srgb, var(--stage-accent) 5%, color-mix(in srgb, #{$ds-bg-surface-soft} 56%, transparent))
-
-.stageAccordion:not(.stageblocked) .stageSummary:hover .stageCountBadge,
-.stageAccordion:not(.stageblocked) .stageSummary:focus-visible .stageCountBadge
-  color: color-mix(in srgb, #{$ds-text-primary} 64%, #{$ds-text-muted})
-  border-color: color-mix(in srgb, #{$ds-glass-stroke} 52%, transparent)
-  background: color-mix(in srgb, #{$ds-bg-surface-soft} 58%, transparent)
-
-.stagecurrent .stageSummary:hover .stageCountBadge,
-.stagecurrent .stageSummary:focus-visible .stageCountBadge
-  color: color-mix(in srgb, #{$ds-text-primary} 74%, #{$ds-text-muted})
-  border-color: color-mix(in srgb, var(--stage-accent) 12%, color-mix(in srgb, #{$ds-glass-stroke} 38%, transparent))
-  background: color-mix(in srgb, var(--stage-accent) 7%, color-mix(in srgb, #{$ds-bg-surface-soft} 60%, transparent))
+    color: rgba(220, 220, 226, 0.9)
+    border-color: color-mix(in srgb, var(--stage-accent) 8%, rgba(255, 255, 255, 0.08))
+    background: color-mix(in srgb, var(--stage-accent) 4%, rgba(255, 255, 255, 0.03))
 
 .stageblocked
-  opacity: 0.52
+  opacity: 0.48
 
   .stageLockIcon
-    color: color-mix(in srgb, var(--stage-accent) 42%, $ds-text-subtle)
+    color: color-mix(in srgb, var(--stage-accent) 38%, rgba(120, 120, 126, 0.72))
 
-  .stageCountBadge
-    color: color-mix(in srgb, #{$ds-text-primary} 44%, #{$ds-text-muted})
-    border-color: color-mix(in srgb, #{$ds-glass-stroke} 28%, transparent)
-    background: color-mix(in srgb, #{$ds-bg-surface-soft} 38%, transparent)
-
-.stageActionCard
-  border-color: $ds-glass-stroke
-  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.045), transparent 46%), linear-gradient(180deg, $ds-glass-dark, rgba(17, 17, 18, 0.9))
-  overflow: visible
-
-  .sectionGlassGlyph
-    color: var(--stage-accent, $ds-text-subtle)
-
-.canvasOrganizationCard
-  display: grid
-  gap: 0
-  width: 100%
-  max-width: 100%
-  padding: 0
-  min-height: min-content
-  align-self: start
-  border-color: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 14%, $ds-glass-stroke)
-  background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--stage-accent, #{$stage-1}) 6%, transparent), transparent 42%), radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.03), transparent 52%), linear-gradient(180deg, rgba(34, 34, 36, 0.88), rgba(16, 16, 18, 0.94))
-  box-shadow: 0 0.0625rem 0 rgba(255, 255, 255, 0.05) inset, 0 0.75rem 1.75rem rgba(0, 0, 0, 0.22)
-  container-type: inline-size
-
-.canvasOrganizationCardGlow
-  position: absolute
-  inset: 0
-  z-index: 0
-  pointer-events: none
-  border-radius: inherit
-  background: radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.05), transparent 48%)
-  opacity: 0.85
-
-.canvasOrganizationHeader
-  appearance: none
-  position: relative
-  z-index: 1
-  display: flex
-  align-items: center
-  justify-content: space-between
-  gap: 0.625rem
-  width: 100%
-  padding: 0.875rem 0.875rem 0.875rem 0.75rem
-  border: 0
-  background: transparent
-  color: $ds-text-primary
-  font: inherit
-  text-align: left
-  cursor: pointer
-  transition: color 180ms ease
-
-  &:hover,
-  &:focus-visible
-    outline: none
-    color: $ds-text-primary
-
-  &:focus-visible
-    box-shadow: inset 0 0 0 0.0625rem $ds-glass-stroke-strong
-
-.canvasOrganizationTitleRow
-  display: flex
-  align-items: center
-  gap: 0.5rem
-  min-width: 0
-
-.canvasOrganizationTitle
-  font-size: 0.625rem
-  font-weight: 800
-  letter-spacing: 0.16em
-  text-transform: uppercase
-  color: rgba(196, 196, 200, 0.78)
-
-.canvasOrganizationContent
-  position: relative
-  z-index: 1
-  display: grid
-  gap: 0.875rem
-  padding: 0 0.75rem 1rem
-
-.canvasOrganizeButton
-  border-color: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 34%, $ds-glass-stroke) !important
-  background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--stage-accent, #{$stage-1}) 10%, transparent), transparent 58%), linear-gradient(180deg, rgba(36, 36, 38, 0.82), rgba(20, 20, 22, 0.94)) !important
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05), inset 0 0 0.75rem color-mix(in srgb, var(--stage-accent, #{$stage-1}) 8%, transparent) !important
-  color: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 72%, $ds-text-primary 28%) !important
-
-  &:hover:not(:disabled),
-  &:focus-visible:not(:disabled)
-    border-color: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 48%, $ds-glass-stroke) !important
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), inset 0 0 1rem color-mix(in srgb, var(--stage-accent, #{$stage-1}) 12%, transparent), 0 0.375rem 1rem rgba(0, 0, 0, 0.22) !important
-    color: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 82%, $ds-text-primary 18%) !important
-
-.sidebarAccordionChevronAccent
-  color: var(--stage-accent, #{$stage-1}) !important
-  opacity: 1 !important
-
-.canvasOrganizationText
-  margin: 0
-  color: $ds-text-secondary
-  font-size: clamp(0.75rem, 2.4cqw, 0.8125rem)
-  line-height: 1.55
-
-.alignmentPreview
-  --preview-max-stack: 1
-  position: relative
-  display: grid
-  grid-template-columns: repeat(4, minmax(0, 1fr))
-  align-items: end
-  gap: clamp(0.375rem, 1.4cqw, 0.625rem)
-  min-height: 4.5rem
-  padding: clamp(0.625rem, 2cqw, 0.875rem) clamp(0.4375rem, 1.4cqw, 0.625rem) clamp(0.5rem, 1.6cqw, 0.75rem)
-  border: 0.0625rem solid $ds-glass-stroke
-  border-radius: 0.875rem
-  background: radial-gradient(circle at 50% 12%, rgba(255, 255, 255, 0.06), transparent 54%), linear-gradient(180deg, rgba(28, 28, 30, 0.82), rgba(12, 12, 14, 0.94))
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04), 0 0.375rem 1rem rgba(0, 0, 0, 0.18)
-  overflow: hidden
-  backdrop-filter: blur(0.375rem)
-  transition: border-color 220ms ease, box-shadow 220ms ease, min-height 320ms cubic-bezier(0.22, 1, 0.36, 1)
-
-  &:hover
-    border-color: $ds-glass-stroke-strong
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06), 0 0.5rem 1.125rem rgba(0, 0, 0, 0.22)
-
-.alignmentPreviewGlow
-  position: absolute
-  inset: 0
-  pointer-events: none
-  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04), transparent 58%)
-  opacity: 0.9
-
+// ─── Block forms ───────────────────────────────────────────────────────────────
 
 .blockFormsCard
   display: grid
@@ -871,8 +545,9 @@
   input,
   textarea
     +ds-editable-field
-    border-radius: 0.8125rem
+    border-radius: 1rem
     color: $ds-text-primary
+    background: rgba(0, 0, 0, 0.32)
 
     &:hover:not(:focus):not(:focus-visible)
       +ds-editable-field-hover
@@ -883,62 +558,56 @@
 
 .blockFormGroup
   display: grid
-  gap: 0.625rem
+  gap: 0.5625rem
 
 .blockFormGroup + .blockFormGroup
   margin-top: 0.875rem
+  padding-top: 0.875rem
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.05)
 
 .blockFormGroupHeader
   display: flex
   align-items: center
-  gap: 0.5rem
+  gap: 0.4375rem
   justify-content: flex-start
 
 .blockFormGroupTitle
   margin: 0
-  color: rgba(196, 196, 200, 0.78)
+  color: rgba(180, 180, 186, 0.82)
   font-size: 0.625rem
   font-weight: 800
   line-height: 1.2
-  letter-spacing: 0.16em
+  letter-spacing: 0.18em
   text-transform: uppercase
 
 .sidebarAccordion
-  border: 0.0625rem solid $ds-glass-stroke
-  border-radius: $ds-btn-radius
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.01))
+  +sidebar-inner-surface
   overflow: hidden
-  transition: border-color 200ms ease, background 200ms ease
+  transition: border-color 200ms ease, background 200ms ease, box-shadow 200ms ease
 
 .blockSidebarAccordion
   &:has(.blockAccordionHeader:hover),
   &:has(.blockAccordionHeader:focus-visible)
-    border-color: color-mix(in srgb, var(--stage-accent) 30%, $ds-glass-stroke)
+    border-color: color-mix(in srgb, var(--stage-accent) 22%, rgba(255, 255, 255, 0.07))
 
     .blockAccordionHeader
-      color: color-mix(in srgb, var(--stage-accent) 76%, $ds-text-primary 24%)
+      color: color-mix(in srgb, var(--stage-accent) 68%, $ds-text-primary 32%)
 
     .sidebarAccordionChevron
       color: var(--stage-accent)
       opacity: 1
 
   &.sidebarAccordionOpen
-    border-color: color-mix(in srgb, var(--stage-accent) 36%, $ds-glass-stroke)
-    background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--stage-accent) 5%, transparent), transparent 58%), linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.008))
+    border-color: color-mix(in srgb, var(--stage-accent) 26%, rgba(255, 255, 255, 0.07))
+    background: radial-gradient(ellipse 100% 50% at 50% 0%, color-mix(in srgb, var(--stage-accent) 4%, transparent), transparent 58%), linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.006))
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05), 0 0.375rem 1rem rgba(0, 0, 0, 0.14)
 
     .blockAccordionHeader
-      color: color-mix(in srgb, var(--stage-accent) 80%, $ds-text-primary 20%)
+      color: color-mix(in srgb, var(--stage-accent) 72%, $ds-text-primary 28%)
 
     .sidebarAccordionChevron
       color: var(--stage-accent)
       opacity: 1
-
-  &.sidebarAccordionOpen:has(.blockAccordionHeader:hover),
-  &.sidebarAccordionOpen:has(.blockAccordionHeader:focus-visible)
-    border-color: color-mix(in srgb, var(--stage-accent) 42%, $ds-glass-stroke)
-
-    .blockAccordionHeader
-      color: color-mix(in srgb, var(--stage-accent) 86%, $ds-text-primary 14%)
 
 .sidebarAccordionHeader
   appearance: none
@@ -947,13 +616,13 @@
   justify-content: space-between
   gap: 0.75rem
   width: 100%
-  min-height: 2.875rem
-  padding: 0.8125rem 0.875rem
+  min-height: 2.75rem
+  padding: 0.75rem 0.8125rem
   border: 0
   background: transparent
-  color: $ds-text-primary
+  color: rgba(220, 220, 226, 0.92)
   font: inherit
-  font-size: 0.8125rem
+  font-size: 0.75rem
   font-weight: 650
   text-align: left
   cursor: pointer
@@ -962,17 +631,17 @@
 
   &:hover,
   &:focus-visible
-    background: rgba(255, 255, 255, 0.03)
+    background: rgba(255, 255, 255, 0.02)
 
   &:focus-visible
-    box-shadow: inset 0 0 0 0.0625rem $ds-glass-stroke-strong
+    box-shadow: inset 0 0 0 0.0625rem rgba(255, 255, 255, 0.1)
 
 .blockAccordionHeader
   font-size: 0.6875rem
   font-weight: 600
-  letter-spacing: 0.1em
+  letter-spacing: 0.12em
   text-transform: uppercase
-  color: $ds-text-secondary
+  color: rgba(168, 168, 174, 0.92)
   transition: color 200ms ease
 
   &:hover,
@@ -980,7 +649,7 @@
     background: transparent
 
   &:focus-visible
-    box-shadow: inset 0 0 0 0.0625rem color-mix(in srgb, var(--stage-accent) 22%, transparent)
+    box-shadow: inset 0 0 0 0.0625rem color-mix(in srgb, var(--stage-accent) 18%, transparent)
 
   .sidebarAccordionTitle
     line-height: 1.25
@@ -993,15 +662,19 @@
 
 .sidebarAccordionChevron
   flex: 0 0 auto
-  width: 1rem
-  height: 1rem
-  color: $ds-text-subtle
+  width: 0.9375rem
+  height: 0.9375rem
+  color: rgba(148, 148, 154, 0.88)
   opacity: 0.88
   transition: transform 220ms ease, opacity 180ms ease, color 180ms ease
 
 .sidebarAccordionChevronOpen
   transform: rotate(180deg)
   color: var(--stage-accent, #{$stage-1})
+
+.sidebarAccordionChevronAccent
+  color: var(--stage-accent, #{$stage-1}) !important
+  opacity: 1 !important
 
 .sidebarAccordionPanel
   display: grid
@@ -1018,34 +691,137 @@
   min-height: 0
 
   > *
-    padding: 0 0.875rem 0.875rem
+    padding: 0 0.8125rem 0.8125rem
+
+// ─── Context panels ────────────────────────────────────────────────────────────
 
 .detailLabel
   margin: 0
-  color: $ds-text-muted
+  color: rgba(148, 148, 154, 0.92)
   font-size: 0.625rem
   font-weight: 800
-  letter-spacing: 0.12em
+  letter-spacing: 0.14em
   text-transform: uppercase
 
 .detailValue
   margin: 0
   color: $ds-text-primary
   font-size: 0.8125rem
-  line-height: 1.5
+  line-height: 1.55
 
 .edgeDetails,
 .markerBlock
   display: grid
   gap: 0.5625rem
 
+.sidebarCtaRow
+  display: flex
+  width: 100%
+  gap: 0.5625rem
+
+  > *
+    flex: 1
+    min-width: 0
+
+.sidebarCtaSpaced
+  margin-top: 0.5625rem
+
+.contextActions
+  display: flex
+  flex-wrap: wrap
+  gap: 0.5625rem
+  margin-top: 0.25rem
+
+  > *
+    width: auto
+    flex: 1 1 calc(50% - 0.28125rem)
+    min-width: 0
+
+// ─── Quick shortcuts ─────────────────────────────────────────────────────────────
+
+.quickShortcutsCard
+  border-color: rgba(255, 255, 255, 0.09)
+  gap: 0.6875rem
+
+.quickShortcutsHeader
+  display: flex
+  align-items: center
+  gap: 0.4375rem
+
+.quickShortcutsTitleRow
+  display: flex
+  align-items: center
+  gap: 0.4375rem
+  min-width: 0
+  justify-content: flex-start
+
+.quickShortcutsTitle
+  margin: 0
+  color: rgba(180, 180, 186, 0.82)
+  font-size: 0.625rem
+  font-weight: 800
+  letter-spacing: 0.18em
+  text-transform: uppercase
+
+.quickShortcutsGrid
+  display: grid
+  grid-template-columns: repeat(2, minmax(0, 1fr))
+  gap: 0.4375rem
+
+.quickShortcutBtn
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  gap: 0.4375rem
+  min-height: 4.5rem
+  padding: 0.6875rem 0.4375rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.08)
+  border-radius: 1rem
+  background: radial-gradient(ellipse 100% 60% at 50% 0%, rgba(255, 255, 255, 0.04), transparent 55%), linear-gradient(180deg, rgba(30, 30, 32, 0.72), rgba(16, 16, 18, 0.9))
+  color: rgba(168, 168, 174, 0.92)
+  font: inherit
+  font-size: 0.5625rem
+  font-weight: 600
+  line-height: 1.2
+  letter-spacing: 0.14em
+  text-transform: uppercase
+  cursor: pointer
+  appearance: none
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04)
+  transition: background 220ms cubic-bezier(0.22, 1, 0.36, 1), border-color 220ms ease, color 220ms ease, box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1), transform 220ms cubic-bezier(0.22, 1, 0.36, 1)
+
+  &:hover,
+  &:focus-visible
+    border-color: rgba(255, 255, 255, 0.14)
+    background: radial-gradient(ellipse 100% 60% at 50% 0%, rgba(255, 255, 255, 0.07), transparent 55%), linear-gradient(180deg, rgba(38, 38, 42, 0.78), rgba(22, 22, 26, 0.94))
+    color: rgba(236, 236, 240, 0.96)
+    box-shadow: 0 0.375rem 1rem rgba(0, 0, 0, 0.28), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
+    outline: none
+
+    .quickShortcutBtnIcon
+      color: rgba(236, 236, 240, 0.9)
+
+  &:active
+    transform: scale(0.985)
+    background: radial-gradient(ellipse 100% 60% at 50% 0%, rgba(255, 255, 255, 0.04), transparent 55%), linear-gradient(180deg, rgba(28, 28, 32, 0.82), rgba(18, 18, 22, 0.94))
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.03)
+
+.quickShortcutBtnIcon
+  width: 1.5rem
+  height: 1.5rem
+  flex: 0 0 auto
+  color: rgba(148, 148, 154, 0.88)
+  transition: color 220ms ease
+
+// ─── Final result hero ─────────────────────────────────────────────────────────
 
 .resultCard
   gap: 0
   padding: 0
-  border-color: rgba(255, 255, 255, 0.14)
+  border-color: rgba(255, 255, 255, 0.1)
   background: transparent
-  box-shadow: 0 0.625rem 1.5rem rgba(0, 0, 0, 0.28)
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.32)
 
   &::before
     display: none
@@ -1053,23 +829,23 @@
 .finalResultHero
   position: relative
   display: grid
-  grid-template-columns: minmax(0, 1fr) clamp(5rem, 22%, 6.75rem)
+  grid-template-columns: minmax(0, 1fr) clamp(4.75rem, 21%, 6.25rem)
   align-items: center
-  gap: clamp(0.375rem, 1vw, 0.625rem)
-  min-height: clamp(5.75rem, 12vw, 6.75rem)
-  padding: clamp(0.75rem, 1.35vw, 0.9375rem) clamp(0.6875rem, 1.2vw, 0.8125rem) clamp(0.75rem, 1.35vw, 0.9375rem) clamp(0.875rem, 1.5vw, 1rem)
+  gap: clamp(0.3125rem, 0.9vw, 0.5rem)
+  min-height: clamp(5.5rem, 11vw, 6.5rem)
+  padding: clamp(0.6875rem, 1.2vw, 0.875rem) clamp(0.625rem, 1.1vw, 0.75rem) clamp(0.6875rem, 1.2vw, 0.875rem) clamp(0.8125rem, 1.4vw, 0.9375rem)
   overflow: hidden
   isolation: isolate
-  border: 0.0625rem solid rgba(255, 255, 255, 0.11)
-  border-radius: clamp(0.9375rem, 1.8vw, 1.1875rem)
-  background: radial-gradient(ellipse 80% 72% at 72% 44%, rgba(255, 255, 255, 0.08), transparent 54%), radial-gradient(ellipse 120% 90% at 50% 100%, rgba(255, 255, 255, 0.03), transparent 58%), linear-gradient(180deg, rgba(28, 28, 30, 0.96), rgba(8, 8, 10, 0.99))
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.09), inset 0 -1.25rem 2.5rem rgba(0, 0, 0, 0.34), 0 0.75rem 1.5rem rgba(0, 0, 0, 0.24)
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1)
+  border-radius: 1.5rem
+  background: radial-gradient(ellipse 72% 68% at 74% 42%, rgba(255, 255, 255, 0.07), transparent 54%), radial-gradient(ellipse 110% 80% at 50% 100%, rgba(255, 255, 255, 0.025), transparent 58%), linear-gradient(180deg, rgba(24, 24, 26, 0.97), rgba(6, 6, 8, 0.99))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), inset 0 -1rem 2rem rgba(0, 0, 0, 0.38), 0 0.625rem 1.5rem rgba(0, 0, 0, 0.28)
 
   &::before
     content: ''
     position: absolute
     inset: 0
-    background: linear-gradient(118deg, rgba(255, 255, 255, 0.06) 0%, transparent 28%, transparent 68%, rgba(255, 255, 255, 0.035) 100%)
+    background: linear-gradient(118deg, rgba(255, 255, 255, 0.05) 0%, transparent 30%, transparent 70%, rgba(255, 255, 255, 0.025) 100%)
     pointer-events: none
     z-index: 3
 
@@ -1077,7 +853,7 @@
     content: ''
     position: absolute
     inset: 0
-    background: radial-gradient(ellipse 92% 88% at 50% 50%, transparent 42%, rgba(0, 0, 0, 0.48) 100%)
+    background: radial-gradient(ellipse 92% 88% at 50% 50%, transparent 44%, rgba(0, 0, 0, 0.42) 100%)
     pointer-events: none
     z-index: 4
 
@@ -1088,23 +864,15 @@
   z-index: 1
   filter: blur(0.65rem)
   mix-blend-mode: screen
-  opacity: 0.72
+  opacity: 0.55
 
   &::before
     content: ''
     position: absolute
     inset: 8% 0 18% 0
-    background: radial-gradient(ellipse 68% 42% at 38% 52%, rgba(255, 255, 255, 0.16), transparent 62%), radial-gradient(ellipse 52% 38% at 72% 44%, rgba(220, 220, 224, 0.1), transparent 58%)
+    background: radial-gradient(ellipse 68% 42% at 38% 52%, rgba(255, 255, 255, 0.12), transparent 62%), radial-gradient(ellipse 52% 38% at 72% 44%, rgba(220, 220, 224, 0.08), transparent 58%)
     mask-image: linear-gradient(90deg, transparent 0%, black 12%, black 88%, transparent 100%)
     -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 12%, black 88%, transparent 100%)
-
-  &::after
-    content: ''
-    position: absolute
-    inset: 22% -8% 8% -8%
-    background: linear-gradient(102deg, transparent 8%, rgba(255, 255, 255, 0.12) 32%, rgba(255, 255, 255, 0.04) 48%, rgba(255, 255, 255, 0.1) 68%, transparent 92%)
-    mask-image: linear-gradient(180deg, transparent 0%, black 18%, black 82%, transparent 100%)
-    -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 18%, black 82%, transparent 100%)
 
 .finalResultHeroWaves
   position: absolute
@@ -1115,7 +883,7 @@
   z-index: 2
   filter: blur(0.5rem)
   mix-blend-mode: screen
-  opacity: 0.68
+  opacity: 0.52
 
 .finalResultHeroWavePath
   fill: none
@@ -1125,20 +893,20 @@
   position: absolute
   inset: 0
   pointer-events: none
-  background: linear-gradient(118deg, rgba(255, 255, 255, 0.07) 0%, transparent 28%, transparent 68%, rgba(255, 255, 255, 0.04) 100%)
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.05) 0%, transparent 28%, transparent 68%, rgba(255, 255, 255, 0.03) 100%)
   z-index: 3
 
 .finalResultHeroCrystalGlow
   position: absolute
-  right: clamp(0.375rem, 1.6vw, 0.625rem)
+  right: clamp(0.3125rem, 1.4vw, 0.5rem)
   top: 50%
-  width: clamp(5.75rem, 30%, 7.75rem)
-  height: clamp(5.75rem, 94%, 7.75rem)
+  width: clamp(5.25rem, 28%, 7rem)
+  height: clamp(5.25rem, 90%, 7rem)
   transform: translateY(-50%)
   border-radius: 50%
   pointer-events: none
-  background: radial-gradient(circle at 50% 46%, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05) 42%, transparent 72%)
-  filter: blur(0.85rem)
+  background: radial-gradient(circle at 50% 46%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04) 42%, transparent 72%)
+  filter: blur(0.75rem)
   z-index: 2
 
 .finalResultHeroContent
@@ -1147,32 +915,37 @@
   display: flex
   flex-direction: column
   align-items: flex-start
-  gap: 0.25rem
+  gap: 0.1875rem
   min-width: 0
 
 .finalResultHeroTitle
   margin: 0
-  color: $ds-text-primary
-  font-size: clamp(0.8125rem, 0.95vw, 0.9375rem)
+  color: rgba(250, 250, 252, 0.98)
+  font-size: clamp(0.8125rem, 0.92vw, 0.9375rem)
   font-weight: 700
-  line-height: 1.2
-  letter-spacing: -0.02em
+  line-height: 1.22
+  letter-spacing: -0.015em
 
 .finalResultHeroSubtitle
   margin: 0
-  color: rgba(161, 161, 161, 0.92)
-  font-size: clamp(0.625rem, 0.76vw, 0.6875rem)
+  color: rgba(148, 148, 154, 0.95)
+  font-size: clamp(0.625rem, 0.74vw, 0.6875rem)
   font-weight: 450
-  line-height: 1.42
-  max-width: clamp(11.75rem, 74%, 15rem)
+  line-height: 1.45
+  max-width: clamp(11.5rem, 74%, 14.5rem)
 
 .finalResultHeroActions
-  margin-top: clamp(0.375rem, 0.65vw, 0.5rem)
+  margin-top: clamp(0.3125rem, 0.6vw, 0.4375rem)
 
 .finalResultHeroCta
   width: auto
   max-width: none
   flex-shrink: 0
+  min-height: 2.25rem !important
+  padding: 0 0.875rem !important
+  border-radius: 0.5625rem !important
+  font-size: 0.6875rem !important
+  letter-spacing: 0.1em !important
 
 .finalResultHeroCtaIconWrap
   display: inline-flex
@@ -1182,8 +955,8 @@
 
 .finalResultHeroBlocked
   margin: 0
-  padding: 0.4375rem 0.875rem 0.6875rem
-  color: $ds-text-muted
+  padding: 0.375rem 0.8125rem 0.625rem
+  color: rgba(148, 148, 154, 0.88)
   font-size: 0.625rem
   line-height: 1.45
 
@@ -1192,8 +965,8 @@
   z-index: 5
   display: grid
   place-items: center
-  width: clamp(4rem, 16.8vw, 5.2rem)
-  height: clamp(4rem, 16.8vw, 5.2rem)
+  width: clamp(3.75rem, 16vw, 4.875rem)
+  height: clamp(3.75rem, 16vw, 4.875rem)
   flex: 0 0 auto
   overflow: visible
   align-self: center
@@ -1204,8 +977,8 @@
   position: absolute
   inset: -12%
   border-radius: 50%
-  background: radial-gradient(circle at 52% 42%, rgba(255, 255, 255, 0.14), rgba(192, 192, 196, 0.06) 38%, transparent 72%)
-  filter: blur(0.72rem)
+  background: radial-gradient(circle at 52% 42%, rgba(255, 255, 255, 0.12), rgba(192, 192, 196, 0.05) 38%, transparent 72%)
+  filter: blur(0.65rem)
   pointer-events: none
 
 .finalResultVisualShell
@@ -1218,165 +991,16 @@
   border: 0
   border-radius: 0
   box-shadow: none
-  filter: drop-shadow(0 1rem 1.65rem rgba(0, 0, 0, 0.52)) drop-shadow(0 0 0.85rem rgba(255, 255, 255, 0.08))
+  filter: drop-shadow(0 0.875rem 1.5rem rgba(0, 0, 0, 0.48)) drop-shadow(0 0 0.625rem rgba(255, 255, 255, 0.06))
 
 .finalResultVisualGlyph
   width: 100%
   height: 100%
   overflow: visible
 
-.quickShortcutsCard
-  border-color: $ds-glass-stroke
-  gap: 0.75rem
-
-.quickShortcutsHeader
-  display: flex
-  align-items: center
-  gap: 0.5rem
-
-.quickShortcutsTitleRow
-  display: flex
-  align-items: center
-  gap: 0.5rem
-  min-width: 0
-  justify-content: flex-start
-
-.quickShortcutsTitle
-  margin: 0
-  color: rgba(196, 196, 200, 0.78)
-  font-size: 0.625rem
-  font-weight: 800
-  letter-spacing: 0.16em
-  text-transform: uppercase
-
-.quickShortcutsGrid
-  display: grid
-  grid-template-columns: repeat(2, minmax(0, 1fr))
-  gap: 0.5rem
-
-.quickShortcutBtn
-  display: flex
-  flex-direction: column
-  align-items: center
-  justify-content: center
-  gap: 0.5rem
-  min-height: 4.875rem
-  padding: 0.75rem 0.5rem
-  border: 0.0625rem solid $ds-glass-stroke
-  border-radius: $ds-radius-sm
-  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.05), transparent 58%), linear-gradient(180deg, rgba(36, 36, 38, 0.68), rgba(20, 20, 22, 0.88))
-  color: $ds-text-secondary
-  font: inherit
-  font-size: 0.5625rem
-  font-weight: 600
-  line-height: 1.2
-  letter-spacing: 0.12em
-  text-transform: uppercase
-  cursor: pointer
-  appearance: none
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04)
-  transition: background 220ms cubic-bezier(0.22, 1, 0.36, 1), border-color 220ms ease, color 220ms ease, box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1)
-
-  &:hover,
-  &:focus-visible
-    border-color: rgba(216, 214, 228, 0.24)
-    background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08), transparent 58%), linear-gradient(180deg, rgba(44, 44, 48, 0.72), rgba(28, 28, 32, 0.9))
-    color: $ds-text-primary
-    box-shadow: 0 0.5rem 1.125rem rgba(0, 0, 0, 0.32), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
-    outline: none
-
-    .quickShortcutBtnIcon
-      color: rgba(236, 235, 244, 0.92)
-
-  &:active
-    background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.05), transparent 58%), linear-gradient(180deg, rgba(38, 38, 42, 0.76), rgba(24, 24, 28, 0.92))
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04)
-
-.quickShortcutBtnIcon
-  width: 1.875rem
-  height: 1.875rem
-  flex: 0 0 auto
-  color: $ds-text-muted
-  transition: color 220ms ease
-
-@media (max-width: 64rem)
-  .open
-    width: min(24rem, calc(100vw - 1rem))
-
-.content
-  display: grid
-  grid-auto-rows: min-content
-  flex: 1
-  gap: $sidebar-section-gap
-  align-content: start
-  min-height: 0
-  overflow-y: auto
-  overflow-x: hidden
-  padding: 0 1.125rem 1.125rem
-  scrollbar-width: thin
-  scrollbar-color: rgba(255, 255, 255, 0.22) transparent
-  overscroll-behavior: contain
-
-  &::-webkit-scrollbar
-    width: 0.375rem
-
-  &::-webkit-scrollbar-track
-    background: transparent
-
-  &::-webkit-scrollbar-thumb
-    border-radius: 62.4375rem
-    background: rgba(255, 255, 255, 0.22)
-
-.card
-  display: grid
-  gap: 0.625rem
-  width: 100%
-  max-width: 100%
-  min-width: 0
-  padding: $sidebar-card-padding
-  border: 0.0625rem solid $ds-line-soft
-  border-radius: $sidebar-card-radius
-  background: $ds-gradient-card-quiet
-  box-shadow: $ds-shadow-card-soft
-  backdrop-filter: blur($ds-blur-glass)
-  -webkit-backdrop-filter: blur($ds-blur-glass)
-
-.progressCard
-  width: 100%
-  max-width: 100%
-  border-color: $ds-line-medium
-  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08), transparent 42%), $ds-gradient-card-quiet
-
-.sectionKicker
-  margin: 0
-  color: $ds-text-muted
-  font-size: 0.625rem
-  font-weight: 800
-  letter-spacing: 0.17em
-  text-transform: uppercase
-
-.sectionTitle
-  margin: 0
-  color: $color-text
-  font-size: 0.9375rem
-  font-weight: 650
-  line-height: 1.3
-
-.sectionText
-  margin: 0
-  color: $ds-text-secondary
-  font-size: 0.8125rem
-  line-height: 1.55
-
-.sectionHint
-  margin: 0
-  color: $color-text
-  font-size: 0.75rem
-  line-height: 1.5
-  padding: 0.625rem 0.75rem
-  border-left: 0.125rem solid color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 36%, transparent)
-  border-radius: $ds-radius-sm
-  background: rgba(255, 255, 255, 0.03)
+// ═══════════════════════════════════════════════════════════════════════════════
+// PRESERVED — AÇÕES DA ETAPA + ORGANIZAÇÃO DO CANVAS (do not modify)
+// ═══════════════════════════════════════════════════════════════════════════════
 
 .sidebarCta
   width: 100%
@@ -1458,277 +1082,59 @@
     border-color: color-mix(in srgb, var(--stage-accent) 52%, transparent)
     background: linear-gradient(180deg, color-mix(in srgb, var(--stage-accent) 28%, transparent), rgba(255, 255, 255, 0.04))
 
-.sidebarCtaRow
-  display: flex
-  width: 100%
-  gap: 0.625rem
-
-  .sidebarCta
-    flex: 1
-    min-width: 0
-
-.sidebarCtaSpaced
-  margin-top: 0.625rem
-
-.contextActions
-  display: flex
-  flex-wrap: wrap
-  gap: 0.625rem
-  margin-top: 0.25rem
-
-  .sidebarCta
-    width: auto
-    flex: 1 1 calc(50% - 0.3125rem)
-    min-width: 0
-
-.timeline
-  display: grid
-  gap: 0.5rem
-  margin: 0.125rem 0 0.25rem
-
-.stageAccordion
+.stageActionCard
   width: 100%
   max-width: 100%
-  border: 0.0625rem solid $color-border
-  border-radius: 0.875rem
-  background: rgba(255, 255, 255, 0.026)
-  overflow: hidden
+  border-radius: $sidebar-card-radius
+  padding: $sidebar-card-padding
+  border-color: var(--stage-border, #{$color-border})
+  background: radial-gradient(circle at top left, var(--stage-soft, rgba(139, 124, 255, 0.12)), transparent 42%), $ds-gradient-card-quiet
 
-.stageSummary
-  display: grid
-  grid-template-columns: auto minmax(0, 1fr) auto auto
-  align-items: center
-  gap: 0.625rem
-  min-width: 0
-  padding: 0.625rem
-  cursor: pointer
-  list-style: none
-
-  &::-webkit-details-marker
-    display: none
-
-.stageSummaryCopy
-  display: grid
-  gap: 0.125rem
-  min-width: 0
-  overflow: hidden
-
-  strong
-    display: block
-    color: $color-text
-    font-size: 0.75rem
-    line-height: 1.25
-    overflow: hidden
-    text-overflow: ellipsis
-    white-space: nowrap
-
-  small
-    display: block
-    color: $ds-text-muted
-    font-size: 0.6875rem
-    line-height: 1.35
-    overflow: hidden
-    text-overflow: ellipsis
-    white-space: nowrap
-
-.timelineChevronButton
-  display: inline-flex
-  align-items: center
-  justify-content: center
-  width: 1.25rem
-  height: 1.25rem
-  flex: 0 0 auto
-  flex-shrink: 0
-  justify-self: end
-  align-self: center
-  color: rgba(244, 247, 251, 0.52)
-  opacity: 0.92
-  background: transparent
-  border: 0
-  padding: 0
-  transform: none
-
-.timelineChevronIcon
-  width: 1rem
-  height: 1rem
-  display: block
-  transition: transform 180ms ease, color 180ms ease
-  transform: rotate(0deg)
-
-.timelineChevronOpen
-  color: var(--stage-accent, #{$color-accent})
-  opacity: 1
-
-  .timelineChevronIcon
-    transform: rotate(180deg)
-
-.stageDot
-  display: inline-grid
-  place-items: center
-  width: 1.375rem
-  height: 1.375rem
-  border: 0.0625rem solid var(--stage-border, #{$color-border})
-  border-radius: 62.4375rem
-  color: var(--stage-accent, #{$color-accent})
-  font-size: 0.6875rem
-  font-weight: 800
-  background: rgba(255, 255, 255, 0.03)
-
-.stageCount
-  flex-shrink: 0
-  justify-self: end
-  min-width: 1.125rem
-  color: var(--stage-accent, #{$color-accent})
-  font-size: 0.75rem
-  font-weight: 800
-  line-height: 1
-  text-align: right
-  white-space: nowrap
-  font-variant-numeric: tabular-nums
-
-.stageBody
-  display: grid
-  gap: 0.5rem
-  padding: 0 0.75rem 0.75rem 2.625rem
-
-  p
+  .sectionKicker
     margin: 0
     color: $ds-text-muted
+    font-size: 0.625rem
+    font-weight: 800
+    letter-spacing: 0.17em
+    text-transform: uppercase
+
+  .sectionText
+    margin: 0
+    color: $ds-text-secondary
+    font-size: 0.8125rem
+    line-height: 1.55
+
+  .sectionHint
+    margin: 0
+    color: $color-text
     font-size: 0.75rem
     line-height: 1.5
+    padding: 0.625rem 0.75rem
+    border-left: 0.125rem solid color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 36%, transparent)
+    border-radius: $ds-radius-sm
+    background: rgba(255, 255, 255, 0.03)
 
-  ul
-    margin: 0
-    padding-left: 1rem
-    color: $color-text
-    font-size: 0.75rem
-    line-height: 1.45
+.stageActionCard .dragCard
+  width: min(70%, 18rem)
+  inline-size: min(70%, 18rem)
+  margin-inline: auto
+  padding-block: 1rem
+  border-color: var(--stage-border, color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 42%, transparent))
+  background: radial-gradient(circle at top left, var(--stage-soft, rgba(139, 124, 255, 0.16)), transparent 42%), linear-gradient(180deg, rgba(42, 42, 44, 0.74), rgba(22, 22, 24, 0.92))
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease
 
-.stagecompleted
-  border-color: $ds-stage-outcome-line
+  &:hover
+    transform: translateY(-0.1875rem)
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.28), 0 0 0 0.0625rem rgba(255, 255, 255, 0.18)
+    border-color: color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 42%, transparent)
 
-.stagecurrent
-  border-color: var(--stage-border, color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 34%, transparent))
-  background: color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 9%, rgba(255, 255, 255, 0.026))
-
-.stageblocked
-  opacity: 0.72
-
-.blockFormsCard
-  display: grid
-  gap: 0
-  width: 100%
-  max-width: 100%
-  padding: 0.75rem
-
-.blockFormGroup
-  display: grid
-  gap: 0.625rem
-
-.blockFormGroup + .blockFormGroup
-  margin-top: 0.875rem
-
-.blockFormGroupTitle
-  margin: 0
-  color: rgba(245, 247, 251, 0.58)
-  font-size: 0.625rem
-  font-weight: 700
-  line-height: 1
-  letter-spacing: 0.22em
+.stageActionCard .dragCard strong
   text-transform: uppercase
+  letter-spacing: 0.06em
 
-.sidebarAccordion
-  border: 0.0625rem solid var(--stage-border, #{$color-border})
-  border-radius: $ds-radius-md
-  background: $ds-gradient-card-quiet
-  overflow: hidden
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.03)
-
-.sidebarAccordionHeader
-  appearance: none
-  display: flex
-  align-items: center
-  justify-content: space-between
-  gap: 0.75rem
-  width: 100%
-  padding: 0.8125rem 0.875rem
-  border: 0
-  background: transparent
-  color: $color-text
-  font: inherit
-  font-size: 0.8125rem
-  font-weight: 650
-  text-align: left
-  cursor: pointer
-  transition: background 180ms ease, color 180ms ease
-
-  &:hover,
-  &:focus-visible
-    background: rgba(255, 255, 255, 0.04)
-    outline: none
-
-.blockAccordionHeader
-  background: transparent
-
-  &:hover,
-  &:focus-visible
-    background: transparent
-    color: rgba(255, 255, 255, 0.96)
-
-  &:hover .sidebarAccordionChevron,
-  &:focus-visible .sidebarAccordionChevron
-    color: var(--stage-accent)
-    opacity: 1
-
-.sidebarAccordionTitle
-  line-height: 1.35
-
-.sidebarAccordionChevron
-  flex: 0 0 auto
-  width: 1rem
-  height: 1rem
+.stageActionCard .dragIcon
   color: var(--stage-accent, #{$color-accent})
-  opacity: 0.88
-  transition: transform 220ms ease, opacity 180ms ease
-
-.sidebarAccordionChevronOpen
-  transform: rotate(180deg)
-
-.sidebarAccordionPanel
-  display: grid
-  grid-template-rows: 0fr
-  opacity: 0
-  transition: grid-template-rows 260ms ease, opacity 220ms ease
-
-.sidebarAccordionPanelOpen
-  grid-template-rows: 1fr
-  opacity: 1
-
-.sidebarAccordionContent
-  overflow: hidden
-  min-height: 0
-
-  > *
-    padding: 0 0.875rem 0.875rem
-
-.detailLabel
-  margin: 0
-  color: $ds-text-muted
-  font-size: 0.625rem
-  font-weight: 800
-  letter-spacing: 0.12em
-  text-transform: uppercase
-
-.detailValue
-  margin: 0
-  color: $ds-text-secondary
-  font-size: 0.8125rem
-  line-height: 1.5
-
-.edgeDetails,
-.markerBlock
-  display: grid
-  gap: 0.5625rem
+  border: 0.0625rem solid var(--stage-border, color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 34%, transparent))
 
 .dragCard
   appearance: none
@@ -1783,31 +1189,6 @@
   stroke-dasharray: 4 3
   opacity: 0.78
 
-
-.stageActionCard
-  width: 100%
-  max-width: 100%
-  border-color: var(--stage-border, #{$color-border})
-  background: radial-gradient(circle at top left, var(--stage-soft, rgba(139, 124, 255, 0.12)), transparent 42%), $ds-gradient-card-quiet
-
-.stageActionCard .dragCard
-  width: min(70%, 18rem)
-  inline-size: min(70%, 18rem)
-  margin-inline: auto
-  padding-block: 1rem
-  border-color: var(--stage-border, color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 42%, transparent))
-  background: radial-gradient(circle at top left, var(--stage-soft, rgba(139, 124, 255, 0.16)), transparent 42%), linear-gradient(180deg, rgba(42, 42, 44, 0.74), rgba(22, 22, 24, 0.92))
-  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease
-
-  &:hover
-    transform: translateY(-0.1875rem)
-    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.28), 0 0 0 0.0625rem rgba(255, 255, 255, 0.18)
-    border-color: color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 42%, transparent)
-
-.stageActionCard .dragIcon
-  color: var(--stage-accent, #{$color-accent})
-  border: 0.0625rem solid var(--stage-border, color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 34%, transparent))
-
 .canvasOrganizationCard
   display: grid
   gap: 0.75rem
@@ -1819,9 +1200,14 @@
   overflow: visible
   visibility: visible
   opacity: 1
+  border-radius: $sidebar-card-radius
   border-color: $ds-line-soft
   background: $ds-gradient-card-quiet
   box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04)
+  container-type: inline-size
+
+  &::before
+    display: none
 
 .canvasOrganizationHeader
   appearance: none
@@ -1946,6 +1332,6 @@
   color: color-mix(in srgb, var(--stage-accent) 78%, white 22%)
   opacity: 0.82
 
-.stageActionCard .dragCard strong
-  text-transform: uppercase
-  letter-spacing: 0.06em
+@media (max-width: 64rem)
+  .open
+    width: min(24rem, calc(100vw - 1rem))

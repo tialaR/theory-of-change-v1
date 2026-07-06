@@ -480,8 +480,8 @@ function QuickShortcutButton({
       type="button"
       className={styles.quickShortcutBtn}
       onClick={onClick}
-      whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.015 }}
-      whileTap={shouldReduceMotion ? undefined : { scale: 0.985 }}
+      whileHover={shouldReduceMotion ? undefined : { y: -2, scale: 1.008 }}
+      whileTap={shouldReduceMotion ? undefined : { scale: 0.988 }}
       transition={QUICK_SHORTCUT_SPRING}
     >
       {icon}
