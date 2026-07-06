@@ -43,3 +43,87 @@ export const TDM_STAGE_THEME: Record<
 export function getTdmStageTheme(stage: TdmStage) {
   return TDM_STAGE_THEME[stage];
 }
+
+const STAGE_CRYSTAL_TOKEN_KEYS: Record<TdmStage, { accent: string; glow: string }> = {
+  input: { accent: '--stage-accent-insumos', glow: '--stage-glow-insumos' },
+  activity: { accent: '--stage-accent-atividades', glow: '--stage-glow-atividades' },
+  output: { accent: '--stage-accent-produtos', glow: '--stage-glow-produtos' },
+  outcome: { accent: '--stage-accent-resultados', glow: '--stage-glow-resultados' }
+};
+
+export function getTdmStageCrystalCssVars(stage: TdmStage): Record<string, string> {
+  const theme = getTdmStageTheme(stage);
+  const keys = STAGE_CRYSTAL_TOKEN_KEYS[stage];
+
+  return {
+    [keys.accent]: theme.accent,
+    [keys.glow]: theme.glow
+  };
+}
+
+export const TDM_CRYSTAL_SILVER_PALETTE = {
+  deep: '#111827',
+  mid: '#6B7280',
+  bright: '#D1D5DB',
+  wire: 'rgba(209, 213, 219, 0.34)',
+  wireBack: 'rgba(17, 24, 39, 0.28)',
+  wireBright: 'rgba(243, 244, 246, 0.58)',
+  outline: 'rgba(229, 231, 235, 0.72)',
+  nodeCore: 'rgba(229, 231, 235, 0.88)',
+  nodeGlow: 'rgba(156, 163, 175, 0.28)',
+  specular: 'rgba(255, 255, 255, 0.88)'
+} as const;
+
+const TDM_STAGE_CRYSTAL_TINT: Record<
+  TdmStage,
+  {
+    accent: string;
+    accentSoft: string;
+    glow: string;
+    shadow: string;
+  }
+> = {
+  input: {
+    accent: 'rgba(150, 116, 255, 0.95)',
+    accentSoft: 'rgba(150, 116, 255, 0.22)',
+    glow: 'rgba(150, 116, 255, 0.28)',
+    shadow: 'rgba(96, 72, 180, 0.32)'
+  },
+  activity: {
+    accent: 'rgba(76, 144, 255, 0.95)',
+    accentSoft: 'rgba(76, 144, 255, 0.2)',
+    glow: 'rgba(76, 144, 255, 0.26)',
+    shadow: 'rgba(36, 96, 196, 0.3)'
+  },
+  output: {
+    accent: 'rgba(226, 156, 58, 0.95)',
+    accentSoft: 'rgba(226, 156, 58, 0.2)',
+    glow: 'rgba(226, 156, 58, 0.24)',
+    shadow: 'rgba(160, 96, 24, 0.28)'
+  },
+  outcome: {
+    accent: 'rgba(74, 194, 116, 0.95)',
+    accentSoft: 'rgba(74, 194, 116, 0.2)',
+    glow: 'rgba(74, 194, 116, 0.24)',
+    shadow: 'rgba(36, 128, 72, 0.28)'
+  }
+};
+
+export function getTdmStageCrystalPalette(_stage: TdmStage) {
+  return TDM_CRYSTAL_SILVER_PALETTE;
+}
+
+export function getTdmStageCrystalTint(stage: TdmStage) {
+  return TDM_STAGE_CRYSTAL_TINT[stage];
+}
+
+export function getTdmStageCrystalCssVarsExtended(stage: TdmStage): Record<string, string> {
+  const tint = getTdmStageCrystalTint(stage);
+
+  return {
+    '--stage-crystal-accent': tint.accent,
+    '--stage-crystal-accent-soft': tint.accentSoft,
+    '--stage-crystal-glow': tint.glow,
+    '--stage-crystal-shadow': tint.shadow
+  };
+}

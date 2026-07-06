@@ -133,3 +133,104 @@ $sidebar-card-radius: $ds-radius-lg
 $sidebar-card-padding: clamp(0.875rem, 0.95vw, 1.125rem)
 $sidebar-section-gap: clamp(0.75rem, 0.85vw, 1rem)
 
+// Sidebar V2 visual aliases (additive — keeps existing $ds-stage-* tokens intact)
+$stage-1: $ds-stage-input
+$stage-1-soft: $ds-stage-input-soft
+$stage-1-line: $ds-stage-input-line
+$stage-2: $ds-stage-activity
+$stage-2-soft: $ds-stage-activity-soft
+$stage-2-line: $ds-stage-activity-line
+$stage-3: $ds-stage-output
+$stage-3-soft: $ds-stage-output-soft
+$stage-3-line: $ds-stage-output-line
+$stage-4: $ds-stage-outcome
+$stage-4-soft: $ds-stage-outcome-soft
+$stage-4-line: $ds-stage-outcome-line
+$ds-card-gradient: $ds-gradient-card-quiet
+$ds-btn-radius: 9px
+
+=tdm-stage-crystal-vars
+  --stage-accent-insumos: #{$stage-1}
+  --stage-accent-atividades: #{$stage-2}
+  --stage-accent-produtos: #{$stage-3}
+  --stage-accent-resultados: #{$stage-4}
+  --stage-glow-insumos: #{$stage-1-soft}
+  --stage-glow-atividades: #{$stage-2-soft}
+  --stage-glow-produtos: #{$stage-3-soft}
+  --stage-glow-resultados: #{$stage-4-soft}
+
+=tdm-icon-vars
+  --tdm-icon-tile-size: 40px
+  --tdm-icon-tile-radius: 10px
+  --tdm-icon-size: 22px
+  --tdm-icon-stroke: 3px
+  --tdm-icon-color: #fafafa
+  --tdm-icon-bg: rgba(92, 92, 96, 0.92)
+  --tdm-icon-bg-hover: rgba(108, 108, 114, 0.96)
+
+=tdm-section-icon-vars
+  --tdm-section-icon-tile-size: 1.625rem
+  --tdm-section-icon-radius: 0.5rem
+  --tdm-section-icon-bg: rgba(92, 92, 96, 0.92)
+  --tdm-section-icon-color: #fafafa
+  --tdm-section-icon-size: 1.125rem
+  --tdm-section-icon-stroke: 1.75
+
+=tdm-button-vars
+  --tdm-button-height: 2.75rem
+  --tdm-button-radius: 0.625rem
+  --tdm-button-border-width: 0.0625rem
+  --tdm-button-padding-x: 1rem
+  --tdm-button-font-size: 0.8125rem
+  --tdm-button-font-weight: 600
+  --tdm-button-letter-spacing: 0.055em
+  --tdm-button-icon-size: 1rem
+  --tdm-button-gap: 0.5rem
+
+=ds-editable-field
+  border: 0.0625rem solid $ds-glass-stroke
+  background: rgba(0, 0, 0, 0.26)
+  outline: none
+  transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease
+
+=ds-editable-field-hover
+  border-color: rgba(255, 255, 255, 0.18)
+  background: rgba(255, 255, 255, 0.055)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), 0 0.75rem 1.5rem rgba(0, 0, 0, 0.16)
+
+=ds-editable-field-focus-neutral
+  border-color: rgba(255, 255, 255, 0.17)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.045), 0 0 0 0.0625rem rgba(255, 255, 255, 0.035)
+  outline: none
+
+=ds-editable-field-focus-stage
+  border-color: color-mix(in srgb, var(--stage-accent, #{$ds-glass-stroke-strong}) 24%, $ds-glass-stroke-strong)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.045), 0 0 0 0.0625rem color-mix(in srgb, var(--stage-accent, #{$stage-1}) 12%, transparent)
+  outline: none
+
+=ds-noir-vars
+  +tdm-icon-vars
+  +tdm-section-icon-vars
+  +tdm-button-vars
+  +tdm-stage-crystal-vars
+  --ds-bg-page: #{$ds-bg-page}
+  --ds-bg-page-deep: #{$ds-bg-page-deep}
+  --ds-bg-surface: #{$ds-bg-surface}
+  --ds-bg-surface-soft: #{$ds-bg-surface-soft}
+  --ds-bg-surface-raised: #{$ds-bg-surface-raised}
+  --ds-bg-surface-hover: #{$ds-bg-surface-hover}
+  --ds-glass-dark: #{$ds-glass-dark}
+  --ds-glass-soft: #{$ds-glass-soft}
+  --ds-glass-light: #{$ds-glass-light}
+  --ds-glass-highlight: #{$ds-glass-highlight}
+  --ds-glass-stroke: #{$ds-glass-stroke}
+  --ds-glass-stroke-strong: #{$ds-glass-stroke-strong}
+  --ds-text-primary: #{$ds-text-primary}
+  --ds-text-secondary: #{$ds-text-secondary}
+  --ds-text-muted: #{$ds-text-muted}
+  --ds-text-subtle: #{$ds-text-subtle}
+  --ds-stage-input: #{$stage-1}
+  --ds-stage-activity: #{$stage-2}
+  --ds-stage-output: #{$stage-3}
+  --ds-stage-outcome: #{$stage-4}
+

@@ -1,18 +1,37 @@
 'use client';
 
-import { useId, useMemo, useState, type CSSProperties, type DragEvent, type ReactNode } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+  type DragEvent,
+  type ReactNode,
+  type RefObject
+} from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 import { Surface } from '@/shared/ui/surface/surface';
+import { TdmButton, tdmButtonClassName } from '@/shared/ui/tdm-button/tdm-button';
+import buttonStyles from '@/shared/ui/tdm-button/tdm-button.module.sass';
+import { TdmAnchoredTooltip } from '@/shared/ui/tooltip/tdm-anchored-tooltip';
 import type { TdmNodeDraft } from '../../domain/tdm-types';
 import { TDM_STAGE_ORDER, type TdmStage } from '../../domain/tdm-stages';
 import { getTdmStageTheme } from '../../domain/tdm-theme';
 import type { StageCreation } from '../../utils/stage-creation';
-import {
-  TdmBlockFormFields,
-  TdmFormField
-} from '../form-field/tdm-form-field';
+import { TdmBlockFormFields, TdmFormField } from '../form-field/tdm-form-field';
 import fieldStyles from '../form-field/tdm-form-field.module.sass';
+import { TdmSectionIcon } from '../tdm-section-icon/tdm-section-icon';
+import { TdmStageCrystalIcon } from '../stage-crystal-icon/tdm-stage-crystal-icon';
+import { FinalResultHeroWaves, FinalResultVisual } from './final-result-visual';
+import { TheoryHeaderForm, THEORY_DEFAULT_DESCRIPTION } from './theory-header-form';
+import { SidebarToggleIcon } from './sidebar-toggle-icon';
+import { V1CanvasOrganizationAccordion, V1StageActionSection } from './v1-preserved-sidebar-sections';
 import styles from './tdm-sidebar.module.sass';
+
+export { SidebarToggleIcon };
 
 export type ExportFormat = 'pdf' | 'png' | 'jpeg' | 'svg';
 
@@ -103,7 +122,12 @@ const STAGE_GUIDE: Record<
     summary: 'Mudanças esperadas após as entregas.',
     technical:
       'Resultados são mudanças em comportamento, prática, capacidade ou condição. Eles mostram o que deve melhorar depois que produtos foram entregues.',
-    examples: ['escolas acompanham melhor estudantes', 'professores usam dados', 'estudantes frequentam mais aulas', 'gestão toma decisões mais rápidas']
+    examples: [
+      'escolas acompanham melhor estudantes',
+      'professores usam dados',
+      'estudantes frequentam mais aulas',
+      'gestão toma decisões mais rápidas'
+    ]
   }
 };
 
@@ -149,82 +173,137 @@ const STAGE_EDIT_LABELS: Record<TdmStage, string> = {
   outcome: 'Editar resultado selecionado'
 };
 
-export function SidebarToggleIcon({
-  direction,
-  className
-}: {
-  direction: 'left' | 'right';
-  className?: string;
-}) {
-  const gradientId = `sidebarToggleGradient-${direction}`;
+const STAGE_SINGULAR: Record<TdmStage, string> = {
+  input: 'insumo',
+  activity: 'atividade',
+  output: 'produto',
+  outcome: 'resultado'
+};
 
+const STAGE_ADVANCE_HINTS: Record<TdmStage, string> = {
+  input: 'Adicione pelo menos 1 insumo para avançar.',
+  activity: 'Adicione pelo menos 1 atividade para avançar.',
+  output: 'Adicione pelo menos 1 produto para avançar.',
+  outcome: 'Adicione pelo menos 1 resultado para concluir.'
+};
+
+const THEORY_PROGRESS_ITEM_GOAL = 10;
+
+function getStageLockTooltip(stage: TdmStage) {
+  const stageIndex = TDM_STAGE_ORDER.indexOf(stage);
+  if (stageIndex <= 0) {
+    return 'Esta etapa será liberada após preencher a etapa anterior.';
+  }
+
+  const previousStage = TDM_STAGE_ORDER[stageIndex - 1];
+  return `Conclua ao menos 1 ${STAGE_SINGULAR[previousStage]} para desbloquear esta etapa.`;
+}
+
+function stripStageNumber(title: string) {
+  return title.replace(/^\d+\.\s*/, '');
+}
+
+function PremiumGlassGlyph() {
   return (
-    <svg
-      viewBox="0 0 64 64"
-      aria-hidden="true"
-      className={[styles.sidebarToggleSvg, className].filter(Boolean).join(' ')}
-      fill="none"
-    >
-      <rect
-        x="4"
-        y="4"
-        width="56"
-        height="56"
-        rx="16"
-        fill={`url(#${gradientId})`}
-        stroke="rgba(196, 181, 253, 0.22)"
-        strokeWidth="1.5"
+    <svg aria-hidden="true" viewBox="0 0 64 64" className={styles.premiumGlassGlyph} fill="none">
+      <path
+        d="M32 6 50 16.2v22.6L32 58 14 38.8V16.2L32 6Z"
+        fill="url(#glassGlyphFill)"
+        stroke="currentColor"
+        strokeWidth="1.35"
+        strokeLinejoin="round"
       />
-      {direction === 'right' ? (
-        <>
-          <path d="M38 4V60" stroke="rgba(255,255,255,0.18)" strokeWidth="3" />
-          <path
-            d="M27 22L37 32L27 42"
-            stroke="rgba(255,255,255,0.92)"
-            strokeWidth="5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </>
-      ) : (
-        <>
-          <path d="M22 4V60" stroke="rgba(255,255,255,0.18)" strokeWidth="3" />
-          <path
-            d="M38 22L28 32L38 42"
-            stroke="rgba(255,255,255,0.92)"
-            strokeWidth="5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </>
-      )}
+      <path d="M32 6v52M14 16.2l18 12.4 18-12.4M14 38.8l18-10.2 18 10.2" stroke="currentColor" strokeWidth="1.1" opacity="0.55" />
+      <path d="M24 10.5 14 38.8M40 10.5 50 38.8M32 18.6V45.8" stroke="currentColor" strokeWidth="0.85" opacity="0.28" />
       <defs>
-        <linearGradient id={gradientId} x1="32" y1="4" x2="32" y2="60" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#2a2638" />
-          <stop offset="1" stopColor="#151821" />
+        <linearGradient id="glassGlyphFill" x1="32" y1="6" x2="32" y2="58" gradientUnits="userSpaceOnUse">
+          <stop stopColor="currentColor" stopOpacity="0.22" />
+          <stop offset="1" stopColor="currentColor" stopOpacity="0.04" />
         </linearGradient>
       </defs>
     </svg>
   );
 }
 
-function StageDragIcon() {
+function SectionHeader({
+  label,
+  accent,
+  stage,
+  crystalAnimated = false,
+  crystalEmphasis = 'subtle',
+  crystalSize = 'sm'
+}: {
+  label: string;
+  accent?: string;
+  stage?: TdmStage | null;
+  crystalAnimated?: boolean;
+  crystalEmphasis?: 'subtle' | 'default' | 'hero';
+  crystalSize?: 'xs' | 'sm' | 'md' | 'lg';
+}) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 32 32" focusable="false" className={styles.dragGlyph}>
-      <rect x="5" y="13" width="12" height="12" rx="2.5" />
-      <rect x="14" y="5" width="13" height="13" rx="2.5" className={styles.dragGhost} />
-      <path d="M14 16 25 27" />
-      <path d="m18.5 26.5 6.5.5-.5-6.5" />
-    </svg>
+    <div className={styles.sectionHeader}>
+      <span
+        className={styles.sectionGlassGlyph}
+        aria-hidden="true"
+        style={accent ? ({ color: accent } as CSSProperties) : undefined}
+      >
+        {stage ? (
+          <TdmStageCrystalIcon
+            stage={stage}
+            size={crystalSize}
+            emphasis={crystalEmphasis}
+            animated={crystalAnimated}
+          />
+        ) : (
+          <PremiumGlassGlyph />
+        )}
+      </span>
+      <p className={styles.sectionKicker}>{label}</p>
+    </div>
+  );
+}
+
+function ProgressRing({ percent, accent }: { percent: number; accent: string }) {
+  const radius = 17;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (percent / 100) * circumference;
+
+  return (
+    <div className={styles.progressRingWrap} style={{ '--stage-accent': accent } as CSSProperties}>
+      <svg className={styles.progressRing} viewBox="0 0 48 48" aria-hidden="true">
+        <circle className={styles.progressRingTrackOuter} cx="24" cy="24" r="21" />
+        <circle className={styles.progressRingTrack} cx="24" cy="24" r={radius} />
+        <circle
+          className={styles.progressRingFill}
+          cx="24"
+          cy="24"
+          r={radius}
+          stroke={accent}
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+        />
+      </svg>
+    </div>
+  );
+}
+
+function BlockFormGroupHeader({ label, kind }: { label: string; kind: 'create' | 'edit' }) {
+  return (
+    <div className={styles.blockFormGroupHeader}>
+      <TdmSectionIcon variant={kind === 'create' ? 'createBlock' : 'editBlock'} />
+      <p className={styles.blockFormGroupTitle}>{label}</p>
+    </div>
   );
 }
 
 function AccordionChevron({
   isOpen,
-  className
+  className,
+  accentWhenOpen = false
 }: {
   isOpen: boolean;
   className?: string;
+  accentWhenOpen?: boolean;
 }) {
   return (
     <svg
@@ -233,6 +312,7 @@ function AccordionChevron({
       className={[
         styles.sidebarAccordionChevron,
         isOpen ? styles.sidebarAccordionChevronOpen : '',
+        accentWhenOpen && isOpen ? styles.sidebarAccordionChevronAccent : '',
         className
       ]
         .filter(Boolean)
@@ -244,10 +324,25 @@ function AccordionChevron({
   );
 }
 
-function TimelineChevron({ isOpen }: { isOpen: boolean }) {
+function TimelineChevron({
+  isOpen,
+  isActive = false,
+  isBlocked = false
+}: {
+  isOpen: boolean;
+  isActive?: boolean;
+  isBlocked?: boolean;
+}) {
   return (
     <span
-      className={[styles.timelineChevronButton, isOpen ? styles.timelineChevronOpen : ''].filter(Boolean).join(' ')}
+      className={[
+        styles.timelineChevronButton,
+        isOpen ? styles.timelineChevronOpen : '',
+        isActive && !isBlocked ? styles.timelineChevronActive : '',
+        isBlocked ? styles.timelineChevronBlocked : ''
+      ]
+        .filter(Boolean)
+        .join(' ')}
       aria-hidden="true"
     >
       <svg aria-hidden="true" viewBox="0 0 24 24" className={styles.timelineChevronIcon} fill="none">
@@ -257,9 +352,33 @@ function TimelineChevron({ isOpen }: { isOpen: boolean }) {
   );
 }
 
+function TimelineLockIcon({
+  tooltip,
+  boundaryRef
+}: {
+  tooltip: string;
+  boundaryRef?: RefObject<HTMLElement | null>;
+}) {
+  return (
+    <TdmAnchoredTooltip content={tooltip} boundaryRef={boundaryRef}>
+      <span className={styles.stageLockIcon} aria-label={tooltip} tabIndex={0} role="button">
+        <svg aria-hidden="true" viewBox="0 0 16 16" className={styles.stageLockSvg} fill="none">
+          <rect x="3.25" y="7" width="9.5" height="6.75" rx="1.25" stroke="currentColor" strokeWidth="1.25" />
+          <path
+            d="M5.25 7V5.25a2.75 2.75 0 0 1 5.5 0V7"
+            stroke="currentColor"
+            strokeWidth="1.25"
+            strokeLinecap="round"
+          />
+        </svg>
+      </span>
+    </TdmAnchoredTooltip>
+  );
+}
+
 function DuplicateIcon() {
   return (
-    <svg aria-hidden="true" viewBox="0 0 16 16" className={styles.sidebarCtaIcon}>
+    <svg aria-hidden="true" viewBox="0 0 16 16" className={buttonStyles.icon}>
       <rect x="5.5" y="5.5" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.35" />
       <path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5" fill="none" stroke="currentColor" strokeWidth="1.35" />
     </svg>
@@ -268,224 +387,257 @@ function DuplicateIcon() {
 
 function TrashIcon() {
   return (
-    <svg aria-hidden="true" viewBox="0 0 16 16" className={styles.sidebarCtaIcon}>
+    <svg aria-hidden="true" viewBox="0 0 16 16" className={buttonStyles.icon}>
       <path d="M3.5 4.5h9M6 4.5V3.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
       <path d="M4.5 4.5l.5 7.5a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1l.5-7.5" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
-function ColumnsAlignIcon() {
-  return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" className={styles.sidebarCtaIcon} fill="none">
-      <rect x="6" y="5" width="20" height="22" rx="6" stroke="currentColor" strokeWidth="2.2" />
-      <path d="M12 10V22" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-      <path d="M16 10V22" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-      <path d="M20 10V22" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function PencilIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 16 16" className={styles.editTheoryTitleIcon}>
-      <path
-        d="M10.5 2.5 13.5 5.5 5.5 13.5H2.5V10.5L10.5 2.5Z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.35"
-        strokeLinejoin="round"
-      />
-      <path d="M9 4 12 7" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function ClearTitleIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 12 12">
-      <path d="M3 3l6 6M9 3 3 9" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function EyeOpenIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 16 16" className={styles.sidebarCtaIcon}>
-      <path
-        d="M1.5 8s2.5-4.5 6.5-4.5S14.5 8 14.5 8s-2.5 4.5-6.5 4.5S1.5 8 1.5 8Z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.35"
-        strokeLinejoin="round"
-      />
-      <circle cx="8" cy="8" r="2" fill="none" stroke="currentColor" strokeWidth="1.35" />
-    </svg>
-  );
-}
-
-function ResultTrendIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 16 16" className={styles.sidebarCtaIcon}>
-      <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" strokeWidth="1.25" />
-      <path d="M5 10V7.5M8 10V6M11 10V5" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
-      <path d="M4.5 5.5 8 3.5 11.5 5.5" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 function BackArrowIcon() {
   return (
-    <svg aria-hidden="true" viewBox="0 0 16 16" className={styles.sidebarCtaIcon}>
+    <svg aria-hidden="true" viewBox="0 0 16 16" className={buttonStyles.icon}>
       <path d="M10 3.5 5.5 8 10 12.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
-const PREVIEW_MAX_BLOCKS = 5;
+const QUICK_SHORTCUT_SPRING = { type: 'spring' as const, stiffness: 260, damping: 22 };
 
-const STAGE_PREVIEW_CLASS: Record<TdmStage, string> = {
-  input: styles.previewInput,
-  activity: styles.previewActivity,
-  output: styles.previewOutput,
-  outcome: styles.previewOutcome
-};
-
-const PREMIUM_EASE = [0.22, 1, 0.36, 1] as const;
-
-function CanvasAlignmentPreview({ stageCounts }: { stageCounts: Record<TdmStage, number> }) {
-  const shouldReduceMotion = useReducedMotion();
-
-  const columns = useMemo(
-    () =>
-      TDM_STAGE_ORDER.map((stage) => ({
-        stage,
-        count: stageCounts[stage],
-        theme: getTdmStageTheme(stage)
-      })),
-    [stageCounts]
-  );
-
-  const containerTransition = shouldReduceMotion
-    ? { duration: 0.01 }
-    : { duration: 0.24, ease: PREMIUM_EASE };
-
-  const blockTransition = (index: number) =>
-    shouldReduceMotion ? { duration: 0.01 } : { duration: 0.22, delay: index * 0.025, ease: PREMIUM_EASE };
-
-  const blockInitial = shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 6, scale: 0.96 };
-  const blockAnimate = shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 };
-  const blockExit = shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -4, scale: 0.96 };
-
+function ExamplesPreviewIcon() {
   return (
-    <motion.div
-      className={styles.alignmentPreview}
-      aria-label="Prévia do alinhamento por etapas"
-      initial={shouldReduceMotion ? false : { opacity: 0, y: 6 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={containerTransition}
-      whileHover={shouldReduceMotion ? undefined : { scale: 1.008 }}
-    >
-      {columns.map((column) => {
-        const visibleCount = Math.min(column.count, PREVIEW_MAX_BLOCKS);
-        const overflow = column.count > PREVIEW_MAX_BLOCKS ? column.count - PREVIEW_MAX_BLOCKS : 0;
-
-        return (
-          <motion.div
-            key={column.stage}
-            layout
-            className={[styles.alignmentPreviewColumn, STAGE_PREVIEW_CLASS[column.stage]].join(' ')}
-            style={{ '--stage-accent': column.theme.accent } as CSSProperties}
-          >
-            {column.count === 0 ? (
-              <span className={styles.alignmentPreviewBlockEmpty} aria-hidden="true" />
-            ) : (
-              <>
-                <AnimatePresence initial={false}>
-                  {Array.from({ length: visibleCount }).map((_, index) => (
-                    <motion.span
-                      key={`${column.stage}-${index}`}
-                      layout
-                      className={styles.alignmentPreviewBlock}
-                      initial={blockInitial}
-                      animate={blockAnimate}
-                      exit={blockExit}
-                      transition={blockTransition(index)}
-                      whileHover={
-                        shouldReduceMotion
-                          ? undefined
-                          : { y: -1, scale: 1.03, boxShadow: `0 0.4rem 0.85rem color-mix(in srgb, ${column.theme.accent} 28%, transparent)` }
-                      }
-                      aria-hidden="true"
-                    />
-                  ))}
-                </AnimatePresence>
-                <AnimatePresence initial={false}>
-                  {overflow > 0 ? (
-                    <motion.span
-                      key={`${column.stage}-overflow-${overflow}`}
-                      className={styles.alignmentPreviewOverflow}
-                      style={{ '--stage-accent': column.theme.accent } as CSSProperties}
-                      initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.92 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.92 }}
-                      transition={shouldReduceMotion ? { duration: 0.01 } : { duration: 0.18, ease: PREMIUM_EASE }}
-                      aria-hidden="true"
-                    >
-                      +{overflow}
-                    </motion.span>
-                  ) : null}
-                </AnimatePresence>
-              </>
-            )}
-          </motion.div>
-        );
-      })}
-    </motion.div>
+    <svg aria-hidden="true" viewBox="0 0 20 20" className={styles.quickShortcutBtnIcon} fill="none">
+      <path
+        d="M4.5 6.5 10 3.75 15.5 6.5v7L10 16.25 4.5 13.5v-7Z"
+        stroke="currentColor"
+        strokeWidth="1.35"
+        strokeLinejoin="round"
+      />
+      <path d="M10 3.75v12.5M4.5 6.5 10 9.25 15.5 6.5" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" opacity="0.45" />
+    </svg>
   );
 }
 
-function CanvasOrganizationAccordion({
-  id,
-  stageCounts,
-  onOrganize
+function LibraryIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 20 20" className={styles.quickShortcutBtnIcon} fill="none">
+      <path
+        d="M4.25 4.5h4.5a1 1 0 0 1 1 1v10.25H5.25a1 1 0 0 0-1 1V5.5a1 1 0 0 1 1-1Z"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9.75 5.5h4.5a1 1 0 0 1 1 1v10.25h-4.5a1 1 0 0 0-1-1V5.5Z"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+      />
+      <path d="M6.25 7.75h1.5M12.75 7.75h1.5M6.25 10.25h1.5M12.75 10.25h1.5" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" opacity="0.45" />
+    </svg>
+  );
+}
+
+function ModelsGridIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 20 20" className={styles.quickShortcutBtnIcon} fill="none">
+      <rect x="4" y="4" width="5.25" height="5.25" rx="1.25" stroke="currentColor" strokeWidth="1.3" />
+      <rect x="10.75" y="4" width="5.25" height="5.25" rx="1.25" stroke="currentColor" strokeWidth="1.3" />
+      <rect x="4" y="10.75" width="5.25" height="5.25" rx="1.25" stroke="currentColor" strokeWidth="1.3" />
+      <rect x="10.75" y="10.75" width="5.25" height="5.25" rx="1.25" stroke="currentColor" strokeWidth="1.3" />
+    </svg>
+  );
+}
+
+function GuidesDocIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 20 20" className={styles.quickShortcutBtnIcon} fill="none">
+      <path
+        d="M6 3.75h5.5L15.25 7.5v8.75a.75.75 0 0 1-.75.75H6a1.25 1.25 0 0 1-1.25-1.25V5a1.25 1.25 0 0 1 1.25-1.25Z"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+      />
+      <path d="M11.5 3.75V7.5h3.75" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" opacity="0.45" />
+      <path d="M7.5 10.25h5M7.5 12.75h5M7.5 15.25h3.25" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" opacity="0.45" />
+    </svg>
+  );
+}
+
+function QuickShortcutButton({
+  onClick,
+  icon,
+  label,
+  shouldReduceMotion
 }: {
-  id: string;
-  stageCounts: Record<TdmStage, number>;
-  onOrganize?: () => void;
+  onClick: () => void;
+  icon: ReactNode;
+  label: string;
+  shouldReduceMotion: boolean;
 }) {
-  const [isOpen, setIsOpen] = useState(true);
-  const contentId = `${id}-content`;
+  return (
+    <motion.button
+      type="button"
+      className={styles.quickShortcutBtn}
+      onClick={onClick}
+      whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.015 }}
+      whileTap={shouldReduceMotion ? undefined : { scale: 0.985 }}
+      transition={QUICK_SHORTCUT_SPRING}
+    >
+      {icon}
+      <span>{label}</span>
+    </motion.button>
+  );
+}
+
+function QuickShortcutsCard({
+  onViewExampleCanvas,
+  onViewExampleResult,
+  canRestoreTheory,
+  onRestoreTheory
+}: {
+  onViewExampleCanvas: () => void;
+  onViewExampleResult: () => void;
+  canRestoreTheory: boolean;
+  onRestoreTheory: () => void;
+}) {
+  const shouldReduceMotion = useReducedMotion();
+
+  const handleQuickLibraryClick = useCallback(() => {
+    // Reservado para futura navegação à biblioteca.
+  }, []);
+
+  const handleQuickModelsClick = useCallback(() => {
+    // Reservado para futura navegação aos modelos.
+  }, []);
 
   return (
-    <section className={[styles.card, styles.canvasOrganizationCard].join(' ')}>
-      <button
-        type="button"
-        className={styles.canvasOrganizationHeader}
-        aria-expanded={isOpen}
-        aria-controls={contentId}
-        onClick={() => setIsOpen((prev) => !prev)}
-      >
-        <span className={styles.canvasOrganizationTitle}>Organização do canvas</span>
-        <AccordionChevron isOpen={isOpen} />
-      </button>
-      {isOpen ? (
-        <div id={contentId} className={styles.canvasOrganizationContent}>
-          <p className={styles.canvasOrganizationText}>
-            Organize o canvas automaticamente. Alinhe os blocos por etapa para visualizar a teoria com mais clareza.
-          </p>
-          <CanvasAlignmentPreview stageCounts={stageCounts} />
-          <button
-            type="button"
-            className={`${styles.sidebarCta} ${styles.sidebarCtaSecondary}`}
-            aria-label="Centralizar colunas do canvas"
-            onClick={() => onOrganize?.()}
-          >
-            <ColumnsAlignIcon />
-            <span>Centralizar colunas</span>
-          </button>
+    <section className={[styles.card, styles.quickShortcutsCard].join(' ')}>
+      <div className={styles.quickShortcutsHeader}>
+        <div className={styles.quickShortcutsTitleRow}>
+          <TdmSectionIcon variant="quickShortcuts" />
+          <p className={styles.quickShortcutsTitle}>Atalhos rápidos</p>
         </div>
+      </div>
+      <div className={styles.quickShortcutsGrid}>
+        <QuickShortcutButton
+          onClick={onViewExampleCanvas}
+          icon={<ExamplesPreviewIcon />}
+          label="Exemplos"
+          shouldReduceMotion={shouldReduceMotion ?? false}
+        />
+        <QuickShortcutButton
+          onClick={handleQuickLibraryClick}
+          icon={<LibraryIcon />}
+          label="Biblioteca"
+          shouldReduceMotion={shouldReduceMotion ?? false}
+        />
+        <QuickShortcutButton
+          onClick={handleQuickModelsClick}
+          icon={<ModelsGridIcon />}
+          label="Modelos"
+          shouldReduceMotion={shouldReduceMotion ?? false}
+        />
+        <QuickShortcutButton
+          onClick={onViewExampleResult}
+          icon={<GuidesDocIcon />}
+          label="Guias"
+          shouldReduceMotion={shouldReduceMotion ?? false}
+        />
+      </div>
+      {canRestoreTheory ? (
+        <TdmButton
+          variant="ghost"
+          fullWidth
+          icon={<BackArrowIcon />}
+          iconPosition="left"
+          className={styles.sidebarCtaSpaced}
+          onClick={onRestoreTheory}
+        >
+          Voltar para minha teoria
+        </TdmButton>
       ) : null}
+    </section>
+  );
+}
+
+function FinalResultCtaArrowIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 16 16" className={buttonStyles.icon}>
+      <path
+        d="M4.5 11.5 11.5 4.5M11.5 4.5H6.25M11.5 4.5V9.75"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.45"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function FinalResultCard({
+  canViewTdmResult,
+  resultAvailabilityMessage,
+  onViewResult,
+  shouldReduceMotion
+}: {
+  canViewTdmResult: boolean;
+  resultAvailabilityMessage: string;
+  onViewResult: () => void;
+  shouldReduceMotion: boolean | null;
+}) {
+  const [isCtaHovered, setIsCtaHovered] = useState(false);
+  const reduceMotion = Boolean(shouldReduceMotion);
+  const ctaSpring = { type: 'spring' as const, stiffness: 260, damping: 22 };
+
+  return (
+    <section className={[styles.card, styles.resultCard].join(' ')} aria-label="Resultado final">
+      <div className={styles.finalResultHero}>
+        <span className={styles.finalResultHeroWaveField} aria-hidden="true" />
+        <FinalResultHeroWaves />
+        <span className={styles.finalResultHeroCrystalGlow} aria-hidden="true" />
+        <span className={styles.finalResultHeroSheen} aria-hidden="true" />
+        <div className={styles.finalResultHeroContent}>
+          <p className={styles.finalResultHeroTitle}>Veja sua teoria tomar forma.</p>
+          <p className={styles.finalResultHeroSubtitle}>
+            Transforme sua lógica em impacto com uma visão clara e inspiradora.
+          </p>
+          <div className={styles.finalResultHeroActions}>
+            <motion.button
+              type="button"
+              className={tdmButtonClassName({
+                variant: 'secondary',
+                className: styles.finalResultHeroCta
+              })}
+              disabled={!canViewTdmResult}
+              aria-disabled={!canViewTdmResult}
+              onClick={canViewTdmResult ? onViewResult : undefined}
+              onHoverStart={() => {
+                if (canViewTdmResult) {
+                  setIsCtaHovered(true);
+                }
+              }}
+              onHoverEnd={() => setIsCtaHovered(false)}
+              whileHover={reduceMotion || !canViewTdmResult ? undefined : { y: -2 }}
+              whileTap={reduceMotion || !canViewTdmResult ? undefined : { scale: 0.985 }}
+              transition={ctaSpring}
+            >
+              <span className={buttonStyles.label}>Visualizar teoria completa</span>
+              <motion.span
+                className={styles.finalResultHeroCtaIconWrap}
+                aria-hidden="true"
+                animate={reduceMotion || !canViewTdmResult || !isCtaHovered ? { x: 0 } : { x: 2 }}
+                transition={ctaSpring}
+              >
+                <FinalResultCtaArrowIcon />
+              </motion.span>
+            </motion.button>
+          </div>
+        </div>
+        <FinalResultVisual />
+      </div>
+      {!canViewTdmResult ? <p className={styles.finalResultHeroBlocked}>{resultAvailabilityMessage}</p> : null}
     </section>
   );
 }
@@ -512,7 +664,13 @@ function SidebarAccordion({
 
   return (
     <div
-      className={styles.sidebarAccordion}
+      className={[
+        styles.sidebarAccordion,
+        variant === 'block' ? styles.blockSidebarAccordion : '',
+        isOpen ? styles.sidebarAccordionOpen : ''
+      ]
+        .filter(Boolean)
+        .join(' ')}
       style={
         {
           '--stage-accent': theme.accent,
@@ -523,10 +681,7 @@ function SidebarAccordion({
     >
       <button
         type="button"
-        className={[
-          styles.sidebarAccordionHeader,
-          variant === 'block' ? styles.blockAccordionHeader : ''
-        ].join(' ')}
+        className={[styles.sidebarAccordionHeader, variant === 'block' ? styles.blockAccordionHeader : ''].join(' ')}
         aria-expanded={isOpen}
         aria-controls={contentId}
         onClick={onToggle}
@@ -562,9 +717,9 @@ function CreateBlockForm({
     <div className={fieldStyles.form}>
       {errorMessage ? <p className={fieldStyles.errorMessage}>{errorMessage}</p> : null}
       <TdmBlockFormFields draft={draft} onDraftChange={onDraftChange} />
-      <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaStage}`} onClick={onSubmit}>
+      <TdmButton variant="primary" fullWidth onClick={onSubmit}>
         {STAGE_CREATE_LABELS[stage]}
-      </button>
+      </TdmButton>
     </div>
   );
 }
@@ -594,18 +749,16 @@ function EditBlockForm({
         <>
           {errorMessage ? <p className={fieldStyles.errorMessage}>{errorMessage}</p> : null}
           <TdmBlockFormFields draft={draft} onDraftChange={onDraftChange} />
-          <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaStage}`} onClick={onSubmit}>
+          <TdmButton variant="primary" fullWidth onClick={onSubmit}>
             Salvar alterações
-          </button>
+          </TdmButton>
           <div className={styles.sidebarCtaRow}>
-            <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaSecondary}`} onClick={onDuplicate}>
-              <span>Duplicar</span>
-              <DuplicateIcon />
-            </button>
-            <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaDanger}`} onClick={onDelete}>
-              <span>Deletar</span>
-              <TrashIcon />
-            </button>
+            <TdmButton variant="secondary" fullWidth icon={<DuplicateIcon />} onClick={onDuplicate}>
+              Duplicar
+            </TdmButton>
+            <TdmButton variant="danger" fullWidth icon={<TrashIcon />} onClick={onDelete}>
+              Deletar
+            </TdmButton>
           </div>
         </>
       )}
@@ -666,34 +819,44 @@ export function TdmSidebar({
   blockForms?: TdmBlockForms | null;
   onStageDragStart?: (event: DragEvent<HTMLElement>, stage: TdmStage) => void;
 }) {
-  const [isEditingTheoryTitle, setIsEditingTheoryTitle] = useState(false);
-  const [draftTheoryTitle, setDraftTheoryTitle] = useState(theoryName);
+  const shouldReduceMotion = useReducedMotion();
+  const [theoryDescription, setTheoryDescription] = useState(THEORY_DEFAULT_DESCRIPTION);
   const [openStage, setOpenStage] = useState<TdmStage>(stageCreation === 'ready-to-connect' ? 'outcome' : stageCreation);
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const [isSidebarScrolled, setIsSidebarScrolled] = useState(false);
   const createAccordionId = useId();
   const editAccordionId = useId();
   const canvasOrganizationAccordionId = useId();
 
-  const commitTheoryTitle = () => {
-    const nextName = draftTheoryTitle.trim() || theoryName;
-    if (nextName !== theoryName) onTheoryNameChange(nextName);
-    setDraftTheoryTitle(nextName);
-    setIsEditingTheoryTitle(false);
-  };
+  useEffect(() => {
+    const contentElement = contentRef.current;
+    if (!contentElement) return;
 
-  const cancelTheoryTitle = () => {
-    setDraftTheoryTitle(theoryName);
-    setIsEditingTheoryTitle(false);
-  };
+    const handleScroll = () => {
+      setIsSidebarScrolled(contentElement.scrollTop > 8);
+    };
 
-  const handleStartEditingTheoryTitle = () => {
-    setDraftTheoryTitle(theoryName);
-    setIsEditingTheoryTitle(true);
-  };
+    handleScroll();
+    contentElement.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      contentElement.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const currentGuide = STAGE_CREATION_HINTS[stageCreation];
-  const selectedStageTheme = stageCreation === 'ready-to-connect' ? null : getTdmStageTheme(stageCreation);
-  const canUseStageActions = stageCreation !== 'ready-to-connect';
-  const dragStage = stageCreation === 'ready-to-connect' ? undefined : stageCreation;
+  const totalRegisteredItems = useMemo(
+    () => TDM_STAGE_ORDER.reduce((sum, stage) => sum + stageCounts[stage], 0),
+    [stageCounts]
+  );
+
+  const theoryProgressPercent = useMemo(() => {
+    if (stageCreation === 'ready-to-connect') return 100;
+    return Math.min(100, Math.round((totalRegisteredItems / THEORY_PROGRESS_ITEM_GOAL) * 100));
+  }, [stageCreation, totalRegisteredItems]);
+
+  const progressStage: TdmStage = stageCreation === 'ready-to-connect' ? 'outcome' : stageCreation;
+  const progressAccent = getTdmStageTheme(progressStage).accent;
 
   const handleCreateAccordionToggle = () => {
     if (!blockForms) return;
@@ -713,67 +876,44 @@ export function TdmSidebar({
   return (
     <aside className={[styles.sidebar, isOpen ? styles.open : styles.closed].join(' ')}>
       <Surface className={styles.surface}>
-        <header className={styles.header}>
+        <header className={[styles.header, isSidebarScrolled ? styles.headerScrolled : ''].filter(Boolean).join(' ')}>
           <div className={styles.headerCopy}>
-            <p className={styles.kicker}>Teoria da mudança</p>
-            <div className={styles.sidebarTitleRow}>
-              {isEditingTheoryTitle ? (
-                <div className={styles.theoryTitleInputWrap}>
-                  <input
-                    aria-label="Editar nome da teoria"
-                    className={styles.titleInput}
-                    type="text"
-                    value={draftTheoryTitle}
-                    placeholder="Nova teoria da mudança"
-                    onChange={(event) => setDraftTheoryTitle(event.target.value)}
-                    onBlur={commitTheoryTitle}
-                    onKeyDown={(event) => {
-                      if (event.key === 'Enter') {
-                        event.preventDefault();
-                        commitTheoryTitle();
-                      }
-                      if (event.key === 'Escape') {
-                        event.preventDefault();
-                        cancelTheoryTitle();
-                      }
-                    }}
-                    autoFocus
-                  />
-                  {draftTheoryTitle ? (
-                    <button
-                      type="button"
-                      className={styles.clearTheoryTitleButton}
-                      aria-label="Limpar título da teoria"
-                      onMouseDown={(event) => event.preventDefault()}
-                      onClick={() => setDraftTheoryTitle('')}
-                    >
-                      <ClearTitleIcon />
-                    </button>
-                  ) : null}
-                </div>
-              ) : (
-                <>
-                  <h2 className={styles.title}>{theoryName}</h2>
-                  <button
-                    type="button"
-                    className={styles.editTheoryTitleButton}
-                    aria-label="Alterar título da teoria"
-                    onClick={handleStartEditingTheoryTitle}
-                  >
-                    <PencilIcon />
-                    <span className={styles.editTheoryTitleTooltip}>Alterar título da teoria</span>
-                  </button>
-                </>
-              )}
-            </div>
-            <p className={styles.headerDescription}>Construa a cadeia em ordem e conecte os blocos quando a base estiver pronta.</p>
+            <TheoryHeaderForm
+              theoryName={theoryName}
+              theoryDescription={theoryDescription}
+              onTheoryNameChange={onTheoryNameChange}
+              onTheoryDescriptionChange={setTheoryDescription}
+              onHideSidebar={onToggle}
+            />
           </div>
         </header>
 
-        <div className={styles.content}>
-          <section className={[styles.card, styles.progressCard].join(' ')}>
-            <p className={styles.sectionKicker}>Progresso da teoria</p>
-            <h3 className={styles.sectionTitle}>{currentGuide.title}</h3>
+        <div ref={contentRef} className={styles.content}>
+          <section
+            className={[styles.card, styles.progressCard].join(' ')}
+            style={{ '--stage-accent': progressAccent } as CSSProperties}
+          >
+            <SectionHeader
+              label="Progresso da teoria"
+              accent={progressAccent}
+              stage={progressStage}
+              crystalAnimated
+              crystalEmphasis="hero"
+              crystalSize="md"
+            />
+            <div className={styles.progressOverview}>
+              <ProgressRing percent={theoryProgressPercent} accent={progressAccent} />
+              <div className={styles.progressOverviewCopy}>
+                <p className={styles.progressPercent}>{theoryProgressPercent}%</p>
+                <p className={styles.progressOverviewLabel}>{currentGuide.title}</p>
+                <p className={styles.progressOverviewMeta}>
+                  {totalRegisteredItems} {totalRegisteredItems === 1 ? 'item cadastrado' : 'itens cadastrados'}
+                </p>
+              </div>
+            </div>
+            <div className={styles.progressBar} aria-hidden="true">
+              <span className={styles.progressBarFill} style={{ width: `${theoryProgressPercent}%` }} />
+            </div>
             <p className={styles.sectionText}>{currentGuide.description}</p>
             <div className={styles.timeline} aria-label="Progresso da teoria">
               {TDM_STAGE_ORDER.map((stage, index) => {
@@ -782,12 +922,19 @@ export function TdmSidebar({
                 const status = getStageStatus(stage, stageCreation, index);
                 const isCurrentStage = stageCreation !== 'ready-to-connect' && stageCreation === stage;
                 const isStageExpanded = openStage === stage || isCurrentStage;
+                const lockTooltip = status === 'blocked' ? getStageLockTooltip(stage) : '';
 
                 return (
                   <details
                     key={stage}
                     open={isStageExpanded}
-                    className={[styles.stageAccordion, styles[`stage${status}`] as string].join(' ')}
+                    className={[
+                      styles.stageAccordion,
+                      styles[`stage${status}`] as string,
+                      isStageExpanded ? styles.stageExpanded : ''
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
                     style={
                       {
                         '--stage-accent': theme.accent,
@@ -811,13 +958,21 @@ export function TdmSidebar({
                     }}
                   >
                     <summary className={styles.stageSummary}>
+                      <span className={styles.stageColorBar} aria-hidden="true" />
                       <span className={styles.stageDot}>{status === 'completed' ? '✓' : index + 1}</span>
+                      <TimelineChevron
+                        isOpen={isStageExpanded}
+                        isActive={status === 'current' || isStageExpanded}
+                        isBlocked={status === 'blocked'}
+                      />
                       <span className={styles.stageSummaryCopy}>
-                        <strong>{guide.title}</strong>
+                        <strong>{stripStageNumber(guide.title)}</strong>
                         <small>{guide.summary}</small>
                       </span>
-                      <span className={styles.stageCount}>{stageCounts[stage]}</span>
-                      <TimelineChevron isOpen={isStageExpanded} />
+                      <span className={styles.stageCountBadge}>{stageCounts[stage]}</span>
+                      {status === 'blocked' ? (
+                        <TimelineLockIcon tooltip={lockTooltip} boundaryRef={contentRef} />
+                      ) : null}
                     </summary>
                     <div className={styles.stageBody}>
                       <p>{guide.technical}</p>
@@ -831,61 +986,42 @@ export function TdmSidebar({
                 );
               })}
             </div>
-            <button
-              type="button"
-              className={`${styles.sidebarCta} ${styles.sidebarCtaPrimary}`}
-              disabled={!canAdvance}
-              onClick={onAdvance}
-            >
+            <TdmButton variant="primary" fullWidth disabled={!canAdvance} onClick={onAdvance}>
               {advanceLabel ?? 'Avançar para próxima etapa'}
-            </button>
-            {!canAdvance ? <p className={styles.sectionHint}>A etapa atual precisa de pelo menos 1 bloco para avançar.</p> : null}
+            </TdmButton>
+            {!canAdvance && stageCreation !== 'ready-to-connect' ? (
+              <p className={styles.contextualHint} style={{ '--stage-accent': progressAccent } as CSSProperties}>
+                <span className={styles.contextualHintIcon} aria-hidden="true">
+                  ⓘ
+                </span>
+                {STAGE_ADVANCE_HINTS[stageCreation]}
+              </p>
+            ) : null}
           </section>
 
-          <section
-            className={[styles.card, styles.stageActionCard].join(' ')}
-            style={
-              selectedStageTheme
-                ? ({
-                    '--stage-accent': selectedStageTheme.accent,
-                    '--stage-border': selectedStageTheme.border,
-                    '--stage-soft': selectedStageTheme.accentSoft
-                  } as CSSProperties)
-                : undefined
-            }
-          >
-            <p className={styles.sectionKicker}>Ações da etapa</p>
-            {canUseStageActions && dragStage ? (
-              <>
-                <p className={styles.sectionText}>Crie um novo bloco arrastando esse card para o canvas e solte-o na posição desejada. Personalize o conteúdo clicando no card ou através do formulário logo abaixo.</p>
-                <button
-                  type="button"
-                  className={styles.dragCard}
-                  draggable
-                  onDragStart={(event) => onStageDragStart?.(event, dragStage)}
-                >
-                  <span className={styles.dragIcon}><StageDragIcon /></span>
-                  <span>
-                    <strong>{actionLabel ?? 'Adicionar bloco'}</strong>
-                    <small>Arraste, solte e crie.</small>
-                  </span>
-                </button>
-              </>
-            ) : (
-              <p className={styles.sectionHint}>Quando uma etapa estiver ativa, este bloco vira o facilitador para criar novos itens.</p>
-            )}
-          </section>
+          <V1StageActionSection
+            stageCreation={stageCreation}
+            actionLabel={actionLabel}
+            onStageDragStart={onStageDragStart}
+          />
 
-          <CanvasOrganizationAccordion
+          <V1CanvasOrganizationAccordion
             id={canvasOrganizationAccordionId}
             stageCounts={stageCounts}
             onOrganize={onOrganize}
           />
 
           {blockForms ? (
-            <section className={[styles.card, styles.blockFormsCard].join(' ')}>
+            <section
+              className={[styles.card, styles.blockFormsCard].join(' ')}
+              style={
+                {
+                  '--stage-accent': getTdmStageTheme(blockForms.stage).accent
+                } as CSSProperties
+              }
+            >
               <div className={styles.blockFormGroup}>
-                <p className={styles.blockFormGroupTitle}>Criar bloco</p>
+                <BlockFormGroupHeader label="Criar bloco" kind="create" />
                 <SidebarAccordion
                   id={createAccordionId}
                   title={STAGE_CREATE_LABELS[blockForms.stage]}
@@ -905,7 +1041,7 @@ export function TdmSidebar({
               </div>
 
               <div className={styles.blockFormGroup}>
-                <p className={styles.blockFormGroupTitle}>Editar bloco</p>
+                <BlockFormGroupHeader label="Editar bloco" kind="edit" />
                 <SidebarAccordion
                   id={editAccordionId}
                   title={editAccordionTitle}
@@ -948,30 +1084,18 @@ export function TdmSidebar({
                   ) : null}
                   <div className={styles.contextActions}>
                     {context.edge.canAddRisk ? (
-                      <button
-                        type="button"
-                        className={`${styles.sidebarCta} ${styles.sidebarCtaSecondary}`}
-                        onClick={context.onAddRisk}
-                      >
+                      <TdmButton variant="secondary" onClick={context.onAddRisk}>
                         Adicionar risco
-                      </button>
+                      </TdmButton>
                     ) : null}
                     {context.edge.canAddHypothesis ? (
-                      <button
-                        type="button"
-                        className={`${styles.sidebarCta} ${styles.sidebarCtaSecondary}`}
-                        onClick={context.onAddHypothesis}
-                      >
+                      <TdmButton variant="secondary" onClick={context.onAddHypothesis}>
                         Adicionar hipótese
-                      </button>
+                      </TdmButton>
                     ) : null}
-                    <button
-                      type="button"
-                      className={`${styles.sidebarCta} ${styles.sidebarCtaDanger}`}
-                      onClick={context.onDelete}
-                    >
+                    <TdmButton variant="danger" onClick={context.onDelete}>
                       Excluir conexão
-                    </button>
+                    </TdmButton>
                   </div>
                 </div>
               ) : null}
@@ -989,46 +1113,19 @@ export function TdmSidebar({
             </section>
           ) : null}
 
-          <section className={styles.card}>
-            <p className={styles.sectionKicker}>Aprender com exemplo</p>
-            <p className={styles.sectionText}>
-              Veja o exemplo de uma teoria pronta no canvas e o seu resultado após a finalização.
-            </p>
-            <div className={styles.sidebarCtaRow}>
-              <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaSecondary}`} onClick={onViewExampleCanvas}>
-                <EyeOpenIcon />
-                <span>Canvas</span>
-              </button>
-              <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaSecondary}`} onClick={onViewExampleResult}>
-                <ResultTrendIcon />
-                <span>Resultado</span>
-              </button>
-            </div>
-            {canRestoreTheory ? (
-              <button
-                type="button"
-                className={`${styles.sidebarCta} ${styles.sidebarCtaGhost} ${styles.sidebarCtaSpaced}`}
-                onClick={onRestoreTheory}
-              >
-                <BackArrowIcon />
-                <span>Voltar para minha teoria</span>
-              </button>
-            ) : null}
-          </section>
+          <QuickShortcutsCard
+            onViewExampleCanvas={onViewExampleCanvas}
+            onViewExampleResult={onViewExampleResult}
+            canRestoreTheory={canRestoreTheory}
+            onRestoreTheory={onRestoreTheory}
+          />
 
-          <section className={styles.card}>
-            <p className={styles.sectionKicker}>Resultado final</p>
-            {canViewTdmResult ? (
-              <>
-                <p className={styles.sectionText}>Sua teoria está pronta para ser visualizada.</p>
-                <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaPrimary}`} onClick={onViewResult}>
-                  Visualizar resultado
-                </button>
-              </>
-            ) : (
-              <p className={styles.sectionHint}>{resultAvailabilityMessage}</p>
-            )}
-          </section>
+          <FinalResultCard
+            canViewTdmResult={canViewTdmResult}
+            resultAvailabilityMessage={resultAvailabilityMessage}
+            onViewResult={onViewResult}
+            shouldReduceMotion={shouldReduceMotion}
+          />
         </div>
       </Surface>
     </aside>
@@ -1065,12 +1162,12 @@ function MarkerBlock({
         onClear={() => onDraftChange('')}
       />
       <div className={styles.contextActions}>
-        <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaPrimary}`} onClick={onSubmit}>
+        <TdmButton variant="primary" onClick={onSubmit}>
           Salvar marcador
-        </button>
-        <button type="button" className={`${styles.sidebarCta} ${styles.sidebarCtaDanger}`} onClick={onDelete}>
+        </TdmButton>
+        <TdmButton variant="danger" onClick={onDelete}>
           Excluir marcador
-        </button>
+        </TdmButton>
       </div>
     </div>
   );

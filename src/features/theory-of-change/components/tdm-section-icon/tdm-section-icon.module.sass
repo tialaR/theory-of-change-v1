@@ -1,0 +1,35 @@
+@use '../../../../shared/styles/tokens' as *
+
+.sectionIcon
+  +tdm-section-icon-vars
+  width: var(--tdm-section-icon-tile-size)
+  height: var(--tdm-section-icon-tile-size)
+  min-width: var(--tdm-section-icon-tile-size)
+  border-radius: var(--tdm-section-icon-radius)
+  background: var(--tdm-section-icon-bg)
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  flex: 0 0 auto
+  color: var(--tdm-section-icon-color)
+  box-shadow: none
+  transition: background 180ms ease
+
+  svg
+    width: var(--tdm-section-icon-size)
+    height: var(--tdm-section-icon-size)
+    display: block
+    overflow: visible
+
+    path,
+    rect,
+    line,
+    polyline,
+    polygon,
+    circle
+      stroke: currentColor
+      stroke-width: var(--tdm-section-icon-stroke)
+      stroke-linecap: round
+      stroke-linejoin: round
+      fill: none
+      vector-effect: non-scaling-stroke
