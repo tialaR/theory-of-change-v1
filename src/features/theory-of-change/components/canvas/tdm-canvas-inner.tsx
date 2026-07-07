@@ -32,6 +32,7 @@ import {
 import { TdmToastViewport } from '../toast/tdm-toast';
 import { useContextualFlowTooltip } from '../toast/use-contextual-flow-tooltip';
 import { TdmConnectionGuide } from './tdm-connection-guide';
+import { TdmCanvasCommandDock } from './tdm-canvas-command-dock';
 import {
   getConnectionKind,
   GUIDE_HYPOTHESIS_DELETED,
@@ -57,6 +58,7 @@ import {
   type StageCreation
 } from '../../utils/stage-creation';
 import { layoutNodesByStage } from '../../utils/layout-nodes-by-stage';
+import { layoutNodesByFlow } from '../../utils/layout-nodes-by-flow';
 import { getCreateNodePosition, getDuplicateNodePosition } from '../../utils/node-placement';
 import styles from './tdm-canvas.module.sass';
 
@@ -165,6 +167,7 @@ export function TdmCanvasInner() {
   const [connectingFromStage, setConnectingFromStage] = useState<TdmStage | null>(null);
   const [markerEditorEdgeId, setMarkerEditorEdgeId] = useState<string | null>(null);
   const [recentlyUpdatedEdgeIds, setRecentlyUpdatedEdgeIds] = useState<Set<string>>(() => new Set());
+  const [isGuideExpanded, setIsGuideExpanded] = useState(false);
 
   const { fitView, zoomIn, zoomOut, screenToFlowPosition } = useReactFlow<TdmNodeModel, TdmEdgeModel>();
 
@@ -182,18 +185,33 @@ export function TdmCanvasInner() {
 
     return selectedEdge.data?.connectionKind ?? getConnectionKind(selectedEdge.sourceStage, selectedEdge.targetStage);
   }, [selectedEdge]);
+  const canGenerateResult = canViewTdmResult(nodes, edges);
+  const hasEdgeMarkers = useMemo(
+    () => edges.some((edge) => Boolean(edge.markerType && edge.markerText?.trim())),
+    [edges]
+  );
   const guideContent = useMemo(
     () =>
       getTheoryGuideContent({
         stageCounts,
+        stageCreation,
         selectedConnectionKind,
         connectingFromStage,
-        transientMessage: guideTransientMessage
+        transientMessage: guideTransientMessage,
+        isTheoryComplete: canGenerateResult,
+        hasEdgeMarkers
       }),
-    [connectingFromStage, guideTransientMessage, selectedConnectionKind, stageCounts]
+    [
+      canGenerateResult,
+      connectingFromStage,
+      guideTransientMessage,
+      hasEdgeMarkers,
+      selectedConnectionKind,
+      stageCounts,
+      stageCreation
+    ]
   );
 
-  const canGenerateResult = canViewTdmResult(nodes, edges);
   const resultAvailabilityMessage = getTdmResultAvailabilityMessage(nodes, edges);
   const canRestoreTheory = canvasVariant === 'example' && previousTheorySnapshot !== null;
   const hasInitializedFlowTooltipRef = useRef(false);
@@ -258,31 +276,6 @@ export function TdmCanvasInner() {
       });
     }, 1800);
   }, []);
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (viewMode !== 'canvas') {
-        return;
-      }
-
-      if (!(event.metaKey || event.ctrlKey)) {
-        return;
-      }
-
-      if (event.key === '+' || event.key === '=') {
-        event.preventDefault();
-        zoomIn({ duration: 160 });
-      }
-
-      if (event.key === '-') {
-        event.preventDefault();
-        zoomOut({ duration: 160 });
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [viewMode, zoomIn, zoomOut]);
 
   const clearEditFormState = useCallback(() => {
     setEditDraft({ ...EMPTY_DRAFT });
@@ -402,12 +395,8 @@ export function TdmCanvasInner() {
   }, [restorePreviousTheory]);
 
   const openResultView = useCallback(() => {
-    if (!canGenerateResult) {
-      return;
-    }
-
     setViewMode('result');
-  }, [canGenerateResult]);
+  }, []);
 
   const exportStub = useCallback((_format: 'pdf' | 'png' | 'jpeg' | 'svg') => {}, []);
 
@@ -418,6 +407,108 @@ export function TdmCanvasInner() {
       fitView({ padding: CANVAS_FIT_PADDING, duration: 250, maxZoom: CANVAS_MAX_AUTO_FIT_ZOOM });
     });
   }, [fitView, setNodes]);
+
+  const organizeFlow = useCallback(() => {
+    setNodes((currentNodes) => layoutNodesByFlow(currentNodes, edges));
+    setCanvasVariant('custom');
+    window.requestAnimationFrame(() => {
+      fitView({ padding: CANVAS_FIT_PADDING, duration: 250, maxZoom: CANVAS_MAX_AUTO_FIT_ZOOM });
+    });
+  }, [edges, fitView, setNodes]);
+
+  const clearCanvasSelection = useCallback(() => {
+    if (editingNodeId) {
+      return;
+    }
+
+    resetCanvasSelection();
+  }, [editingNodeId, resetCanvasSelection]);
+
+  const toggleGuideExpanded = useCallback(() => {
+    setIsGuideExpanded((current) => !current);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (viewMode !== 'canvas') {
+        return;
+      }
+
+      const target = event.target;
+      const isEditableTarget =
+        target instanceof HTMLElement &&
+        (target.isContentEditable ||
+          target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.tagName === 'SELECT');
+
+      if (isEditableTarget) {
+        if (event.key === 'Escape') {
+          if (markerEditorEdgeId) {
+            event.preventDefault();
+            setMarkerEditorEdgeId(null);
+          }
+        }
+
+        return;
+      }
+
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        clearCanvasSelection();
+        return;
+      }
+
+      if (event.metaKey || event.ctrlKey) {
+        if (event.key === '+' || event.key === '=') {
+          event.preventDefault();
+          zoomIn({ duration: 160 });
+        }
+
+        if (event.key === '-') {
+          event.preventDefault();
+          zoomOut({ duration: 160 });
+        }
+
+        return;
+      }
+
+      if (event.altKey) {
+        return;
+      }
+
+      const key = event.key.toLowerCase();
+
+      if (key === 'f') {
+        event.preventDefault();
+        fitCanvasToVisibleArea();
+        return;
+      }
+
+      if (key === 'a') {
+        event.preventDefault();
+        centerNodes();
+        return;
+      }
+
+      if (key === 'g') {
+        event.preventDefault();
+        toggleGuideExpanded();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [
+    centerNodes,
+    clearCanvasSelection,
+    fitCanvasToVisibleArea,
+    markerEditorEdgeId,
+    toggleGuideExpanded,
+    viewMode,
+    zoomIn,
+    zoomOut
+  ]);
 
   const syncEditDraftFromNode = useCallback((node: TdmNodeModel) => {
     setEditDraft({
@@ -947,11 +1038,9 @@ export function TdmCanvasInner() {
       setEdges((currentEdges) => addEdge(nextEdge, currentEdges));
       setSelectedNodeId(null);
       setToolbarNodeId(null);
-      setSelectedEdgeId(nextEdge.id);
-      markEdgeRecentlyUpdated(nextEdge.id);
       setGuideTransientMessage(null);
     },
-    [markEdgeRecentlyUpdated, nodes, setEdges]
+    [nodes, setEdges]
   );
 
   const handleConnectStart: OnConnectStart = useCallback(
@@ -1311,7 +1400,22 @@ export function TdmCanvasInner() {
               colorMode="dark"
               attributionPosition="bottom-left"
             >
-              <TdmConnectionGuide content={guideContent} />
+              <TdmConnectionGuide
+                content={guideContent}
+                stageCounts={stageCounts}
+                isTheoryComplete={canGenerateResult}
+                isExpanded={isGuideExpanded}
+                onExpandedChange={setIsGuideExpanded}
+              />
+              <TdmCanvasCommandDock
+                isGuideExpanded={isGuideExpanded}
+                isClearDisabled={Boolean(editingNodeId)}
+                onFitView={fitCanvasToVisibleArea}
+                onCenterColumns={centerNodes}
+                onOrganizeFlow={organizeFlow}
+                onToggleGuide={toggleGuideExpanded}
+                onClearSelection={clearCanvasSelection}
+              />
               <Background variant={BackgroundVariant.Dots} gap={24} size={1} />
               <Controls
                 showInteractive={false}

@@ -44,6 +44,19 @@ export function getTdmStageTheme(stage: TdmStage) {
   return TDM_STAGE_THEME[stage];
 }
 
+/** Neutral silver palette for Theory (Fase 0) — not a stage color */
+export const TDM_THEORY_NEUTRAL = {
+  text: '#FAFAFA',
+  accent: 'rgba(250, 250, 250, 0.72)',
+  border: 'rgba(250, 250, 250, 0.14)',
+  glow: 'rgba(250, 250, 250, 0.08)',
+  muted: 'rgba(176, 182, 194, 0.88)'
+} as const;
+
+/** Full journey gradient: Insumos → Atividades → Produtos → Resultados */
+export const TDM_JOURNEY_GRADIENT =
+  'linear-gradient(90deg, #8B7CFF 0%, #49B3FF 34%, #F2A65A 67%, #37C893 100%)';
+
 const STAGE_CRYSTAL_TOKEN_KEYS: Record<TdmStage, { accent: string; glow: string }> = {
   input: { accent: '--stage-accent-insumos', glow: '--stage-glow-insumos' },
   activity: { accent: '--stage-accent-atividades', glow: '--stage-glow-atividades' },

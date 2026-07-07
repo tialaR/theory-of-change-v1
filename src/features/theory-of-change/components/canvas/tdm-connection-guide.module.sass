@@ -1,173 +1,639 @@
 @use '../../../../shared/styles/tokens' as *
 
 .panel
+  container-type: inline-size
+  container-name: tdm-guide
   z-index: 8
-  max-width: min(58rem, calc(100vw - 5rem))
-  pointer-events: none
+  box-sizing: border-box
+  left: 1rem !important
+  right: auto !important
+  top: 1rem !important
+  margin: 0 !important
+  --guide-inline-gutter: 2rem
+  inline-size: min(72rem, calc(100vw - var(--tdm-sidebar-width, #{$sidebar-width}) - #{$sidebar-gap} - var(--guide-inline-gutter))) !important
+  max-inline-size: min(72rem, calc(100vw - var(--tdm-sidebar-width, #{$sidebar-width}) - #{$sidebar-gap} - var(--guide-inline-gutter)))
+  min-inline-size: 0
+  width: min(72rem, calc(100vw - var(--tdm-sidebar-width, #{$sidebar-width}) - #{$sidebar-gap} - var(--guide-inline-gutter))) !important
+  pointer-events: auto
+  cursor: default
   font-family: $ds-font-family
 
 .shell
-  display: grid
-  grid-template-columns: auto minmax(0, 1.35fr) minmax(9rem, 0.95fr) minmax(11rem, 1.1fr)
-  align-items: center
-  gap: 0.65rem 0.85rem
-  min-height: 3.35rem
-  padding: 0.55rem 0.85rem 0.55rem 0
-  border: 0.0625rem solid rgba(255, 255, 255, 0.08)
+  width: 100%
+  max-width: 100%
+  min-width: 0
+  border: 0.0625rem solid rgba(255, 255, 255, 0.07)
   border-radius: 0.85rem
-  background: linear-gradient(180deg, rgba(24, 25, 30, 0.94), rgba(14, 15, 18, 0.96))
-  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.32), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
-  backdrop-filter: blur(0.75rem)
+  background: linear-gradient(180deg, rgba(22, 23, 28, 0.94), rgba(12, 13, 16, 0.96))
+  box-shadow: 0 0.35rem 1.1rem rgba(0, 0, 0, 0.34), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05)
+  backdrop-filter: blur(0.85rem)
+  overflow: hidden
+  transform-origin: top left
+
+.shellTheory
+  border-color: rgba(250, 250, 250, 0.1)
+
+.shellJourneyComplete
+  border-color: rgba(255, 255, 255, 0.09)
+  background: linear-gradient(180deg, rgba(22, 23, 28, 0.94), rgba(12, 13, 16, 0.96)), linear-gradient(90deg, rgba(139, 124, 255, 0.04), rgba(73, 179, 255, 0.03), rgba(242, 166, 90, 0.03), rgba(55, 200, 147, 0.04))
+
+.strip
+  display: grid
+  grid-template-columns: minmax(12rem, 16rem) minmax(20rem, 1fr) minmax(8rem, 10rem) auto
+  grid-template-areas: "left center preview actions" "tabs tabs tabs tabs"
+  align-items: center
+  gap: 0.75rem
+  min-block-size: 5.25rem
+  padding-block: 0.75rem
+  padding-inline: 1rem
+
+.leftZone
+  grid-area: left
+  display: flex
+  align-items: center
+  gap: 0.42rem
+  min-width: 0
+  padding-right: 0.5rem
+  border-right: 0.0625rem solid rgba(255, 255, 255, 0.05)
+
+.accentDot
+  flex-shrink: 0
+  width: 0.34rem
+  height: 0.34rem
+  border-radius: 999rem
+  background: var(--strip-accent)
+  box-shadow: 0 0 0.45rem color-mix(in srgb, var(--strip-accent) 55%, transparent)
+
+.accentDotJourney
+  width: 0.48rem
+  background: var(--journey-gradient)
+  background-size: 200% 100%
+  animation: journeyShift 5s ease-in-out infinite
+  box-shadow: 0 0 0.5rem rgba(73, 179, 255, 0.22), 0 0 0.3rem rgba(55, 200, 147, 0.16)
+
+.leftIcon
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  flex-shrink: 0
+  width: 1.55rem
+  height: 1.55rem
+  color: var(--strip-accent)
+
+.leftIconJourney
+  color: #5BC4A8
+
+.leftCopy
+  display: flex
+  flex-direction: column
+  gap: 0.1rem
+  min-width: 0
+
+.stepGlyph
+  display: inline-flex
+  align-items: center
+  justify-content: center
+
+.stepGlyphSvg
+  width: 1rem
+  height: 1rem
+
+.leftTitle
+  margin: 0
+  color: #FAFAFA
+  font-size: 0.82rem
+  font-weight: 600
+  letter-spacing: 0.015em
+  line-height: 1.25
+  overflow-wrap: anywhere
+
+.centerZone
+  grid-area: center
+  display: flex
+  align-items: center
+  min-width: 0
+
+.centerCopy
+  display: flex
+  flex-direction: column
+  gap: 0.14rem
+  min-width: 0
+  width: 100%
+
+.centerMessage
+  margin: 0
+  color: rgba(198, 198, 206, 0.88)
+  font-size: 0.76rem
+  line-height: 1.45
+  max-width: 100%
+  overflow-wrap: anywhere
+  text-wrap: pretty
+
+.centerAction
+  margin: 0
+  color: color-mix(in srgb, var(--strip-accent) 68%, rgba(228, 228, 234, 0.9))
+  font-size: 0.72rem
+  line-height: 1.4
+
+.previewZone
+  grid-area: preview
+  display: flex
+  flex-direction: column
+  align-items: flex-start
+  justify-content: center
+  gap: 0.12rem
+  width: auto
+  min-inline-size: 8rem
+  max-inline-size: 10rem
+  min-block-size: 3rem
+  padding-block: 0.42rem
+  padding-inline: 0.75rem
+  border-radius: 0.52rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.06)
+  background: rgba(255, 255, 255, 0.025)
+  flex-shrink: 0
+
+.previewZonePlaceholder
+  display: none
+
+.previewLabel
+  color: rgba(130, 136, 148, 0.62)
+  font-size: 0.56rem
+  font-weight: 500
+  letter-spacing: 0.04em
+  text-transform: uppercase
+  line-height: 1.15
+
+.previewValue
+  color: var(--preview-accent, rgba(176, 182, 194, 0.88))
+  font-size: 0.72rem
+  font-weight: 600
+  line-height: 1.2
+  overflow-wrap: anywhere
+
+.actionsZone
+  grid-area: actions
+  display: flex
+  align-items: stretch
+  justify-self: end
+  flex-shrink: 0
+
+.tabStripRow
+  grid-area: tabs
+  min-width: 0
+  width: 100%
+
+.tabStrip
+  display: flex
+  align-items: stretch
+  flex-wrap: nowrap
+  gap: 0.12rem
+  width: 100%
+  padding: 0.16rem
+  border-radius: 0.58rem
+  background: rgba(255, 255, 255, 0.03)
+  border: 0.0625rem solid rgba(255, 255, 255, 0.05)
+  justify-content: flex-start
+
+.tab
   position: relative
-  overflow: hidden
-  transform-origin: left center
+  display: inline-flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  gap: 0.1rem
+  min-inline-size: 2.85rem
+  min-block-size: 3rem
+  padding-block: 0.32rem 0.28rem
+  padding-inline: 0.75rem
+  border: none
+  border-radius: 0.45rem
+  background: transparent
+  color: rgba(156, 163, 175, 0.72)
+  cursor: pointer
+  user-select: none
+  font: inherit
+  flex: 0 0 auto
 
-.accentRailHost
-  position: absolute
-  left: 0
-  top: 0
-  bottom: 0
-  width: 0.18rem
-  overflow: hidden
-  border-radius: 0.85rem 0 0 0.85rem
-  pointer-events: none
+  &:hover
+    color: rgba(210, 214, 222, 0.88)
 
-.accentRail
+  &:focus-visible
+    outline: 0.12rem solid color-mix(in srgb, var(--tab-accent) 55%, rgba(255, 255, 255, 0.35))
+    outline-offset: 0.08rem
+
+.tabWorkflowActive
+  color: rgba(236, 236, 242, 0.94)
+
+.tabTheoryActive
+  color: #FAFAFA
+
+  .tabIndicator
+    background: rgba(255, 255, 255, 0.06)
+    border: 0.0625rem solid rgba(250, 250, 250, 0.14)
+    box-shadow: 0 0 0.55rem rgba(250, 250, 250, 0.08), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08)
+
+.tabHelpActive:not(.tabWorkflowActive)
+  color: rgba(210, 214, 222, 0.9)
+  box-shadow: inset 0 0 0 0.0625rem color-mix(in srgb, var(--tab-accent) 24%, rgba(255, 255, 255, 0.08))
+
+.tabCompleted
+  color: rgba(180, 186, 196, 0.78)
+
+.tabIndicator
   position: absolute
   inset: 0
-  transform-origin: center top
-  background: linear-gradient(180deg, var(--guide-accent), rgba(255, 255, 255, 0.08))
-  box-shadow: 0 0 0.85rem color-mix(in srgb, var(--guide-accent) 42%, transparent)
+  border-radius: inherit
+  background: color-mix(in srgb, var(--tab-accent) 14%, rgba(255, 255, 255, 0.04))
+  border: 0.0625rem solid color-mix(in srgb, var(--tab-accent) 22%, rgba(255, 255, 255, 0.06))
+  box-shadow: 0 0 0.55rem color-mix(in srgb, var(--tab-accent) 16%, transparent), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05)
 
-.iconCell
-  display: flex
-  align-items: center
-  justify-content: center
-  width: 2rem
-  margin-left: 0.55rem
-  flex-shrink: 0
+.tabJourneyComplete
+  .tabIndicator
+    background: var(--journey-gradient)
+    background-size: 200% 100%
+    border-color: rgba(255, 255, 255, 0.1)
+    opacity: 0.22
+    animation: journeyShift 5s ease-in-out infinite
+    box-shadow: 0 0 0.55rem rgba(73, 179, 255, 0.12), 0 0 0.35rem rgba(55, 200, 147, 0.1), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05)
+
+.tabIcon
   position: relative
-  min-height: 1.45rem
-
-.iconMotion
-  display: flex
-  align-items: center
-  justify-content: center
-  transform-origin: center center
-
-.phaseIcon
-  display: block
-
-.phaseGlyph
+  z-index: 1
   display: inline-flex
   align-items: center
   justify-content: center
-  width: 1.45rem
-  height: 1.45rem
-  border-radius: 0.42rem
-  color: var(--guide-accent)
-  background: color-mix(in srgb, var(--guide-accent) 12%, rgba(255, 255, 255, 0.03))
-  border: 0.0625rem solid color-mix(in srgb, var(--guide-accent) 24%, rgba(255, 255, 255, 0.06))
+  width: 1.12rem
+  height: 1.12rem
+  color: inherit
 
-.phaseGlyphSvg
-  width: 0.9rem
-  height: 0.9rem
+.tabLabel
+  position: relative
+  z-index: 1
+  font-size: 0.58rem
+  font-weight: 500
+  letter-spacing: 0.015em
+  line-height: 1.1
+  white-space: nowrap
 
-.copyCell
-  min-width: 0
+.tabDone
+  position: absolute
+  top: 0.24rem
+  right: 0.26rem
+  z-index: 2
+  width: 0.28rem
+  height: 0.28rem
+  border-radius: 999rem
+  background: color-mix(in srgb, var(--tab-accent) 72%, rgba(255, 255, 255, 0.2))
+  box-shadow: 0 0 0.3rem color-mix(in srgb, var(--tab-accent) 40%, transparent)
+
+.expandButton
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  align-self: stretch
+  width: 2.25rem
+  min-height: 3rem
+  padding: 0
+  border: 0.0625rem solid rgba(255, 255, 255, 0.07)
+  border-radius: 0.5rem
+  background: rgba(255, 255, 255, 0.03)
+  color: rgba(176, 182, 194, 0.86)
+  cursor: pointer
+
+  &:hover
+    color: rgba(228, 230, 236, 0.94)
+    background: rgba(255, 255, 255, 0.05)
+
+  &:focus-visible
+    outline: 0.12rem solid rgba(250, 250, 250, 0.45)
+    outline-offset: 0.08rem
+
+.chevronSvg
+  width: 0.95rem
+  height: 0.95rem
+  transition: transform 0.22s ease
+
+.chevronExpanded
+  transform: rotate(180deg)
+
+.expanded
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.05)
+  padding: 0.55rem 0.62rem 0.62rem
   overflow: hidden
 
-.copyStack
+.timelineSection
   display: grid
-  gap: 0.12rem
-  will-change: opacity, transform
+  gap: 0.42rem
+  margin-bottom: 0.48rem
 
-.title
-  margin: 0
-  color: rgba(244, 244, 248, 0.96)
-  font-size: 0.76rem
-  font-weight: 600
-  letter-spacing: 0.03em
+.timeline
+  position: relative
+  display: grid
+  grid-template-columns: repeat(6, minmax(0, 1fr))
+  gap: 0.28rem
+  padding-top: 0.18rem
+
+.timelineTrack
+  position: absolute
+  top: 0.48rem
+  left: 6%
+  right: 6%
+  height: 0.12rem
+  border-radius: 999rem
+  background: rgba(255, 255, 255, 0.06)
+  overflow: hidden
+
+.timelineProgress
+  display: block
+  height: 100%
+  border-radius: inherit
+  background: linear-gradient(90deg, color-mix(in srgb, var(--timeline-accent) 35%, transparent), var(--timeline-accent))
+  box-shadow: 0 0 0.55rem color-mix(in srgb, var(--timeline-accent) 35%, transparent)
+
+.timelineProgressComplete
+  background: linear-gradient(90deg, #8B7CFF 0%, #49B3FF 34%, #F2A65A 67%, #37C893 100%)
+  background-size: 200% 100%
+  animation: journeyShift 5s ease-in-out infinite
+  box-shadow: 0 0 0.45rem rgba(73, 179, 255, 0.18), 0 0 0.3rem rgba(55, 200, 147, 0.14)
+
+.timelineStep
+  position: relative
+  z-index: 1
+  display: flex
+  flex-direction: column
+  align-items: center
+  gap: 0.28rem
+  min-width: 0
+  text-align: center
+
+.timelineDot
+  width: 0.58rem
+  height: 0.58rem
+  border-radius: 999rem
+  background: rgba(18, 19, 23, 0.95)
+  border: 0.1rem solid color-mix(in srgb, var(--step-accent) 42%, rgba(255, 255, 255, 0.12))
+  box-shadow: 0 0 0.35rem color-mix(in srgb, var(--step-accent) 18%, transparent)
+
+.timelineRing
+  position: absolute
+  top: 0.1rem
+  width: 0.82rem
+  height: 0.82rem
+  border-radius: 999rem
+  border: 0.1rem solid color-mix(in srgb, var(--step-accent) 62%, rgba(255, 255, 255, 0.2))
+  box-shadow: 0 0 0.65rem color-mix(in srgb, var(--step-accent) 32%, transparent)
+
+.timelineStepFocus
+  .timelineDot
+    background: color-mix(in srgb, var(--step-accent) 28%, rgba(18, 19, 23, 0.95))
+    border-color: color-mix(in srgb, var(--step-accent) 72%, rgba(255, 255, 255, 0.2))
+
+  .timelineLabel
+    color: rgba(236, 236, 242, 0.94)
+    font-weight: 600
+
+.timelineStepWorkflow:not(.timelineStepFocus)
+  .timelineLabel
+    color: rgba(198, 202, 212, 0.82)
+
+.timelineStepPast
+  .timelineDot
+    background: color-mix(in srgb, var(--step-accent) 18%, rgba(18, 19, 23, 0.95))
+
+.timelineStepJourneyComplete
+  .timelineDot
+    background: linear-gradient(135deg, #8B7CFF, #49B3FF, #F2A65A, #37C893)
+    border-color: rgba(255, 255, 255, 0.18)
+    box-shadow: 0 0 0.45rem rgba(73, 179, 255, 0.16), 0 0 0.3rem rgba(55, 200, 147, 0.12)
+
+  .timelineRing
+    border-image: linear-gradient(135deg, #8B7CFF, #49B3FF, #F2A65A, #37C893) 1
+    border-color: transparent
+    box-shadow: 0 0 0.55rem rgba(73, 179, 255, 0.14), 0 0 0.35rem rgba(55, 200, 147, 0.1)
+
+  .timelineLabel
+    color: rgba(220, 224, 232, 0.9)
+    font-weight: 600
+
+.timelineLabel
+  color: rgba(140, 146, 158, 0.72)
+  font-size: 0.58rem
+  font-weight: 500
+  letter-spacing: 0.015em
   line-height: 1.2
 
-.message
-  margin: 0
-  color: rgba(210, 210, 218, 0.88)
-  font-size: 0.74rem
-  line-height: 1.35
-
-.actionCell
-  min-width: 0
-  padding-left: 0.7rem
-  border-left: 0.0625rem solid rgba(255, 255, 255, 0.06)
-  overflow: hidden
-  min-height: 1.1rem
-
-.action
-  margin: 0
-  color: color-mix(in srgb, var(--guide-accent) 72%, rgba(232, 232, 238, 0.92))
-  font-size: 0.7rem
-  line-height: 1.35
-  font-weight: 500
-
-.flowCell
-  min-width: 0
-  padding-left: 0.7rem
-  border-left: 0.0625rem solid rgba(255, 255, 255, 0.06)
-
-.miniFlow
+.qualifierRow
   display: flex
-  align-items: center
   flex-wrap: wrap
-  gap: 0.15rem 0.2rem
-  margin: 0
-  padding: 0
-  list-style: none
+  gap: 0.38rem
 
-.miniFlowItem
+.qualifierChip
   display: inline-flex
   align-items: center
-  gap: 0.2rem
+  gap: 0.38rem
+  padding: 0.32rem 0.48rem
+  border-radius: 0.48rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.06)
+  background: rgba(255, 255, 255, 0.025)
 
-.miniFlowArrow
-  color: rgba(156, 163, 175, 0.55)
-  font-size: 0.62rem
-  line-height: 1
+.qualifierChipActive
+  border-color: color-mix(in srgb, var(--qualifier-accent) 32%, rgba(255, 255, 255, 0.08))
+  background: color-mix(in srgb, var(--qualifier-accent) 8%, rgba(255, 255, 255, 0.03))
+  box-shadow: 0 0 0.45rem color-mix(in srgb, var(--qualifier-accent) 12%, transparent)
 
-.miniFlowStep
-  color: rgba(156, 163, 175, 0.72)
+.qualifierIcon
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  width: 1rem
+  height: 1rem
+  color: color-mix(in srgb, var(--qualifier-accent) 78%, rgba(236, 236, 242, 0.9))
+
+.qualifierCopy
+  display: flex
+  flex-direction: column
+  gap: 0.06rem
+  min-width: 0
+
+.qualifierLabel
+  color: rgba(210, 214, 222, 0.9)
+  font-size: 0.6rem
+  font-weight: 600
+  line-height: 1.15
+
+.qualifierConnection
+  color: rgba(140, 146, 158, 0.72)
+  font-size: 0.54rem
+  line-height: 1.25
+
+.expandedBody
+  display: grid
+  gap: 0.48rem
+
+.expandedMain
+  display: grid
+  gap: 0.32rem
+
+.expandedTitle
+  margin: 0
+  color: color-mix(in srgb, var(--expanded-accent) 72%, rgba(244, 244, 248, 0.95))
+  font-size: 0.78rem
+  font-weight: 600
+  letter-spacing: 0.01em
+  line-height: 1.25
+
+.expandedExplanation
+  margin: 0
+  color: rgba(198, 200, 208, 0.88)
+  font-size: 0.7rem
+  line-height: 1.45
+  max-width: 72ch
+
+.expandedComplement
+  margin: 0
+  color: rgba(172, 176, 186, 0.84)
+  font-size: 0.68rem
+  line-height: 1.45
+
+.tipsSection
+  display: grid
+  gap: 0.32rem
+  margin-top: 0.12rem
+
+.tipsToggle
+  display: inline-flex
+  align-items: center
+  gap: 0.32rem
+  width: fit-content
+  padding: 0.24rem 0.48rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.07)
+  border-radius: 999rem
+  background: rgba(255, 255, 255, 0.03)
+  color: rgba(176, 182, 194, 0.86)
+  font-family: inherit
   font-size: 0.62rem
   font-weight: 500
   letter-spacing: 0.02em
-  white-space: nowrap
+  cursor: pointer
 
-.miniFlowStepPast
-  color: rgba(180, 180, 190, 0.58)
+  &:hover
+    color: rgba(220, 224, 232, 0.92)
+    background: rgba(255, 255, 255, 0.05)
 
-.miniFlowStepActive
-  color: var(--mini-flow-accent)
+  .chevronSvg
+    width: 0.72rem
+    height: 0.72rem
+
+.tipsPanel
+  display: grid
+  gap: 0.32rem
+  overflow: hidden
+
+.tipChip
+  display: grid
+  gap: 0.14rem
+  padding: 0.42rem 0.52rem
+  border-radius: 0.48rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.05)
+  background: rgba(255, 255, 255, 0.025)
+
+.tipChipLabel
+  color: color-mix(in srgb, var(--expanded-accent) 62%, rgba(200, 204, 214, 0.9))
+  font-size: 0.56rem
   font-weight: 600
+  letter-spacing: 0.04em
+  text-transform: uppercase
+  line-height: 1.2
 
-@media (max-width: 960px)
-  .shell
-    grid-template-columns: auto minmax(0, 1fr)
-    grid-template-areas: 'icon copy' 'icon action' 'flow flow'
-    gap: 0.45rem 0.7rem
-    padding-right: 0.75rem
+.tipChipText
+  color: rgba(172, 176, 186, 0.88)
+  font-size: 0.66rem
+  line-height: 1.4
 
-  .iconCell
-    grid-area: icon
+.tipChipRow
+  display: flex
+  flex-wrap: wrap
+  gap: 0.28rem
 
-  .copyCell
-    grid-area: copy
+.tipChipSmall
+  display: inline-flex
+  align-items: center
+  padding: 0.24rem 0.48rem
+  border-radius: 999rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.06)
+  background: rgba(255, 255, 255, 0.03)
+  color: rgba(164, 170, 182, 0.86)
+  font-size: 0.6rem
+  line-height: 1.35
 
-  .actionCell
-    grid-area: action
-    padding-left: 0
-    border-left: none
+.expandedNext
+  margin: 0
+  padding-top: 0.32rem
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.05)
+  color: rgba(130, 136, 148, 0.72)
+  font-size: 0.64rem
+  line-height: 1.4
+  font-style: italic
 
-  .flowCell
-    grid-area: flow
-    padding-left: 2.55rem
-    border-left: none
-    padding-top: 0.15rem
+@container tdm-guide (min-width: 58rem)
+  .strip
+    grid-template-columns: minmax(12rem, 16rem) minmax(16rem, 1fr) minmax(8rem, 10rem) minmax(0, max-content) auto
+    grid-template-areas: "left center preview tabs actions"
+    align-items: center
+
+  .tabStripRow
+    width: auto
+    justify-self: stretch
+    min-width: 0
+
+  .tabStrip
+    width: auto
+    max-width: 100%
+    justify-content: flex-start
+
+@container tdm-guide (max-width: 38rem)
+  .strip
+    grid-template-columns: minmax(0, 1fr) auto
+    grid-template-areas: "left actions" "center center" "preview preview" "tabs tabs"
+    gap: 0.625rem
+
+  .leftZone
+    border-right: none
+    padding-right: 0
+
+  .leftTitle
+    font-size: 0.78rem
+
+  .centerMessage
+    font-size: 0.72rem
+
+  .previewZone
+    flex-direction: row
+    align-items: center
+    gap: 0.38rem
+    width: fit-content
+    max-inline-size: none
+
+  .tab
+    min-inline-size: 2.85rem
+
+  .timeline
+    overflow-x: auto
+    padding-bottom: 0.2rem
+
+@media (prefers-reduced-motion: reduce)
+  .chevronSvg
+    transition: none
+
+  .accentDotJourney,
+  .timelineProgressComplete,
+  .tabJourneyComplete .tabIndicator
+    animation: none
+    background-size: 100% 100%
+
+@keyframes journeyShift
+  0%, 100%
+    background-position: 0% 50%
+  50%
+    background-position: 100% 50%

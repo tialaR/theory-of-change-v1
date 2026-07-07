@@ -7,6 +7,8 @@
   height: 100vh
   min-height: 100vh
   overflow: hidden
+  --tdm-sidebar-width: #{$sidebar-width}
+  --tdm-sidebar-gap: #{$sidebar-gap}
   background: radial-gradient(circle at 20% 0%, rgba(167, 139, 250, 0.11), transparent 34%), linear-gradient(180deg, rgba(7, 9, 15, 1), rgba(5, 7, 12, 1))
   transition: grid-template-columns 220ms ease
 
@@ -15,6 +17,8 @@
   column-gap: $sidebar-gap
 
 .sidebarClosed
+  --tdm-sidebar-width: 0px
+  --tdm-sidebar-gap: 0px
   grid-template-columns: minmax(0, 1fr) 0px
   column-gap: 0
 
@@ -23,6 +27,7 @@
   width: 100%
   min-width: 0
   height: 100%
+  overflow: hidden
   padding-right: clamp(1rem, 1.25vw, 1.25rem)
 
 .flowFrame
