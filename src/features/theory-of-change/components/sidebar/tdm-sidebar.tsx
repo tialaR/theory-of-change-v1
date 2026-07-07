@@ -238,7 +238,7 @@ function SectionHeader({
   stage?: TdmStage | null;
   crystalAnimated?: boolean;
   crystalEmphasis?: 'subtle' | 'default' | 'hero';
-  crystalSize?: 'xs' | 'sm' | 'md' | 'lg';
+  crystalSize?: 'xs' | 'sm' | 'md' | 'lg' | 'progress';
 }) {
   return (
     <div className={styles.sectionHeader}>
@@ -485,7 +485,7 @@ function QuickShortcutButton({
       transition={QUICK_SHORTCUT_SPRING}
     >
       {icon}
-      <span>{label}</span>
+      <span className={styles.quickShortcutBtnLabel}>{label}</span>
     </motion.button>
   );
 }
@@ -558,6 +558,21 @@ function QuickShortcutsCard({
         </TdmButton>
       ) : null}
     </section>
+  );
+}
+
+function AdvanceArrowIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 16 16" className={buttonStyles.icon}>
+      <path
+        d="M3.5 8h9M9 4.5 12.5 8 9 11.5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.45"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
 
@@ -899,7 +914,7 @@ export function TdmSidebar({
               stage={progressStage}
               crystalAnimated
               crystalEmphasis="hero"
-              crystalSize="md"
+              crystalSize="progress"
             />
             <div className={styles.progressOverview}>
               <ProgressRing percent={theoryProgressPercent} accent={progressAccent} />
@@ -986,7 +1001,14 @@ export function TdmSidebar({
                 );
               })}
             </div>
-            <TdmButton variant="primary" fullWidth disabled={!canAdvance} onClick={onAdvance}>
+            <TdmButton
+              variant="primary"
+              fullWidth
+              disabled={!canAdvance}
+              onClick={onAdvance}
+              icon={<AdvanceArrowIcon />}
+              iconPosition="right"
+            >
               {advanceLabel ?? 'Avançar para próxima etapa'}
             </TdmButton>
             {!canAdvance && stageCreation !== 'ready-to-connect' ? (

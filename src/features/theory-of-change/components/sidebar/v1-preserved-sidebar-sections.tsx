@@ -2,6 +2,9 @@
 
 import { useMemo, useState, type CSSProperties, type DragEvent } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
+import buttonStyles from '@/shared/ui/tdm-button/tdm-button.module.sass';
+import { TdmSectionIcon } from '../tdm-section-icon/tdm-section-icon';
 import { TDM_STAGE_ORDER, type TdmStage } from '../../domain/tdm-stages';
 import { getTdmStageTheme } from '../../domain/tdm-theme';
 import type { StageCreation } from '../../utils/stage-creation';
@@ -49,7 +52,7 @@ function AccordionChevron({ isOpen, className }: { isOpen: boolean; className?: 
 
 function ColumnsAlignIcon() {
   return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" className={styles.sidebarCtaIcon} fill="none">
+    <svg viewBox="0 0 32 32" aria-hidden="true" className={buttonStyles.icon} fill="none">
       <rect x="6" y="5" width="20" height="22" rx="6" stroke="currentColor" strokeWidth="2.2" />
       <path d="M12 10V22" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
       <path d="M16 10V22" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
@@ -173,7 +176,10 @@ export function V1CanvasOrganizationAccordion({
         aria-controls={contentId}
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        <span className={styles.canvasOrganizationTitle}>Organização do canvas</span>
+        <span className={styles.canvasOrganizationTitleRow}>
+          <TdmSectionIcon variant="organization" />
+          <span className={styles.canvasOrganizationTitle}>Organização do canvas</span>
+        </span>
         <AccordionChevron isOpen={isOpen} />
       </button>
       {isOpen ? (
@@ -181,16 +187,13 @@ export function V1CanvasOrganizationAccordion({
           <p className={styles.canvasOrganizationText}>
             Organize o canvas automaticamente. Alinhe os blocos por etapa para visualizar a teoria com mais clareza.
           </p>
-          <CanvasAlignmentPreview stageCounts={stageCounts} />
-          <button
-            type="button"
-            className={`${styles.sidebarCta} ${styles.sidebarCtaSecondary}`}
-            aria-label="Centralizar colunas do canvas"
-            onClick={() => onOrganize?.()}
-          >
-            <ColumnsAlignIcon />
-            <span>Centralizar colunas</span>
-          </button>
+          <div className={styles.canvasOrgPreviewShell}>
+            <p className={styles.canvasOrgPreviewLabel}>Prévia do alinhamento</p>
+            <CanvasAlignmentPreview stageCounts={stageCounts} />
+          </div>
+          <TdmButton variant="secondary" fullWidth icon={<ColumnsAlignIcon />} onClick={() => onOrganize?.()}>
+            Centralizar colunas
+          </TdmButton>
         </div>
       ) : null}
     </section>
@@ -230,23 +233,27 @@ export function V1StageActionSection({
             Crie um novo bloco arrastando esse card para o canvas e solte-o na posição desejada. Personalize o conteúdo
             clicando no card ou através do formulário logo abaixo.
           </p>
-          <button
-            type="button"
-            className={styles.dragCard}
-            draggable
-            onDragStart={(event) => onStageDragStart?.(event, dragStage)}
-          >
-            <span className={styles.dragIcon}>
-              <StageDragIcon />
-            </span>
-            <span>
-              <strong>{actionLabel ?? 'Adicionar bloco'}</strong>
-              <small>Arraste, solte e crie.</small>
-            </span>
-          </button>
+          <div className={styles.stageActionInnerPanel}>
+            <button
+              type="button"
+              className={styles.dragCard}
+              draggable
+              onDragStart={(event) => onStageDragStart?.(event, dragStage)}
+            >
+              <span className={styles.dragIcon}>
+                <StageDragIcon />
+              </span>
+              <span>
+                <strong>{actionLabel ?? 'Adicionar bloco'}</strong>
+                <small>Arraste, solte e crie.</small>
+              </span>
+            </button>
+          </div>
         </>
       ) : (
-        <p className={styles.sectionHint}>Quando uma etapa estiver ativa, este bloco vira o facilitador para criar novos itens.</p>
+        <div className={styles.stageActionInnerPanel}>
+          <p className={styles.sectionHint}>Quando uma etapa estiver ativa, este bloco vira o facilitador para criar novos itens.</p>
+        </div>
       )}
     </section>
   );
