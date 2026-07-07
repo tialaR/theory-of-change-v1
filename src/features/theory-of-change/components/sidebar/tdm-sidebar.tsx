@@ -14,7 +14,7 @@ import {
 } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { Surface } from '@/shared/ui/surface/surface';
-import { TdmButton, tdmButtonClassName } from '@/shared/ui/tdm-button/tdm-button';
+import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
 import buttonStyles from '@/shared/ui/tdm-button/tdm-button.module.sass';
 import { TdmAnchoredTooltip } from '@/shared/ui/tooltip/tdm-anchored-tooltip';
 import type { TdmNodeDraft } from '../../domain/tdm-types';
@@ -24,12 +24,16 @@ import type { StageCreation } from '../../utils/stage-creation';
 import { TdmBlockFormFields, TdmFormField } from '../form-field/tdm-form-field';
 import fieldStyles from '../form-field/tdm-form-field.module.sass';
 import { TdmSectionIcon } from '../tdm-section-icon/tdm-section-icon';
-import { TdmStageCrystalIcon } from '../stage-crystal-icon/tdm-stage-crystal-icon';
-import { FinalResultHeroWaves, FinalResultVisual } from './final-result-visual';
 import { TheoryChangeSculpture } from './theory-change-sculpture';
 import { TheoryHeaderForm, THEORY_DEFAULT_DESCRIPTION } from './theory-header-form';
 import { SidebarToggleIcon } from './sidebar-toggle-icon';
-import { V1CanvasOrganizationAccordion, V1StageActionSection } from './v1-preserved-sidebar-sections';
+import {
+  V1BlockFormsPanel,
+  V1CanvasOrganizationAccordion,
+  V1FinalResultCard,
+  V1StageActionSection,
+  V1TheoryProgressHeader
+} from './v1-preserved-sidebar-sections';
 import styles from './tdm-sidebar.module.sass';
 
 export { SidebarToggleIcon };
@@ -202,90 +206,6 @@ function getStageLockTooltip(stage: TdmStage) {
 
 function stripStageNumber(title: string) {
   return title.replace(/^\d+\.\s*/, '');
-}
-
-function PremiumGlassGlyph() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 64 64" className={styles.premiumGlassGlyph} fill="none">
-      <path
-        d="M32 6 50 16.2v22.6L32 58 14 38.8V16.2L32 6Z"
-        fill="url(#glassGlyphFill)"
-        stroke="currentColor"
-        strokeWidth="1.35"
-        strokeLinejoin="round"
-      />
-      <path d="M32 6v52M14 16.2l18 12.4 18-12.4M14 38.8l18-10.2 18 10.2" stroke="currentColor" strokeWidth="1.1" opacity="0.55" />
-      <path d="M24 10.5 14 38.8M40 10.5 50 38.8M32 18.6V45.8" stroke="currentColor" strokeWidth="0.85" opacity="0.28" />
-      <defs>
-        <linearGradient id="glassGlyphFill" x1="32" y1="6" x2="32" y2="58" gradientUnits="userSpaceOnUse">
-          <stop stopColor="currentColor" stopOpacity="0.22" />
-          <stop offset="1" stopColor="currentColor" stopOpacity="0.04" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
-
-function SectionHeader({
-  label,
-  accent,
-  stage,
-  crystalAnimated = false,
-  crystalEmphasis = 'subtle',
-  crystalSize = 'sm'
-}: {
-  label: string;
-  accent?: string;
-  stage?: TdmStage | null;
-  crystalAnimated?: boolean;
-  crystalEmphasis?: 'subtle' | 'default' | 'hero';
-  crystalSize?: 'xs' | 'sm' | 'md' | 'lg' | 'progress';
-}) {
-  return (
-    <div className={styles.sectionHeader}>
-      <span
-        className={styles.sectionGlassGlyph}
-        aria-hidden="true"
-        style={accent ? ({ color: accent } as CSSProperties) : undefined}
-      >
-        {stage ? (
-          <TdmStageCrystalIcon
-            stage={stage}
-            size={crystalSize}
-            emphasis={crystalEmphasis}
-            animated={crystalAnimated}
-          />
-        ) : (
-          <PremiumGlassGlyph />
-        )}
-      </span>
-      <p className={styles.sectionKicker}>{label}</p>
-    </div>
-  );
-}
-
-function ProgressRing({ percent, accent }: { percent: number; accent: string }) {
-  const radius = 17;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (percent / 100) * circumference;
-
-  return (
-    <div className={styles.progressRingWrap} style={{ '--stage-accent': accent } as CSSProperties}>
-      <svg className={styles.progressRing} viewBox="0 0 48 48" aria-hidden="true">
-        <circle className={styles.progressRingTrackOuter} cx="24" cy="24" r="21" />
-        <circle className={styles.progressRingTrack} cx="24" cy="24" r={radius} />
-        <circle
-          className={styles.progressRingFill}
-          cx="24"
-          cy="24"
-          r={radius}
-          stroke={accent}
-          strokeDasharray={circumference}
-          strokeDashoffset={offset}
-        />
-      </svg>
-    </div>
-  );
 }
 
 function BlockFormGroupHeader({ label, kind }: { label: string; kind: 'create' | 'edit' }) {
@@ -574,87 +494,6 @@ function AdvanceArrowIcon() {
         strokeLinejoin="round"
       />
     </svg>
-  );
-}
-
-function FinalResultCtaArrowIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 16 16" className={buttonStyles.icon}>
-      <path
-        d="M4.5 11.5 11.5 4.5M11.5 4.5H6.25M11.5 4.5V9.75"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.45"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function FinalResultCard({
-  canViewTdmResult,
-  resultAvailabilityMessage,
-  onViewResult,
-  shouldReduceMotion
-}: {
-  canViewTdmResult: boolean;
-  resultAvailabilityMessage: string;
-  onViewResult: () => void;
-  shouldReduceMotion: boolean | null;
-}) {
-  const [isCtaHovered, setIsCtaHovered] = useState(false);
-  const reduceMotion = Boolean(shouldReduceMotion);
-  const ctaSpring = { type: 'spring' as const, stiffness: 260, damping: 22 };
-
-  return (
-    <section className={[styles.card, styles.resultCard].join(' ')} aria-label="Resultado final">
-      <div className={styles.finalResultHero}>
-        <span className={styles.finalResultHeroWaveField} aria-hidden="true" />
-        <FinalResultHeroWaves />
-        <span className={styles.finalResultHeroCrystalGlow} aria-hidden="true" />
-        <span className={styles.finalResultHeroSheen} aria-hidden="true" />
-        <div className={styles.finalResultHeroContent}>
-          <p className={styles.finalResultHeroTitle}>Veja sua teoria tomar forma.</p>
-          <p className={styles.finalResultHeroSubtitle}>
-            Transforme sua lógica em impacto com uma visão clara e inspiradora.
-          </p>
-          <div className={styles.finalResultHeroActions}>
-            <motion.button
-              type="button"
-              className={tdmButtonClassName({
-                variant: 'secondary',
-                className: styles.finalResultHeroCta
-              })}
-              disabled={!canViewTdmResult}
-              aria-disabled={!canViewTdmResult}
-              onClick={canViewTdmResult ? onViewResult : undefined}
-              onHoverStart={() => {
-                if (canViewTdmResult) {
-                  setIsCtaHovered(true);
-                }
-              }}
-              onHoverEnd={() => setIsCtaHovered(false)}
-              whileHover={reduceMotion || !canViewTdmResult ? undefined : { y: -2 }}
-              whileTap={reduceMotion || !canViewTdmResult ? undefined : { scale: 0.985 }}
-              transition={ctaSpring}
-            >
-              <span className={buttonStyles.label}>Visualizar teoria completa</span>
-              <motion.span
-                className={styles.finalResultHeroCtaIconWrap}
-                aria-hidden="true"
-                animate={reduceMotion || !canViewTdmResult || !isCtaHovered ? { x: 0 } : { x: 2 }}
-                transition={ctaSpring}
-              >
-                <FinalResultCtaArrowIcon />
-              </motion.span>
-            </motion.button>
-          </div>
-        </div>
-        <FinalResultVisual />
-      </div>
-      {!canViewTdmResult ? <p className={styles.finalResultHeroBlocked}>{resultAvailabilityMessage}</p> : null}
-    </section>
   );
 }
 
@@ -972,28 +811,12 @@ export function TdmSidebar({
             className={[styles.card, styles.progressCard].join(' ')}
             style={{ '--stage-accent': progressAccent } as CSSProperties}
           >
-            <SectionHeader
-              label="Progresso da teoria"
+            <V1TheoryProgressHeader
+              percent={theoryProgressPercent}
               accent={progressAccent}
-              stage={progressStage}
-              crystalAnimated
-              crystalEmphasis="hero"
-              crystalSize="progress"
+              stageTitle={currentGuide.title}
+              stageInstruction={currentGuide.description}
             />
-            <div className={styles.progressOverview}>
-              <ProgressRing percent={theoryProgressPercent} accent={progressAccent} />
-              <div className={styles.progressOverviewCopy}>
-                <p className={styles.progressPercent}>{theoryProgressPercent}%</p>
-                <p className={styles.progressOverviewLabel}>{currentGuide.title}</p>
-                <p className={styles.progressOverviewMeta}>
-                  {totalRegisteredItems} {totalRegisteredItems === 1 ? 'item cadastrado' : 'itens cadastrados'}
-                </p>
-              </div>
-            </div>
-            <div className={styles.progressBar} aria-hidden="true">
-              <span className={styles.progressBarFill} style={{ width: `${theoryProgressPercent}%` }} />
-            </div>
-            <p className={styles.sectionText}>{currentGuide.description}</p>
             <div className={styles.timeline} aria-label="Progresso da teoria">
               {TDM_STAGE_ORDER.map((stage, index) => {
                 const guide = STAGE_GUIDE[stage];
@@ -1002,6 +825,8 @@ export function TdmSidebar({
                 const isCurrentStage = stageCreation !== 'ready-to-connect' && stageCreation === stage;
                 const isStageExpanded = openStage === stage || isCurrentStage;
                 const lockTooltip = status === 'blocked' ? getStageLockTooltip(stage) : '';
+                const isTopSegmentLit = status === 'completed' || status === 'current';
+                const isBottomSegmentLit = status === 'completed';
 
                 return (
                   <details
@@ -1010,6 +835,8 @@ export function TdmSidebar({
                     className={[
                       styles.stageAccordion,
                       styles[`stage${status}`] as string,
+                      index === 0 ? styles.stageFirst : '',
+                      index === TDM_STAGE_ORDER.length - 1 ? styles.stageLast : '',
                       isStageExpanded ? styles.stageExpanded : ''
                     ]
                       .filter(Boolean)
@@ -1038,12 +865,27 @@ export function TdmSidebar({
                   >
                     <summary className={styles.stageSummary}>
                       <span className={styles.stageColorBar} aria-hidden="true" />
-                      <span className={styles.stageDot}>{status === 'completed' ? '✓' : index + 1}</span>
-                      <TimelineChevron
-                        isOpen={isStageExpanded}
-                        isActive={status === 'current' || isStageExpanded}
-                        isBlocked={status === 'blocked'}
-                      />
+                      <span className={styles.stageProgressColumn} aria-hidden="true">
+                        <span
+                          className={[
+                            styles.stageProgressSegment,
+                            styles.stageProgressSegmentTop,
+                            isTopSegmentLit ? styles.stageProgressSegmentLit : ''
+                          ]
+                            .filter(Boolean)
+                            .join(' ')}
+                        />
+                        <span className={styles.stageDot}>{status === 'completed' ? '✓' : index + 1}</span>
+                        <span
+                          className={[
+                            styles.stageProgressSegment,
+                            styles.stageProgressSegmentBottom,
+                            isBottomSegmentLit ? styles.stageProgressSegmentLit : ''
+                          ]
+                            .filter(Boolean)
+                            .join(' ')}
+                        />
+                      </span>
                       <span className={styles.stageSummaryCopy}>
                         <strong>{stripStageNumber(guide.title)}</strong>
                         <small>{guide.summary}</small>
@@ -1052,6 +894,11 @@ export function TdmSidebar({
                       {status === 'blocked' ? (
                         <TimelineLockIcon tooltip={lockTooltip} boundaryRef={contentRef} />
                       ) : null}
+                      <TimelineChevron
+                        isOpen={isStageExpanded}
+                        isActive={status === 'current' || isStageExpanded}
+                        isBlocked={status === 'blocked'}
+                      />
                     </summary>
                     <div className={styles.stageBody}>
                       <p>{guide.technical}</p>
@@ -1068,6 +915,7 @@ export function TdmSidebar({
             <TdmButton
               variant="primary"
               fullWidth
+              className={styles.workflowAdvanceButton}
               disabled={!canAdvance}
               onClick={onAdvance}
               icon={<AdvanceArrowIcon />}
@@ -1098,14 +946,7 @@ export function TdmSidebar({
           />
 
           {blockForms ? (
-            <section
-              className={[styles.card, styles.blockFormsCard].join(' ')}
-              style={
-                {
-                  '--stage-accent': getTdmStageTheme(blockForms.stage).accent
-                } as CSSProperties
-              }
-            >
+            <V1BlockFormsPanel stage={blockForms.stage}>
               <div className={styles.blockFormGroup}>
                 <BlockFormGroupHeader label="Criar bloco" kind="create" />
                 <SidebarAccordion
@@ -1147,7 +988,7 @@ export function TdmSidebar({
                   />
                 </SidebarAccordion>
               </div>
-            </section>
+            </V1BlockFormsPanel>
           ) : null}
 
           {context.kind === 'edge' || context.kind === 'marker' ? (
@@ -1206,11 +1047,10 @@ export function TdmSidebar({
             onRestoreTheory={onRestoreTheory}
           />
 
-          <FinalResultCard
+          <V1FinalResultCard
             canViewTdmResult={canViewTdmResult}
             resultAvailabilityMessage={resultAvailabilityMessage}
             onViewResult={onViewResult}
-            shouldReduceMotion={shouldReduceMotion}
           />
         </div>
       </Surface>
