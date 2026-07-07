@@ -1107,7 +1107,7 @@ export function TdmCanvasInner() {
               colorMode="dark"
               attributionPosition="bottom-left"
             >
-              <Background variant={BackgroundVariant.Dots} gap={24} size={1} color="rgba(167, 139, 250, 0.12)" />
+              <Background variant={BackgroundVariant.Dots} gap={24} size={1} />
               <Controls
                 showInteractive={false}
                 position="bottom-left"
@@ -1124,8 +1124,8 @@ export function TdmCanvasInner() {
                 nodeStrokeColor={(node) => getTdmStageTheme((node as TdmNodeModel).stage).accent}
                 nodeBorderRadius={6}
                 nodeStrokeWidth={1}
-                bgColor="rgba(7, 9, 15, 0.8)"
-                maskColor="rgba(7, 9, 15, 0.72)"
+                bgColor="rgba(16, 17, 20, 0.86)"
+                maskColor="rgba(8, 9, 12, 0.74)"
               />
             </ReactFlow>
           </TdmNodeInteractionProvider>

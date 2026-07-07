@@ -31,17 +31,51 @@
   width: 100%
   height: 100%
   overflow: hidden
+  isolation: isolate
+  background: linear-gradient(168deg, #111216 0%, $noir-surface-shell 28%, $noir-surface-page 58%, #07080b 100%)
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0
+    z-index: 0
+    pointer-events: none
+    background: linear-gradient(112deg, rgba(255, 255, 255, 0.016) 0%, transparent 38%, transparent 62%, rgba(255, 255, 255, 0.01) 100%), linear-gradient(198deg, rgba(14, 15, 19, 0.42) 0%, transparent 48%, rgba(6, 7, 10, 0.52) 100%), linear-gradient(90deg, rgba(0, 0, 0, 0.14) 0%, transparent 12%, transparent 88%, rgba(0, 0, 0, 0.14) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.028) 0%, transparent 14%, transparent 78%, rgba(0, 0, 0, 0.16) 100%), radial-gradient(ellipse 220% 160% at -18% -32%, rgba(255, 255, 255, 0.032), transparent 78%), radial-gradient(ellipse 200% 140% at 118% 108%, rgba(255, 255, 255, 0.018), transparent 76%), radial-gradient(ellipse 180% 120% at 50% 122%, rgba(0, 0, 0, 0.22), transparent 74%)
+
+  &::after
+    content: ''
+    position: absolute
+    inset: 0
+    z-index: 1
+    pointer-events: none
+    opacity: 0.42
+    mix-blend-mode: overlay
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
+    background-size: 192px 192px
 
   :global(.react-flow)
+    position: relative
+    z-index: 2
     width: 100%
     height: 100%
-    background: radial-gradient(circle at top left, rgba(167, 139, 250, 0.09), transparent 30%), radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.06), transparent 28%), linear-gradient(180deg, rgba(10, 14, 22, 0.96), rgba(5, 7, 12, 0.99))
+    background: transparent
+    --xy-background-pattern-dots-color-default: rgba(178, 184, 196, 0.15)
+    --xy-background-pattern-lines-color-default: rgba(178, 184, 196, 0.1)
+    --xy-edge-stroke-default: rgba(186, 192, 204, 0.28)
+    --xy-edge-stroke-selected-default: rgba(214, 220, 230, 0.54)
+    --xy-connectionline-stroke-default: rgba(186, 192, 204, 0.36)
+    --xy-minimap-background-color-default: rgba(16, 17, 20, 0.86)
+    --xy-controls-button-background-color-default: transparent
+    --xy-controls-button-background-color-hover-default: rgba(255, 255, 255, 0.07)
+    --xy-controls-button-border-color-default: rgba(255, 255, 255, 0.08)
+    --xy-controls-button-color-default: rgba(244, 244, 248, 0.92)
+    --xy-controls-box-shadow-default: none
 
-  :global(.react-flow__renderer)
-    touch-action: none
-    pointer-events: auto
-
+  :global(.react-flow__renderer),
+  :global(.react-flow__pane),
   :global(.react-flow__viewport)
+    background: transparent
+    touch-action: none
     pointer-events: auto
 
   :global(.react-flow__background)
@@ -56,10 +90,10 @@
     flex-direction: column
     width: auto
     z-index: 12
-    border: 1px solid $color-border
+    border: 0.0625rem solid $noir-stroke-soft
     border-radius: 14px
-    background: rgba(10, 14, 22, 0.9)
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4)
+    background: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(255, 255, 255, 0.09), transparent 58%), linear-gradient(180deg, rgba(27, 28, 32, 0.9), rgba(16, 17, 20, 0.94))
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1), 0 0.75rem 2rem rgba(0, 0, 0, 0.36)
     overflow: hidden
 
   :global(.react-flow__controls-button)
@@ -71,25 +105,64 @@
     fill: currentColor
 
     &:hover
-      background: rgba(255, 255, 255, 0.06)
+      background: rgba(255, 255, 255, 0.07)
 
   :global(.react-flow__minimap)
     right: 16px
     bottom: 16px
     top: auto
     z-index: 11
-    border: 1px solid $color-border
+    border: 0.0625rem solid $noir-stroke-soft
     border-radius: 14px
-    background: rgba(10, 14, 22, 0.84)
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.32)
+    background: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(255, 255, 255, 0.07), transparent 58%), linear-gradient(180deg, rgba(27, 28, 32, 0.86), rgba(16, 17, 20, 0.92))
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), 0 0.75rem 2rem rgba(0, 0, 0, 0.3)
     overflow: hidden
     pointer-events: none
+
+  :global(.react-flow__panel.react-flow__controls)
+    top: auto !important
+    right: auto !important
+    bottom: 16px !important
+    left: 16px !important
+    width: auto !important
+    height: auto !important
+
+  :global(.react-flow__panel.react-flow__minimap)
+    top: auto !important
+    left: auto !important
+    bottom: 16px !important
+    right: 16px !important
+
+  :global(.react-flow__attribution)
+    display: none
+
+  :global(.react-flow__pane)
+    cursor: grab
+
+  :global(.react-flow__pane.dragging)
+    cursor: grabbing
+
+  :global(.react-flow__viewport-portal)
+    pointer-events: none
+
+    > *
+      pointer-events: auto
+
+  :global(.react-flow__node)
+    overflow: visible
+    cursor: grab
+    width: fit-content !important
+    height: fit-content !important
+    max-width: none
+
+  :global(.react-flow__node.dragging)
+    cursor: grabbing
 
 .controls
   margin: 0
 
 .minimap
-  opacity: 0.84
+  opacity: 0.88
 
 .sidebarToggleButton
   position: absolute
@@ -155,43 +228,3 @@
   justify-content: flex-end
   gap: 12px
   margin-top: 16px
-
-.flowFrame
-  :global(.react-flow__panel.react-flow__controls)
-    top: auto !important
-    right: auto !important
-    bottom: 16px !important
-    left: 16px !important
-    width: auto !important
-    height: auto !important
-
-  :global(.react-flow__panel.react-flow__minimap)
-    top: auto !important
-    left: auto !important
-    bottom: 16px !important
-    right: 16px !important
-
-  :global(.react-flow__attribution)
-    display: none
-
-  :global(.react-flow__pane)
-    cursor: grab
-
-  :global(.react-flow__pane.dragging)
-    cursor: grabbing
-
-  :global(.react-flow__viewport-portal)
-    pointer-events: none
-
-    > *
-      pointer-events: auto
-
-  :global(.react-flow__node)
-    overflow: visible
-    cursor: grab
-    width: fit-content !important
-    height: fit-content !important
-    max-width: none
-
-  :global(.react-flow__node.dragging)
-    cursor: grabbing
