@@ -45,8 +45,8 @@
   border: 0
   border-radius: 0
   overflow: hidden
-  background: radial-gradient(ellipse 90% 48% at 50% 0%, rgba(255, 255, 255, 0.042), transparent 46%), radial-gradient(ellipse 60% 30% at 50% 100%, rgba(255, 255, 255, 0.012), transparent 58%), linear-gradient(180deg, rgba(6, 6, 8, 0.99), $noir-surface-page)
-  box-shadow: inset -0.0625rem 0 0 rgba(255, 255, 255, 0.04)
+  background: radial-gradient(ellipse 90% 52% at 50% 0%, rgba(255, 255, 255, 0.07), transparent 48%), radial-gradient(ellipse 65% 38% at 80% 60%, rgba(255, 255, 255, 0.025), transparent 52%), radial-gradient(ellipse 55% 32% at 50% 100%, rgba(255, 255, 255, 0.025), transparent 58%), linear-gradient(180deg, rgba(21, 22, 26, 0.98), $noir-surface-page)
+  box-shadow: inset -0.0625rem 0 0 rgba(255, 255, 255, 0.06)
   backdrop-filter: blur($ds-blur-heavy) saturate(1.06)
   -webkit-backdrop-filter: blur($ds-blur-heavy) saturate(1.06)
 
@@ -55,8 +55,8 @@
     position: absolute
     inset: 0
     pointer-events: none
-    background: radial-gradient(ellipse 70% 28% at 50% 0%, rgba(255, 255, 255, 0.035), transparent 72%)
-    opacity: 0.72
+    background: radial-gradient(ellipse 70% 32% at 50% 0%, rgba(255, 255, 255, 0.05), transparent 72%)
+    opacity: 0.85
 
 .header
   position: sticky
@@ -70,7 +70,7 @@
   transition: background 200ms ease, backdrop-filter 200ms ease, box-shadow 200ms ease
 
 .headerScrolled
-  background: linear-gradient(180deg, rgba(18, 18, 20, 0.88), rgba(18, 18, 20, 0.55))
+  background: linear-gradient(180deg, rgba(27, 28, 32, 0.92), rgba(21, 22, 26, 0.62))
   backdrop-filter: blur(1.125rem) saturate(1.2)
   -webkit-backdrop-filter: blur(1.125rem) saturate(1.2)
   box-shadow: 0 0.625rem 1.5rem rgba(0, 0, 0, 0.28)
@@ -147,7 +147,7 @@
 
 .sectionKicker
   margin: 0
-  color: rgba(180, 180, 186, 0.82)
+  color: rgba(196, 196, 202, 0.88)
   font-size: 0.625rem
   font-weight: 800
   letter-spacing: 0.18em
@@ -156,7 +156,7 @@
 
 .sectionText
   margin: 0
-  color: rgba(168, 168, 174, 0.92)
+  color: rgba(180, 180, 186, 0.96)
   font-size: 0.8125rem
   line-height: 1.6
 
@@ -191,11 +191,17 @@
 // ─── Progress card ───────────────────────────────────────────────────────────
 
 .progressCard
-  border-color: $noir-stroke-soft
+  border-color: $noir-stroke-medium
   gap: 0.6875rem
   display: grid
   grid-template-columns: 3.25rem minmax(0, 1fr)
   column-gap: 0.75rem
+
+  &::before
+    background: linear-gradient(132deg, rgba(255, 255, 255, 0.08) 0%, transparent 30%, transparent 70%, rgba(255, 255, 255, 0.03) 100%)
+
+  &::after
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2) 28%, rgba(255, 255, 255, 0.26) 50%, rgba(255, 255, 255, 0.2) 72%, transparent)
 
   .sectionHeader
     display: contents
@@ -247,12 +253,12 @@
 
 .progressRingTrackOuter
   fill: none
-  stroke: rgba(255, 255, 255, 0.03)
+  stroke: rgba(255, 255, 255, 0.05)
   stroke-width: 1
 
 .progressRingTrack
   fill: none
-  stroke: rgba(255, 255, 255, 0.06)
+  stroke: rgba(255, 255, 255, 0.1)
   stroke-width: 2.5
 
 .progressRingFill
@@ -295,7 +301,7 @@
   height: 0.125rem
   margin-top: 0.0625rem
   border-radius: 62.4375rem
-  background: rgba(255, 255, 255, 0.06)
+  background: rgba(255, 255, 255, 0.1)
   overflow: hidden
 
 .progressBarFill
@@ -436,13 +442,13 @@
   place-items: center
   width: 1.25rem
   height: 1.25rem
-  border: 0.0625rem solid rgba(255, 255, 255, 0.1)
+  border: 0.0625rem solid $noir-stroke-soft
   border-radius: 50%
-  color: rgba(148, 148, 154, 0.92)
+  color: rgba(164, 164, 170, 0.96)
   font-size: 0.625rem
   font-weight: 800
-  background: rgba(12, 12, 14, 0.95)
-  box-shadow: 0 0 0 0.09375rem rgba(8, 8, 10, 0.8)
+  background: radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.07), transparent 58%), $noir-surface-card
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06), 0 0.125rem 0.375rem rgba(0, 0, 0, 0.14)
   transition: color 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease
 
 .stageLockIcon
@@ -478,15 +484,15 @@
   min-width: 1.25rem
   height: 1.25rem
   padding: 0 0.3125rem
-  border: 0.0625rem solid $noir-stroke-hairline
+  border: 0.0625rem solid $noir-stroke-soft
   border-radius: $noir-radius-chip
-  color: rgba(200, 200, 206, 0.82)
+  color: rgba(212, 212, 218, 0.9)
   font-size: 0.625rem
   font-weight: 650
   line-height: 1
   font-variant-numeric: tabular-nums
-  background: rgba(0, 0, 0, 0.28)
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.03)
+  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.05), transparent 58%), rgba(27, 28, 32, 0.88)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05)
   transition: color 180ms ease, border-color 180ms ease, background 180ms ease
 
 .stageBody
@@ -528,12 +534,12 @@
   .stageDot
     color: var(--stage-accent)
     border-color: color-mix(in srgb, var(--stage-accent) 28%, transparent)
-    background: color-mix(in srgb, var(--stage-accent) 8%, rgba(12, 12, 14, 0.95))
+    background: color-mix(in srgb, var(--stage-accent) 8%, $noir-surface-card)
 
 .stagecurrent
-  border-color: color-mix(in srgb, var(--stage-accent) 18%, $noir-stroke-hairline)
-  background: radial-gradient(ellipse 80% 60% at 0% 50%, color-mix(in srgb, var(--stage-accent) 8%, transparent), transparent 55%), linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4))
-  box-shadow: $noir-shadow-inset, 0 0.375rem 1rem rgba(0, 0, 0, 0.2), 0 0 1.25rem color-mix(in srgb, var(--stage-accent) 6%, transparent)
+  border-color: color-mix(in srgb, var(--stage-accent) 22%, $noir-stroke-soft)
+  background: radial-gradient(ellipse 80% 60% at 0% 50%, color-mix(in srgb, var(--stage-accent) 10%, transparent), transparent 55%), radial-gradient(ellipse 100% 50% at 50% 0%, rgba(255, 255, 255, 0.04), transparent 58%), linear-gradient(180deg, rgba(32, 33, 38, 0.72), rgba(21, 22, 26, 0.88))
+  box-shadow: $noir-shadow-inset, 0 0.5rem 1.125rem rgba(0, 0, 0, 0.18), 0 0 1.5rem color-mix(in srgb, var(--stage-accent) 8%, transparent)
 
   .stageColorBar
     opacity: 0.92
@@ -547,14 +553,14 @@
   .stageDot
     color: color-mix(in srgb, var(--stage-accent) 78%, white 22%)
     border-color: color-mix(in srgb, var(--stage-accent) 22%, transparent)
-    background: color-mix(in srgb, var(--stage-accent) 6%, rgba(12, 12, 14, 0.95))
-    box-shadow: 0 0 0 0.09375rem rgba(8, 8, 10, 0.8), 0 0 0.5rem color-mix(in srgb, var(--stage-accent) 18%, transparent)
+    background: color-mix(in srgb, var(--stage-accent) 6%, $noir-surface-card)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06), 0 0 0.5rem color-mix(in srgb, var(--stage-accent) 18%, transparent)
 
   .stageCountBadge
     color: rgba(228, 228, 234, 0.94)
     border-color: color-mix(in srgb, var(--stage-accent) 12%, rgba(255, 255, 255, 0.1))
-    background: color-mix(in srgb, var(--stage-accent) 6%, rgba(0, 0, 0, 0.32))
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05)
+    background: color-mix(in srgb, var(--stage-accent) 6%, rgba(27, 28, 32, 0.88))
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
 
   &:hover
     border-color: color-mix(in srgb, var(--stage-accent) 22%, $noir-stroke-soft)
@@ -563,9 +569,9 @@
       opacity: 0.96
 
 .stageblocked
-  border-color: color-mix(in srgb, var(--stage-accent) 5%, rgba(255, 255, 255, 0.05))
-  background: radial-gradient(ellipse 80% 60% at 0% 50%, color-mix(in srgb, var(--stage-accent) 2%, transparent), transparent 55%), linear-gradient(180deg, rgba(16, 16, 18, 0.78), rgba(6, 6, 8, 0.92))
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.02), inset 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.36)
+  border-color: color-mix(in srgb, var(--stage-accent) 6%, $noir-stroke-hairline)
+  background: radial-gradient(ellipse 80% 60% at 0% 50%, color-mix(in srgb, var(--stage-accent) 3%, transparent), transparent 55%), linear-gradient(180deg, rgba(27, 28, 32, 0.82), rgba(16, 17, 20, 0.9))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04), inset 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.28)
 
   .stageColorBar
     opacity: 0.16
@@ -577,16 +583,16 @@
     color: rgba(112, 112, 118, 0.62)
 
   .stageDot
-    color: rgba(108, 108, 114, 0.58)
-    border-color: rgba(255, 255, 255, 0.05)
-    background: rgba(10, 10, 12, 0.96)
-    box-shadow: none
+    color: rgba(128, 128, 134, 0.72)
+    border-color: $noir-stroke-hairline
+    background: radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.03), transparent 58%), rgba(21, 22, 26, 0.92)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.03)
 
   .stageCountBadge
-    color: rgba(128, 128, 134, 0.52)
-    border-color: rgba(255, 255, 255, 0.04)
-    background: rgba(0, 0, 0, 0.42)
-    box-shadow: none
+    color: rgba(148, 148, 154, 0.62)
+    border-color: $noir-stroke-hairline
+    background: rgba(21, 22, 26, 0.82)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.03)
 
   .stageLockIcon
     color: color-mix(in srgb, var(--stage-accent) 28%, rgba(100, 100, 106, 0.48))
@@ -602,9 +608,9 @@
       opacity: 0.82
 
   &:hover
-    border-color: color-mix(in srgb, var(--stage-accent) 9%, rgba(255, 255, 255, 0.07))
-    background: radial-gradient(ellipse 80% 60% at 0% 50%, color-mix(in srgb, var(--stage-accent) 3%, transparent), transparent 55%), linear-gradient(180deg, rgba(18, 18, 20, 0.74), rgba(8, 8, 10, 0.88))
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.03), inset 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.32), 0 0.125rem 0.5rem rgba(0, 0, 0, 0.12)
+    border-color: color-mix(in srgb, var(--stage-accent) 12%, $noir-stroke-soft)
+    background: radial-gradient(ellipse 80% 60% at 0% 50%, color-mix(in srgb, var(--stage-accent) 5%, transparent), transparent 55%), linear-gradient(180deg, rgba(32, 33, 38, 0.78), rgba(21, 22, 26, 0.88))
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05), inset 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.2), 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1)
 
     .stageColorBar
       opacity: 0.26
@@ -625,9 +631,9 @@
 
   &[open],
   &.stageExpanded
-    border-color: color-mix(in srgb, var(--stage-accent) 7%, rgba(255, 255, 255, 0.06))
-    background: radial-gradient(ellipse 80% 60% at 0% 50%, color-mix(in srgb, var(--stage-accent) 2.5%, transparent), transparent 55%), linear-gradient(180deg, rgba(16, 16, 18, 0.76), rgba(6, 6, 8, 0.9))
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.025), inset 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.34)
+    border-color: color-mix(in srgb, var(--stage-accent) 10%, $noir-stroke-soft)
+    background: radial-gradient(ellipse 80% 60% at 0% 50%, color-mix(in srgb, var(--stage-accent) 4%, transparent), transparent 55%), linear-gradient(180deg, rgba(27, 28, 32, 0.8), rgba(16, 17, 20, 0.88))
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04), inset 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.22)
 
     .stageColorBar
       opacity: 0.22
@@ -666,7 +672,7 @@
     font-size: 0.8125rem
 
     &::placeholder
-      color: rgba(148, 148, 154, 0.72)
+      color: rgba(164, 164, 170, 0.78)
 
     &:hover:not(:focus):not(:focus-visible)
       +ds-editable-field-hover
@@ -896,8 +902,11 @@
 // ─── Quick shortcuts ─────────────────────────────────────────────────────────────
 
 .quickShortcutsCard
-  border-color: $noir-stroke-soft
+  border-color: $noir-stroke-medium
   gap: 0.8125rem
+
+  &::before
+    background: linear-gradient(132deg, rgba(255, 255, 255, 0.07) 0%, transparent 32%, transparent 68%, rgba(255, 255, 255, 0.025) 100%)
 
 .quickShortcutsHeader
   display: flex
@@ -942,10 +951,10 @@
   font-weight: 700
   letter-spacing: 0.14em
   line-height: 1.15
-  border-radius: 1rem
-  border-color: $noir-stroke-soft
-  background: radial-gradient(ellipse 100% 74% at 50% 0%, rgba(255, 255, 255, 0.078), transparent 62%), linear-gradient(180deg, rgba(32, 32, 34, 0.94), rgba(14, 14, 16, 0.98))
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.07), inset 0 -0.0625rem 0 rgba(0, 0, 0, 0.28), 0 0.3125rem 0.875rem rgba(0, 0, 0, 0.24)
+  border-radius: $noir-radius-panel
+  border-color: $noir-stroke-medium
+  background: radial-gradient(ellipse 100% 78% at 50% 0%, rgba(255, 255, 255, 0.14), transparent 58%), linear-gradient(180deg, rgba(48, 49, 54, 0.96), rgba(27, 28, 32, 0.98))
+  box-shadow: inset 0 0 0.75rem 0.125rem rgba(255, 255, 255, 0.04), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12), inset 0 -0.0625rem 0 rgba(0, 0, 0, 0.16), 0 0.5rem 1.125rem rgba(0, 0, 0, 0.2)
   transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), border-color 220ms ease, background 220ms ease, box-shadow 220ms ease, color 220ms ease
 
   &::before
@@ -955,7 +964,7 @@
     z-index: 0
     border-radius: inherit
     pointer-events: none
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 0.125rem, transparent 38%)
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 0.125rem, transparent 40%), linear-gradient(118deg, rgba(255, 255, 255, 0.05) 0%, transparent 28%, transparent 72%, rgba(255, 255, 255, 0.025) 100%)
 
   > *
     position: relative
@@ -963,32 +972,32 @@
 
   &:hover:not(:disabled),
   &:focus-visible:not(:disabled)
-    border-color: $noir-stroke-medium
-    background: radial-gradient(ellipse 100% 74% at 50% 0%, rgba(255, 255, 255, 0.1), transparent 62%), linear-gradient(180deg, rgba(38, 38, 40, 0.96), rgba(18, 18, 20, 0.99))
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.09), inset 0 -0.0625rem 0 rgba(0, 0, 0, 0.24), 0 0.5rem 1.25rem rgba(0, 0, 0, 0.3), $noir-glow-edge
+    border-color: $noir-stroke-strong
+    background: radial-gradient(ellipse 100% 78% at 50% 0%, rgba(255, 255, 255, 0.16), transparent 58%), linear-gradient(180deg, rgba(48, 49, 54, 0.98), rgba(27, 28, 32, 0.99))
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12), inset 0 -0.0625rem 0 rgba(0, 0, 0, 0.18), 0 0.625rem 1.5rem rgba(0, 0, 0, 0.28), $noir-glow-edge
 
     .quickShortcutBtnIcon
-      color: rgba(240, 240, 244, 0.96)
+      color: rgba(248, 248, 250, 0.98)
 
     .quickShortcutBtnLabel
-      color: rgba(252, 252, 254, 0.98)
+      color: rgba(252, 252, 254, 1)
 
   &:active:not(:disabled)
     transform: translateY(0) scale(0.988)
-    box-shadow: inset 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.42), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.03), inset 0 -0.0625rem 0 rgba(0, 0, 0, 0.32)
+    box-shadow: inset 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.32), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04), inset 0 -0.0625rem 0 rgba(0, 0, 0, 0.24)
 
 .quickShortcutBtnIcon
   width: 1.75rem
   height: 1.75rem
   flex: 0 0 auto
-  color: rgba(164, 164, 170, 0.94)
+  color: rgba(180, 180, 186, 0.98)
   transition: color 220ms ease, transform 220ms ease
 
 .quickShortcutBtnLabel
   display: block
   width: 100%
   text-align: center
-  color: rgba(244, 244, 246, 0.94)
+  color: rgba(248, 248, 250, 0.98)
   transition: color 220ms ease
 
 // ─── Final result hero ─────────────────────────────────────────────────────────
@@ -1005,55 +1014,30 @@
     display: none
 
 .finalResultHero
-  position: relative
+  +noir-hero-glass
   display: grid
   grid-template-columns: minmax(0, 1fr) clamp(4.75rem, 21%, 6.25rem)
   align-items: center
   gap: clamp(0.3125rem, 0.9vw, 0.5rem)
   min-height: clamp(5.5rem, 11vw, 6.5rem)
   padding: clamp(0.6875rem, 1.2vw, 0.875rem) clamp(0.625rem, 1.1vw, 0.75rem) clamp(0.6875rem, 1.2vw, 0.875rem) clamp(0.8125rem, 1.4vw, 0.9375rem)
-  overflow: hidden
-  isolation: isolate
-  border: 0.0625rem solid $noir-stroke-soft
-  border-radius: $noir-radius-section
-  background: radial-gradient(ellipse 72% 68% at 74% 42%, rgba(255, 255, 255, 0.08), transparent 54%), radial-gradient(ellipse 110% 80% at 50% 100%, rgba(255, 255, 255, 0.028), transparent 58%), linear-gradient(180deg, rgba(26, 26, 28, 0.98), rgba(4, 4, 6, 0.99))
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.09), inset 0 -1rem 2rem rgba(0, 0, 0, 0.42), $noir-shadow-card
-
-  &::before
-    content: ''
-    position: absolute
-    top: 0
-    left: 1rem
-    right: 1rem
-    height: 0.0625rem
-    z-index: 6
-    pointer-events: none
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16) 30%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.16) 70%, transparent)
-
-  &::after
-    content: ''
-    position: absolute
-    inset: 0
-    background: radial-gradient(ellipse 92% 88% at 50% 50%, transparent 44%, rgba(0, 0, 0, 0.42) 100%)
-    pointer-events: none
-    z-index: 4
 
 .finalResultHeroWaveField
   position: absolute
   inset: -18% -24% -14% -18%
   pointer-events: none
   z-index: 1
-  filter: blur(0.65rem)
+  filter: blur(0.75rem)
   mix-blend-mode: screen
-  opacity: 0.55
+  opacity: 0.72
 
   &::before
     content: ''
     position: absolute
     inset: 8% 0 18% 0
-    background: radial-gradient(ellipse 68% 42% at 38% 52%, rgba(255, 255, 255, 0.12), transparent 62%), radial-gradient(ellipse 52% 38% at 72% 44%, rgba(220, 220, 224, 0.08), transparent 58%)
-    mask-image: linear-gradient(90deg, transparent 0%, black 12%, black 88%, transparent 100%)
-    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 12%, black 88%, transparent 100%)
+    background: radial-gradient(ellipse 72% 48% at 32% 52%, rgba(255, 255, 255, 0.18), transparent 62%), radial-gradient(ellipse 58% 42% at 76% 44%, rgba(220, 220, 226, 0.12), transparent 58%), radial-gradient(ellipse 40% 30% at 55% 68%, rgba(200, 200, 206, 0.08), transparent 62%)
+    mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%)
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%)
 
 .finalResultHeroWaves
   position: absolute
@@ -1062,9 +1046,9 @@
   height: 122%
   pointer-events: none
   z-index: 2
-  filter: blur(0.5rem)
+  filter: blur(0.55rem)
   mix-blend-mode: screen
-  opacity: 0.52
+  opacity: 0.68
 
 .finalResultHeroWavePath
   fill: none
@@ -1074,7 +1058,7 @@
   position: absolute
   inset: 0
   pointer-events: none
-  background: linear-gradient(118deg, rgba(255, 255, 255, 0.05) 0%, transparent 28%, transparent 68%, rgba(255, 255, 255, 0.03) 100%)
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.08) 0%, transparent 24%, transparent 68%, rgba(255, 255, 255, 0.04) 100%), radial-gradient(ellipse 88% 82% at 50% 50%, transparent 52%, rgba(11, 12, 15, 0.22) 100%)
   z-index: 3
 
 .finalResultHeroCrystalGlow
@@ -1086,8 +1070,8 @@
   transform: translateY(-50%)
   border-radius: 50%
   pointer-events: none
-  background: radial-gradient(circle at 50% 46%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04) 42%, transparent 72%)
-  filter: blur(0.75rem)
+  background: radial-gradient(circle at 50% 46%, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08) 38%, transparent 72%)
+  filter: blur(0.85rem)
   z-index: 2
 
 .finalResultHeroContent
@@ -1109,7 +1093,7 @@
 
 .finalResultHeroSubtitle
   margin: 0
-  color: rgba(148, 148, 154, 0.95)
+  color: rgba(164, 164, 170, 0.96)
   font-size: clamp(0.625rem, 0.74vw, 0.6875rem)
   font-weight: 450
   line-height: 1.45
@@ -1119,10 +1103,12 @@
   margin-top: clamp(0.3125rem, 0.6vw, 0.4375rem)
 
 .finalResultHeroCta
+  +noir-cta-glass
   width: auto
   max-width: 100%
   flex-shrink: 0
   gap: 0.375rem
+  font-size: 0.6875rem
 
 .finalResultHeroCtaIconWrap
   display: inline-flex
@@ -1153,10 +1139,10 @@
 
 .finalResultVisualGlow
   position: absolute
-  inset: -12%
+  inset: -18%
   border-radius: 50%
-  background: radial-gradient(circle at 52% 42%, rgba(255, 255, 255, 0.12), rgba(192, 192, 196, 0.05) 38%, transparent 72%)
-  filter: blur(0.65rem)
+  background: radial-gradient(circle at 52% 42%, rgba(255, 255, 255, 0.2), rgba(200, 200, 206, 0.08) 38%, transparent 72%)
+  filter: blur(0.85rem)
   pointer-events: none
 
 .finalResultVisualShell
@@ -1169,7 +1155,7 @@
   border: 0
   border-radius: 0
   box-shadow: none
-  filter: drop-shadow(0 0.875rem 1.5rem rgba(0, 0, 0, 0.48)) drop-shadow(0 0 0.625rem rgba(255, 255, 255, 0.06))
+  filter: drop-shadow(0 0.875rem 1.5rem rgba(0, 0, 0, 0.36)) drop-shadow(0 0 1rem rgba(255, 255, 255, 0.1))
 
 .finalResultVisualGlyph
   width: 100%
@@ -1337,8 +1323,8 @@
   height: 2.125rem
   border: 0.0625rem solid var(--stage-border, color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 20%, $noir-stroke-hairline))
   border-radius: $noir-radius-icon-tile
-  background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 6%, transparent), transparent 62%), rgba(0, 0, 0, 0.32)
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05)
+  background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 8%, transparent), transparent 62%), rgba(27, 28, 32, 0.88)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
   color: var(--stage-accent, #{$color-text})
 
 .dragGlyph
