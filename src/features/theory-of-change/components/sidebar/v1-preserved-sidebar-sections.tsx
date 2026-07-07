@@ -165,7 +165,11 @@ export function V1CanvasOrganizationAccordion({
   onOrganize?: () => void;
 }) {
   const [isOpen, setIsOpen] = useState(true);
+  const shouldReduceMotion = useReducedMotion();
   const contentId = `${id}-content`;
+  const accordionTransition = shouldReduceMotion
+    ? { duration: 0.01 }
+    : { duration: 0.3, ease: PREMIUM_EASE };
 
   return (
     <section className={[styles.card, styles.canvasOrganizationCard].join(' ')}>
@@ -182,20 +186,31 @@ export function V1CanvasOrganizationAccordion({
         </span>
         <AccordionChevron isOpen={isOpen} />
       </button>
-      {isOpen ? (
-        <div id={contentId} className={styles.canvasOrganizationContent}>
-          <p className={styles.canvasOrganizationText}>
-            Organize o canvas automaticamente. Alinhe os blocos por etapa para visualizar a teoria com mais clareza.
-          </p>
-          <div className={styles.canvasOrgPreviewShell}>
-            <p className={styles.canvasOrgPreviewLabel}>Prévia do alinhamento</p>
-            <CanvasAlignmentPreview stageCounts={stageCounts} />
-          </div>
-          <TdmButton variant="secondary" fullWidth icon={<ColumnsAlignIcon />} onClick={() => onOrganize?.()}>
-            Centralizar colunas
-          </TdmButton>
-        </div>
-      ) : null}
+      <AnimatePresence initial={false}>
+        {isOpen ? (
+          <motion.div
+            key={contentId}
+            id={contentId}
+            className={styles.canvasOrganizationContent}
+            initial={shouldReduceMotion ? false : { height: 0, opacity: 0, y: -4 }}
+            animate={{ height: 'auto', opacity: 1, y: 0 }}
+            exit={shouldReduceMotion ? { opacity: 0, height: 0 } : { height: 0, opacity: 0, y: -3 }}
+            transition={accordionTransition}
+            style={{ overflow: 'hidden' }}
+          >
+            <p className={styles.canvasOrganizationText}>
+              Organize o canvas automaticamente. Alinhe os blocos por etapa para visualizar a teoria com mais clareza.
+            </p>
+            <div className={styles.canvasOrgPreviewShell}>
+              <p className={styles.canvasOrgPreviewLabel}>Prévia do alinhamento</p>
+              <CanvasAlignmentPreview stageCounts={stageCounts} />
+            </div>
+            <TdmButton variant="secondary" fullWidth icon={<ColumnsAlignIcon />} onClick={() => onOrganize?.()}>
+              Centralizar colunas
+            </TdmButton>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </section>
   );
 }
