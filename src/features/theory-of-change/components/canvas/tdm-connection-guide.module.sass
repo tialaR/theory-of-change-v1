@@ -1,0 +1,173 @@
+@use '../../../../shared/styles/tokens' as *
+
+.panel
+  z-index: 8
+  max-width: min(58rem, calc(100vw - 5rem))
+  pointer-events: none
+  font-family: $ds-font-family
+
+.shell
+  display: grid
+  grid-template-columns: auto minmax(0, 1.35fr) minmax(9rem, 0.95fr) minmax(11rem, 1.1fr)
+  align-items: center
+  gap: 0.65rem 0.85rem
+  min-height: 3.35rem
+  padding: 0.55rem 0.85rem 0.55rem 0
+  border: 0.0625rem solid rgba(255, 255, 255, 0.08)
+  border-radius: 0.85rem
+  background: linear-gradient(180deg, rgba(24, 25, 30, 0.94), rgba(14, 15, 18, 0.96))
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.32), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
+  backdrop-filter: blur(0.75rem)
+  position: relative
+  overflow: hidden
+  transform-origin: left center
+
+.accentRailHost
+  position: absolute
+  left: 0
+  top: 0
+  bottom: 0
+  width: 0.18rem
+  overflow: hidden
+  border-radius: 0.85rem 0 0 0.85rem
+  pointer-events: none
+
+.accentRail
+  position: absolute
+  inset: 0
+  transform-origin: center top
+  background: linear-gradient(180deg, var(--guide-accent), rgba(255, 255, 255, 0.08))
+  box-shadow: 0 0 0.85rem color-mix(in srgb, var(--guide-accent) 42%, transparent)
+
+.iconCell
+  display: flex
+  align-items: center
+  justify-content: center
+  width: 2rem
+  margin-left: 0.55rem
+  flex-shrink: 0
+  position: relative
+  min-height: 1.45rem
+
+.iconMotion
+  display: flex
+  align-items: center
+  justify-content: center
+  transform-origin: center center
+
+.phaseIcon
+  display: block
+
+.phaseGlyph
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  width: 1.45rem
+  height: 1.45rem
+  border-radius: 0.42rem
+  color: var(--guide-accent)
+  background: color-mix(in srgb, var(--guide-accent) 12%, rgba(255, 255, 255, 0.03))
+  border: 0.0625rem solid color-mix(in srgb, var(--guide-accent) 24%, rgba(255, 255, 255, 0.06))
+
+.phaseGlyphSvg
+  width: 0.9rem
+  height: 0.9rem
+
+.copyCell
+  min-width: 0
+  overflow: hidden
+
+.copyStack
+  display: grid
+  gap: 0.12rem
+  will-change: opacity, transform
+
+.title
+  margin: 0
+  color: rgba(244, 244, 248, 0.96)
+  font-size: 0.76rem
+  font-weight: 600
+  letter-spacing: 0.03em
+  line-height: 1.2
+
+.message
+  margin: 0
+  color: rgba(210, 210, 218, 0.88)
+  font-size: 0.74rem
+  line-height: 1.35
+
+.actionCell
+  min-width: 0
+  padding-left: 0.7rem
+  border-left: 0.0625rem solid rgba(255, 255, 255, 0.06)
+  overflow: hidden
+  min-height: 1.1rem
+
+.action
+  margin: 0
+  color: color-mix(in srgb, var(--guide-accent) 72%, rgba(232, 232, 238, 0.92))
+  font-size: 0.7rem
+  line-height: 1.35
+  font-weight: 500
+
+.flowCell
+  min-width: 0
+  padding-left: 0.7rem
+  border-left: 0.0625rem solid rgba(255, 255, 255, 0.06)
+
+.miniFlow
+  display: flex
+  align-items: center
+  flex-wrap: wrap
+  gap: 0.15rem 0.2rem
+  margin: 0
+  padding: 0
+  list-style: none
+
+.miniFlowItem
+  display: inline-flex
+  align-items: center
+  gap: 0.2rem
+
+.miniFlowArrow
+  color: rgba(156, 163, 175, 0.55)
+  font-size: 0.62rem
+  line-height: 1
+
+.miniFlowStep
+  color: rgba(156, 163, 175, 0.72)
+  font-size: 0.62rem
+  font-weight: 500
+  letter-spacing: 0.02em
+  white-space: nowrap
+
+.miniFlowStepPast
+  color: rgba(180, 180, 190, 0.58)
+
+.miniFlowStepActive
+  color: var(--mini-flow-accent)
+  font-weight: 600
+
+@media (max-width: 960px)
+  .shell
+    grid-template-columns: auto minmax(0, 1fr)
+    grid-template-areas: 'icon copy' 'icon action' 'flow flow'
+    gap: 0.45rem 0.7rem
+    padding-right: 0.75rem
+
+  .iconCell
+    grid-area: icon
+
+  .copyCell
+    grid-area: copy
+
+  .actionCell
+    grid-area: action
+    padding-left: 0
+    border-left: none
+
+  .flowCell
+    grid-area: flow
+    padding-left: 2.55rem
+    border-left: none
+    padding-top: 0.15rem

@@ -1,0 +1,71 @@
+@use '../../../../shared/styles/tokens' as *
+
+.edge
+  transition: stroke 160ms ease, opacity 160ms ease
+
+.selected
+  filter: drop-shadow(0 0 10px rgba(139, 124, 255, 0.22))
+
+.hovered
+  filter: drop-shadow(0 0 8px rgba(139, 124, 255, 0.16))
+
+.animated
+  animation: edgeDash 0.9s linear 2
+
+@keyframes edgeDash
+  to
+    stroke-dashoffset: -20
+
+.labelLayer
+  position: absolute
+  pointer-events: all
+  transform: translate(-50%, -50%)
+
+.marker
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  min-width: 1.45rem
+  height: 1.45rem
+  padding: 0 0.35rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.14)
+  border-radius: 999rem
+  background: rgba(18, 19, 24, 0.94)
+  color: rgba(244, 244, 248, 0.95)
+  font-size: 0.68rem
+  font-weight: 700
+  letter-spacing: 0.04em
+  cursor: pointer
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.28)
+
+  &:hover
+    border-color: rgba(255, 255, 255, 0.24)
+    transform: translateY(-0.0625rem)
+
+.markerRisk
+  border-color: rgba(139, 124, 255, 0.42)
+  color: rgba(210, 198, 255, 0.96)
+
+.markerHypothesis
+  border-color: rgba(61, 191, 154, 0.42)
+  color: rgba(170, 244, 214, 0.96)
+
+.cta
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  min-height: 1.35rem
+  padding: 0 0.5rem
+  border: 0.0625rem dashed rgba(255, 255, 255, 0.16)
+  border-radius: 999rem
+  background: rgba(18, 19, 24, 0.82)
+  color: rgba(210, 210, 218, 0.86)
+  font-size: 0.64rem
+  font-weight: 600
+  letter-spacing: 0.03em
+  text-transform: uppercase
+  cursor: pointer
+
+  &:hover
+    border-color: rgba(255, 255, 255, 0.28)
+    color: rgba(244, 244, 248, 0.94)

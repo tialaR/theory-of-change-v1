@@ -1,5 +1,5 @@
 import { TDM_STAGE_ORDER, type TdmStage } from './tdm-stages';
-import type { TdmMarkerType } from './tdm-types';
+import type { TdmConnectionKind, TdmMarkerType } from './tdm-types';
 
 const ALLOWED_CONNECTIONS: Record<TdmStage, readonly TdmStage[]> = {
   input: ['activity'],
@@ -17,6 +17,34 @@ const STAGE_MESSAGES = {
     'Essa ligação pula uma etapa. Primeiro conecte com a próxima coluna para deixar o caminho mais claro.',
   valid: 'Conexão válida. Agora você pode explicar o vínculo entre esses blocos.'
 } as const;
+
+export const GUIDE_DEFAULT_TITLE = 'Guia da teoria';
+
+export const GUIDE_DEFAULT_BODY = 'Conecte os blocos da esquerda para a direita. Cada etapa leva à próxima mudança.';
+
+export const GUIDE_FLOW_LINE = 'Insumos -> Atividades -> Produtos -> Resultados';
+
+export const GUIDE_RISK_HINT = 'Riscos explicam o que pode impedir uma passagem.';
+
+export const GUIDE_HYPOTHESIS_HINT = 'Hipóteses explicam por que um produto deve gerar um resultado.';
+
+export const GUIDE_INVALID_CONNECTION =
+  'Essa conexão não segue a ordem da teoria. Use apenas a próxima etapa à direita.';
+
+export const GUIDE_RISK_SAVED = 'Risco salvo nesta passagem.';
+
+export const GUIDE_HYPOTHESIS_SAVED = 'Hipótese salva nesta passagem.';
+
+export const GUIDE_RISK_DELETED = 'Risco removido. A conexão continua existindo.';
+
+export const GUIDE_HYPOTHESIS_DELETED = 'Hipótese removida. A conexão continua existindo.';
+
+const CONNECTION_START_GUIDE: Record<TdmStage, string> = {
+  input: 'Leve este Insumo até uma Atividade.',
+  activity: 'Leve esta Atividade até um Produto.',
+  output: 'Leve este Produto até um Resultado.',
+  outcome: 'Resultados encerram o fluxo. Eles não se conectam para frente.'
+};
 
 export function isAllowedTdmConnection(sourceStage: TdmStage, targetStage: TdmStage): boolean {
   return ALLOWED_CONNECTIONS[sourceStage].includes(targetStage);
@@ -41,6 +69,26 @@ export function getTdmConnectionMessage(sourceStage: TdmStage, targetStage: TdmS
   return STAGE_MESSAGES.skipStage;
 }
 
+export function getConnectionKind(sourceStage: TdmStage, targetStage: TdmStage): TdmConnectionKind | undefined {
+  if (sourceStage === 'input' && targetStage === 'activity') {
+    return 'input-activity';
+  }
+
+  if (sourceStage === 'activity' && targetStage === 'output') {
+    return 'activity-output';
+  }
+
+  if (sourceStage === 'output' && targetStage === 'outcome') {
+    return 'output-outcome';
+  }
+
+  return undefined;
+}
+
+export function getAllowedTargetStage(sourceStage: TdmStage): TdmStage | undefined {
+  return ALLOWED_CONNECTIONS[sourceStage][0];
+}
+
 export function getAllowedMarkerTypesForConnection(
   sourceStage: TdmStage,
   targetStage: TdmStage
@@ -60,10 +108,46 @@ export function getAllowedMarkerTypesForConnection(
   return [];
 }
 
+export function canCreateRisk(sourceStage: TdmStage, targetStage: TdmStage): boolean {
+  return getAllowedMarkerTypesForConnection(sourceStage, targetStage).includes('risk');
+}
+
+export function canCreateHypothesis(sourceStage: TdmStage, targetStage: TdmStage): boolean {
+  return getAllowedMarkerTypesForConnection(sourceStage, targetStage).includes('hypothesis');
+}
+
 export function canConnectStages(sourceStage: TdmStage, targetStage: TdmStage): boolean {
   return isAllowedTdmConnection(sourceStage, targetStage);
 }
 
 export function getNextAllowedStages(stage: TdmStage): readonly TdmStage[] {
   return ALLOWED_CONNECTIONS[stage];
+}
+
+export function getConnectionStartGuideMessage(sourceStage: TdmStage): string {
+  return CONNECTION_START_GUIDE[sourceStage];
+}
+
+export function getInvalidConnectionMessage(_sourceStage: TdmStage, _targetStage: TdmStage): string {
+  return GUIDE_INVALID_CONNECTION;
+}
+
+export function getInvalidConnectionGuideMessage(sourceStage: TdmStage, targetStage: TdmStage): string {
+  if (isAllowedTdmConnection(sourceStage, targetStage)) {
+    return STAGE_MESSAGES.valid;
+  }
+
+  return getInvalidConnectionMessage(sourceStage, targetStage);
+}
+
+export function getEdgeSelectionGuideMessage(sourceStage: TdmStage, targetStage: TdmStage): string | null {
+  if (canCreateRisk(sourceStage, targetStage)) {
+    return 'Esta passagem pode ter um Risco.';
+  }
+
+  if (canCreateHypothesis(sourceStage, targetStage)) {
+    return 'Esta passagem pode ter uma Hipótese.';
+  }
+
+  return null;
 }

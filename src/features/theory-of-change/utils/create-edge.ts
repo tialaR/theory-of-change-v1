@@ -1,6 +1,11 @@
 import { MarkerType } from '@xyflow/react';
-import { getAllowedMarkerTypesForConnection, getTdmConnectionMessage, isAllowedTdmConnection } from '../domain/tdm-connection-rules';
-import { getTdmStageTheme } from '../domain/tdm-theme';
+import {
+  getAllowedMarkerTypesForConnection,
+  getConnectionKind,
+  getTdmConnectionMessage,
+  isAllowedTdmConnection
+} from '../domain/tdm-connection-rules';
+import { getConnectionStrokeColor } from '../domain/tdm-connection-theme';
 import type { TdmEdge } from '../domain/tdm-types';
 import type { TdmStage } from '../domain/tdm-stages';
 
@@ -28,7 +33,8 @@ export function createEdge({
   const allowedMarkerTypes = getAllowedMarkerTypesForConnection(sourceStage, targetStage);
   const resolvedMarkerType =
     markerType && allowedMarkerTypes.includes(markerType) ? markerType : undefined;
-  const edgeColor = getTdmStageTheme(sourceStage).accent;
+  const connectionKind = getConnectionKind(sourceStage, targetStage);
+  const edgeColor = getConnectionStrokeColor(connectionKind, '#8B7CFF');
   const edgeMarker =
     validationStatus === 'valid'
       ? { type: MarkerType.ArrowClosed, width: 18, height: 18, color: edgeColor }
@@ -49,8 +55,13 @@ export function createEdge({
     createdAt,
     updatedAt: createdAt,
     data: {
+      sourceStage,
+      targetStage,
+      connectionKind,
       markerType: resolvedMarkerType,
       markerText,
+      riskText: resolvedMarkerType === 'risk' ? markerText : undefined,
+      hypothesisText: resolvedMarkerType === 'hypothesis' ? markerText : undefined,
       validationStatus,
       validationMessage
     }

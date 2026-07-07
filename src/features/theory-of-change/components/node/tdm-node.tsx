@@ -135,7 +135,8 @@ export function TdmNode({ id, data, selected }: NodeProps<TdmNodeModel>) {
         styles[data.stage],
         isEditingInline ? styles.editing : '',
         isToolbarVisible && !isEditingInline ? styles.toolbarOpen : '',
-        selected || data.isSelected ? styles.selected : ''
+        selected || data.isSelected ? styles.selected : '',
+        data.isValidConnectionTarget ? styles.connectionTarget : ''
       ]
         .filter(Boolean)
         .join(' ')}
