@@ -26,6 +26,7 @@ import fieldStyles from '../form-field/tdm-form-field.module.sass';
 import { TdmSectionIcon } from '../tdm-section-icon/tdm-section-icon';
 import { TdmStageCrystalIcon } from '../stage-crystal-icon/tdm-stage-crystal-icon';
 import { FinalResultHeroWaves, FinalResultVisual } from './final-result-visual';
+import { TheoryChangeSculpture } from './theory-change-sculpture';
 import { TheoryHeaderForm, THEORY_DEFAULT_DESCRIPTION } from './theory-header-form';
 import { SidebarToggleIcon } from './sidebar-toggle-icon';
 import { V1CanvasOrganizationAccordion, V1StageActionSection } from './v1-preserved-sidebar-sections';
@@ -838,7 +839,11 @@ export function TdmSidebar({
   const [theoryDescription, setTheoryDescription] = useState(THEORY_DEFAULT_DESCRIPTION);
   const [openStage, setOpenStage] = useState<TdmStage>(stageCreation === 'ready-to-connect' ? 'outcome' : stageCreation);
   const contentRef = useRef<HTMLDivElement | null>(null);
+  const heroFormShellRef = useRef<HTMLDivElement | null>(null);
+  const scrollRafRef = useRef<number | null>(null);
+  const isHeroCompactRef = useRef(false);
   const [isSidebarScrolled, setIsSidebarScrolled] = useState(false);
+  const [isHeroCompact, setIsHeroCompact] = useState(false);
   const createAccordionId = useId();
   const editAccordionId = useId();
   const canvasOrganizationAccordionId = useId();
@@ -847,15 +852,47 @@ export function TdmSidebar({
     const contentElement = contentRef.current;
     if (!contentElement) return;
 
-    const handleScroll = () => {
-      setIsSidebarScrolled(contentElement.scrollTop > 8);
+    const updateHeroScrollState = () => {
+      const scrollTop = contentElement.scrollTop;
+      setIsSidebarScrolled(scrollTop > 8);
+
+      const shouldCompact = isHeroCompactRef.current ? scrollTop > 12 : scrollTop > 48;
+
+      if (shouldCompact !== isHeroCompactRef.current) {
+        if (
+          shouldCompact &&
+          typeof document !== 'undefined' &&
+          heroFormShellRef.current?.contains(document.activeElement)
+        ) {
+          (document.activeElement as HTMLElement | null)?.blur();
+        }
+
+        isHeroCompactRef.current = shouldCompact;
+        setIsHeroCompact(shouldCompact);
+      }
     };
 
-    handleScroll();
+    const handleScroll = () => {
+      if (scrollRafRef.current !== null) return;
+      scrollRafRef.current = window.requestAnimationFrame(() => {
+        scrollRafRef.current = null;
+        updateHeroScrollState();
+      });
+    };
+
+    updateHeroScrollState();
     contentElement.addEventListener('scroll', handleScroll, { passive: true });
+    heroFormShellRef.current?.addEventListener('focusin', updateHeroScrollState);
+    heroFormShellRef.current?.addEventListener('focusout', updateHeroScrollState);
 
     return () => {
       contentElement.removeEventListener('scroll', handleScroll);
+      heroFormShellRef.current?.removeEventListener('focusin', updateHeroScrollState);
+      heroFormShellRef.current?.removeEventListener('focusout', updateHeroScrollState);
+      if (scrollRafRef.current !== null) {
+        window.cancelAnimationFrame(scrollRafRef.current);
+        scrollRafRef.current = null;
+      }
     };
   }, []);
 
@@ -893,13 +930,40 @@ export function TdmSidebar({
       <Surface className={styles.surface}>
         <header className={[styles.header, isSidebarScrolled ? styles.headerScrolled : ''].filter(Boolean).join(' ')}>
           <div className={styles.headerCopy}>
-            <TheoryHeaderForm
-              theoryName={theoryName}
-              theoryDescription={theoryDescription}
-              onTheoryNameChange={onTheoryNameChange}
-              onTheoryDescriptionChange={setTheoryDescription}
-              onHideSidebar={onToggle}
-            />
+            <section
+              className={[styles.heroCard, isHeroCompact ? styles.heroCardCollapsed : ''].filter(Boolean).join(' ')}
+              aria-label="Hero da teoria da mudança"
+            >
+              <span className={styles.heroGlowTop} aria-hidden="true" />
+              <span className={styles.heroGlowBottom} aria-hidden="true" />
+              <span className={styles.heroSpecular} aria-hidden="true" />
+              <div className={styles.heroContent}>
+                <div className={styles.heroLead}>
+                  <h1 className={styles.heroTitle}>Construtor de Teoria da Mudança</h1>
+                  <p className={styles.heroDescription}>
+                    Um espaço guiado para mapear impacto, alinhar estratégias e criar resultados significativos.
+                  </p>
+                </div>
+                <div
+                  ref={heroFormShellRef}
+                  className={[styles.heroFormShell, isHeroCompact ? styles.heroFormShellCollapsed : '']
+                    .filter(Boolean)
+                    .join(' ')}
+                  aria-hidden={isHeroCompact}
+                >
+                  <TheoryHeaderForm
+                    theoryName={theoryName}
+                    theoryDescription={theoryDescription}
+                    onTheoryNameChange={onTheoryNameChange}
+                    onTheoryDescriptionChange={setTheoryDescription}
+                    onHideSidebar={onToggle}
+                  />
+                </div>
+              </div>
+              <div className={styles.heroSculptureWrap} aria-hidden="true">
+                <TheoryChangeSculpture accent={progressAccent} />
+              </div>
+            </section>
           </div>
         </header>
 
