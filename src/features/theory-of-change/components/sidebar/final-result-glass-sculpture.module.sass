@@ -1,0 +1,226 @@
+@use '../../../../shared/styles/tokens' as *
+
+.sculpture
+  --sculpture-size: clamp(8.25rem, 33vw, 12rem)
+  position: relative
+  display: block
+  width: var(--sculpture-size)
+  height: calc(var(--sculpture-size) * 0.72)
+  flex: 0 0 auto
+  overflow: visible
+  pointer-events: none
+  isolation: isolate
+  perspective: 80rem
+  transform-style: preserve-3d
+  animation: sculptureDrift 9s ease-in-out infinite
+
+.cosmicHalo
+  position: absolute
+  inset: -22% -18% -28% -18%
+  border-radius: 50%
+  background: radial-gradient(ellipse 62% 52% at 56% 44%, rgba(255, 255, 255, 0.24), rgba(210, 216, 224, 0.085) 34%, rgba(132, 146, 170, 0.04) 50%, transparent 70%)
+  filter: blur(1.25rem)
+  opacity: 0.88
+  animation: heroHaloBreathe 6.5s ease-in-out infinite
+
+.lens
+  position: absolute
+  border-radius: 50%
+  background: radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.16) 26%, rgba(135, 158, 190, 0.06) 56%, rgba(0, 0, 0, 0.26) 78%, transparent 100%)
+  box-shadow: inset 0.18rem 0.16rem 0.42rem rgba(255, 255, 255, 0.22), inset -0.45rem -0.45rem 0.7rem rgba(0, 0, 0, 0.44), 0 0 0.95rem rgba(255, 255, 255, 0.1)
+  opacity: 0.82
+  filter: saturate(0.85)
+
+.lensOne
+  width: 2.05rem
+  height: 2.05rem
+  top: 8%
+  left: 8%
+  animation: lensOneFloat 8.5s ease-in-out infinite
+
+.lensTwo
+  width: 1.12rem
+  height: 1.12rem
+  top: 16%
+  right: 16%
+  opacity: 0.72
+  animation: lensTwoFloat 7.8s ease-in-out infinite
+
+.lensThree
+  width: 1.45rem
+  height: 1.45rem
+  bottom: 3%
+  left: 31%
+  opacity: 0.54
+  animation: lensThreeFloat 9.4s ease-in-out infinite
+
+.ringStack
+  position: absolute
+  left: 12%
+  top: 22%
+  width: 78%
+  height: 56%
+  transform-style: preserve-3d
+  transform: rotateX(62deg) rotateZ(-11deg)
+  filter: drop-shadow(0 1.2rem 1.4rem rgba(0, 0, 0, 0.5))
+  animation: heroRingRotate 28s linear infinite
+
+.ring
+  position: absolute
+  inset: 0
+  border-radius: 50%
+  border: 0.0625rem solid rgba(255, 255, 255, 0.25)
+  background: radial-gradient(circle, transparent 57%, rgba(255, 255, 255, 0.035) 59%, rgba(255, 255, 255, 0.18) 66%, rgba(255, 255, 255, 0.035) 72%, transparent 77%)
+  box-shadow: inset 0 0.25rem 0.55rem rgba(255, 255, 255, 0.08), inset 0 -0.4rem 0.9rem rgba(0, 0, 0, 0.58), 0 0 0.55rem rgba(255, 255, 255, 0.08)
+  opacity: 0.78
+
+.ringA
+  transform: translateZ(0.52rem) scale(1, 0.55)
+
+.ringB
+  transform: translateZ(0.26rem) rotateZ(12deg) scale(0.86, 0.5)
+  opacity: 0.52
+
+.ringC
+  transform: translateZ(-0.1rem) rotateZ(-14deg) scale(1.12, 0.62)
+  opacity: 0.38
+
+.ringD
+  transform: translateZ(-0.28rem) rotateZ(28deg) scale(0.74, 0.44)
+  border-style: dashed
+  opacity: 0.32
+
+.planet
+  position: absolute
+  border-radius: 50%
+  background: radial-gradient(circle at 36% 24%, rgba(255, 255, 255, 0.14), rgba(23, 24, 28, 0.86) 34%, #030304 78%)
+  box-shadow: inset -0.32rem -0.46rem 0.9rem rgba(0, 0, 0, 0.82), inset 0.16rem 0.16rem 0.42rem rgba(255, 255, 255, 0.06), 0 0.9rem 1.4rem rgba(0, 0, 0, 0.54)
+
+.planetBack
+  width: 3.4rem
+  height: 3.4rem
+  right: 15%
+  top: 18%
+  opacity: 0.66
+  filter: blur(0.02rem)
+
+.planetFront
+  width: 2.25rem
+  height: 2.25rem
+  right: 25%
+  bottom: 19%
+  transform: translateZ(1.4rem)
+
+.planetSmall
+  width: 1.15rem
+  height: 1.15rem
+  left: 24%
+  top: 43%
+  opacity: 0.76
+
+.glassShard
+  position: absolute
+  width: 46%
+  height: 10%
+  border-radius: 999rem
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.06), transparent)
+  filter: blur(0.12rem)
+  transform-origin: center
+  opacity: 0.7
+
+.shardOne
+  left: 29%
+  top: 43%
+  transform: rotate(-13deg)
+  animation: shardPulse 5.8s ease-in-out infinite
+
+.shardTwo
+  left: 25%
+  bottom: 24%
+  width: 56%
+  opacity: 0.42
+  transform: rotate(-9deg)
+  animation: shardPulse 6.5s ease-in-out infinite reverse
+
+.spark
+  position: absolute
+  width: 0.18rem
+  height: 0.18rem
+  border-radius: 50%
+  background: rgba(255, 255, 255, 0.88)
+  box-shadow: 0 0 0.55rem rgba(255, 255, 255, 0.7), 0 0 1.2rem rgba(190, 205, 235, 0.28)
+
+.sparkA
+  top: 14%
+  right: 34%
+  animation: sparkFlicker 4.2s ease-in-out infinite
+
+.sparkB
+  bottom: 20%
+  right: 18%
+  animation: sparkFlicker 3.8s ease-in-out infinite reverse
+
+@keyframes sculptureDrift
+  0%, 100%
+    transform: translate3d(0, 0, 0) rotateZ(0deg)
+  50%
+    transform: translate3d(0.15rem, -0.22rem, 0) rotateZ(-1deg)
+
+@keyframes heroHaloBreathe
+  0%, 100%
+    opacity: 0.62
+    transform: scale(0.96)
+  50%
+    opacity: 0.98
+    transform: scale(1.08)
+
+@keyframes heroRingRotate
+  from
+    transform: rotateX(62deg) rotateZ(-11deg)
+  to
+    transform: rotateX(62deg) rotateZ(349deg)
+
+@keyframes lensOneFloat
+  0%, 100%
+    transform: translate(0, 0)
+  50%
+    transform: translate(0.28rem, -0.5rem)
+
+@keyframes lensTwoFloat
+  0%, 100%
+    transform: translate(0, 0) scale(1)
+  50%
+    transform: translate(-0.26rem, 0.28rem) scale(0.92)
+
+@keyframes lensThreeFloat
+  0%, 100%
+    transform: translate(0, 0)
+  50%
+    transform: translate(0.12rem, 0.36rem)
+
+@keyframes shardPulse
+  0%, 100%
+    opacity: 0.34
+  50%
+    opacity: 0.82
+
+@keyframes sparkFlicker
+  0%, 100%
+    opacity: 0.22
+    transform: scale(0.75)
+  45%, 60%
+    opacity: 1
+    transform: scale(1.15)
+
+@media (prefers-reduced-motion: reduce)
+  .sculpture,
+  .cosmicHalo,
+  .ringStack,
+  .lensOne,
+  .lensTwo,
+  .lensThree,
+  .shardOne,
+  .shardTwo,
+  .sparkA,
+  .sparkB
+    animation: none !important
