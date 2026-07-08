@@ -1,0 +1,62 @@
+.blueprintLayer
+  position: absolute
+  inset: 0
+  z-index: 1
+  pointer-events: none
+  overflow: hidden
+
+.blueprintSvg
+  position: absolute
+  inset: 0
+  inline-size: 100%
+  block-size: 100%
+
+.guideLine,
+.guideLineVertical
+  stroke: rgba(255, 255, 255, 0.035)
+  stroke-width: 0.5
+  vector-effect: non-scaling-stroke
+
+.guideLineVertical
+  stroke-dasharray: 4 8
+  opacity: 0.72
+
+.blueprintCornerMarks
+  position: absolute
+  inset: 1.25rem
+  display: grid
+  grid-template-columns: 1fr 1fr
+  grid-template-rows: 1fr 1fr
+  pointer-events: none
+
+.cornerMark
+  inline-size: 1.25rem
+  block-size: 1.25rem
+  border-color: rgba(255, 255, 255, 0.06)
+  border-style: solid
+  border-width: 0
+  opacity: 0.55
+
+  &:nth-child(1)
+    border-top-width: 0.0625rem
+    border-left-width: 0.0625rem
+    align-self: start
+    justify-self: start
+
+  &:nth-child(2)
+    border-top-width: 0.0625rem
+    border-right-width: 0.0625rem
+    align-self: start
+    justify-self: end
+
+  &:nth-child(3)
+    border-bottom-width: 0.0625rem
+    border-left-width: 0.0625rem
+    align-self: end
+    justify-self: start
+
+  &:nth-child(4)
+    border-bottom-width: 0.0625rem
+    border-right-width: 0.0625rem
+    align-self: end
+    justify-self: end

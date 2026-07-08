@@ -1,0 +1,84 @@
+// ResultViewNoirBackdrop — local atmosphere behind glass columns.
+// Reference survey: React Bits Grainient / DarkVeil / SoftAurora use ogl+GLSL (skipped).
+// Adapted lightweight techniques: layered gradients + grain (Grainient pattern) via CSS/SVG only.
+
+$noir-base: #030304
+$noir-graphite: #111216
+
+.backdrop
+  position: fixed
+  inset: 0
+  z-index: 0
+  pointer-events: none
+  overflow: hidden
+  background: $noir-base
+
+.gradientBase
+  position: absolute
+  inset: 0
+  background: radial-gradient(ellipse 92% 68% at 50% -8%, rgba(210, 214, 222, 0.07), transparent 58%), radial-gradient(ellipse 78% 52% at 50% 102%, rgba(255, 255, 255, 0.04), transparent 62%), linear-gradient(168deg, #18191d 0%, #111216 24%, #0b0c0f 50%, #070708 76%, $noir-base 100%)
+
+.smokeDriftA,
+.smokeDriftB
+  position: absolute
+  inset: -12%
+  opacity: 0.55
+  filter: blur(3.5rem)
+  will-change: transform
+  animation: smoke-drift 52s ease-in-out infinite alternate
+
+.smokeDriftA
+  background: radial-gradient(ellipse 48% 38% at 22% 34%, rgba(255, 255, 255, 0.09), transparent 68%), radial-gradient(ellipse 36% 28% at 78% 62%, rgba(210, 214, 222, 0.06), transparent 72%)
+
+.smokeDriftB
+  opacity: 0.42
+  animation-duration: 68s
+  animation-direction: alternate-reverse
+  background: radial-gradient(ellipse 42% 34% at 68% 28%, rgba(210, 214, 222, 0.07), transparent 70%), radial-gradient(ellipse 38% 30% at 32% 72%, rgba(255, 255, 255, 0.05), transparent 74%)
+
+.depthGlow
+  position: absolute
+  inset: 0
+  background: radial-gradient(ellipse 34% 22% at 12% 58%, rgba(167, 139, 250, 0.06), transparent 72%), radial-gradient(ellipse 34% 22% at 38% 62%, rgba(96, 165, 250, 0.05), transparent 72%), radial-gradient(ellipse 34% 22% at 62% 62%, rgba(245, 158, 66, 0.045), transparent 72%), radial-gradient(ellipse 34% 22% at 88% 58%, rgba(72, 211, 165, 0.045), transparent 72%)
+  opacity: 0.9
+
+.backdropSvg
+  position: absolute
+  inset: 0
+  display: block
+  inline-size: 100%
+  block-size: 100%
+  max-inline-size: 100%
+
+.grainOverlay
+  position: absolute
+  inset: 0
+  opacity: 0.38
+  mix-blend-mode: soft-light
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E")
+  background-size: 180px 180px
+
+.vignette
+  position: absolute
+  inset: 0
+  background: radial-gradient(ellipse 88% 78% at 50% 46%, transparent 42%, rgba(3, 3, 4, 0.42) 100%)
+  opacity: 0.72
+
+@keyframes smoke-drift
+  0%
+    transform: translate3d(-1.5%, -1%, 0) scale(1)
+  100%
+    transform: translate3d(1.5%, 1.25%, 0) scale(1.03)
+
+@media (prefers-reduced-motion: reduce)
+  .smokeDriftA,
+  .smokeDriftB
+    animation: none
+
+@media (max-width: 80rem)
+  .backdrop
+    display: none
+
+@media print
+  .backdrop
+    display: none !important

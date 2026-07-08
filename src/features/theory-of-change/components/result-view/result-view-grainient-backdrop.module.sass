@@ -1,0 +1,71 @@
+// ResultViewGrainientBackdrop — CSS adaptation of React Bits Grainient (no WebGL).
+// Palette: graphite (color1) + mineral silver (color2) + mid graphite (color3).
+
+.backdrop
+  position: fixed
+  inset: 0
+  z-index: 0
+  pointer-events: none
+  overflow: hidden
+  inline-size: 100%
+  max-inline-size: 100%
+  block-size: 100%
+  background: var(--grain-color1, #07080B)
+
+.gradientBase
+  position: absolute
+  inset: 0
+  background: radial-gradient(ellipse 88% 62% at 50% -6%, rgba(var(--grain-rgb2, 167, 163, 183), 0.1), transparent 58%), radial-gradient(ellipse 72% 48% at 82% 18%, rgba(var(--grain-rgb2, 167, 163, 183), 0.05), transparent 62%), radial-gradient(ellipse 68% 54% at 18% 72%, rgba(var(--grain-rgb3, 17, 19, 24), 0.32), transparent 68%), radial-gradient(ellipse 92% 72% at 50% 108%, rgba(var(--grain-rgb3, 17, 19, 24), 0.38), transparent 64%), linear-gradient(168deg, var(--grain-color3, #111318) 0%, var(--grain-color1, #07080B) 34%, var(--grain-color1, #07080B) 58%, var(--grain-color3, #111318) 100%)
+
+.gradientDriftA,
+.gradientDriftB
+  position: absolute
+  inset: -14%
+  opacity: 0.38
+  filter: blur(2.5rem)
+  will-change: transform
+  animation: grainient-drift 56s ease-in-out infinite alternate
+
+.gradientDriftA
+  background: radial-gradient(ellipse 46% 36% at 24% 32%, rgba(var(--grain-rgb2, 167, 163, 183), 0.07), transparent 70%), radial-gradient(ellipse 40% 32% at 74% 58%, rgba(var(--grain-rgb3, 17, 19, 24), 0.18), transparent 72%)
+
+.gradientDriftB
+  opacity: 0.28
+  animation-duration: 72s
+  animation-direction: alternate-reverse
+  background: radial-gradient(ellipse 44% 34% at 66% 26%, rgba(var(--grain-rgb2, 167, 163, 183), 0.05), transparent 72%), radial-gradient(ellipse 38% 30% at 34% 78%, rgba(var(--grain-rgb3, 17, 19, 24), 0.14), transparent 74%)
+
+.mineralSheen
+  position: absolute
+  inset: 0
+  opacity: 0.55
+  background: radial-gradient(ellipse 38% 24% at 50% 12%, rgba(var(--grain-rgb2, 167, 163, 183), 0.07), transparent 72%), linear-gradient(180deg, rgba(245, 245, 242, 0.035) 0%, transparent 28%, transparent 72%, rgba(var(--grain-rgb3, 17, 19, 24), 0.08) 100%)
+
+.grainOverlay
+  position: absolute
+  inset: 0
+  opacity: 0.28
+  mix-blend-mode: soft-light
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.44'/%3E%3C/svg%3E")
+  background-size: 168px 168px
+
+.vignette
+  position: absolute
+  inset: 0
+  background: radial-gradient(ellipse 90% 80% at 50% 48%, transparent 44%, rgba(var(--grain-rgb1, 7, 8, 11), 0.32) 100%)
+  opacity: 0.55
+
+@keyframes grainient-drift
+  0%
+    transform: translate3d(-1.25%, -0.75%, 0) scale(1)
+  100%
+    transform: translate3d(1.25%, 1%, 0) scale(1.025)
+
+@media (prefers-reduced-motion: reduce)
+  .gradientDriftA,
+  .gradientDriftB
+    animation: none
+
+@media print
+  .backdrop
+    display: none !important
