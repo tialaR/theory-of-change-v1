@@ -396,9 +396,7 @@ export function V1FinalResultCard({
           variant={canViewTdmResult ? 'primary' : 'secondary'}
           fullWidth
           className={styles.finalResultCta}
-          disabled={!canViewTdmResult}
-          aria-disabled={!canViewTdmResult}
-          onClick={canViewTdmResult ? onViewResult : undefined}
+          onClick={onViewResult}
           icon={<FinalResultCtaArrowIcon />}
           iconPosition="right"
         >
@@ -622,8 +620,7 @@ function TheoryProgressRing({ percent, accent }: { percent: number; accent: stri
 export function V1TheoryProgressHeader({
   percent,
   accent,
-  stageTitle,
-  stageInstruction
+  stageTitle
 }: {
   percent: number;
   accent: string;
@@ -633,32 +630,11 @@ export function V1TheoryProgressHeader({
   return (
     <div className={styles.progressHeader}>
       <p className={styles.progressHeaderKicker}>Progresso da teoria</p>
-      <div className={styles.progressHeaderScene}>
-        <div className={styles.progressHeaderAtmosphere} aria-hidden="true">
-          <span className={styles.progressHeaderHazeCore} />
-          <span className={styles.progressHeaderHazeBand} />
-          <span className={styles.progressHeaderHazeSpread} />
-          <span className={styles.progressHeaderHazeTrail} />
-          <span className={styles.progressHeaderHazeProgressive} />
-        </div>
-
-        <TheoryProgressOrbitalSculpture />
-
-        <div className={styles.progressHeaderCard} style={{ '--stage-accent': accent } as CSSProperties}>
-          <span className={styles.progressHeaderCardVeil} aria-hidden="true" />
-          <span className={styles.progressHeaderCardSpecular} aria-hidden="true" />
-          <span className={styles.progressHeaderCardHighlight} aria-hidden="true" />
-          <span className={styles.progressHeaderCardEdge} aria-hidden="true" />
-          <span className={styles.progressHeaderCardNoise} aria-hidden="true" />
-          <div className={styles.progressHeaderCardTop}>
-            <TheoryProgressRing percent={percent} accent={accent} />
-            <div className={styles.progressHeaderCardCopy}>
-              <p className={styles.progressPercent}>{percent}%</p>
-              <p className={styles.progressOverviewLabel}>{stageTitle}</p>
-            </div>
-          </div>
-          <div className={styles.progressHeaderCardDivider} aria-hidden="true" />
-          <p className={styles.progressHeaderInstruction}>{stageInstruction}</p>
+      <div className={styles.progressHeaderCleanCard} style={{ '--stage-accent': accent } as CSSProperties}>
+        <TheoryProgressRing percent={percent} accent={accent} />
+        <div className={styles.progressHeaderCleanCopy}>
+          <p className={styles.progressPercent}>{percent}%</p>
+          <p className={styles.progressOverviewLabel}>{stageTitle}</p>
         </div>
       </div>
     </div>

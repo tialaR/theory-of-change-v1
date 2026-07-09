@@ -8,13 +8,13 @@
   min-height: 100vh
   overflow: hidden
   --tdm-sidebar-width: #{$sidebar-width}
-  --tdm-sidebar-gap: #{$sidebar-gap}
+  --tdm-sidebar-gap: 0px
   background: radial-gradient(circle at 20% 0%, rgba(167, 139, 250, 0.11), transparent 34%), linear-gradient(180deg, rgba(7, 9, 15, 1), rgba(5, 7, 12, 1))
   transition: grid-template-columns 220ms ease
 
 .sidebarOpen
   grid-template-columns: minmax(0, 1fr) $sidebar-width
-  column-gap: $sidebar-gap
+  column-gap: 0
 
 .sidebarClosed
   --tdm-sidebar-width: 0px
@@ -28,7 +28,7 @@
   min-width: 0
   height: 100%
   overflow: hidden
-  padding-right: clamp(1rem, 1.25vw, 1.25rem)
+  padding-right: 0
 
 .flowFrame
   position: absolute
@@ -233,3 +233,14 @@
   justify-content: flex-end
   gap: 12px
   margin-top: 16px
+
+
+// TDM canvas under-sidebar backdrop fix v1
+.shell
+  background: linear-gradient(168deg, #111216 0%, #0d0e11 42%, #08090c 100%) !important
+
+.sidebarOpen
+  column-gap: 0
+
+.canvasArea
+  padding-right: 0
