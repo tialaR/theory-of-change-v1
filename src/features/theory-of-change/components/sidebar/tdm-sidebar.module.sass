@@ -2791,3 +2791,265 @@
   .heroFormShell,
   .heroSculptureWrap
     transition-duration: 1ms !important
+
+
+// TDM progress clean and sidebar elevation v1
+.progressHeader
+  padding: 0
+  border-radius: 1.375rem
+  overflow: hidden
+
+.progressHeaderKicker
+  margin: 0
+  padding: 1.0625rem 1.25rem 0.75rem
+  color: rgba(218, 219, 224, 0.76)
+  font-size: 0.72rem
+  font-weight: 820
+  line-height: 1
+  letter-spacing: 0.34em
+  text-transform: uppercase
+
+.progressHeaderScene,
+.progressHeaderAtmosphere,
+.progressOrbitalSculpture,
+.progressHeaderCard,
+.progressHeaderCardVeil,
+.progressHeaderCardSpecular,
+.progressHeaderCardHighlight,
+.progressHeaderCardEdge,
+.progressHeaderCardNoise,
+.progressHeaderCardDivider,
+.progressHeaderInstruction
+  display: none !important
+
+.progressHeaderCleanCard
+  position: relative
+  display: inline-flex
+  align-items: center
+  gap: 0.75rem
+  margin: 0 1.25rem 1.25rem
+  padding: 0
+  min-height: 2.5rem
+  color: rgba(245, 246, 250, 0.96)
+  background: transparent
+  border: 0
+  box-shadow: none
+
+.progressHeaderCleanCopy
+  display: grid
+  gap: 0.125rem
+  min-width: 0
+
+.progressHeaderCleanCard .progressRing
+  width: 2.25rem
+  height: 2.25rem
+  opacity: 0.84
+
+.progressHeaderCleanCard .progressPercent
+  margin: 0
+  color: rgba(247, 248, 252, 0.98)
+  font-size: 1.42rem
+  font-weight: 760
+  line-height: 1
+
+.progressHeaderCleanCard .progressOverviewLabel
+  margin: 0
+  color: rgba(247, 248, 252, 0.92)
+  font-size: 0.92rem
+  font-weight: 720
+  line-height: 1.18
+
+.sidebar
+  overflow: hidden
+  border-radius: 1.65rem 0 0 1.65rem
+  box-shadow: -1.25rem 0 2.75rem rgba(0, 0, 0, 0.34), -0.0625rem 0 0 rgba(255, 255, 255, 0.08), inset 0.0625rem 0 0 rgba(255, 255, 255, 0.07)
+  background-clip: padding-box
+
+.sidebar::before
+  border-radius: inherit
+
+.sidebarInner,
+.sidebarScroll,
+.contentScroll
+  border-radius: inherit
+
+
+// TDM sidebar transparent radius shell fix v1
+.sidebar
+  background: transparent !important
+  border-radius: 1.75rem 0 0 1.75rem
+  overflow: clip
+  box-shadow: -1rem 0 2.5rem rgba(0, 0, 0, 0.28), -0.0625rem 0 0 rgba(255, 255, 255, 0.07)
+  background-clip: padding-box
+
+  &::before,
+  &::after
+    display: none !important
+
+.surface
+  border-radius: inherit
+  overflow: clip
+  background: transparent !important
+  box-shadow: none !important
+  background-clip: padding-box
+
+  &::before,
+  &::after
+    display: none !important
+
+.header
+  background: transparent !important
+  box-shadow: none
+
+.headerScrolled
+  background: transparent !important
+  box-shadow: none
+
+.sidebarInner,
+.sidebarScroll,
+.contentScroll
+  background: transparent !important
+  border-radius: inherit
+
+
+// TDM aside floating shell radius fix v2
+.sidebar
+  isolation: isolate
+  display: flex
+  align-items: stretch
+  box-sizing: border-box
+  padding: 0.625rem 0.625rem 0.625rem 0
+  overflow: visible
+  border-radius: 2rem 0 0 2rem
+  background: linear-gradient(168deg, #111216 0%, #0d0e11 42%, #08090c 100%) !important
+  background-clip: padding-box
+  filter: drop-shadow(-1.25rem 0 2.6rem rgba(0, 0, 0, 0.34))
+
+  &::before,
+  &::after
+    display: none !important
+
+.open
+  width: $sidebar-width
+
+.closed
+  padding: 0
+  overflow: hidden
+  filter: none
+  background: transparent !important
+
+.surface
+  position: relative
+  z-index: 1
+  flex: 1 1 auto
+  width: 100%
+  height: auto
+  min-height: 0
+  overflow: clip
+  border-radius: 1.85rem 0 0 1.85rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.075)
+  border-right: 0
+  background: radial-gradient(ellipse 90% 52% at 50% 0%, rgba(255, 255, 255, 0.07), transparent 48%), radial-gradient(ellipse 65% 38% at 80% 60%, rgba(255, 255, 255, 0.025), transparent 52%), radial-gradient(ellipse 55% 32% at 50% 100%, rgba(255, 255, 255, 0.025), transparent 58%), linear-gradient(180deg, rgba(23, 24, 28, 0.96), rgba(13, 14, 18, 0.94)) !important
+  box-shadow: inset 0.0625rem 0 0 rgba(255, 255, 255, 0.075), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06), 0 1.25rem 2.75rem rgba(0, 0, 0, 0.28) !important
+  backdrop-filter: blur(1.35rem) saturate(1.08)
+  -webkit-backdrop-filter: blur(1.35rem) saturate(1.08)
+  background-clip: padding-box
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0
+    z-index: 0
+    pointer-events: none
+    border-radius: inherit
+    background: radial-gradient(ellipse 70% 30% at 50% 0%, rgba(255, 255, 255, 0.055), transparent 72%)
+    opacity: 0.75
+
+  &::after
+    display: none !important
+
+.header
+  border-radius: 1.85rem 0 0 0
+  background: transparent !important
+
+.headerScrolled
+  background: linear-gradient(180deg, rgba(23, 24, 28, 0.68), rgba(17, 18, 22, 0.18)) !important
+  box-shadow: 0 0.625rem 1.5rem rgba(0, 0, 0, 0.2)
+
+.sidebarInner,
+.sidebarScroll,
+.contentScroll
+  min-height: 0
+  background: transparent !important
+
+
+// TDM sidebar single-layer shell fix v3
+.sidebar
+  padding: 0 !important
+  margin: 0 !important
+  overflow: visible !important
+  background: transparent !important
+  border: 0 !important
+  border-radius: 0 !important
+  box-shadow: none !important
+  filter: none !important
+  backdrop-filter: none !important
+  -webkit-backdrop-filter: none !important
+
+  &::before,
+  &::after
+    display: none !important
+    content: none !important
+
+.open
+  padding: 0 !important
+  margin: 0 !important
+  background: transparent !important
+  box-shadow: none !important
+  filter: none !important
+
+.surface
+  position: relative
+  z-index: 1
+  width: 100% !important
+  height: 100% !important
+  min-height: 100% !important
+  margin: 0 !important
+  padding: 0 !important
+  overflow: clip !important
+  border-radius: 1.75rem 0 0 1.75rem !important
+  border: 0.0625rem solid rgba(255, 255, 255, 0.075) !important
+  border-right: 0 !important
+  background: linear-gradient(180deg, rgba(23, 24, 28, 0.96), rgba(12, 13, 17, 0.965)) !important
+  background-clip: padding-box !important
+  box-shadow: -1.125rem 0 2.35rem rgba(0, 0, 0, 0.34), inset 0.0625rem 0 0 rgba(255, 255, 255, 0.075), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.055) !important
+  filter: none !important
+  backdrop-filter: blur(1.25rem) saturate(1.08)
+  -webkit-backdrop-filter: blur(1.25rem) saturate(1.08)
+
+  &::before,
+  &::after
+    display: none !important
+    content: none !important
+
+.header
+  margin: 0 !important
+  background: transparent !important
+  box-shadow: none !important
+  border-radius: 1.75rem 0 0 0 !important
+
+.headerScrolled
+  background: transparent !important
+  box-shadow: none !important
+
+.sidebarInner,
+.sidebarScroll,
+.contentScroll
+  margin: 0 !important
+  background: transparent !important
+  box-shadow: none !important
+  border-radius: inherit !important
+
+.sidebarScroll,
+.contentScroll
+  overflow-x: hidden
