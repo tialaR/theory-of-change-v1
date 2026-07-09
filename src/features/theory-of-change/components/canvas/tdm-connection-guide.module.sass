@@ -9,11 +9,10 @@
   right: auto !important
   top: 1rem !important
   margin: 0 !important
-  --guide-inline-gutter: 2rem
-  inline-size: min(72rem, calc(100vw - var(--tdm-sidebar-width, #{$sidebar-width}) - #{$sidebar-gap} - var(--guide-inline-gutter))) !important
-  max-inline-size: min(72rem, calc(100vw - var(--tdm-sidebar-width, #{$sidebar-width}) - #{$sidebar-gap} - var(--guide-inline-gutter)))
+  inline-size: min(66rem, calc(100vw - var(--tdm-sidebar-width, #{$sidebar-width}) - #{$sidebar-gap} - 2rem)) !important
+  width: min(66rem, calc(100vw - var(--tdm-sidebar-width, #{$sidebar-width}) - #{$sidebar-gap} - 2rem)) !important
+  max-inline-size: min(66rem, calc(100vw - var(--tdm-sidebar-width, #{$sidebar-width}) - #{$sidebar-gap} - 2rem)) !important
   min-inline-size: 0
-  width: min(72rem, calc(100vw - var(--tdm-sidebar-width, #{$sidebar-width}) - #{$sidebar-gap} - var(--guide-inline-gutter))) !important
   pointer-events: auto
   cursor: default
   font-family: $ds-font-family
@@ -27,7 +26,7 @@
   background: linear-gradient(180deg, rgba(22, 23, 28, 0.94), rgba(12, 13, 16, 0.96))
   box-shadow: 0 0.35rem 1.1rem rgba(0, 0, 0, 0.34), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05)
   backdrop-filter: blur(0.85rem)
-  overflow: hidden
+  overflow: visible
   transform-origin: top left
 
 .shellTheory
@@ -39,13 +38,14 @@
 
 .strip
   display: grid
-  grid-template-columns: minmax(12rem, 16rem) minmax(20rem, 1fr) minmax(8rem, 10rem) auto
-  grid-template-areas: "left center preview actions" "tabs tabs tabs tabs"
-  align-items: center
+  grid-template-columns: minmax(10rem, 13rem) minmax(18rem, 24rem) minmax(8.75rem, 10rem) max-content minmax(2.75rem, 3rem)
+  grid-template-areas: "left center preview tabs actions"
   gap: 0.75rem
-  min-block-size: 5.25rem
-  padding-block: 0.75rem
-  padding-inline: 1rem
+  align-items: center
+  min-block-size: 4.75rem
+  padding-block: 0.625rem
+  padding-inline: 0.75rem
+  overflow: visible
 
 .leftZone
   grid-area: left
@@ -123,17 +123,17 @@
 .centerMessage
   margin: 0
   color: rgba(198, 198, 206, 0.88)
-  font-size: 0.76rem
-  line-height: 1.45
-  max-width: 100%
+  font-size: 0.7rem
+  line-height: 1.38
+  max-inline-size: 24rem
   overflow-wrap: anywhere
   text-wrap: pretty
 
 .centerAction
   margin: 0
   color: color-mix(in srgb, var(--strip-accent) 68%, rgba(228, 228, 234, 0.9))
-  font-size: 0.72rem
-  line-height: 1.4
+  font-size: 0.64rem
+  line-height: 1.3
 
 .previewZone
   grid-area: preview
@@ -142,8 +142,8 @@
   align-items: flex-start
   justify-content: center
   gap: 0.12rem
-  width: auto
-  min-inline-size: 8rem
+  inline-size: 9.25rem
+  min-inline-size: 9rem
   max-inline-size: 10rem
   min-block-size: 3rem
   padding-block: 0.42rem
@@ -173,27 +173,34 @@
 
 .actionsZone
   grid-area: actions
-  display: flex
-  align-items: stretch
   justify-self: end
-  flex-shrink: 0
+  min-inline-size: 2.75rem
+  inline-size: 2.75rem
+  display: flex
+  align-items: center
+  justify-content: flex-end
+  overflow: visible
 
 .tabStripRow
   grid-area: tabs
+  justify-self: end
+  inline-size: auto
+  width: auto
   min-width: 0
-  width: 100%
 
 .tabStrip
   display: flex
   align-items: stretch
   flex-wrap: nowrap
-  gap: 0.12rem
-  width: 100%
+  gap: 0.125rem
+  inline-size: fit-content
+  width: fit-content
   padding: 0.16rem
   border-radius: 0.58rem
   background: rgba(255, 255, 255, 0.03)
   border: 0.0625rem solid rgba(255, 255, 255, 0.05)
   justify-content: flex-start
+  overflow: visible
 
 .tab
   position: relative
@@ -202,10 +209,11 @@
   align-items: center
   justify-content: center
   gap: 0.1rem
-  min-inline-size: 2.85rem
-  min-block-size: 3rem
+  min-inline-size: 4.2rem
+  max-inline-size: 4.8rem
+  min-block-size: 2.9rem
   padding-block: 0.32rem 0.28rem
-  padding-inline: 0.75rem
+  padding-inline: 0.42rem
   border: none
   border-radius: 0.45rem
   background: transparent
@@ -292,7 +300,10 @@
   align-items: center
   justify-content: center
   align-self: stretch
-  width: 2.25rem
+  flex: 0 0 2.5rem
+  inline-size: 2.5rem
+  width: 2.5rem
+  min-inline-size: 2.5rem
   min-height: 3rem
   padding: 0
   border: 0.0625rem solid rgba(255, 255, 255, 0.07)
@@ -300,6 +311,8 @@
   background: rgba(255, 255, 255, 0.03)
   color: rgba(176, 182, 194, 0.86)
   cursor: pointer
+  overflow: visible
+  margin-inline-end: 0
 
   &:hover
     color: rgba(228, 230, 236, 0.94)
@@ -310,8 +323,9 @@
     outline-offset: 0.08rem
 
 .chevronSvg
-  width: 0.95rem
-  height: 0.95rem
+  width: 1rem
+  height: 1rem
+  flex: 0 0 auto
   transition: transform 0.22s ease
 
 .chevronExpanded
@@ -576,22 +590,6 @@
   line-height: 1.4
   font-style: italic
 
-@container tdm-guide (min-width: 58rem)
-  .strip
-    grid-template-columns: minmax(12rem, 16rem) minmax(16rem, 1fr) minmax(8rem, 10rem) minmax(0, max-content) auto
-    grid-template-areas: "left center preview tabs actions"
-    align-items: center
-
-  .tabStripRow
-    width: auto
-    justify-self: stretch
-    min-width: 0
-
-  .tabStrip
-    width: auto
-    max-width: 100%
-    justify-content: flex-start
-
 @container tdm-guide (max-width: 38rem)
   .strip
     grid-template-columns: minmax(0, 1fr) auto
@@ -606,21 +604,64 @@
     font-size: 0.78rem
 
   .centerMessage
-    font-size: 0.72rem
+    max-inline-size: 100%
 
   .previewZone
     flex-direction: row
     align-items: center
     gap: 0.38rem
-    width: fit-content
+    inline-size: 100%
     max-inline-size: none
 
-  .tab
-    min-inline-size: 2.85rem
+  .tabStripRow
+    justify-self: stretch
+    overflow-x: auto
+
+  .tabStrip
+    width: max-content
+    inline-size: max-content
 
   .timeline
     overflow-x: auto
     padding-bottom: 0.2rem
+
+@media (max-width: 80rem)
+  .strip
+    grid-template-columns: minmax(10rem, 13rem) minmax(8.75rem, 10rem) max-content minmax(2.75rem, 3rem)
+    grid-template-areas: "left preview tabs actions" "center center center center"
+
+  .centerMessage
+    max-inline-size: 100%
+
+@media (max-width: 56rem)
+  .panel
+    left: 0.75rem !important
+    right: 0.75rem !important
+    inline-size: calc(100vw - 1.5rem) !important
+    width: calc(100vw - 1.5rem) !important
+    max-inline-size: calc(100vw - 1.5rem) !important
+
+  .strip
+    grid-template-columns: 1fr
+    grid-template-areas: "left" "center" "preview" "tabs" "actions"
+
+  .previewZone
+    inline-size: 100%
+    max-inline-size: none
+
+  .tabStripRow
+    justify-self: stretch
+    overflow-x: auto
+
+  .tabStrip
+    width: max-content
+    inline-size: max-content
+
+  .actionsZone
+    justify-self: stretch
+
+  .expandButton
+    inline-size: 100%
 
 @media (prefers-reduced-motion: reduce)
   .chevronSvg
@@ -637,3 +678,4 @@
     background-position: 0% 50%
   50%
     background-position: 100% 50%
+

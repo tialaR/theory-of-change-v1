@@ -68,6 +68,10 @@ const PHASE_ACCENT: Record<TheoryGuidePhase, string> = {
 
 type ControlStripTabId = (typeof THEORY_GUIDE_MAIN_TABS)[number]['id'];
 
+const PRIMARY_GUIDE_TABS = THEORY_GUIDE_MAIN_TABS.filter((tab) =>
+  ['theory', 'input', 'activity', 'output', 'outcome'].includes(tab.id)
+);
+
 function getNextStagePreviewAccent(label: string | null): string {
   if (!label) {
     return TDM_THEORY_NEUTRAL.muted;
@@ -426,7 +430,7 @@ function ControlStripTabs({
 
   return (
     <div className={styles.tabStrip} role="tablist" aria-label="Etapas da teoria">
-      {THEORY_GUIDE_MAIN_TABS.map((tab) => {
+      {PRIMARY_GUIDE_TABS.map((tab) => {
         const isWorkflowActive = workflowStage === tab.id && !isContextualPhase;
         const isHelpActive = helpStage === tab.id;
         const isCompleted =
