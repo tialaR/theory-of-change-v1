@@ -396,7 +396,9 @@ export function V1FinalResultCard({
           variant={canViewTdmResult ? 'primary' : 'secondary'}
           fullWidth
           className={styles.finalResultCta}
-          onClick={onViewResult}
+          disabled={!canViewTdmResult}
+          aria-disabled={!canViewTdmResult}
+          onClick={canViewTdmResult ? onViewResult : undefined}
           icon={<FinalResultCtaArrowIcon />}
           iconPosition="right"
         >

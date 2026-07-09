@@ -24,7 +24,7 @@ import type { StageCreation } from '../../utils/stage-creation';
 import { TdmBlockFormFields, TdmFormField } from '../form-field/tdm-form-field';
 import fieldStyles from '../form-field/tdm-form-field.module.sass';
 import { TdmSectionIcon } from '../tdm-section-icon/tdm-section-icon';
-import { TdmStageOrb } from '../shared/tdm-stage-orb';
+import { TheoryChangeSculpture } from './theory-change-sculpture';
 import { TheoryHeaderForm, THEORY_DEFAULT_DESCRIPTION } from './theory-header-form';
 import { SidebarToggleIcon } from './sidebar-toggle-icon';
 import {
@@ -193,53 +193,6 @@ const STAGE_ADVANCE_HINTS: Record<TdmStage, string> = {
 };
 
 const THEORY_PROGRESS_ITEM_GOAL = 10;
-
-type VisualOrbStage = TdmStage | 'theory' | 'connect';
-
-const STAGE_ORB_SIGNATURE: Record<VisualOrbStage, { hue: number; backgroundColor: string }> = {
-  theory: { hue: 0, backgroundColor: '#D8D8D2' },
-  input: { hue: 265, backgroundColor: '#8B5CFF' },
-  activity: { hue: 208, backgroundColor: '#2F9BFF' },
-  output: { hue: 32, backgroundColor: '#F59E2E' },
-  outcome: { hue: 160, backgroundColor: '#22D3A6' },
-  connect: { hue: 265, backgroundColor: '#8B5CFF' }
-};
-
-const STAGE_ORB_ACCENT: Record<VisualOrbStage, string> = {
-  theory: 'rgba(245, 245, 242, 0.95)',
-  input: 'rgba(180, 120, 255, 0.98)',
-  activity: 'rgba(72, 176, 255, 0.98)',
-  output: 'rgba(255, 174, 60, 0.96)',
-  outcome: 'rgba(52, 230, 178, 0.96)',
-  connect: 'rgba(180, 120, 255, 0.98)'
-};
-
-const STAGE_ORB_ACCENT_SECONDARY: Record<VisualOrbStage, string> = {
-  theory: 'rgba(95, 96, 102, 0.72)',
-  input: 'rgba(196, 168, 255, 0.9)',
-  activity: 'rgba(130, 200, 255, 0.88)',
-  output: 'rgba(255, 196, 110, 0.86)',
-  outcome: 'rgba(110, 240, 200, 0.88)',
-  connect: 'rgba(72, 176, 255, 0.98)'
-};
-
-const STAGE_ORB_ACCENT_TERTIARY: Record<VisualOrbStage, string> = {
-  theory: 'rgba(200, 200, 196, 0.38)',
-  input: 'rgba(200, 196, 210, 0.32)',
-  activity: 'rgba(196, 204, 214, 0.32)',
-  output: 'rgba(210, 200, 188, 0.32)',
-  outcome: 'rgba(196, 210, 204, 0.32)',
-  connect: 'rgba(255, 174, 76, 0.84)'
-};
-
-const STAGE_ORB_ACCENT_QUATERNARY: Record<VisualOrbStage, string> = {
-  theory: 'rgba(188, 188, 184, 0.34)',
-  input: 'rgba(188, 184, 198, 0.28)',
-  activity: 'rgba(184, 192, 202, 0.28)',
-  output: 'rgba(198, 188, 176, 0.28)',
-  outcome: 'rgba(184, 198, 192, 0.28)',
-  connect: 'rgba(80, 226, 180, 0.88)'
-};
 
 function getStageLockTooltip(stage: TdmStage) {
   const stageIndex = TDM_STAGE_ORDER.indexOf(stage);
@@ -795,19 +748,6 @@ export function TdmSidebar({
 
   const progressStage: TdmStage = stageCreation === 'ready-to-connect' ? 'outcome' : stageCreation;
   const progressAccent = getTdmStageTheme(progressStage).accent;
-  const visualOrbStage: VisualOrbStage =
-    stageCreation === 'ready-to-connect'
-      ? 'connect'
-      : totalRegisteredItems === 0
-        ? 'theory'
-        : stageCreation;
-  const stageOrbSignature = STAGE_ORB_SIGNATURE[visualOrbStage] ?? STAGE_ORB_SIGNATURE.theory;
-  const signatureHue = stageOrbSignature.hue;
-  const signatureBackgroundColor = stageOrbSignature.backgroundColor;
-  const signatureAccent = STAGE_ORB_ACCENT[visualOrbStage] ?? STAGE_ORB_ACCENT.theory;
-  const signatureAccentSecondary = STAGE_ORB_ACCENT_SECONDARY[visualOrbStage] ?? signatureAccent;
-  const signatureAccentTertiary = STAGE_ORB_ACCENT_TERTIARY[visualOrbStage] ?? signatureAccent;
-  const signatureAccentQuaternary = STAGE_ORB_ACCENT_QUATERNARY[visualOrbStage] ?? signatureAccent;
 
   const handleCreateAccordionToggle = () => {
     if (!blockForms) return;
@@ -836,21 +776,6 @@ export function TdmSidebar({
               <span className={styles.heroGlowTop} aria-hidden="true" />
               <span className={styles.heroGlowBottom} aria-hidden="true" />
               <span className={styles.heroSpecular} aria-hidden="true" />
-              <div className={styles.heroOrbSlot} aria-hidden="true">
-                <TdmStageOrb
-                  hue={signatureHue}
-                  hoverIntensity={0.44}
-                  rotateOnHover={false}
-                  forceHoverState={true}
-                  neutral={visualOrbStage === 'theory'}
-                  connectMode={visualOrbStage === 'connect'}
-                  backgroundColor={signatureBackgroundColor}
-                  transparentCenter
-                  ringThickness={0.34}
-                  ringSoftness={0.12}
-                  ringIntensity={1.35}
-                />
-              </div>
               <div className={styles.heroContent}>
                 <div className={styles.heroLead}>
                   <h1 className={styles.heroTitle}>Construtor de Teoria da Mudança</h1>
@@ -873,6 +798,9 @@ export function TdmSidebar({
                     onHideSidebar={onToggle}
                   />
                 </div>
+              </div>
+              <div className={styles.heroSculptureWrap} aria-hidden="true">
+                <TheoryChangeSculpture accent={progressAccent} />
               </div>
             </section>
           </div>

@@ -142,7 +142,6 @@
   gap: 0.5rem
   min-width: 0
   width: 100%
-  pointer-events: none
   transition: gap 300ms cubic-bezier(0.22, 1, 0.36, 1)
 
 .heroLead
@@ -150,8 +149,7 @@
   gap: 0.375rem
   min-width: 0
   max-width: min(33rem, 100%)
-  padding-right: clamp(6.5rem, 34vw, 13.5rem)
-  pointer-events: none
+  padding-right: clamp(4.2rem, 20vw, 7.25rem)
   transition: gap 300ms cubic-bezier(0.22, 1, 0.36, 1), padding-right 300ms cubic-bezier(0.22, 1, 0.36, 1)
 
 .heroTitle
@@ -180,7 +178,6 @@
   width: 100%
   max-width: 100%
   transform-origin: top center
-  pointer-events: auto
   transition: opacity 320ms ease, transform 340ms cubic-bezier(0.22, 1, 0.36, 1), max-height 360ms cubic-bezier(0.22, 1, 0.36, 1), margin-top 300ms ease
   max-height: 15rem
   opacity: 1
@@ -224,13 +221,9 @@
     background-color: transparent
 
   :global([class*='formCardToolbar'])
-    position: relative
-    z-index: 5
     margin: 0 0 0.3125rem
 
   :global([class*='hideSidebarButton'])
-    position: relative
-    z-index: 5
     opacity: 0.78
 
   :global(.form)
@@ -266,48 +259,29 @@
     background: transparent !important
     box-shadow: none !important
 
-.heroCard > .heroOrbSlot
+.heroSculptureWrap
   position: absolute
+  right: 0
+  top: clamp(0.45rem, 1.6vw, 0.82rem)
   z-index: 1
-  pointer-events: auto
+  width: clamp(7.8rem, 42%, 11.2rem)
+  max-width: 56%
+  height: auto
+  pointer-events: none
+  opacity: 0.3
+  transform: rotate(-2deg)
+  transition: opacity 260ms ease, transform 320ms cubic-bezier(0.22, 1, 0.36, 1), width 260ms ease
 
-.heroOrbSlot
-  position: absolute
-  inset-block-start: 0.9rem
-  inset-inline-end: 2.6rem
-  inline-size: clamp(9.25rem, 14vw, 12rem)
-  block-size: clamp(9.25rem, 14vw, 12rem)
-  aspect-ratio: 1 / 1
-  z-index: 1
-  opacity: 1
-  pointer-events: auto
-  overflow: visible
-  border-radius: 999rem
-  background: transparent !important
-  box-shadow: none !important
-  filter: none !important
-
-  :global([class*='root'])
-    position: relative
-    z-index: 1
-    background: transparent !important
-    box-shadow: none !important
-    filter: none !important
-    pointer-events: auto
-
-.heroCardCollapsed .heroOrbSlot
-  inset-block-start: 0.7rem
-  inset-inline-end: 3rem
-  inline-size: 6.25rem
-  block-size: 6.25rem
-  opacity: 0.88
+.heroCardCollapsed .heroSculptureWrap
+  opacity: 0.22
+  transform: rotate(-1deg) scale(0.92)
 
 .heroCardCollapsed .heroContent
   gap: 0.3125rem
 
 .heroCardCollapsed .heroLead
   gap: 0.25rem
-  padding-right: clamp(5.4rem, 24vw, 8.2rem)
+  padding-right: clamp(3.6rem, 18vw, 6.4rem)
 
 .heroCardCollapsed .heroTitle
   font-size: clamp(0.98rem, 1.55vw + 0.56rem, 1.24rem)
@@ -2720,13 +2694,7 @@
 
   .heroLead
     gap: 0.3125rem
-    padding-right: clamp(5.8rem, 30vw, 10.5rem)
-
-  .heroOrbSlot
-    inset-block-start: 0.85rem
-    inset-inline-end: 2rem
-    inline-size: clamp(8rem, 22vw, 10rem)
-    block-size: clamp(8rem, 22vw, 10rem)
+    padding-right: clamp(3.2rem, 24vw, 5rem)
 
   .heroTitle
     font-size: clamp(0.98rem, 4.1vw, 1.22rem)
@@ -2736,6 +2704,14 @@
     font-size: 0.75rem
     line-height: 1.45
     max-width: min(48ch, 100%)
+
+  .heroSculptureWrap
+    top: clamp(0.58rem, 2.3vw, 0.9rem)
+    right: 0.25rem
+    width: clamp(6.5rem, 38%, 8.75rem)
+    max-width: 52%
+    opacity: 0.24
+    transform: rotate(-3deg)
 
 @media (max-width: 24.375rem)
   .progressHeaderScene
@@ -2761,6 +2737,11 @@
 
   .heroDescription
     max-width: 100%
+
+  .heroSculptureWrap
+    width: clamp(5.25rem, 38%, 6.75rem)
+    max-width: 48%
+    opacity: 0.18
 
 @media (prefers-reduced-motion: reduce)
   .sidebarAccordionChevron
@@ -2807,8 +2788,6 @@
   .heroLead,
   .heroTitle,
   .heroDescription,
-  .heroFormShell
+  .heroFormShell,
+  .heroSculptureWrap
     transition-duration: 1ms !important
-
-
-
