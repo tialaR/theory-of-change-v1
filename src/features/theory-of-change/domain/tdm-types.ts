@@ -3,6 +3,7 @@ import type { TdmStage } from './tdm-stages';
 
 export type TdmMarkerType = 'risk' | 'hypothesis';
 export type TdmValidationStatus = 'valid' | 'invalid';
+export type TdmConnectionKind = 'input-activity' | 'activity-output' | 'output-outcome';
 
 export interface TdmNodeDraft {
   title: string;
@@ -20,6 +21,7 @@ export interface TdmNodeData extends Record<string, unknown> {
   nodeId?: string;
   isSelected?: boolean;
   isToolbarVisible?: boolean;
+  isValidConnectionTarget?: boolean;
   onSelectNode?: (nodeId: string) => void;
   onCloseToolbar?: () => void;
   onStartInlineEdit?: (nodeId: string) => void;
@@ -43,10 +45,23 @@ export interface TdmNode extends Node<TdmNodeData> {
 }
 
 export interface TdmEdgeData extends Record<string, unknown> {
+  sourceStage?: TdmStage;
+  targetStage?: TdmStage;
+  connectionKind?: TdmConnectionKind;
   markerType?: TdmMarkerType;
   markerText?: string;
+  riskText?: string;
+  hypothesisText?: string;
+  riskCreatedAt?: string;
+  hypothesisCreatedAt?: string;
+  recentlyUpdated?: boolean;
+  isEditorOpen?: boolean;
   validationStatus: TdmValidationStatus;
   validationMessage?: string;
+  onOpenMarkerEditor?: (edgeId: string) => void;
+  onCloseMarkerEditor?: () => void;
+  onSaveMarker?: (edgeId: string, markerType: TdmMarkerType, text: string) => void;
+  onDeleteMarker?: (edgeId: string) => void;
 }
 
 export interface TdmEdge extends Edge<TdmEdgeData> {

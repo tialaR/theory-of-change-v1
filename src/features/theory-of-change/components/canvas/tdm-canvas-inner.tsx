@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent, type MouseEvent } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent, type MouseEvent as ReactMouseEvent, type TouchEvent as ReactTouchEvent } from 'react';
 import {
   addEdge,
   Background,
@@ -14,10 +14,13 @@ import {
   useReactFlow,
   type Connection,
   type EdgeTypes,
+  type FinalConnectionState,
   type IsValidConnection,
-  type NodeTypes
+  type NodeTypes,
+  type OnConnectEnd,
+  type OnConnectStart
 } from '@xyflow/react';
-import { TdmEdge as TdmEdgeView } from '../edge/tdm-edge';
+import { TdmTheoryEdge } from '../edge/tdm-theory-edge';
 import { ResultView } from '../result-view/result-view';
 import { TdmNode as TdmNodeView, TdmNodeInteractionProvider } from '../node/tdm-node';
 import { SidebarToggleIcon, TdmSidebar, type TdmBlockForms, type TdmSidebarContext } from '../sidebar/tdm-sidebar';
@@ -28,10 +31,20 @@ import {
 } from '../toast/tdm-toast-messages';
 import { TdmToastViewport } from '../toast/tdm-toast';
 import { useContextualFlowTooltip } from '../toast/use-contextual-flow-tooltip';
-import { isAllowedTdmConnection } from '../../domain/tdm-connection-rules';
+import { TdmConnectionGuide } from './tdm-connection-guide';
+import { TdmCanvasCommandDock } from './tdm-canvas-command-dock';
+import {
+  getConnectionKind,
+  GUIDE_HYPOTHESIS_DELETED,
+  GUIDE_HYPOTHESIS_SAVED,
+  GUIDE_RISK_DELETED,
+  GUIDE_RISK_SAVED,
+  isAllowedTdmConnection
+} from '../../domain/tdm-connection-rules';
+import { getTheoryGuideContent, THEORY_GUIDE_INVALID_CONNECTION } from '../../domain/tdm-theory-guide';
 import { type TdmStage } from '../../domain/tdm-stages';
 import { getTdmStageTheme } from '../../domain/tdm-theme';
-import type { TdmEdge as TdmEdgeModel, TdmNode as TdmNodeModel, TdmNodeDraft } from '../../domain/tdm-types';
+import type { TdmEdge as TdmEdgeModel, TdmMarkerType, TdmNode as TdmNodeModel, TdmNodeDraft } from '../../domain/tdm-types';
 import { exampleTheory } from '../../data/example-theory';
 import { canViewTdmResult, getTdmResultAvailabilityMessage } from '../../utils/tdm-result';
 import { createEdge } from '../../utils/create-edge';
@@ -45,6 +58,7 @@ import {
   type StageCreation
 } from '../../utils/stage-creation';
 import { layoutNodesByStage } from '../../utils/layout-nodes-by-stage';
+import { layoutNodesByFlow } from '../../utils/layout-nodes-by-flow';
 import { getCreateNodePosition, getDuplicateNodePosition } from '../../utils/node-placement';
 import styles from './tdm-canvas.module.sass';
 
@@ -103,7 +117,7 @@ export const nodeTypes = {
 } satisfies NodeTypes;
 
 export const edgeTypes = {
-  tdm: TdmEdgeView
+  tdm: TdmTheoryEdge
 } satisfies EdgeTypes;
 
 type ViewMode = 'canvas' | 'example-preview' | 'result';
@@ -149,6 +163,11 @@ export function TdmCanvasInner() {
   const [canvasVariant, setCanvasVariant] = useState<'custom' | 'example'>('custom');
   const [previousTheorySnapshot, setPreviousTheorySnapshot] = useState<TheorySnapshot | null>(null);
   const [viewportResetToken, setViewportResetToken] = useState(0);
+  const [guideTransientMessage, setGuideTransientMessage] = useState<string | null>(null);
+  const [connectingFromStage, setConnectingFromStage] = useState<TdmStage | null>(null);
+  const [markerEditorEdgeId, setMarkerEditorEdgeId] = useState<string | null>(null);
+  const [recentlyUpdatedEdgeIds, setRecentlyUpdatedEdgeIds] = useState<Set<string>>(() => new Set());
+  const [isGuideExpanded, setIsGuideExpanded] = useState(false);
 
   const { fitView, zoomIn, zoomOut, screenToFlowPosition } = useReactFlow<TdmNodeModel, TdmEdgeModel>();
 
@@ -159,8 +178,40 @@ export function TdmCanvasInner() {
   const canAdvance = stageCreation !== 'ready-to-connect' && currentStageCount > 0;
   const selectedNode = useMemo(() => nodes.find((node) => node.id === selectedNodeId) ?? null, [nodes, selectedNodeId]);
   const selectedEdge = useMemo(() => edges.find((edge) => edge.id === selectedEdgeId) ?? null, [edges, selectedEdgeId]);
+  const selectedConnectionKind = useMemo(() => {
+    if (!selectedEdge) {
+      return undefined;
+    }
 
+    return selectedEdge.data?.connectionKind ?? getConnectionKind(selectedEdge.sourceStage, selectedEdge.targetStage);
+  }, [selectedEdge]);
   const canGenerateResult = canViewTdmResult(nodes, edges);
+  const hasEdgeMarkers = useMemo(
+    () => edges.some((edge) => Boolean(edge.markerType && edge.markerText?.trim())),
+    [edges]
+  );
+  const guideContent = useMemo(
+    () =>
+      getTheoryGuideContent({
+        stageCounts,
+        stageCreation,
+        selectedConnectionKind,
+        connectingFromStage,
+        transientMessage: guideTransientMessage,
+        isTheoryComplete: canGenerateResult,
+        hasEdgeMarkers
+      }),
+    [
+      canGenerateResult,
+      connectingFromStage,
+      guideTransientMessage,
+      hasEdgeMarkers,
+      selectedConnectionKind,
+      stageCounts,
+      stageCreation
+    ]
+  );
+
   const resultAvailabilityMessage = getTdmResultAvailabilityMessage(nodes, edges);
   const canRestoreTheory = canvasVariant === 'example' && previousTheorySnapshot !== null;
   const hasInitializedFlowTooltipRef = useRef(false);
@@ -206,30 +257,25 @@ export function TdmCanvasInner() {
     setViewportResetToken((currentValue) => currentValue + 1);
   }, []);
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (viewMode !== 'canvas') {
-        return;
-      }
+  const markEdgeRecentlyUpdated = useCallback((edgeId: string) => {
+    setRecentlyUpdatedEdgeIds((currentIds) => {
+      const nextIds = new Set(currentIds);
+      nextIds.add(edgeId);
+      return nextIds;
+    });
 
-      if (!(event.metaKey || event.ctrlKey)) {
-        return;
-      }
+    window.setTimeout(() => {
+      setRecentlyUpdatedEdgeIds((currentIds) => {
+        if (!currentIds.has(edgeId)) {
+          return currentIds;
+        }
 
-      if (event.key === '+' || event.key === '=') {
-        event.preventDefault();
-        zoomIn({ duration: 160 });
-      }
-
-      if (event.key === '-') {
-        event.preventDefault();
-        zoomOut({ duration: 160 });
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [viewMode, zoomIn, zoomOut]);
+        const nextIds = new Set(currentIds);
+        nextIds.delete(edgeId);
+        return nextIds;
+      });
+    }, 1800);
+  }, []);
 
   const clearEditFormState = useCallback(() => {
     setEditDraft({ ...EMPTY_DRAFT });
@@ -246,6 +292,8 @@ export function TdmCanvasInner() {
     setMarkerDraft('');
     setEditDraft({ ...EMPTY_DRAFT });
     setIsEditAccordionOpen(false);
+    setMarkerEditorEdgeId(null);
+    setGuideTransientMessage(null);
   }, []);
 
   const replaceCanvasWithExample = useCallback(() => {
@@ -347,12 +395,8 @@ export function TdmCanvasInner() {
   }, [restorePreviousTheory]);
 
   const openResultView = useCallback(() => {
-    if (!canGenerateResult) {
-      return;
-    }
-
     setViewMode('result');
-  }, [canGenerateResult]);
+  }, []);
 
   const exportStub = useCallback((_format: 'pdf' | 'png' | 'jpeg' | 'svg') => {}, []);
 
@@ -363,6 +407,108 @@ export function TdmCanvasInner() {
       fitView({ padding: CANVAS_FIT_PADDING, duration: 250, maxZoom: CANVAS_MAX_AUTO_FIT_ZOOM });
     });
   }, [fitView, setNodes]);
+
+  const organizeFlow = useCallback(() => {
+    setNodes((currentNodes) => layoutNodesByFlow(currentNodes, edges));
+    setCanvasVariant('custom');
+    window.requestAnimationFrame(() => {
+      fitView({ padding: CANVAS_FIT_PADDING, duration: 250, maxZoom: CANVAS_MAX_AUTO_FIT_ZOOM });
+    });
+  }, [edges, fitView, setNodes]);
+
+  const clearCanvasSelection = useCallback(() => {
+    if (editingNodeId) {
+      return;
+    }
+
+    resetCanvasSelection();
+  }, [editingNodeId, resetCanvasSelection]);
+
+  const toggleGuideExpanded = useCallback(() => {
+    setIsGuideExpanded((current) => !current);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (viewMode !== 'canvas') {
+        return;
+      }
+
+      const target = event.target;
+      const isEditableTarget =
+        target instanceof HTMLElement &&
+        (target.isContentEditable ||
+          target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.tagName === 'SELECT');
+
+      if (isEditableTarget) {
+        if (event.key === 'Escape') {
+          if (markerEditorEdgeId) {
+            event.preventDefault();
+            setMarkerEditorEdgeId(null);
+          }
+        }
+
+        return;
+      }
+
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        clearCanvasSelection();
+        return;
+      }
+
+      if (event.metaKey || event.ctrlKey) {
+        if (event.key === '+' || event.key === '=') {
+          event.preventDefault();
+          zoomIn({ duration: 160 });
+        }
+
+        if (event.key === '-') {
+          event.preventDefault();
+          zoomOut({ duration: 160 });
+        }
+
+        return;
+      }
+
+      if (event.altKey) {
+        return;
+      }
+
+      const key = event.key.toLowerCase();
+
+      if (key === 'f') {
+        event.preventDefault();
+        fitCanvasToVisibleArea();
+        return;
+      }
+
+      if (key === 'a') {
+        event.preventDefault();
+        centerNodes();
+        return;
+      }
+
+      if (key === 'g') {
+        event.preventDefault();
+        toggleGuideExpanded();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [
+    centerNodes,
+    clearCanvasSelection,
+    fitCanvasToVisibleArea,
+    markerEditorEdgeId,
+    toggleGuideExpanded,
+    viewMode,
+    zoomIn,
+    zoomOut
+  ]);
 
   const syncEditDraftFromNode = useCallback((node: TdmNodeModel) => {
     setEditDraft({
@@ -528,6 +674,108 @@ export function TdmCanvasInner() {
     setMarkerDraft('');
   }, [selectedEdge, setEdges]);
 
+  const deleteMarkerFromEdge = useCallback(
+    (edgeId: string) => {
+      const edge = edges.find((currentEdge) => currentEdge.id === edgeId);
+      if (!edge) {
+        return;
+      }
+
+      const wasRisk = edge.markerType === 'risk';
+
+      setEdges((currentEdges) =>
+        currentEdges.map((currentEdge) => {
+          if (currentEdge.id !== edgeId) {
+            return currentEdge;
+          }
+
+          return {
+            ...currentEdge,
+            markerType: undefined,
+            markerText: undefined,
+            data: {
+              ...currentEdge.data,
+              markerType: undefined,
+              markerText: undefined,
+              riskText: undefined,
+              hypothesisText: undefined,
+              validationStatus: currentEdge.data?.validationStatus ?? 'valid',
+              validationMessage: currentEdge.data?.validationMessage
+            }
+          } satisfies TdmEdgeModel;
+        })
+      );
+      setMarkerEditorEdgeId(null);
+      setMarkerDraft('');
+      setGuideTransientMessage(wasRisk ? GUIDE_RISK_DELETED : GUIDE_HYPOTHESIS_DELETED);
+    },
+    [edges, setEdges]
+  );
+
+  const saveMarkerOnEdge = useCallback(
+    (edgeId: string, markerType: TdmMarkerType, text: string) => {
+      const trimmed = text.trim();
+      if (!trimmed) {
+        return;
+      }
+
+      const timestamp = new Date().toISOString();
+
+      setEdges((currentEdges) =>
+        currentEdges.map((edge) => {
+          if (edge.id !== edgeId) {
+            return edge;
+          }
+
+          return {
+            ...edge,
+            markerType,
+            markerText: trimmed,
+            updatedAt: timestamp,
+            data: {
+              ...edge.data,
+              markerType,
+              markerText: trimmed,
+              riskText: markerType === 'risk' ? trimmed : edge.data?.riskText,
+              hypothesisText: markerType === 'hypothesis' ? trimmed : edge.data?.hypothesisText,
+              riskCreatedAt: markerType === 'risk' ? edge.data?.riskCreatedAt ?? timestamp : edge.data?.riskCreatedAt,
+              hypothesisCreatedAt:
+                markerType === 'hypothesis' ? edge.data?.hypothesisCreatedAt ?? timestamp : edge.data?.hypothesisCreatedAt,
+              validationStatus: edge.data?.validationStatus ?? 'valid',
+              validationMessage: edge.data?.validationMessage
+            }
+          } satisfies TdmEdgeModel;
+        })
+      );
+      setMarkerEditorEdgeId(null);
+      setMarkerDraft(trimmed);
+      setGuideTransientMessage(markerType === 'risk' ? GUIDE_RISK_SAVED : GUIDE_HYPOTHESIS_SAVED);
+      markEdgeRecentlyUpdated(edgeId);
+    },
+    [markEdgeRecentlyUpdated, setEdges]
+  );
+
+  const openMarkerEditor = useCallback((edgeId: string) => {
+    setMarkerEditorEdgeId(edgeId);
+    setSelectedEdgeId(edgeId);
+    setSelectedNodeId(null);
+    setToolbarNodeId(null);
+    setEditingNodeId(null);
+  }, []);
+
+  const closeMarkerEditor = useCallback(() => {
+    setMarkerEditorEdgeId(null);
+  }, []);
+
+  const deleteMarkerFromSelectedEdge = useCallback(() => {
+    if (!selectedEdge) {
+      return;
+    }
+
+    deleteMarkerFromEdge(selectedEdge.id);
+    setSelectedEdgeId(selectedEdge.id);
+  }, [deleteMarkerFromEdge, selectedEdge]);
+
   const addMarkerToSelectedEdge = useCallback(
     (markerType: 'risk' | 'hypothesis') => {
       if (!selectedEdge) {
@@ -543,78 +791,30 @@ export function TdmCanvasInner() {
           return {
             ...edge,
             markerType,
-            markerText: markerType === 'risk' ? 'Risco' : 'Hipótese',
+            markerText: edge.markerText,
             data: {
               ...edge.data,
               markerType,
-              markerText: markerType === 'risk' ? 'Risco' : 'Hipótese',
+              markerText: edge.markerText,
               validationStatus: edge.data?.validationStatus ?? 'valid',
               validationMessage: edge.data?.validationMessage
             }
           } satisfies TdmEdgeModel;
         })
       );
-      setMarkerDraft(markerType === 'risk' ? 'Risco' : 'Hipótese');
+      setMarkerDraft(selectedEdge.markerText ?? '');
+      openMarkerEditor(selectedEdge.id);
     },
-    [selectedEdge, setEdges]
+    [openMarkerEditor, selectedEdge, setEdges]
   );
 
   const saveMarkerOnSelectedEdge = useCallback(() => {
-    if (!selectedEdge) {
+    if (!selectedEdge?.markerType) {
       return;
     }
 
-    const nextMarkerText = markerDraft.trim() || (selectedEdge.markerType === 'risk' ? 'Risco' : 'Hipótese');
-
-    setEdges((currentEdges) =>
-      currentEdges.map((edge) => {
-        if (edge.id !== selectedEdge.id) {
-          return edge;
-        }
-
-        return {
-          ...edge,
-          markerText: nextMarkerText,
-          data: {
-            ...edge.data,
-            markerType: selectedEdge.markerType,
-            markerText: nextMarkerText,
-            validationStatus: edge.data?.validationStatus ?? 'valid',
-            validationMessage: edge.data?.validationMessage
-          }
-        } satisfies TdmEdgeModel;
-      })
-    );
-  }, [markerDraft, selectedEdge, setEdges]);
-
-  const deleteMarkerFromSelectedEdge = useCallback(() => {
-    if (!selectedEdge) {
-      return;
-    }
-
-    setEdges((currentEdges) =>
-      currentEdges.map((edge) => {
-        if (edge.id !== selectedEdge.id) {
-          return edge;
-        }
-
-        return {
-          ...edge,
-          markerType: undefined,
-          markerText: undefined,
-          data: {
-            ...edge.data,
-            markerType: undefined,
-            markerText: undefined,
-            validationStatus: edge.data?.validationStatus ?? 'valid',
-            validationMessage: edge.data?.validationMessage
-          }
-        } satisfies TdmEdgeModel;
-      })
-    );
-    setSelectedEdgeId(selectedEdge.id);
-    setMarkerDraft('');
-  }, [selectedEdge, setEdges]);
+    saveMarkerOnEdge(selectedEdge.id, selectedEdge.markerType, markerDraft);
+  }, [markerDraft, saveMarkerOnEdge, selectedEdge]);
 
   const advanceStage = useCallback(() => {
     if (stageCreation === 'ready-to-connect') {
@@ -838,9 +1038,58 @@ export function TdmCanvasInner() {
       setEdges((currentEdges) => addEdge(nextEdge, currentEdges));
       setSelectedNodeId(null);
       setToolbarNodeId(null);
-      setSelectedEdgeId(nextEdge.id);
+      setGuideTransientMessage(null);
     },
     [nodes, setEdges]
+  );
+
+  const handleConnectStart: OnConnectStart = useCallback(
+    (_event, params) => {
+      if (!params.nodeId) {
+        return;
+      }
+
+      const sourceNode = nodes.find((node) => node.id === params.nodeId);
+      if (!sourceNode) {
+        return;
+      }
+
+      setConnectingFromStage(sourceNode.stage);
+      setGuideTransientMessage(null);
+    },
+    [nodes]
+  );
+
+  const handleConnectEnd: OnConnectEnd = useCallback(
+    (_event, connectionState: FinalConnectionState) => {
+      setConnectingFromStage(null);
+
+      const fromNodeId = connectionState.fromNode?.id;
+      if (!fromNodeId) {
+        return;
+      }
+
+      const sourceNode = nodes.find((node) => node.id === fromNodeId);
+      if (!sourceNode) {
+        return;
+      }
+
+      const toNodeId = connectionState.toNode?.id;
+      if (!toNodeId) {
+        setGuideTransientMessage(null);
+        return;
+      }
+
+      const targetNode = nodes.find((node) => node.id === toNodeId);
+      if (!targetNode) {
+        return;
+      }
+
+      if (!isAllowedTdmConnection(sourceNode.stage, targetNode.stage)) {
+        setGuideTransientMessage(THEORY_GUIDE_INVALID_CONNECTION);
+      }
+    },
+    [nodes]
   );
 
   const handleCloseToolbar = useCallback(() => {
@@ -864,12 +1113,14 @@ export function TdmCanvasInner() {
     closeToolbarSelection();
     setSelectedEdgeId(null);
     setMarkerDraft('');
+    setMarkerEditorEdgeId(null);
+    setGuideTransientMessage(null);
     setCreationError(undefined);
     setEditError(undefined);
   }, [closeToolbarSelection, editingNodeId]);
 
   const handleFlowBackgroundClick = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
+    (event: ReactMouseEvent<HTMLDivElement>) => {
       if (editingNodeId) {
         return;
       }
@@ -908,7 +1159,7 @@ export function TdmCanvasInner() {
   );
 
   const handleNodeClick = useCallback(
-    (event: MouseEvent, node: TdmNodeModel) => {
+    (event: ReactMouseEvent, node: TdmNodeModel) => {
       event.stopPropagation();
 
       if (editingNodeId && editingNodeId !== node.id) {
@@ -934,6 +1185,8 @@ export function TdmCanvasInner() {
             nodeId: node.id,
             isToolbarVisible: toolbarNodeId === node.id && editingNodeId !== node.id,
             isSelected: selectedNodeId === node.id,
+            isValidConnectionTarget:
+              connectingFromStage !== null && isAllowedTdmConnection(connectingFromStage, node.stage),
             onSelectNode: focusNodeSelection,
             onCloseToolbar: handleCloseToolbar,
             onStartInlineEdit: openNodeEditor,
@@ -944,6 +1197,7 @@ export function TdmCanvasInner() {
         };
       }),
     [
+      connectingFromStage,
       deleteNodeById,
       duplicateNodeById,
       editingNodeId,
@@ -954,6 +1208,42 @@ export function TdmCanvasInner() {
       selectedNodeId,
       toolbarNodeId,
       updateNodeById
+    ]
+  );
+
+  const flowEdges = useMemo(
+    () =>
+      edges.map((edge) => ({
+        ...edge,
+        selected: selectedEdgeId === edge.id,
+        data: {
+          ...edge.data,
+          sourceStage: edge.sourceStage,
+          targetStage: edge.targetStage,
+          connectionKind: edge.data?.connectionKind ?? getConnectionKind(edge.sourceStage, edge.targetStage),
+          markerType: edge.markerType,
+          markerText: edge.markerText,
+          riskText: edge.data?.riskText,
+          hypothesisText: edge.data?.hypothesisText,
+          recentlyUpdated: recentlyUpdatedEdgeIds.has(edge.id),
+          isEditorOpen: markerEditorEdgeId === edge.id,
+          validationStatus: edge.validationStatus,
+          validationMessage: edge.validationMessage,
+          onOpenMarkerEditor: () => openMarkerEditor(edge.id),
+          onCloseMarkerEditor: closeMarkerEditor,
+          onSaveMarker: saveMarkerOnEdge,
+          onDeleteMarker: deleteMarkerFromEdge
+        }
+      })),
+    [
+      closeMarkerEditor,
+      deleteMarkerFromEdge,
+      edges,
+      markerEditorEdgeId,
+      openMarkerEditor,
+      recentlyUpdatedEdgeIds,
+      saveMarkerOnEdge,
+      selectedEdgeId
     ]
   );
 
@@ -1067,7 +1357,7 @@ export function TdmCanvasInner() {
           >
             <ReactFlow<TdmNodeModel, TdmEdgeModel>
               nodes={flowNodes}
-              edges={edges}
+              edges={flowEdges}
               nodeTypes={nodeTypes}
               edgeTypes={edgeTypes}
               defaultEdgeOptions={defaultEdgeOptions}
@@ -1075,6 +1365,8 @@ export function TdmCanvasInner() {
               onEdgesChange={onEdgesChange}
               isValidConnection={isValidConnection}
               onConnect={handleConnect}
+              onConnectStart={handleConnectStart}
+              onConnectEnd={handleConnectEnd}
               onDragOver={handleDragOver}
               onDrop={handleDrop}
               onNodeDoubleClick={(_, node) => openNodeEditor(node.id)}
@@ -1088,7 +1380,8 @@ export function TdmCanvasInner() {
                 setEditError(undefined);
                 setEditDraft({ ...EMPTY_DRAFT });
                 setIsEditAccordionOpen(false);
-                setMarkerDraft(edge.markerText ?? (edge.markerType === 'risk' ? 'Risco' : 'Hipótese'));
+                setMarkerDraft(edge.markerText ?? '');
+                setGuideTransientMessage(null);
               }}
               onPaneClick={handlePaneClick}
               nodesDraggable
@@ -1107,7 +1400,23 @@ export function TdmCanvasInner() {
               colorMode="dark"
               attributionPosition="bottom-left"
             >
-              <Background variant={BackgroundVariant.Dots} gap={24} size={1} color="rgba(167, 139, 250, 0.12)" />
+              <TdmConnectionGuide
+                content={guideContent}
+                stageCounts={stageCounts}
+                isTheoryComplete={canGenerateResult}
+                isExpanded={isGuideExpanded}
+                onExpandedChange={setIsGuideExpanded}
+              />
+              <TdmCanvasCommandDock
+                isGuideExpanded={isGuideExpanded}
+                isClearDisabled={Boolean(editingNodeId)}
+                onFitView={fitCanvasToVisibleArea}
+                onCenterColumns={centerNodes}
+                onOrganizeFlow={organizeFlow}
+                onToggleGuide={toggleGuideExpanded}
+                onClearSelection={clearCanvasSelection}
+              />
+              <Background variant={BackgroundVariant.Dots} gap={24} size={1} />
               <Controls
                 showInteractive={false}
                 position="bottom-left"
@@ -1124,8 +1433,8 @@ export function TdmCanvasInner() {
                 nodeStrokeColor={(node) => getTdmStageTheme((node as TdmNodeModel).stage).accent}
                 nodeBorderRadius={6}
                 nodeStrokeWidth={1}
-                bgColor="rgba(7, 9, 15, 0.8)"
-                maskColor="rgba(7, 9, 15, 0.72)"
+                bgColor="rgba(16, 17, 20, 0.86)"
+                maskColor="rgba(8, 9, 12, 0.74)"
               />
             </ReactFlow>
           </TdmNodeInteractionProvider>

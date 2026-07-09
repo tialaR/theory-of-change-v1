@@ -1,0 +1,29 @@
+@use '../../../../shared/styles/tokens' as *
+
+.sectionIcon
+  +tdm-section-icon-vars
+  +noir-icon-tile
+  transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease
+
+  &:hover
+    border-color: $noir-stroke-medium
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1), 0 0.5rem 1rem rgba(0, 0, 0, 0.22)
+
+  svg
+    width: var(--tdm-section-icon-size)
+    height: var(--tdm-section-icon-size)
+    display: block
+    overflow: visible
+
+    path,
+    rect,
+    line,
+    polyline,
+    polygon,
+    circle
+      stroke: currentColor
+      stroke-width: var(--tdm-section-icon-stroke)
+      stroke-linecap: round
+      stroke-linejoin: round
+      fill: none
+      vector-effect: non-scaling-stroke

@@ -1,0 +1,40 @@
+@use '../../../../shared/styles/tokens' as *
+
+.formCard
+  +ds-sidebar-shell
+  position: relative
+  display: grid
+  gap: 0
+  width: 100%
+  min-width: 0
+  padding: $sidebar-card-padding
+
+  :global(.fieldLabel)
+    color: rgba(180, 180, 186, 0.82)
+    font-size: 0.625rem
+    font-weight: 800
+    letter-spacing: 0.18em
+    text-transform: uppercase
+
+.formCardToolbar
+  position: relative
+  z-index: 1
+  display: flex
+  justify-content: flex-end
+  margin: -0.125rem 0 0.4375rem
+
+.hideSidebarButton
+  display: inline-grid
+  place-items: center
+  padding: 0
+  border: 0
+  background: transparent
+  cursor: pointer
+  opacity: 0.72
+  transition: opacity 160ms ease, filter 160ms ease
+
+  &:hover,
+  &:focus-visible
+    outline: none
+    opacity: 1
+    filter: brightness(1.06)

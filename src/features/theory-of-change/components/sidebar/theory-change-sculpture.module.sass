@@ -1,0 +1,86 @@
+.sculpture
+  position: relative
+  isolation: isolate
+  display: block
+  width: 100%
+  min-width: 0
+  height: auto
+  aspect-ratio: 500 / 320
+  color: rgba(224, 228, 236, 0.86)
+  pointer-events: none
+  animation: sculptureFloat 7s ease-in-out infinite
+
+.aura
+  position: absolute
+  inset: 12% 9% 8%
+  z-index: 0
+  border-radius: 999rem
+  background: radial-gradient(circle at 48% 46%, rgba(255, 255, 255, 0.12), rgba(210, 216, 224, 0.075) 34%, transparent 74%)
+  filter: blur(1rem)
+  mix-blend-mode: normal
+  opacity: 0.3
+  animation: sculpturePulse 5.6s ease-in-out infinite
+
+.svg
+  position: relative
+  z-index: 1
+  display: block
+  width: 100%
+  height: 100%
+  overflow: visible
+  filter: drop-shadow(0 0.7rem 0.95rem rgba(0, 0, 0, 0.3)) drop-shadow(0 0 0.55rem rgba(240, 244, 250, 0.06))
+  opacity: 0.72
+
+.sculptureShell
+  transform-origin: 258px 164px
+  animation: sculptureTurn 11.8s ease-in-out infinite
+
+.sculptureCore
+  transform-origin: 248px 180px
+  animation: sculptureFloat 6.8s ease-in-out infinite
+
+.sculptureGlow
+  transform-origin: 254px 166px
+  animation: sculpturePulse 5.1s ease-in-out infinite
+
+.reduceMotion,
+.reduceMotion .aura,
+.reduceMotion .sculptureShell,
+.reduceMotion .sculptureCore,
+.reduceMotion .sculptureGlow
+  animation: none !important
+
+@keyframes sculptureFloat
+  0%, 100%
+    transform: translate3d(0, -4px, 0)
+  50%
+    transform: translate3d(0, 5px, 0)
+
+@keyframes sculptureTurn
+  0%, 100%
+    transform: rotate(-5deg)
+  50%
+    transform: rotate(5deg)
+
+@keyframes sculpturePulse
+  0%, 100%
+    opacity: 0.52
+  50%
+    opacity: 0.92
+
+@media (max-width: 30rem)
+  .aura
+    inset: 14% 10% 8%
+    filter: blur(0.7rem)
+    opacity: 0.44
+
+  .svg
+    opacity: 0.8
+
+@media (prefers-reduced-motion: reduce)
+  .sculpture,
+  .aura,
+  .sculptureShell,
+  .sculptureCore,
+  .sculptureGlow
+    animation: none !important

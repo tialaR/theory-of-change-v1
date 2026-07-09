@@ -11,3 +11,13 @@ build
 .DS_Store
 *.log
 .vercel
+
+.next
+.DS_Store
+.cursor/screenshots
+.audit-screenshots
+.playwright-cli
+.validation-screenshots
+.sidebar-polish-screenshots
+tsconfig.tsbuildinfo
+.migration-screenshots

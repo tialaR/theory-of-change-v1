@@ -5,13 +5,11 @@ import {
   createContext,
   useContext,
   useState,
-  type CSSProperties,
   type MouseEvent,
   type ReactNode,
   type SyntheticEvent
 } from 'react';
 import { TDM_STAGE_LABELS } from '../../domain/tdm-stages';
-import { getTdmStageTheme } from '../../domain/tdm-theme';
 import type { TdmNode as TdmNodeModel, TdmNodeDraft } from '../../domain/tdm-types';
 import { TdmBlockFormFields } from '../form-field/tdm-form-field';
 import styles from './tdm-node.module.sass';
@@ -84,7 +82,6 @@ export function TdmNode({ id, data, selected }: NodeProps<TdmNodeModel>) {
 
   const canReceive = data.stage !== 'input';
   const canSend = data.stage !== 'outcome';
-  const theme = getTdmStageTheme(data.stage);
   const compactDescription = data.shortNotes || data.description;
   const beginInlineEdit = () => {
     setDraft({
@@ -132,16 +129,17 @@ export function TdmNode({ id, data, selected }: NodeProps<TdmNodeModel>) {
 
   return (
     <article
-      className={[styles.nodeWrapper, styles.node, styles[data.stage], isEditingInline ? styles.editing : '', selected || data.isSelected ? styles.selected : ''].filter(Boolean).join(' ')}
-      style={
-        {
-          '--node-accent': theme.accent,
-          '--node-accent-soft': theme.accentSoft,
-          '--node-border': theme.border,
-          '--node-glow': theme.glow,
-          '--node-surface': theme.surface
-        } as CSSProperties
-      }
+      className={[
+        styles.nodeWrapper,
+        styles.node,
+        styles[data.stage],
+        isEditingInline ? styles.editing : '',
+        isToolbarVisible && !isEditingInline ? styles.toolbarOpen : '',
+        selected || data.isSelected ? styles.selected : '',
+        data.isValidConnectionTarget ? styles.connectionTarget : ''
+      ]
+        .filter(Boolean)
+        .join(' ')}
       onDoubleClick={(event) => {
         event.stopPropagation();
         beginInlineEdit();
@@ -222,7 +220,9 @@ export function TdmNode({ id, data, selected }: NodeProps<TdmNodeModel>) {
           className={styles.nodeEditForm}
           onClick={(event) => event.stopPropagation()}
         >
-          <div className={styles.nodeEditStage}>{TDM_STAGE_LABELS[data.stage]}</div>
+          <header className={styles.nodeEditHeader}>
+            <div className={styles.nodeEditStage}>{TDM_STAGE_LABELS[data.stage]}</div>
+          </header>
           <div className={styles.nodeEditFields}>
             <TdmBlockFormFields
               draft={draft}

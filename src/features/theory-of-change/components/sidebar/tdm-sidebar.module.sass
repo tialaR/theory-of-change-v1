@@ -1,5 +1,15 @@
 @use '../../../../shared/styles/tokens' as *
 
+// ─── Sidebar premium noir glass mixins (aliases to DS tokens) ─────────────────
+
+=sidebar-glass-surface
+  +ds-sidebar-shell
+
+=sidebar-inner-surface
+  +ds-sidebar-inner-panel
+
+// ─── Shell ───────────────────────────────────────────────────────────────────
+
 .sidebar
   position: relative
   z-index: 18
@@ -22,513 +32,1360 @@
   pointer-events: none
 
 .surface
+  +ds-noir-vars
+  position: relative
   display: flex
   flex-direction: column
-  gap: 0.875rem
+  gap: 0
   width: 100%
   min-width: 0
   height: 100%
   min-height: 0
-  padding: 1.125rem
+  padding: 0
   border: 0
   border-radius: 0
-  background: linear-gradient(180deg, rgba(13, 17, 26, 0.98), rgba(7, 9, 15, 0.99))
-  box-shadow: none
-  backdrop-filter: blur(1.125rem)
+  overflow: hidden
+  background: radial-gradient(ellipse 90% 52% at 50% 0%, rgba(255, 255, 255, 0.07), transparent 48%), radial-gradient(ellipse 65% 38% at 80% 60%, rgba(255, 255, 255, 0.025), transparent 52%), radial-gradient(ellipse 55% 32% at 50% 100%, rgba(255, 255, 255, 0.025), transparent 58%), linear-gradient(180deg, rgba(21, 22, 26, 0.98), $noir-surface-page)
+  box-shadow: inset -0.0625rem 0 0 rgba(255, 255, 255, 0.06)
+  backdrop-filter: blur($ds-blur-heavy) saturate(1.06)
+  -webkit-backdrop-filter: blur($ds-blur-heavy) saturate(1.06)
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0
+    pointer-events: none
+    background: radial-gradient(ellipse 70% 32% at 50% 0%, rgba(255, 255, 255, 0.05), transparent 72%)
+    opacity: 0.85
 
 .header
+  position: sticky
+  top: 0
+  z-index: 9
   flex: 0 0 auto
-  padding-top: 1rem
+  padding: 0.875rem calc(1rem + 0.375rem) 0.625rem 1rem
+  background: transparent
+  backdrop-filter: none
+  -webkit-backdrop-filter: none
+  transition: background 200ms ease, backdrop-filter 200ms ease, box-shadow 200ms ease
+
+.headerScrolled
+  background: linear-gradient(180deg, rgba(27, 28, 32, 0.92), rgba(21, 22, 26, 0.62))
+  backdrop-filter: blur(1.125rem) saturate(1.2)
+  -webkit-backdrop-filter: blur(1.125rem) saturate(1.2)
+  box-shadow: 0 0.625rem 1.5rem rgba(0, 0, 0, 0.28)
 
 .headerCopy
   display: grid
-  gap: 0.5rem
-  min-width: 0
-
-.titleRow
-  display: flex
-  align-items: center
-  gap: 0.5rem
-  min-width: 0
-
-.sidebarTitleRow
-  display: inline-flex
-  align-items: center
-  gap: 0.5rem
-  width: fit-content
-  min-width: 0
-
-.theoryTitleInputWrap
-  position: relative
-  display: flex
-  align-items: center
-  flex: 1
-  min-width: 0
-
-  .titleInput
-    width: 100%
-    padding-right: 2.25rem
-
-.clearTheoryTitleButton
-  position: absolute
-  right: 0.4375rem
-  display: inline-grid
-  place-items: center
-  width: 1.375rem
-  height: 1.375rem
-  padding: 0
-  border: 0
-  border-radius: 62.4375rem
-  background: transparent
-  color: rgba(244, 247, 251, 0.42)
-  cursor: pointer
-  transition: color 160ms ease, background 160ms ease
-
-  svg
-    width: 0.6875rem
-    height: 0.6875rem
-
-  &:hover,
-  &:focus-visible
-    color: rgba(244, 247, 251, 0.82)
-    background: rgba(255, 255, 255, 0.06)
-    outline: none
-
-.editTheoryTitleButton
-  position: relative
-  flex: 0 0 auto
-  display: inline-grid
-  place-items: center
-  width: 1.75rem
-  height: 1.75rem
-  padding: 0
-  border: 0.0625rem solid rgba(255, 255, 255, 0.08)
-  border-radius: 62.4375rem
-  background: rgba(255, 255, 255, 0.04)
-  color: rgba(244, 247, 251, 0.62)
-  cursor: pointer
-  transition: color 160ms ease, border-color 160ms ease, background 160ms ease
-
-  &:hover,
-  &:focus-visible
-    color: rgba(244, 247, 251, 0.92)
-    border-color: rgba(167, 139, 250, 0.32)
-    background: rgba(167, 139, 250, 0.08)
-    outline: none
-
-    .editTheoryTitleTooltip
-      opacity: 1
-      visibility: visible
-      transform: translate(-50%, 0)
-
-.editTheoryTitleIcon
-  width: 0.8125rem
-  height: 0.8125rem
-
-.editTheoryTitleTooltip
-  position: absolute
-  top: calc(100% + 0.4375rem)
-  left: 50%
-  z-index: 2
-  transform: translate(-50%, -0.125rem)
-  padding: 0.3125rem 0.5rem
-  border-radius: 0.4375rem
-  background: rgba(9, 12, 20, 0.96)
-  border: 0.0625rem solid rgba(255, 255, 255, 0.1)
-  box-shadow: 0 0.375rem 1rem rgba(0, 0, 0, 0.28)
-  color: rgba(244, 247, 251, 0.92)
-  font-size: 0.6875rem
-  font-weight: 600
-  line-height: 1.2
-  white-space: nowrap
-  pointer-events: none
-  opacity: 0
-  visibility: hidden
-  transition: opacity 160ms ease, transform 160ms ease, visibility 160ms ease
-
-.titleInput
+  gap: 0
   width: 100%
-  border: 0.0625rem solid $color-border-strong
-  border-radius: 0.875rem
-  padding: 0.6875rem 0.75rem
-  background: $color-surface-strong
-  color: $color-text
-  outline: none
   min-width: 0
+  box-sizing: border-box
 
-  &:focus
-    border-color: rgba(167, 139, 250, 0.72)
-    box-shadow: 0 0 0 0.1875rem rgba(167, 139, 250, 0.14)
-
-.sidebarTitleRow .titleInput
-  flex: 1
-  min-width: 0
-
-.sidebarToggleSvg
-  width: 2.25rem
-  height: 2.25rem
+.heroCard
+  position: relative
+  isolation: isolate
+  overflow: clip
   display: block
-  filter: drop-shadow(0 0.75rem 1.25rem rgba(0, 0, 0, 0.32))
-
-.kicker
-  margin: 0 0 0.375rem
-  color: $color-text-soft
-  font-size: 0.625rem
-  font-weight: 700
-  letter-spacing: 0.18em
-  text-transform: uppercase
-
-.title
-  margin: 0
-  color: $color-text
-  font-size: 1.125rem
-  font-weight: 650
-  letter-spacing: 0.01em
-  line-height: 1.18
-
-.headerDescription
-  margin: 0
+  width: 100%
   min-width: 0
-  color: $color-text-muted
-  font-size: 0.75rem
+  padding: clamp(0.875rem, 2.3vw, 1.125rem) clamp(0.875rem, 2.3vw, 1.125rem) clamp(0.8125rem, 2vw, 1.0625rem)
+  border-radius: clamp(1.75rem, 3vw, 2rem)
+  border: 0.0625rem solid rgba(255, 255, 255, 0.12)
+  background: radial-gradient(ellipse 122% 90% at 18% -16%, rgba(255, 255, 255, 0.11), transparent 64%), radial-gradient(ellipse 150% 100% at 50% 116%, rgba(255, 255, 255, 0.03), transparent 72%), linear-gradient(158deg, rgba(33, 34, 38, 0.95) 0%, rgba(28, 29, 33, 0.95) 42%, rgba(22, 23, 27, 0.96) 100%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.05), inset 0 0 1.4rem rgba(255, 255, 255, 0.025), 0 1rem 2rem rgba(0, 0, 0, 0.34)
+  backdrop-filter: blur(1.35rem) saturate(1.02)
+  -webkit-backdrop-filter: blur(1.35rem) saturate(1.02)
+  transition: padding 320ms cubic-bezier(0.22, 1, 0.36, 1), border-color 260ms ease, box-shadow 320ms ease, background 320ms ease
+
+  > *
+    position: relative
+    z-index: 2
+
+.heroCardCollapsed
+  padding-top: clamp(0.6875rem, 1.7vw, 0.8125rem)
+  padding-bottom: clamp(0.55rem, 1.4vw, 0.75rem)
+  border-color: rgba(255, 255, 255, 0.1)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.11), inset 0 0 1.25rem rgba(255, 255, 255, 0.018), 0 0.75rem 1.65rem rgba(0, 0, 0, 0.28)
+
+.heroGlowTop,
+.heroGlowBottom,
+.heroSpecular
+  position: absolute
+  pointer-events: none
+
+.heroGlowTop
+  z-index: 0
+  inset: -42% -26% auto -22%
+  height: 70%
+  background: radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04) 34%, transparent 72%)
+  opacity: 0.56
+
+.heroGlowBottom
+  z-index: 0
+  inset: auto -40% -46% -16%
+  height: 76%
+  background: radial-gradient(ellipse at 42% 42%, rgba(255, 255, 255, 0.08), transparent 68%), radial-gradient(ellipse at 66% 46%, rgba(228, 232, 238, 0.055), transparent 70%)
+  opacity: 0.28
+
+.heroSpecular
+  z-index: 1
+  inset: 0
+  background: linear-gradient(116deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.032) 14%, transparent 31%, transparent 75%, rgba(255, 255, 255, 0.045) 100%)
+
+.heroContent
+  position: relative
+  z-index: 2
+  display: grid
+  grid-template-columns: minmax(0, 1fr)
+  align-content: start
+  gap: 0.5rem
+  min-width: 0
+  width: 100%
+  transition: gap 300ms cubic-bezier(0.22, 1, 0.36, 1)
+
+.heroLead
+  display: grid
+  gap: 0.375rem
+  min-width: 0
+  max-width: min(33rem, 100%)
+  padding-right: clamp(4.2rem, 20vw, 7.25rem)
+  transition: gap 300ms cubic-bezier(0.22, 1, 0.36, 1), padding-right 300ms cubic-bezier(0.22, 1, 0.36, 1)
+
+.heroTitle
+  margin: 0
+  color: rgba(252, 252, 255, 0.98)
+  font-size: clamp(1.04rem, 1.9vw + 0.58rem, 1.44rem)
+  font-weight: 690
+  line-height: 1.16
+  letter-spacing: -0.02em
+  max-width: 100%
+  min-width: 0
+  transition: font-size 300ms cubic-bezier(0.22, 1, 0.36, 1), line-height 300ms cubic-bezier(0.22, 1, 0.36, 1)
+
+.heroDescription
+  margin: 0
+  color: rgba(198, 201, 208, 0.9)
+  font-size: clamp(0.75rem, 0.34vw + 0.68rem, 0.86rem)
   line-height: 1.5
+  max-width: min(52ch, 100%)
+  min-width: 0
+  transition: opacity 300ms ease, max-width 300ms cubic-bezier(0.22, 1, 0.36, 1)
+
+.heroFormShell
+  margin-top: 0.1875rem
+  min-width: 0
+  width: 100%
+  max-width: 100%
+  transform-origin: top center
+  transition: opacity 320ms ease, transform 340ms cubic-bezier(0.22, 1, 0.36, 1), max-height 360ms cubic-bezier(0.22, 1, 0.36, 1), margin-top 300ms ease
+  max-height: 15rem
+  opacity: 1
+  transform: translateY(0) scaleY(1)
+  overflow: hidden
+  background: transparent
+
+  :global(.formInput),
+  :global(.formTextarea)
+    box-sizing: border-box
+    width: 100%
+    max-width: 100%
+    min-width: 0
+
+  :global(.formTextarea)
+    min-height: 5rem
+    line-height: 1.45
+    resize: none
+    overflow: hidden
+    scrollbar-width: none
+
+    &::-webkit-scrollbar
+      display: none
+
+  :global([class*='formCard'])
+    width: 100%
+    min-width: 0
+    padding: 0
+    border: 0
+    border-radius: 0
+    background: transparent
+    box-shadow: none
+    backdrop-filter: none
+    -webkit-backdrop-filter: none
+
+    &::before,
+    &::after
+      display: none
+
+  :global([class*='formCard'] *)
+    background-color: transparent
+
+  :global([class*='formCardToolbar'])
+    margin: 0 0 0.3125rem
+
+  :global([class*='hideSidebarButton'])
+    opacity: 0.78
+
+  :global(.form)
+    gap: 0.625rem
+    width: 100%
+    min-width: 0
+    background: transparent
+
+  :global(.field),
+  :global(.fieldControl)
+    background: transparent
+
+.heroFormShellCollapsed
+  max-height: 0
+  margin-top: 0
+  padding: 0
+  opacity: 0
+  transform: translateY(-0.375rem) scaleY(0.96)
+  border: 0
+  background: transparent
+  box-shadow: none
+  overflow: hidden
+  pointer-events: none
+
+  :global(.form),
+  :global(.field),
+  :global(.fieldControl),
+  :global([class*='formCard']),
+  :global([class*='formCardToolbar'])
+    margin: 0 !important
+    padding: 0 !important
+    border: 0 !important
+    background: transparent !important
+    box-shadow: none !important
+
+.heroSculptureWrap
+  position: absolute
+  right: 0
+  top: clamp(0.45rem, 1.6vw, 0.82rem)
+  z-index: 1
+  width: clamp(7.8rem, 42%, 11.2rem)
+  max-width: 56%
+  height: auto
+  pointer-events: none
+  opacity: 0.3
+  transform: rotate(-2deg)
+  transition: opacity 260ms ease, transform 320ms cubic-bezier(0.22, 1, 0.36, 1), width 260ms ease
+
+.heroCardCollapsed .heroSculptureWrap
+  opacity: 0.22
+  transform: rotate(-1deg) scale(0.92)
+
+.heroCardCollapsed .heroContent
+  gap: 0.3125rem
+
+.heroCardCollapsed .heroLead
+  gap: 0.25rem
+  padding-right: clamp(3.6rem, 18vw, 6.4rem)
+
+.heroCardCollapsed .heroTitle
+  font-size: clamp(0.98rem, 1.55vw + 0.56rem, 1.24rem)
+  line-height: 1.12
+
+.heroCardCollapsed .heroDescription
+  opacity: 0.82
+  max-width: min(44ch, 100%)
+
+.premiumGlassGlyph
+  width: 1rem
+  height: 1rem
 
 .content
+  position: relative
+  z-index: 1
   display: grid
   grid-auto-rows: min-content
   flex: 1
-  gap: 0.875rem
+  gap: $sidebar-section-gap
   align-content: start
   min-height: 0
   overflow-y: auto
-  padding-right: 0.25rem
+  overflow-x: hidden
+  padding: 0 1rem 1rem
+  overscroll-behavior: contain
+  scrollbar-gutter: stable
   scrollbar-width: thin
-  scrollbar-color: rgba(167, 139, 250, 0.34) transparent
+  scrollbar-color: rgba(255, 255, 255, 0.14) transparent
 
   &::-webkit-scrollbar
-    width: 0.5rem
+    width: 0.3125rem
 
   &::-webkit-scrollbar-track
     background: transparent
 
   &::-webkit-scrollbar-thumb
     border-radius: 62.4375rem
-    background: rgba(167, 139, 250, 0.32)
+    background: rgba(255, 255, 255, 0.14)
+
+// ─── Cards (redesigned) ──────────────────────────────────────────────────────
 
 .card
+  +sidebar-glass-surface
   display: grid
-  gap: 0.625rem
+  gap: $sidebar-inner-gap
   width: 100%
   max-width: 100%
   min-width: 0
-  padding: 0.875rem
-  border: 0.0625rem solid $color-border
-  border-radius: 1.125rem
-  background: $color-surface
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.03)
+  padding: $sidebar-card-padding
+  border-radius: $sidebar-card-radius
 
-.progressCard
+  > *
+    position: relative
+    z-index: 1
+
+.sectionHeader
+  display: flex
+  align-items: center
+  gap: 0.5rem
+  justify-content: flex-start
   width: 100%
-  max-width: 100%
-  border-color: rgba(167, 139, 250, 0.22)
-  background: radial-gradient(circle at top left, rgba(167, 139, 250, 0.1), transparent 40%), $color-surface
+
+.sectionGlassGlyph
+  display: grid
+  place-items: center
+  width: 2.25rem
+  height: 2.25rem
+  flex: 0 0 auto
+  color: $ds-text-subtle
+  overflow: visible
 
 .sectionKicker
   margin: 0
-  color: $color-text-soft
+  color: rgba(196, 196, 202, 0.88)
   font-size: 0.625rem
   font-weight: 800
-  letter-spacing: 0.17em
+  letter-spacing: 0.18em
   text-transform: uppercase
-
-.sectionTitle
-  margin: 0
-  color: $color-text
-  font-size: 0.9375rem
-  font-weight: 650
-  line-height: 1.3
+  text-align: left
 
 .sectionText
   margin: 0
-  color: $color-text
+  color: rgba(180, 180, 186, 0.96)
   font-size: 0.8125rem
-  line-height: 1.55
+  line-height: 1.6
 
 .sectionHint
   margin: 0
-  color: $color-text
+  color: $ds-text-muted
   font-size: 0.75rem
-  line-height: 1.5
+  line-height: 1.55
   padding: 0.625rem 0.75rem
-  border-left: 0.125rem solid rgba(167, 139, 250, 0.46)
-  border-radius: 0.75rem
-  background: rgba(255, 255, 255, 0.03)
+  border: 0.0625rem solid $noir-stroke-hairline
+  border-left: 0.125rem solid $noir-stroke-medium
+  border-radius: $noir-radius-panel
+  +ds-sidebar-inset-well
 
-.sidebarCta
-  width: 100%
-  min-height: 2.625rem
+.contextualHint
+  display: flex
+  align-items: flex-start
+  gap: 0.4375rem
+  margin: 0.25rem 0 0
+  padding: 0 0 0 0.25rem
+  font-size: 0.6875rem
+  line-height: 1.5
+  color: rgba(168, 168, 174, 0.88)
+
+.contextualHintIcon
+  flex: 0 0 auto
   display: inline-flex
   align-items: center
   justify-content: center
-  gap: 0.5rem
-  padding: 0.75rem 1rem
-  border: 0.0625rem solid rgba(255, 255, 255, 0.12)
-  border-radius: 0.875rem
-  background: rgba(255, 255, 255, 0.035)
-  color: rgba(245, 247, 251, 0.92)
-  font: inherit
-  font-size: 0.78rem
-  font-weight: 650
-  line-height: 1
-  letter-spacing: 0.08em
-  text-transform: uppercase
-  cursor: pointer
-  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, color 180ms ease, box-shadow 180ms ease
-  appearance: none
+  color: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 72%, rgba(180, 180, 186, 0.9))
 
-  &:hover,
-  &:focus-visible
-    transform: translateY(-0.0625rem)
-    border-color: rgba(196, 181, 253, 0.32)
-    background: rgba(255, 255, 255, 0.055)
-    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.18)
-    outline: none
+// ─── Progress card ───────────────────────────────────────────────────────────
 
-  &:active
-    transform: translateY(0) scale(0.985)
-
-  &:disabled,
-  &[aria-disabled="true"]
-    cursor: not-allowed
-    opacity: 0.48
-    transform: none
-    box-shadow: none
-
-.sidebarCtaIcon
-  width: 1rem
-  height: 1rem
-  flex: 0 0 auto
-  color: currentColor
-
-.sidebarCtaPrimary
-  border-color: rgba(196, 181, 253, 0.38)
-  background: linear-gradient(180deg, rgba(167, 139, 250, 0.22), rgba(124, 58, 237, 0.12))
-  color: rgba(255, 255, 255, 0.95)
-
-.sidebarCtaSecondary
-  border-color: rgba(255, 255, 255, 0.12)
-  background: rgba(255, 255, 255, 0.035)
-
-.sidebarCtaGhost
-  border-color: rgba(255, 255, 255, 0.10)
-  background: transparent
-
-.sidebarCtaDanger
-  border-color: rgba(255, 107, 139, 0.22)
-  background: rgba(255, 107, 139, 0.055)
-  color: rgba(255, 122, 154, 0.96)
-
-  &:hover,
-  &:focus-visible
-    border-color: rgba(255, 107, 139, 0.42)
-    color: rgba(255, 132, 164, 1)
-    background: rgba(255, 107, 139, 0.08)
-
-.sidebarCtaStage
-  border-color: color-mix(in srgb, var(--stage-accent) 38%, transparent)
-  background: linear-gradient(180deg, color-mix(in srgb, var(--stage-accent) 20%, transparent), rgba(255, 255, 255, 0.025))
-  color: rgba(255, 255, 255, 0.95)
-
-  &:hover,
-  &:focus-visible
-    border-color: color-mix(in srgb, var(--stage-accent) 52%, transparent)
-    background: linear-gradient(180deg, color-mix(in srgb, var(--stage-accent) 28%, transparent), rgba(255, 255, 255, 0.04))
-
-.sidebarCtaRow
-  display: flex
+.progressCard
+  border-color: $noir-stroke-medium
+  gap: 0.75rem
+  display: grid
   width: 100%
-  gap: 0.625rem
+  min-width: 0
+  box-sizing: border-box
 
-  .sidebarCta
-    flex: 1
+  &::before
+    background: linear-gradient(132deg, rgba(255, 255, 255, 0.08) 0%, transparent 30%, transparent 70%, rgba(255, 255, 255, 0.03) 100%)
+
+  &::after
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2) 28%, rgba(255, 255, 255, 0.26) 50%, rgba(255, 255, 255, 0.2) 72%, transparent)
+
+  .timeline,
+  .contextualHint
+    width: 100%
     min-width: 0
+    box-sizing: border-box
 
-.sidebarCtaSpaced
-  margin-top: 0.625rem
+.progressHeader
+  display: grid
+  gap: 0.625rem
+  width: 100%
+  min-width: 0
 
-.contextActions
+.progressHeaderKicker
+  margin: 0
+  color: rgba(196, 196, 202, 0.88)
+  font-size: 0.625rem
+  font-weight: 800
+  letter-spacing: 0.18em
+  text-transform: uppercase
+  text-align: left
+
+.progressHeaderScene
+  position: relative
+  isolation: isolate
+  width: 100%
+  min-width: 0
+  min-height: clamp(8.25rem, 32vw, 10.75rem)
+  padding: 0.25rem 0 0.5rem
+  overflow: visible
+
+.progressHeaderAtmosphere
+  position: absolute
+  inset: -14% -8% -10% -14%
+  z-index: 0
+  pointer-events: none
+  overflow: visible
+  mask-image: linear-gradient(180deg, transparent 0%, black 10%, black 90%, transparent 100%), linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%)
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 10%, black 90%, transparent 100%), linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%)
+  mask-composite: intersect
+  -webkit-mask-composite: source-in
+
+.progressHeaderHazeCore
+  position: absolute
+  left: -8%
+  top: 2%
+  width: 58%
+  height: 96%
+  border-radius: 50%
+  pointer-events: none
+  background: radial-gradient(ellipse 74% 70% at 46% 50%, rgba(236, 238, 244, 0.18), rgba(148, 150, 156, 0.06) 44%, transparent 76%)
+  filter: blur(1.375rem)
+  opacity: 0.92
+  animation: progressHazeBreath 18s ease-in-out infinite
+
+.progressHeaderHazeBand
+  position: absolute
+  left: -4%
+  top: 18%
+  width: 108%
+  height: 64%
+  border-radius: 50%
+  pointer-events: none
+  background: linear-gradient(102deg, rgba(236, 238, 244, 0.12) 0%, rgba(214, 216, 222, 0.14) 24%, rgba(168, 170, 176, 0.08) 48%, rgba(120, 122, 128, 0.04) 72%, transparent 100%)
+  filter: blur(1.5rem)
+  opacity: 0.82
+  animation: progressHazeBand 24s ease-in-out infinite
+
+.progressHeaderHazeSpread
+  position: absolute
+  left: 12%
+  top: 12%
+  width: 88%
+  height: 76%
+  border-radius: 50%
+  pointer-events: none
+  background: radial-gradient(ellipse 86% 62% at 16% 52%, rgba(214, 216, 222, 0.12), rgba(88, 90, 96, 0.04) 40%, transparent 78%)
+  filter: blur(1.625rem)
+  opacity: 0.78
+  animation: progressHazeDrift 22s ease-in-out infinite
+
+.progressHeaderHazeTrail
+  position: absolute
+  left: 28%
+  top: 22%
+  width: 78%
+  height: 56%
+  border-radius: 50%
+  pointer-events: none
+  background: linear-gradient(108deg, rgba(214, 216, 222, 0.1) 0%, rgba(196, 198, 204, 0.06) 28%, rgba(148, 150, 156, 0.03) 52%, transparent 82%)
+  filter: blur(1.25rem)
+  opacity: 0.68
+  animation: progressHazeTrail 26s ease-in-out infinite
+
+.progressHeaderHazeProgressive
+  position: absolute
+  left: -6%
+  top: 8%
+  width: 112%
+  height: 84%
+  pointer-events: none
+  background: linear-gradient(108deg, rgba(252, 252, 255, 0.14) 0%, rgba(236, 238, 244, 0.1) 18%, rgba(196, 198, 204, 0.06) 38%, rgba(120, 122, 128, 0.03) 58%, transparent 82%)
+  filter: blur(1.75rem)
+  opacity: 0.76
+  mask-image: linear-gradient(90deg, black 0%, black 12%, rgba(0, 0, 0, 0.82) 32%, rgba(0, 0, 0, 0.48) 58%, rgba(0, 0, 0, 0.18) 78%, transparent 96%)
+  -webkit-mask-image: linear-gradient(90deg, black 0%, black 12%, rgba(0, 0, 0, 0.82) 32%, rgba(0, 0, 0, 0.48) 58%, rgba(0, 0, 0, 0.18) 78%, transparent 96%)
+  animation: progressHazeProgressive 28s ease-in-out infinite
+
+.progressOrbitalSculpture
+  position: absolute
+  left: clamp(-1.25rem, -6vw, -0.5rem)
+  top: 50%
+  transform: translateY(-50%)
+  width: clamp(9.5rem, 78%, 14rem)
+  height: clamp(8rem, 64vw, 11rem)
+  overflow: visible
+  pointer-events: none
+  z-index: 1
+
+.progressOrbitalNucleusGlow
+  position: absolute
+  left: 8%
+  top: 50%
+  width: 52%
+  height: 72%
+  transform: translateY(-50%)
+  border-radius: 50%
+  background: radial-gradient(ellipse 78% 74% at 50% 50%, rgba(252, 252, 255, 0.16), rgba(196, 198, 204, 0.06) 42%, transparent 74%)
+  filter: blur(1rem)
+  opacity: 0.88
+  animation: progressOrbitalBreath 14s ease-in-out infinite
+
+.progressOrbitalSmoke
+  position: absolute
+  left: -12%
+  top: 8%
+  width: 88%
+  height: 84%
+  border-radius: 50%
+  background: radial-gradient(ellipse 72% 66% at 44% 50%, rgba(228, 230, 236, 0.14), rgba(88, 90, 96, 0.04) 46%, transparent 76%)
+  filter: blur(1.125rem)
+  opacity: 0.82
+  animation: progressOrbitalBreath 14s ease-in-out infinite
+
+.progressOrbitalAmbient
+  position: absolute
+  left: -4%
+  top: 2%
+  width: 96%
+  height: 96%
+  border-radius: 50%
+  background: radial-gradient(ellipse 76% 70% at 42% 48%, rgba(236, 238, 244, 0.18), rgba(88, 90, 96, 0.05) 44%, transparent 78%)
+  filter: blur(0.875rem)
+  opacity: 0.92
+  animation: progressOrbitalBreath 16s ease-in-out infinite
+
+.progressOrbitalHazeEmit
+  position: absolute
+  left: 18%
+  top: 18%
+  width: 108%
+  height: 64%
+  border-radius: 50%
+  background: linear-gradient(98deg, rgba(214, 216, 222, 0.1) 0%, rgba(196, 198, 204, 0.06) 32%, rgba(148, 150, 156, 0.03) 58%, transparent 88%)
+  filter: blur(1.375rem)
+  opacity: 0.72
+  animation: progressHazeDrift 20s ease-in-out infinite
+
+.progressOrbitalSvg
+  position: absolute
+  inset: -8% -18% -6% -6%
+  width: 124%
+  height: 116%
+  display: block
+  animation: progressOrbitalDrift 20s ease-in-out infinite
+
+.progressOrbitalHazeField
+  animation: progressOrbitalBreath 16s ease-in-out infinite
+
+.progressOrbitalHalo
+  animation: progressOrbitalBreath 14s ease-in-out infinite
+
+.progressOrbitalRingOuter
+  animation: progressOrbitalRingDrift 24s ease-in-out infinite
+
+.progressOrbitalRingMid
+  animation: progressOrbitalRingDrift 28s ease-in-out infinite reverse
+
+.progressOrbitalSatellite
+  animation: progressOrbitalSatelliteDrift 22s ease-in-out infinite
+
+.progressOrbitalSatelliteAlt
+  animation: progressOrbitalSatelliteDrift 26s ease-in-out infinite reverse
+
+.progressHeaderCard
+  position: absolute
+  right: 0
+  top: 50%
+  transform: translateY(-50%)
+  z-index: 2
+  display: grid
+  gap: 0.4375rem
+  width: clamp(8rem, 44%, 10.75rem)
+  max-width: 44%
+  min-width: 0
+  padding: 0.5rem 0.5625rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.14)
+  border-radius: $noir-radius-panel
+  background: linear-gradient(158deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.024) 30%, rgba(12, 13, 16, 0.08) 100%), rgba(18, 19, 22, 0.14)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.16), inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.04), inset 0 0 2.5rem rgba(255, 255, 255, 0.024), inset 0 0.0625rem 0.75rem rgba(0, 0, 0, 0.08), 0 0.5rem 1.5rem rgba(0, 0, 0, 0.14)
+  backdrop-filter: blur(1.625rem) saturate(1.22)
+  -webkit-backdrop-filter: blur(1.625rem) saturate(1.22)
+  overflow: hidden
+
+.progressHeaderCardVeil
+  position: absolute
+  inset: 0
+  z-index: 0
+  pointer-events: none
+  background: linear-gradient(168deg, rgba(252, 252, 255, 0.06) 0%, transparent 30%, transparent 64%, rgba(18, 19, 22, 0.06) 100%)
+  opacity: 0.92
+
+.progressHeaderCardSpecular
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  height: 52%
+  z-index: 0
+  pointer-events: none
+  background: radial-gradient(ellipse 96% 82% at 50% 0%, rgba(255, 255, 255, 0.12), transparent 68%)
+  opacity: 0.76
+
+.progressHeaderCardHighlight
+  position: absolute
+  inset: 0
+  z-index: 0
+  background: linear-gradient(132deg, rgba(255, 255, 255, 0.08) 0%, transparent 22%, transparent 78%, rgba(255, 255, 255, 0.03) 100%)
+  pointer-events: none
+
+.progressHeaderCardEdge
+  position: absolute
+  top: 0
+  left: 0.5rem
+  right: 0.5rem
+  height: 0.0625rem
+  z-index: 0
+  pointer-events: none
+  border-radius: 0 0 0.0625rem 0.0625rem
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18) 20%, rgba(255, 255, 255, 0.26) 50%, rgba(255, 255, 255, 0.18) 80%, transparent)
+  opacity: 0.62
+
+.progressHeaderCardNoise
+  position: absolute
+  inset: 0
+  z-index: 0
+  pointer-events: none
+  opacity: 0.035
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
+  background-size: 7.5rem 7.5rem
+  mix-blend-mode: overlay
+
+.progressHeaderCardTop
+  position: relative
+  z-index: 1
   display: flex
-  flex-wrap: wrap
-  gap: 0.625rem
-  margin-top: 0.25rem
+  align-items: center
+  gap: 0.5625rem
+  min-width: 0
 
-  .sidebarCta
-    width: auto
-    flex: 1 1 calc(50% - 0.3125rem)
-    min-width: 0
+.progressHeaderCardCopy
+  display: grid
+  gap: 0.125rem
+  min-width: 0
+
+.progressHeaderCardDivider
+  position: relative
+  z-index: 1
+  width: 100%
+  height: 0.0625rem
+  border-radius: 999rem
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12) 18%, rgba(255, 255, 255, 0.16) 50%, rgba(255, 255, 255, 0.12) 82%, transparent)
+
+.progressHeaderInstruction
+  position: relative
+  z-index: 1
+  margin: 0
+  color: rgba(184, 186, 192, 0.96)
+  font-size: 0.71875rem
+  line-height: 1.55
+  overflow-wrap: anywhere
+
+.progressRingWrap
+  position: relative
+  flex: 0 0 auto
+  width: 2.375rem
+  height: 2.375rem
+  overflow: visible
+
+.progressRing
+  width: 100%
+  height: 100%
+  transform: rotate(-90deg)
+
+.progressRingTrackOuter
+  fill: none
+  stroke: rgba(255, 255, 255, 0.05)
+  stroke-width: 1
+
+.progressRingTrack
+  fill: none
+  stroke: rgba(255, 255, 255, 0.1)
+  stroke-width: 2.5
+
+.progressRingFill
+  fill: none
+  stroke: var(--stage-accent, #{$stage-1})
+  stroke-width: 2.5
+  stroke-linecap: round
+  transition: stroke-dashoffset 420ms cubic-bezier(0.22, 1, 0.36, 1), stroke 280ms ease
+
+.progressPercent
+  margin: 0
+  color: $ds-text-primary
+  font-size: 1rem
+  font-weight: 700
+  line-height: 1
+  font-variant-numeric: tabular-nums
+  letter-spacing: -0.02em
+
+.progressOverviewLabel
+  margin: 0
+  color: $ds-text-primary
+  font-size: 0.8125rem
+  font-weight: 650
+  line-height: 1.3
+  letter-spacing: 0.01em
+
+@keyframes progressOrbitalBreath
+  0%, 100%
+    opacity: 0.62
+  50%
+    opacity: 0.92
+
+@keyframes progressOrbitalDrift
+  0%, 100%
+    transform: translateY(0)
+  50%
+    transform: translateY(-0.1875rem)
+
+@keyframes progressOrbitalRingDrift
+  0%, 100%
+    transform: rotate(0deg)
+    opacity: 0.72
+  50%
+    transform: rotate(2deg)
+    opacity: 0.88
+
+@keyframes progressOrbitalSatelliteDrift
+  0%, 100%
+    opacity: 0.34
+    transform: translateY(0)
+  50%
+    opacity: 0.56
+    transform: translateY(-0.0875rem)
+
+@keyframes progressHazeBreath
+  0%, 100%
+    opacity: 0.68
+    transform: scale(1)
+  50%
+    opacity: 0.88
+    transform: scale(1.03)
+
+@keyframes progressHazeDrift
+  0%, 100%
+    opacity: 0.58
+    transform: translateX(0)
+  50%
+    opacity: 0.76
+    transform: translateX(0.25rem)
+
+@keyframes progressHazeTrail
+  0%, 100%
+    opacity: 0.52
+    transform: translateX(0) scaleX(1)
+  50%
+    opacity: 0.72
+    transform: translateX(0.5rem) scaleX(1.05)
+
+@keyframes progressHazeBand
+  0%, 100%
+    opacity: 0.72
+    transform: translateX(0)
+  50%
+    opacity: 0.92
+    transform: translateX(0.375rem)
+
+@keyframes progressHazeProgressive
+  0%, 100%
+    opacity: 0.64
+    transform: scaleX(1)
+  50%
+    opacity: 0.84
+    transform: scaleX(1.04)
+
+// ─── Stage timeline ────────────────────────────────────────────────────────────
 
 .timeline
+  --timeline-rail-x: 1.3125rem
   display: grid
   gap: 0.5rem
-  margin: 0.125rem 0 0.25rem
+  margin: 0.125rem 0 0.375rem
+  width: 100%
+  min-width: 0
+  box-sizing: border-box
+  position: relative
+
+  &::before
+    content: ''
+    position: absolute
+    left: var(--timeline-rail-x)
+    top: 1.4375rem
+    bottom: 1.4375rem
+    width: 0.0625rem
+    border-radius: 999rem
+    background: rgba(255, 255, 255, 0.12)
+    pointer-events: none
+    z-index: 0
 
 .stageAccordion
   width: 100%
   max-width: 100%
-  border: 0.0625rem solid $color-border
-  border-radius: 0.875rem
-  background: rgba(255, 255, 255, 0.025)
+  min-width: 0
+  box-sizing: border-box
+  display: block
+  position: relative
+  interpolate-size: allow-keywords
+  +sidebar-inner-surface
+  border-color: $noir-stroke-hairline
+  border-radius: $noir-radius-panel
   overflow: hidden
+  transition: border-color 200ms ease, background 200ms ease, box-shadow 200ms ease
+
+  &::details-content
+    height: 0
+    overflow: clip
+    opacity: 0
+    transform: translateY(-0.25rem)
+    transition: height 320ms cubic-bezier(0.22, 1, 0.36, 1), opacity 260ms cubic-bezier(0.22, 1, 0.36, 1), transform 260ms cubic-bezier(0.22, 1, 0.36, 1), content-visibility 320ms allow-discrete
+
+  &[open]::details-content
+    height: auto
+    opacity: 1
+    transform: translateY(0)
+
+  &::before
+    content: ''
+    position: absolute
+    left: 0
+    right: 0
+    top: 0
+    height: 0.125rem
+    border-top-left-radius: inherit
+    border-top-right-radius: inherit
+    background: var(--stage-accent, #{$stage-1})
+    opacity: var(--stage-bar-opacity, 0.26)
+    pointer-events: none
+    z-index: 1
 
 .stageSummary
   display: grid
-  grid-template-columns: auto minmax(0, 1fr) auto auto
+  grid-template-columns: auto minmax(0, 1fr) auto auto auto
   align-items: center
-  gap: 0.625rem
+  gap: 0.5rem
+  width: 100%
   min-width: 0
-  padding: 0.625rem
+  min-height: 2.875rem
+  padding: 0.625rem 0.6875rem
   cursor: pointer
   list-style: none
+  background: transparent
+  box-sizing: border-box
 
   &::-webkit-details-marker
     display: none
 
+.stageColorBar
+  display: none
+
 .stageSummaryCopy
   display: grid
-  gap: 0.125rem
+  gap: 0.1875rem
   min-width: 0
-  overflow: hidden
+  padding-right: 0.125rem
 
   strong
     display: block
-    color: $color-text
-    font-size: 0.75rem
-    line-height: 1.25
-    overflow: hidden
-    text-overflow: ellipsis
-    white-space: nowrap
+    color: rgba(244, 244, 246, 0.94)
+    font-size: 0.71875rem
+    font-weight: 750
+    letter-spacing: 0.05em
+    text-transform: uppercase
+    line-height: 1.3
 
   small
     display: block
-    color: $color-text-muted
-    font-size: 0.6875rem
-    line-height: 1.35
-    overflow: hidden
-    text-overflow: ellipsis
-    white-space: nowrap
+    color: rgba(148, 148, 154, 0.92)
+    font-size: 0.65625rem
+    line-height: 1.4
 
 .timelineChevronButton
+  --timeline-control-size: 1.25rem
   display: inline-flex
   align-items: center
   justify-content: center
-  width: 1.25rem
-  height: 1.25rem
+  width: var(--timeline-control-size)
+  height: var(--timeline-control-size)
   flex: 0 0 auto
-  flex-shrink: 0
+  border: 0.0625rem solid $noir-stroke-hairline
+  border-radius: $noir-radius-chip
+  color: rgba(148, 148, 154, 0.9)
+  background: rgba(255, 255, 255, 0.02)
+  padding: 0
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04)
+  transition: border-color 180ms ease, color 180ms ease, background 180ms ease, box-shadow 180ms ease
   justify-self: end
   align-self: center
-  color: rgba(244, 247, 251, 0.52)
-  opacity: 0.92
-  background: transparent
-  border: 0
-  padding: 0
-  transform: none
+
+  &:hover
+    color: rgba(200, 200, 206, 0.96)
+    border-color: $noir-stroke-soft
+    background: $noir-surface-hover
 
 .timelineChevronIcon
-  width: 1rem
-  height: 1rem
+  width: 0.75rem
+  height: 0.75rem
   display: block
-  transition: transform 180ms ease, color 180ms ease
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1), color 180ms ease
   transform: rotate(0deg)
 
 .timelineChevronOpen
-  color: var(--stage-accent, #{$color-accent})
-  opacity: 1
-
   .timelineChevronIcon
     transform: rotate(180deg)
 
+.timelineChevronActive
+  color: rgba(200, 200, 206, 0.96)
+  border-color: $noir-stroke-soft
+  background: $noir-surface-active
+
+.timelineChevronBlocked
+  color: rgba(108, 108, 114, 0.58)
+  border-color: rgba(255, 255, 255, 0.04)
+  background: rgba(255, 255, 255, 0.008)
+  box-shadow: none
+
+  &:hover
+    color: rgba(138, 138, 144, 0.72)
+    border-color: rgba(255, 255, 255, 0.07)
+    background: rgba(255, 255, 255, 0.016)
+
 .stageDot
+  position: relative
+  z-index: 2
   display: inline-grid
   place-items: center
-  width: 1.375rem
-  height: 1.375rem
-  border: 0.0625rem solid var(--stage-border, #{$color-border})
-  border-radius: 62.4375rem
-  color: var(--stage-accent, #{$color-accent})
-  font-size: 0.6875rem
+  width: 1.25rem
+  height: 1.25rem
+  border: 0.0625rem solid $noir-stroke-soft
+  border-radius: 50%
+  color: rgba(164, 164, 170, 0.96)
+  font-size: 0.625rem
   font-weight: 800
-  background: rgba(255, 255, 255, 0.03)
+  background: radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.07), transparent 58%), $noir-surface-card
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06), 0 0.125rem 0.375rem rgba(0, 0, 0, 0.14)
+  transition: color 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease
 
-.stageCount
+.stageProgressColumn
+  position: relative
+  display: grid
+  grid-template-rows: 1fr auto 1fr
+  justify-items: center
+  align-items: center
+  align-self: stretch
+  width: 1.25rem
+  min-height: 2.125rem
+
+.stageProgressSegment
+  width: 0.0625rem
+  height: 100%
+  border-radius: 999rem
+  background: transparent
+  box-shadow: none
+  transition: background 220ms ease, box-shadow 220ms ease
+
+.stageProgressSegmentLit
+  background: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 42%, rgba(216, 219, 224, 0.64))
+  box-shadow: 0 0 0.4rem color-mix(in srgb, var(--stage-accent, #{$stage-1}) 18%, transparent)
+
+.stageFirst
+  .stageProgressSegmentTop
+    opacity: 0
+
+.stageLast
+  .stageProgressSegmentBottom
+    opacity: 0
+
+.stageLockIcon
+  --timeline-control-size: 1.25rem
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  width: var(--timeline-control-size)
+  height: var(--timeline-control-size)
+  flex: 0 0 auto
+  border: 0.0625rem solid $noir-stroke-hairline
+  border-radius: $noir-radius-chip
+  color: rgba(120, 120, 126, 0.72)
+  background: rgba(255, 255, 255, 0.015)
+  cursor: help
+  transition: color 180ms ease, border-color 180ms ease, background 180ms ease
+
+  &:hover,
+  &:focus-visible
+    color: rgba(168, 168, 174, 0.92)
+    border-color: $noir-stroke-soft
+    background: $noir-surface-hover
+    outline: none
+
+.stageLockSvg
+  width: 0.75rem
+  height: 0.75rem
+  display: block
+
+.stageCountBadge
+  --timeline-control-size: 1.25rem
   flex-shrink: 0
-  justify-self: end
-  min-width: 1.125rem
-  color: var(--stage-accent, #{$color-accent})
-  font-size: 0.75rem
-  font-weight: 800
+  display: inline-grid
+  place-items: center
+  width: var(--timeline-control-size)
+  height: var(--timeline-control-size)
+  padding: 0
+  border: 0.0625rem solid $noir-stroke-soft
+  border-radius: $noir-radius-chip
+  color: rgba(212, 212, 218, 0.9)
+  font-size: 0.625rem
+  font-weight: 650
   line-height: 1
-  text-align: right
-  white-space: nowrap
   font-variant-numeric: tabular-nums
+  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.05), transparent 58%), rgba(27, 28, 32, 0.88)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05)
+  transition: color 180ms ease, border-color 180ms ease, background 180ms ease
 
 .stageBody
   display: grid
-  gap: 0.5rem
-  padding: 0 0.75rem 0.75rem 2.625rem
+  gap: 0.5625rem
+  width: 100%
+  min-width: 0
+  min-height: 0
+  box-sizing: border-box
+  padding: 0.25rem 0.6875rem 0.875rem 2.125rem
 
   p
     margin: 0
-    color: $color-text-muted
+    color: rgba(148, 148, 154, 0.95)
     font-size: 0.75rem
-    line-height: 1.5
+    line-height: 1.6
 
   ul
     margin: 0
-    padding-left: 1rem
-    color: $color-text
+    padding-left: 0.875rem
+    color: rgba(180, 180, 186, 0.88)
     font-size: 0.75rem
-    line-height: 1.45
+    line-height: 1.55
+
+    li
+      padding-left: 0.125rem
+
+      &::marker
+        color: rgba(148, 148, 154, 0.72)
+
+.stageAccordion[open]
+  --stage-bar-opacity: 0.42
+
+.stageAccordion:not([open]) .timelineChevronIcon
+  transform: rotate(0deg) !important
+
+.stageAccordion[open] .timelineChevronIcon
+  transform: rotate(180deg) !important
+
+.stageExpanded.stagecurrent
+  --stage-bar-opacity: 0.88
 
 .stagecompleted
-  border-color: rgba(52, 211, 153, 0.25)
+  --stage-bar-opacity: 0.58
+
+  .stageDot
+    color: var(--stage-accent)
+    border-color: color-mix(in srgb, var(--stage-accent) 28%, transparent)
+    background: color-mix(in srgb, var(--stage-accent) 8%, $noir-surface-card)
 
 .stagecurrent
-  border-color: var(--stage-border, rgba(167, 139, 250, 0.34))
-  background: rgba(167, 139, 250, 0.07)
+  --stage-bar-opacity: 0.72
+  border-color: color-mix(in srgb, var(--stage-accent) 22%, $noir-stroke-soft)
+  background: radial-gradient(ellipse 80% 60% at 0% 50%, color-mix(in srgb, var(--stage-accent) 10%, transparent), transparent 55%), radial-gradient(ellipse 100% 50% at 50% 0%, rgba(255, 255, 255, 0.04), transparent 58%), linear-gradient(180deg, rgba(32, 33, 38, 0.72), rgba(21, 22, 26, 0.88))
+  box-shadow: $noir-shadow-inset, 0 0.5rem 1.125rem rgba(0, 0, 0, 0.18), 0 0 1.5rem color-mix(in srgb, var(--stage-accent) 8%, transparent)
+
+  .stageSummaryCopy strong
+    color: rgba(252, 252, 254, 0.98)
+
+  .stageSummaryCopy small
+    color: rgba(168, 168, 174, 0.94)
+
+  .stageDot
+    color: color-mix(in srgb, var(--stage-accent) 78%, white 22%)
+    border-color: color-mix(in srgb, var(--stage-accent) 22%, transparent)
+    background: color-mix(in srgb, var(--stage-accent) 6%, $noir-surface-card)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06), 0 0 0.5rem color-mix(in srgb, var(--stage-accent) 18%, transparent)
+
+  .stageCountBadge
+    color: rgba(228, 228, 234, 0.94)
+    border-color: color-mix(in srgb, var(--stage-accent) 12%, rgba(255, 255, 255, 0.1))
+    background: color-mix(in srgb, var(--stage-accent) 6%, rgba(27, 28, 32, 0.88))
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
+
+  &:hover
+    border-color: color-mix(in srgb, var(--stage-accent) 22%, $noir-stroke-soft)
+    --stage-bar-opacity: 0.96
 
 .stageblocked
-  opacity: 0.72
+  --stage-bar-opacity: 0.16
+  border-color: color-mix(in srgb, var(--stage-accent) 6%, $noir-stroke-hairline)
+  background: radial-gradient(ellipse 80% 60% at 0% 50%, color-mix(in srgb, var(--stage-accent) 3%, transparent), transparent 55%), linear-gradient(180deg, rgba(27, 28, 32, 0.82), rgba(16, 17, 20, 0.9))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04), inset 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.28)
 
-.blockFormsCard
+  .stageSummaryCopy strong
+    color: rgba(172, 172, 178, 0.68)
+
+  .stageSummaryCopy small
+    color: rgba(112, 112, 118, 0.62)
+
+  .stageDot
+    color: rgba(128, 128, 134, 0.72)
+    border-color: $noir-stroke-hairline
+    background: radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.03), transparent 58%), rgba(21, 22, 26, 0.92)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.03)
+
+  .stageCountBadge
+    color: rgba(148, 148, 154, 0.62)
+    border-color: $noir-stroke-hairline
+    background: rgba(21, 22, 26, 0.82)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.03)
+
+  .stageLockIcon
+    color: color-mix(in srgb, var(--stage-accent) 28%, rgba(100, 100, 106, 0.48))
+    border-color: rgba(255, 255, 255, 0.04)
+    background: rgba(255, 255, 255, 0.008)
+    opacity: 0.68
+
+    &:hover,
+    &:focus-visible
+      color: color-mix(in srgb, var(--stage-accent) 36%, rgba(128, 128, 134, 0.62))
+      border-color: rgba(255, 255, 255, 0.06)
+      background: rgba(255, 255, 255, 0.014)
+      opacity: 0.82
+
+  &:hover
+    border-color: color-mix(in srgb, var(--stage-accent) 12%, $noir-stroke-soft)
+    background: radial-gradient(ellipse 80% 60% at 0% 50%, color-mix(in srgb, var(--stage-accent) 5%, transparent), transparent 55%), linear-gradient(180deg, rgba(32, 33, 38, 0.78), rgba(21, 22, 26, 0.88))
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05), inset 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.2), 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1)
+    --stage-bar-opacity: 0.26
+
+    .stageSummaryCopy strong
+      color: rgba(188, 188, 194, 0.76)
+
+    .stageSummaryCopy small
+      color: rgba(128, 128, 134, 0.7)
+
+    .stageDot
+      color: rgba(128, 128, 134, 0.66)
+      border-color: rgba(255, 255, 255, 0.07)
+
+    .stageCountBadge
+      color: rgba(148, 148, 154, 0.62)
+      border-color: rgba(255, 255, 255, 0.06)
+
+  &[open],
+  &.stageExpanded
+    --stage-bar-opacity: 0.22
+    border-color: color-mix(in srgb, var(--stage-accent) 10%, $noir-stroke-soft)
+    background: radial-gradient(ellipse 80% 60% at 0% 50%, color-mix(in srgb, var(--stage-accent) 4%, transparent), transparent 55%), linear-gradient(180deg, rgba(27, 28, 32, 0.8), rgba(16, 17, 20, 0.88))
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04), inset 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.22)
+
+    .stageSummaryCopy strong
+      color: rgba(180, 180, 186, 0.74)
+
+    .stageSummaryCopy small
+      color: rgba(122, 122, 128, 0.68)
+
+    .stageBody
+      p
+        color: rgba(148, 148, 154, 0.86)
+
+      ul
+        color: rgba(158, 158, 164, 0.8)
+
+        li::marker
+          color: color-mix(in srgb, var(--stage-accent) 24%, rgba(112, 112, 118, 0.62))
+
+.workflowAdvanceButton
+  &:disabled,
+  &[aria-disabled="true"]
+    cursor: not-allowed
+    pointer-events: auto
+    transform: none
+    filter: none
+    border-color: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 28%, $noir-stroke-soft)
+    background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--stage-accent, #{$stage-1}) 14%, transparent), transparent 58%), linear-gradient(180deg, rgba(44, 44, 46, 0.82), $noir-surface-cta-neutral)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05)
+    opacity: 0.42
+
+    &:hover,
+    &:focus-visible,
+    &:active
+      transform: none !important
+      scale: 1 !important
+      translate: 0 !important
+      border-color: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 28%, $noir-stroke-soft) !important
+      background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--stage-accent, #{$stage-1}) 14%, transparent), transparent 58%), linear-gradient(180deg, rgba(44, 44, 46, 0.82), $noir-surface-cta-neutral) !important
+      box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05) !important
+      filter: none !important
+      opacity: 0.42 !important
+      transition: none !important
+
+// ─── Block forms (unified create/edit panel) ───────────────────────────────────
+
+.blockFormsPanel
+  position: relative
+  isolation: isolate
   display: grid
   gap: 0
   width: 100%
   max-width: 100%
-  padding: 0.75rem
+  min-width: 0
+  padding: 0.875rem
+  border-radius: $sidebar-card-radius
+  border: 0.0625rem solid $noir-stroke-hairline
+  background: radial-gradient(ellipse 110% 72% at 50% 0%, rgba(255, 255, 255, 0.032), transparent 58%), linear-gradient(180deg, rgba(28, 29, 33, 0.9), rgba(18, 19, 23, 0.94))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05), 0 0.375rem 0.875rem rgba(0, 0, 0, 0.12)
+  overflow: hidden
+
+  &::before
+    content: ''
+    position: absolute
+    top: 0
+    left: 0.75rem
+    right: 0.75rem
+    height: 0.0625rem
+    border-radius: 0 0 0.0625rem 0.0625rem
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.09) 28%, rgba(255, 255, 255, 0.09) 72%, transparent)
+    opacity: 0.38
+    pointer-events: none
+
+  &::after
+    content: ''
+    position: absolute
+    inset: 0
+    border-radius: inherit
+    pointer-events: none
+    background: radial-gradient(ellipse 90% 55% at 50% 0%, rgba(255, 255, 255, 0.028), transparent 52%)
+    opacity: 0.55
+
+  > *
+    position: relative
+    z-index: 1
+
+  input,
+  textarea
+    +ds-editable-field
+    border-radius: $noir-radius-field
+    color: $ds-text-primary
+    font-size: 0.8125rem
+
+    &::placeholder
+      color: rgba(164, 164, 170, 0.78)
+
+    &:hover:not(:focus):not(:focus-visible)
+      +ds-editable-field-hover
+
+    &:focus,
+    &:focus-visible
+      +ds-editable-field-focus-stage
+
+  :global(.field)
+    gap: 0.4375rem
+
+  :global(.fieldLabel)
+    color: rgba(180, 180, 186, 0.82)
+
+  :global(.fieldControl)
+    background: transparent
 
 .blockFormGroup
   display: grid
   gap: 0.625rem
 
 .blockFormGroup + .blockFormGroup
-  margin-top: 0.875rem
+  margin-top: 0.75rem
+  padding-top: 0.875rem
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.045)
+
+.blockFormGroupHeader
+  display: flex
+  align-items: center
+  gap: 0.5rem
+  justify-content: flex-start
+  padding: 0 0.125rem 0.125rem
 
 .blockFormGroupTitle
   margin: 0
-  color: rgba(245, 247, 251, 0.58)
+  color: rgba(168, 168, 174, 0.86)
   font-size: 0.625rem
-  font-weight: 700
-  line-height: 1
-  letter-spacing: 0.22em
+  font-weight: 800
+  line-height: 1.2
+  letter-spacing: 0.18em
   text-transform: uppercase
 
+.blockFormsPanel .blockSidebarAccordion
+  border-radius: $noir-radius-panel
+  border: 0.0625rem solid $noir-stroke-hairline
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.006))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04)
+  transition: border-color 220ms ease, background 220ms ease, box-shadow 220ms ease
+
+  &::before
+    display: none
+
+  &:not(.sidebarAccordionOpen):has(.blockAccordionHeader:hover),
+  &:not(.sidebarAccordionOpen):has(.blockAccordionHeader:focus-visible)
+    +sidebar-block-accordion-stage-accent
+    background: radial-gradient(ellipse 100% 58% at 50% 0%, color-mix(in srgb, var(--stage-accent, #{$stage-1}) 4%, transparent), transparent 62%), linear-gradient(180deg, rgba(255, 255, 255, 0.022), rgba(255, 255, 255, 0.008))
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04), 0 0 0.625rem color-mix(in srgb, var(--stage-accent, #{$stage-1}) 3%, transparent)
+
+  &.sidebarAccordionOpen
+    +sidebar-block-accordion-stage-accent
+    border-color: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 10%, $noir-stroke-hairline)
+    background: radial-gradient(ellipse 115% 88% at 50% 0%, color-mix(in srgb, var(--stage-accent, #{$stage-1}) 7%, transparent), transparent 64%), radial-gradient(ellipse 72% 48% at 100% 100%, color-mix(in srgb, var(--stage-accent, #{$stage-1}) 4%, transparent), transparent 58%), linear-gradient(180deg, color-mix(in srgb, var(--stage-accent, #{$stage-1}) 3%, rgba(30, 31, 35, 0.48)), rgba(20, 21, 25, 0.32))
+    box-shadow: inset 0 0.0625rem 0 color-mix(in srgb, var(--stage-accent, #{$stage-1}) 5%, rgba(255, 255, 255, 0.04)), 0 0 0.75rem color-mix(in srgb, var(--stage-accent, #{$stage-1}) 3%, transparent)
+
+.blockFormsPanel .blockAccordionHeader
+  min-height: 2.875rem
+  padding: 0.8125rem 0.75rem
+  border-radius: calc(#{$noir-radius-panel} - 0.0625rem)
+
+  &:hover,
+  &:focus-visible
+    background: transparent
+
+.blockFormsPanel .sidebarAccordionContent > *
+  padding: 0 0.75rem 0.875rem
+
 .sidebarAccordion
-  border: 0.0625rem solid var(--stage-border, #{$color-border})
-  border-radius: 1rem
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015))
+  +sidebar-inner-surface
+  border-radius: $noir-radius-panel
   overflow: hidden
+  transition: border-color 200ms ease, background 200ms ease, box-shadow 200ms ease
+
+.blockSidebarAccordion
+  position: relative
+  border-radius: $sidebar-block-accordion-radius
+  border-color: $noir-stroke-hairline
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.016), rgba(255, 255, 255, 0.004))
   box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.03)
+  transition: border-color 220ms ease, background 220ms ease, box-shadow 220ms ease
 
 .sidebarAccordionHeader
   appearance: none
@@ -537,48 +1394,89 @@
   justify-content: space-between
   gap: 0.75rem
   width: 100%
-  padding: 0.8125rem 0.875rem
+  min-height: 2.75rem
+  padding: 0.75rem 0.8125rem
   border: 0
   background: transparent
-  color: $color-text
+  color: rgba(220, 220, 226, 0.92)
   font: inherit
-  font-size: 0.8125rem
+  font-size: 0.75rem
   font-weight: 650
   text-align: left
   cursor: pointer
-  transition: background 180ms ease, color 180ms ease
+  transition: background 180ms ease, color 200ms ease
+  outline: none
 
   &:hover,
   &:focus-visible
-    background: rgba(255, 255, 255, 0.04)
-    outline: none
+    background: rgba(255, 255, 255, 0.02)
+
+  &:focus-visible
+    box-shadow: inset 0 0 0 0.0625rem rgba(255, 255, 255, 0.1)
 
 .blockAccordionHeader
-  background: transparent
+  min-height: 2.875rem
+  padding: 0.8125rem 0.75rem
+  font-size: 0.6875rem
+  font-weight: 600
+  letter-spacing: 0.12em
+  text-transform: uppercase
+  color: rgba(196, 196, 202, 0.9)
+  transition: color 200ms ease
 
   &:hover,
   &:focus-visible
     background: transparent
-    color: rgba(255, 255, 255, 0.96)
 
-  &:hover .sidebarAccordionChevron,
-  &:focus-visible .sidebarAccordionChevron
-    color: var(--stage-accent)
-    opacity: 1
+  &:focus-visible
+    box-shadow: inset 0 0 0 0.0625rem rgba(255, 255, 255, 0.1)
+
+.blockFormsPanel .blockSidebarAccordion:not(.sidebarAccordionOpen):has(.blockAccordionHeader:hover) .blockAccordionHeader,
+.blockFormsPanel .blockSidebarAccordion:not(.sidebarAccordionOpen):has(.blockAccordionHeader:focus-visible) .blockAccordionHeader
+  &:focus-visible
+    box-shadow: inset 0 0 0 0.0625rem color-mix(in srgb, var(--stage-accent, #{$stage-1}) 14%, $noir-stroke-soft)
+
+.blockSidebarAccordion.sidebarAccordionOpen .blockAccordionHeader
+  &:hover,
+  &:focus-visible
+    background: transparent
+    box-shadow: none
+
+  &:focus-visible
+    box-shadow: inset 0 0 0 0.0625rem color-mix(in srgb, var(--stage-accent, #{$stage-1}) 14%, $noir-stroke-soft)
+
+.blockSidebarAccordion.sidebarAccordionOpen .blockAccordionHeader .sidebarAccordionTitle
+  color: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 68%, rgba(196, 196, 202, 0.94))
+  line-height: 1.25
+  letter-spacing: inherit
+  text-transform: inherit
 
 .sidebarAccordionTitle
   line-height: 1.35
+  transition: color 200ms ease
 
 .sidebarAccordionChevron
   flex: 0 0 auto
-  width: 1rem
-  height: 1rem
-  color: var(--stage-accent, #{$color-accent})
-  opacity: 0.88
-  transition: transform 220ms ease, opacity 180ms ease
+  width: 0.9375rem
+  height: 0.9375rem
+  color: rgba(148, 148, 154, 0.88)
+  opacity: 0.92
+  transition: transform 220ms ease, opacity 180ms ease, color 180ms ease
 
 .sidebarAccordionChevronOpen
   transform: rotate(180deg)
+
+.blockFormsPanel .blockSidebarAccordion:not(.sidebarAccordionOpen) .sidebarAccordionChevron
+  color: rgba(148, 148, 154, 0.88)
+  opacity: 0.92
+
+.blockFormsPanel .blockSidebarAccordion.sidebarAccordionOpen .sidebarAccordionChevron,
+.blockFormsPanel .blockSidebarAccordion.sidebarAccordionOpen .sidebarAccordionChevronOpen
+  opacity: 1
+
+.sidebarAccordionChevronAccent
+  color: rgba(200, 200, 206, 0.96) !important
+  opacity: 1 !important
 
 .sidebarAccordionPanel
   display: grid
@@ -595,40 +1493,913 @@
   min-height: 0
 
   > *
-    padding: 0 0.875rem 0.875rem
+    padding: 0 0.8125rem 0.8125rem
+
+// ─── Context panels ────────────────────────────────────────────────────────────
 
 .detailLabel
   margin: 0
-  color: $color-text-soft
+  color: rgba(148, 148, 154, 0.92)
   font-size: 0.625rem
   font-weight: 800
-  letter-spacing: 0.12em
+  letter-spacing: 0.14em
   text-transform: uppercase
 
 .detailValue
   margin: 0
-  color: $color-text
+  color: $ds-text-primary
   font-size: 0.8125rem
-  line-height: 1.5
+  line-height: 1.55
 
 .edgeDetails,
 .markerBlock
   display: grid
   gap: 0.5625rem
 
+.sidebarCtaRow
+  display: flex
+  width: 100%
+  gap: 0.5625rem
+
+  > *
+    flex: 1
+    min-width: 0
+
+.sidebarCtaSpaced
+  margin-top: 0.5625rem
+
+.contextActions
+  display: flex
+  flex-wrap: wrap
+  gap: 0.5625rem
+  margin-top: 0.25rem
+
+  > *
+    width: auto
+    flex: 1 1 calc(50% - 0.28125rem)
+    min-width: 0
+
+// ─── Quick shortcuts (auxiliary — low visual hierarchy, premium glass finish) ──
+
+.quickShortcutsCard
+  position: relative
+  isolation: isolate
+  gap: 0.4375rem
+  padding: 0.5625rem 0.75rem 0.6875rem
+  border-color: rgba(255, 255, 255, 0.058)
+  background: radial-gradient(ellipse 112% 82% at 50% -14%, rgba(255, 255, 255, 0.048), transparent 58%), radial-gradient(ellipse 72% 48% at 100% 42%, rgba(255, 255, 255, 0.018), transparent 54%), linear-gradient(168deg, rgba(30, 31, 35, 0.68) 0%, rgba(24, 25, 29, 0.74) 46%, rgba(18, 19, 22, 0.8) 100%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.058), inset 0 0.125rem 0.4375rem rgba(255, 255, 255, 0.014), inset 0 -0.0625rem 0.3125rem rgba(0, 0, 0, 0.16), 0 0.25rem 0.75rem rgba(0, 0, 0, 0.14)
+  backdrop-filter: blur(0.625rem) saturate(1.04)
+  -webkit-backdrop-filter: blur(0.625rem) saturate(1.04)
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0
+    border-radius: inherit
+    pointer-events: none
+    background: linear-gradient(132deg, rgba(255, 255, 255, 0.055) 0%, transparent 24%, transparent 76%, rgba(255, 255, 255, 0.018) 100%)
+    opacity: 0.72
+    z-index: 0
+
+  &::after
+    content: ''
+    position: absolute
+    top: 0
+    left: 0.75rem
+    right: 0.75rem
+    height: 0.0625rem
+    border-radius: 0 0 0.0625rem 0.0625rem
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.11) 32%, rgba(255, 255, 255, 0.13) 50%, rgba(255, 255, 255, 0.11) 68%, transparent)
+    pointer-events: none
+    opacity: 0.5
+    z-index: 0
+
+.quickShortcutsHeader
+  display: flex
+  align-items: center
+  gap: 0.25rem
+  margin-bottom: 0.125rem
+
+.quickShortcutsTitleRow
+  display: flex
+  align-items: center
+  gap: 0.3125rem
+  min-width: 0
+  justify-content: flex-start
+
+  > span
+    width: 1.125rem
+    height: 1.125rem
+    flex: 0 0 auto
+    opacity: 0.62
+    border-color: rgba(255, 255, 255, 0.07)
+    background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04), transparent 62%), rgba(255, 255, 255, 0.018)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04)
+
+    svg
+      width: 0.6875rem
+      height: 0.6875rem
+
+.quickShortcutsTitle
+  margin: 0
+  color: rgba(156, 158, 164, 0.72)
+  font-size: 0.5625rem
+  font-weight: 600
+  letter-spacing: 0.11em
+  text-transform: uppercase
+
+.quickShortcutsGrid
+  display: grid
+  grid-template-columns: repeat(2, minmax(0, 1fr))
+  gap: 0.625rem
+  width: 100%
+
+.quickShortcutBtn
+  appearance: none
+  position: relative
+  isolation: isolate
+  display: inline-flex
+  flex-direction: row
+  align-items: center
+  justify-content: flex-start
+  width: 100%
+  min-width: 0
+  gap: 0.375rem
+  min-height: 2rem
+  padding: 0.3125rem 0.5rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.062)
+  border-radius: $noir-radius-chip
+  background: radial-gradient(ellipse 100% 88% at 50% 0%, rgba(255, 255, 255, 0.052), transparent 58%), linear-gradient(180deg, rgba(34, 35, 39, 0.7), rgba(22, 23, 27, 0.78))
+  color: rgba(172, 174, 180, 0.84)
+  font: inherit
+  font-size: 0.5625rem
+  font-weight: 580
+  letter-spacing: 0.045em
+  line-height: 1.2
+  text-transform: none
+  white-space: nowrap
+  cursor: pointer
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.048), inset 0 -0.0625rem 0 rgba(0, 0, 0, 0.1), 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.08)
+  transition: border-color 200ms ease, background 200ms ease, color 200ms ease, box-shadow 200ms ease
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0
+    border-radius: inherit
+    pointer-events: none
+    background: linear-gradient(125deg, rgba(255, 255, 255, 0.038) 0%, transparent 30%)
+    opacity: 0.85
+    z-index: 0
+
+  > *
+    position: relative
+    z-index: 1
+
+  &:hover:not(:disabled),
+  &:focus-visible:not(:disabled)
+    border-color: rgba(255, 255, 255, 0.092)
+    background: radial-gradient(ellipse 100% 88% at 50% 0%, rgba(255, 255, 255, 0.068), transparent 58%), linear-gradient(180deg, rgba(38, 39, 43, 0.76), rgba(26, 27, 31, 0.82))
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.062), inset 0 -0.0625rem 0 rgba(0, 0, 0, 0.08), 0 0.125rem 0.375rem rgba(0, 0, 0, 0.12)
+    outline: none
+
+    .quickShortcutBtnIcon
+      color: rgba(186, 188, 194, 0.86)
+      opacity: 0.94
+      border-color: rgba(255, 255, 255, 0.07)
+      background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.06), transparent 62%), rgba(255, 255, 255, 0.028)
+
+    .quickShortcutBtnLabel
+      color: rgba(196, 198, 204, 0.9)
+
+  &:active:not(:disabled)
+    background: radial-gradient(ellipse 100% 88% at 50% 0%, rgba(255, 255, 255, 0.038), transparent 58%), linear-gradient(180deg, rgba(28, 29, 33, 0.74), rgba(20, 21, 25, 0.8))
+    box-shadow: inset 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.14), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.03)
+
+.quickShortcutBtnIcon
+  display: inline-grid
+  place-items: center
+  width: 1.125rem
+  height: 1.125rem
+  flex: 0 0 auto
+  border: 0.0625rem solid rgba(255, 255, 255, 0.048)
+  border-radius: 0.25rem
+  color: rgba(162, 164, 170, 0.76)
+  opacity: 0.86
+  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.042), transparent 62%), rgba(255, 255, 255, 0.016)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.038)
+  transition: color 200ms ease, opacity 200ms ease, border-color 200ms ease, background 200ms ease
+
+  svg
+    width: 0.6875rem
+    height: 0.6875rem
+
+.quickShortcutBtnLabel
+  display: block
+  flex: 1
+  min-width: 0
+  text-align: left
+  color: rgba(178, 180, 186, 0.82)
+  font-weight: 580
+  letter-spacing: 0.03em
+  transition: color 200ms ease
+
+@media (max-width: 24.375rem)
+  .quickShortcutsCard
+    padding: 0.5625rem 0.6875rem 0.625rem
+
+  .quickShortcutsGrid
+    gap: 0.625rem
+
+  .quickShortcutBtn
+    min-height: 1.9375rem
+    padding: 0.28125rem 0.4375rem
+    gap: 0.3125rem
+
+  .quickShortcutBtnIcon
+    width: 1.0625rem
+    height: 1.0625rem
+
+    svg
+      width: 0.625rem
+      height: 0.625rem
+
+@media (max-width: 22.5rem)
+  .quickShortcutsCard
+    padding: 0.5rem 0.625rem 0.5625rem
+
+  .quickShortcutsGrid
+    gap: 0.5625rem
+
+  .quickShortcutBtn
+    min-height: 1.875rem
+    padding: 0.25rem 0.375rem
+
+  .quickShortcutBtnLabel
+    letter-spacing: 0.02em
+
+// ─── Final result card — premium Apple Noir Glass editorial ───────────────────
+
+.resultCard
+  position: relative
+  isolation: isolate
+  gap: 0
+  padding: 0
+  overflow: hidden
+  border-color: rgba(255, 255, 255, 0.1)
+  background: radial-gradient(ellipse 140% 96% at 50% -16%, rgba(228, 230, 236, 0.12), transparent 56%), radial-gradient(ellipse 82% 58% at 6% 38%, rgba(168, 170, 176, 0.06), transparent 58%), radial-gradient(ellipse 100% 68% at 94% 92%, rgba(148, 150, 156, 0.07), transparent 58%), linear-gradient(162deg, rgba(36, 37, 41, 0.88) 0%, rgba(20, 21, 25, 0.94) 48%, rgba(12, 13, 16, 0.98) 100%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12), inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.035), inset 0 0 3.5rem rgba(255, 255, 255, 0.02), inset 0 1.5rem 3rem rgba(0, 0, 0, 0.14), 0 0.75rem 1.75rem rgba(0, 0, 0, 0.32)
+  backdrop-filter: blur(1.5rem) saturate(1.12)
+  -webkit-backdrop-filter: blur(1.5rem) saturate(1.12)
+
+  &::before
+    background: linear-gradient(128deg, rgba(255, 255, 255, 0.09) 0%, transparent 20%, transparent 74%, rgba(255, 255, 255, 0.035) 100%)
+    opacity: 0.92
+
+  &::after
+    opacity: 0.55
+
+.finalResultAccent
+  position: absolute
+  top: 0
+  left: 0.875rem
+  right: 0.875rem
+  height: 0.0625rem
+  z-index: 4
+  pointer-events: none
+  background: linear-gradient(90deg, transparent, rgba(168, 170, 176, 0.22) 14%, rgba(236, 238, 244, 0.48) 50%, rgba(168, 170, 176, 0.22) 86%, transparent)
+  opacity: 0.72
+
+.finalResultGlassVeil
+  position: absolute
+  inset: 0
+  z-index: 0
+  pointer-events: none
+  background: linear-gradient(162deg, rgba(252, 252, 255, 0.05) 0%, transparent 30%, transparent 64%, rgba(18, 19, 22, 0.08) 100%)
+  opacity: 0.92
+
+.finalResultGlassHighlight
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  height: 48%
+  z-index: 0
+  pointer-events: none
+  background: radial-gradient(ellipse 92% 78% at 32% 0%, rgba(255, 255, 255, 0.1), transparent 68%)
+  opacity: 0.78
+
+.finalResultGlassSpecular
+  position: absolute
+  inset: 0
+  z-index: 0
+  pointer-events: none
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.08) 0%, transparent 18%, transparent 82%, rgba(255, 255, 255, 0.025) 100%)
+  opacity: 0.68
+
+.finalResultGlassEdge
+  position: absolute
+  inset: 0
+  z-index: 0
+  pointer-events: none
+  border-radius: inherit
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.02)
+
+.finalResultGlassNoise
+  position: absolute
+  inset: 0
+  z-index: 0
+  pointer-events: none
+  opacity: 0.035
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
+  background-size: 12rem 12rem
+  mix-blend-mode: overlay
+
+.finalResultGlassHaze
+  position: absolute
+  top: 14%
+  right: -10%
+  width: 58%
+  height: 52%
+  z-index: 0
+  pointer-events: none
+  border-radius: 50%
+  background: radial-gradient(ellipse 72% 66% at 50% 50%, rgba(228, 230, 236, 0.18), rgba(120, 122, 128, 0.06) 42%, transparent 72%)
+  filter: blur(1.25rem)
+  opacity: 0.92
+  animation: finalResultHazePulse 18s ease-in-out infinite
+
+.finalResultHazeCore
+  position: absolute
+  left: -6%
+  top: 6%
+  width: 56%
+  height: 72%
+  z-index: 0
+  pointer-events: none
+  border-radius: 50%
+  background: radial-gradient(ellipse 74% 68% at 42% 48%, rgba(236, 238, 244, 0.28), rgba(168, 170, 176, 0.1) 38%, rgba(88, 90, 96, 0.04) 58%, transparent 76%)
+  filter: blur(1.375rem)
+  opacity: 0.96
+  animation: finalResultHazePulse 14s ease-in-out infinite
+
+.finalResultHazeBand
+  position: absolute
+  left: -4%
+  top: 22%
+  width: 108%
+  height: 42%
+  z-index: 0
+  pointer-events: none
+  border-radius: 50%
+  background: linear-gradient(96deg, rgba(214, 216, 222, 0.14) 0%, rgba(252, 252, 255, 0.22) 28%, rgba(196, 198, 204, 0.12) 52%, rgba(214, 216, 222, 0.08) 76%, transparent 88%)
+  filter: blur(1.25rem)
+  opacity: 0.9
+  animation: finalResultHazeBand 22s ease-in-out infinite
+
+.finalResultHazeSpread
+  position: absolute
+  right: -2%
+  bottom: 22%
+  width: 54%
+  height: 48%
+  z-index: 0
+  pointer-events: none
+  border-radius: 50%
+  background: radial-gradient(ellipse 78% 64% at 58% 42%, rgba(214, 216, 222, 0.14), rgba(148, 150, 156, 0.05) 48%, transparent 72%)
+  filter: blur(1.125rem)
+  opacity: 0.82
+  animation: finalResultHazePulse 20s ease-in-out infinite reverse
+
+@keyframes finalResultHazePulse
+  0%, 100%
+    opacity: 0.82
+    transform: scale(1)
+  50%
+    opacity: 1
+    transform: scale(1.03)
+
+@keyframes finalResultHazeBand
+  0%, 100%
+    opacity: 0.78
+    transform: translateX(0)
+  50%
+    opacity: 0.96
+    transform: translateX(0.5rem)
+
+.resultCardReady
+  border-color: rgba(214, 216, 222, 0.18)
+  background: radial-gradient(ellipse 128% 92% at 18% 28%, rgba(236, 238, 244, 0.2), transparent 54%), radial-gradient(ellipse 96% 68% at 72% 58%, rgba(196, 198, 204, 0.12), transparent 56%), radial-gradient(ellipse 142% 98% at 50% -18%, rgba(236, 238, 244, 0.16), transparent 58%), radial-gradient(ellipse 80% 54% at 8% 36%, rgba(196, 198, 204, 0.1), transparent 58%), radial-gradient(ellipse 98% 66% at 92% 94%, rgba(168, 170, 176, 0.1), transparent 58%), linear-gradient(162deg, rgba(36, 37, 41, 0.94) 0%, rgba(20, 21, 25, 0.97) 48%, rgba(10, 11, 14, 1) 100%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.16), inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.05), inset 0 0 4.5rem rgba(255, 255, 255, 0.032), inset 0 1.5rem 3rem rgba(0, 0, 0, 0.12), 0 0.8125rem 1.875rem rgba(0, 0, 0, 0.36)
+
+  .finalResultAccent
+    opacity: 1
+
+  .finalResultKicker
+    color: rgba(196, 198, 204, 1)
+
+  .finalResultHeadlineLead
+    color: rgba(244, 245, 248, 0.98)
+
+  .finalResultHeadlineAccent
+    color: rgba(228, 230, 236, 0.92)
+
+  .finalResultLead
+    color: rgba(176, 178, 184, 0.92)
+
+  .finalResultSculptureZone
+    opacity: 1
+
+.resultCardBlocked
+  .finalResultSculptureZone
+    opacity: 0.52
+
+  .finalResultAtmosphere
+    opacity: 0.62
+
+  .finalResultGlassHaze,
+  .finalResultHazeCore,
+  .finalResultHazeBand
+    opacity: 0.48
+
+  .finalResultGlassPanel
+    opacity: 0.88
+
+.finalResultScene
+  position: relative
+  z-index: 1
+  width: 100%
+  min-width: 0
+  padding: 0.375rem 0 0.125rem
+  overflow: visible
+
+.finalResultAtmosphere
+  position: absolute
+  inset: -0.125rem 0 0
+  z-index: 0
+  pointer-events: none
+  height: calc(100% + 0.5rem)
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.92) 58%, rgba(0, 0, 0, 0.48) 82%, rgba(0, 0, 0, 0.18) 94%, transparent 100%)
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.92) 58%, rgba(0, 0, 0, 0.48) 82%, rgba(0, 0, 0, 0.18) 94%, transparent 100%)
+
+.finalResultComposition
+  position: relative
+  z-index: 1
+  display: grid
+  grid-template-columns: minmax(6.75rem, 40%) minmax(0, 1fr)
+  align-items: center
+  gap: 0
+  width: 100%
+  min-width: 0
+  padding: 0.25rem clamp(0.625rem, 1vw, 0.75rem) 0.625rem
+
+.finalResultSculptureZone
+  position: relative
+  z-index: 2
+  display: grid
+  place-items: center
+  align-self: center
+  margin-left: -0.5rem
+  margin-right: -0.75rem
+  opacity: 0.96
+  overflow: visible
+
+.finalResultGlassPanel
+  position: relative
+  z-index: 3
+  display: grid
+  min-width: 0
+  margin-left: -0.375rem
+  padding: clamp(0.625rem, 1.1vw, 0.75rem) clamp(0.625rem, 1vw, 0.6875rem)
+  border: 0.03125rem solid rgba(255, 255, 255, 0.22)
+  border-radius: $noir-radius-panel
+  background: rgba(8, 9, 12, 0.04)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.26), inset 0.0625rem 0 0 rgba(255, 255, 255, 0.12), inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.06), inset 0 -1.5rem 2.25rem rgba(0, 0, 0, 0.16), inset 0 0 2.75rem rgba(255, 255, 255, 0.04), 0 0.625rem 1.5rem rgba(0, 0, 0, 0.22)
+  backdrop-filter: blur(2.375rem) saturate(1.52) brightness(1.08)
+  -webkit-backdrop-filter: blur(2.375rem) saturate(1.52) brightness(1.08)
+  overflow: hidden
+  isolation: isolate
+
+.finalResultPanelGlassSvg
+  position: absolute
+  inset: 0
+  z-index: 1
+  width: 100%
+  height: 100%
+  pointer-events: none
+  opacity: 0.88
+  mix-blend-mode: screen
+
+.finalResultPanelGlassBackdrop
+  position: absolute
+  inset: 0
+  z-index: 0
+  border-radius: inherit
+  pointer-events: none
+  background: linear-gradient(152deg, rgba(255, 255, 255, 0.03) 0%, rgba(18, 19, 22, 0.04) 52%, rgba(8, 9, 12, 0.06) 100%)
+  backdrop-filter: blur(2.75rem) saturate(1.55)
+  -webkit-backdrop-filter: blur(2.75rem) saturate(1.55)
+
+.finalResultPanelGlassGrain
+  position: absolute
+  inset: 0
+  z-index: 4
+  pointer-events: none
+  opacity: 0.045
+  border-radius: inherit
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
+  background-size: 9rem 9rem
+  mix-blend-mode: overlay
+
+.finalResultPanelGlassRefraction
+  position: absolute
+  inset: 0
+  z-index: 2
+  pointer-events: none
+  border-radius: inherit
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.1) 0%, transparent 22%, transparent 68%, rgba(255, 255, 255, 0.04) 100%)
+  opacity: 0.78
+
+.finalResultPanelGlassDepth
+  position: absolute
+  inset: 0
+  z-index: 3
+  pointer-events: none
+  border-radius: inherit
+  box-shadow: inset 0 0.125rem 0.75rem rgba(255, 255, 255, 0.04), inset 0 -1.75rem 2.5rem rgba(0, 0, 0, 0.14)
+
+.finalResultPanelGlassRimLeft
+  position: absolute
+  top: 0.375rem
+  bottom: 0.375rem
+  left: 0
+  width: 0.0625rem
+  z-index: 5
+  pointer-events: none
+  border-radius: 999rem
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.32) 18%, rgba(255, 255, 255, 0.14) 72%, rgba(255, 255, 255, 0.03))
+  opacity: 0.88
+
+.finalResultPanelGlassRimTop
+  position: absolute
+  top: 0
+  left: 0.375rem
+  right: 0.375rem
+  height: 0.0625rem
+  z-index: 5
+  pointer-events: none
+  border-radius: 999rem
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.34) 22%, rgba(255, 255, 255, 0.42) 50%, rgba(255, 255, 255, 0.34) 78%, rgba(255, 255, 255, 0.04))
+  opacity: 0.92
+
+.finalResultPanelVeil
+  position: absolute
+  inset: 0
+  z-index: 2
+  pointer-events: none
+  background: linear-gradient(168deg, rgba(252, 252, 255, 0.08) 0%, transparent 28%, transparent 62%, rgba(18, 19, 22, 0.08) 100%)
+  opacity: 0.92
+
+.finalResultPanelSpecular
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  height: 52%
+  z-index: 3
+  pointer-events: none
+  background: radial-gradient(ellipse 96% 84% at 38% 0%, rgba(255, 255, 255, 0.16), transparent 66%)
+  opacity: 0.82
+
+.finalResultPanelEdge
+  position: absolute
+  top: 0
+  left: 0.5rem
+  right: 0.5rem
+  height: 0.0625rem
+  z-index: 6
+  pointer-events: none
+  border-radius: 0 0 0.0625rem 0.0625rem
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.32) 50%, rgba(255, 255, 255, 0.2) 80%, transparent)
+  opacity: 0.78
+
+.finalResultEditorial
+  position: relative
+  z-index: 7
+  display: grid
+  gap: 0.25rem
+  min-width: 0
+
+.finalResultKicker
+  margin: 0
+  color: rgba(168, 170, 176, 0.96)
+  font-size: 0.5625rem
+  font-weight: 800
+  letter-spacing: 0.2em
+  text-transform: uppercase
+  line-height: 1.2
+
+.finalResultHeadline
+  display: grid
+  gap: 0
+  margin: 0
+  text-transform: uppercase
+  text-wrap: balance
+  line-height: 0.98
+
+.finalResultHeadlineLead
+  color: rgba(236, 238, 244, 0.98)
+  font-size: clamp(1rem, 2.8vw, 1.1875rem)
+  font-weight: 900
+  letter-spacing: 0.02em
+  line-height: 1.02
+
+.finalResultHeadlineAccent
+  color: rgba(196, 198, 204, 0.88)
+  font-size: clamp(0.875rem, 2.2vw, 1rem)
+  font-weight: 700
+  letter-spacing: 0.06em
+  line-height: 1.08
+
+.finalResultHairline
+  display: block
+  width: clamp(2rem, 32%, 3.25rem)
+  height: 0.0625rem
+  margin-top: 0.1875rem
+  border-radius: 999rem
+  background: linear-gradient(90deg, rgba(236, 238, 244, 0.48), rgba(168, 170, 176, 0.14))
+  opacity: 0.82
+
+.finalResultLead
+  margin: 0.1875rem 0 0
+  color: rgba(148, 150, 156, 0.92)
+  font-size: clamp(0.625rem, 0.75vw, 0.6875rem)
+  font-weight: 450
+  line-height: 1.48
+  max-width: 26ch
+
+.finalResultFooter
+  position: relative
+  z-index: 2
+  display: grid
+  gap: 0.4375rem
+  min-width: 0
+  padding: 0.5625rem clamp(0.875rem, 1.15vw, 1rem) clamp(0.8125rem, 1.1vw, 0.9375rem)
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.08)
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.025) 0%, rgba(0, 0, 0, 0.08) 100%)
+  backdrop-filter: blur(0.75rem)
+  -webkit-backdrop-filter: blur(0.75rem)
+
+  &::before
+    content: ''
+    position: absolute
+    top: 0
+    left: clamp(0.875rem, 1.15vw, 1rem)
+    right: clamp(0.875rem, 1.15vw, 1rem)
+    height: 0.0625rem
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08) 18%, rgba(255, 255, 255, 0.14) 50%, rgba(255, 255, 255, 0.08) 82%, transparent)
+    pointer-events: none
+
+.finalResultCta
+  width: 100%
+
+  &:disabled,
+  &[aria-disabled="true"]
+    cursor: not-allowed
+    pointer-events: auto
+
+    &,
+    &:hover,
+    &:focus-visible,
+    &:active
+      cursor: not-allowed
+      transform: none !important
+      scale: 1 !important
+      translate: 0 !important
+      filter: none !important
+      transition: none !important
+      border-color: $noir-stroke-medium !important
+      background: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(255, 255, 255, 0.12), transparent 58%), linear-gradient(180deg, rgba(48, 49, 54, 0.88), $noir-surface-cta-neutral) !important
+      box-shadow: inset 0 0 0.75rem 0.125rem rgba(255, 255, 255, 0.04), $noir-shadow-cta !important
+
+.finalResultHelper
+  display: flex
+  align-items: flex-start
+  gap: 0.375rem
+  margin: 0
+  padding: 0.125rem 0 0
+  color: rgba(128, 130, 136, 0.94)
+  font-size: 0.625rem
+  line-height: 1.5
+  font-weight: 450
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.05)
+  padding-top: 0.4375rem
+
+.finalResultHelperIconWrap
+  flex: 0 0 auto
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  margin-top: 0.0625rem
+  color: rgba(148, 150, 156, 0.72)
+
+.finalResultHelperIcon
+  width: 0.75rem
+  height: 0.75rem
+  display: block
+
+@media (max-width: 30rem)
+  .finalResultComposition
+    grid-template-columns: minmax(5.25rem, 36%) minmax(0, 1fr)
+    padding: 0.1875rem 0.5625rem 0.5rem
+
+  .finalResultSculptureZone
+    margin-left: -0.375rem
+    margin-right: -0.5rem
+
+  .finalResultGlassPanel
+    margin-left: -0.25rem
+    padding: 0.5625rem 0.5625rem
+
+  .finalResultHeadlineLead
+    font-size: clamp(0.9375rem, 4.4vw, 1.0625rem)
+
+  .finalResultHeadlineAccent
+    font-size: clamp(0.8125rem, 3.6vw, 0.9375rem)
+
+  .finalResultLead
+    max-width: none
+    font-size: 0.625rem
+
+@media (max-width: 24.375rem)
+  .resultCard
+    .finalResultScene
+      padding-top: 0.25rem
+
+    .finalResultFooter
+      padding: 0.5rem 0.8125rem 0.75rem
+
+  .finalResultComposition
+    grid-template-columns: minmax(4.5rem, 34%) minmax(0, 1fr)
+    gap: 0
+    padding: 0.125rem 0.5rem 0.4375rem
+
+  .finalResultSculptureZone
+    margin-left: -0.25rem
+    margin-right: -0.375rem
+
+  .finalResultGlassPanel
+    padding: 0.5rem 0.5rem
+
+  .finalResultHeadlineLead
+    font-size: clamp(0.875rem, 4.8vw, 0.9375rem)
+    letter-spacing: 0.01em
+
+  .finalResultHeadlineAccent
+    font-size: clamp(0.75rem, 3.8vw, 0.875rem)
+
+  .finalResultHairline
+    width: clamp(1.75rem, 28%, 2.5rem)
+
+  .finalResultFooter
+    gap: 0.375rem
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// AÇÕES DA ETAPA + ORGANIZAÇÃO DO CANVAS — premium horizontal card language
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.sidebarCta
+  +ds-sidebar-cta
+  width: 100%
+
+.sidebarCtaIcon
+  width: 1rem
+  height: 1rem
+  flex: 0 0 auto
+  color: currentColor
+
+.sidebarCtaPrimary
+  border-color: color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 28%, $noir-stroke-soft)
+  background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 14%, transparent), transparent 58%), linear-gradient(180deg, rgba(44, 44, 46, 0.82), $noir-surface-cta-neutral)
+  color: rgba(255, 255, 255, 0.95)
+
+.sidebarCtaSecondary
+  border-color: $noir-stroke-soft
+  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08), transparent 58%), linear-gradient(180deg, rgba(38, 38, 40, 0.72), $noir-surface-cta-neutral)
+
+.sidebarCtaGhost
+  border-color: $noir-stroke-hairline
+  background: transparent
+  box-shadow: none
+
+.sidebarCtaDanger
+  border-color: rgba(255, 107, 139, 0.22)
+  background: rgba(255, 107, 139, 0.055)
+  color: rgba(255, 122, 154, 0.96)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 107, 139, 0.06)
+
+  &:hover,
+  &:focus-visible
+    border-color: rgba(255, 107, 139, 0.42)
+    color: rgba(255, 132, 164, 1)
+    background: rgba(255, 107, 139, 0.08)
+    box-shadow: 0 0.375rem 0.875rem rgba(0, 0, 0, 0.2), inset 0 0.0625rem 0 rgba(255, 107, 139, 0.08)
+
+.sidebarCtaStage
+  border-color: color-mix(in srgb, var(--stage-accent) 28%, $noir-stroke-soft)
+  background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--stage-accent) 12%, transparent), transparent 58%), linear-gradient(180deg, rgba(40, 40, 42, 0.78), $noir-surface-cta-neutral)
+  color: rgba(255, 255, 255, 0.95)
+
+  &:hover,
+  &:focus-visible
+    border-color: color-mix(in srgb, var(--stage-accent) 42%, $noir-stroke-medium)
+    background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--stage-accent) 18%, transparent), transparent 58%), linear-gradient(180deg, rgba(46, 46, 48, 0.84), rgba(26, 26, 28, 0.96))
+
+.stageActionCard
+  gap: $sidebar-inner-gap
+
+  .sectionKicker
+    margin: 0
+    color: $ds-text-muted
+    font-size: 0.625rem
+    font-weight: 800
+    letter-spacing: 0.17em
+    text-transform: uppercase
+
+  .sectionText
+    margin: 0
+    color: $ds-text-secondary
+    font-size: 0.8125rem
+    line-height: 1.6
+    max-width: 36ch
+
+  .sectionHint
+    margin: 0
+    color: $ds-text-muted
+    font-size: 0.75rem
+    line-height: 1.55
+    padding: 0
+    border-left: 0
+    border-radius: 0
+    background: transparent
+
+.stageActionInnerPanel
+  +ds-sidebar-inner-panel
+  display: grid
+  gap: 0.625rem
+  padding: 0.875rem
+
+  &::after
+    content: ''
+    position: absolute
+    top: -0.375rem
+    right: 0.75rem
+    width: 2.75rem
+    height: 2.75rem
+    border-radius: 50%
+    pointer-events: none
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.06), transparent 72%)
+    filter: blur(0.5rem)
+    opacity: 0.45
+
+.stageActionCard .dragCard
+  width: 100%
+  inline-size: 100%
+  margin-inline: 0
+  padding: 0.8125rem 0.875rem
+  border-color: color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 22%, $noir-stroke-hairline)
+  border-radius: $noir-radius-panel
+  background: radial-gradient(ellipse 90% 70% at 12% 0%, color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 8%, transparent), transparent 52%), $noir-surface-panel-inset
+  box-shadow: $noir-shadow-inset
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease
+
+  &:hover
+    transform: translateY(-0.125rem)
+    border-color: color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 32%, $noir-stroke-soft)
+    box-shadow: $noir-shadow-inset, 0 0.625rem 1.25rem rgba(0, 0, 0, 0.22), $noir-glow-edge
+
+.stageActionCard .dragCard strong
+  text-transform: uppercase
+  letter-spacing: 0.06em
+
+.stageActionCard .dragIcon
+  color: var(--stage-accent, #{$color-accent})
+  border: 0.0625rem solid var(--stage-border, color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 34%, transparent))
+
 .dragCard
   appearance: none
   display: grid
   grid-template-columns: auto 1fr
   align-items: center
-  gap: 0.625rem
+  gap: 0.75rem
   width: 100%
-  border: 0.0625rem solid var(--stage-border, rgba(167, 139, 250, 0.42))
-  border-radius: 1.125rem
-  padding: 0.875rem
+  border: 0.0625rem solid var(--stage-border, color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 22%, $noir-stroke-hairline))
+  border-radius: $noir-radius-panel
+  padding: 0.8125rem 0.875rem
   color: $color-text
-  background: radial-gradient(circle at top left, var(--stage-soft, rgba(167, 139, 250, 0.12)), transparent 46%), linear-gradient(180deg, rgba(18, 23, 37, 0.96), rgba(9, 12, 20, 0.96))
-  box-shadow: 0 0.875rem 2.125rem rgba(0, 0, 0, 0.24), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04)
+  background: $noir-surface-panel-inset
+  box-shadow: $noir-shadow-inset
   cursor: grab
   text-align: left
 
@@ -638,22 +2409,25 @@
   strong
     display: block
     font-size: 0.8125rem
+    font-weight: 650
+    letter-spacing: 0.02em
 
   small
     display: block
-    margin-top: 0.1875rem
-    color: $color-text-muted
+    margin-top: 0.25rem
+    color: $ds-text-muted
     font-size: 0.6875rem
-    line-height: 1.35
+    line-height: 1.4
 
 .dragIcon
   display: inline-grid
   place-items: center
   width: 2.125rem
   height: 2.125rem
-  border: 0.0625rem solid var(--stage-border, rgba(167, 139, 250, 0.34))
-  border-radius: 0.75rem
-  background: rgba(255, 255, 255, 0.06)
+  border: 0.0625rem solid var(--stage-border, color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 20%, $noir-stroke-hairline))
+  border-radius: $noir-radius-icon-tile
+  background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 8%, transparent), transparent 62%), rgba(27, 28, 32, 0.88)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
   color: var(--stage-accent, #{$color-text})
 
 .dragGlyph
@@ -669,45 +2443,20 @@
   stroke-dasharray: 4 3
   opacity: 0.78
 
-
-.stageActionCard
-  width: 100%
-  max-width: 100%
-  border-color: var(--stage-border, #{$color-border})
-  background: radial-gradient(circle at top left, var(--stage-soft, rgba(167, 139, 250, 0.12)), transparent 44%), $color-surface
-
-.stageActionCard .dragCard
-  width: min(70%, 18rem)
-  inline-size: min(70%, 18rem)
-  margin-inline: auto
-  padding-block: 1rem
-  border-color: var(--stage-border, rgba(167, 139, 250, 0.42))
-  background: radial-gradient(circle at top left, var(--stage-soft, rgba(167, 139, 250, 0.18)), transparent 46%), linear-gradient(180deg, rgba(18, 23, 37, 0.96), rgba(9, 12, 20, 0.96))
-  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease
-
-  &:hover
-    transform: translateY(-0.1875rem)
-    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.28), 0 0 0 0.0625rem rgba(196, 181, 253, 0.22)
-    border-color: rgba(196, 181, 253, 0.42)
-
-.stageActionCard .dragIcon
-  color: var(--stage-accent, #{$color-accent})
-  border: 0.0625rem solid var(--stage-border, rgba(167, 139, 250, 0.34))
-
 .canvasOrganizationCard
   display: grid
-  gap: 0.75rem
+  gap: 0
   width: 100%
   max-width: 100%
   padding: 0
   min-height: min-content
   align-self: start
-  overflow: visible
-  visibility: visible
-  opacity: 1
-  border-color: rgba(167, 139, 250, 0.18)
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015))
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04)
+  overflow: hidden
+  container-type: inline-size
+  border-color: rgba(255, 255, 255, 0.09)
+  border-radius: $sidebar-card-radius
+  background: radial-gradient(ellipse 120% 80% at 14% -18%, rgba(255, 255, 255, 0.07), transparent 62%), linear-gradient(180deg, rgba(36, 37, 41, 0.94), rgba(20, 21, 25, 0.96))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1), inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.03), 0 0.625rem 1.35rem rgba(0, 0, 0, 0.26)
 
 .canvasOrganizationHeader
   appearance: none
@@ -716,82 +2465,120 @@
   justify-content: space-between
   gap: 0.75rem
   width: 100%
-  padding: 0.875rem
+  min-height: 2.75rem
+  padding: 0.75rem $sidebar-card-padding
   border: 0
   background: transparent
   color: $color-text
   font: inherit
   text-align: left
   cursor: pointer
-  transition: color 180ms ease, opacity 180ms ease
+  transition: color 180ms ease, background 180ms ease, box-shadow 180ms ease
 
   &:hover
-    background: transparent
-    box-shadow: none
-    filter: none
+    background: rgba(255, 255, 255, 0.028)
 
   &:focus-visible
-    outline: 0.0625rem solid rgba(196, 181, 253, 0.36)
-    outline-offset: 0.125rem
+    outline: 0.0625rem solid rgba(255, 255, 255, 0.2)
+    outline-offset: -0.0625rem
+
+.canvasOrganizationCard:has(.canvasOrganizationContent)
+  .canvasOrganizationHeader
+    &:hover,
+    &:focus-visible
+      background: transparent
+
+    .sidebarAccordionChevron,
+    .sidebarAccordionChevronOpen
+      color: rgba(148, 148, 154, 0.88)
+      opacity: 0.92
+
+.canvasOrganizationTitleRow
+  display: flex
+  align-items: center
+  gap: 0.5rem
+  min-width: 0
 
 .canvasOrganizationTitle
-  font-size: 0.625rem
+  font-size: 0.6rem
   font-weight: 800
-  letter-spacing: 0.17em
+  letter-spacing: 0.15em
   text-transform: uppercase
-  color: $color-text-soft
+  color: rgba(192, 194, 200, 0.86)
 
 .canvasOrganizationContent
   display: grid
-  gap: 0.75rem
-  padding: 0 0.875rem 0.875rem
+  gap: 0.625rem
+  padding: 0 $sidebar-card-padding 0.8125rem
   visibility: visible
   opacity: 1
-  height: auto
-  max-height: none
-  overflow: visible
-  pointer-events: auto
 
 .canvasOrganizationText
   margin: 0
-  color: $color-text
-  font-size: 0.8125rem
-  line-height: 1.55
+  color: rgba(176, 179, 186, 0.9)
+  font-size: 0.75rem
+  line-height: 1.5
+  max-width: 35ch
+
+.canvasOrgPreviewShell
+  display: grid
+  gap: 0.4375rem
+  padding: 0.625rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.06)
+  border-radius: $noir-radius-panel
+  background: linear-gradient(180deg, rgba(30, 31, 35, 0.82), rgba(21, 22, 26, 0.9))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.045)
+
+.canvasOrgPreviewLabel
+  margin: 0
+  color: rgba(152, 155, 161, 0.82)
+  font-size: 0.5625rem
+  font-weight: 700
+  letter-spacing: 0.14em
+  text-transform: uppercase
 
 .alignmentPreview
   display: grid
   grid-template-columns: repeat(4, 1fr)
-  gap: 0.45rem
-  min-height: 4.5rem
-  padding: 0.65rem
-  border: 0.0625rem solid rgba(255, 255, 255, 0.08)
-  border-radius: 0.9rem
-  background: rgba(255, 255, 255, 0.035)
+  gap: 0.375rem
+  min-height: 4.125rem
+  padding: 0.5625rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.055)
+  border-radius: $noir-radius-panel
+  background: linear-gradient(180deg, rgba(20, 21, 24, 0.8), rgba(16, 17, 20, 0.9))
   overflow: hidden
-  perspective: 36rem
+  perspective: 30rem
   transform-style: preserve-3d
   transition: box-shadow 220ms ease, border-color 220ms ease
 
   &:hover
-    border-color: rgba(255, 255, 255, 0.12)
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05), 0 0.5rem 1.25rem rgba(0, 0, 0, 0.16)
+    border-color: rgba(255, 255, 255, 0.1)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.045), 0 0.25rem 0.85rem rgba(0, 0, 0, 0.14)
+
+.canvasOrganizationContent > button
+  border-radius: $noir-radius-panel
 
 .alignmentPreviewColumn
   display: flex
   flex-direction: column-reverse
   justify-content: flex-start
   align-items: stretch
-  gap: 0.28rem
-  min-height: 4.25rem
+  gap: 0.18rem
+  min-height: 3.7rem
+  padding: 0.22rem
+  border-radius: 0.45rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.032)
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.004))
   transform-style: preserve-3d
 
 .alignmentPreviewBlock
   position: relative
   width: 100%
-  height: 0.62rem
-  border-radius: 0.22rem
-  background: linear-gradient(180deg, color-mix(in srgb, var(--stage-accent) 90%, white 10%), color-mix(in srgb, var(--stage-accent) 72%, black 18%))
-  box-shadow: 0 0.35rem 0.7rem color-mix(in srgb, var(--stage-accent) 20%, transparent)
+  height: 0.44rem
+  border-radius: 0.16rem
+  border: 0.0625rem solid color-mix(in srgb, var(--stage-accent) 30%, rgba(255, 255, 255, 0.16))
+  background: linear-gradient(180deg, color-mix(in srgb, var(--stage-accent) 34%, rgba(243, 246, 252, 0.22)), color-mix(in srgb, var(--stage-accent) 22%, rgba(130, 138, 152, 0.16)))
+  box-shadow: 0 0.1875rem 0.375rem rgba(0, 0, 0, 0.16), 0 0 0.625rem color-mix(in srgb, var(--stage-accent) 16%, transparent)
   transform: rotateX(0deg) translateZ(0)
 
   &::before
@@ -803,39 +2590,466 @@
     pointer-events: none
 
 .previewInput .alignmentPreviewBlock
-  --stage-accent: #a78bfa
+  --stage-accent: #{$ds-stage-input}
 
 .previewActivity .alignmentPreviewBlock
-  --stage-accent: #38bdf8
+  --stage-accent: #{$ds-stage-activity}
 
 .previewOutput .alignmentPreviewBlock
-  --stage-accent: #f472b6
+  --stage-accent: #{$ds-stage-output}
 
 .previewOutcome .alignmentPreviewBlock
-  --stage-accent: #34d399
+  --stage-accent: #{$ds-stage-outcome}
 
 .alignmentPreviewBlockEmpty
   width: 100%
-  height: 0.62rem
-  border-radius: 0.22rem
-  background: rgba(255, 255, 255, 0.04)
-  border: 0.0625rem dashed rgba(255, 255, 255, 0.08)
-  opacity: 0.72
+  height: 0.44rem
+  border-radius: 0.16rem
+  background: rgba(255, 255, 255, 0.03)
+  border: 0.0625rem dashed rgba(255, 255, 255, 0.09)
+  opacity: 0.66
 
 .alignmentPreviewOverflow
   align-self: center
-  margin-top: 0.12rem
-  font-size: 0.5625rem
-  font-weight: 700
-  letter-spacing: 0.04em
+  margin-top: 0.16rem
+  padding: 0.08rem 0.22rem
+  border: 0.0625rem solid color-mix(in srgb, var(--stage-accent) 9%, rgba(255, 255, 255, 0.16))
+  border-radius: $noir-radius-chip
+  background: rgba(255, 255, 255, 0.02)
+  font-size: 0.5rem
+  font-weight: 650
+  letter-spacing: 0.03em
   line-height: 1
-  color: color-mix(in srgb, var(--stage-accent) 78%, white 22%)
-  opacity: 0.82
-
-.stageActionCard .dragCard strong
-  text-transform: uppercase
-  letter-spacing: 0.06em
+  color: color-mix(in srgb, var(--stage-accent) 28%, rgba(205, 208, 216, 0.92))
+  opacity: 0.9
 
 @media (max-width: 64rem)
   .open
     width: min(24rem, calc(100vw - 1rem))
+
+@media (max-width: 30rem)
+  .timeline
+    gap: 0.4375rem
+
+  .progressHeaderScene
+    min-height: clamp(7.5rem, 30vw, 9.25rem)
+    padding: 0.1875rem 0 0.375rem
+
+  .progressOrbitalSculpture
+    width: clamp(8.5rem, 74%, 12rem)
+    height: clamp(7.25rem, 60vw, 9.75rem)
+    left: clamp(-1rem, -5vw, -0.375rem)
+
+  .progressHeaderHazeCore
+    width: 64%
+    filter: blur(1.125rem)
+
+  .progressHeaderHazeSpread
+    left: 6%
+    width: 94%
+    filter: blur(1.375rem)
+
+  .progressHeaderHazeProgressive
+    filter: blur(1.5rem)
+
+  .progressHeaderCard
+    width: clamp(7.75rem, 46%, 10rem)
+    max-width: 46%
+    padding: 0.4375rem 0.5rem
+    backdrop-filter: blur(1.375rem) saturate(1.16)
+    -webkit-backdrop-filter: blur(1.375rem) saturate(1.16)
+
+  .progressRingWrap
+    width: 2.375rem
+    height: 2.375rem
+
+  .progressPercent
+    font-size: 0.96875rem
+
+  .progressOverviewLabel
+    font-size: 0.75rem
+
+  .progressHeaderInstruction
+    font-size: 0.71875rem
+    line-height: 1.5
+
+  .stageSummary
+    grid-template-columns: auto minmax(0, 1fr) auto auto
+
+  .stageLockIcon
+    display: none
+
+  .stageBody
+    padding-left: 1.875rem
+
+  .header
+    padding: 0.75rem 0.875rem 0.5625rem
+
+  .heroCard
+    padding: 0.875rem
+    border-radius: 1.75rem
+
+  .heroContent
+    gap: 0.375rem
+
+  .heroLead
+    gap: 0.3125rem
+    padding-right: clamp(3.2rem, 24vw, 5rem)
+
+  .heroTitle
+    font-size: clamp(0.98rem, 4.1vw, 1.22rem)
+    max-width: 100%
+
+  .heroDescription
+    font-size: 0.75rem
+    line-height: 1.45
+    max-width: min(48ch, 100%)
+
+  .heroSculptureWrap
+    top: clamp(0.58rem, 2.3vw, 0.9rem)
+    right: 0.25rem
+    width: clamp(6.5rem, 38%, 8.75rem)
+    max-width: 52%
+    opacity: 0.24
+    transform: rotate(-3deg)
+
+@media (max-width: 24.375rem)
+  .progressHeaderScene
+    min-height: clamp(7rem, 28vw, 8.75rem)
+
+  .progressOrbitalSculpture
+    width: clamp(7.75rem, 72%, 10.5rem)
+    height: clamp(6.75rem, 58vw, 9rem)
+
+  .progressHeaderCard
+    width: clamp(7.5rem, 48%, 9.5rem)
+    max-width: 48%
+    padding: 0.375rem 0.4375rem
+    gap: 0.3125rem
+
+  .progressHeaderInstruction
+    font-size: 0.6875rem
+    line-height: 1.52
+
+  .heroCard
+    padding: 0.75rem
+    border-radius: 1.625rem
+
+  .heroDescription
+    max-width: 100%
+
+  .heroSculptureWrap
+    width: clamp(5.25rem, 38%, 6.75rem)
+    max-width: 48%
+    opacity: 0.18
+
+@media (prefers-reduced-motion: reduce)
+  .sidebarAccordionChevron
+    transition-duration: 1ms !important
+
+  .progressOrbitalAmbient,
+  .progressOrbitalNucleusGlow,
+  .progressOrbitalHazeEmit,
+  .progressOrbitalHazeField,
+  .progressOrbitalSvg,
+  .progressOrbitalHalo,
+  .progressOrbitalSmoke,
+  .progressOrbitalRingOuter,
+  .progressOrbitalRingMid,
+  .progressOrbitalSatellite,
+  .progressOrbitalSatelliteAlt,
+  .progressHeaderHazeCore,
+  .progressHeaderHazeBand,
+  .progressHeaderHazeSpread,
+  .progressHeaderHazeTrail,
+  .progressHeaderHazeProgressive
+    animation: none !important
+
+  .finalResultGlassHaze,
+  .finalResultHazeCore,
+  .finalResultHazeBand,
+  .finalResultHazeSpread
+    animation: none !important
+
+  .timelineChevronIcon
+    transition-duration: 1ms !important
+
+  .stageAccordion
+    transition-duration: 1ms !important
+
+    &::details-content
+      transition-duration: 1ms !important
+      transform: none !important
+      height: auto !important
+      opacity: 1 !important
+
+  .heroCard,
+  .heroContent,
+  .heroLead,
+  .heroTitle,
+  .heroDescription,
+  .heroFormShell,
+  .heroSculptureWrap
+    transition-duration: 1ms !important
+
+
+// TDM progress clean and sidebar elevation v1
+.progressHeader
+  padding: 0
+  border-radius: 1.375rem
+  overflow: hidden
+
+.progressHeaderKicker
+  margin: 0
+  padding: 1.0625rem 1.25rem 0.75rem
+  color: rgba(218, 219, 224, 0.76)
+  font-size: 0.72rem
+  font-weight: 820
+  line-height: 1
+  letter-spacing: 0.34em
+  text-transform: uppercase
+
+.progressHeaderScene,
+.progressHeaderAtmosphere,
+.progressOrbitalSculpture,
+.progressHeaderCard,
+.progressHeaderCardVeil,
+.progressHeaderCardSpecular,
+.progressHeaderCardHighlight,
+.progressHeaderCardEdge,
+.progressHeaderCardNoise,
+.progressHeaderCardDivider,
+.progressHeaderInstruction
+  display: none !important
+
+.progressHeaderCleanCard
+  position: relative
+  display: inline-flex
+  align-items: center
+  gap: 0.75rem
+  margin: 0 1.25rem 1.25rem
+  padding: 0
+  min-height: 2.5rem
+  color: rgba(245, 246, 250, 0.96)
+  background: transparent
+  border: 0
+  box-shadow: none
+
+.progressHeaderCleanCopy
+  display: grid
+  gap: 0.125rem
+  min-width: 0
+
+.progressHeaderCleanCard .progressRing
+  width: 2.25rem
+  height: 2.25rem
+  opacity: 0.84
+
+.progressHeaderCleanCard .progressPercent
+  margin: 0
+  color: rgba(247, 248, 252, 0.98)
+  font-size: 1.42rem
+  font-weight: 760
+  line-height: 1
+
+.progressHeaderCleanCard .progressOverviewLabel
+  margin: 0
+  color: rgba(247, 248, 252, 0.92)
+  font-size: 0.92rem
+  font-weight: 720
+  line-height: 1.18
+
+.sidebar
+  overflow: hidden
+  border-radius: 1.65rem 0 0 1.65rem
+  box-shadow: -1.25rem 0 2.75rem rgba(0, 0, 0, 0.34), -0.0625rem 0 0 rgba(255, 255, 255, 0.08), inset 0.0625rem 0 0 rgba(255, 255, 255, 0.07)
+  background-clip: padding-box
+
+.sidebar::before
+  border-radius: inherit
+
+.sidebarInner,
+.sidebarScroll,
+.contentScroll
+  border-radius: inherit
+
+
+// TDM sidebar transparent radius shell fix v1
+.sidebar
+  background: transparent !important
+  border-radius: 1.75rem 0 0 1.75rem
+  overflow: clip
+  box-shadow: -1rem 0 2.5rem rgba(0, 0, 0, 0.28), -0.0625rem 0 0 rgba(255, 255, 255, 0.07)
+  background-clip: padding-box
+
+  &::before,
+  &::after
+    display: none !important
+
+.surface
+  border-radius: inherit
+  overflow: clip
+  background: transparent !important
+  box-shadow: none !important
+  background-clip: padding-box
+
+  &::before,
+  &::after
+    display: none !important
+
+.header
+  background: transparent !important
+  box-shadow: none
+
+.headerScrolled
+  background: transparent !important
+  box-shadow: none
+
+.sidebarInner,
+.sidebarScroll,
+.contentScroll
+  background: transparent !important
+  border-radius: inherit
+
+
+// TDM aside floating shell radius fix v2
+.sidebar
+  isolation: isolate
+  display: flex
+  align-items: stretch
+  box-sizing: border-box
+  padding: 0.625rem 0.625rem 0.625rem 0
+  overflow: visible
+  border-radius: 2rem 0 0 2rem
+  background: linear-gradient(168deg, #111216 0%, #0d0e11 42%, #08090c 100%) !important
+  background-clip: padding-box
+  filter: drop-shadow(-1.25rem 0 2.6rem rgba(0, 0, 0, 0.34))
+
+  &::before,
+  &::after
+    display: none !important
+
+.open
+  width: $sidebar-width
+
+.closed
+  padding: 0
+  overflow: hidden
+  filter: none
+  background: transparent !important
+
+.surface
+  position: relative
+  z-index: 1
+  flex: 1 1 auto
+  width: 100%
+  height: auto
+  min-height: 0
+  overflow: clip
+  border-radius: 1.85rem 0 0 1.85rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.075)
+  border-right: 0
+  background: radial-gradient(ellipse 90% 52% at 50% 0%, rgba(255, 255, 255, 0.07), transparent 48%), radial-gradient(ellipse 65% 38% at 80% 60%, rgba(255, 255, 255, 0.025), transparent 52%), radial-gradient(ellipse 55% 32% at 50% 100%, rgba(255, 255, 255, 0.025), transparent 58%), linear-gradient(180deg, rgba(23, 24, 28, 0.96), rgba(13, 14, 18, 0.94)) !important
+  box-shadow: inset 0.0625rem 0 0 rgba(255, 255, 255, 0.075), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06), 0 1.25rem 2.75rem rgba(0, 0, 0, 0.28) !important
+  backdrop-filter: blur(1.35rem) saturate(1.08)
+  -webkit-backdrop-filter: blur(1.35rem) saturate(1.08)
+  background-clip: padding-box
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0
+    z-index: 0
+    pointer-events: none
+    border-radius: inherit
+    background: radial-gradient(ellipse 70% 30% at 50% 0%, rgba(255, 255, 255, 0.055), transparent 72%)
+    opacity: 0.75
+
+  &::after
+    display: none !important
+
+.header
+  border-radius: 1.85rem 0 0 0
+  background: transparent !important
+
+.headerScrolled
+  background: linear-gradient(180deg, rgba(23, 24, 28, 0.68), rgba(17, 18, 22, 0.18)) !important
+  box-shadow: 0 0.625rem 1.5rem rgba(0, 0, 0, 0.2)
+
+.sidebarInner,
+.sidebarScroll,
+.contentScroll
+  min-height: 0
+  background: transparent !important
+
+
+// TDM sidebar single-layer shell fix v3
+.sidebar
+  padding: 0 !important
+  margin: 0 !important
+  overflow: visible !important
+  background: transparent !important
+  border: 0 !important
+  border-radius: 0 !important
+  box-shadow: none !important
+  filter: none !important
+  backdrop-filter: none !important
+  -webkit-backdrop-filter: none !important
+
+  &::before,
+  &::after
+    display: none !important
+    content: none !important
+
+.open
+  padding: 0 !important
+  margin: 0 !important
+  background: transparent !important
+  box-shadow: none !important
+  filter: none !important
+
+.surface
+  position: relative
+  z-index: 1
+  width: 100% !important
+  height: 100% !important
+  min-height: 100% !important
+  margin: 0 !important
+  padding: 0 !important
+  overflow: clip !important
+  border-radius: 1.75rem 0 0 1.75rem !important
+  border: 0.0625rem solid rgba(255, 255, 255, 0.075) !important
+  border-right: 0 !important
+  background: linear-gradient(180deg, rgba(23, 24, 28, 0.96), rgba(12, 13, 17, 0.965)) !important
+  background-clip: padding-box !important
+  box-shadow: -1.125rem 0 2.35rem rgba(0, 0, 0, 0.34), inset 0.0625rem 0 0 rgba(255, 255, 255, 0.075), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.055) !important
+  filter: none !important
+  backdrop-filter: blur(1.25rem) saturate(1.08)
+  -webkit-backdrop-filter: blur(1.25rem) saturate(1.08)
+
+  &::before,
+  &::after
+    display: none !important
+    content: none !important
+
+.header
+  margin: 0 !important
+  background: transparent !important
+  box-shadow: none !important
+  border-radius: 1.75rem 0 0 0 !important
+
+.headerScrolled
+  background: transparent !important
+  box-shadow: none !important
+
+.sidebarInner,
+.sidebarScroll,
+.contentScroll
+  margin: 0 !important
+  background: transparent !important
+  box-shadow: none !important
+  border-radius: inherit !important
+
+.sidebarScroll,
+.contentScroll
+  overflow-x: hidden
