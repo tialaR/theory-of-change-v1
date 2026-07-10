@@ -24,7 +24,7 @@ import type { StageCreation } from '../../utils/stage-creation';
 import { TdmBlockFormFields, TdmFormField } from '../form-field/tdm-form-field';
 import fieldStyles from '../form-field/tdm-form-field.module.sass';
 import { TdmSectionIcon } from '../tdm-section-icon/tdm-section-icon';
-import { TheoryChangeSculpture } from './theory-change-sculpture';
+import { LogoAnimatedSprite } from './logo-animated-sprite';
 import { TheoryHeaderForm, THEORY_DEFAULT_DESCRIPTION } from './theory-header-form';
 import { SidebarToggleIcon } from './sidebar-toggle-icon';
 import {
@@ -800,7 +800,18 @@ export function TdmSidebar({
                 </div>
               </div>
               <div className={styles.heroSculptureWrap} aria-hidden="true">
-                <TheoryChangeSculpture accent={progressAccent} />
+                <LogoAnimatedSprite
+                    className={styles.heroAnimatedSprite}
+                    ariaHidden
+                    size="clamp(5.75rem, 8.4vw, 7.25rem)"
+                    speed={0.72}
+                    color="#f2f4f8"
+                    glowColor="rgba(255, 255, 255, 0.12)"
+                   glowSize="0.85rem"
+                    tintOpacity={0.12}
+                    textureStrength={0.72}
+                    opacity={0.68}
+                  />
               </div>
             </section>
           </div>
