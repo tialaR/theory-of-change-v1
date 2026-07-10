@@ -24,7 +24,6 @@ import type { StageCreation } from '../../utils/stage-creation';
 import { TdmBlockFormFields, TdmFormField } from '../form-field/tdm-form-field';
 import fieldStyles from '../form-field/tdm-form-field.module.sass';
 import { TdmSectionIcon } from '../tdm-section-icon/tdm-section-icon';
-import { TheoryChangeSculpture } from './theory-change-sculpture';
 import { TheoryHeaderForm, THEORY_DEFAULT_DESCRIPTION } from './theory-header-form';
 import { SidebarToggleIcon } from './sidebar-toggle-icon';
 import {
@@ -800,7 +799,6 @@ export function TdmSidebar({
                 </div>
               </div>
               <div className={styles.heroSculptureWrap} aria-hidden="true">
-                <TheoryChangeSculpture accent={progressAccent} />
               </div>
             </section>
           </div>
