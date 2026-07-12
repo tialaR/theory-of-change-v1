@@ -686,7 +686,7 @@ export function V1StageActionSection({
               </span>
               <span>
                 <strong>{actionLabel ?? 'Adicionar bloco'}</strong>
-                <small>Arraste, solte e crie.</small>
+                <small>Clique, arraste, solte e crie.</small>
               </span>
             </button>
           </div>

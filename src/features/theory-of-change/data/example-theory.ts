@@ -96,7 +96,9 @@ export const exampleTheory: ExampleTheory = {
       source: exampleInput.id,
       target: exampleActivity.id,
       sourceStage: 'input',
-      targetStage: 'activity'
+      targetStage: 'activity',
+      markerType: 'risk',
+      markerText: 'Dependência de disponibilidade da equipe técnica para manter a rotina de formação.'
     }),
     createEdge({
       source: exampleInputTwo.id,
@@ -114,7 +116,9 @@ export const exampleTheory: ExampleTheory = {
       source: exampleActivity.id,
       target: exampleOutput.id,
       sourceStage: 'activity',
-      targetStage: 'output'
+      targetStage: 'output',
+      markerType: 'risk',
+      markerText: 'Baixa adesão pode reduzir a qualidade das oficinas realizadas.'
     }),
     createEdge({
       source: exampleActivityTwo.id,
@@ -126,7 +130,9 @@ export const exampleTheory: ExampleTheory = {
       source: exampleOutput.id,
       target: exampleOutcome.id,
       sourceStage: 'output',
-      targetStage: 'outcome'
+      targetStage: 'outcome',
+      markerType: 'hypothesis',
+      markerText: 'As escolas precisam aplicar os planos no cotidiano para gerar mudança observável.'
     }),
     createEdge({
       source: exampleOutputTwo.id,

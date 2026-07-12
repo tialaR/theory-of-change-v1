@@ -1,0 +1,144 @@
+.logoPlaceholder
+  display: grid
+  place-items: center
+  inline-size: 3.4rem
+  block-size: 3.4rem
+  border-radius: 1.05rem
+  border: .0625rem solid rgba(255,255,255,.14)
+  background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.04))
+  box-shadow: inset 0 .0625rem 0 rgba(255,255,255,.2), 0 1.2rem 3rem rgba(0,0,0,.24)
+  font-weight: 780
+  letter-spacing: -.08em
+
+.automationVisual
+  position: absolute
+  inset: 5rem 2rem 2rem
+  display: grid
+  grid-template-columns: 1fr .8fr 1fr
+  gap: 1.1rem
+  align-items: center
+
+.flowColumn
+  display: grid
+  gap: 1rem
+
+.flowNode
+  min-block-size: 5.8rem
+  padding: 1rem
+  border-radius: 1.1rem
+  border: .0625rem solid rgba(255,255,255,.11)
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.025)), rgba(255,255,255,.024)
+  box-shadow: inset 0 .0625rem 0 rgba(255,255,255,.12)
+
+.nodeLabel
+  display: inline-flex
+  margin-block-end: .55rem
+  color: rgba(255,255,255,.42)
+  font-size: .68rem
+  letter-spacing: .18em
+  text-transform: uppercase
+
+.nodeTitle
+  margin: 0
+  color: rgba(255,255,255,.9)
+  font-size: .9rem
+  font-weight: 660
+
+.connector
+  display: grid
+  place-items: center
+  min-block-size: 18rem
+  color: rgba(255,255,255,.38)
+
+.connectorLine
+  inline-size: .0625rem
+  block-size: 100%
+  background: linear-gradient(transparent, rgba(255,255,255,.28), transparent)
+
+.splitCards
+  display: grid
+  grid-template-columns: repeat(2, minmax(0, 1fr))
+  gap: 1rem
+  margin-block-start: 1.5rem
+
+.codePanel
+  min-block-size: 30rem
+  padding: 1rem
+  border-radius: 1.6rem
+  border: .0625rem solid rgba(255,255,255,.1)
+  background: rgba(255,255,255,.03)
+  overflow: hidden
+
+.codeLine
+  display: block
+  block-size: .75rem
+  margin-block: .7rem
+  border-radius: 999rem
+  background: linear-gradient(90deg, rgba(255,255,255,.22), rgba(255,255,255,.045))
+
+.codeLine:nth-child(2n)
+  inline-size: 72%
+
+.codeLine:nth-child(3n)
+  inline-size: 48%
+
+.referenceLayout
+  display: grid
+  grid-template-columns: 18rem minmax(0, 1fr)
+  gap: 2rem
+  align-items: start
+
+.referenceRail
+  position: sticky
+  top: 6.2rem
+  display: grid
+  gap: .45rem
+  padding: 1rem
+  border-radius: 1.4rem
+  border: .0625rem solid rgba(255,255,255,.1)
+  background: rgba(255,255,255,.026)
+
+.referenceRail a
+  padding: .72rem .8rem
+  border-radius: .85rem
+  color: rgba(255,255,255,.55)
+  font-size: .9rem
+
+.referenceRail a:hover
+  background: rgba(255,255,255,.055)
+  color: rgba(255,255,255,.9)
+
+.referenceContent
+  display: grid
+  gap: 1rem
+
+.referenceBlock
+  padding: clamp(1.4rem, 3vw, 2.4rem)
+  border-radius: 1.7rem
+  border: .0625rem solid rgba(255,255,255,.1)
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.018)), rgba(255,255,255,.024)
+
+.referenceBlock h2
+  margin: 0 0 .8rem
+  font-size: clamp(1.8rem, 3vw, 3.2rem)
+  line-height: .95
+  letter-spacing: -.06em
+
+.referenceBlock p
+  max-inline-size: 48rem
+  margin: 0
+  color: rgba(255,255,255,.58)
+  line-height: 1.58
+
+@media (max-width: 62rem)
+  .automationVisual
+    inset: 5rem 1rem 1rem
+    grid-template-columns: 1fr
+  .connector
+    display: none
+  .splitCards,
+  .referenceLayout
+    grid-template-columns: 1fr
+  .referenceRail
+    position: relative
+    top: auto

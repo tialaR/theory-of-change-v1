@@ -141,13 +141,18 @@ function createEmptyDraftMap(): Record<TdmStage, TdmNodeDraft> {
   };
 }
 
-export function TdmCanvasInner() {
+type TdmCanvasInnerProps = {
+  initialVariant?: 'custom' | 'example';
+};
+
+export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProps) {
+  const isExampleInitial = initialVariant === 'example';
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [viewMode, setViewMode] = useState<ViewMode>('canvas');
-  const [theoryTitle, setTheoryTitle] = useState('Nova teoria da mudança');
-  const [nodes, setNodes, onNodesChange] = useNodesState<TdmNodeModel>([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<TdmEdgeModel>([]);
-  const [stageCreation, setStageCreation] = useState<StageCreation>('input');
+  const [theoryTitle, setTheoryTitle] = useState(isExampleInitial ? exampleTheory.title : 'Nova teoria da mudança');
+  const [nodes, setNodes, onNodesChange] = useNodesState<TdmNodeModel>(isExampleInitial ? exampleTheory.nodes : []);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<TdmEdgeModel>(isExampleInitial ? exampleTheory.edges : []);
+  const [stageCreation, setStageCreation] = useState<StageCreation>(isExampleInitial ? 'ready-to-connect' : 'input');
   const { activeFlowTooltip, showFlowTooltip, closeFlowTooltip, clearFlowTooltipEvent } = useContextualFlowTooltip();
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [toolbarNodeId, setToolbarNodeId] = useState<string | null>(null);
@@ -160,7 +165,7 @@ export function TdmCanvasInner() {
   const [isCreateAccordionOpen, setIsCreateAccordionOpen] = useState(true);
   const [isEditAccordionOpen, setIsEditAccordionOpen] = useState(false);
   const [markerDraft, setMarkerDraft] = useState('');
-  const [canvasVariant, setCanvasVariant] = useState<'custom' | 'example'>('custom');
+  const [canvasVariant, setCanvasVariant] = useState<'custom' | 'example'>(initialVariant);
   const [previousTheorySnapshot, setPreviousTheorySnapshot] = useState<TheorySnapshot | null>(null);
   const [viewportResetToken, setViewportResetToken] = useState(0);
   const [guideTransientMessage, setGuideTransientMessage] = useState<string | null>(null);

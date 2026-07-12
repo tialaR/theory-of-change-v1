@@ -1,0 +1,388 @@
+$ease-out: cubic-bezier(.22, 1, .36, 1)
+
+.shell
+  --rx-bg: #050506
+  --rx-ink: #f7f7f8
+  --rx-muted: rgba(247, 247, 248, .62)
+  --rx-soft: rgba(247, 247, 248, .42)
+  --rx-line: rgba(255, 255, 255, .105)
+  --rx-line-strong: rgba(255, 255, 255, .18)
+  --rx-panel: rgba(255, 255, 255, .035)
+  --rx-panel-strong: rgba(255, 255, 255, .065)
+  --rx-smoke: #17181c
+  --rx-graphite: #0d0e11
+  --rx-glow: rgba(255, 255, 255, .18)
+  position: fixed
+  inset: 0
+  overflow-y: auto
+  overflow-x: hidden
+  color: var(--rx-ink)
+  background: var(--rx-bg)
+  scrollbar-width: thin
+  scrollbar-color: rgba(255, 255, 255, .28) transparent
+  isolation: isolate
+
+  &::before,
+  &::after
+    content: ''
+    position: fixed
+    inset: 0
+    pointer-events: none
+    z-index: -2
+
+  &::before
+    background: radial-gradient(ellipse 62rem 28rem at 50% -10%, rgba(255, 255, 255, .135), transparent 64%), radial-gradient(ellipse 38rem 24rem at 9% 32%, rgba(255, 255, 255, .045), transparent 72%), radial-gradient(ellipse 40rem 26rem at 92% 34%, rgba(255, 255, 255, .055), transparent 75%), linear-gradient(180deg, #030304 0%, #07080a 42%, #040405 100%)
+
+  &::after
+    z-index: -1
+    opacity: .38
+    background-image: linear-gradient(rgba(255,255,255,.028) .0625rem, transparent .0625rem), linear-gradient(90deg, rgba(255,255,255,.022) .0625rem, transparent .0625rem), radial-gradient(circle at center, rgba(255,255,255,.06) 0 .0625rem, transparent .0625rem)
+    background-size: 4.5rem 4.5rem, 4.5rem 4.5rem, 1.1rem 1.1rem
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 28%, black 0%, transparent 78%)
+
+.shellInner
+  width: min(100%, 92rem)
+  margin-inline: auto
+  padding: 1rem clamp(1rem, 3vw, 2rem) 5rem
+
+.header
+  position: sticky
+  top: .75rem
+  z-index: 50
+  width: min(100%, 82rem)
+  margin: 0 auto 5rem
+  display: flex
+  align-items: center
+  justify-content: space-between
+  gap: 1rem
+  min-block-size: 3.25rem
+  padding: .45rem .55rem .45rem .65rem
+  border: .0625rem solid var(--rx-line)
+  border-radius: 999rem
+  background: linear-gradient(180deg, rgba(255,255,255,.095), rgba(255,255,255,.035)), rgba(10, 10, 12, .72)
+  backdrop-filter: blur(1.75rem) saturate(1.18)
+  -webkit-backdrop-filter: blur(1.75rem) saturate(1.18)
+  box-shadow: 0 1.4rem 4rem rgba(0,0,0,.36), inset 0 .0625rem 0 rgba(255,255,255,.12)
+
+.brand
+  display: inline-flex
+  align-items: center
+  gap: .65rem
+  min-inline-size: 0
+  font-weight: 620
+  color: rgba(255,255,255,.9)
+  letter-spacing: -.015em
+
+.logo
+  inline-size: 2.05rem
+  block-size: 2.05rem
+  display: grid
+  place-items: center
+  border-radius: 999rem
+  border: .0625rem solid rgba(255,255,255,.14)
+  background: radial-gradient(circle at 35% 25%, rgba(255,255,255,.96), rgba(255,255,255,.32) 28%, transparent 29%), linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.035))
+  box-shadow: inset 0 .0625rem 0 rgba(255,255,255,.2), 0 0 2rem rgba(255,255,255,.08)
+  font-size: .68rem
+  color: #fff
+
+.nav
+  display: flex
+  align-items: center
+  justify-content: center
+  gap: .25rem
+  min-inline-size: 0
+
+.navLink,
+.navCta,
+.ghostButton,
+.primaryButton,
+.iconButton
+  min-block-size: 2.3rem
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  border: .0625rem solid transparent
+  border-radius: 999rem
+  text-decoration: none
+  white-space: nowrap
+  transition: transform 180ms $ease-out, border-color 180ms $ease-out, background 180ms $ease-out, color 180ms $ease-out, opacity 180ms $ease-out
+
+  &:hover
+    transform: translateY(-.0625rem)
+
+  &:active
+    transform: translateY(0) scale(.985)
+
+.navLink
+  padding: 0 .85rem
+  color: rgba(255,255,255,.58)
+  font-size: .82rem
+
+  &:hover
+    color: rgba(255,255,255,.9)
+    background: rgba(255,255,255,.05)
+
+.navCta,
+.primaryButton
+  padding: 0 1rem
+  color: #0a0a0b
+  font-size: .82rem
+  font-weight: 680
+  background: #f6f6f4
+  border-color: rgba(255,255,255,.88)
+  box-shadow: 0 .65rem 2rem rgba(255,255,255,.08)
+
+.ghostButton
+  padding: 0 1rem
+  color: rgba(255,255,255,.84)
+  background: rgba(255,255,255,.035)
+  border-color: var(--rx-line)
+
+.iconButton
+  inline-size: 2.5rem
+  padding: 0
+  color: rgba(255,255,255,.88)
+  background: rgba(255,255,255,.04)
+  border-color: var(--rx-line)
+
+.hero
+  min-block-size: clamp(34rem, 78vh, 49rem)
+  display: grid
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr)
+  gap: clamp(2rem, 5vw, 5rem)
+  align-items: center
+  padding-block: 1rem 6rem
+
+.kicker
+  margin: 0 0 1.15rem
+  color: rgba(255,255,255,.44)
+  font-size: .78rem
+  font-weight: 720
+  line-height: 1.35
+  letter-spacing: .24em
+  text-transform: uppercase
+
+.display
+  max-inline-size: 45rem
+  margin: 0
+  font-size: clamp(4.6rem, 10.5vw, 9.9rem)
+  line-height: .86
+  letter-spacing: -.09em
+  font-weight: 760
+
+.displaySmall
+  max-inline-size: 48rem
+  margin: 0
+  font-size: clamp(3.4rem, 7.4vw, 7.4rem)
+  line-height: .9
+  letter-spacing: -.075em
+  font-weight: 760
+
+.lead
+  max-inline-size: 39rem
+  margin: 1.5rem 0 0
+  color: rgba(255,255,255,.64)
+  font-size: clamp(1.05rem, 1.45vw, 1.36rem)
+  line-height: 1.52
+  letter-spacing: -.02em
+
+.actions
+  display: flex
+  flex-wrap: wrap
+  align-items: center
+  gap: .75rem
+  margin-block-start: 2rem
+
+.heroPanel
+  position: relative
+  min-block-size: clamp(30rem, 55vw, 42rem)
+  border-radius: 2.4rem
+  overflow: hidden
+  border: .0625rem solid rgba(255,255,255,.11)
+  background: radial-gradient(ellipse 40rem 18rem at 50% 0%, rgba(255,255,255,.12), transparent 68%), linear-gradient(180deg, rgba(255,255,255,.065), rgba(255,255,255,.022)), rgba(255,255,255,.028)
+  box-shadow: inset 0 .0625rem 0 rgba(255,255,255,.1), 0 2rem 6rem rgba(0,0,0,.44)
+
+.bigNumber
+  position: absolute
+  right: -2.6rem
+  top: -3.4rem
+  color: rgba(255,255,255,.045)
+  font-size: clamp(10rem, 24vw, 18rem)
+  line-height: 1
+  letter-spacing: -.12em
+  font-weight: 780
+
+.mockGrid
+  position: absolute
+  inset: 5rem 2rem 2rem
+  display: grid
+  grid-template-columns: repeat(2, minmax(0, 1fr))
+  gap: 1rem
+
+.mockCard
+  position: relative
+  overflow: hidden
+  min-block-size: 11rem
+  padding: 1.1rem
+  border-radius: 1.35rem
+  border: .0625rem solid rgba(255,255,255,.1)
+  background: linear-gradient(180deg, rgba(255,255,255,.095), rgba(255,255,255,.024)), rgba(255,255,255,.035)
+  box-shadow: inset 0 .0625rem 0 rgba(255,255,255,.12)
+
+.mockTitle
+  margin: 0 0 .45rem
+  color: rgba(255,255,255,.92)
+  font-size: .92rem
+  font-weight: 650
+  letter-spacing: -.02em
+
+.mockText
+  margin: 0
+  color: rgba(255,255,255,.5)
+  font-size: .78rem
+  line-height: 1.45
+
+.section
+  padding-block: clamp(4rem, 9vw, 8rem)
+  border-top: .0625rem solid rgba(255,255,255,.07)
+
+.sectionHeader
+  display: grid
+  grid-template-columns: minmax(0, .75fr) minmax(0, 1fr)
+  gap: clamp(2rem, 5vw, 5rem)
+  align-items: end
+  margin-block-end: clamp(2rem, 5vw, 4rem)
+
+.sectionTitle
+  margin: 0
+  font-size: clamp(2.6rem, 5.4vw, 5.6rem)
+  line-height: .92
+  letter-spacing: -.07em
+
+.sectionCopy
+  margin: 0
+  color: rgba(255,255,255,.58)
+  font-size: clamp(1rem, 1.35vw, 1.2rem)
+  line-height: 1.55
+
+.cardsGrid
+  display: grid
+  grid-template-columns: repeat(3, minmax(0, 1fr))
+  gap: 1rem
+
+.featureCard
+  min-block-size: 20rem
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  padding: 1.35rem
+  border-radius: 1.6rem
+  border: .0625rem solid rgba(255,255,255,.1)
+  background: radial-gradient(circle at 18% 0%, rgba(255,255,255,.13), transparent 36%), linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02)), rgba(255,255,255,.026)
+  box-shadow: inset 0 .0625rem 0 rgba(255,255,255,.11), 0 1.2rem 4rem rgba(0,0,0,.28)
+
+.featureIndex
+  color: rgba(255,255,255,.42)
+  font-size: .8rem
+  letter-spacing: .18em
+  text-transform: uppercase
+
+.featureTitle
+  max-inline-size: 18rem
+  margin: 1rem 0 .75rem
+  color: rgba(255,255,255,.92)
+  font-size: clamp(1.4rem, 2vw, 2rem)
+  line-height: 1
+  letter-spacing: -.045em
+
+.featureText
+  margin: 0
+  color: rgba(255,255,255,.52)
+  line-height: 1.48
+
+.timeline
+  position: relative
+  display: grid
+  gap: 1rem
+  max-inline-size: 72rem
+  margin-inline: auto
+
+.timelineItem
+  position: relative
+  display: grid
+  grid-template-columns: 8rem minmax(0, 1fr)
+  gap: 2rem
+  min-block-size: 18rem
+  padding: 1rem 0
+
+.timelineMarker
+  position: sticky
+  top: 6rem
+  align-self: start
+  display: grid
+  place-items: center
+  inline-size: 4.5rem
+  block-size: 4.5rem
+  border-radius: 999rem
+  border: .0625rem solid rgba(255,255,255,.12)
+  background: rgba(255,255,255,.045)
+  box-shadow: inset 0 .0625rem 0 rgba(255,255,255,.12)
+  color: rgba(255,255,255,.85)
+  font-weight: 720
+
+.timelineCard
+  padding: clamp(1.4rem, 3vw, 2.2rem)
+  border-radius: 1.8rem
+  border: .0625rem solid rgba(255,255,255,.11)
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02)), rgba(255,255,255,.03)
+  box-shadow: inset 0 .0625rem 0 rgba(255,255,255,.1)
+
+.timelineTitle
+  margin: 0
+  font-size: clamp(2rem, 4vw, 4.2rem)
+  line-height: .92
+  letter-spacing: -.065em
+
+.timelineText
+  max-inline-size: 42rem
+  margin: 1rem 0 0
+  color: rgba(255,255,255,.56)
+  font-size: 1.05rem
+  line-height: 1.55
+
+.footer
+  display: flex
+  justify-content: space-between
+  gap: 1rem
+  padding-block: 5rem 1rem
+  color: rgba(255,255,255,.38)
+  border-top: .0625rem solid rgba(255,255,255,.07)
+  font-size: .82rem
+
+@media (max-width: 62rem)
+  .shellInner
+    padding-inline: 1rem
+  .header
+    top: .5rem
+    border-radius: 1.6rem
+    align-items: flex-start
+    flex-direction: column
+  .nav
+    width: 100%
+    justify-content: flex-start
+    flex-wrap: wrap
+  .hero,
+  .sectionHeader
+    grid-template-columns: 1fr
+  .heroPanel
+    min-block-size: 34rem
+  .cardsGrid
+    grid-template-columns: 1fr
+  .timelineItem
+    grid-template-columns: 1fr
+    gap: 1rem
+  .timelineMarker
+    position: relative
+    top: auto
+  .footer
+    flex-direction: column

@@ -1,0 +1,51 @@
+.hero
+  max-width: 64rem
+  padding-top: clamp(1rem, 3vw, 2.5rem)
+
+.eyebrow
+  margin: 0 0 0.8rem
+  font-size: 0.72rem
+  font-weight: 780
+  letter-spacing: 0.18em
+  text-transform: uppercase
+  color: rgba(255,255,255,.48)
+
+.hero h1
+  margin: 0
+  font-size: clamp(3rem, 8vw, 7rem)
+  line-height: 0.88
+  letter-spacing: -0.085em
+
+.hero p:not(.eyebrow)
+  max-width: 40rem
+  margin: 1.15rem 0 0
+  color: rgba(220,224,232,.72)
+  font-size: 1.08rem
+  line-height: 1.65
+
+.grid
+  display: grid
+  grid-template-columns: repeat(2, minmax(0, 1fr))
+  gap: 1rem
+
+.card
+  min-height: 13rem
+  padding: 1rem
+
+  h2
+    margin: 0
+    font-size: 1.35rem
+  p
+    margin: 0.75rem 0 0
+    color: rgba(220,224,232,.68)
+    line-height: 1.62
+
+.actions
+  display: flex
+  flex-wrap: wrap
+  gap: 0.72rem
+  margin-top: 1rem
+
+@media (max-width: 54rem)
+  .grid
+    grid-template-columns: 1fr
