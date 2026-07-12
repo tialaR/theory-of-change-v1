@@ -1204,44 +1204,59 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
     .flowTranslator
       width: min(18rem, calc(100% - 1.5rem))
 
-// Patch v7: interactive result board visual fit, no horizontal scrollbar, stronger liquid-glass skin.
-// Scoped to the interactive route only. No logic or canvas behavior changes.
-.interactiveExperience
-  .workspaceShell,
-  .workspaceViewport,
-  .flowWorkspace,
-  .diagramWorkspace,
-  .diagramBoard,
-  .diagramColumns,
-  .diagramColumn,
-  .diagramColumnGlass,
-  .diagramColumnContent,
-  .diagramCard,
-  .diagramCardGlass,
-  .diagramCardInner
-    box-sizing: border-box
+// v8 interactive visual correction: fit columns, no horizontal scroll, thinner frame, softer glass.
+.interactiveExperience,
+.interactiveExperience *
+  box-sizing: border-box
 
+.interactiveExperience
   .workspaceShell
-    padding: .625rem
+    padding: 0
     overflow: hidden
+    border: 0
+    border-radius: 1.25rem
+    background: transparent
+    box-shadow: none
 
   .workspaceViewport
+    inline-size: 100%
+    max-inline-size: 100%
+    min-inline-size: 0
     overflow-x: hidden
     overflow-y: auto
-    scrollbar-gutter: stable
-    background-color: #090a0c
-    background-image: radial-gradient(ellipse 46rem 30rem at 50% 18%, rgba(255,255,255,.045), transparent 72%), linear-gradient(rgba(255,255,255,.045) .0625rem, transparent .0625rem), linear-gradient(90deg, rgba(255,255,255,.045) .0625rem, transparent .0625rem), linear-gradient(rgba(255,255,255,.018) .0625rem, transparent .0625rem), linear-gradient(90deg, rgba(255,255,255,.018) .0625rem, transparent .0625rem)
-    background-size: auto, 4rem 4rem, 4rem 4rem, 1rem 1rem, 1rem 1rem
-    background-position: center top, 0 0, 0 0, 0 0, 0 0
+    border: .0625rem solid rgba(255,255,255,.075)
+    border-radius: 1.25rem
+    background: #08090a
+    scrollbar-width: auto
+    scrollbar-color: rgba(255,255,255,.24) transparent
 
-    &::before,
+    &::-webkit-scrollbar
+      width: .55rem
+      height: 0
+
+    &::-webkit-scrollbar-track
+      background: transparent
+
+    &::-webkit-scrollbar-thumb
+      border-radius: 999rem
+      background: rgba(255,255,255,.22)
+
+    &::before
+      inset: 0
+      border-radius: inherit
+      background-color: #08090a
+      background-image: linear-gradient(rgba(255,255,255,.045) .0625rem, transparent .0625rem), linear-gradient(90deg, rgba(255,255,255,.045) .0625rem, transparent .0625rem), linear-gradient(rgba(255,255,255,.018) .0625rem, transparent .0625rem), linear-gradient(90deg, rgba(255,255,255,.018) .0625rem, transparent .0625rem)
+      background-size: 4.25rem 4.25rem, 4.25rem 4.25rem, 1.0625rem 1.0625rem, 1.0625rem 1.0625rem
+      box-shadow: inset 0 0 5rem rgba(0,0,0,.5)
+
     &::after
-      display: none
+      opacity: .075
 
   .flowWorkspace
     inline-size: 100%
     max-inline-size: 100%
     min-inline-size: 0
+    min-block-size: 100%
     overflow: visible
     transform-origin: center top
 
@@ -1249,226 +1264,140 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
     inline-size: 100%
     max-inline-size: 100%
     min-inline-size: 0
-    min-block-size: max(100%, 36rem)
-    padding: .875rem .875rem 1.25rem
-    overflow-x: hidden
-    overflow-y: visible
+    min-block-size: 100%
+    padding: clamp(.75rem, 1vw, 1rem)
+    overflow: visible
 
   .diagramBoard
     inline-size: 100%
     max-inline-size: 100%
     min-inline-size: 0
-    min-block-size: max(100%, 34rem)
+    min-block-size: clamp(34rem, calc(100vh - 7rem), 46rem)
     overflow: visible
 
   .diagramColumns
     inline-size: 100%
     max-inline-size: 100%
     min-inline-size: 0
+    display: grid
     grid-template-columns: repeat(4, minmax(0, 1fr))
-    gap: clamp(.875rem, 1.45vw, 1.45rem)
+    gap: clamp(.85rem, 1.75vw, 1.7rem)
+    align-items: stretch
 
   .diagramColumn
     min-inline-size: 0
-    min-block-size: 27.5rem
+    min-block-size: clamp(24rem, calc(100vh - 9rem), 42rem)
 
   .diagramColumnHalo
-    inset: 3% -8% -3%
-    opacity: .14
-    background: radial-gradient(ellipse 78% 58% at 50% 23%, color-mix(in srgb, var(--stage-color) 11%, transparent) 0%, transparent 68%)
-    filter: blur(2rem)
+    inset: 6% -3% 0
+    opacity: .16
+    filter: blur(2.25rem)
+    background: radial-gradient(ellipse 78% 70% at 50% 12%, color-mix(in srgb, var(--stage-color) 10%, transparent), transparent 72%)
 
   .diagramColumnGlass
-    --glass-radius: .95rem !important
-    --glass-background-opacity: .045
-    --glass-background: linear-gradient(180deg, rgba(255,255,255,.052), rgba(255,255,255,.018) 42%, rgba(0,0,0,.08)), radial-gradient(ellipse 82% 42% at 50% 0%, color-mix(in srgb, var(--stage-color) 7%, transparent), transparent 66%), rgba(8,9,11,.5)
-    --glass-border-color: color-mix(in srgb, var(--stage-color) 28%, rgba(255,255,255,.09))
-    min-block-size: 27.5rem
-    border: .0625rem solid var(--glass-border-color)
-    box-shadow: inset 0 .0625rem 0 rgba(255,255,255,.12), inset 0 -0.0625rem 0 rgba(255,255,255,.025), 0 1.15rem 2.8rem rgba(0,0,0,.22), 0 0 1.8rem color-mix(in srgb, var(--stage-color) 5%, transparent)
+    min-inline-size: 0
+    min-block-size: 100%
+    border-radius: 1rem !important
+    border: .0625rem solid color-mix(in srgb, var(--stage-color) 18%, rgba(255,255,255,.065)) !important
+    background: linear-gradient(180deg, color-mix(in srgb, var(--stage-color) 5%, rgba(255,255,255,.038)) 0%, rgba(255,255,255,.012) 28%, rgba(255,255,255,.006) 100%) !important
+    box-shadow: inset 0 .0625rem 0 rgba(255,255,255,.06), inset 0 0 0 .0625rem rgba(255,255,255,.012), 0 1.35rem 3.2rem rgba(0,0,0,.2) !important
+    backdrop-filter: blur(.8rem) saturate(1.08) !important
+    -webkit-backdrop-filter: blur(.8rem) saturate(1.08) !important
 
-    &::before
-      content: ''
-      position: absolute
-      inset: .0625rem
-      border-radius: calc(.95rem - .0625rem)
-      pointer-events: none
-      background: linear-gradient(180deg, rgba(255,255,255,.075), transparent 18%, transparent 80%, color-mix(in srgb, var(--stage-color) 5%, transparent)), linear-gradient(90deg, rgba(255,255,255,.025), transparent 24% 74%, rgba(255,255,255,.018))
-      opacity: .62
-      z-index: 2
+    > span:nth-of-type(1)
+      inset: -32% -18% auto
+      block-size: 11rem
+      opacity: .18
+      filter: blur(1.85rem)
+      background: radial-gradient(ellipse 78% 82% at 50% 0%, color-mix(in srgb, var(--stage-color) 24%, rgba(255,255,255,.12)), transparent 72%)
+      transform: none
+
+    > span:nth-of-type(2)
+      opacity: .48
+      background: linear-gradient(180deg, color-mix(in srgb, var(--stage-color) 12%, rgba(255,255,255,.11)) 0%, rgba(255,255,255,.03) 18%, transparent 48%, color-mix(in srgb, var(--stage-color) 7%, transparent) 100%)
+
+    > span:nth-of-type(3)
+      opacity: .42
+      background: linear-gradient(145deg, rgba(255,255,255,.09), transparent 24%, transparent 70%, color-mix(in srgb, var(--stage-color) 10%, transparent))
+      box-shadow: inset 0 0 0 .0625rem color-mix(in srgb, var(--stage-color) 18%, rgba(255,255,255,.04))
 
   .diagramColumnContent
-    position: relative
-    z-index: 4
-    padding: 1rem
-
-  .diagramColumnHeader
-    align-items: center
-    min-block-size: 2.55rem
-    padding-block-start: 0
-
-  .diagramColumnTopRule
-    left: .125rem
-    right: .125rem
-    opacity: .5
-    background: linear-gradient(90deg, color-mix(in srgb, var(--stage-color) 46%, white 10%) 0%, color-mix(in srgb, var(--stage-color) 24%, transparent) 56%, transparent 100%)
-
-  .diagramColumnHeadingGroup
-    gap: .5rem
-    padding-block-start: 0
-
-  .diagramColumnHeader h3
-    font-size: .78rem
-    letter-spacing: .2em
-    font-weight: 760
-    color: color-mix(in srgb, var(--stage-accent-soft, var(--stage-color)) 86%, white)
-    text-shadow: 0 0 .7rem color-mix(in srgb, var(--stage-color) 20%, transparent)
-
-  .diagramColumnHeader small
-    min-inline-size: 3.2rem
-    block-size: 1.42rem
-    margin-block-start: 0
-    padding-inline: .48rem
-    border-radius: .52rem
-    border-width: .0625rem
-    font-size: .72rem
-    letter-spacing: .01em
-    color: color-mix(in srgb, var(--stage-accent-soft, var(--stage-color)) 82%, rgba(255,255,255,.82))
-    background: color-mix(in srgb, var(--stage-color) 10%, rgba(255,255,255,.018))
-    box-shadow: inset 0 .0625rem 0 rgba(255,255,255,.08), 0 0 .65rem color-mix(in srgb, var(--stage-color) 8%, transparent)
-
-  .diagramColumnDot
-    inline-size: .42rem
-    block-size: .42rem
-    box-shadow: 0 0 .55rem color-mix(in srgb, var(--stage-color) 42%, transparent)
-
-  .diagramColumnDivider
-    margin-block-start: .55rem
-    opacity: .78
-    background: linear-gradient(90deg, rgba(255,255,255,.08), rgba(255,255,255,.035), transparent)
+    padding: clamp(.9rem, 1.15vw, 1.12rem)
 
   .diagramColumnCards
-    gap: .82rem
-    margin-block-start: .82rem
+    gap: clamp(.72rem, 1.1vw, .9rem)
 
   .diagramCard
     min-inline-size: 0
 
-    &:not(.diagramCardDisabled):hover .diagramCardGlass
-      transform: translateY(-.125rem)
-      --glass-border-color: color-mix(in srgb, var(--stage-color) 46%, rgba(255,255,255,.13))
-      box-shadow: inset 0 .0625rem 0 rgba(255,255,255,.15), inset 0 -0.0625rem 0 rgba(255,255,255,.035), 0 .9rem 2rem rgba(0,0,0,.24), 0 0 1.7rem color-mix(in srgb, var(--stage-color) 12%, transparent)
-
   .diagramCardGlass
-    --glass-radius: .78rem !important
-    --glass-background-opacity: .05
-    --glass-background: linear-gradient(180deg, rgba(255,255,255,.065), rgba(255,255,255,.02) 45%, rgba(0,0,0,.1)), radial-gradient(ellipse 82% 55% at 50% 0%, color-mix(in srgb, var(--stage-color) 7%, transparent), transparent 70%), rgba(10,11,13,.58)
-    --glass-border-color: color-mix(in srgb, var(--stage-color) 30%, rgba(255,255,255,.09))
-    border: .0625rem solid var(--glass-border-color)
-    border-left-color: color-mix(in srgb, var(--stage-color) 54%, rgba(255,255,255,.06))
-    box-shadow: inset 0 .0625rem 0 rgba(255,255,255,.13), inset 0 -0.0625rem 0 rgba(255,255,255,.025), 0 .55rem 1.35rem rgba(0,0,0,.18), 0 0 .9rem color-mix(in srgb, var(--stage-color) 6%, transparent)
-    transition: transform 220ms $ease-out, border-color 220ms $ease-out, box-shadow 220ms $ease-out
+    min-inline-size: 0
+    border-radius: .88rem !important
+    border: .0625rem solid color-mix(in srgb, var(--stage-color) 28%, rgba(255,255,255,.08)) !important
+    border-left: .0625rem solid color-mix(in srgb, var(--stage-color) 62%, rgba(255,255,255,.1)) !important
+    background: linear-gradient(180deg, color-mix(in srgb, var(--stage-color) 8%, rgba(255,255,255,.068)) 0%, rgba(255,255,255,.026) 30%, rgba(2,3,4,.26) 100%) !important
+    box-shadow: inset 0 .0625rem 0 rgba(255,255,255,.085), inset 0 0 0 .0625rem rgba(255,255,255,.012), 0 .8rem 1.8rem rgba(0,0,0,.16) !important
+    backdrop-filter: blur(.72rem) saturate(1.06) !important
+    -webkit-backdrop-filter: blur(.72rem) saturate(1.06) !important
 
-    &::before
-      content: ''
-      position: absolute
-      inset: .0625rem
-      border-radius: calc(.78rem - .0625rem)
-      z-index: 2
-      pointer-events: none
-      background: linear-gradient(180deg, rgba(255,255,255,.09), transparent 26%), radial-gradient(ellipse 92% 54% at 50% 0%, rgba(255,255,255,.05), transparent 68%), linear-gradient(135deg, transparent 0 62%, color-mix(in srgb, var(--stage-color) 6%, transparent) 100%)
-      opacity: .64
+    > span:nth-of-type(1)
+      inset: -42% -28% auto
+      block-size: 9rem
+      opacity: .2
+      filter: blur(1.55rem)
+      background: radial-gradient(ellipse 80% 72% at 50% 0%, color-mix(in srgb, var(--stage-color) 26%, rgba(255,255,255,.14)), transparent 70%)
+      transform: none
 
-    &::after
-      content: ''
-      position: absolute
-      inset: auto .55rem .42rem .55rem
-      block-size: 1.4rem
-      z-index: 2
-      pointer-events: none
-      border-radius: 50%
-      background: radial-gradient(ellipse at center, color-mix(in srgb, var(--stage-color) 8%, transparent), transparent 68%)
-      filter: blur(.85rem)
-      opacity: .72
+    > span:nth-of-type(2)
+      opacity: .5
+      background: linear-gradient(180deg, color-mix(in srgb, var(--stage-color) 15%, rgba(255,255,255,.11)) 0%, rgba(255,255,255,.035) 23%, transparent 62%, color-mix(in srgb, var(--stage-color) 6%, transparent) 100%)
+
+    > span:nth-of-type(3)
+      opacity: .46
+      background: linear-gradient(145deg, rgba(255,255,255,.09), transparent 28%, transparent 74%, color-mix(in srgb, var(--stage-color) 12%, transparent))
+      box-shadow: inset 0 0 0 .0625rem color-mix(in srgb, var(--stage-color) 20%, rgba(255,255,255,.04))
 
   .diagramCardInner
-    position: relative
-    z-index: 5
-    padding: .95rem .95rem .82rem
+    padding: clamp(.82rem, 1vw, .96rem)
 
   .diagramCardHeader
-    grid-template-columns: 1.24rem minmax(0, 1fr) auto
+    grid-template-columns: 1.25rem minmax(0, 1fr) auto
     column-gap: .48rem
-    min-block-size: 1.24rem
 
   .diagramCardIcon
     inline-size: 1.18rem
     block-size: 1.18rem
-    margin-block-start: .1rem
-    border-radius: .34rem
-    border-color: color-mix(in srgb, var(--stage-color) 42%, rgba(255,255,255,.08))
-    background: radial-gradient(circle at 50% 10%, color-mix(in srgb, var(--stage-color) 20%, transparent), transparent 62%), rgba(255,255,255,.035)
-
-  .diagramCardDot
-    inline-size: .34rem
-    block-size: .34rem
-    box-shadow: 0 0 .42rem color-mix(in srgb, var(--stage-color) 48%, transparent)
+    border-radius: .35rem
 
   .diagramCardHeader strong
-    font-size: .88rem
-    line-height: 1.24
-    font-weight: 730
-
-  .diagramCardCounts
-    gap: .2rem
-
-  .diagramCardCountPill
-    min-inline-size: 1.55rem
-    block-size: 1.05rem
-    padding: 0 .34rem
-    border-radius: .48rem
-    font-size: .66rem
-    color: rgba(245,245,242,.66)
-    background: color-mix(in srgb, var(--stage-color) 10%, rgba(255,255,255,.026))
-    border-color: color-mix(in srgb, var(--stage-color) 24%, rgba(255,255,255,.08))
+    font-size: clamp(.82rem, .88vw, .92rem)
+    line-height: 1.28
 
   .diagramCardDescription
-    margin-block-start: .54rem
-    font-size: .78rem
-    line-height: 1.48
-    color: rgba(245,245,242,.68)
+    margin-block-start: .55rem
+    font-size: clamp(.72rem, .78vw, .8125rem)
+    line-height: 1.5
 
   .diagramCardSection
-    margin-block-start: .68rem
-    font-size: .71rem
-    line-height: 1.46
-    color: rgba(245,245,242,.62)
+    margin-block-start: .58rem
+    font-size: clamp(.68rem, .72vw, .75rem)
+    line-height: 1.45
 
   .diagramCardSection em
-    margin-block-end: .18rem
-    font-size: .66rem
-    letter-spacing: .11em
-    color: rgba(245,245,242,.5)
+    font-size: .64rem
 
-  .diagramCardGlassSelected
-    --glass-border-color: color-mix(in srgb, var(--stage-color) 64%, rgba(255,255,255,.14))
-    border-left-color: var(--stage-color)
-    box-shadow: inset 0 .0625rem 0 rgba(255,255,255,.18), inset 0 -0.0625rem 0 rgba(255,255,255,.04), 0 1rem 2.4rem rgba(0,0,0,.25), 0 0 2rem color-mix(in srgb, var(--stage-color) 18%, transparent)
-
+  .diagramCardGlassSelected,
   .diagramCardGlassRelated
-    --glass-border-color: color-mix(in srgb, var(--stage-color) 42%, rgba(255,255,255,.1))
-    border-left-color: color-mix(in srgb, var(--stage-color) 70%, rgba(255,255,255,.1))
+    border-color: color-mix(in srgb, var(--stage-color) 44%, rgba(255,255,255,.1)) !important
+    border-left-color: color-mix(in srgb, var(--stage-color) 82%, white 6%) !important
+    box-shadow: inset 0 .0625rem 0 rgba(255,255,255,.12), 0 .95rem 2.4rem color-mix(in srgb, var(--stage-color) 14%, rgba(0,0,0,.18)) !important
 
 @media (max-width: 70rem)
   .interactiveExperience
-    .workspaceViewport
-      overflow-x: hidden
-
     .diagramColumns
       grid-template-columns: repeat(2, minmax(0, 1fr))
-      gap: 1rem
 
-@media (max-width: 44rem)
+@media (max-width: 42rem)
   .interactiveExperience
     .diagramColumns
       grid-template-columns: 1fr

@@ -1,25 +1,19 @@
-# Patch: resultado interativo sem scroll horizontal + glass interno
+# TDM interactive visual fit v8
 
-Escopo alterado:
+Escopo: somente `src/features/theory-of-change/components/result-view/experience/result-experience.module.sass`.
 
-- `src/features/theory-of-change/components/result-view/experience/result-experience.module.sass`
+Objetivo:
+- remover overflow horizontal da rota `/exemplos/resultado/interativo`;
+- reduzir a moldura externa para linha fina;
+- fazer colunas caberem no container usando `rem`, `clamp`, `box-sizing` e grid fluido;
+- suavizar o visual de pilula/metalico;
+- reforcar o efeito interno liquid glass nos cards e colunas sem alterar logica.
 
-O patch adiciona overrides escopados em `.interactiveExperience` para:
-
-- impedir scroll horizontal no container da visualizacao interativa;
-- usar `box-sizing: border-box` nos wrappers do diagrama;
-- fazer as 4 colunas caberem no container usando `rem` e `clamp`;
-- manter scroll somente vertical quando houver muitos itens;
-- aplicar grid/background diretamente no viewport para nao aparecer area vazia ao rolar;
-- reforcar o efeito interno liquid glass em colunas e cards via variaveis do `GlassSurface` existente;
-- manter cor de cada etapa apenas nos acentos, bordas, glows, bolinhas, contadores e pills;
-- preservar logica, dados, conexoes, toolbar, tradutor, rotas e `/canvas`.
-
-Comandos:
+Aplicar:
 
 ```bash
 cd /Users/tialarocha/Documents/CHANGE-THEORY/theory-of-change-v1
-unzip -o ~/Downloads/tdm-interactive-glass-fit-v7.zip -d .
+unzip -o ~/Downloads/tdm-interactive-visual-fit-v8.zip -d .
 rm -rf .next
 npm run build
 npm run dev
@@ -27,6 +21,6 @@ npm run dev
 
 Validar:
 
-- http://localhost:3000/exemplos/resultado/interativo
-
-Observacao de validacao local aqui: `npx tsc --noEmit --pretty false` passou. `next build` compilou e terminou TypeScript, mas travou na etapa `Collecting page data` neste sandbox depois de alguns minutos, entao nao considerei como build completo validado aqui.
+```bash
+http://localhost:3000/exemplos/resultado/interativo
+```
