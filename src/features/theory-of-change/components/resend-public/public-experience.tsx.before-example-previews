@@ -1,0 +1,794 @@
+'use client';
+
+import Link from 'next/link';
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
+import {
+  PublicFooter,
+  PublicHeader,
+  PublicReveal,
+  PublicShell
+} from '@/shared/ui/lusion-resend-ds';
+import { exampleTheory } from '../../data/example-theory';
+import { TDM_STAGE_ORDER, type TdmStage } from '../../domain/tdm-stages';
+import { DsButton, DsCodeFrame, DsFooter, DsHeader, DsHero, DsPageShell, DsSection, DsSurface, Reveal } from '@/shared/ui/resend-ds';
+import styles from './public-experience.module.sass';
+
+const STAGE_NAMES: Record<TdmStage, string> = {
+  input: 'Insumos',
+  activity: 'Atividades',
+  output: 'Produtos',
+  outcome: 'Resultados'
+};
+
+const STAGE_X: Record<TdmStage, number> = {
+  input: 10,
+  activity: 38,
+  output: 66,
+  outcome: 90
+};
+
+const STAGE_TEXT: Record<TdmStage, string> = {
+  input: 'Recursos e condições que sustentam a execução.',
+  activity: 'Ações realizadas para transformar intenção em prática.',
+  output: 'Entregas concretas produzidas pela intervenção.',
+  outcome: 'Mudanças esperadas no acompanhamento e na gestão.'
+};
+
+const EDGE_BADGES = ['R', null, null, 'R', null, 'H', 'H'] as const;
+const INITIAL_NODE_ID = exampleTheory.nodes[0]?.id ?? '';
+
+type FlowGraphProps = {
+  mode?: 'preview' | 'interactive';
+};
+
+function stageNodes(stage: TdmStage) {
+  return exampleTheory.nodes.filter((node) => node.stage === stage);
+}
+
+function yForNode(nodeId: string) {
+  const node = nodeById(nodeId);
+  if (!node) return 50;
+  const nodes = stageNodes(node.stage);
+  const index = Math.max(0, nodes.findIndex((item) => item.id === node.id));
+  const positions = nodes.length === 1 ? [50] : nodes.length === 2 ? [38, 62] : [30, 50, 70];
+  return positions[index] ?? 50;
+}
+
+function nodeById(nodeId: string) {
+  return exampleTheory.nodes.find((node) => node.id === nodeId);
+}
+
+function addDescendants(nodeId: string, ids: Set<string>) {
+  ids.add(nodeId);
+  for (const edge of exampleTheory.edges) {
+    if (edge.source === nodeId && !ids.has(edge.target)) addDescendants(edge.target, ids);
+  }
+}
+
+function addAncestors(nodeId: string, ids: Set<string>) {
+  ids.add(nodeId);
+  for (const edge of exampleTheory.edges) {
+    if (edge.target === nodeId && !ids.has(edge.source)) addAncestors(edge.source, ids);
+  }
+}
+
+function getFocusIds(nodeId: string) {
+  const ids = new Set<string>();
+  addDescendants(nodeId, ids);
+  addAncestors(nodeId, ids);
+  return ids;
+}
+
+function edgeFocused(edge: { source: string; target: string }, ids: Set<string>) {
+  return ids.has(edge.source) && ids.has(edge.target);
+}
+
+function edgePath(index: number) {
+  const edge = exampleTheory.edges[index];
+  const source = nodeById(edge.source);
+  const target = nodeById(edge.target);
+  if (!source || !target) return '';
+  const x1 = STAGE_X[source.stage] * 10;
+  const y1 = yForNode(source.id) * 5.4;
+  const x2 = STAGE_X[target.stage] * 10;
+  const y2 = yForNode(target.id) * 5.4;
+  const curve = Math.max(72, Math.abs(x2 - x1) * 0.42);
+  return `M ${x1} ${y1} C ${x1 + curve} ${y1}, ${x2 - curve} ${y2}, ${x2} ${y2}`;
+}
+
+function edgePoint(index: number) {
+  const edge = exampleTheory.edges[index];
+  const source = nodeById(edge.source);
+  const target = nodeById(edge.target);
+  if (!source || !target) return { x: 0, y: 0 };
+  return {
+    x: ((STAGE_X[source.stage] + STAGE_X[target.stage]) / 2) * 10,
+    y: ((yForNode(source.id) + yForNode(target.id)) / 2) * 5.4
+  };
+}
+
+export function HomeExperiencePage() {
+  return (
+    <DsPageShell>
+      <DsHeader />
+      <DsHero
+        visual={<ProductOrb />}
+        kicker="Construtor de Teoria da Mudança"
+        title="Desenhe uma mudança antes de tentar explicá-la."
+        description="Um produto visual para transformar problema, etapas, conexões, riscos e hipóteses em uma narrativa clara."
+        actions={
+          <>
+            <DsButton href="/canvas">Comece agora</DsButton>
+            <DsButton href="/guia-de-aprendizado" variant="ghost">Ver guia</DsButton>
+          </>
+        }
+      />
+      <InterfaceSection />
+      <ResultMirrorSection />
+      <DsFooter />
+    </DsPageShell>
+  );
+}
+
+function ProductOrb() {
+  return (
+    <div className={styles.productOrb} aria-hidden="true">
+      <span />
+      <i />
+    </div>
+  );
+}
+
+function InterfaceSection() {
+  return (
+    <DsSection
+      eyebrow="Teoria como interface"
+      title="Permita que a equipe leia o caminho da intervenção."
+      description="A página pública troca o layout antigo por seções amplas, cards de contexto, painel técnico e uma prévia navegável do resultado."
+    >
+      <div className={styles.inboundGrid}>
+        <Reveal>
+          <div className={styles.stepCards}>
+            {[
+              ['01', 'Organizar etapas', 'Agrupe insumos, atividades, produtos e resultados em uma sequência fácil de ler.'],
+              ['02', 'Evidenciar relações', 'Mostre quais cards se conectam, onde há risco e quais hipóteses sustentam o fluxo.'],
+              ['03', 'Apresentar decisão', 'Transforme a teoria em relatório visual, não em documento seco.']
+            ].map(([number, title, text]) => (
+              <motion.article key={title} className={styles.stepCard} whileHover={{ y: '-0.35rem' }} transition={{ duration: 0.18 }}>
+                <span>{number}</span>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </motion.article>
+            ))}
+          </div>
+        </Reveal>
+        <Reveal delay={0.05}>
+          <DsCodeFrame title="Fluxo da teoria">
+{`criarTeoria({
+  problema: "acompanhamento irregular",
+  etapas: ["insumos", "atividades", "produtos", "resultados"],
+  conexoes: "visiveis",
+  riscos: "marcados",
+  hipoteses: "testaveis"
+})`}
+          </DsCodeFrame>
+        </Reveal>
+      </div>
+    </DsSection>
+  );
+}
+
+function ResultMirrorSection() {
+  return (
+    <DsSection
+      eyebrow="Prévia conectada"
+      title="Clique em um card e acompanhe o caminho até o resultado."
+      description="A prévia é um espelho reduzido da visualização interativa: cards relacionados ganham foco, os demais recuam, e as setas indicam risco ou hipótese quando existir."
+    >
+      <ResultPreviewPanel />
+    </DsSection>
+  );
+}
+
+type GuideStepAccent = {
+  color: string;
+  glow: string;
+  soft: string;
+};
+
+type GuideStep = {
+  number: string;
+  title: string;
+  description: string;
+  recommendation: string;
+  example: string;
+  accent: GuideStepAccent;
+};
+
+const GUIDE_STEP_ACCENTS = {
+  silver: {
+    color: 'rgba(232, 235, 242, 0.92)',
+    glow: 'rgba(255, 255, 255, 0.22)',
+    soft: 'rgba(255, 255, 255, 0.08)'
+  },
+  input: {
+    color: 'rgba(198, 181, 255, 0.94)',
+    glow: 'rgba(198, 181, 255, 0.34)',
+    soft: 'rgba(198, 181, 255, 0.12)'
+  },
+  activity: {
+    color: 'rgba(185, 217, 255, 0.94)',
+    glow: 'rgba(185, 217, 255, 0.34)',
+    soft: 'rgba(185, 217, 255, 0.12)'
+  },
+  output: {
+    color: 'rgba(255, 216, 168, 0.94)',
+    glow: 'rgba(255, 216, 168, 0.34)',
+    soft: 'rgba(255, 216, 168, 0.12)'
+  },
+  outcome: {
+    color: 'rgba(185, 245, 215, 0.94)',
+    glow: 'rgba(185, 245, 215, 0.34)',
+    soft: 'rgba(185, 245, 215, 0.12)'
+  },
+  connections: {
+    color: 'rgba(232, 235, 242, 0.92)',
+    glow: 'rgba(255, 255, 255, 0.18)',
+    soft: 'rgba(255, 255, 255, 0.06)'
+  }
+} as const;
+
+const GUIDE_STEPS: GuideStep[] = [
+  {
+    number: 'Passo 0',
+    title: 'Fundamentos da Teoria de Mudança',
+    description:
+      'Entenda a lógica CLEAR/FGV para construir uma Teoria de Mudança: insumos → atividades → produtos → resultados.',
+    recommendation:
+      'Use esta etapa para compreender a coerência causal, as hipóteses e os riscos antes de preencher os cartões.',
+    example: 'Insumos sustentam atividades, atividades geram produtos, produtos viabilizam resultados.',
+    accent: GUIDE_STEP_ACCENTS.silver
+  },
+  {
+    number: 'Passo 1',
+    title: 'Insumos',
+    description: 'Liste recursos e capacidades necessários para viabilizar a política.',
+    recommendation:
+      'Escreva como recursos ou capacidades em forma nominal: equipe formada, orçamento anual, parceria com municípios.',
+    example: 'Equipe técnica, orçamento, dados educacionais.',
+    accent: GUIDE_STEP_ACCENTS.input
+  },
+  {
+    number: 'Passo 2',
+    title: 'Atividades',
+    description: 'Descreva o que a política faz com os insumos.',
+    recommendation: 'Comece com verbos de ação: realizar, oferecer, implantar, acompanhar.',
+    example: 'Formar professores, acompanhar escolas, revisar planos de ação.',
+    accent: GUIDE_STEP_ACCENTS.activity
+  },
+  {
+    number: 'Passo 3',
+    title: 'Produtos',
+    description: 'Registre as entregas diretas geradas pelas atividades.',
+    recommendation: 'Produtos devem ser observáveis ou quantificáveis.',
+    example: 'Oficinas realizadas, planos validados, relatórios emitidos.',
+    accent: GUIDE_STEP_ACCENTS.output
+  },
+  {
+    number: 'Passo 4',
+    title: 'Resultados',
+    description: 'Descreva mudanças de curto prazo nos públicos-alvo.',
+    recommendation: 'Resultados indicam mudança de comportamento, atitude ou condição.',
+    example: 'Escolas passam a usar dados com mais regularidade.',
+    accent: GUIDE_STEP_ACCENTS.outcome
+  },
+  {
+    number: 'Passo 5',
+    title: 'Conexões causais',
+    description:
+      'Clique em um cartão de origem e depois em um cartão do estágio seguinte para criar uma relação causal.',
+    recommendation: 'Conexões só acontecem entre fases consecutivas.',
+    example: 'Insumos → Atividades → Produtos → Resultados.',
+    accent: GUIDE_STEP_ACCENTS.connections
+  },
+  {
+    number: 'Passo 6',
+    title: 'Riscos e hipóteses',
+    description: 'Use riscos e hipóteses para qualificar as conexões da teoria.',
+    recommendation:
+      'Riscos aparecem entre insumos, atividades e produtos. Hipóteses aparecem entre produtos e resultados.',
+    example: 'Risco: baixa adesão das escolas. Hipótese: produtos entregues geram mudança observável.',
+    accent: GUIDE_STEP_ACCENTS.connections
+  },
+  {
+    number: 'Passo 7',
+    title: 'Leitura final',
+    description: 'Visualize a teoria completa após conectar as etapas.',
+    recommendation:
+      'Clique nos cards para destacar relações e revisar riscos, hipóteses e coerência causal.',
+    example: 'A leitura final mostra quais elementos sustentam cada resultado.',
+    accent: GUIDE_STEP_ACCENTS.silver
+  }
+];
+
+function useActiveGuideStep(stepCount: number) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const stepRefs = useRef<Array<HTMLElement | null>>([]);
+
+  useEffect(() => {
+    const elements = stepRefs.current.filter((element): element is HTMLElement => Boolean(element));
+    if (!elements.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (!visible.length) return;
+
+        const index = elements.indexOf(visible[0].target as HTMLElement);
+        if (index >= 0) setActiveIndex(index);
+      },
+      { rootMargin: '-40% 0px -40% 0px', threshold: [0, 0.2, 0.45, 0.7, 1] }
+    );
+
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, [stepCount]);
+
+  const setStepRef = (index: number) => (element: HTMLElement | null) => {
+    stepRefs.current[index] = element;
+  };
+
+  return { activeIndex, setStepRef };
+}
+
+export function GuideExperiencePage() {
+  return (
+    <PublicShell tone="silver" className={styles.guideShell}>
+      <PublicHeader />
+      <GuideHero />
+      <GuideTimeline />
+      <PublicFooter />
+    </PublicShell>
+  );
+}
+
+function GuideHero() {
+  return (
+    <section className={styles.guideHero}>
+      <PublicReveal className={styles.guideHeroCopy} amount={0.35}>
+        <p className={styles.guideKicker}>Guia de aprendizado</p>
+        <h1>Construa a teoria etapa por etapa.</h1>
+        <p className={styles.guideHeroDescription}>
+          Cada etapa revela uma parte da lógica causal, com orientação prática e contexto visual.
+        </p>
+      </PublicReveal>
+    </section>
+  );
+}
+
+function GuideTimeline() {
+  const reducedMotion = useReducedMotion() ?? false;
+  const timelineRef = useRef<HTMLElement>(null);
+  const { activeIndex, setStepRef } = useActiveGuideStep(GUIDE_STEPS.length);
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ['start 0.75', 'end 0.35']
+  });
+  const railScale = useTransform(scrollYProgress, [0, 1], [0.04, 1]);
+  const shimmerY = useTransform(scrollYProgress, [0, 1], ['0%', '88%']);
+
+  return (
+    <section ref={timelineRef} className={styles.guideTimeline} aria-label="Linha do tempo do guia">
+      <div className={styles.guideTimelineRail} aria-hidden="true">
+        <motion.div className={styles.guideTimelineRailFill} style={{ scaleY: railScale }} />
+        <motion.div className={styles.guideTimelineRailShimmer} style={{ y: shimmerY }} />
+        {GUIDE_STEPS.map((step, index) => (
+          <GuideTimelineDot
+            key={step.number}
+            step={step}
+            index={index}
+            isActive={activeIndex === index}
+            reduced={reducedMotion}
+          />
+        ))}
+      </div>
+
+      <div className={styles.guideTimelineSteps}>
+        {GUIDE_STEPS.map((step, index) => (
+          <GuideTimelineRow
+            key={step.number}
+            step={step}
+            index={index}
+            isActive={activeIndex === index}
+            reduced={reducedMotion}
+            setRef={setStepRef(index)}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function GuideTimelineDot({
+  step,
+  index,
+  isActive,
+  reduced
+}: {
+  step: GuideStep;
+  index: number;
+  isActive: boolean;
+  reduced: boolean;
+}) {
+  const top = `${((index + 0.5) / GUIDE_STEPS.length) * 100}%`;
+
+  return (
+    <motion.span
+      className={styles.guideTimelineDot}
+      style={
+        {
+          top,
+          '--step-accent': step.accent.color,
+          '--step-glow': step.accent.glow
+        } as CSSProperties
+      }
+      initial={{ opacity: 0, scale: reduced ? 1 : 0.6 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true, amount: 0.2 }}
+      animate={{
+        scale: isActive ? 1.35 : 1,
+        opacity: isActive ? 1 : 0.72,
+        boxShadow: isActive ? `0 0 1.1rem ${step.accent.glow}, 0 0 0 0.22rem ${step.accent.soft}` : `0 0 0 0.14rem ${step.accent.soft}`
+      }}
+      transition={{ duration: reduced ? 0.01 : 0.34, ease: [0.22, 1, 0.36, 1] }}
+      aria-hidden="true"
+    />
+  );
+}
+
+function GuideTimelineRow({
+  step,
+  index,
+  isActive,
+  reduced,
+  setRef
+}: {
+  step: GuideStep;
+  index: number;
+  isActive: boolean;
+  reduced: boolean;
+  setRef: (element: HTMLElement | null) => void;
+}) {
+  const showStageAccents = step.number === 'Passo 5' || step.number === 'Passo 6';
+
+  return (
+    <article
+      ref={setRef}
+      className={styles.guideTimelineRow}
+      style={
+        {
+          '--step-accent': step.accent.color,
+          '--step-accent-soft': step.accent.soft,
+          '--step-soft': step.accent.soft
+        } as CSSProperties
+      }
+    >
+      <motion.div
+        className={styles.guideTimelineCopy}
+        initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : '1.25rem' }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.35 }}
+        transition={{ duration: reduced ? 0.01 : 0.55, delay: index * 0.02, ease: [0.22, 1, 0.36, 1] }}
+        animate={{ opacity: isActive ? 1 : 0.48 }}
+      >
+        <span className={styles.guideStepNumber}>{step.number}</span>
+        <h2>{step.title}</h2>
+        <p>{step.description}</p>
+      </motion.div>
+
+      <motion.div
+        className={styles.guideStepCardMotion}
+        initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : '1.75rem' }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.28 }}
+        transition={{ duration: reduced ? 0.01 : 0.62, delay: 0.04 + index * 0.02, ease: [0.22, 1, 0.36, 1] }}
+        animate={{
+          opacity: isActive ? 1 : 0.38,
+          y: isActive ? '-0.35rem' : '0rem',
+          scale: isActive ? 1 : 0.985
+        }}
+      >
+        <div
+          className={styles.guideStepCardShell}
+          data-reduced-motion={reduced ? 'true' : 'false'}
+          style={
+            {
+              '--step-accent': step.accent.color,
+              '--step-accent-soft': step.accent.soft,
+              '--step-accent-glow': step.accent.glow
+            } as CSSProperties
+          }
+        >
+          <span className={styles.guideStepCardBorderSweep} aria-hidden="true" />
+          <div className={styles.guideStepCardInner}>
+          {showStageAccents ? (
+            <div className={styles.guideStageAccents} aria-hidden="true">
+              <span style={{ '--chip-color': GUIDE_STEP_ACCENTS.input.color } as CSSProperties}>Insumos</span>
+              <span style={{ '--chip-color': GUIDE_STEP_ACCENTS.activity.color } as CSSProperties}>Atividades</span>
+              <span style={{ '--chip-color': GUIDE_STEP_ACCENTS.output.color } as CSSProperties}>Produtos</span>
+              <span style={{ '--chip-color': GUIDE_STEP_ACCENTS.outcome.color } as CSSProperties}>Resultados</span>
+            </div>
+          ) : null}
+          <h3>{step.title}</h3>
+          <p className={styles.guideStepCardLead}>{step.description}</p>
+          <div className={styles.guideStepCardMeta}>
+            <div>
+              <span>Recomendação</span>
+              <p>{step.recommendation}</p>
+            </div>
+            <div>
+              <span>Exemplo</span>
+              <p>{step.example}</p>
+            </div>
+          </div>
+          </div>
+        </div>
+      </motion.div>
+    </article>
+  );
+}
+
+export function ExamplesExperiencePage() {
+  return (
+    <DsPageShell>
+      <DsHeader />
+      <DsHero
+        compact
+        visual={<ProductOrb />}
+        kicker="Exemplos"
+        title="Explore uma teoria pronta antes de criar a sua."
+        description="Abra a leitura executiva, navegue pela visualização interativa ou vá direto para o canvas preservado."
+        actions={<DsButton href="/exemplos/resultado">Ver resultado</DsButton>}
+      />
+      <DsSection compact eyebrow="Rotas principais" title="Um fluxo simples, sem labirinto." description="Cada card tem uma função clara no produto.">
+        <div className={styles.galleryGrid}>
+          {[
+            ['Resultado conectado', 'Relatório visual com prévia, conexões e exportação.', '/exemplos/resultado'],
+            ['Visualização interativa', 'Área dedicada para clicar em cards, focar relações e ler R/H.', '/exemplos/resultado/interativo'],
+            ['Canvas', 'Editor principal mantido intacto para ser redesenhado por último.', '/canvas']
+          ].map(([title, text, href], index) => (
+            <Reveal key={title} delay={index * 0.05}>
+              <Link href={href} className={styles.galleryCard}>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <h3>{title}</h3>
+                <p>{text}</p>
+                <em>Abrir</em>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+      </DsSection>
+      <DsFooter />
+    </DsPageShell>
+  );
+}
+
+export function ReferencesExperiencePage() {
+  return (
+    <DsPageShell>
+      <DsHeader />
+      <DsHero
+        compact
+        kicker="Referências"
+        title="Base visual e técnica para a nova experiência."
+        description="Organize as referências por uso: experiência, arquitetura, movimento e lógica da Teoria da Mudança."
+        actions={<DsButton href="/guia-de-aprendizado">Ver linha do tempo</DsButton>}
+      />
+      <DsSection compact eyebrow="Biblioteca" title="Referência com contexto, não lista seca." description="Cada bloco explica por que aquela base existe no produto.">
+        <div className={styles.referenceGrid}>
+          {[
+            ['Experiência visual', 'SaaS dark, header fino, hero editorial, grade sutil e cards com presença.'],
+            ['Arquitetura pública', 'Rotas públicas isoladas do canvas, componentes compartilhados e feature scoped.'],
+            ['Movimento', 'Reveals, foco, elevação e conexões desenhadas com Motion, sem travar scroll.'],
+            ['Regra de negócio', 'Etapas, conexões, riscos e hipóteses continuam sendo o núcleo da teoria.']
+          ].map(([title, text]) => (
+            <DsSurface key={title} className={styles.referenceCard}>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </DsSurface>
+          ))}
+        </div>
+      </DsSection>
+      <DsFooter />
+    </DsPageShell>
+  );
+}
+
+export function ResultExperiencePage() {
+  return (
+    <DsPageShell>
+      <DsHeader />
+      <DsHero
+        compact
+        kicker="Resultado da teoria"
+        title="Uma leitura executiva com prévia viva."
+        description="O resultado começa com contexto e abre a visualização interativa quando o usuário precisa investigar as relações."
+        actions={
+          <>
+            <DsButton href="/exemplos/resultado/interativo">Abrir visualização</DsButton>
+            <DsButton href="#relacoes" variant="ghost">Ler relações</DsButton>
+          </>
+        }
+      />
+      <ResultMirrorSection />
+      <ExportActions />
+      <ResultRelations />
+      <DsFooter />
+    </DsPageShell>
+  );
+}
+
+function ExportActions() {
+  return (
+    <Reveal>
+      <div className={styles.exportBar}>
+        {['PDF', 'JPEG', 'PNG', 'SVG'].map((format) => <button key={format} type="button">Exportar {format}</button>)}
+      </div>
+    </Reveal>
+  );
+}
+
+function ResultRelations() {
+  return (
+    <DsSection compact eyebrow="Relações causais" title="O que cada seta está dizendo." description="Abaixo, a teoria vira leitura: origem, destino e atenção necessária em risco ou hipótese.">
+      <div id="relacoes" className={styles.relationGrid}>
+        {exampleTheory.edges.map((edge, index) => {
+          const source = nodeById(edge.source);
+          const target = nodeById(edge.target);
+          const badge = EDGE_BADGES[index];
+          return (
+            <Reveal key={edge.id} delay={index * 0.025}>
+              <DsSurface className={styles.relationCard}>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <h3>{source?.title} → {target?.title}</h3>
+                <p>{badge === 'R' ? 'Risco: esta relação depende de adesão, recurso ou regularidade de execução.' : badge === 'H' ? 'Hipótese: esta relação precisa se confirmar na prática.' : 'Relação causal direta entre etapas do fluxo.'}</p>
+                {badge ? <em>{badge}</em> : null}
+              </DsSurface>
+            </Reveal>
+          );
+        })}
+      </div>
+    </DsSection>
+  );
+}
+
+function ResultPreviewPanel() {
+  return (
+    <div className={styles.previewShell}>
+      <aside className={styles.previewContext}>
+        <span>Prévia do resultado</span>
+        <h3>{exampleTheory.title}</h3>
+        <p>Clique em um card para revelar as conexões até o resultado. Esta área é pequena de propósito: a exploração completa fica na rota interativa.</p>
+        <DsButton href="/exemplos/resultado/interativo" variant="secondary">Abrir tela completa</DsButton>
+      </aside>
+      <FlowGraph mode="preview" />
+    </div>
+  );
+}
+
+function FlowGraph({ mode = 'preview' }: FlowGraphProps) {
+  const [activeNodeId, setActiveNodeId] = useState(INITIAL_NODE_ID);
+  const reduced = useReducedMotion();
+  const focusIds = useMemo(() => getFocusIds(activeNodeId), [activeNodeId]);
+  const activeNode = nodeById(activeNodeId);
+
+  return (
+    <div className={`${styles.flowGraph} ${mode === 'interactive' ? styles.flowGraphInteractive : ''}`}>
+      <div className={styles.stageLabels}>
+        {TDM_STAGE_ORDER.map((stage) => <span key={stage}>{STAGE_NAMES[stage]}</span>)}
+      </div>
+
+      <svg className={styles.connectionSvg} viewBox="0 0 1000 540" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <marker id={`arrow-${mode}`} markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+            <path d="M0,0 L10,5 L0,10 Z" fill="rgba(247,247,248,.74)" />
+          </marker>
+        </defs>
+        {exampleTheory.edges.map((edge, index) => {
+          const focused = edgeFocused(edge, focusIds);
+          const point = edgePoint(index);
+          const badge = EDGE_BADGES[index];
+          return (
+            <g key={edge.id} className={`${styles.edge} ${focused ? styles.edgeOn : styles.edgeOff}`}>
+              <motion.path
+                d={edgePath(index)}
+                markerEnd={`url(#arrow-${mode})`}
+                initial={{ pathLength: reduced ? 1 : 0, opacity: reduced ? (focused ? 1 : 0.1) : 0 }}
+                animate={{ pathLength: 1, opacity: focused ? 1 : 0.1 }}
+                transition={{ duration: 0.64, ease: [0.22, 1, 0.36, 1], delay: index * 0.03 }}
+              />
+              {badge ? (
+                <motion.g
+                  initial={{ opacity: focused ? 1 : 0.14, scale: focused ? 1 : 0.82 }}
+                  animate={{ opacity: focused ? 1 : 0.14, scale: focused ? 1 : 0.82 }}
+                  transition={{ duration: 0.22 }}
+                >
+                  <circle cx={point.x} cy={point.y} r="15" />
+                  <text x={point.x} y={point.y + 4}>{badge}</text>
+                </motion.g>
+              ) : null}
+            </g>
+          );
+        })}
+      </svg>
+
+      <div className={styles.nodeLayer}>
+        {exampleTheory.nodes.map((node) => {
+          const active = node.id === activeNodeId;
+          const focused = focusIds.has(node.id);
+          return (
+            <motion.button
+              key={node.id}
+              type="button"
+              onClick={() => setActiveNodeId(node.id)}
+              className={`${styles.flowNode} ${active ? styles.nodeActive : ''} ${!focused ? styles.nodeMuted : ''}`}
+              style={{ '--x': `${STAGE_X[node.stage]}%`, '--y': `${yForNode(node.id)}%` } as CSSProperties}
+              animate={{ y: active ? '-0.62rem' : '0rem', scale: active ? 1.045 : focused ? 1 : 0.96 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <strong>{node.title}</strong>
+              <small>{node.description}</small>
+            </motion.button>
+          );
+        })}
+      </div>
+
+      {mode === 'interactive' ? (
+        <aside className={styles.inspectorPanel}>
+          <span>Explorar conexões</span>
+          <h2>{activeNode?.title}</h2>
+          <p>{activeNode?.description}</p>
+          <div>
+            <em>Risco</em>
+            <em>Hipótese</em>
+            <em>{Math.max(0, focusIds.size - 1)} relacionados</em>
+          </div>
+        </aside>
+      ) : null}
+    </div>
+  );
+}
+
+export function ResultInteractiveWorkspace() {
+  const [zoom, setZoom] = useState(1);
+
+  useEffect(() => {
+    document.body.classList.add('resend-public-scroll');
+    return () => document.body.classList.remove('resend-public-scroll');
+  }, []);
+
+  return (
+    <main data-resend-page="true" className={styles.interactivePage}>
+      <div className={styles.workspaceBackground} aria-hidden="true" />
+      <header className={styles.workspaceTopbar}>
+        <Link href="/" className={styles.workspaceBrand}><span /><strong>{exampleTheory.title}</strong></Link>
+        <div className={styles.workspaceControls}>
+          <button type="button" onClick={() => setZoom((value) => Math.min(1.22, value + 0.08))}>+</button>
+          <span>{Math.round(zoom * 100)}%</span>
+          <button type="button" onClick={() => setZoom((value) => Math.max(0.78, value - 0.08))}>−</button>
+          <button type="button" onClick={() => setZoom(1)}>Centralizar</button>
+          <Link href="/exemplos/resultado">Fechar</Link>
+        </div>
+      </header>
+      <section className={styles.workspaceStage}>
+        <motion.div className={styles.workspaceScale} animate={{ scale: zoom }} transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}>
+          <FlowGraph mode="interactive" />
+        </motion.div>
+      </section>
+    </main>
+  );
+}
