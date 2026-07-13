@@ -34,27 +34,30 @@ type PreviewPhase =
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+/** Ciclo total alvo: ~46s (dentro de 36–48s) */
 const TIMING = {
-  intro: 2600,
-  cardDelay: 450,
-  stageDelay: 750,
-  afterLastCard: 550,
-  connDelay: 1350,
-  afterLastConn: 450,
-  transition: 2800,
-  colDelay: 550,
-  resultCardDelay: 500,
-  arrowDelay: 1100,
-  afterLastArrow: 450,
-  finalMessage: 2700,
-  restartPause: 1500,
+  intro: 3000,
+  initialCardDelay: 800,
+  cardDelay: 850,
+  stageDelay: 1350,
+  afterLastCard: 2000,
+  connDelay: 1000,
+  afterLastConn: 1500,
+  transition: 4500,
+  colDelay: 1100,
+  resultCardDelay: 450,
+  afterBuildResult: 2500,
+  arrowDelay: 1400,
+  afterLastArrow: 1200,
+  finalMessage: 4000,
+  restartPause: 2000,
 } as const;
 
 const STAGE_META: Record<StageId, { label: string; color: string; count: number }> = {
   input: { label: 'Insumos', color: PREVIEW_STAGE_COLORS.input, count: 3 },
   activity: { label: 'Atividades', color: PREVIEW_STAGE_COLORS.activity, count: 2 },
   product: { label: 'Produtos', color: PREVIEW_STAGE_COLORS.product, count: 2 },
-  outcome: { label: 'Resultado', color: PREVIEW_STAGE_COLORS.outcome, count: 1 },
+  outcome: { label: 'Resultados', color: PREVIEW_STAGE_COLORS.outcome, count: 1 },
 };
 
 const FLOW_CARDS: FlowCard[] = [
@@ -82,13 +85,26 @@ const RESULT_ARROWS: Connection[] = [
   { id: 'a1', d: 'M 22% 50% L 30% 50%', color: 'rgba(255,255,255,0.42)', arrowX: 30, arrowY: 50 },
   { id: 'a2', d: 'M 47% 50% L 55% 50%', color: 'rgba(255,255,255,0.42)', arrowX: 55, arrowY: 50 },
   { id: 'a3', d: 'M 72% 50% L 80% 50%', color: 'rgba(255,255,255,0.42)', arrowX: 80, arrowY: 50 },
-  { id: 'a4', d: 'M 67% 28% C 74% 24%, 78% 22%, 85% 24%', color: 'rgba(74,222,189,0.45)', arrowX: 85, arrowY: 24 },
 ];
 
 const STAGES_ORDER: StageId[] = ['input', 'activity', 'product', 'outcome'];
 
+const CARD_ENTER = {
+  initial: { opacity: 0, y: -10, scale: 0.985, filter: 'blur(0.25rem)' },
+  visible: { opacity: 1, y: 0, scale: 1, filter: 'blur(0rem)' },
+  hidden: { opacity: 0, y: -10, scale: 0.985, filter: 'blur(0.25rem)' },
+  transition: { duration: 0.92, ease: EASE },
+};
+
+const COLUMN_ENTER = {
+  initial: { opacity: 0, x: -12, filter: 'blur(0.25rem)' },
+  visible: { opacity: 1, x: 0, filter: 'blur(0rem)' },
+  hidden: { opacity: 0, x: -12, filter: 'blur(0.25rem)' },
+  transition: { duration: 0.95, ease: EASE },
+};
+
 function getCardDelay(prevCard: FlowCard | null, nextCard: FlowCard): number {
-  if (!prevCard) return 0;
+  if (!prevCard) return TIMING.initialCardDelay;
   if (prevCard.col !== nextCard.col) return TIMING.stageDelay;
   return TIMING.cardDelay;
 }
@@ -105,10 +121,10 @@ function OverlayMessage({
   return (
     <motion.div
       className={[styles.overlayMessage, className].filter(Boolean).join(' ')}
-      initial={{ opacity: 0, y: 8, scale: 0.985 }}
+      initial={{ opacity: 0, y: '0.5rem', scale: 0.985 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: -6, scale: 0.985 }}
-      transition={{ duration: 0.65, ease: EASE }}
+      exit={{ opacity: 0, y: '-0.375rem', scale: 0.985 }}
+      transition={{ duration: 0.7, ease: EASE }}
     >
       <h3 className={styles.overlayTitle}>{title}</h3>
       <p className={styles.overlaySubtitle}>{subtitle}</p>
@@ -121,28 +137,22 @@ function SkeletonCard({ stage, visible }: { stage: StageId; visible: boolean }) 
   return (
     <motion.div
       className={styles.cardWrap}
-      initial={{ opacity: 0, y: -12, scale: 0.985 }}
-      animate={visible ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: -12, scale: 0.985 }}
-      transition={{ duration: 0.75, ease: EASE }}
+      initial={CARD_ENTER.initial}
+      animate={visible ? CARD_ENTER.visible : CARD_ENTER.hidden}
+      transition={CARD_ENTER.transition}
     >
       <div className={styles.card} style={{ '--stage-color': color } as CSSProperties}>
         <span className={styles.cardAccent} />
-        <div className={styles.skeletonLine} style={{ width: '68%' }} />
+        <div className={styles.skeletonLine} />
         <div className={styles.skeletonLineShort} />
       </div>
     </motion.div>
   );
 }
 
-function FlowConnection({
-  conn,
-  visible,
-  index,
-}: {
-  conn: Connection;
-  visible: boolean;
-  index: number;
-}) {
+function FlowConnection({ conn, visible }: { conn: Connection; visible: boolean }) {
+  const pathDuration = 1.15;
+
   return (
     <g>
       <motion.path
@@ -154,19 +164,21 @@ function FlowConnection({
         strokeDasharray="1.2 1.8"
         vectorEffect="non-scaling-stroke"
         initial={{ pathLength: 0, opacity: 0 }}
-        animate={visible ? { pathLength: 1, opacity: 0.62 } : { pathLength: 0, opacity: 0 }}
-        transition={{ duration: 1, ease: EASE, delay: index > 0 ? 0 : 0 }}
+        animate={visible ? { pathLength: 1, opacity: 0.58 } : { pathLength: 0, opacity: 0 }}
+        transition={{ duration: pathDuration, ease: EASE }}
       />
-      {visible ? (
-        <motion.polygon
-          points={`${conn.arrowX},${conn.arrowY - 0.6} ${conn.arrowX + 1.2},${conn.arrowY} ${conn.arrowX},${conn.arrowY + 0.6}`}
-          fill={conn.color}
-          initial={{ opacity: 0, scale: 0.7 }}
-          animate={{ opacity: 0.75, scale: 1 }}
-          transition={{ duration: 0.35, ease: EASE, delay: 1 }}
-          style={{ transformOrigin: `${conn.arrowX}% ${conn.arrowY}%` }}
-        />
-      ) : null}
+      <motion.polygon
+        points={`${conn.arrowX},${conn.arrowY - 0.6} ${conn.arrowX + 1.2},${conn.arrowY} ${conn.arrowX},${conn.arrowY + 0.6}`}
+        fill={conn.color}
+        initial={{ opacity: 0, scale: 0.6 }}
+        animate={
+          visible
+            ? { opacity: 0.72, scale: 1 }
+            : { opacity: 0, scale: 0.6 }
+        }
+        transition={{ duration: 0.35, ease: EASE, delay: visible ? pathDuration * 0.55 : 0 }}
+        style={{ transformOrigin: `${conn.arrowX}% ${conn.arrowY}%` }}
+      />
     </g>
   );
 }
@@ -174,11 +186,11 @@ function FlowConnection({
 function BuildView({
   visibleCards,
   visibleConnections,
-  receded,
+  hidden,
 }: {
   visibleCards: number;
   visibleConnections: number;
-  receded?: boolean;
+  hidden?: boolean;
 }) {
   const cardsByCol = useMemo(() => {
     const cols: FlowCard[][] = [[], [], [], []];
@@ -194,35 +206,52 @@ function BuildView({
     <motion.div
       className={styles.previewInner}
       animate={
-        receded
-          ? { opacity: 0.18, filter: 'blur(3px)', scale: 0.985 }
-          : { opacity: 1, filter: 'blur(0px)', scale: 1 }
+        hidden
+          ? { opacity: 0, filter: 'blur(0.375rem)', scale: 0.98 }
+          : { opacity: 1, filter: 'blur(0rem)', scale: 1 }
       }
-      transition={{ duration: 0.7, ease: EASE }}
+      transition={{ duration: 0.75, ease: EASE }}
+      aria-hidden={hidden}
     >
       <div className={styles.flowGrid}>
         {cardsByCol.map((colCards, colIdx) => {
           const stage = STAGES_ORDER[colIdx];
           const meta = STAGE_META[stage];
+          const colStartIndex = cardIndex;
+          const colEndIndex = colStartIndex + colCards.length;
+          const colHasVisibleCards = visibleCards > colStartIndex;
+          cardIndex = colEndIndex;
+
           return (
             <div key={stage} className={styles.column}>
-              <p className={styles.columnHeader} style={{ color: meta.color }}>
-                {meta.label}
-              </p>
-              {colCards.map((card) => {
-                const idx = cardIndex;
-                cardIndex += 1;
+              {colHasVisibleCards ? (
+                <motion.p
+                  className={styles.columnHeader}
+                  style={{ color: meta.color }}
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 0.55, y: 0 }}
+                  transition={{ duration: 0.5, ease: EASE }}
+                >
+                  {meta.label}
+                </motion.p>
+              ) : (
+                <span className={styles.columnHeaderPlaceholder} aria-hidden="true" />
+              )}
+              {colCards.map((card, localIdx) => {
+                const idx = colStartIndex + localIdx;
                 return <SkeletonCard key={card.id} stage={card.stage} visible={idx < visibleCards} />;
               })}
             </div>
           );
         })}
       </div>
-      <svg className={styles.connectionsSvg} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        {CONNECTIONS.map((conn, i) => (
-          <FlowConnection key={conn.id} conn={conn} visible={i < visibleConnections} index={i} />
-        ))}
-      </svg>
+      {visibleConnections > 0 ? (
+        <svg className={styles.connectionsSvg} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          {CONNECTIONS.map((conn, i) => (
+            <FlowConnection key={conn.id} conn={conn} visible={i < visibleConnections} />
+          ))}
+        </svg>
+      ) : null}
     </motion.div>
   );
 }
@@ -233,8 +262,12 @@ function ResultSkeletonCard({ stage, visible }: { stage: StageId; visible: boole
     <motion.div
       className={styles.resultCard}
       style={{ '--stage-color': color } as CSSProperties}
-      initial={{ opacity: 0, y: 8 }}
-      animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+      initial={{ opacity: 0, y: -8, filter: 'blur(0.2rem)' }}
+      animate={
+        visible
+          ? { opacity: 1, y: 0, filter: 'blur(0rem)' }
+          : { opacity: 0, y: -8, filter: 'blur(0.2rem)' }
+      }
       transition={{ duration: 0.55, ease: EASE }}
     >
       <div className={styles.resultCardTop}>
@@ -243,11 +276,34 @@ function ResultSkeletonCard({ stage, visible }: { stage: StageId; visible: boole
       </div>
       <div className={styles.skeletonLine} style={{ width: '88%' }} />
       <div className={styles.skeletonLineShort} />
-      <div className={styles.resultCardMeta}>
-        <span className={styles.metaLabel}>Detalhes</span>
-        <div className={styles.skeletonLineShort} style={{ width: '72%' }} />
-      </div>
     </motion.div>
+  );
+}
+
+function ResultArrow({ arrow, visible }: { arrow: Connection; visible: boolean }) {
+  const pathDuration = 1.1;
+
+  return (
+    <g>
+      <motion.path
+        d={arrow.d}
+        fill="none"
+        stroke={arrow.color}
+        strokeWidth="0.38"
+        strokeLinecap="round"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={visible ? { pathLength: 1, opacity: 0.68 } : { pathLength: 0, opacity: 0 }}
+        transition={{ duration: pathDuration, ease: EASE }}
+      />
+      <motion.polygon
+        points={`${arrow.arrowX},${arrow.arrowY - 0.55} ${arrow.arrowX + 1.1},${arrow.arrowY} ${arrow.arrowX},${arrow.arrowY + 0.55}`}
+        fill="rgba(255,255,255,0.48)"
+        initial={{ opacity: 0, scale: 0.6 }}
+        animate={visible ? { opacity: 0.7, scale: 1 } : { opacity: 0, scale: 0.6 }}
+        transition={{ duration: 0.3, ease: EASE, delay: visible ? pathDuration * 0.6 : 0 }}
+        style={{ transformOrigin: `${arrow.arrowX}% ${arrow.arrowY}%` }}
+      />
+    </g>
   );
 }
 
@@ -255,10 +311,12 @@ function ResultView({
   visibleColumns,
   visibleResultCards,
   visibleArrows,
+  hidden,
 }: {
   visibleColumns: number;
   visibleResultCards: number[];
   visibleArrows: number;
+  hidden?: boolean;
 }) {
   const cardsByStage = useMemo(() => {
     const map: Record<StageId, FlowCard[]> = { input: [], activity: [], product: [], outcome: [] };
@@ -269,7 +327,16 @@ function ResultView({
   }, []);
 
   return (
-    <div className={styles.previewInner}>
+    <motion.div
+      className={styles.previewInner}
+      animate={
+        hidden
+          ? { opacity: 0, filter: 'blur(0.375rem)', scale: 0.98 }
+          : { opacity: 1, filter: 'blur(0rem)', scale: 1 }
+      }
+      transition={{ duration: 0.75, ease: EASE }}
+      aria-hidden={hidden}
+    >
       <div className={styles.resultGrid}>
         {STAGES_ORDER.map((stage, colIdx) => {
           const meta = STAGE_META[stage];
@@ -280,9 +347,9 @@ function ResultView({
               key={stage}
               className={styles.resultColumn}
               style={{ '--stage-color': meta.color } as CSSProperties}
-              initial={{ opacity: 0, x: -12, filter: 'blur(4px)' }}
-              animate={colVisible ? { opacity: 1, x: 0, filter: 'blur(0px)' } : { opacity: 0, x: -12, filter: 'blur(4px)' }}
-              transition={{ duration: 0.85, ease: EASE }}
+              initial={COLUMN_ENTER.initial}
+              animate={colVisible ? COLUMN_ENTER.visible : COLUMN_ENTER.hidden}
+              transition={COLUMN_ENTER.transition}
             >
               <div className={styles.resultColumnHeader}>
                 <span className={styles.resultColumnDot} />
@@ -303,28 +370,14 @@ function ResultView({
           );
         })}
       </div>
-      <svg className={styles.resultArrows} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        <defs>
-          <marker id="homeArrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="4" markerHeight="4" orient="auto">
-            <path d="M0,0 L6,3 L0,6 Z" fill="rgba(255,255,255,0.48)" />
-          </marker>
-        </defs>
-        {RESULT_ARROWS.map((arrow, i) => (
-          <motion.path
-            key={arrow.id}
-            d={arrow.d}
-            fill="none"
-            stroke={arrow.color}
-            strokeWidth="0.38"
-            strokeLinecap="round"
-            markerEnd={i < 3 ? 'url(#homeArrow)' : undefined}
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={i < visibleArrows ? { pathLength: 1, opacity: 0.72 } : { pathLength: 0, opacity: 0 }}
-            transition={{ duration: 0.95, ease: EASE }}
-          />
-        ))}
-      </svg>
-    </div>
+      {visibleArrows > 0 ? (
+        <svg className={styles.resultArrows} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          {RESULT_ARROWS.map((arrow, i) => (
+            <ResultArrow key={arrow.id} arrow={arrow} visible={i < visibleArrows} />
+          ))}
+        </svg>
+      ) : null}
+    </motion.div>
   );
 }
 
@@ -379,7 +432,7 @@ export function HomeOnboardingPreview() {
       }
     } else if (phase === 'connectFlow') {
       if (visibleConnections < CONNECTIONS.length) {
-        const delay = visibleConnections === 0 ? 0 : TIMING.connDelay;
+        const delay = visibleConnections === 0 ? 400 : TIMING.connDelay;
         schedule(() => setVisibleConnections((n) => n + 1), delay);
       } else {
         schedule(() => setPhase('transitionToResult'), TIMING.afterLastConn);
@@ -412,11 +465,11 @@ export function HomeOnboardingPreview() {
           }, TIMING.resultCardDelay);
         }
       } else {
-        schedule(() => setPhase('connectResult'), TIMING.afterLastCard);
+        schedule(() => setPhase('connectResult'), TIMING.afterBuildResult);
       }
     } else if (phase === 'connectResult') {
       if (visibleArrows < RESULT_ARROWS.length) {
-        const delay = visibleArrows === 0 ? 0 : TIMING.arrowDelay;
+        const delay = visibleArrows === 0 ? 400 : TIMING.arrowDelay;
         schedule(() => setVisibleArrows((n) => n + 1), delay);
       } else {
         schedule(() => setPhase('finalMessage'), TIMING.afterLastArrow);
@@ -472,21 +525,23 @@ export function HomeOnboardingPreview() {
       {showFlow ? (
         <BuildView
           visibleCards={visibleCards}
-          visibleConnections={visibleConnections}
-          receded={phase === 'transitionToResult'}
+          visibleConnections={phase === 'connectFlow' ? visibleConnections : 0}
+          hidden={phase === 'transitionToResult'}
         />
       ) : null}
 
       {showResult ? (
         <motion.div
+          className={styles.resultLayer}
           initial={{ opacity: 0 }}
           animate={{ opacity: phase === 'restart' ? 0 : 1 }}
-          transition={{ duration: phase === 'restart' ? 0.65 : 0.55, ease: EASE }}
+          transition={{ duration: phase === 'restart' ? 0.7 : 0.65, ease: EASE }}
         >
           <ResultView
             visibleColumns={visibleColumns}
             visibleResultCards={visibleResultCards}
-            visibleArrows={visibleArrows}
+            visibleArrows={phase === 'connectResult' ? visibleArrows : 0}
+            hidden={phase === 'finalMessage' || phase === 'restart'}
           />
         </motion.div>
       ) : null}
@@ -495,8 +550,9 @@ export function HomeOnboardingPreview() {
         {phase === 'intro' ? (
           <OverlayMessage
             key="intro"
-            title="Comece pelos elementos da teoria"
-            subtitle="Cada etapa entra no fluxo antes das conexões aparecerem."
+            title="Comece pelas etapas da teoria."
+            subtitle="Insumos, atividades, produtos e resultados entram em ordem para revelar a lógica causal."
+            className={styles.overlayBackdrop}
           />
         ) : null}
 
@@ -504,8 +560,8 @@ export function HomeOnboardingPreview() {
           <OverlayMessage
             key="transition"
             title="O fluxo agora vira leitura."
-            subtitle="As relações deixam de ser rascunho e passam a organizar a visão de resultados."
-            className={styles.overlayElevated}
+            subtitle="As conexões deixam de ser rascunho e passam a organizar a visão por etapa."
+            className={styles.overlayBackdrop}
           />
         ) : null}
 
@@ -514,7 +570,7 @@ export function HomeOnboardingPreview() {
             key="final"
             title="Do rascunho à leitura final."
             subtitle="A teoria mostra o caminho, os vínculos e o que sustenta cada resultado."
-            className={styles.overlayElevated}
+            className={styles.overlayBackdrop}
           />
         ) : null}
       </AnimatePresence>

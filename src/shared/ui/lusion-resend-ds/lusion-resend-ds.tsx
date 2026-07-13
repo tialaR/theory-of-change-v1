@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useEffect, type ReactNode } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import styles from './lusion-resend-ds.module.sass';
@@ -8,8 +9,13 @@ import styles from './lusion-resend-ds.module.sass';
 const NAV = [
   { href: '/guia-de-aprendizado', label: 'Guia' },
   { href: '/exemplos', label: 'Exemplos' },
-  { href: '/referencias', label: 'Referências' }
+  { href: '/referencias', label: 'Referências' },
+  { href: '/canvas', label: 'Canvas' }
 ] as const;
+
+function isNavActive(pathname: string, href: string) {
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -108,6 +114,8 @@ export function PublicHeader({
   ctaHref?: string;
   ctaLabel?: string;
 }) {
+  const pathname = usePathname();
+
   return (
     <header className={styles.header}>
       <Link href="/" className={styles.brand} aria-label="Ir para o início">
@@ -115,11 +123,20 @@ export function PublicHeader({
         <span>TDM</span>
       </Link>
       <nav className={styles.nav} aria-label="Navegação principal">
-        {NAV.map((item) => (
-          <Link key={item.href} href={item.href} className={styles.navLink}>
-            {item.label}
-          </Link>
-        ))}
+        {NAV.map((item) => {
+          const active = isNavActive(pathname, item.href);
+
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`${styles.navLink} ${active ? styles.navLink_active : ''}`}
+              aria-current={active ? 'page' : undefined}
+            >
+              {item.label}
+            </Link>
+          );
+        })}
       </nav>
       <div className={styles.headerCtaWrap}>
         <PublicButton href={ctaHref} variant="primary">

@@ -1038,7 +1038,7 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
 
 .diagramCardDisabled
   pointer-events: auto
-  filter: grayscale(.3) saturate(.4) brightness(.88)
+  cursor: pointer
 
   .diagramCardGlass
     border-left-color: rgba(255, 255, 255, .08)
@@ -1107,11 +1107,25 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
   stroke: rgba(255,255,255,.2)
   stroke-width: .75
 
+.edgeBadgeRisk
+  fill: rgba(18,12,8,.92)
+  stroke: color-mix(in srgb, var(--risk) 42%, rgba(255,255,255,.22))
+
+.edgeBadgeHypothesis
+  fill: rgba(8,14,12,.92)
+  stroke: color-mix(in srgb, var(--hypothesis) 42%, rgba(255,255,255,.22))
+
 .edgeBadgeText
   fill: rgba(244,244,245,.9)
   font-size: .54rem
   font-weight: 700
   font-family: inherit
+
+.edgeBadgeTextRisk
+  fill: color-mix(in srgb, var(--risk) 82%, white)
+
+.edgeBadgeTextHypothesis
+  fill: color-mix(in srgb, var(--hypothesis) 82%, white)
 
 .edgeBadgeTextPill
   font-size: .48rem

@@ -9,7 +9,6 @@ import {
   buildDiagramEdges,
   buildDiagramNodes,
   getConnectedFlowFromNode,
-  getConnectionBadge,
   getEdgeBadges
 } from './result-experience-data';
 import { ResourceCard, ResourcesPanel, getLiquidGlassStageTheme } from '../liquid-glass';
@@ -68,6 +67,10 @@ type CardRect = {
 type Point = { x: number; y: number };
 
 const EDGE_GAP = 10;
+const EDGE_STAGGER = 0.24;
+const CARD_TRANSITION = 0.36;
+const PATH_DURATION = 0.85;
+const ease = [0.22, 1, 0.36, 1] as const;
 
 function cubicBezierPoint(t: number, p0: Point, p1: Point, p2: Point, p3: Point): Point {
   const mt = 1 - t;
@@ -119,6 +122,33 @@ export function ResultDiagram({
   const diagramNodes = useMemo(() => buildDiagramNodes(nodes), [nodes]);
   const diagramEdges = useMemo(() => buildDiagramEdges(edges, diagramNodes), [edges, diagramNodes]);
 
+  const relatedEdgeOrder = useMemo(() => {
+    if (!hasSelection) {
+      return new Map<string, number>();
+    }
+
+    const sorted = edges
+      .filter((edge) => flow.edgeIds.has(edge.id))
+      .sort((left, right) => {
+        const sourceStage = (stage: string) => TDM_STAGE_ORDER.indexOf(stage as (typeof TDM_STAGE_ORDER)[number]);
+        const leftSource = nodes.find((node) => node.id === left.source);
+        const rightSource = nodes.find((node) => node.id === right.source);
+        const leftTarget = nodes.find((node) => node.id === left.target);
+        const rightTarget = nodes.find((node) => node.id === right.target);
+        const leftIndex =
+          sourceStage(leftSource?.stage ?? 'input') * 100 +
+          sourceStage(leftTarget?.stage ?? 'input') * 10 +
+          left.source.localeCompare(right.source);
+        const rightIndex =
+          sourceStage(rightSource?.stage ?? 'input') * 100 +
+          sourceStage(rightTarget?.stage ?? 'input') * 10 +
+          right.source.localeCompare(right.target);
+        return leftIndex - rightIndex;
+      });
+
+    return new Map(sorted.map((edge, index) => [edge.id, index]));
+  }, [edges, flow.edgeIds, hasSelection, nodes]);
+
   const measureCards = useCallback(() => {
     const board = boardRef.current;
     if (!board) {
@@ -158,7 +188,7 @@ export function ResultDiagram({
       observer.disconnect();
       window.removeEventListener('resize', measureCards);
     };
-  }, [measureCards, nodes, edges, selected, zoom]);
+  }, [measureCards, nodes, edges, zoom]);
 
   const registerCardRef = useCallback((nodeId: string, element: HTMLButtonElement | null) => {
     if (element) {
@@ -168,6 +198,13 @@ export function ResultDiagram({
 
     cardRefs.current.delete(nodeId);
   }, []);
+
+  const handleSelectNode = useCallback(
+    (nodeId: string) => {
+      onSelectNode?.(nodeId);
+    },
+    [onSelectNode]
+  );
 
   if (mode === 'preview') {
     return (
@@ -225,10 +262,6 @@ export function ResultDiagram({
             </marker>
           </defs>
           {edges.map((edge) => {
-            if (!hasSelection) {
-              return null;
-            }
-
             const sourceRect = cardRects.get(edge.source);
             const targetRect = cardRects.get(edge.target);
             if (!sourceRect || !targetRect) {
@@ -237,10 +270,12 @@ export function ResultDiagram({
 
             const geometry = buildMeasuredEdgePath(sourceRect, targetRect);
             const isRelated =
-              flow.edgeIds.has(edge.id) && flow.nodeIds.has(edge.source) && flow.nodeIds.has(edge.target);
-            const badge = isRelated ? getConnectionBadge(edge) : null;
-            const badgeDetails = getEdgeBadges(edge);
-            const isPillBadge = badge === 'R/H';
+              !hasSelection ||
+              (flow.edgeIds.has(edge.id) && flow.nodeIds.has(edge.source) && flow.nodeIds.has(edge.target));
+            const badgeDetails = hasSelection && isRelated ? getEdgeBadges(edge) : [];
+            const edgeDelay = relatedEdgeOrder.get(edge.id) ?? 0;
+            const shouldAnimatePath = hasSelection && isRelated;
+            const edgeTransitionDelay = shouldAnimatePath ? edgeDelay * EDGE_STAGGER : 0;
 
             return (
               <g key={edge.id} className={isRelated ? styles.edgeGroup : styles.edgeDimmed}>
@@ -248,33 +283,53 @@ export function ResultDiagram({
                   className={[styles.edgePath, isRelated ? styles.edgePathActive : ''].filter(Boolean).join(' ')}
                   d={geometry.path}
                   markerEnd={isRelated ? 'url(#tdm-arrow-workspace)' : undefined}
-                  initial={shouldReduceMotion ? false : { pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: isRelated ? 1 : 0.08 }}
-                  transition={{ duration: shouldReduceMotion ? 0.01 : 0.48, ease: [0.22, 1, 0.36, 1] }}
+                  initial={false}
+                  animate={{
+                    opacity: hasSelection ? (isRelated ? 1 : 0.08) : isRelated ? 0.35 : 0.08
+                  }}
+                  transition={{
+                    duration: shouldReduceMotion ? 0.01 : shouldAnimatePath ? PATH_DURATION : CARD_TRANSITION,
+                    delay: edgeTransitionDelay,
+                    ease
+                  }}
                 />
-                {badge ? (
+                {badgeDetails.length ? (
                   <motion.g
                     className={styles.edgeBadgeGroup}
                     transform={`translate(${geometry.midX}, ${geometry.midY})`}
                     initial={shouldReduceMotion ? false : { scale: 0.85, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: shouldReduceMotion ? 0.01 : 0.22 }}
+                    animate={{
+                      scale: 1,
+                      opacity: 1
+                    }}
+                    transition={{
+                      duration: shouldReduceMotion ? 0.01 : CARD_TRANSITION,
+                      delay: edgeTransitionDelay + 0.12,
+                      ease
+                    }}
                   >
-                    {isPillBadge ? (
-                      <rect className={styles.edgeBadgePill} x="-13" y="-7.5" width="26" height="15" rx="7.5" />
-                    ) : (
-                      <circle className={styles.edgeBadgeCircle} r="8" />
-                    )}
-                    <text
-                      className={[styles.edgeBadgeText, isPillBadge ? styles.edgeBadgeTextPill : ''].filter(Boolean).join(' ')}
-                      y={isPillBadge ? '3' : '3'}
-                      textAnchor="middle"
-                    >
-                      {badge}
-                    </text>
-                    <title>
-                      {badgeDetails.map((item) => `${item.label}: ${item.text}`).join(' · ')}
-                    </title>
+                    {badgeDetails.map((item, index) => {
+                      const offsetX = badgeDetails.length > 1 ? (index === 0 ? -9 : 9) : 0;
+                      const badgeClass =
+                        item.label === 'R' ? styles.edgeBadgeRisk : styles.edgeBadgeHypothesis;
+
+                      return (
+                        <g key={`${edge.id}-${item.label}`} transform={`translate(${offsetX}, 0)`}>
+                          <circle className={[styles.edgeBadgeCircle, badgeClass].join(' ')} r="7.5" />
+                          <text
+                            className={[
+                              styles.edgeBadgeText,
+                              item.label === 'R' ? styles.edgeBadgeTextRisk : styles.edgeBadgeTextHypothesis
+                            ].join(' ')}
+                            y="3"
+                            textAnchor="middle"
+                          >
+                            {item.label}
+                          </text>
+                          <title>{`${item.label === 'R' ? 'Risco' : 'Hipótese'}: ${item.text}`}</title>
+                        </g>
+                      );
+                    })}
                   </motion.g>
                 ) : null}
               </g>
@@ -319,13 +374,14 @@ export function ResultDiagram({
                         .filter(Boolean)
                         .join(' ')}
                       style={{ '--stage-color': meta.accent, '--stage-soft': meta.accentSoft } as CustomStyle}
-                      onClick={() => onSelectNode?.(node.id)}
+                      onClick={() => handleSelectNode(node.id)}
                       whileTap={shouldReduceMotion ? undefined : { scale: 0.985 }}
+                      initial={false}
                       animate={{
                         opacity: isRelated ? 1 : 0.22,
                         y: isSelected ? -5 : isRelatedOnly ? -2 : 0
                       }}
-                      transition={{ duration: shouldReduceMotion ? 0.01 : 0.22, ease: [0.22, 1, 0.36, 1] }}
+                      transition={{ duration: shouldReduceMotion ? 0.01 : CARD_TRANSITION, ease }}
                     >
                       <ResourceCard
                         title={node.title}

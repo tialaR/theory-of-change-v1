@@ -39,7 +39,6 @@ import {
   PublicFooter,
   PublicHeader,
   PublicHero,
-  PublicHomeOrb,
   PublicReveal,
   PublicSection,
   PublicShell,
@@ -47,6 +46,7 @@ import {
 } from '@/shared/ui/lusion-resend-ds';
 import { ExamplePreviewsSection, DedicatedExamplePreview } from '@/features/theory-of-change/components/resend-public/example-previews';
 import { HomeOnboardingPreview } from './home-onboarding-preview';
+import { HomeAnimatedLogoMark } from '@/features/theory-of-change/components/resend-public/home-animated-logo-mark/home-animated-logo-mark';
 import { TheoryFlowBoard } from './theory-flow-board';
 import styles from './public-pages.module.sass';
 
@@ -65,7 +65,7 @@ export function HomePage() {
     <PublicShell>
       <PublicHeader />
       <PublicHero
-        visual={<PublicHomeOrb />}
+        visual={<HomeAnimatedLogoMark />}
         kicker="Teoria da Mudança"
         title="Desenhe a mudança antes de explicá-la."
         description="Um espaço visual para transformar problema, etapas, conexões, riscos e hipóteses em narrativa clara."

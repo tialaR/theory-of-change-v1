@@ -7,7 +7,6 @@ import type { TdmEdge, TdmNode } from '../../../domain/tdm-types';
 import { groupNodesByStage } from '../result-view-utils';
 import {
   getConnectedFlowFromNode,
-  getConnectionBadge,
   getEdgeBadges
 } from './result-experience-data';
 import { STAGE_META, type CustomStyle } from './types';
@@ -30,7 +29,10 @@ type CardRect = {
 
 type Point = { x: number; y: number };
 
-const EDGE_GAP = 8;
+const EDGE_GAP = 10;
+const EDGE_STAGGER = 0.24;
+const PATH_DURATION = 0.98;
+const ease = [0.22, 1, 0.36, 1] as const;
 
 function cubicBezierPoint(t: number, p0: Point, p1: Point, p2: Point, p3: Point): Point {
   const mt = 1 - t;
@@ -48,8 +50,8 @@ function buildMeasuredEdgePath(source: CardRect, target: CardRect) {
   const startY = source.y;
   const endX = target.x - target.width / 2 - EDGE_GAP;
   const endY = target.y;
-  const span = Math.max(endX - startX, 24);
-  const control = Math.max(span * 0.44, 24);
+  const span = Math.max(endX - startX, 28);
+  const control = Math.max(span * 0.44, 28);
   const p0 = { x: startX, y: startY };
   const p1 = { x: startX + control, y: startY };
   const p2 = { x: endX - control, y: endY };
@@ -67,6 +69,14 @@ function getCardDescription(node: TdmNode) {
   return node.shortNotes?.trim() || node.description;
 }
 
+function getEdgeSortIndex(edge: TdmEdge, nodes: TdmNode[]) {
+  const source = nodes.find((node) => node.id === edge.source);
+  const target = nodes.find((node) => node.id === edge.target);
+  const sourceStage = source ? TDM_STAGE_ORDER.indexOf(source.stage) : 0;
+  const targetStage = target ? TDM_STAGE_ORDER.indexOf(target.stage) : 0;
+  return sourceStage * 100 + targetStage * 10 + edge.source.localeCompare(edge.target);
+}
+
 export function FlowVisionDiagram({
   nodes,
   edges,
@@ -82,6 +92,18 @@ export function FlowVisionDiagram({
   const selected = selectedNodeId ?? null;
   const flow = useMemo(() => getConnectedFlowFromNode(selected, edges), [selected, edges]);
   const hasSelection = Boolean(selected);
+
+  const relatedEdgeOrder = useMemo(() => {
+    if (!hasSelection) {
+      return new Map<string, number>();
+    }
+
+    const sorted = edges
+      .filter((edge) => flow.edgeIds.has(edge.id))
+      .sort((left, right) => getEdgeSortIndex(left, nodes) - getEdgeSortIndex(right, nodes));
+
+    return new Map(sorted.map((edge, index) => [edge.id, index]));
+  }, [edges, flow.edgeIds, hasSelection, nodes]);
 
   const measureCards = useCallback(() => {
     const board = boardRef.current;
@@ -139,7 +161,7 @@ export function FlowVisionDiagram({
         <svg className={styles.flowVisionConnections} aria-hidden="true">
           <defs>
             <marker id="flow-vision-arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto" markerUnits="strokeWidth">
-              <path d="M 0 0 L 6 3 L 0 6 z" fill="rgba(244,247,251,.48)" />
+              <path d="M 0 0 L 6 3 L 0 6 z" fill="rgba(244,247,251,.58)" />
             </marker>
           </defs>
           {edges.map((edge) => {
@@ -153,15 +175,16 @@ export function FlowVisionDiagram({
             const isRelated =
               !hasSelection ||
               (flow.edgeIds.has(edge.id) && flow.nodeIds.has(edge.source) && flow.nodeIds.has(edge.target));
-            const badge = getConnectionBadge(edge);
             const badgeDetails = getEdgeBadges(edge);
-            const isPillBadge = badge === 'R/H';
-            const targetNode = nodes.find((node) => node.id === edge.target);
-            const stageAccent = targetNode ? STAGE_META[targetNode.stage].accent : 'rgba(255,255,255,.42)';
+            const sourceNode = nodes.find((node) => node.id === edge.source);
+            const stageAccent = sourceNode ? STAGE_META[sourceNode.stage].accent : 'rgba(255,255,255,.42)';
+            const edgeDelay = relatedEdgeOrder.get(edge.id) ?? 0;
+            const shouldAnimate = hasSelection && isRelated;
+            const edgeTransitionDelay = shouldAnimate ? edgeDelay * EDGE_STAGGER : 0;
 
             return (
               <g
-                key={edge.id}
+                key={`${edge.id}-${selected ?? 'idle'}`}
                 className={isRelated ? styles.flowVisionEdgeGroup : styles.flowVisionEdgeDimmed}
                 style={{ '--edge-accent': stageAccent } as CustomStyle}
               >
@@ -169,33 +192,54 @@ export function FlowVisionDiagram({
                   className={[styles.flowVisionEdgePath, isRelated ? styles.flowVisionEdgePathActive : ''].filter(Boolean).join(' ')}
                   d={geometry.path}
                   markerEnd={isRelated ? 'url(#flow-vision-arrow)' : undefined}
-                  initial={shouldReduceMotion ? false : { pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: isRelated ? 1 : 0.1 }}
-                  transition={{ duration: shouldReduceMotion ? 0.01 : 0.48, ease: [0.22, 1, 0.36, 1] }}
+                  initial={
+                    shouldReduceMotion
+                      ? false
+                      : shouldAnimate
+                        ? { pathLength: 0, opacity: 0, strokeDashoffset: 32 }
+                        : false
+                  }
+                  animate={{
+                    pathLength: 1,
+                    opacity: hasSelection ? (isRelated ? 1 : 0.06) : isRelated ? 0.42 : 0.06,
+                    strokeDashoffset: 0
+                  }}
+                  transition={{
+                    duration: shouldReduceMotion ? 0.01 : shouldAnimate ? PATH_DURATION : 0.32,
+                    delay: edgeTransitionDelay,
+                    ease
+                  }}
                 />
-                {badge ? (
+                {badgeDetails.length ? (
                   <motion.g
                     className={styles.flowVisionEdgeBadgeGroup}
                     transform={`translate(${geometry.midX}, ${geometry.midY})`}
-                    initial={shouldReduceMotion ? false : { scale: 0.85, opacity: 0 }}
-                    animate={{ scale: 1, opacity: isRelated ? 1 : 0.12 }}
-                    transition={{ duration: shouldReduceMotion ? 0.01 : 0.22 }}
+                    initial={shouldReduceMotion ? false : shouldAnimate ? { scale: 0.78, opacity: 0 } : false}
+                    animate={{
+                      scale: 1,
+                      opacity: hasSelection ? (isRelated ? 1 : 0.08) : isRelated ? 0.68 : 0.08
+                    }}
+                    transition={{
+                      duration: shouldReduceMotion ? 0.01 : 0.32,
+                      delay: edgeTransitionDelay + 0.14,
+                      ease
+                    }}
                   >
-                    {isPillBadge ? (
-                      <rect className={styles.flowVisionEdgeBadgePill} x="-13" y="-7.5" width="26" height="15" rx="7.5" />
-                    ) : (
-                      <circle className={styles.flowVisionEdgeBadgeCircle} r="8" />
-                    )}
-                    <text
-                      className={[styles.flowVisionEdgeBadgeText, isPillBadge ? styles.flowVisionEdgeBadgeTextPill : ''].filter(Boolean).join(' ')}
-                      y="3"
-                      textAnchor="middle"
-                    >
-                      {badge}
-                    </text>
-                    <title>
-                      {badgeDetails.map((item) => `${item.label}: ${item.text}`).join(' · ')}
-                    </title>
+                    {badgeDetails.map((item, index) => {
+                      const offsetX = badgeDetails.length > 1 ? (index === 0 ? -9 : 9) : 0;
+                      const badgeClass =
+                        item.label === 'R' ? styles.flowVisionEdgeBadgeRisk : styles.flowVisionEdgeBadgeHypothesis;
+
+                      return (
+                        <g key={`${edge.id}-${item.label}`} transform={`translate(${offsetX}, 0)`}>
+                          <circle className={[styles.flowVisionEdgeBadgeCircle, badgeClass].join(' ')} r="7.5" />
+                          <text className={styles.flowVisionEdgeBadgeText} y="3" textAnchor="middle">
+                            {item.label}
+                          </text>
+                          <title>{`${item.label === 'R' ? 'Risco' : 'Hipótese'}: ${item.text}`}</title>
+                        </g>
+                      );
+                    })}
                   </motion.g>
                 ) : null}
               </g>
@@ -207,11 +251,12 @@ export function FlowVisionDiagram({
           {TDM_STAGE_ORDER.map((stage) => {
             const meta = STAGE_META[stage];
             const stageNodes = grouped[stage];
+            const isOutcomeColumn = stage === 'outcome';
 
             return (
               <div
                 key={stage}
-                className={styles.flowVisionColumn}
+                className={[styles.flowVisionColumn, isOutcomeColumn ? styles.flowVisionColumnOutcome : ''].filter(Boolean).join(' ')}
                 style={{ '--stage-color': meta.accent, '--stage-soft': meta.accentSoft } as CustomStyle}
               >
                 <div className={styles.flowVisionColumnHeader}>
@@ -238,13 +283,15 @@ export function FlowVisionDiagram({
                           .filter(Boolean)
                           .join(' ')}
                         onClick={() => onSelectNode?.(node.id)}
+                        onPointerDown={(event) => event.stopPropagation()}
                         whileTap={shouldReduceMotion ? undefined : { scale: 0.985 }}
                         animate={{
                           opacity: isRelated ? 1 : 0.22,
                           y: isSelected ? -4 : isRelatedOnly ? -2 : 0
                         }}
-                        transition={{ duration: shouldReduceMotion ? 0.01 : 0.22, ease: [0.22, 1, 0.36, 1] }}
+                        transition={{ duration: shouldReduceMotion ? 0.01 : 0.22, ease }}
                       >
+                        <span className={styles.flowVisionCardStage}>{meta.label}</span>
                         <strong className={styles.flowVisionCardTitle}>{node.title}</strong>
                         <span className={styles.flowVisionCardText}>{getCardDescription(node)}</span>
                       </motion.button>
