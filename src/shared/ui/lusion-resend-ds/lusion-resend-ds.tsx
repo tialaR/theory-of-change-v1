@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { HomeBrandLogo } from '@/features/theory-of-change/components/public-pages/home-brand-logo';
 import styles from './lusion-resend-ds.module.sass';
@@ -14,8 +14,21 @@ const NAV = [
   { href: '/canvas', label: 'Canvas' }
 ] as const;
 
+const HIDDEN_HEADER_ROUTES = [
+  '/canvas',
+  '/exemplos/resultado/interativo',
+  '/exemplos/visao-do-fluxo/interativo'
+] as const;
+
+const SCROLL_THRESHOLD = 32;
+
 function isNavActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+function shouldHidePublicHeader(pathname: string) {
+  if (pathname.startsWith('/canvas')) return true;
+  return HIDDEN_HEADER_ROUTES.some((route) => pathname === route || pathname.startsWith(`${route}/`));
 }
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -30,12 +43,32 @@ function isOutcomeKicker(text?: string) {
 }
 
 function resolveActionIcon(label: string): ReactNode | null {
-  const text = label.toLowerCase();
+  const text = label
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
 
   if (/criar|comece|abrir canvas|ir para o canvas/.test(text)) {
     return (
       <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
         <path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    );
+  }
+
+  if (/experiencia interativa|abrir experiencia/.test(text)) {
+    return (
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <circle cx="3.5" cy="8" r="1.6" stroke="currentColor" strokeWidth="1.35" />
+        <circle cx="8" cy="3.75" r="1.6" stroke="currentColor" strokeWidth="1.35" />
+        <circle cx="12.5" cy="8" r="1.6" stroke="currentColor" strokeWidth="1.35" />
+        <circle cx="8" cy="12.25" r="1.6" stroke="currentColor" strokeWidth="1.35" />
+        <path
+          d="M4.9 7.1 6.6 4.85M9.4 4.85 11.1 7.1M11.1 8.9 9.4 11.15M6.6 11.15 4.9 8.9"
+          stroke="currentColor"
+          strokeWidth="1.35"
+          strokeLinecap="round"
+        />
       </svg>
     );
   }
@@ -116,35 +149,53 @@ export function PublicHeader({
   ctaLabel?: string;
 }) {
   const pathname = usePathname();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setIsScrolled(window.scrollY > SCROLL_THRESHOLD);
+    };
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  if (shouldHidePublicHeader(pathname)) return null;
 
   return (
-    <header className={styles.header}>
-      <Link href="/" className={styles.brand} aria-label="Ir para o início">
-        <HomeBrandLogo variant="header" />
-        <span className={styles.brandText}>TDM</span>
-      </Link>
-      <nav className={styles.nav} aria-label="Navegação principal">
-        {NAV.map((item) => {
-          const active = isNavActive(pathname, item.href);
+    <>
+      <header className={styles.header} data-scrolled={isScrolled ? 'true' : 'false'}>
+        <div className={styles.headerBar}>
+          <Link href="/" className={styles.brand} aria-label="Ir para o início">
+            <HomeBrandLogo variant="header" />
+            <span className={styles.brandText}>TDM</span>
+          </Link>
+          <nav className={styles.nav} aria-label="Navegação principal">
+            {NAV.map((item) => {
+              const active = isNavActive(pathname, item.href);
 
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`${styles.navLink} ${active ? styles.navLink_active : ''}`}
-              aria-current={active ? 'page' : undefined}
-            >
-              {item.label}
-            </Link>
-          );
-        })}
-      </nav>
-      <div className={styles.headerCtaWrap}>
-        <PublicButton href={ctaHref} variant="primary">
-          {ctaLabel}
-        </PublicButton>
-      </div>
-    </header>
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`${styles.navLink} ${active ? styles.navLink_active : ''}`}
+                  aria-current={active ? 'page' : undefined}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+          <div className={styles.headerCtaWrap}>
+            <PublicButton href={ctaHref} variant="primary">
+              {ctaLabel}
+            </PublicButton>
+          </div>
+        </div>
+      </header>
+      <div className={styles.headerOffset} aria-hidden="true" />
+    </>
   );
 }
 

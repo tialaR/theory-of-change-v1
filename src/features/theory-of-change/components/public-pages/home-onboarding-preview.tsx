@@ -34,9 +34,9 @@ type PreviewPhase =
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-/** Ciclo total alvo: ~52s (dentro de 42–56s) */
+/** Ciclo total alvo: ~54s (dentro de 42–56s) */
 const TIMING = {
-  intro: 5800,
+  intro: 6800,
   initialCardDelay: 1000,
   cardDelay: 600,
   stageDelay: 1150,
@@ -44,7 +44,7 @@ const TIMING = {
   connInitialDelay: 750,
   connDelay: 850,
   afterLastConn: 2100,
-  transition: 5800,
+  transition: 6800,
   colFirstCardDelay: 550,
   resultCardDelay: 550,
   colStageDelay: 875,
@@ -52,21 +52,68 @@ const TIMING = {
   arrowInitialDelay: 550,
   arrowDelay: 1200,
   afterLastArrow: 1800,
-  finalMessage: 6000,
+  finalMessage: 7200,
   restartPause: 2500,
 } as const;
 
 const FLOW_PATH_DURATION = 1.95;
 const FLOW_ARROW_DELAY_RATIO = 0.65;
 
-const TEXT_MOTION = {
-  initial: { opacity: 0, y: '1rem', scale: 0.985, filter: 'blur(0.45rem)' },
-  animate: { opacity: 1, y: '0rem', scale: 1, filter: 'blur(0rem)' },
-  exit: { opacity: 0, y: '-0.75rem', scale: 0.99, filter: 'blur(0.3rem)' },
-  transition: { duration: 1.6, ease: EASE },
+const TEXT_SCENE_TRANSITION = { duration: 1.4, ease: EASE } as const;
+
+const textSceneVariants = {
+  initial: {
+    opacity: 0,
+    y: '1.2rem',
+    scale: 0.985,
+    filter: 'blur(0.45rem)',
+  },
+  animate: {
+    opacity: 1,
+    y: '0rem',
+    scale: 1,
+    filter: 'blur(0rem)',
+  },
+  exit: {
+    opacity: 0,
+    y: '-0.8rem',
+    scale: 0.99,
+    filter: 'blur(0.28rem)',
+  },
 } as const;
 
-const TEXT_SUBTITLE_DELAY = 0.32;
+const textLineContainerVariants = {
+  initial: {},
+  animate: {
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
+    },
+  },
+  exit: {
+    transition: {
+      staggerChildren: 0.08,
+      staggerDirection: -1,
+    },
+  },
+} as const;
+
+const textLineVariants = {
+  initial: {
+    opacity: 0,
+    y: '1rem',
+  },
+  animate: {
+    opacity: 1,
+    y: '0rem',
+    transition: { duration: 0.9, ease: EASE },
+  },
+  exit: {
+    opacity: 0,
+    y: '-0.55rem',
+    transition: { duration: 0.7, ease: EASE },
+  },
+} as const;
 
 const STAGE_META: Record<StageId, { label: string; color: string; count: number }> = {
   input: { label: 'Insumos', color: PREVIEW_STAGE_COLORS.input, count: 3 },
@@ -91,10 +138,10 @@ const CONNECTIONS: Connection[] = [
   { id: 'l1', d: 'M 19.8 28.5 C 23 28.5, 26.5 34, 30.2 40.5', color: PREVIEW_STAGE_COLORS.input, arrowX: 30.2, arrowY: 40.5 },
   { id: 'l2', d: 'M 19.8 50.5 C 23 50.5, 26.5 45.5, 30.2 40.5', color: PREVIEW_STAGE_COLORS.input, arrowX: 30.2, arrowY: 40.5 },
   { id: 'l3', d: 'M 19.8 72.5 C 23 72.5, 26.5 65.5, 30.2 58.5', color: PREVIEW_STAGE_COLORS.input, arrowX: 30.2, arrowY: 58.5 },
-  { id: 'l4', d: 'M 47.2 40.5 C 50.5 40.5, 53 40.5, 56.8 40.5', color: PREVIEW_STAGE_COLORS.activity, arrowX: 56.8, arrowY: 40.5 },
-  { id: 'l5', d: 'M 47.2 58.5 C 50.5 58.5, 53 58.5, 56.8 58.5', color: PREVIEW_STAGE_COLORS.activity, arrowX: 56.8, arrowY: 58.5 },
-  { id: 'l6', d: 'M 73.5 40.5 C 76.5 42.5, 78.5 46, 81.2 51.5', color: PREVIEW_STAGE_COLORS.product, arrowX: 81.2, arrowY: 51.5 },
-  { id: 'l7', d: 'M 73.5 58.5 C 76.5 56.5, 78.5 53, 81.2 51.5', color: PREVIEW_STAGE_COLORS.product, arrowX: 81.2, arrowY: 51.5 },
+  { id: 'l4', d: 'M 45.4 40.5 C 49.2 40.5, 53 40.5, 56.8 40.5', color: PREVIEW_STAGE_COLORS.activity, arrowX: 56.8, arrowY: 40.5 },
+  { id: 'l5', d: 'M 45.4 58.5 C 49.2 58.5, 53 58.5, 56.8 58.5', color: PREVIEW_STAGE_COLORS.activity, arrowX: 56.8, arrowY: 58.5 },
+  { id: 'l6', d: 'M 70.8 40.5 C 74.5 42.5, 78 46, 81.2 51.5', color: PREVIEW_STAGE_COLORS.product, arrowX: 81.2, arrowY: 51.5 },
+  { id: 'l7', d: 'M 70.8 58.5 C 74.5 56.5, 78 53, 81.2 51.5', color: PREVIEW_STAGE_COLORS.product, arrowX: 81.2, arrowY: 51.5 },
 ];
 
 const RESULT_ARROWS: Connection[] = [
@@ -144,29 +191,20 @@ function OverlayMessage({
   return (
     <motion.div
       className={[styles.overlayMessage, className].filter(Boolean).join(' ')}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5, ease: EASE }}
+      variants={textSceneVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      transition={TEXT_SCENE_TRANSITION}
     >
-      <motion.h3
-        className={styles.overlayTitle}
-        initial={TEXT_MOTION.initial}
-        animate={TEXT_MOTION.animate}
-        exit={TEXT_MOTION.exit}
-        transition={TEXT_MOTION.transition}
-      >
-        {title}
-      </motion.h3>
-      <motion.p
-        className={styles.overlaySubtitle}
-        initial={TEXT_MOTION.initial}
-        animate={TEXT_MOTION.animate}
-        exit={TEXT_MOTION.exit}
-        transition={{ ...TEXT_MOTION.transition, delay: TEXT_SUBTITLE_DELAY }}
-      >
-        {subtitle}
-      </motion.p>
+      <motion.div className={styles.textSceneInner} variants={textLineContainerVariants}>
+        <motion.h3 className={styles.overlayTitle} variants={textLineVariants}>
+          {title}
+        </motion.h3>
+        <motion.p className={styles.overlaySubtitle} variants={textLineVariants}>
+          {subtitle}
+        </motion.p>
+      </motion.div>
     </motion.div>
   );
 }
@@ -561,8 +599,8 @@ export function HomeOnboardingPreview() {
         {phase === 'intro' ? (
           <OverlayMessage
             key="intro"
-            title="Comece pelas etapas da teoria."
-            subtitle="Insumos, atividades, produtos e resultados entram em ordem para revelar a lógica causal."
+            title="Comece pelas etapas."
+            subtitle="Primeiro entram os recursos. Depois as ações, as entregas e as mudanças que a teoria quer provocar."
             className={styles.overlayBackdrop}
           />
         ) : null}
@@ -570,8 +608,8 @@ export function HomeOnboardingPreview() {
         {phase === 'transitionToResult' ? (
           <OverlayMessage
             key="transition"
-            title="O fluxo agora vira leitura."
-            subtitle="As conexões deixam de ser rascunho e passam a organizar a visão por etapa."
+            title="Agora vira leitura."
+            subtitle="As conexões deixam de ser rascunho e organizam a teoria por etapa."
             className={styles.overlayBackdrop}
           />
         ) : null}

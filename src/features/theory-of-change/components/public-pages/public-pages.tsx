@@ -60,6 +60,61 @@ const GUIDE_STEPS = [
   { number: 'Passo 7', title: 'Leia a teoria final', text: 'Revise o fluxo completo e compartilhe a narrativa com a equipe.', visual: 'Relatório visual' }
 ];
 
+const FLOW_CONTEXT_CARDS = [
+  {
+    number: '01',
+    title: 'Insumos iniciam o caminho',
+    text: 'Recursos e capacidades entram primeiro para sustentar as ações da intervenção.'
+  },
+  {
+    number: '02',
+    title: 'Atividades transformam recursos',
+    text: 'As ações organizam o uso dos insumos e aproximam a teoria dos produtos.'
+  },
+  {
+    number: '03',
+    title: 'Produtos registram entregas',
+    text: 'As entregas concretas mostram o que foi realizado antes dos resultados.'
+  },
+  {
+    number: '04',
+    title: 'Resultados fecham a leitura',
+    text: 'As mudanças esperadas aparecem como efeito do caminho construído pelas etapas.'
+  }
+] as const;
+
+function ExampleContextActions({
+  primaryHref,
+  primaryLabel
+}: {
+  primaryHref: string;
+  primaryLabel: string;
+}) {
+  return (
+    <div className={styles.contextActions}>
+      <PublicButton href={primaryHref}>{primaryLabel}</PublicButton>
+      <PublicButton href="/exemplos" variant="secondary">
+        Voltar para exemplos
+      </PublicButton>
+    </div>
+  );
+}
+
+function ExportFormatIcon() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path
+        d="M4.25 2.75h5.5L12.25 5.25v8H4.25v-10.5Z"
+        stroke="currentColor"
+        strokeWidth="1.35"
+        strokeLinejoin="round"
+      />
+      <path d="M9.5 2.75V5.5h2.75" stroke="currentColor" strokeWidth="1.35" strokeLinejoin="round" />
+      <path d="M6.25 8.5h3.5M6.25 10.75h3.5" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export function HomePage() {
   return (
     <PublicShell>
@@ -166,10 +221,13 @@ export function FlowPage() {
             <p className={styles.inspectorKicker}>Exemplo</p>
             <h3>Rascunho da teoria de mudança</h3>
             <p>
-              Veja a lógica causal em etapas, com cards e conexões animadas para entender o caminho da
-              intervenção antes da leitura final.
+              Veja como insumos, atividades, produtos e resultados se organizam em uma sequência causal
+              antes da leitura final.
             </p>
-            <PublicButton href="/exemplos/visao-do-fluxo/interativo">Abrir experiência interativa</PublicButton>
+            <ExampleContextActions
+              primaryHref="/exemplos/visao-do-fluxo/interativo"
+              primaryLabel="Abrir experiência interativa"
+            />
           </div>
         </PublicReveal>
         <PublicReveal delay={0.05}>
@@ -178,6 +236,24 @@ export function FlowPage() {
           </div>
         </PublicReveal>
       </div>
+      <PublicSection
+        compact
+        eyebrow="Visão do fluxo"
+        title="O caminho antes da leitura final."
+        description="A prévia mostra como cada etapa alimenta a próxima, revelando a lógica causal em construção."
+      >
+        <div className={styles.relationGrid}>
+          {FLOW_CONTEXT_CARDS.map((card, index) => (
+            <PublicReveal key={card.number} delay={index * 0.03}>
+              <PublicCard className={styles.relationCard}>
+                <span>{card.number}</span>
+                <h3>{card.title}</h3>
+                <p>{card.text}</p>
+              </PublicCard>
+            </PublicReveal>
+          ))}
+        </div>
+      </PublicSection>
       <PublicFooter />
     </PublicShell>
   );
@@ -202,7 +278,10 @@ export function ResultPage() {
               Política educacional com formação de professores, acompanhamento nas escolas e melhoria
               no uso de dados. A prévia resume a estrutura conectada antes da leitura interativa.
             </p>
-            <PublicButton href="/exemplos/resultado/interativo">Abrir visualização interativa</PublicButton>
+            <ExampleContextActions
+              primaryHref="/exemplos/resultado/interativo"
+              primaryLabel="Abrir visualização interativa"
+            />
           </div>
         </PublicReveal>
         <PublicReveal delay={0.05}>
@@ -214,6 +293,9 @@ export function ResultPage() {
       <div className={styles.exportBar}>
         {['PDF', 'PNG', 'SVG'].map((format) => (
           <button key={format} type="button">
+            <span className={styles.exportIcon} aria-hidden="true">
+              <ExportFormatIcon />
+            </span>
             Exportar {format}
           </button>
         ))}
