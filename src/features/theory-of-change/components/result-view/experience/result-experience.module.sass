@@ -399,6 +399,7 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
   overflow: hidden
 
 .interactiveExperience
+  overflow: hidden
   background: radial-gradient(ellipse 52rem 18rem at 50% -6%, rgba(255,255,255,.11), transparent 70%), radial-gradient(ellipse 30rem 20rem at 8% 28%, rgba(255,255,255,.04), transparent 72%), radial-gradient(ellipse 28rem 18rem at 94% 30%, rgba(255,255,255,.035), transparent 72%), linear-gradient(180deg, #020203 0%, #060708 54%, #030304 100%)
 
   .interactiveFrame
@@ -528,6 +529,7 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
     border-radius: 1.1rem
     border: .0625rem solid rgba(255,255,255,.06)
     background: #0a0b0d
+    overflow: hidden
 
     &::before
       background-color: #0a0b0d
@@ -1206,143 +1208,67 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
 
 // TDM_LIQUID_VISUAL_FIX_V1_RESULT_OVERRIDES
 .interactiveExperience
+  --column-card-gap: 0.875rem
+  --column-padding: 1.125rem
+  --column-header-gap: 0.875rem
+  --card-radius: 0.5625rem
+  --diagram-viewport-offset: 7.25rem
+
   .workspaceViewport
     overflow-x: hidden
-    overflow-y: auto
-    scrollbar-gutter: stable
+    overflow-y: hidden
+    max-height: calc(100dvh - var(--diagram-viewport-offset))
 
   .workspaceShell
     border-width: 0.0625rem
 
+  .flowWorkspace
+    min-block-size: 0
+    height: 100%
+    display: flex
+    flex-direction: column
+
   .diagramWorkspace
-    min-block-size: 100%
+    flex: 1
+    min-block-size: 0
     overflow-x: hidden
-    padding: clamp(1rem, 1.8vw, 1.35rem)
+    padding: clamp(0.875rem, 1.6vw, 1.25rem)
 
   .diagramBoard
+    flex: 1
     inline-size: 100%
-    min-block-size: 34rem
-    overflow: visible
+    min-block-size: 0
+    display: flex
+    flex-direction: column
+    overflow: hidden
 
   .diagramColumns
+    flex: 1
     grid-template-columns: repeat(4, minmax(0, 1fr))
-    gap: clamp(1.25rem, 2.25vw, 2.05rem)
+    gap: clamp(1rem, 2vw, 1.75rem)
     inline-size: 100%
+    min-block-size: 0
     min-inline-size: 0
+    align-items: stretch
 
-  .diagramColumn
-    min-inline-size: 0
-    min-block-size: clamp(27.5rem, 47vw, 40rem)
+  .diagramColumnPanel
+    min-block-size: 0
+    max-height: 100%
+    height: 100%
 
-  .diagramColumnGlass
-    min-block-size: 100%
-    border: 0.0625rem solid color-mix(in srgb, var(--stage-color) 22%, rgba(255, 255, 255, 0.07))
-    border-radius: 1.05rem
-    background-image: radial-gradient(circle at 12% 17%, color-mix(in srgb, var(--stage-color) 6%, transparent) 0 0.0625rem, transparent 0.1rem), radial-gradient(circle at 78% 24%, rgba(255, 255, 255, 0.03) 0 0.0625rem, transparent 0.1125rem), linear-gradient(rgba(255, 255, 255, 0.018) 0.0625rem, transparent 0.0625rem), linear-gradient(90deg, rgba(255, 255, 255, 0.015) 0.0625rem, transparent 0.0625rem)
-    background-size: 2.3125rem 2.6875rem, 3.3125rem 2.9375rem, 5.75rem 5.75rem, 5.75rem 5.75rem
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.09), inset 0 0 0 0.0625rem rgba(255, 255, 255, 0.025), 0 2rem 5.625rem rgba(0, 0, 0, 0.34)
+  .diagramColumnPanelContent
+    min-block-size: 0
 
-  .diagramColumnContent
-    padding: clamp(1.25rem, 1.8vw, 1.75rem) clamp(1rem, 1.6vw, 1.625rem) clamp(1.5rem, 2vw, 2.125rem)
-
-  .diagramColumnHeader
-    min-block-size: 3.5rem
-
-  .diagramColumnTopRule
-    height: 0.125rem
-    left: 0.1875rem
-    background: linear-gradient(90deg, color-mix(in srgb, var(--stage-color) 82%, white 8%) 0%, color-mix(in srgb, var(--stage-color) 48%, transparent) 78%, transparent 100%)
-    box-shadow: 0 0 1.0625rem color-mix(in srgb, var(--stage-color) 12%, transparent)
-    opacity: 0.68
-
-  .diagramColumnHeadingGroup
-    gap: 0.8125rem
-    padding-block-start: 0.5rem
-
-  .diagramColumnDot
-    inline-size: 0.8125rem
-    block-size: 0.8125rem
-    background: color-mix(in srgb, var(--stage-color) 82%, white 8%)
-    box-shadow: 0 0 0.75rem color-mix(in srgb, var(--stage-color) 34%, transparent)
-
-  .diagramColumnHeader h3
-    font-size: clamp(0.82rem, 1.1vw, 1rem)
-    letter-spacing: 0.32em
-    color: color-mix(in srgb, var(--stage-color) 74%, white 26%)
-
-  .diagramColumnHeader small
-    min-inline-size: 4.8rem
-    block-size: 2rem
-    border-radius: 0.7rem
-    border-color: color-mix(in srgb, var(--stage-color) 31%, rgba(255, 255, 255, 0.065))
-    background: color-mix(in srgb, var(--stage-color) 10%, rgba(255, 255, 255, 0.028))
-    color: color-mix(in srgb, var(--stage-color) 79%, rgba(255, 255, 255, 0.74))
-    font-size: 0.82rem
-    font-weight: 650
-
-  .diagramColumnDivider
-    margin-block-start: 0
-    background: rgba(255, 255, 255, 0.065)
-
-  .diagramColumnCards
-    gap: clamp(1rem, 1.7vw, 1.25rem)
-    margin-block-start: clamp(1.15rem, 2vw, 1.45rem)
-
-  .diagramCardGlass
-    border: 0.0625rem solid color-mix(in srgb, var(--stage-color) 31%, rgba(255, 255, 255, 0.07))
-    border-radius: 0.9rem
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012)), rgba(15, 16, 20, 0.38)
-    box-shadow: inset 0.125rem 0 0 color-mix(in srgb, var(--stage-color) 68%, transparent), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.065), 0 1rem 2.5rem rgba(0, 0, 0, 0.17)
-
-    &::before
-      content: ''
-      position: absolute
-      z-index: 3
-      inset-block: 0
-      inset-inline-start: 0
-      inline-size: 0.125rem
-      border-radius: inherit
-      background: linear-gradient(180deg, color-mix(in srgb, var(--stage-color) 78%, white 7%), color-mix(in srgb, var(--stage-color) 46%, transparent))
-      box-shadow: 0 0 1.125rem color-mix(in srgb, var(--stage-color) 13%, transparent)
-
-  .diagramCardInner
-    padding: clamp(1.1rem, 1.6vw, 1.625rem) clamp(1rem, 1.55vw, 1.5625rem) clamp(1rem, 1.4vw, 1.25rem) clamp(1.15rem, 1.65vw, 1.625rem)
-
-  .diagramCardIcon
-    inline-size: 2.125rem
-    block-size: 2.125rem
-    border-radius: 0.5625rem
-    background: linear-gradient(145deg, color-mix(in srgb, var(--stage-color) 15%, rgba(255, 255, 255, 0.055)), rgba(255, 255, 255, 0.022) 56%, rgba(0, 0, 0, 0.07))
-
-  .diagramCardHeader
-    grid-template-columns: 2.125rem minmax(0, 1fr) auto
-    column-gap: 0.8125rem
-
-  .diagramCardHeader strong
-    font-size: clamp(0.92rem, 1.18vw, 1.05rem)
-    font-weight: 710
-    line-height: 1.18
-    letter-spacing: -0.025em
-
-  .diagramCardDescription,
-  .diagramCardSection
-    font-size: clamp(0.78rem, 1vw, 0.88rem)
-    line-height: 1.5
-
-  .diagramCardCountPill
-    border-color: color-mix(in srgb, var(--stage-color) 31%, rgba(255, 255, 255, 0.07))
-    border-radius: 0.75rem
-    background: color-mix(in srgb, var(--stage-color) 10%, rgba(255, 255, 255, 0.035))
-
-  .diagramCard:not(.diagramCardDisabled):hover .diagramCardGlass
-    transform: translateY(-0.16rem)
-    border-color: color-mix(in srgb, var(--stage-color) 46%, rgba(255, 255, 255, 0.1))
-    box-shadow: inset 0.125rem 0 0 color-mix(in srgb, var(--stage-color) 74%, transparent), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.09), 0 1.15rem 2.65rem rgba(0, 0, 0, 0.22)
+  .diagramCardButton
+    flex-shrink: 0
 
 @media (max-width: 70rem)
   .interactiveExperience
+    --diagram-viewport-offset: 8.5rem
+
     .workspaceViewport
       overflow-x: hidden
+      overflow-y: hidden
 
     .diagramColumns
       grid-template-columns: repeat(4, minmax(0, 1fr))
@@ -1369,6 +1295,7 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
   z-index: 1
   width: 100%
   min-inline-size: 0
+  min-block-size: 0
   height: 100%
 
 .diagramColumnPanelContent
@@ -1376,6 +1303,7 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
   flex-direction: column
   flex: 1
   min-block-size: 0
+  overflow: hidden
 
 .diagramCardButton
   display: block
@@ -1387,20 +1315,25 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
   text-align: left
   background: transparent
   cursor: pointer
+  flex-shrink: 0
 
 .diagramResourceCard
   transition: border-color 220ms cubic-bezier(.22, 1, .36, 1), box-shadow 220ms cubic-bezier(.22, 1, .36, 1), filter 220ms cubic-bezier(.22, 1, .36, 1)
 
 .diagramCardButton:not(.diagramCardDisabled):hover .diagramResourceCard
-  border-color: color-mix(in srgb, var(--stage-color) 24%, rgba(255, 255, 255, .08))
-  box-shadow: inset 0.0625rem 0 0 color-mix(in srgb, var(--stage-color) 38%, transparent), inset 0 0.0625rem 0 rgba(255, 255, 255, .04)
+  border-color: color-mix(in srgb, var(--stage-color) 28%, rgba(255, 255, 255, .1))
+  box-shadow: inset 0.0625rem 0 0 color-mix(in srgb, var(--stage-color) 48%, transparent), inset 0 0.0625rem 0 rgba(255, 255, 255, .06), 0 0 1rem color-mix(in srgb, var(--stage-color) 10%, transparent)
 
 .diagramResourceCardSelected
-  border-color: color-mix(in srgb, var(--stage-color) 36%, rgba(255, 255, 255, .12))
-  box-shadow: inset 0.0625rem 0 0 color-mix(in srgb, var(--stage-color) 58%, transparent), 0 0 1.2rem color-mix(in srgb, var(--stage-color) 10%, transparent)
+  border-color: color-mix(in srgb, var(--stage-color) 40%, rgba(255, 255, 255, .14))
+  box-shadow: inset 0.0625rem 0 0 color-mix(in srgb, var(--stage-color) 62%, transparent), 0 0 1.35rem color-mix(in srgb, var(--stage-color) 14%, transparent)
 
 .diagramResourceCardRelated
-  border-color: color-mix(in srgb, var(--stage-color) 20%, rgba(255, 255, 255, .08))
+  border-color: color-mix(in srgb, var(--stage-color) 24%, rgba(255, 255, 255, .09))
+
+.interactiveExperience
+  .diagramResourceCard
+    border-radius: var(--card-radius, 0.5625rem)
 
 @media (max-width: 56rem)
   .diagramColumnPanel

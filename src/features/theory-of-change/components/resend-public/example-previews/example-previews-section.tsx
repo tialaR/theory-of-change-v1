@@ -90,7 +90,7 @@ export function ExamplePreviewsSection() {
       <div className={styles.previewGrid}>
         <PreviewCard
           type="flow"
-          href="/exemplos/fluxo"
+          href="/exemplos/visao-do-fluxo"
           title="Visualização do fluxo"
           description="Veja a lógica causal em rascunho: etapas, cards e conexões animadas antes de abrir a experiência completa."
           icon={<FlowIcon />}

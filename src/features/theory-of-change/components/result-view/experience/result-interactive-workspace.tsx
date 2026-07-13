@@ -1,9 +1,9 @@
 'use client';
 
-import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import type { ResultExperienceProps } from './types';
+import { InteractiveExperienceShell } from './interactive-experience-shell';
 import { ResultDiagram } from './result-diagram';
 import {
   getConnectedFlowFromNode,
@@ -82,124 +82,98 @@ export function ResultInteractiveWorkspace({ title, nodes, edges }: ResultExperi
     }
   }, []);
 
-  useEffect(() => {
-    document.body.classList.add('public-page-scroll');
-    return () => document.body.classList.remove('public-page-scroll');
-  }, []);
-
   return (
-    <main className={`${styles.interactivePage} ${styles.interactiveExperience}`}>
-      <div className={styles.interactiveFrame}>
-        <header className={styles.interactiveTopbar}>
-          <div className={styles.interactiveTopbarStart}>
-            <Link href="/exemplos/resultado" className={styles.interactiveBackButton} aria-label="Voltar">
-              <span aria-hidden="true">←</span>
-            </Link>
-            <h1 className={styles.interactiveTopbarHeading}>{title}</h1>
-          </div>
-
-          <div className={styles.interactiveToolbar}>
-            <div className={styles.interactiveToolbarCluster}>
-              <button className={styles.toolButton} type="button" aria-label="Aumentar zoom" onClick={() => setZoom((value) => Math.min(1.4, Number((value + 0.1).toFixed(2))))}>+</button>
-              <span className={styles.interactiveZoomLabel}>{Math.round(zoom * 100)}%</span>
-              <button className={styles.toolButton} type="button" aria-label="Diminuir zoom" onClick={() => setZoom((value) => Math.max(0.74, Number((value - 0.1).toFixed(2))))}>−</button>
-              <span className={styles.interactiveToolbarDivider} aria-hidden="true" />
-              <button className={styles.toolButton} type="button" aria-label="Centralizar visualização" onClick={() => setZoom(1)}>⌖</button>
-              <button className={styles.toolButton} type="button" aria-label="Reiniciar visualização" onClick={resetView}>↺</button>
-            </div>
-            <Link className={styles.interactiveCloseButton} href="/exemplos/resultado">Fechar</Link>
-          </div>
-        </header>
-
-        <motion.section
-          className={styles.workspaceShell}
-          initial={reduce ? false : { opacity: 0, scale: 0.985 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: reduce ? 0.01 : 0.42, ease }}
+    <InteractiveExperienceShell
+      title={title}
+      backHref="/exemplos/resultado"
+      closeHref="/exemplos/resultado"
+      zoom={zoom}
+      onZoomIn={() => setZoom((value) => Math.min(1.4, Number((value + 0.1).toFixed(2))))}
+      onZoomOut={() => setZoom((value) => Math.max(0.74, Number((value - 0.1).toFixed(2))))}
+      onCenter={() => setZoom(1)}
+      onReset={resetView}
+    >
+      <div className={styles.workspaceViewport} ref={viewportRef}>
+        <motion.div
+          className={styles.flowWorkspace}
+          animate={{ scale: zoom }}
+          transition={{ duration: reduce ? 0.01 : 0.28, ease }}
         >
-          <div className={styles.workspaceViewport} ref={viewportRef}>
-            <motion.div
-              className={styles.flowWorkspace}
-              animate={{ scale: zoom }}
-              transition={{ duration: reduce ? 0.01 : 0.28, ease }}
+          <ResultDiagram
+            nodes={nodes}
+            edges={edges}
+            mode="workspace"
+            selectedNodeId={selectedId}
+            onSelectNode={setSelectedId}
+            zoom={zoom}
+          />
+        </motion.div>
+
+        {selectedNode ? (
+          <aside
+            className={styles.flowTranslator}
+            style={{ transform: `translate(${panelOffset.x}px, ${panelOffset.y}px)` }}
+          >
+            <div
+              className={styles.flowTranslatorHandle}
+              onPointerDown={handlePanelPointerDown}
+              onPointerMove={handlePanelPointerMove}
+              onPointerUp={handlePanelPointerUp}
+              onPointerCancel={handlePanelPointerUp}
             >
-              <ResultDiagram
-                nodes={nodes}
-                edges={edges}
-                mode="workspace"
-                selectedNodeId={selectedId}
-                onSelectNode={setSelectedId}
-                zoom={zoom}
-              />
-            </motion.div>
+              <span className={styles.flowTranslatorGrip} aria-hidden="true">
+                <span />
+                <span />
+                <span />
+                <span />
+                <span />
+                <span />
+              </span>
+              <p className={styles.flowTranslatorKicker}>Tradutor do fluxo</p>
+            </div>
 
-            {selectedNode ? (
-              <aside
-                className={styles.flowTranslator}
-                style={{ transform: `translate(${panelOffset.x}px, ${panelOffset.y}px)` }}
-              >
-                <div
-                  className={styles.flowTranslatorHandle}
-                  onPointerDown={handlePanelPointerDown}
-                  onPointerMove={handlePanelPointerMove}
-                  onPointerUp={handlePanelPointerUp}
-                  onPointerCancel={handlePanelPointerUp}
-                >
-                  <span className={styles.flowTranslatorGrip} aria-hidden="true">
-                    <span />
-                    <span />
-                    <span />
-                    <span />
-                    <span />
-                    <span />
-                  </span>
-                  <p className={styles.flowTranslatorKicker}>Tradutor do fluxo</p>
+            <div className={styles.flowTranslatorBody}>
+              <h2>{selectedNode.title}</h2>
+              <p>{selectedNode.description}</p>
+
+              <div className={styles.flowTranslatorMeta}>
+                <span>{Math.max(0, flow.nodeIds.size - 1)} relacionados</span>
+                {markerTexts.risks.length ? <span><b>R</b> Risco</span> : null}
+                {markerTexts.hypotheses.length ? <span><b>H</b> Hipótese</span> : null}
+              </div>
+
+              {markerTexts.risks.length ? (
+                <div className={styles.flowTranslatorBlock}>
+                  <h3>Riscos</h3>
+                  <ul>
+                    {markerTexts.risks.map((risk) => (
+                      <li key={risk}>{risk}</li>
+                    ))}
+                  </ul>
                 </div>
+              ) : null}
 
-                <div className={styles.flowTranslatorBody}>
-                  <h2>{selectedNode.title}</h2>
-                  <p>{selectedNode.description}</p>
-
-                  <div className={styles.flowTranslatorMeta}>
-                    <span>{Math.max(0, flow.nodeIds.size - 1)} relacionados</span>
-                    {markerTexts.risks.length ? <span><b>R</b> Risco</span> : null}
-                    {markerTexts.hypotheses.length ? <span><b>H</b> Hipótese</span> : null}
-                  </div>
-
-                  {markerTexts.risks.length ? (
-                    <div className={styles.flowTranslatorBlock}>
-                      <h3>Riscos</h3>
-                      <ul>
-                        {markerTexts.risks.map((risk) => (
-                          <li key={risk}>{risk}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : null}
-
-                  {markerTexts.hypotheses.length ? (
-                    <div className={styles.flowTranslatorBlock}>
-                      <h3>Hipóteses</h3>
-                      <ul>
-                        {markerTexts.hypotheses.map((hypothesis) => (
-                          <li key={hypothesis}>{hypothesis}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : null}
-
-                  {flowPath ? (
-                    <div className={styles.flowTranslatorBlock}>
-                      <h3>Caminho resumido</h3>
-                      <p className={styles.flowTranslatorPath}>{flowPath}</p>
-                    </div>
-                  ) : null}
+              {markerTexts.hypotheses.length ? (
+                <div className={styles.flowTranslatorBlock}>
+                  <h3>Hipóteses</h3>
+                  <ul>
+                    {markerTexts.hypotheses.map((hypothesis) => (
+                      <li key={hypothesis}>{hypothesis}</li>
+                    ))}
+                  </ul>
                 </div>
-              </aside>
-            ) : null}
-          </div>
-        </motion.section>
+              ) : null}
+
+              {flowPath ? (
+                <div className={styles.flowTranslatorBlock}>
+                  <h3>Caminho resumido</h3>
+                  <p className={styles.flowTranslatorPath}>{flowPath}</p>
+                </div>
+              ) : null}
+            </div>
+          </aside>
+        ) : null}
       </div>
-    </main>
+    </InteractiveExperienceShell>
   );
 }

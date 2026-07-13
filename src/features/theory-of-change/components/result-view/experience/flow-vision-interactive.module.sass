@@ -1,0 +1,231 @@
+$ease-out: cubic-bezier(.22, 1, .36, 1)
+
+.flowVisionExperience
+  --diagram-viewport-offset: 7.25rem
+
+  .workspaceShell
+    min-block-size: 0
+    display: flex
+    flex-direction: column
+
+.flowVisionWorkspace
+  display: grid
+  grid-template-columns: minmax(0, 1fr) clamp(15rem, 22vw, 19rem)
+  gap: 0
+  min-block-size: 0
+  flex: 1
+  overflow: hidden
+
+  > :first-child
+    min-block-size: 0
+    max-height: calc(100dvh - var(--diagram-viewport-offset))
+    overflow: hidden
+
+.flowVisionInspector
+  padding: clamp(1rem, 2vw, 1.35rem)
+  border-left: 1px solid rgba(255,255,255,.08)
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)), rgba(8,9,11,.62)
+  backdrop-filter: blur(1.2rem) saturate(1.1)
+  -webkit-backdrop-filter: blur(1.2rem) saturate(1.1)
+  overflow: auto
+
+  h2
+    margin: 0 0 .7rem
+    font-size: 1.05rem
+    font-weight: 650
+    letter-spacing: -.02em
+    line-height: 1.25
+
+  p
+    margin: 0 0 1rem
+    color: rgba(255,255,255,.58)
+    font-size: .82rem
+    line-height: 1.55
+
+.flowVisionInspectorMeta
+  display: flex
+  flex-wrap: wrap
+  gap: .45rem
+  margin-block-end: 1rem
+
+  span
+    display: inline-flex
+    align-items: center
+    padding: .35rem .6rem
+    border-radius: 999rem
+    border: 1px solid rgba(255,255,255,.1)
+    background: rgba(255,255,255,.03)
+    color: rgba(255,255,255,.62)
+    font-size: .72rem
+
+.flowVisionDiagram
+  position: relative
+  width: 100%
+  min-block-size: 100%
+  padding: clamp(.75rem, 1.6vw, 1.1rem)
+
+.flowVisionBoard
+  position: relative
+  width: 100%
+  min-block-size: 22rem
+  display: flex
+  align-items: center
+  justify-content: center
+
+.flowVisionConnections
+  position: absolute
+  inset: 0
+  width: 100%
+  height: 100%
+  overflow: visible
+  pointer-events: none
+  z-index: 3
+
+.flowVisionEdgePath
+  fill: none
+  stroke: color-mix(in srgb, var(--edge-accent, rgba(255,255,255,.42)) 55%, rgba(255,255,255,.28))
+  stroke-width: 1.5
+  stroke-dasharray: .35rem .3rem
+  vector-effect: non-scaling-stroke
+
+.flowVisionEdgePathActive
+  stroke: color-mix(in srgb, var(--edge-accent, rgba(255,255,255,.58)) 72%, rgba(255,255,255,.42))
+  stroke-width: 1.5
+  filter: drop-shadow(0 0 .25rem color-mix(in srgb, var(--edge-accent, white) 18%, transparent))
+
+.flowVisionEdgeDimmed .flowVisionEdgePath
+  stroke: rgba(244,244,245,.06)
+  stroke-width: 1px
+
+.flowVisionEdgeBadgeGroup
+  pointer-events: none
+
+.flowVisionEdgeBadgeCircle,
+.flowVisionEdgeBadgePill
+  fill: rgba(8,9,11,.88)
+  stroke: rgba(255,255,255,.2)
+  stroke-width: .75
+
+.flowVisionEdgeBadgeText
+  fill: rgba(244,244,245,.9)
+  font-size: .54rem
+  font-weight: 700
+  font-family: inherit
+
+.flowVisionEdgeBadgeTextPill
+  font-size: .48rem
+  letter-spacing: -.02em
+
+.flowVisionColumns
+  position: relative
+  z-index: 2
+  display: grid
+  grid-template-columns: repeat(4, minmax(0, 1fr))
+  gap: clamp(.85rem, 1.8vw, 1.5rem)
+  width: 100%
+  max-width: 68rem
+  margin-inline: auto
+
+.flowVisionColumn
+  display: flex
+  flex-direction: column
+  gap: .65rem
+  min-inline-size: 0
+
+.flowVisionColumnHeader
+  display: flex
+  align-items: center
+  justify-content: center
+  min-block-size: 1.5rem
+
+.flowVisionColumnLabel
+  color: color-mix(in srgb, var(--stage-color) 78%, rgba(255,255,255,.72))
+  font-size: .65rem
+  font-weight: 700
+  letter-spacing: .16em
+  text-transform: uppercase
+
+.flowVisionColumnCards
+  display: flex
+  flex-direction: column
+  gap: .65rem
+
+.flowVisionCard
+  position: relative
+  display: block
+  width: 100%
+  padding: .7rem .8rem .7rem .95rem
+  border-radius: .7rem
+  border: 1px solid color-mix(in srgb, var(--stage-color) 14%, rgba(255,255,255,.08))
+  border-left: .1875rem solid color-mix(in srgb, var(--stage-color) 68%, rgba(255,255,255,.18))
+  background: linear-gradient(135deg, color-mix(in srgb, var(--stage-color) 6%, rgba(255,255,255,.04)) 0%, rgba(255,255,255,.02) 42%, rgba(8,9,11,.42) 100%), rgba(10,11,13,.58)
+  backdrop-filter: blur(.85rem) saturate(1.25)
+  -webkit-backdrop-filter: blur(.85rem) saturate(1.25)
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 .65rem 1.6rem rgba(0,0,0,.18)
+  text-align: left
+  color: rgba(255,255,255,.9)
+  cursor: pointer
+  transition: border-color 180ms $ease-out, box-shadow 180ms $ease-out, transform 180ms $ease-out
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0
+    border-radius: inherit
+    pointer-events: none
+    background: radial-gradient(ellipse 90% 70% at 0% 50%, color-mix(in srgb, var(--stage-color) 10%, transparent), transparent 72%)
+    opacity: .55
+
+  &:not(.flowVisionCardDisabled):hover
+    border-color: color-mix(in srgb, var(--stage-color) 28%, rgba(255,255,255,.12))
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 .85rem 2rem color-mix(in srgb, var(--stage-color) 10%, rgba(0,0,0,.22))
+
+.flowVisionCardSelected
+  border-color: color-mix(in srgb, var(--stage-color) 42%, rgba(255,255,255,.16))
+  border-left-color: var(--stage-color)
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 0 0 1px color-mix(in srgb, var(--stage-color) 22%, transparent), 0 .9rem 2.2rem color-mix(in srgb, var(--stage-color) 16%, rgba(0,0,0,.24))
+
+.flowVisionCardRelated
+  border-color: color-mix(in srgb, var(--stage-color) 24%, rgba(255,255,255,.1))
+
+.flowVisionCardDisabled
+  pointer-events: none
+
+.flowVisionCardStage
+  display: block
+  margin-block-end: .3rem
+  color: color-mix(in srgb, var(--stage-color) 70%, rgba(255,255,255,.5))
+  font-size: .58rem
+  font-weight: 700
+  letter-spacing: .14em
+  text-transform: uppercase
+
+.flowVisionCardTitle
+  display: block
+  margin-block-end: .25rem
+  font-size: .78rem
+  font-weight: 650
+  line-height: 1.3
+  letter-spacing: -.01em
+
+.flowVisionCardText
+  display: block
+  color: rgba(255,255,255,.52)
+  font-size: .68rem
+  line-height: 1.45
+
+@media (max-width: 70rem)
+  .flowVisionWorkspace
+    grid-template-columns: 1fr
+
+  .flowVisionInspector
+    border-left: 0
+    border-top: 1px solid rgba(255,255,255,.08)
+
+  .flowVisionColumns
+    grid-template-columns: repeat(2, minmax(0, 1fr))
+    gap: 1rem
+
+@media (max-width: 42rem)
+  .flowVisionColumns
+    grid-template-columns: 1fr
