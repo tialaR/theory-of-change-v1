@@ -45,7 +45,8 @@ import {
   PublicShell,
   PublicTimeline
 } from '@/shared/ui/lusion-resend-ds';
-import { ExamplePreviewsSection } from '@/features/theory-of-change/components/resend-public/example-previews';
+import { ExamplePreviewsSection, DedicatedExamplePreview } from '@/features/theory-of-change/components/resend-public/example-previews';
+import { HomeOnboardingPreview } from './home-onboarding-preview';
 import { TheoryFlowBoard } from './theory-flow-board';
 import styles from './public-pages.module.sass';
 
@@ -60,8 +61,6 @@ const GUIDE_STEPS = [
 ];
 
 export function HomePage() {
-  const [selectedId, setSelectedId] = useState<string | null>(exampleTheory.nodes[0]?.id ?? null);
-
   return (
     <PublicShell>
       <PublicHeader />
@@ -102,18 +101,12 @@ export function HomePage() {
       </PublicSection>
       <PublicSection
         compact
-        eyebrow="Prévia"
-        title="Clique em um card e acompanhe o caminho."
-        description="Espelho reduzido da visualização interativa — relacionados ganham foco, demais recuam."
+        eyebrow="PRÉVIA GUIADA"
+        title="Veja a teoria ganhar forma."
+        description="Primeiro, os elementos entram em sequência e revelam o caminho causal. Depois, o fluxo se organiza em uma leitura final por etapas."
       >
         <div className={styles.resultPreview}>
-          <TheoryFlowBoard
-            nodes={exampleTheory.nodes}
-            edges={exampleTheory.edges}
-            mode="preview"
-            selectedNodeId={selectedId}
-            onSelectNode={setSelectedId}
-          />
+          <HomeOnboardingPreview />
         </div>
       </PublicSection>
       <PublicFooter />
@@ -157,9 +150,40 @@ export function ExamplesPage() {
   );
 }
 
-export function ResultPage() {
-  const [selectedId, setSelectedId] = useState<string | null>(exampleTheory.nodes[0]?.id ?? null);
+export function FlowPage() {
+  return (
+    <PublicShell>
+      <PublicHeader />
+      <PublicHero
+        compact
+        kicker="Fluxo"
+        title="Visão do fluxo com prévia viva."
+        description="Entenda como insumos, atividades, produtos e resultados se conectam antes de abrir a experiência completa."
+      />
+      <div className={styles.resultLayout}>
+        <PublicReveal>
+          <div className={styles.resultContext}>
+            <p className={styles.inspectorKicker}>Exemplo</p>
+            <h3>Rascunho da teoria de mudança</h3>
+            <p>
+              Veja a lógica causal em etapas, com cards e conexões animadas para entender o caminho da
+              intervenção antes da leitura final.
+            </p>
+            <PublicButton href="/exemplos/visao-do-fluxo/interativo">Abrir experiência interativa</PublicButton>
+          </div>
+        </PublicReveal>
+        <PublicReveal delay={0.05}>
+          <div className={styles.resultPreview}>
+            <DedicatedExamplePreview type="flow" />
+          </div>
+        </PublicReveal>
+      </div>
+      <PublicFooter />
+    </PublicShell>
+  );
+}
 
+export function ResultPage() {
   return (
     <PublicShell>
       <PublicHeader />
@@ -167,7 +191,7 @@ export function ResultPage() {
         compact
         kicker="Resultado"
         title="Leitura executiva com prévia viva."
-        description="Contexto à esquerda, fluxo compacto à direita. A exploração completa fica na rota interativa."
+        description="Contexto à esquerda, prévia abstrata à direita. A exploração completa fica na rota interativa."
       />
       <div className={styles.resultLayout}>
         <PublicReveal>
@@ -176,20 +200,14 @@ export function ResultPage() {
             <h3>{exampleTheory.title}</h3>
             <p>
               Política educacional com formação de professores, acompanhamento nas escolas e melhoria
-              no uso de dados. Clique nos cards da prévia para ver relações.
+              no uso de dados. A prévia resume a estrutura conectada antes da leitura interativa.
             </p>
             <PublicButton href="/exemplos/resultado/interativo">Abrir visualização interativa</PublicButton>
           </div>
         </PublicReveal>
         <PublicReveal delay={0.05}>
           <div className={styles.resultPreview}>
-            <TheoryFlowBoard
-              nodes={exampleTheory.nodes}
-              edges={exampleTheory.edges}
-              mode="preview"
-              selectedNodeId={selectedId}
-              onSelectNode={setSelectedId}
-            />
+            <DedicatedExamplePreview type="result" />
           </div>
         </PublicReveal>
       </div>
@@ -259,7 +277,7 @@ export function InteractivePage() {
   return (
     <div data-public-page="true" className={styles.interactiveShell}>
       <header className={styles.interactiveTopbar}>
-        <Link href="/exemplos/resultado" className={styles.interactiveBrand}>
+        <Link href="/exemplos/visao-do-fluxo" className={styles.interactiveBrand}>
           <span aria-hidden="true" />
           <strong>{exampleTheory.title}</strong>
         </Link>
@@ -287,7 +305,7 @@ export function InteractivePage() {
           <button type="button" className={styles.toolBtn} onClick={resetView}>
             Reiniciar
           </button>
-          <Link href="/exemplos/resultado" className={styles.closeLink}>
+          <Link href="/exemplos/visao-do-fluxo" className={styles.closeLink}>
             Fechar
           </Link>
         </div>
@@ -366,6 +384,8 @@ export function ReferencesPage() {
   "/",
   "/guia-de-aprendizado",
   "/exemplos",
+  "/exemplos/visao-do-fluxo",
+  "/exemplos/visao-do-fluxo/interativo",
   "/exemplos/resultado",
   "/exemplos/resultado/interativo",
   "/referencias"

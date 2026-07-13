@@ -8,7 +8,6 @@ import styles from './lusion-resend-ds.module.sass';
 const NAV = [
   { href: '/guia-de-aprendizado', label: 'Guia' },
   { href: '/exemplos', label: 'Exemplos' },
-  { href: '/exemplos/resultado', label: 'Resultado' },
   { href: '/referencias', label: 'Referências' }
 ] as const;
 
@@ -154,7 +153,7 @@ export function PublicHero({
     <section className={`${styles.hero} ${compact ? styles.hero_compact : ''}`}>
       {visual ? <PublicReveal className={styles.heroVisual}>{visual}</PublicReveal> : null}
       <PublicReveal className={styles.heroCopy} delay={0.06}>
-        {kicker ? <p className={isOutcomeKicker(kicker) ? styles.kickerOutcome : styles.kicker}>{kicker}</p> : null}
+        {kicker ? <p className={styles.kicker}>{kicker}</p> : null}
         <h1>{title}</h1>
         {description ? <p className={styles.heroDescription}>{description}</p> : null}
         {actions ? <div className={styles.heroActions}>{actions}</div> : null}

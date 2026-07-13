@@ -2,6 +2,7 @@ export {
   HomePage,
   GuidePage,
   ExamplesPage,
+  FlowPage,
   ResultPage,
   InteractivePage,
   ReferencesPage
