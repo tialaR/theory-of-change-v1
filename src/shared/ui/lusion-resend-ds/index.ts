@@ -2,7 +2,6 @@ export {
   PublicShell,
   PublicGridBackground,
   PublicHeader,
-  PublicLogoMark,
   PublicHero,
   PublicButton,
   PublicSection,

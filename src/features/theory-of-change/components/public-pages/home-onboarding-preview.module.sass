@@ -1,61 +1,95 @@
 $ease: cubic-bezier(0.22, 1, 0.36, 1)
 
 .preview
+  --guided-preview-content-height: clamp(17rem, 26vw, 22.5rem)
+  --guided-preview-flow-offset-y: 0rem
+  --guided-preview-columns-offset-y: 0rem
+  --guided-preview-text-max-width: clamp(28rem, 56vw, 46rem)
+  --guided-preview-text-area-width: clamp(28rem, 56vw, 46rem)
+  --guided-preview-text-area-height: clamp(10rem, 20vw, 17rem)
   position: relative
+  display: grid
+  place-items: center
   width: 100%
-  min-height: 17rem
+  min-height: clamp(24rem, 36vw, 32rem)
   padding: clamp(0.875rem, 2vw, 1.375rem)
   overflow: hidden
   background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04), transparent 42%), linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.008)), rgba(8, 9, 11, 0.72)
 
 .previewInner
+  --preview-stage-width: minmax(0, 1fr)
+  --preview-card-width: clamp(7.5rem, 13vw, 10.75rem)
+  --preview-card-height: clamp(3.75rem, 5.6vw, 4.875rem)
+  --preview-stage-gap: clamp(1.5rem, 4vw, 3.25rem)
+  --preview-card-gap: clamp(0.75rem, 1.5vw, 1rem)
+  --preview-flow-scale: 1
+  --preview-flow-height: var(--guided-preview-content-height)
+  --result-column-width: clamp(12rem, 20vw, 18rem)
+  --result-column-height: clamp(14rem, 24vw, 20rem)
+  --result-card-height: clamp(3.5rem, 5vw, 4.75rem)
+  --result-card-gap: clamp(0.625rem, 1.2vw, 0.875rem)
+  --result-column-gap: clamp(1.25rem, 2.6vw, 2.25rem)
+  --result-preview-scale: 1
   position: relative
+  display: grid
+  place-items: center
   width: 100%
-  min-height: 13.5rem
-
-.resultLayer
-  position: absolute
-  inset: clamp(0.875rem, 2vw, 1.375rem)
-  z-index: 1
+  height: 100%
+  min-height: var(--guided-preview-content-height)
+  overflow: visible
 
 .flowGrid
   display: grid
-  grid-template-columns: repeat(4, minmax(0, 1fr))
-  gap: clamp(0.375rem, 0.9vw, 0.625rem)
-  align-items: start
+  grid-template-columns: repeat(4, var(--preview-stage-width))
+  gap: var(--preview-stage-gap)
+  align-items: center
+  align-content: center
+  justify-content: center
+  width: 100%
+  transform: scale(var(--preview-flow-scale)) translateY(var(--guided-preview-flow-offset-y))
+  transform-origin: center center
+  position: relative
+  z-index: 3
 
 .column
   display: flex
   flex-direction: column
-  gap: 0.375rem
-  max-width: 5.75rem
-  margin: 0 auto
+  gap: var(--preview-card-gap)
+  width: 100%
+  justify-content: center
+  align-items: stretch
+  align-content: center
 
 .columnHeader
-  margin: 0 0 0.125rem
-  font-size: 0.5rem
+  margin: 0 0 0.1875rem
+  font-size: 0.53125rem
   letter-spacing: 0.11em
   text-transform: uppercase
   font-weight: 600
+  text-align: center
 
 .columnHeaderPlaceholder
   display: block
-  height: 0.6875rem
-  margin-bottom: 0.125rem
+  height: 0.75rem
+  margin-bottom: 0.1875rem
 
 .cardWrap
   position: relative
+  display: flex
+  justify-content: center
 
 .card
   position: relative
-  padding: 0.375rem 0.4375rem 0.3125rem
-  border-radius: 0.375rem
+  width: 100%
+  max-width: var(--preview-card-width)
+  min-height: var(--preview-card-height)
+  padding: 0.5rem 0.5rem 0.4375rem
+  border-radius: 0.4375rem
   border: 1px solid rgba(255, 255, 255, 0.09)
   background: rgba(12, 12, 13, 0.84)
   backdrop-filter: blur(0.5rem)
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 0 0.875rem color-mix(in srgb, var(--stage-color) 10%, transparent)
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 0 1rem color-mix(in srgb, var(--stage-color) 12%, transparent)
   overflow: hidden
-  min-height: 1.75rem
 
 .cardAccent
   position: absolute
@@ -63,24 +97,24 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1)
   top: 0
   bottom: 0
   width: 0.125rem
-  border-radius: 0.375rem 0 0 0.375rem
+  border-radius: 0.4375rem 0 0 0.4375rem
   background: var(--stage-color)
   box-shadow: 0 0 0.5rem color-mix(in srgb, var(--stage-color) 50%, transparent)
 
 .skeletonLine,
 .skeletonLineShort
   display: block
-  height: 0.25rem
+  height: 0.28125rem
   border-radius: 999px
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.05))
-  margin-top: 0.1875rem
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05))
+  margin-top: 0.25rem
 
 .skeletonLine
-  width: 62%
+  width: 68%
 
 .skeletonLineShort
-  width: 38%
-  margin-top: 0.1875rem
+  width: 42%
+  margin-top: 0.25rem
   opacity: 0.5
 
 .connectionsSvg
@@ -90,7 +124,7 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1)
   height: 100%
   pointer-events: none
   overflow: visible
-  z-index: 2
+  z-index: 4
 
 .overlayMessage
   position: absolute
@@ -100,43 +134,58 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1)
   align-items: center
   justify-content: center
   text-align: center
-  gap: 0.5rem
-  padding: 1.5rem
+  gap: clamp(0.75rem, 1.6vw, 1.125rem)
+  padding: clamp(1.25rem, 2.8vw, 2rem)
   z-index: 6
 
 .overlayBackdrop
-  background: radial-gradient(circle at 50% 48%, rgba(8, 9, 11, 0.94), rgba(8, 9, 11, 0.82) 58%, rgba(8, 9, 11, 0.62) 100%)
+  background: radial-gradient(circle at 50% 48%, rgba(8, 9, 11, 0.99), rgba(8, 9, 11, 0.98) 52%, rgba(8, 9, 11, 0.96) 100%)
 
 .overlayTitle
   margin: 0
-  max-width: 17rem
-  font-size: clamp(0.9375rem, 1.9vw, 1.125rem)
+  width: 100%
+  max-width: var(--guided-preview-text-max-width)
+  font-size: clamp(1.45rem, 2.8vw, 2.35rem)
   font-weight: 500
-  line-height: 1.35
-  letter-spacing: 0.01em
-  background: linear-gradient(92deg, rgba(255, 255, 255, 0.92) 0%, rgba(214, 218, 228, 0.72) 48%, rgba(255, 255, 255, 0.86) 100%)
+  line-height: 1.2
+  letter-spacing: -0.015em
+  background: linear-gradient(92deg, rgba(255, 255, 255, 0.94) 0%, rgba(214, 218, 228, 0.78) 48%, rgba(255, 255, 255, 0.9) 100%)
   -webkit-background-clip: text
   background-clip: text
   color: transparent
 
 .overlaySubtitle
   margin: 0
-  max-width: 20rem
-  font-size: 0.8125rem
+  width: 100%
+  max-width: var(--guided-preview-text-max-width)
+  font-size: clamp(0.95rem, 1.35vw, 1.25rem)
   line-height: 1.55
-  color: rgba(244, 244, 245, 0.52)
+  color: rgba(244, 244, 245, 0.62)
+
+.sceneLayer
+  position: absolute
+  inset: clamp(0.875rem, 2vw, 1.375rem)
+  display: grid
+  place-items: center
+  z-index: 1
 
 .resultGrid
   display: grid
-  grid-template-columns: repeat(4, minmax(0, 1fr))
-  gap: clamp(0.5rem, 1.2vw, 0.875rem)
-  align-items: stretch
+  grid-template-columns: repeat(4, minmax(0, var(--result-column-width)))
+  gap: var(--result-column-gap)
+  align-items: center
+  align-content: center
+  justify-content: center
+  width: 100%
+  transform: scale(var(--result-preview-scale)) translateY(var(--guided-preview-columns-offset-y))
+  transform-origin: center center
 
 .resultColumn
   display: flex
   flex-direction: column
-  gap: 0.5rem
-  padding: 0.625rem 0.5rem
+  gap: var(--result-card-gap)
+  min-height: var(--result-column-height)
+  padding: clamp(0.75rem, 1.4vw, 1rem) clamp(0.625rem, 1.1vw, 0.875rem)
   border-radius: 0.625rem
   border: 1px solid color-mix(in srgb, var(--stage-color) 18%, rgba(255, 255, 255, 0.08))
   background: rgba(16, 18, 20, 0.42)
@@ -171,7 +220,8 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1)
   color: rgba(244, 244, 245, 0.34)
 
 .resultCard
-  padding: 0.5rem 0.5rem 0.4375rem
+  min-height: var(--result-card-height)
+  padding: clamp(0.5625rem, 1vw, 0.75rem) clamp(0.5rem, 0.9vw, 0.625rem)
   border-radius: 0.4375rem
   border: 1px solid rgba(255, 255, 255, 0.09)
   background: rgba(12, 12, 13, 0.78)
@@ -202,14 +252,20 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1)
   .resultGrid
     grid-template-columns: repeat(2, minmax(0, 1fr))
 
-  .column
-    max-width: none
-
   .preview
-    min-height: 18.5rem
+    --guided-preview-content-height: clamp(15rem, 40vw, 20rem)
+    --guided-preview-text-area-width: clamp(18rem, 88vw, 28rem)
+    --guided-preview-text-max-width: clamp(18rem, 88vw, 28rem)
+    --guided-preview-text-area-height: clamp(8.5rem, 28vw, 13rem)
+    min-height: clamp(22rem, 52vw, 28rem)
 
-  .overlayTitle
-    max-width: 14rem
-
-  .overlaySubtitle
-    max-width: 15rem
+  .previewInner
+    --preview-card-width: clamp(5.5rem, 38vw, 8rem)
+    --preview-card-height: clamp(3rem, 8vw, 4rem)
+    --preview-stage-gap: clamp(0.875rem, 3.5vw, 1.5rem)
+    --preview-card-gap: clamp(0.625rem, 2vw, 0.875rem)
+    --result-column-width: clamp(9rem, 42vw, 14rem)
+    --result-column-height: clamp(11rem, 46vw, 16rem)
+    --result-card-height: clamp(3rem, 7vw, 4rem)
+    --result-card-gap: clamp(0.5rem, 2vw, 0.75rem)
+    --result-column-gap: clamp(0.75rem, 3vw, 1.25rem)

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, type ReactNode } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
+import { HomeBrandLogo } from '@/features/theory-of-change/components/public-pages/home-brand-logo';
 import styles from './lusion-resend-ds.module.sass';
 
 const NAV = [
@@ -119,8 +120,8 @@ export function PublicHeader({
   return (
     <header className={styles.header}>
       <Link href="/" className={styles.brand} aria-label="Ir para o início">
-        <PublicLogoMark />
-        <span>TDM</span>
+        <HomeBrandLogo variant="header" />
+        <span className={styles.brandText}>TDM</span>
       </Link>
       <nav className={styles.nav} aria-label="Navegação principal">
         {NAV.map((item) => {
@@ -145,10 +146,6 @@ export function PublicHeader({
       </div>
     </header>
   );
-}
-
-export function PublicLogoMark() {
-  return <span className={styles.logoMark} aria-hidden="true" />;
 }
 
 export function PublicHero({
