@@ -96,7 +96,7 @@
   box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.05), inset 0 0 1.4rem rgba(255, 255, 255, 0.025), 0 1rem 2rem rgba(0, 0, 0, 0.34)
   backdrop-filter: blur(1.35rem) saturate(1.02)
   -webkit-backdrop-filter: blur(1.35rem) saturate(1.02)
-  transition: padding 320ms cubic-bezier(0.22, 1, 0.36, 1), border-color 260ms ease, box-shadow 320ms ease, background 320ms ease
+  transition: border-color 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms cubic-bezier(0.22, 1, 0.36, 1)
 
   > *
     position: relative
@@ -142,7 +142,7 @@
   gap: 0.5rem
   min-width: 0
   width: 100%
-  transition: gap 300ms cubic-bezier(0.22, 1, 0.36, 1)
+  transition: gap 200ms cubic-bezier(0.22, 1, 0.36, 1)
 
 .heroLead
   display: grid
@@ -150,7 +150,7 @@
   min-width: 0
   max-width: min(33rem, 100%)
   padding-right: clamp(4.2rem, 20vw, 7.25rem)
-  transition: gap 300ms cubic-bezier(0.22, 1, 0.36, 1), padding-right 300ms cubic-bezier(0.22, 1, 0.36, 1)
+  transition: gap 200ms cubic-bezier(0.22, 1, 0.36, 1)
 
 .heroTitle
   margin: 0
@@ -161,7 +161,6 @@
   letter-spacing: -0.02em
   max-width: 100%
   min-width: 0
-  transition: font-size 300ms cubic-bezier(0.22, 1, 0.36, 1), line-height 300ms cubic-bezier(0.22, 1, 0.36, 1)
 
 .heroDescription
   margin: 0
@@ -170,7 +169,7 @@
   line-height: 1.5
   max-width: min(52ch, 100%)
   min-width: 0
-  transition: opacity 300ms ease, max-width 300ms cubic-bezier(0.22, 1, 0.36, 1)
+  transition: opacity 200ms cubic-bezier(0.22, 1, 0.36, 1)
 
 .heroFormShell
   margin-top: 0.1875rem
@@ -178,10 +177,10 @@
   width: 100%
   max-width: 100%
   transform-origin: top center
-  transition: opacity 320ms ease, transform 340ms cubic-bezier(0.22, 1, 0.36, 1), max-height 360ms cubic-bezier(0.22, 1, 0.36, 1), margin-top 300ms ease
+  transition: opacity 200ms cubic-bezier(0.22, 1, 0.36, 1), transform 200ms cubic-bezier(0.22, 1, 0.36, 1)
   max-height: 15rem
   opacity: 1
-  transform: translateY(0) scaleY(1)
+  transform: translate3d(0, 0, 0) scaleY(1)
   overflow: hidden
   background: transparent
 
@@ -241,7 +240,7 @@
   margin-top: 0
   padding: 0
   opacity: 0
-  transform: translateY(-0.375rem) scaleY(0.96)
+  transform: translate3d(0, -0.375rem, 0) scaleY(0.94)
   border: 0
   background: transparent
   box-shadow: none
@@ -268,13 +267,61 @@
   max-width: 56%
   height: auto
   pointer-events: none
-  opacity: 0.3
+  opacity: 0.92
   transform: rotate(-2deg)
-  transition: opacity 260ms ease, transform 320ms cubic-bezier(0.22, 1, 0.36, 1), width 260ms ease
+  transform-origin: top right
+  transition: opacity 200ms cubic-bezier(0.22, 1, 0.36, 1), transform 200ms cubic-bezier(0.22, 1, 0.36, 1)
+  will-change: transform, opacity
+
+.heroAnimatedSprite
+  width: 100%
+  height: auto
+  opacity: 0.88
+  mix-blend-mode: screen
+  pointer-events: none
+  user-select: none
+  filter: saturate(0.92) contrast(1.06) brightness(1.04)
+  transform: translate3d(0, 0, 0)
+
+.heroLiquidGlassLogoWrap
+  position: relative
+  z-index: 1
+  display: grid
+  place-items: center
+  width: 100%
+  height: 100%
+  pointer-events: auto
+  user-select: none
+  will-change: transform, opacity
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms cubic-bezier(0.22, 1, 0.36, 1)
+
+.heroLiquidGlassLogoWrap::before
+  content: ''
+  position: absolute
+  inset: -18%
+  border-radius: 999rem
+  opacity: 0
+  pointer-events: none
+  filter: blur(1.25rem)
+  background: conic-gradient(from 180deg, rgba(139, 124, 255, .24), rgba(73, 179, 255, .22), rgba(242, 166, 90, .22), rgba(55, 200, 147, .22), rgba(139, 124, 255, .24))
+  transition: opacity 180ms cubic-bezier(0.22, 1, 0.36, 1)
+
+.heroLiquidGlassLogoWrapConnection::before
+  opacity: .72
+
+.heroLiquidGlassLogo
+  width: 100%
+  height: 100%
+  pointer-events: auto
+  mix-blend-mode: screen
+  filter: saturate(0.94) contrast(1.04) brightness(1.03)
+
+.heroLiquidGlassLogoWrap:hover
+  transform: translate3d(0, -0.12rem, 0) scale(1.025)
 
 .heroCardCollapsed .heroSculptureWrap
-  opacity: 0.22
-  transform: rotate(-1deg) scale(0.92)
+  opacity: 0.78
+  transform: translate3d(-0.75rem, -0.85rem, 0) rotate(-1deg) scale(0.88)
 
 .heroCardCollapsed .heroContent
   gap: 0.3125rem

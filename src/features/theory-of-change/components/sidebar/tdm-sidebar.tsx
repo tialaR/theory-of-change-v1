@@ -19,11 +19,13 @@ import buttonStyles from '@/shared/ui/tdm-button/tdm-button.module.sass';
 import { TdmAnchoredTooltip } from '@/shared/ui/tooltip/tdm-anchored-tooltip';
 import type { TdmNodeDraft } from '../../domain/tdm-types';
 import { TDM_STAGE_ORDER, type TdmStage } from '../../domain/tdm-stages';
-import { getTdmStageTheme } from '../../domain/tdm-theme';
+import { getTheoryGuideProgressStage, type TheoryGuideStageId } from '../../domain/tdm-theory-guide';
+import { getTdmStageTheme, TDM_THEORY_NEUTRAL } from '../../domain/tdm-theme';
 import type { StageCreation } from '../../utils/stage-creation';
 import { TdmBlockFormFields, TdmFormField } from '../form-field/tdm-form-field';
 import fieldStyles from '../form-field/tdm-form-field.module.sass';
 import { TdmSectionIcon } from '../tdm-section-icon/tdm-section-icon';
+import LiquidGlassLogoInfiniteLoop from './liquid-glass-logo-infinite-loop';
 import { TheoryHeaderForm, THEORY_DEFAULT_DESCRIPTION } from './theory-header-form';
 import { SidebarToggleIcon } from './sidebar-toggle-icon';
 import {
@@ -192,6 +194,56 @@ const STAGE_ADVANCE_HINTS: Record<TdmStage, string> = {
 };
 
 const THEORY_PROGRESS_ITEM_GOAL = 10;
+
+type HeroLogoTheme = {
+  color: string;
+  glowColor: string;
+  tintOpacity: number;
+  glassIntensity: number;
+  isConnectionBlend: boolean;
+};
+
+function getHeroLogoTheme(guideStage: TheoryGuideStageId): HeroLogoTheme {
+  if (guideStage === 'theory') {
+    return {
+      color: '#f5f3ee',
+      glowColor: 'rgba(255, 255, 255, 0.32)',
+      tintOpacity: 0.42,
+      glassIntensity: 1.18,
+      isConnectionBlend: false
+    };
+  }
+
+  if (guideStage === 'connect') {
+    return {
+      color: '#f5f3ee',
+      glowColor: TDM_THEORY_NEUTRAL.glow,
+      tintOpacity: 0.52,
+      glassIntensity: 1.25,
+      isConnectionBlend: true
+    };
+  }
+
+  if (guideStage !== 'input' && guideStage !== 'activity' && guideStage !== 'output' && guideStage !== 'outcome') {
+    return getHeroLogoTheme('theory');
+  }
+
+  const theme = getTdmStageTheme(guideStage);
+  const stageGlass: Partial<Record<TdmStage, Pick<HeroLogoTheme, 'tintOpacity' | 'glassIntensity'>>> = {
+    input: { tintOpacity: 0.62, glassIntensity: 1.22 },
+    activity: { tintOpacity: 0.58, glassIntensity: 1.18 },
+    output: { tintOpacity: 0.6, glassIntensity: 1.18 },
+    outcome: { tintOpacity: 0.6, glassIntensity: 1.18 }
+  };
+
+  return {
+    color: theme.accent,
+    glowColor: theme.glow,
+    tintOpacity: stageGlass[guideStage]?.tintOpacity ?? 0.6,
+    glassIntensity: stageGlass[guideStage]?.glassIntensity ?? 1.18,
+    isConnectionBlend: false
+  };
+}
 
 function getStageLockTooltip(stage: TdmStage) {
   const stageIndex = TDM_STAGE_ORDER.indexOf(stage);
@@ -694,7 +746,7 @@ export function TdmSidebar({
       const scrollTop = contentElement.scrollTop;
       setIsSidebarScrolled(scrollTop > 8);
 
-      const shouldCompact = isHeroCompactRef.current ? scrollTop > 12 : scrollTop > 48;
+      const shouldCompact = isHeroCompactRef.current ? scrollTop > 4 : scrollTop > 10;
 
       if (shouldCompact !== isHeroCompactRef.current) {
         if (
@@ -748,6 +800,12 @@ export function TdmSidebar({
   const progressStage: TdmStage = stageCreation === 'ready-to-connect' ? 'outcome' : stageCreation;
   const progressAccent = getTdmStageTheme(progressStage).accent;
 
+  const heroGuideStage = useMemo(
+    () => getTheoryGuideProgressStage({ stageCounts, stageCreation }),
+    [stageCounts, stageCreation]
+  );
+  const heroLogoTheme = useMemo(() => getHeroLogoTheme(heroGuideStage), [heroGuideStage]);
+
   const handleCreateAccordionToggle = () => {
     if (!blockForms) return;
     const nextOpen = !blockForms.create.isOpen;
@@ -799,6 +857,31 @@ export function TdmSidebar({
                 </div>
               </div>
               <div className={styles.heroSculptureWrap} aria-hidden="true">
+                <div
+                  className={[
+                    styles.heroLiquidGlassLogoWrap,
+                    heroLogoTheme.isConnectionBlend ? styles.heroLiquidGlassLogoWrapConnection : ''
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                >
+                  <LiquidGlassLogoInfiniteLoop
+                    className={styles.heroLiquidGlassLogo}
+                    size="clamp(5.75rem, 8.4vw, 7.25rem)"
+                    speed={1}
+                    hoverSpeed={1.8}
+                    color={heroLogoTheme.color}
+                    glowColor={heroLogoTheme.glowColor}
+                    glowSize="0.72rem"
+                    textureStrength={0.68}
+                    tintOpacity={heroLogoTheme.tintOpacity}
+                    glassIntensity={heroLogoTheme.glassIntensity}
+                    showBackground={false}
+                    backgroundGlow
+                    spriteQuality="sidebar"
+                    ariaHidden
+                  />
+                </div>
               </div>
             </section>
           </div>

@@ -1,0 +1,124 @@
+.hero
+  display: grid
+  grid-template-columns: minmax(0, 0.9fr) minmax(19rem, 0.72fr)
+  gap: clamp(1.5rem, 5vw, 4rem)
+  align-items: center
+  min-height: 58dvh
+
+.eyebrow
+  margin: 0 0 0.85rem
+  font-size: 0.72rem
+  font-weight: 780
+  letter-spacing: 0.18em
+  text-transform: uppercase
+  color: rgba(255, 255, 255, 0.48)
+
+.heroCopy
+  h1
+    margin: 0
+    font-size: clamp(3.2rem, 8vw, 7.6rem)
+    line-height: 0.86
+    letter-spacing: -0.09em
+
+  p:not(.eyebrow)
+    max-width: 41rem
+    margin: 1.25rem 0 0
+    color: rgba(220, 224, 232, 0.72)
+    font-size: clamp(1rem, 1.5vw, 1.16rem)
+    line-height: 1.68
+
+.actions
+  display: flex
+  flex-wrap: wrap
+  gap: 0.72rem
+  margin-top: 1.45rem
+
+.heroPreview
+  min-height: clamp(24rem, 44vw, 34rem)
+  padding: 1.2rem
+  display: grid
+  align-content: center
+  gap: 1.35rem
+
+.previewColumns
+  display: grid
+  grid-template-columns: repeat(4, 1fr)
+  gap: 0.72rem
+
+  span
+    color: rgba(255,255,255,.52)
+    font-size: 0.7rem
+    font-weight: 760
+    letter-spacing: 0.14em
+    text-transform: uppercase
+
+.previewNodes
+  display: grid
+  grid-template-columns: repeat(4, 1fr)
+  gap: 0.8rem
+  min-height: 13rem
+  align-items: center
+
+  b
+    display: block
+    min-height: 4.5rem
+    border: 0.0625rem solid rgba(255,255,255,.12)
+    border-radius: 0.9rem
+    background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.026)), rgba(255,255,255,.03)
+
+  b:nth-child(1)
+    grid-row: 1
+  b:nth-child(2)
+    grid-row: 2
+  b:nth-child(3)
+    grid-row: 1
+  b:nth-child(4)
+    grid-row: 2
+  b:nth-child(5)
+    grid-row: 1
+  b:nth-child(6)
+    grid-row: 1 / span 2
+
+.previewLines
+  position: absolute
+  inset: 32% 10% 30%
+  opacity: .38
+
+  span
+    position: absolute
+    height: 0.0625rem
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.48), transparent)
+
+  span:nth-child(1)
+    left: 8%
+    right: 8%
+    top: 22%
+  span:nth-child(2)
+    left: 9%
+    right: 9%
+    top: 54%
+  span:nth-child(3)
+    left: 18%
+    right: 16%
+    top: 78%
+
+.capabilityGrid
+  display: grid
+  grid-template-columns: repeat(3, minmax(0, 1fr))
+  gap: 1rem
+
+.capabilityCard
+  padding: 1rem
+
+  h3
+    margin: 0
+    font-size: 1.2rem
+  p
+    margin: 0.55rem 0 0
+    color: rgba(220,224,232,.68)
+    line-height: 1.55
+
+@media (max-width: 58rem)
+  .hero,
+  .capabilityGrid
+    grid-template-columns: 1fr

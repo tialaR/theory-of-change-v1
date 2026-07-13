@@ -121,7 +121,7 @@ export const RESULT_BRIDGE_ACCENTS = {
   }
 } as const;
 
-export const HERO_COMPACT_SCROLL_THRESHOLD = 8;
+export const HERO_COMPACT_SCROLL_THRESHOLD = 12;
 
 export const RESULT_VIEW_TITLE = 'Sua Teoria da Mudança';
 

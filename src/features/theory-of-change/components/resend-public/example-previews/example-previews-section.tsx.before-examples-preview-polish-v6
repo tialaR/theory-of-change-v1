@@ -1,0 +1,216 @@
+'use client';
+
+import Link from 'next/link';
+import { motion, useReducedMotion } from 'motion/react';
+import type { CSSProperties, ReactNode } from 'react';
+import styles from './example-previews.module.sass';
+
+type PreviewVariant = 'flow' | 'result';
+
+type PreviewCard = {
+  href: string;
+  icon: ReactNode;
+  title: string;
+  description: string;
+  cta: string;
+  variant: PreviewVariant;
+};
+
+const STAGES = [
+  { key: 'input', label: 'Insumos', accent: 'rgba(181, 151, 255, 0.54)' },
+  { key: 'activity', label: 'Atividades', accent: 'rgba(102, 181, 255, 0.5)' },
+  { key: 'output', label: 'Produtos', accent: 'rgba(255, 177, 86, 0.5)' },
+  { key: 'outcome', label: 'Resultados', accent: 'rgba(91, 229, 178, 0.48)' }
+] as const;
+
+const FLOW_LINES = [
+  'M 150 142 C 205 142, 214 143, 258 143',
+  'M 150 242 C 202 242, 210 143, 258 143',
+  'M 150 342 C 205 342, 210 244, 258 244',
+  'M 404 142 C 465 142, 478 142, 528 142',
+  'M 404 242 C 462 242, 478 242, 528 242',
+  'M 404 342 C 462 342, 478 342, 528 342',
+  'M 675 142 C 730 142, 744 142, 792 142',
+  'M 675 242 C 735 242, 744 326, 792 326',
+  'M 930 204 C 960 204, 982 204, 1010 204'
+] as const;
+
+const RESULT_LINES = [
+  'M 170 156 C 250 156, 257 156, 330 156',
+  'M 170 252 C 252 252, 257 156, 330 156',
+  'M 170 348 C 252 348, 257 252, 330 252',
+  'M 480 156 C 540 156, 570 156, 640 156',
+  'M 480 252 C 540 252, 570 252, 640 252',
+  'M 790 156 C 858 156, 868 252, 940 252',
+  'M 790 252 C 858 252, 868 252, 940 252'
+] as const;
+
+const PREVIEW_CARDS: PreviewCard[] = [
+  {
+    href: '/exemplos/fluxo',
+    icon: <FlowIcon />,
+    title: 'Visualização do fluxo',
+    description: 'Veja a lógica causal em rascunho: etapas, cards e conexões animadas antes de abrir a experiência completa.',
+    cta: 'Abrir',
+    variant: 'flow'
+  },
+  {
+    href: '/exemplos/resultado',
+    icon: <ResultIcon />,
+    title: 'Resultado conectado',
+    description: 'Abra a leitura final com relações, riscos e hipóteses organizados em uma experiência visual.',
+    cta: 'Abrir',
+    variant: 'result'
+  }
+];
+
+function FlowIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className={styles.cardIconSvg}>
+      <path d="M7 7h3v3H7zM14 7h3v3h-3zM7 14h3v3H7zM14 14h3v3h-3z" />
+      <path d="M10 8.5h4M10 15.5h4M8.5 10v4M15.5 10v4" />
+    </svg>
+  );
+}
+
+function ResultIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className={styles.cardIconSvg}>
+      <path d="M6.5 4.75h11v14.5h-11z" />
+      <path d="M9.25 8.5h5.5M9.25 12h5.5M9.25 15.5h3.75" />
+    </svg>
+  );
+}
+
+function FlowNode({ stage, size = 'regular' }: { stage: (typeof STAGES)[number]; size?: 'regular' | 'compact' }) {
+  return (
+    <span className={`${styles.previewNode} ${size === 'compact' ? styles.previewNodeCompact : ''}`} style={{ '--stage-color': stage.accent } as CSSProperties} aria-hidden="true">
+      <i />
+      <b />
+      <em />
+      <small />
+    </span>
+  );
+}
+
+function FlowDraft() {
+  return (
+    <div className={styles.previewCanvas} aria-hidden="true">
+      <PreviewLines variant="flow" paths={FLOW_LINES} />
+      <div className={styles.previewFlowGrid}>
+        <div className={styles.previewStack}>
+          <FlowNode stage={STAGES[0]} />
+          <FlowNode stage={STAGES[0]} />
+          <FlowNode stage={STAGES[0]} />
+        </div>
+        <div className={styles.previewStack}>
+          <FlowNode stage={STAGES[1]} />
+          <FlowNode stage={STAGES[1]} />
+          <FlowNode stage={STAGES[1]} />
+        </div>
+        <div className={styles.previewStack}>
+          <FlowNode stage={STAGES[2]} />
+          <FlowNode stage={STAGES[2]} />
+        </div>
+        <div className={styles.previewStackFinal}>
+          <FlowNode stage={STAGES[3]} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ResultDraft() {
+  return (
+    <div className={`${styles.previewCanvas} ${styles.previewCanvasResult}`} aria-hidden="true">
+      <PreviewLines variant="result" paths={RESULT_LINES} />
+      <div className={styles.previewResultGrid}>
+        {STAGES.map((stage, index) => (
+          <div key={stage.key} className={styles.previewResultColumn} style={{ '--stage-color': stage.accent } as CSSProperties}>
+            <span>{stage.label}</span>
+            <div className={styles.previewResultList}>
+              <FlowNode stage={stage} size="compact" />
+              {index < 3 ? <FlowNode stage={stage} size="compact" /> : null}
+              {index === 0 ? <FlowNode stage={stage} size="compact" /> : null}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function PreviewLines({ variant, paths }: { variant: PreviewVariant; paths: readonly string[] }) {
+  return (
+    <svg className={styles.previewLines} viewBox="0 0 1080 470" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <marker id={`tdm-preview-arrow-${variant}`} markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth">
+          <path d="M 0 0 L 9 4.5 L 0 9 z" />
+        </marker>
+      </defs>
+      {paths.map((path, index) => (
+        <g key={path} className={styles.previewLineGroup} style={{ '--line-index': index } as CSSProperties}>
+          <path d={path} markerEnd={`url(#tdm-preview-arrow-${variant})`} />
+        </g>
+      ))}
+      {variant === 'flow' ? (
+        <>
+          <circle className={styles.previewBadgeRisk} cx="210" cy="142" r="9" />
+          <circle className={styles.previewBadgeRisk} cx="602" cy="142" r="9" />
+          <circle className={styles.previewBadgeHypothesis} cx="850" cy="142" r="9" />
+        </>
+      ) : (
+        <>
+          <circle className={styles.previewBadgeGhost} cx="260" cy="156" r="8" />
+          <circle className={styles.previewBadgeGhost} cx="558" cy="156" r="8" />
+          <circle className={styles.previewBadgeGhost} cx="865" cy="252" r="8" />
+        </>
+      )}
+    </svg>
+  );
+}
+
+export function ExamplePreviewsSection() {
+  const reducedMotion = useReducedMotion();
+
+  return (
+    <section className={styles.section} aria-labelledby="example-previews-title">
+      <div className={styles.heading}>
+        <p>Prévia das experiências</p>
+        <h2 id="example-previews-title">Escolha como visualizar a teoria.</h2>
+        <span>Dois caminhos visuais, o mesmo sistema: primeiro entenda o fluxo, depois leia o resultado conectado.</span>
+      </div>
+
+      <div className={styles.grid}>
+        {PREVIEW_CARDS.map((card, index) => (
+          <motion.article
+            key={card.title}
+            className={styles.card}
+            initial={reducedMotion ? false : { opacity: 0, y: '1rem' }}
+            whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
+            whileHover={reducedMotion ? undefined : { y: '-0.35rem' }}
+            viewport={{ once: true, amount: 0.24 }}
+            transition={{ duration: 0.42, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className={styles.cardHeader}>
+              <span className={styles.cardIcon}>{card.icon}</span>
+              <div>
+                <h3>{card.title}</h3>
+                <p>{card.description}</p>
+              </div>
+            </div>
+
+            {card.variant === 'flow' ? <FlowDraft /> : <ResultDraft />}
+
+            <Link href={card.href} className={styles.cardCta}>
+              <span>{card.cta}</span>
+              <span aria-hidden="true">→</span>
+            </Link>
+          </motion.article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+export default ExamplePreviewsSection;

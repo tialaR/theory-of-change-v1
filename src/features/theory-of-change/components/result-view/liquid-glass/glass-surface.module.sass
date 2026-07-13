@@ -1,0 +1,71 @@
+.surface
+  --glass-radius: 8px
+  --glass-opacity: 1
+  --glass-brightness: 50%
+  --glass-blur: 11px
+  --glass-background-opacity: .02
+  --glass-saturation: 1
+  --glass-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation))
+  --glass-accent: #a88cff
+  --glass-background: hsl(0 0% 0% / var(--glass-background-opacity))
+  --glass-border-color: color-mix(in srgb, var(--glass-accent) 14%, rgba(255, 255, 255, .06))
+  --glass-highlight: rgba(255, 255, 255, .08)
+  position: relative
+  isolation: isolate
+  overflow: hidden
+  width: 100%
+  min-width: 0
+  border: 1px solid var(--glass-border-color)
+  border-radius: var(--glass-radius)
+  background: var(--glass-background)
+  opacity: var(--glass-opacity)
+  backdrop-filter: var(--glass-filter)
+  -webkit-backdrop-filter: var(--glass-filter)
+  transform: translateZ(0)
+
+.surfaceSvg
+  box-shadow: 0 0 2px 1px color-mix(in srgb, white 12%, transparent) inset, 0 4px 16px rgba(17, 17, 26, .04), 0 8px 24px rgba(17, 17, 26, .03)
+
+.surfaceFallback
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04), 0 6px 18px rgba(0, 0, 0, .08)
+
+.filterSvg
+  position: absolute
+  width: 0
+  height: 0
+  overflow: hidden
+  pointer-events: none
+
+.content
+  position: relative
+  z-index: 4
+  width: 100%
+  height: 100%
+
+.liquidLight,
+.specular,
+.edgeLight
+  position: absolute
+  pointer-events: none
+  border-radius: inherit
+
+.liquidLight
+  z-index: 1
+  inset: -48% -38%
+  background: conic-gradient(from 220deg at 50% 50%, transparent 0 29%, color-mix(in srgb, var(--glass-accent) 9%, transparent) 36%, rgba(255, 255, 255, .04) 41%, transparent 50% 100%)
+  filter: blur(1.5625rem)
+  opacity: .08
+  transform: rotate(18deg) translate3d(-1%, 0, 0)
+
+.specular
+  z-index: 2
+  inset: -1px
+  background: radial-gradient(circle at 50% 14%, rgba(255, 255, 255, .11) 0%, rgba(255, 255, 255, .035) 18%, transparent 40%), linear-gradient(145deg, rgba(255, 255, 255, .045), transparent 32% 68%, color-mix(in srgb, var(--glass-accent) 6%, transparent))
+  opacity: .3
+
+.edgeLight
+  z-index: 3
+  inset: 0
+  background: linear-gradient(145deg, rgba(255, 255, 255, .055), transparent 19%, transparent 70%, color-mix(in srgb, var(--glass-accent) 6%, transparent))
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .022)
+  opacity: .34

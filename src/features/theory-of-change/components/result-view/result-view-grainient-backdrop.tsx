@@ -3,10 +3,10 @@
 import type { CSSProperties } from 'react';
 import styles from './result-view-grainient-backdrop.module.sass';
 
-/** Apple Noir Glass — graphite base, mineral silver light, mid graphite depth */
-const DEFAULT_COLOR1 = '#07080B';
-const DEFAULT_COLOR2 = '#A7A3B7';
-const DEFAULT_COLOR3 = '#111318';
+/** Apple Noir Glass — graphite base, cool silver light, charcoal depth (no blue cast) */
+const DEFAULT_COLOR1 = '#0A0B0E';
+const DEFAULT_COLOR2 = '#C4C6CC';
+const DEFAULT_COLOR3 = '#16181D';
 
 export type ResultViewGrainientBackdropProps = {
   className?: string;
@@ -49,9 +49,9 @@ export function ResultViewGrainientBackdrop({
     '--grain-color1': color1,
     '--grain-color2': color2,
     '--grain-color3': color3,
-    '--grain-rgb1': hexToRgbString(color1, '8, 9, 13'),
-    '--grain-rgb2': hexToRgbString(color2, '167, 163, 183'),
-    '--grain-rgb3': hexToRgbString(color3, '36, 38, 45')
+    '--grain-rgb1': hexToRgbString(color1, '10, 11, 14'),
+    '--grain-rgb2': hexToRgbString(color2, '196, 198, 204'),
+    '--grain-rgb3': hexToRgbString(color3, '22, 24, 29')
   } as CSSProperties;
 
   return (

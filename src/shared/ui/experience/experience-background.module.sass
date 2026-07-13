@@ -1,0 +1,49 @@
+.background
+  position: absolute
+  inset: 0
+  z-index: 0
+  overflow: hidden
+  pointer-events: none
+  background: radial-gradient(ellipse 70% 42% at 50% 8%, rgba(255, 255, 255, 0.12), transparent 62%), radial-gradient(ellipse 52% 34% at 18% 68%, rgba(255, 255, 255, 0.055), transparent 68%), radial-gradient(ellipse 50% 32% at 86% 64%, rgba(210, 214, 222, 0.052), transparent 70%), linear-gradient(180deg, #050506 0%, #0a0b0e 48%, #050506 100%)
+
+.beamOne,
+.beamTwo,
+.glowOne,
+.glowTwo,
+.grid
+  position: absolute
+  inset: 0
+  pointer-events: none
+
+.beamOne
+  background: linear-gradient(112deg, transparent 4%, rgba(255, 255, 255, 0.055) 32%, rgba(255, 255, 255, 0.18) 46%, rgba(255, 255, 255, 0.05) 57%, transparent 76%)
+  opacity: 0.58
+  filter: blur(0.03rem)
+
+.beamTwo
+  background: linear-gradient(72deg, transparent 8%, rgba(255, 255, 255, 0.026) 34%, rgba(255, 255, 255, 0.11) 49%, transparent 68%)
+  opacity: 0.42
+
+.glowOne
+  inset: 8% 4% auto auto
+  width: 34rem
+  height: 34rem
+  border-radius: 50%
+  background: rgba(255, 255, 255, 0.06)
+  filter: blur(5rem)
+  opacity: 0.55
+
+.glowTwo
+  inset: auto auto 2% -8rem
+  width: 28rem
+  height: 28rem
+  border-radius: 50%
+  background: rgba(139, 124, 255, 0.075)
+  filter: blur(5.5rem)
+  opacity: 0.52
+
+.grid
+  background-image: linear-gradient(rgba(255, 255, 255, 0.026) 0.0625rem, transparent 0.0625rem), linear-gradient(90deg, rgba(255, 255, 255, 0.022) 0.0625rem, transparent 0.0625rem)
+  background-size: 4rem 4rem
+  opacity: 0.22
+  mask-image: linear-gradient(180deg, transparent 0%, #000 16%, #000 78%, transparent 100%)

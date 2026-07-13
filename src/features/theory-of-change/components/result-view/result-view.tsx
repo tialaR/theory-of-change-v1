@@ -36,7 +36,13 @@ import {
 import { ResultViewBlueprintLayer } from './result-view-blueprint-layer';
 import { ResultViewFlowInspector, RhLegendMicro } from './result-view-flow-inspector';
 import { ResultViewGrainientBackdrop } from './result-view-grainient-backdrop';
-import { TdmGlassSurface, tdmStageToGlassStage } from './tdm-glass-surface';
+import { TdmGlassSurface } from './tdm-glass-surface';
+import {
+  LiquidGlassMonochromeBackdrop,
+  ResultLiquidCard,
+  ResultLiquidColumn,
+  getLiquidGlassStageTheme
+} from './liquid-glass';
 import styles from './result-view.module.sass';
 
 const PREMIUM_EASE = [0.22, 1, 0.36, 1] as const;
@@ -45,8 +51,8 @@ const HERO_ENTRANCE = { duration: 0.42, ease: PREMIUM_EASE };
 const RIPPLE_TRANSITION = { duration: 0.52, ease: PREMIUM_EASE };
 const CONNECTION_DRAW = { duration: 0.4, ease: PREMIUM_EASE };
 const MARKER_REVEAL = { duration: 0.28, ease: PREMIUM_EASE };
-const CARD_FLOAT_Y = -4;
-const CARD_FLOAT_SCALE = 1.012;
+const CARD_FLOAT_Y = -2;
+const CARD_FLOAT_SCALE = 1.006;
 
 function BackArrowIcon() {
   return (
@@ -230,20 +236,6 @@ function ExportMenuOption({
   );
 }
 
-function StageAccentTile({ stage }: { stage: TdmStage }) {
-  const theme = getResultStageAccent(stage);
-
-  return (
-    <span
-      className={styles.stageAccentTile}
-      style={{ '--stage-accent': theme.accent, '--stage-glow': theme.glow } as CSSProperties}
-      aria-hidden="true"
-    >
-      <span className={styles.stageAccentTileCore} />
-    </span>
-  );
-}
-
 function ResultReadingCard({
   node,
   stage,
@@ -269,7 +261,6 @@ function ResultReadingCard({
   onRegisterRef: (nodeId: string, element: HTMLElement | null) => void;
   shouldReduceMotion: boolean | null;
 }) {
-  const [isHovered, setIsHovered] = useState(false);
   const [ripple, setRipple] = useState<RipplePoint | null>(null);
   const theme = getResultStageAccent(stage);
   const hasDetails = Boolean(node.advancedDetails?.trim());
@@ -301,8 +292,7 @@ function ResultReadingCard({
         isFocused ? styles.readingCardFocused : '',
         isHighlighted && !isFocused ? styles.readingCardHighlighted : '',
         isDimmed ? styles.readingCardDimmed : '',
-        isDisabled ? styles.readingCardDisabled : '',
-        isHovered && !isFocused && !isDimmed && !isDisabled ? styles.readingCardHover : ''
+        isDisabled ? styles.readingCardDisabled : ''
       ]
         .filter(Boolean)
         .join(' ')}
@@ -316,8 +306,6 @@ function ResultReadingCard({
         } as CSSProperties
       }
       onClick={(event) => handleActivate(event.clientX, event.clientY, event.currentTarget)}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       onKeyDown={(event) => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
@@ -328,33 +316,26 @@ function ResultReadingCard({
       aria-pressed={isFocused}
       aria-selected={isFocused}
       aria-label={`${node.title}, ${TDM_STAGE_LABELS[stage]}`}
-      whileHover={
-        shouldReduceMotion || isFocused || isDimmed || isDisabled
-          ? undefined
-          : { y: -2, transition: { duration: 0.22 } }
-      }
       animate={{
         opacity: isDisabled && !isFocused ? 0.34 : isDimmed ? 0.45 : isHighlighted && !isFocused ? 0.94 : 1,
         y: isFocused ? CARD_FLOAT_Y : 0,
-        scale: isFocused ? CARD_FLOAT_SCALE : isHighlighted && !isDimmed ? 1.004 : 1
+        scale: isFocused ? CARD_FLOAT_SCALE : 1
       }}
       transition={shouldReduceMotion ? { duration: 0.01 } : FOCUS_TRANSITION}
     >
-      <TdmGlassSurface
-        variant="subtle"
-        stage={tdmStageToGlassStage(stage)}
-        interactive
-        className={styles.readingCardGlass}
-        contentClassName={styles.readingCardContent}
-        style={
-          {
-            '--stage-accent': theme.accent,
-            '--stage-border': theme.border,
-            '--stage-glow': theme.glow
-          } as CSSProperties
-        }
+      <ResultLiquidCard
+        title={node.title}
+        description={description}
+        details={hasDetails ? node.advancedDetails : undefined}
+        notes={hasNotes ? node.shortNotes : undefined}
+        incomingCount={incomingCount}
+        outgoingCount={outgoingCount}
+        accentColor={theme.accent}
+        theme={getLiquidGlassStageTheme(stage)}
+        glassClassName={styles.readingCardGlass}
+        titleClassName={styles.readingCardTitle}
+        ariaLabel={`${node.title}, ${TDM_STAGE_LABELS[stage]}`}
       >
-        <span className={styles.readingCardAccent} aria-hidden="true" />
         <AnimatePresence>
           {ripple ? (
             <motion.span
@@ -370,32 +351,7 @@ function ResultReadingCard({
             />
           ) : null}
         </AnimatePresence>
-        <header className={styles.readingCardHeader}>
-        <div className={styles.readingCardTitleRow}>
-          <StageAccentTile stage={stage} />
-          <h3 className={styles.readingCardTitle}>{node.title}</h3>
-        </div>
-        {(incomingCount > 0 || outgoingCount > 0) && (
-          <div className={styles.readingCardConnections} aria-label="Conexões relacionadas">
-            {incomingCount > 0 ? <span className={styles.connectionBadge}>← {incomingCount}</span> : null}
-            {outgoingCount > 0 ? <span className={styles.connectionBadge}>→ {outgoingCount}</span> : null}
-          </div>
-        )}
-      </header>
-      <p className={styles.readingCardDescription}>{description}</p>
-      {hasDetails ? (
-        <div className={styles.readingCardMeta}>
-          <p className={styles.readingCardMetaLabel}>Detalhes</p>
-          <p className={styles.readingCardMetaText}>{node.advancedDetails}</p>
-        </div>
-      ) : null}
-      {hasNotes ? (
-        <div className={styles.readingCardMeta}>
-          <p className={styles.readingCardMetaLabel}>Notas</p>
-          <p className={styles.readingCardMetaText}>{node.shortNotes}</p>
-        </div>
-      ) : null}
-      </TdmGlassSurface>
+      </ResultLiquidCard>
     </motion.article>
   );
 }
@@ -872,6 +828,8 @@ export function ResultView({
   const viewRef = useRef<HTMLElement>(null);
   const resultExportRef = useRef<HTMLDivElement>(null);
   const flowViewportRef = useRef<HTMLDivElement>(null);
+  const flowInspectorSlotRef = useRef<HTMLDivElement>(null);
+  const flowInspectorMobileRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<Map<string, HTMLElement>>(new Map());
   const columnViewportRefs = useRef<Map<string, HTMLElement>>(new Map());
   const shouldReduceMotion = useReducedMotion();
@@ -961,15 +919,90 @@ export function ResultView({
     setFocusedEdgeId(null);
   }, []);
 
-  const handleSelectNode = useCallback((nodeId: string) => {
-    setFocusedEdgeId(null);
-    setFocusedNodeId((current) => (current === nodeId ? null : nodeId));
-  }, []);
+  const scrollFocusTargetIntoView = useCallback(
+    (element: HTMLElement | null | undefined) => {
+      if (!element) {
+        return;
+      }
 
-  const handleSelectEdge = useCallback((edgeId: string) => {
-    setFocusedNodeId(null);
-    setFocusedEdgeId((current) => (current === edgeId ? null : edgeId));
-  }, []);
+      window.requestAnimationFrame(() => {
+        element.scrollIntoView({
+          behavior: shouldReduceMotion ? 'auto' : 'smooth',
+          block: 'center',
+          inline: 'nearest'
+        });
+      });
+    },
+    [shouldReduceMotion]
+  );
+
+  const focusRelatedConnectionForNode = useCallback(
+    (nodeId: string) => {
+      const family = getCausalFamily(nodeId, nodes, edges);
+      const partnerId = family.outgoingIds[0] ?? family.incomingIds[0] ?? null;
+      const partnerElement = partnerId ? cardRefs.current.get(partnerId) : null;
+      const selfElement = cardRefs.current.get(nodeId);
+      const desktopInspector = flowInspectorSlotRef.current;
+      const mobileInspector = flowInspectorMobileRef.current;
+      const inspectorVisible =
+        desktopInspector && window.getComputedStyle(desktopInspector).display !== 'none'
+          ? desktopInspector
+          : mobileInspector;
+
+      scrollFocusTargetIntoView(partnerElement ?? selfElement);
+
+      if (inspectorVisible && family.relatedEdgeIds.size > 0) {
+        window.requestAnimationFrame(() => {
+          scrollFocusTargetIntoView(inspectorVisible);
+        });
+      }
+    },
+    [edges, nodes, scrollFocusTargetIntoView]
+  );
+
+  const focusRelatedConnectionForEdge = useCallback(
+    (edgeId: string) => {
+      const edge = edges.find((candidate) => candidate.id === edgeId);
+
+      if (!edge) {
+        return;
+      }
+
+      const targetElement = cardRefs.current.get(edge.target) ?? cardRefs.current.get(edge.source);
+      scrollFocusTargetIntoView(targetElement);
+    },
+    [edges, scrollFocusTargetIntoView]
+  );
+
+  const handleSelectNode = useCallback(
+    (nodeId: string) => {
+      setFocusedEdgeId(null);
+
+      if (focusedNodeId === nodeId) {
+        setFocusedNodeId(null);
+        return;
+      }
+
+      setFocusedNodeId(nodeId);
+      focusRelatedConnectionForNode(nodeId);
+    },
+    [focusRelatedConnectionForNode, focusedNodeId]
+  );
+
+  const handleSelectEdge = useCallback(
+    (edgeId: string) => {
+      setFocusedNodeId(null);
+
+      if (focusedEdgeId === edgeId) {
+        setFocusedEdgeId(null);
+        return;
+      }
+
+      setFocusedEdgeId(edgeId);
+      focusRelatedConnectionForEdge(edgeId);
+    },
+    [focusRelatedConnectionForEdge, focusedEdgeId]
+  );
 
   const handleExport = useCallback(
     (format: ResultExportFormat) => {
@@ -1048,7 +1081,10 @@ export function ResultView({
               <div className={styles.heroLeft}>
                 <span className={styles.heroEditorialLine} aria-hidden="true" />
                 <p className={styles.kicker}>Resultado da Teoria da Mudança</p>
-                <h1 className={styles.title}>{RESULT_VIEW_TITLE}</h1>
+                <div className={styles.heroTitleShell}>
+                  <h1 className={styles.title}>{RESULT_VIEW_TITLE}</h1>
+                </div>
+                <div className={styles.heroExpandable}>
                 <p className={styles.subtitle}>
                   {description?.trim() ||
                     'Leia a lógica da intervenção em etapas, conexões, riscos e hipóteses.'}
@@ -1059,6 +1095,7 @@ export function ResultView({
                 </p>
                 <div className={[styles.heroMetaRow, styles.noPrint].join(' ')}>
                   <ResultHeaderStats nodes={nodes} edges={edges} />
+                </div>
                 </div>
               </div>
 
@@ -1086,8 +1123,8 @@ export function ResultView({
                   </TdmGlassSurface>
                 </div>
 
-                <div className={styles.flowInspectorSlot}>
-                  <AnimatePresence mode="wait">
+                <div className={styles.flowInspectorSlot} ref={flowInspectorSlotRef}>
+                  <AnimatePresence initial={false}>
                     {flowInspectorContent ? (
                       <ResultViewFlowInspector
                         key={flowInspectorContent.edgeId ?? flowInspectorContent.nodeId}
@@ -1100,6 +1137,7 @@ export function ResultView({
                         initial={false}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
+                        transition={shouldReduceMotion ? { duration: 0.01 } : { duration: 0.18, ease: PREMIUM_EASE }}
                       >
                         <RhLegendMicro className={styles.heroRhMicro} />
                       </motion.div>
@@ -1110,7 +1148,10 @@ export function ResultView({
             </div>
           </motion.header>
 
-          <div className={[styles.flowInspectorMobile, styles.noPrint].join(' ')}>
+          <div
+            className={[styles.flowInspectorMobile, styles.noPrint].join(' ')}
+            ref={flowInspectorMobileRef}
+          >
             <AnimatePresence mode="wait">
               {flowInspectorContent ? (
                 <ResultViewFlowInspector
@@ -1123,6 +1164,13 @@ export function ResultView({
 
           <section className={styles.flowSection} aria-label="Fluxo da teoria da mudança">
             <div className={styles.flowViewport} ref={flowViewportRef}>
+              <LiquidGlassMonochromeBackdrop
+                preset="gray-layers"
+                intensity={1.08}
+                speed={0.72}
+                overlay
+                className={styles.flowMonochromeLayer}
+              />
               <ResultViewBlueprintLayer />
 
               <div className={styles.connectionLayer}>
@@ -1144,6 +1192,7 @@ export function ResultView({
                   const theme = getResultStageAccent(stage);
                   const stageNodes = groupedNodes[stage];
                   const bridge = index < RESULT_FLOW_BRIDGES.length ? RESULT_FLOW_BRIDGES[index] : null;
+                  const liquidGlassTheme = getLiquidGlassStageTheme(stage);
                   const columnHeaderState = getColumnHeaderState(
                     stageNodes,
                     focusedNodeId,
@@ -1173,36 +1222,21 @@ export function ResultView({
                             } as CSSProperties
                           }
                         />
-                        <TdmGlassSurface
-                          variant="default"
-                          stage={tdmStageToGlassStage(stage)}
+                        <ResultLiquidColumn
+                          title={TDM_STAGE_LABELS[stage]}
+                          countLabel={`${stageNodes.length} ${stageNodes.length === 1 ? 'item' : 'itens'}`}
+                          theme={liquidGlassTheme}
                           className={[
                             styles.stageColumn,
-                            styles[getResultStageClassName(stage) as keyof typeof styles],
-                            columnHeaderState.isDimmed ? styles.stageColumnDimmed : ''
+                            styles[getResultStageClassName(stage) as keyof typeof styles]
                           ]
                             .filter(Boolean)
                             .join(' ')}
-                          contentClassName={styles.stageColumnContent}
-                          style={
-                            {
-                              '--stage-accent': theme.accent,
-                              '--stage-accent-soft': theme.accentSoft,
-                              '--stage-border': theme.border,
-                              '--stage-glow': theme.glow
-                            } as CSSProperties
-                          }
+                          headerClassName={columnHeaderClassName}
+                          isDimmed={columnHeaderState.isDimmed}
+                          isSelected={columnHeaderState.isSelected}
+                          ariaLabel={`${TDM_STAGE_LABELS[stage]}, ${stageNodes.length} itens`}
                         >
-                          <header className={columnHeaderClassName}>
-                            <div className={styles.columnTitleRow}>
-                              <span className={styles.columnAccentDot} aria-hidden="true" />
-                              <h2 className={styles.columnTitle}>{TDM_STAGE_LABELS[stage]}</h2>
-                            </div>
-                            <span className={styles.columnCount}>
-                              {stageNodes.length} {stageNodes.length === 1 ? 'item' : 'itens'}
-                            </span>
-                          </header>
-
                           <div
                             ref={(element) => registerColumnViewportRef(stage, element)}
                             className={styles.stageItemsViewport}
@@ -1238,7 +1272,7 @@ export function ResultView({
                               );
                             })}
                           </div>
-                        </TdmGlassSurface>
+                        </ResultLiquidColumn>
                       </div>
 
                       {bridge ? (

@@ -42,7 +42,7 @@ $result-transition: 280ms $result-ease
   scroll-behavior: smooth
   z-index: 1
   padding-block-end: 8rem
-  background: #07080B
+  background: #050506
   color: rgba(245, 245, 242, 0.94)
 
   &::before
@@ -51,8 +51,8 @@ $result-transition: 280ms $result-ease
     inset: 0
     z-index: 0
     pointer-events: none
-    background: linear-gradient(180deg, rgba(7, 8, 11, 0.18), rgba(7, 8, 11, 0.42))
-    opacity: 0.55
+    background: radial-gradient(ellipse 70% 42% at 50% 18%, rgba(255, 255, 255, 0.12), transparent 62%), radial-gradient(ellipse 42% 28% at 16% 72%, rgba(255, 255, 255, 0.06), transparent 66%), radial-gradient(ellipse 48% 30% at 88% 62%, rgba(255, 255, 255, 0.05), transparent 68%), linear-gradient(180deg, #050506 0%, #090a0d 46%, #050506 100%)
+    opacity: 1
 
   *,
   *::before,
@@ -85,21 +85,22 @@ $result-transition: 280ms $result-ease
 // ─── Hero / Header fluido — sem caixa retangular ───────────────────────────────
 
 .hero
-  position: relative
+  position: sticky
+  top: 0
   isolation: isolate
   display: grid
   gap: 0.875rem
-  padding: 1.75rem 0 1.5rem
+  padding: 1rem 0
   margin-block-end: 0
-  border: none
+  border: 1px solid rgba(255, 255, 255, 0.1)
   border-radius: 0
-  background: transparent
-  box-shadow: none
-  backdrop-filter: none
-  z-index: 5
-  max-block-size: none
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)), rgba(10, 11, 14, 0.58)
+  backdrop-filter: blur(1.375rem) saturate(1.18)
+  -webkit-backdrop-filter: blur(1.375rem) saturate(1.18)
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.12)
+  z-index: 24
   overflow: hidden
-  transition: padding 320ms $result-ease, max-block-size 320ms $result-ease, opacity 320ms $result-ease, transform 320ms $result-ease
+  transition: transform 180ms $result-ease, opacity 180ms $result-ease, background 180ms $result-ease, box-shadow 180ms $result-ease
 
   &::before
     content: ''
@@ -109,10 +110,10 @@ $result-transition: 280ms $result-ease
     right: -8%
     height: 14rem
     pointer-events: none
-    background: radial-gradient(ellipse 68% 72% at 72% 28%, rgba(255, 255, 255, 0.04), transparent 62%), radial-gradient(ellipse 52% 48% at 18% 42%, rgba(255, 255, 255, 0.02), transparent 58%)
+    background: radial-gradient(ellipse 68% 72% at 72% 28%, rgba(255, 255, 255, 0.045), transparent 62%), radial-gradient(ellipse 52% 48% at 18% 42%, rgba(210, 214, 222, 0.028), transparent 58%)
     filter: blur(1.75rem)
-    opacity: 0.55
-    transition: opacity 280ms $result-ease, height 280ms $result-ease
+    opacity: 0.35
+    transition: opacity 180ms $result-ease
 
   &::after
     content: ''
@@ -124,80 +125,51 @@ $result-transition: 280ms $result-ease
     pointer-events: none
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.07) 24%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.07) 76%, transparent)
     opacity: 0.45
-    transition: opacity 280ms $result-ease
+    transition: opacity 180ms $result-ease
 
 .heroCompact
-  padding: 0.5rem 0 0.625rem
-  max-block-size: 4.75rem
-  margin-inline: -2rem
-  padding-inline: 2rem
-  background: rgba(7, 8, 11, 0.58)
-  backdrop-filter: blur(0.75rem) saturate(1.02)
-  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.08)
-  border: none
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.03)), rgba(10, 11, 14, 0.72)
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.14)
 
   &::before
     opacity: 0.08
-    height: 3rem
-    top: -0.375rem
 
   &::after
-    opacity: 0.35
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05) 24%, rgba(255, 255, 255, 0.07) 50%, rgba(255, 255, 255, 0.05) 76%, transparent)
+    opacity: 0.32
 
   .heroRibbon
     opacity: 0
     visibility: hidden
 
   .kicker
-    margin-bottom: 0.25rem
-    font-size: 0.5625rem
-    letter-spacing: 0.14em
+    opacity: 0.72
+    transform: scale(0.92)
+    transform-origin: left center
 
   .heroEditorialLine
-    opacity: 0.2
+    opacity: 0.16
+
+  .heroTitleShell
+    block-size: 1.375rem
 
   .title
-    font-size: clamp(1.35rem, 2.8vw, 1.7rem)
-    line-height: 1.12
-    max-inline-size: none
+    transform: scale(0.36)
+    transform-origin: left top
 
-  .subtitle,
-  .instruction
-    max-block-size: 0
-    margin: 0
+  .heroExpandable
+    position: absolute
+    inset: auto
     opacity: 0
-    overflow: hidden
+    visibility: hidden
     pointer-events: none
-    transform: translateY(-0.25rem)
-
-  .statusGlassTray
-    margin-top: 0.5rem
-    padding: 0.25rem 0.375rem
-
-  .statusStat
-    padding: 0.25rem 0.4375rem
-
-  .statusStatLabel
-    font-size: 0.5625rem
-
-  .statusStatValue
-    font-size: 0.6875rem
+    transform: translateY(-0.375rem)
 
   .heroInner
-    gap: 0.625rem
+    gap: 0.5rem
     align-items: center
 
   .heroRight
-    gap: 0.375rem
-
-  .backButtonInner
-    padding: 0.5rem 0.75rem
-    font-size: 0.75rem
-
-  .exportTriggerInner
-    padding: 0.5rem 0.875rem
-    font-size: 0.75rem
+    gap: 0.25rem
 
 .heroEvilEye
   position: absolute
@@ -246,7 +218,19 @@ $result-transition: 280ms $result-ease
   inline-size: 100%
   max-inline-size: 24rem
   min-inline-size: 0
-  transition: opacity 280ms $result-ease, max-block-size 280ms $result-ease
+  transition: opacity 180ms $result-ease
+
+.heroTitleShell
+  position: relative
+  z-index: 1
+  block-size: clamp(2.5rem, 5.8vw, 4.75rem)
+  overflow: hidden
+  transition: block-size 180ms $result-ease
+
+.heroExpandable
+  display: grid
+  gap: 0
+  transition: opacity 180ms $result-ease, transform 180ms $result-ease, visibility 0s linear 0s
 
 .heroRhMicro
   align-self: flex-end
@@ -299,7 +283,7 @@ $result-transition: 280ms $result-ease
   font-weight: 700
   letter-spacing: 0.2em
   text-transform: uppercase
-  transition: font-size 220ms $result-ease, margin 220ms $result-ease, opacity 220ms $result-ease
+  transition: opacity 180ms $result-ease, transform 180ms $result-ease
 
 .title
   position: relative
@@ -314,7 +298,8 @@ $result-transition: 280ms $result-ease
   overflow-wrap: anywhere
   color: rgba(250, 250, 247, 0.99)
   text-shadow: 0 0.0625rem 0 rgba(255, 255, 255, 0.05)
-  transition: font-size 280ms $result-ease, line-height 280ms $result-ease, transform 280ms $result-ease, opacity 280ms $result-ease
+  transform-origin: left top
+  transition: transform 180ms $result-ease, opacity 180ms $result-ease
 
 .subtitle
   position: relative
@@ -325,7 +310,7 @@ $result-transition: 280ms $result-ease
   font-size: 1rem
   font-weight: 400
   line-height: 1.55
-  transition: opacity 280ms $result-ease, max-block-size 280ms $result-ease, margin 280ms $result-ease, transform 280ms $result-ease
+  transition: opacity 180ms $result-ease, transform 180ms $result-ease
 
 .instruction
   position: relative
@@ -342,7 +327,7 @@ $result-transition: 280ms $result-ease
   color: rgba(160, 166, 176, 0.88)
   font-size: 0.8125rem
   line-height: 1.55
-  transition: opacity 220ms $result-ease, max-block-size 220ms $result-ease, margin 220ms $result-ease
+  transition: opacity 180ms $result-ease, transform 180ms $result-ease
 
 .instructionDot
   width: 0.3125rem
@@ -360,7 +345,7 @@ $result-transition: 280ms $result-ease
   background: transparent
   box-shadow: none
   backdrop-filter: none
-  transition: margin 220ms $result-ease, padding 220ms $result-ease
+  transition: opacity 180ms $result-ease
 
 .statusGrid
   display: flex
@@ -555,6 +540,33 @@ $result-transition: 280ms $result-ease
   max-inline-size: 100%
   min-inline-size: 0
   overflow: visible
+  background: radial-gradient(ellipse 70% 42% at 50% 18%, rgba(255, 255, 255, 0.12), transparent 62%), radial-gradient(ellipse 42% 28% at 16% 72%, rgba(255, 255, 255, 0.06), transparent 66%), radial-gradient(ellipse 48% 30% at 88% 62%, rgba(255, 255, 255, 0.05), transparent 68%), linear-gradient(180deg, #050506 0%, #090a0d 46%, #050506 100%)
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0
+    z-index: 0
+    pointer-events: none
+    background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.07) 34%, rgba(255, 255, 255, 0.2) 46%, rgba(255, 255, 255, 0.055) 57%, transparent 74%), linear-gradient(72deg, transparent 8%, rgba(255, 255, 255, 0.03) 38%, rgba(255, 255, 255, 0.11) 48%, transparent 68%)
+    opacity: 0.7
+    filter: blur(0.4px)
+
+  &::after
+    content: ''
+    position: absolute
+    inset: 0
+    z-index: 0
+    pointer-events: none
+    background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 5rem)
+    opacity: 0.2
+
+.flowMonochromeLayer
+  position: absolute
+  inset: 0
+  z-index: 1
+  opacity: 0.64
+  pointer-events: none
 
 .connectionLayer
   position: absolute
@@ -743,17 +755,18 @@ $result-transition: 280ms $result-ease
 
 .stageColumnShell
   position: relative
+  z-index: 3
   isolation: isolate
   min-inline-size: 0
 
 .stageColumnHalo
   position: absolute
-  inset: 6% -8% -2%
+  inset: 4% -10% -4%
   z-index: 0
   border-radius: 1.5rem
-  background: radial-gradient(ellipse 82% 72% at 50% 36%, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.015) 28%, transparent 70%)
-  filter: blur(1rem)
-  opacity: 0.32
+  background: radial-gradient(ellipse 82% 72% at 50% 36%, rgba(255, 255, 255, 0.02) 0%, rgba(210, 214, 222, 0.01) 28%, transparent 70%)
+  filter: blur(1.8rem)
+  opacity: 0.08
   pointer-events: none
 
 .stageColumn
@@ -767,7 +780,9 @@ $result-transition: 280ms $result-ease
   min-block-size: clamp(28rem, 52dvh, 40rem)
   display: flex
   flex-direction: column
-  border-radius: 1rem
+  border-radius: 0.5rem
+  background: transparent
+  box-shadow: none
   transition: opacity 280ms $result-ease, filter 280ms $result-ease
 
 .stageColumnDimmed
@@ -905,7 +920,7 @@ $result-transition: 280ms $result-ease
   overflow: visible
   padding-inline-end: 0.125rem
 
-// ─── Cards de leitura (glass via TdmGlassSurface) ─────────────────────────────
+// ─── Cards de leitura (Liquid Glass) ──────────────────────────────────────────
 
 .readingCardShell
   position: relative
@@ -922,25 +937,9 @@ $result-transition: 280ms $result-ease
     outline-offset: 0.125rem
 
 .readingCardGlass
-  border-left: 0.125rem solid color-mix(in srgb, var(--stage-accent) 68%, transparent)
-  transition: border-color $result-transition, box-shadow $result-transition
-
-.readingCardContent
-  position: relative
-  display: grid
-  gap: 0.625rem
-  padding: 1rem
-  overflow: hidden
-
-.readingCardInnerGlow
-  position: absolute
-  inset: 1px
-  z-index: 0
-  border-radius: calc(0.875rem - 1px)
-  pointer-events: none
-  opacity: 0
-  background: radial-gradient(ellipse 80% 50% at 50% 0%, color-mix(in srgb, var(--stage-accent) 8%, transparent), transparent 72%)
-  transition: opacity $result-transition
+  border-left: 1px solid color-mix(in srgb, var(--stage-accent) 36%, transparent)
+  box-shadow: none
+  transition: border-color $result-transition
 
 .cardRipple
   position: absolute
@@ -953,36 +952,12 @@ $result-transition: 280ms $result-ease
   z-index: 2
   background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 42%, transparent 72%)
 
-.readingCardAccent
-  position: absolute
-  top: 0
-  left: 0.875rem
-  right: 0.875rem
-  height: 1px
-  z-index: 0
-  background: linear-gradient(90deg, transparent, var(--stage-accent), transparent)
-  opacity: 0.48
-  transition: opacity $result-transition
-
-.readingCardHover
-  .readingCardGlass
-    border-left-color: var(--stage-accent)
-
-  .readingCardAccent
-    opacity: 0.58
-
-.readingCardInnerGlow
-  display: none
-
 .readingCardFocused
   z-index: 3
 
   .readingCardGlass
     border-left-color: var(--stage-accent)
-    box-shadow: 0 0.375rem 1.25rem rgba(0, 0, 0, 0.2), 0 0 1rem color-mix(in srgb, var(--stage-glow) 48%, transparent)
-
-  .readingCardAccent
-    opacity: 0.78
+    box-shadow: none
 
   .readingCardTitle
     color: rgba(252, 252, 249, 0.99)
@@ -1005,15 +980,9 @@ $result-transition: 280ms $result-ease
   .readingCardGlass
     border-left-color: rgba(255, 255, 255, 0.08)
 
-  .readingCardAccent
-    opacity: 0.22
-
   &:not(.readingCardFocused):hover
     .readingCardGlass
       border-left-color: rgba(255, 255, 255, 0.08)
-
-    .readingCardAccent
-      opacity: 0.22
 
 .readingCardHeader
   position: relative
@@ -1649,10 +1618,6 @@ $result-transition: 280ms $result-ease
     padding-block: 1.5rem
     padding-inline: 1.5rem
 
-  .heroCompact
-    margin-inline: -1.5rem
-    padding-inline: 1.5rem
-
   .stageGrid
     gap: 1rem
 
@@ -1673,12 +1638,7 @@ $result-transition: 280ms $result-ease
     padding-inline: 1.25rem
 
   .hero
-    padding: 1.25rem 0
-
-  .heroCompact
-    margin-inline: -1.25rem
-    padding-inline: 1.25rem
-    padding-block: 0.75rem 0.625rem
+    padding: 1rem 0
 
   .heroInner
     grid-template-columns: 1fr
@@ -1717,8 +1677,11 @@ $result-transition: 280ms $result-ease
   .title
     font-size: clamp(1.875rem, 8vw, 2.5rem)
 
+  .heroCompact .heroTitleShell
+    block-size: 1.25rem
+
   .heroCompact .title
-    font-size: 1.35rem
+    transform: scale(0.42)
 
   .stageItemsViewport
     max-block-size: none

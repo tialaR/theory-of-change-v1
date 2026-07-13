@@ -1,0 +1,76 @@
+// Seções públicas devem seguir o padrão tipográfico: kicker uppercase com tracking,
+// título prata/cinza premium, descrição cinza suave, hierarquia controlada e
+// cards com título forte + descrição secundária.
+
+@mixin public-kicker
+  margin: 0
+  font-size: 0.75rem
+  font-weight: 600
+  letter-spacing: 0.14em
+  text-transform: uppercase
+  background: var(--shine-kicker)
+  -webkit-background-clip: text
+  background-clip: text
+  color: transparent
+
+@mixin public-hero-title
+  margin: 0 auto
+  max-inline-size: 11.5em
+  font-size: var(--hero-title)
+  font-weight: 500
+  line-height: 1.08
+  letter-spacing: -0.03em
+  text-wrap: balance
+  background: var(--shine-hero)
+  -webkit-background-clip: text
+  background-clip: text
+  color: transparent
+  filter: drop-shadow(0 0 0.5rem rgba(255, 255, 255, 0.08))
+
+@mixin public-hero-title-compact
+  @include public-hero-title
+  font-size: var(--hero-title-compact)
+  max-inline-size: 13em
+  line-height: 1.1
+
+@mixin public-hero-description
+  margin: 0 auto
+  max-width: 32rem
+  font-size: clamp(1rem, 1.8vw, 1.125rem)
+  line-height: 1.65
+  color: var(--body-muted)
+
+@mixin public-section-title
+  margin: 0 auto
+  max-inline-size: 15em
+  font-size: clamp(1.5rem, 2.6vw, 2.125rem)
+  font-weight: 500
+  line-height: 1.14
+  letter-spacing: -0.022em
+  text-wrap: balance
+  background: var(--shine-hero)
+  -webkit-background-clip: text
+  background-clip: text
+  color: transparent
+
+@mixin public-section-description
+  margin: 0 auto
+  max-width: 32rem
+  font-size: clamp(0.9375rem, 1.45vw, 1.0625rem)
+  line-height: 1.65
+  color: var(--body-muted)
+
+@mixin public-card-title
+  margin: 0
+  font-size: 1.0625rem
+  font-weight: 500
+  line-height: 1.3
+  letter-spacing: -0.015em
+  color: var(--white)
+
+@mixin public-card-description
+  margin: 0.5rem 0 0
+  max-inline-size: 36rem
+  font-size: 0.875rem
+  line-height: 1.55
+  color: var(--body-muted)

@@ -1,0 +1,35 @@
+.section
+  margin-top: clamp(3rem, 7vw, 5.5rem)
+
+.eyebrow
+  margin: 0 0 0.75rem
+  font-size: 0.74rem
+  font-weight: 760
+  letter-spacing: 0.16em
+  text-transform: uppercase
+  color: rgba(255, 255, 255, 0.48)
+
+.headline
+  display: grid
+  grid-template-columns: minmax(0, 0.8fr) minmax(16rem, 0.6fr)
+  gap: 1.25rem
+  align-items: end
+
+  h2
+    margin: 0
+    font-size: clamp(2rem, 5.5vw, 4.8rem)
+    line-height: 0.93
+    letter-spacing: -0.07em
+
+  p
+    margin: 0
+    color: rgba(220, 223, 230, 0.7)
+    font-size: clamp(0.98rem, 1.5vw, 1.1rem)
+    line-height: 1.65
+
+.content
+  margin-top: 1.5rem
+
+@media (max-width: 54rem)
+  .headline
+    grid-template-columns: 1fr

@@ -51,3 +51,22 @@ select
 @media (min-width: 120rem)
   html
     font-size: 16.5px
+
+body:has([data-public-page='true'])
+  overflow-x: hidden
+  overflow-y: auto
+  height: auto
+  min-height: 100vh
+  background: #050505
+
+body.public-page-scroll
+  overflow-x: hidden !important
+  overflow-y: auto !important
+  min-height: 100vh
+  height: auto !important
+  overscroll-behavior-y: auto
+
+body.public-page-scroll #__next,
+body.public-page-scroll [data-nextjs-scroll-focus-boundary]
+  min-height: 100vh
+  height: auto
