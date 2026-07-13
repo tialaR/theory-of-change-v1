@@ -1,36 +1,26 @@
+@use '../public-typography' as type
+
 .previewsSection
   inline-size: min(100%, 96rem)
   margin: 0 auto
-  padding: clamp(4rem, 8vw, 7rem) clamp(1.25rem, 4vw, 3.5rem)
+  padding: clamp(2.5rem, 5vw, 4rem) clamp(1.25rem, 4vw, 3.5rem)
 
 .sectionHeader
   display: grid
-  gap: 0.75rem
-  max-inline-size: 48rem
+  gap: clamp(0.625rem, 1.2vw, 0.875rem)
+  max-inline-size: 42rem
+  margin-inline: auto
   margin-block-end: clamp(1.75rem, 4vw, 3rem)
+  text-align: center
 
-  p
-    margin: 0
-    color: rgba(255, 255, 255, 0.72)
-    font-size: 0.75rem
-    font-weight: 700
-    letter-spacing: 0.2em
-    text-transform: uppercase
+.sectionKicker
+  @include type.public-kicker
 
-  h2
-    margin: 0
-    color: rgba(255, 255, 255, 0.96)
-    font-size: clamp(2.4rem, 5vw, 5.2rem)
-    line-height: 0.95
-    letter-spacing: -0.07em
-    text-wrap: balance
+.sectionTitle
+  @include type.public-section-title
 
-  span
-    display: block
-    max-inline-size: 42rem
-    color: rgba(255, 255, 255, 0.54)
-    font-size: clamp(1rem, 1.35vw, 1.2rem)
-    line-height: 1.55
+.sectionDescription
+  @include type.public-section-description
 
 .previewGrid
   display: grid
@@ -72,18 +62,10 @@
   align-items: start
 
   h3
-    margin: 0
-    color: rgba(255, 255, 255, 0.95)
-    font-size: clamp(1.35rem, 2.1vw, 2rem)
-    line-height: 1.04
-    letter-spacing: -0.045em
+    @include type.public-card-title
 
   p
-    margin: 0.55rem 0 0
-    max-inline-size: 41rem
-    color: rgba(255, 255, 255, 0.58)
-    font-size: clamp(0.92rem, 1.05vw, 1.06rem)
-    line-height: 1.5
+    @include type.public-card-description
 
 .iconTile
   display: grid
@@ -182,5 +164,3 @@
   .previewCard
     min-block-size: 31rem
 
-  .sectionHeader h2
-    letter-spacing: -0.055em

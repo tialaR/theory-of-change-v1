@@ -13,6 +13,10 @@ Rotas públicas usam exclusivamente o design system em `src/shared/ui/lusion-res
 
 Não copiar marcas, logos, textos ou assets proprietários.
 
+### Tipografia pública
+
+Seções públicas devem seguir o padrão tipográfico: kicker uppercase com tracking, título prata/cinza premium, descrição cinza suave, hierarquia controlada e cards com título forte + descrição secundária. Mixins reutilizáveis em `src/features/theory-of-change/components/resend-public/_public-typography.sass`.
+
 ### Tokens obrigatórios
 
 Definidos em `lusion-resend-ds.module.sass`:

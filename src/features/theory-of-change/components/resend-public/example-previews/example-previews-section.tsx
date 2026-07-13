@@ -78,9 +78,13 @@ export function ExamplePreviewsSection() {
   return (
     <section className={styles.previewsSection} aria-labelledby="example-previews-title">
       <div className={styles.sectionHeader}>
-        <p>Prévia das experiências</p>
-        <h2 id="example-previews-title">Escolha como visualizar a teoria.</h2>
-        <span>Dois caminhos visuais, o mesmo sistema: primeiro entenda o fluxo, depois leia o resultado conectado.</span>
+        <p className={styles.sectionKicker}>PRÉVIA DAS EXPERIÊNCIAS</p>
+        <h2 id="example-previews-title" className={styles.sectionTitle}>
+          Escolha como visualizar a teoria.
+        </h2>
+        <p className={styles.sectionDescription}>
+          Dois caminhos visuais, o mesmo sistema: primeiro entenda o fluxo, depois leia o resultado conectado.
+        </p>
       </div>
 
       <div className={styles.previewGrid}>
