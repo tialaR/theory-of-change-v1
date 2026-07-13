@@ -45,6 +45,7 @@ import {
   PublicShell,
   PublicTimeline
 } from '@/shared/ui/lusion-resend-ds';
+import { ExamplePreviewsSection } from '@/features/theory-of-change/components/resend-public/example-previews';
 import { TheoryFlowBoard } from './theory-flow-board';
 import styles from './public-pages.module.sass';
 
@@ -143,39 +144,14 @@ export function ExamplesPage() {
       <PublicHeader />
       <PublicHero
         compact
-        visual={<PublicHomeOrb />}
-        kicker="Exemplos"
-        title="Explore uma teoria pronta."
-        description="Abra o relatório, navegue pela visualização interativa ou vá direto ao canvas."
-        actions={<PublicButton href="/exemplos/resultado">Ver resultado</PublicButton>}
+        kicker="EXEMPLOS"
+        title="Explore exemplos guiados."
+        description="Veja prévias animadas da teoria antes de abrir a experiência completa."
+        actions={<PublicButton href="#examples-experiences">Ver exemplos</PublicButton>}
       />
-      <PublicSection compact title="Rotas principais" description="Cada card tem uma função clara no produto.">
-        <div className={styles.galleryGrid}>
-          {[
-            ['01', 'Resultado conectado', 'Relatório com prévia, conexões e exportação.', '/exemplos/resultado'],
-            ['02', 'Visualização interativa', 'Clique em cards, foque relações e leia R/H.', '/exemplos/resultado/interativo'],
-            ['03', 'Criar teoria', 'Editor principal para montar sua própria teoria.', '/canvas']
-          ].map(([num, title, text, href], i) => (
-            <PublicReveal key={title} delay={i * 0.05}>
-              <Link href={href} className={styles.galleryCard}>
-                <span>{num}</span>
-                <h3>{title}</h3>
-                <p>{text}</p>
-                <em>Abrir →</em>
-                {href === '/exemplos/resultado' ? (
-                  <div className={styles.galleryPreview}>
-                    <TheoryFlowBoard
-                      nodes={exampleTheory.nodes}
-                      edges={exampleTheory.edges}
-                      mode="preview"
-                    />
-                  </div>
-                ) : null}
-              </Link>
-            </PublicReveal>
-          ))}
-        </div>
-      </PublicSection>
+      <div id="examples-experiences">
+        <ExamplePreviewsSection />
+      </div>
       <PublicFooter />
     </PublicShell>
   );

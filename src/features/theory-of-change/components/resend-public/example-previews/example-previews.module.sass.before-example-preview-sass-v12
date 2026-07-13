@@ -1,0 +1,188 @@
+.previewsSection
+  inline-size: min(100%, 96rem)
+  margin: 0 auto
+  padding: clamp(4rem, 8vw, 7rem) clamp(1.25rem, 4vw, 3.5rem)
+
+.sectionHeader
+  display: grid
+  gap: 0.75rem
+  max-inline-size: 48rem
+  margin-block-end: clamp(1.75rem, 4vw, 3rem)
+
+  p
+    margin: 0
+    color: rgba(255, 255, 255, 0.72)
+    font-size: 0.75rem
+    font-weight: 700
+    letter-spacing: 0.2em
+    text-transform: uppercase
+
+  h2
+    margin: 0
+    color: rgba(255, 255, 255, 0.96)
+    font-size: clamp(2.4rem, 5vw, 5.2rem)
+    line-height: 0.95
+    letter-spacing: -0.07em
+    text-wrap: balance
+
+  span
+    display: block
+    max-inline-size: 42rem
+    color: rgba(255, 255, 255, 0.54)
+    font-size: clamp(1rem, 1.35vw, 1.2rem)
+    line-height: 1.55
+
+.previewGrid
+  display: grid
+  grid-template-columns: repeat(2, minmax(0, 1fr))
+  gap: clamp(1rem, 2vw, 1.5rem)
+
+.previewCard
+  position: relative
+  display: grid
+  grid-template-rows: auto minmax(18rem, 1fr) auto
+  gap: clamp(1.25rem, 2vw, 1.75rem)
+  min-block-size: clamp(32rem, 45vw, 42rem)
+  padding: clamp(1.25rem, 2.25vw, 2rem)
+  border: 0.0625rem solid rgba(255, 255, 255, 0.105)
+  border-radius: 1.75rem
+  overflow: hidden
+  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.09), transparent 34%), linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.018) 42%, rgba(255, 255, 255, 0.01)), rgba(6, 7, 9, 0.68)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1),
+    0 2rem 5rem rgba(0, 0, 0, 0.42)
+  transform: translateZ(0)
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0
+    pointer-events: none
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.065), transparent), radial-gradient(circle at 12% 18%, rgba(167, 139, 250, 0.08), transparent 26%), radial-gradient(circle at 92% 24%, rgba(74, 222, 189, 0.065), transparent 24%)
+    opacity: 0.74
+
+  &:hover,
+  &:focus-within
+    border-color: rgba(255, 255, 255, 0.18)
+
+.cardIntro
+  position: relative
+  z-index: 2
+  display: grid
+  grid-template-columns: auto minmax(0, 1fr)
+  gap: 1rem
+  align-items: start
+
+  h3
+    margin: 0
+    color: rgba(255, 255, 255, 0.95)
+    font-size: clamp(1.35rem, 2.1vw, 2rem)
+    line-height: 1.04
+    letter-spacing: -0.045em
+
+  p
+    margin: 0.55rem 0 0
+    max-inline-size: 41rem
+    color: rgba(255, 255, 255, 0.58)
+    font-size: clamp(0.92rem, 1.05vw, 1.06rem)
+    line-height: 1.5
+
+.iconTile
+  display: grid
+  place-items: center
+  inline-size: 3.25rem
+  block-size: 3.25rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.14)
+  border-radius: 0.9rem
+  color: rgba(255, 255, 255, 0.84)
+  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.16), transparent 58%), rgba(255, 255, 255, 0.035)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.14),
+    0 0.75rem 1.5rem rgba(0, 0, 0, 0.22)
+
+.previewFrame
+  position: relative
+  z-index: 1
+  overflow: hidden
+  min-block-size: clamp(18rem, 27vw, 26rem)
+  border: 0.0625rem solid rgba(255, 255, 255, 0.09)
+  border-radius: 1.25rem
+  background: radial-gradient(circle at 50% 12%, rgba(255, 255, 255, 0.055), transparent 44%), rgba(4, 5, 7, 0.64)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
+
+.previewCanvas
+  inline-size: 100%
+  block-size: 100%
+  min-block-size: clamp(18rem, 27vw, 26rem)
+
+  svg
+    display: block
+    inline-size: 100%
+    block-size: 100%
+
+.previewCta
+  position: relative
+  z-index: 2
+  display: inline-flex
+  align-items: center
+  justify-content: flex-start
+  gap: 0.45rem
+  inline-size: fit-content
+  color: rgba(255, 255, 255, 0.9)
+  font-size: 1rem
+  font-weight: 700
+  letter-spacing: -0.02em
+  text-decoration: none
+
+  span:last-child
+    transition: transform 180ms ease
+
+.previewCard:hover .previewCta span:last-child,
+.previewCard:focus-within .previewCta span:last-child
+  transform: translateX(0.25rem)
+
+.fullPage
+  min-block-size: 100vh
+  padding: clamp(5rem, 9vw, 8rem) clamp(1rem, 4vw, 4rem)
+  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.07), transparent 30rem), #050608
+
+.fullShell
+  display: grid
+  gap: 1.5rem
+  inline-size: min(100%, 92rem)
+  margin-inline: auto
+
+.fullHeader
+  display: flex
+  align-items: center
+  justify-content: space-between
+  gap: 1rem
+
+  a
+    color: rgba(255, 255, 255, 0.82)
+    text-decoration: none
+    border: 0.0625rem solid rgba(255, 255, 255, 0.12)
+    border-radius: 999rem
+    padding: 0.75rem 1rem
+    background: rgba(255, 255, 255, 0.035)
+
+  h1
+    margin: 0
+    color: rgba(255, 255, 255, 0.96)
+    font-size: clamp(2.25rem, 5vw, 5rem)
+    letter-spacing: -0.07em
+
+.fullPreview
+  min-block-size: min(64vh, 44rem)
+  overflow: hidden
+  border: 0.0625rem solid rgba(255, 255, 255, 0.12)
+  border-radius: 1.75rem
+  background: rgba(5, 6, 8, 0.88)
+
+@media (max-width: 58rem)
+  .previewGrid
+    grid-template-columns: 1fr
+
+  .previewCard
+    min-block-size: 31rem
+
+  .sectionHeader h2
+    letter-spacing: -0.055em

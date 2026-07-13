@@ -13,6 +13,8 @@ import { exampleTheory } from '../../data/example-theory';
 import { TDM_STAGE_ORDER, type TdmStage } from '../../domain/tdm-stages';
 import { DsButton, DsCodeFrame, DsFooter, DsHeader, DsHero, DsPageShell, DsSection, DsSurface, Reveal } from '@/shared/ui/resend-ds';
 import styles from './public-experience.module.sass';
+import { ExamplePreviewsSection } from './example-previews/example-previews-section';
+import { GuideStageCard } from './guide-stage-card/guide-stage-card';
 
 const STAGE_NAMES: Record<TdmStage, string> = {
   input: 'Insumos',
@@ -502,19 +504,12 @@ function GuideTimelineRow({
           scale: isActive ? 1 : 0.985
         }}
       >
-        <div
-          className={styles.guideStepCardShell}
-          data-reduced-motion={reduced ? 'true' : 'false'}
-          style={
-            {
-              '--step-accent': step.accent.color,
-              '--step-accent-soft': step.accent.soft,
-              '--step-accent-glow': step.accent.glow
-            } as CSSProperties
-          }
+        <GuideStageCard
+          accentColor={step.accent.color}
+          className={styles.guideStageCard}
+          contentClassName={styles.guideStageCardInner}
+          aria-label={step.title}
         >
-          <span className={styles.guideStepCardBorderSweep} aria-hidden="true" />
-          <div className={styles.guideStepCardInner}>
           {showStageAccents ? (
             <div className={styles.guideStageAccents} aria-hidden="true">
               <span style={{ '--chip-color': GUIDE_STEP_ACCENTS.input.color } as CSSProperties}>Insumos</span>
@@ -535,8 +530,7 @@ function GuideTimelineRow({
               <p>{step.example}</p>
             </div>
           </div>
-          </div>
-        </div>
+        </GuideStageCard>
       </motion.div>
     </article>
   );
@@ -548,30 +542,14 @@ export function ExamplesExperiencePage() {
       <DsHeader />
       <DsHero
         compact
-        visual={<ProductOrb />}
-        kicker="Exemplos"
-        title="Explore uma teoria pronta antes de criar a sua."
-        description="Abra a leitura executiva, navegue pela visualização interativa ou vá direto para o canvas preservado."
-        actions={<DsButton href="/exemplos/resultado">Ver resultado</DsButton>}
+        kicker="Prévia das experiências"
+        title="Escolha como visualizar a teoria."
+        description="Dois caminhos visuais, o mesmo sistema: primeiro entenda o fluxo, depois leia o resultado conectado."
+        actions={<DsButton href="#previews">Ver exemplos</DsButton>}
       />
-      <DsSection compact eyebrow="Rotas principais" title="Um fluxo simples, sem labirinto." description="Cada card tem uma função clara no produto.">
-        <div className={styles.galleryGrid}>
-          {[
-            ['Resultado conectado', 'Relatório visual com prévia, conexões e exportação.', '/exemplos/resultado'],
-            ['Visualização interativa', 'Área dedicada para clicar em cards, focar relações e ler R/H.', '/exemplos/resultado/interativo'],
-            ['Canvas', 'Editor principal mantido intacto para ser redesenhado por último.', '/canvas']
-          ].map(([title, text, href], index) => (
-            <Reveal key={title} delay={index * 0.05}>
-              <Link href={href} className={styles.galleryCard}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <h3>{title}</h3>
-                <p>{text}</p>
-                <em>Abrir</em>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
-      </DsSection>
+      <div id="previews">
+        <ExamplePreviewsSection />
+      </div>
       <DsFooter />
     </DsPageShell>
   );
