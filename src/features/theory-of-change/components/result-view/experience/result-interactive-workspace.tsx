@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
+import { useCallback, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import type { ResultExperienceProps } from './types';
 import { InteractiveExperienceShell } from './interactive-experience-shell';
@@ -13,6 +13,8 @@ import {
 import styles from './result-experience.module.sass';
 
 const ease = [0.22, 1, 0.36, 1] as const;
+const INITIAL_ZOOM = 1;
+const HEADER_TITLE = 'TDM · RESULTADO EXEMPLO';
 
 type DragState = {
   dragging: boolean;
@@ -22,9 +24,9 @@ type DragState = {
   originY: number;
 };
 
-export function ResultInteractiveWorkspace({ title, nodes, edges }: ResultExperienceProps) {
+export function ResultInteractiveWorkspace({ nodes, edges }: ResultExperienceProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [zoom, setZoom] = useState(1);
+  const [zoom, setZoom] = useState(INITIAL_ZOOM);
   const [panelOffset, setPanelOffset] = useState({ x: 0, y: 0 });
   const reduce = useReducedMotion();
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -48,7 +50,7 @@ export function ResultInteractiveWorkspace({ title, nodes, edges }: ResultExperi
   );
 
   const resetView = useCallback(() => {
-    setZoom(1);
+    setZoom(INITIAL_ZOOM);
     setSelectedId(null);
     setPanelOffset({ x: 0, y: 0 });
   }, []);
@@ -84,13 +86,13 @@ export function ResultInteractiveWorkspace({ title, nodes, edges }: ResultExperi
 
   return (
     <InteractiveExperienceShell
-      title={title}
+      title={HEADER_TITLE}
       backHref="/exemplos/resultado"
       closeHref="/exemplos/resultado"
       zoom={zoom}
       onZoomIn={() => setZoom((value) => Math.min(1.4, Number((value + 0.1).toFixed(2))))}
       onZoomOut={() => setZoom((value) => Math.max(0.74, Number((value - 0.1).toFixed(2))))}
-      onCenter={() => setZoom(1)}
+      onCenter={() => setZoom(INITIAL_ZOOM)}
       onReset={resetView}
     >
       <div className={styles.workspaceViewport} ref={viewportRef}>

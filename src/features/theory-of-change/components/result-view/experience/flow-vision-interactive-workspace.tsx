@@ -19,7 +19,8 @@ import shellStyles from './result-experience.module.sass';
 import styles from './flow-vision-interactive.module.sass';
 
 const ease = [0.22, 1, 0.36, 1] as const;
-const INITIAL_ZOOM = 0.95;
+const INITIAL_ZOOM = 1;
+const HEADER_TITLE = 'TMD - FLUXO EXEMPLO';
 
 type PanOffset = { x: number; y: number };
 
@@ -52,7 +53,7 @@ function computeCenteredPan(viewport: HTMLElement, flow: HTMLElement, zoom: numb
   return { x, y };
 }
 
-export function FlowVisionInteractiveWorkspace({ title, nodes, edges }: ResultExperienceProps) {
+export function FlowVisionInteractiveWorkspace({ nodes, edges }: ResultExperienceProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [zoom, setZoom] = useState(INITIAL_ZOOM);
   const [panOffset, setPanOffset] = useState<PanOffset>({ x: 0, y: 0 });
@@ -209,7 +210,7 @@ export function FlowVisionInteractiveWorkspace({ title, nodes, edges }: ResultEx
 
   return (
     <InteractiveExperienceShell
-      title={title}
+      title={HEADER_TITLE}
       backHref="/exemplos/visao-do-fluxo"
       closeHref="/exemplos/visao-do-fluxo"
       zoom={zoom}

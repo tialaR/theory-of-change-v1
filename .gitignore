@@ -21,3 +21,14 @@ build
 .sidebar-polish-screenshots
 tsconfig.tsbuildinfo
 .migration-screenshots
+
+# TDM generated/local artifacts
+.next/
+node_modules/
+*.tsbuildinfo
+.DS_Store
+__MACOSX/
+tdm-backups/
+tdm-*/
+*.before-*
+*.zip

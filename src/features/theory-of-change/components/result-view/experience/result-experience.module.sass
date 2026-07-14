@@ -403,21 +403,26 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
   background: radial-gradient(ellipse 52rem 18rem at 50% -6%, rgba(255,255,255,.11), transparent 70%), radial-gradient(ellipse 30rem 20rem at 8% 28%, rgba(255,255,255,.04), transparent 72%), radial-gradient(ellipse 28rem 18rem at 94% 30%, rgba(255,255,255,.035), transparent 72%), linear-gradient(180deg, #020203 0%, #060708 54%, #030304 100%)
 
   .interactiveFrame
-    inset: clamp(.65rem, 1.6vw, 1rem)
+    inset: 0
+    gap: 0
+    padding: .75rem clamp(.75rem, 1.4vw, 1rem)
 
   .interactiveTopbar
+    position: relative
     display: flex
     align-items: center
     justify-content: space-between
     gap: 1rem
     min-block-size: 3rem
-    padding: .35rem .35rem .35rem .45rem
+    padding: .35rem .35rem .55rem .45rem
+    z-index: 2
 
   .interactiveTopbarStart
     display: flex
     align-items: center
     gap: .7rem
-    min-inline-size: 0
+    min-inline-size: 2.35rem
+    z-index: 2
 
   .interactiveBackButton
     flex-shrink: 0
@@ -438,21 +443,36 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
       background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.03)), rgba(255,255,255,.04)
 
   .interactiveTopbarHeading
+    position: absolute
+    left: 50%
+    top: 50%
+    transform: translate(-50%, -50%)
     margin: 0
-    color: rgba(255,255,255,.9)
-    font-size: .92rem
+    max-inline-size: min(28rem, calc(100% - 18rem))
+    color: rgba(246, 248, 252, .92)
+    background-image: linear-gradient(105deg, rgba(255, 255, 255, .55) 0%, rgba(255, 255, 255, .96) 38%, rgba(198, 205, 216, .78) 52%, rgba(255, 255, 255, .94) 72%, rgba(230, 234, 240, .82) 100%)
+    -webkit-background-clip: text
+    background-clip: text
+    -webkit-text-fill-color: transparent
+    font-size: .72rem
     font-weight: 650
-    letter-spacing: -.02em
+    letter-spacing: .16em
+    text-transform: uppercase
     white-space: nowrap
     overflow: hidden
     text-overflow: ellipsis
     line-height: 1.2
+    pointer-events: none
+    text-align: center
+    z-index: 1
+    filter: drop-shadow(0 0 .55rem rgba(255, 255, 255, .12))
 
   .interactiveToolbar
     display: flex
     align-items: center
     gap: .55rem
     flex-shrink: 0
+    z-index: 2
 
   .interactiveToolbarCluster
     display: flex
@@ -516,30 +536,50 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
 
   .workspaceShell
     min-block-size: 0
-    padding: .75rem
+    padding: 0
     display: flex
     flex-direction: column
     overflow: hidden
-    border-color: rgba(255,255,255,.07)
-    border-radius: 1.35rem
-    background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)), rgba(255,255,255,.018)
-    box-shadow: 0 1.2rem 3.2rem rgba(0,0,0,.28)
+    border: 0
+    border-radius: 0
+    background: transparent
+    box-shadow: none
 
   .workspaceViewport
+    flex: 1
+    min-block-size: 0
     border-radius: 1.1rem
     border: .0625rem solid rgba(255,255,255,.06)
     background: #0a0b0d
-    overflow: hidden
+    overflow: auto
+    scrollbar-width: thin
+    scrollbar-color: rgba(255, 255, 255, .28) rgba(255, 255, 255, .025)
+
+    &::-webkit-scrollbar
+      width: .45rem
+      height: .45rem
+
+    &::-webkit-scrollbar-track
+      background: rgba(255, 255, 255, .025)
+
+    &::-webkit-scrollbar-thumb
+      border-radius: 999rem
+      background: linear-gradient(180deg, rgba(255, 255, 255, .18), rgba(255, 255, 255, .42), rgba(255, 255, 255, .18))
+      box-shadow: 0 0 1.25rem rgba(255, 255, 255, .12)
+
+      &:hover
+        background: linear-gradient(180deg, rgba(255, 255, 255, .26), rgba(255, 255, 255, .52), rgba(255, 255, 255, .26))
+        box-shadow: 0 0 1.4rem rgba(255, 255, 255, .16)
 
     &::before
       background-color: #0a0b0d
-      background-image: linear-gradient(rgba(255,255,255,.042) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.042) 1px, transparent 1px), linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px)
+      background-image: linear-gradient(rgba(255,255,255,.042) .0625rem, transparent .0625rem), linear-gradient(90deg, rgba(255,255,255,.042) .0625rem, transparent .0625rem), linear-gradient(rgba(255,255,255,.018) .0625rem, transparent .0625rem), linear-gradient(90deg, rgba(255,255,255,.018) .0625rem, transparent .0625rem)
       background-size: 4.25rem 4.25rem, 4.25rem 4.25rem, 1.0625rem 1.0625rem, 1.0625rem 1.0625rem
       box-shadow: inset 0 0 7rem rgba(0,0,0,.48)
 
     &::after
       opacity: .06
-      background: repeating-linear-gradient(45deg, rgba(255,255,255,.022) 0, rgba(255,255,255,.022) 1px, transparent 1px, transparent 5px)
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,.022) 0, rgba(255,255,255,.022) .0625rem, transparent .0625rem, transparent .3125rem)
 
   .flowTranslator
     top: auto
@@ -564,7 +604,7 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
     color: rgba(255,255,255,.82)
 
   .diagramColumns
-    gap: clamp(1.25rem, 2.4vw, 2.1rem)
+    gap: clamp(1.75rem, 3.2vw, 3.25rem)
 
   .diagramColumnGlass
     border-color: color-mix(in srgb, var(--stage-color) 10%, rgba(255, 255, 255, .06))
@@ -575,7 +615,7 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
     color: color-mix(in srgb, var(--stage-accent-soft) 72%, rgba(255, 255, 255, .7))
 
   .diagramColumnCards
-    gap: .875rem
+    gap: .75rem
 
   .diagramCard
     &:not(.diagramCardDisabled):hover .diagramCardGlass
@@ -587,7 +627,7 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
     border-left-color: color-mix(in srgb, var(--stage-color) 36%, transparent)
 
   .diagramCardInner
-    padding: 1rem 1rem .875rem
+    padding: .9rem .9rem .8rem
 
   .diagramCardGlassSelected
     border-color: color-mix(in srgb, var(--stage-color) 22%, rgba(255, 255, 255, .1))
@@ -596,6 +636,7 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
   .diagramCardGlassRelated
     border-color: color-mix(in srgb, var(--stage-color) 16%, rgba(255, 255, 255, .07))
     border-left-color: color-mix(in srgb, var(--stage-color) 52%, rgba(255, 255, 255, .14))
+
 
 .interactiveFrame
   position: absolute
@@ -608,7 +649,7 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
   position: relative
   flex: 1
   min-block-size: 0
-  overflow: auto
+  overflow: hidden
   border-radius: 1.4rem
   isolation: isolate
   background: #121316
@@ -1043,6 +1084,13 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
   .diagramCardGlass
     border-left-color: rgba(255, 255, 255, .08)
 
+.diagramCardReceded
+  filter: brightness(0.42) saturate(0.55)
+  transition: filter 360ms $ease-out
+
+  .diagramResourceCard
+    box-shadow: none
+
 .diagramPreview
   position: relative
   min-block-size: 18rem
@@ -1210,11 +1258,17 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
 
   .interactiveExperience
     .interactiveTopbar
-      flex-direction: column
-      align-items: stretch
+      flex-direction: row
+      align-items: center
+      min-block-size: 3.4rem
+
+    .interactiveTopbarHeading
+      max-inline-size: min(18rem, calc(100% - 12rem))
+      font-size: .6rem
+      letter-spacing: .1em
 
     .interactiveToolbar
-      justify-content: space-between
+      justify-content: flex-end
       flex-wrap: wrap
 
     .flowTranslator
@@ -1222,77 +1276,91 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
 
 // TDM_LIQUID_VISUAL_FIX_V1_RESULT_OVERRIDES
 .interactiveExperience
-  --column-card-gap: 0.875rem
-  --column-padding: 1.125rem
-  --column-header-gap: 0.875rem
+  --column-card-gap: 0.75rem
+  --column-padding: 0.95rem
+  --column-header-gap: 0.75rem
   --card-radius: 0.5625rem
   --diagram-viewport-offset: 7.25rem
 
   .workspaceViewport
-    overflow-x: hidden
-    overflow-y: hidden
-    max-height: calc(100dvh - var(--diagram-viewport-offset))
+    overflow: auto
+    min-height: 0
+    max-height: none
+    height: 100%
 
   .workspaceShell
-    border-width: 0.0625rem
+    border-width: 0
+    min-height: 0
+    flex: 1
 
   .flowWorkspace
-    min-block-size: 0
-    height: 100%
+    min-block-size: 100%
+    height: auto
     display: flex
     flex-direction: column
+    min-height: 100%
+    overflow: visible
 
   .diagramWorkspace
     flex: 1
-    min-block-size: 0
-    overflow-x: hidden
-    padding: clamp(0.875rem, 1.6vw, 1.25rem)
+    min-block-size: 100%
+    height: auto
+    overflow: visible
+    padding: clamp(1.75rem, 3.2vw, 2.75rem) clamp(1.35rem, 2.8vw, 2.5rem) clamp(1.5rem, 2.6vw, 2.25rem)
 
   .diagramBoard
     flex: 1
     inline-size: 100%
     min-block-size: 0
+    height: auto
     display: flex
     flex-direction: column
-    overflow: hidden
+    overflow: visible
 
   .diagramColumns
     flex: 1
     grid-template-columns: repeat(4, minmax(0, 1fr))
-    gap: clamp(1rem, 2vw, 1.75rem)
+    gap: clamp(1.75rem, 3.4vw, 3.35rem)
     inline-size: 100%
     min-block-size: 0
     min-inline-size: 0
     align-items: stretch
 
   .diagramColumnPanel
-    min-block-size: 0
-    max-height: 100%
-    height: 100%
+    min-block-size: 100%
+    max-height: none
+    height: auto
 
   .diagramColumnPanelContent
     min-block-size: 0
+    max-height: none
+    overflow: visible
 
   .diagramCardButton
     flex-shrink: 0
+    transition: filter 360ms cubic-bezier(.22, 1, .36, 1)
 
 @media (max-width: 70rem)
   .interactiveExperience
     --diagram-viewport-offset: 8.5rem
 
+    .interactiveTopbarHeading
+      max-inline-size: min(20rem, calc(100% - 14rem))
+      font-size: .64rem
+      letter-spacing: .12em
+
     .workspaceViewport
-      overflow-x: hidden
-      overflow-y: hidden
+      overflow: auto
 
     .diagramColumns
       grid-template-columns: repeat(4, minmax(0, 1fr))
-      gap: clamp(0.75rem, 1.5vw, 1.1rem)
+      gap: clamp(1.1rem, 2.2vw, 1.75rem)
 
     .diagramColumnContent
-      padding: 0.9rem
+      padding: 0.85rem
 
     .diagramCardInner
-      padding: 0.85rem
+      padding: 0.8rem
 
     .diagramColumnHeader h3
       font-size: 0.72rem
@@ -1317,7 +1385,9 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
   flex-direction: column
   flex: 1
   min-block-size: 0
-  overflow: hidden
+  overflow: visible
+  overflow-y: visible
+  max-height: none
 
 .diagramCardButton
   display: block
