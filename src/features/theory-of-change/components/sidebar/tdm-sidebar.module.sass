@@ -149,7 +149,6 @@
   gap: 0.375rem
   min-width: 0
   max-width: min(33rem, 100%)
-  padding-right: clamp(4.2rem, 20vw, 7.25rem)
   transition: gap 200ms cubic-bezier(0.22, 1, 0.36, 1)
 
 .heroTitle
@@ -258,77 +257,11 @@
     background: transparent !important
     box-shadow: none !important
 
-.heroSculptureWrap
-  position: absolute
-  right: 0
-  top: clamp(0.45rem, 1.6vw, 0.82rem)
-  z-index: 1
-  width: clamp(7.8rem, 42%, 11.2rem)
-  max-width: 56%
-  height: auto
-  pointer-events: none
-  opacity: 0.92
-  transform: rotate(-2deg)
-  transform-origin: top right
-  transition: opacity 200ms cubic-bezier(0.22, 1, 0.36, 1), transform 200ms cubic-bezier(0.22, 1, 0.36, 1)
-  will-change: transform, opacity
-
-.heroAnimatedSprite
-  width: 100%
-  height: auto
-  opacity: 0.88
-  mix-blend-mode: screen
-  pointer-events: none
-  user-select: none
-  filter: saturate(0.92) contrast(1.06) brightness(1.04)
-  transform: translate3d(0, 0, 0)
-
-.heroLiquidGlassLogoWrap
-  position: relative
-  z-index: 1
-  display: grid
-  place-items: center
-  width: 100%
-  height: 100%
-  pointer-events: auto
-  user-select: none
-  will-change: transform, opacity
-  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms cubic-bezier(0.22, 1, 0.36, 1)
-
-.heroLiquidGlassLogoWrap::before
-  content: ''
-  position: absolute
-  inset: -18%
-  border-radius: 999rem
-  opacity: 0
-  pointer-events: none
-  filter: blur(1.25rem)
-  background: conic-gradient(from 180deg, rgba(139, 124, 255, .24), rgba(73, 179, 255, .22), rgba(242, 166, 90, .22), rgba(55, 200, 147, .22), rgba(139, 124, 255, .24))
-  transition: opacity 180ms cubic-bezier(0.22, 1, 0.36, 1)
-
-.heroLiquidGlassLogoWrapConnection::before
-  opacity: .72
-
-.heroLiquidGlassLogo
-  width: 100%
-  height: 100%
-  pointer-events: auto
-  mix-blend-mode: screen
-  filter: saturate(0.94) contrast(1.04) brightness(1.03)
-
-.heroLiquidGlassLogoWrap:hover
-  transform: translate3d(0, -0.12rem, 0) scale(1.025)
-
-.heroCardCollapsed .heroSculptureWrap
-  opacity: 0.78
-  transform: translate3d(-0.75rem, -0.85rem, 0) rotate(-1deg) scale(0.88)
-
 .heroCardCollapsed .heroContent
   gap: 0.3125rem
 
 .heroCardCollapsed .heroLead
   gap: 0.25rem
-  padding-right: clamp(3.6rem, 18vw, 6.4rem)
 
 .heroCardCollapsed .heroTitle
   font-size: clamp(0.98rem, 1.55vw + 0.56rem, 1.24rem)
@@ -426,6 +359,13 @@
   border-left: 0.125rem solid $noir-stroke-medium
   border-radius: $noir-radius-panel
   +ds-sidebar-inset-well
+
+.sectionHintMuted
+  margin: -0.125rem 0 0
+  color: rgba(160, 162, 170, 0.68)
+  font-size: 0.6875rem
+  line-height: 1.45
+  max-width: 34ch
 
 .contextualHint
   display: flex
@@ -1055,8 +995,8 @@
   transition: background 220ms ease, box-shadow 220ms ease
 
 .stageProgressSegmentLit
-  background: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 42%, rgba(216, 219, 224, 0.64))
-  box-shadow: 0 0 0.4rem color-mix(in srgb, var(--stage-accent, #{$stage-1}) 18%, transparent)
+  background: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 38%, rgba(216, 219, 224, 0.58))
+  box-shadow: none
 
 .stageFirst
   .stageProgressSegmentTop
@@ -1162,9 +1102,9 @@
 
 .stagecurrent
   --stage-bar-opacity: 0.72
-  border-color: color-mix(in srgb, var(--stage-accent) 22%, $noir-stroke-soft)
-  background: radial-gradient(ellipse 80% 60% at 0% 50%, color-mix(in srgb, var(--stage-accent) 10%, transparent), transparent 55%), radial-gradient(ellipse 100% 50% at 50% 0%, rgba(255, 255, 255, 0.04), transparent 58%), linear-gradient(180deg, rgba(32, 33, 38, 0.72), rgba(21, 22, 26, 0.88))
-  box-shadow: $noir-shadow-inset, 0 0.5rem 1.125rem rgba(0, 0, 0, 0.18), 0 0 1.5rem color-mix(in srgb, var(--stage-accent) 8%, transparent)
+  border-color: color-mix(in srgb, var(--stage-accent) 18%, $noir-stroke-soft)
+  background: linear-gradient(180deg, rgba(28, 29, 34, 0.55), rgba(18, 19, 23, 0.7))
+  box-shadow: inset 0.12rem 0 0 color-mix(in srgb, var(--stage-accent) 55%, transparent)
 
   .stageSummaryCopy strong
     color: rgba(252, 252, 254, 0.98)
@@ -1176,7 +1116,7 @@
     color: color-mix(in srgb, var(--stage-accent) 78%, white 22%)
     border-color: color-mix(in srgb, var(--stage-accent) 22%, transparent)
     background: color-mix(in srgb, var(--stage-accent) 6%, $noir-surface-card)
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06), 0 0 0.5rem color-mix(in srgb, var(--stage-accent) 18%, transparent)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
 
   .stageCountBadge
     color: rgba(228, 228, 234, 0.94)
@@ -1185,8 +1125,8 @@
     box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
 
   &:hover
-    border-color: color-mix(in srgb, var(--stage-accent) 22%, $noir-stroke-soft)
-    --stage-bar-opacity: 0.96
+    border-color: color-mix(in srgb, var(--stage-accent) 20%, $noir-stroke-soft)
+    --stage-bar-opacity: 0.9
 
 .stageblocked
   --stage-bar-opacity: 0.16
@@ -1684,11 +1624,13 @@
   font-weight: 580
   letter-spacing: 0.045em
   line-height: 1.2
+  text-decoration: none
   text-transform: none
   white-space: nowrap
   cursor: pointer
   box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.048), inset 0 -0.0625rem 0 rgba(0, 0, 0, 0.1), 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.08)
   transition: border-color 200ms ease, background 200ms ease, color 200ms ease, box-shadow 200ms ease
+  box-sizing: border-box
 
   &::before
     content: ''
@@ -2364,22 +2306,29 @@
     background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--stage-accent) 18%, transparent), transparent 58%), linear-gradient(180deg, rgba(46, 46, 48, 0.84), rgba(26, 26, 28, 0.96))
 
 .stageActionCard
-  gap: $sidebar-inner-gap
+  gap: 0.65rem
+  border-color: color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 18%, $noir-stroke-soft)
+  background: radial-gradient(ellipse 100% 70% at 12% -10%, color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 10%, transparent), transparent 55%), linear-gradient(168deg, rgba(34, 35, 40, 0.92) 0%, rgba(22, 23, 27, 0.94) 100%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1), 0 0.75rem 1.5rem rgba(0, 0, 0, 0.22)
 
   .sectionKicker
     margin: 0
-    color: $ds-text-muted
-    font-size: 0.625rem
+    color: color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 42%, rgba(196, 196, 202, 0.88))
+    font-size: 0.6rem
     font-weight: 800
-    letter-spacing: 0.17em
+    letter-spacing: 0.16em
     text-transform: uppercase
 
   .sectionText
     margin: 0
-    color: $ds-text-secondary
-    font-size: 0.8125rem
-    line-height: 1.6
-    max-width: 36ch
+    color: rgba(210, 212, 220, 0.9)
+    font-size: 0.8rem
+    line-height: 1.45
+    max-width: 34ch
+    font-weight: 500
+
+  .sectionHintMuted
+    margin: -0.2rem 0 0.05rem
 
   .sectionHint
     margin: 0
@@ -2741,7 +2690,6 @@
 
   .heroLead
     gap: 0.3125rem
-    padding-right: clamp(3.2rem, 24vw, 5rem)
 
   .heroTitle
     font-size: clamp(0.98rem, 4.1vw, 1.22rem)
@@ -2751,14 +2699,6 @@
     font-size: 0.75rem
     line-height: 1.45
     max-width: min(48ch, 100%)
-
-  .heroSculptureWrap
-    top: clamp(0.58rem, 2.3vw, 0.9rem)
-    right: 0.25rem
-    width: clamp(6.5rem, 38%, 8.75rem)
-    max-width: 52%
-    opacity: 0.24
-    transform: rotate(-3deg)
 
 @media (max-width: 24.375rem)
   .progressHeaderScene
@@ -2784,11 +2724,6 @@
 
   .heroDescription
     max-width: 100%
-
-  .heroSculptureWrap
-    width: clamp(5.25rem, 38%, 6.75rem)
-    max-width: 48%
-    opacity: 0.18
 
 @media (prefers-reduced-motion: reduce)
   .sidebarAccordionChevron
@@ -2835,8 +2770,7 @@
   .heroLead,
   .heroTitle,
   .heroDescription,
-  .heroFormShell,
-  .heroSculptureWrap
+  .heroFormShell
     transition-duration: 1ms !important
 
 
@@ -2873,10 +2807,10 @@
   position: relative
   display: inline-flex
   align-items: center
-  gap: 0.75rem
-  margin: 0 1.25rem 1.25rem
+  gap: 0.625rem
+  margin: 0
   padding: 0
-  min-height: 2.5rem
+  min-height: 2.25rem
   color: rgba(245, 246, 250, 0.96)
   background: transparent
   border: 0
@@ -2884,27 +2818,27 @@
 
 .progressHeaderCleanCopy
   display: grid
-  gap: 0.125rem
+  gap: 0.1rem
   min-width: 0
 
 .progressHeaderCleanCard .progressRing
-  width: 2.25rem
-  height: 2.25rem
-  opacity: 0.84
+  width: 2rem
+  height: 2rem
+  opacity: 0.8
 
 .progressHeaderCleanCard .progressPercent
   margin: 0
-  color: rgba(247, 248, 252, 0.98)
-  font-size: 1.42rem
-  font-weight: 760
+  color: rgba(247, 248, 252, 0.96)
+  font-size: 1.2rem
+  font-weight: 720
   line-height: 1
 
 .progressHeaderCleanCard .progressOverviewLabel
   margin: 0
-  color: rgba(247, 248, 252, 0.92)
-  font-size: 0.92rem
-  font-weight: 720
-  line-height: 1.18
+  color: rgba(200, 202, 210, 0.84)
+  font-size: 0.78rem
+  font-weight: 600
+  line-height: 1.2
 
 .sidebar
   overflow: hidden
@@ -3100,3 +3034,652 @@
 .sidebarScroll,
 .contentScroll
   overflow-x: hidden
+
+
+// ─── Resend Surface — Coach Inspector ────────────────────────────────────────
+
+$noir-bg: #050506
+$surface: rgba(16, 17, 21, 0.84)
+$surface-strong: rgba(22, 23, 28, 0.92)
+$border-soft: rgba(255, 255, 255, 0.1)
+$border-strong: rgba(255, 255, 255, 0.16)
+$text: rgba(248, 248, 250, 0.94)
+$text-muted: rgba(210, 212, 220, 0.62)
+$text-faint: rgba(210, 212, 220, 0.42)
+$stage-inputs: #a78bfa
+
+.surface
+  background: radial-gradient(72% 20% at 50% 0%, rgba(255, 255, 255, 0.1), transparent 72%), linear-gradient(180deg, rgba(21, 22, 26, 0.96) 0%, rgba(12, 13, 16, 0.98) 48%, rgba(5, 5, 7, 1) 100%)
+  box-shadow: inset 0.0625rem 0 0 rgba(255, 255, 255, 0.06)
+  backdrop-filter: blur(0.75rem) saturate(1.02)
+  -webkit-backdrop-filter: blur(0.75rem) saturate(1.02)
+
+  &::before
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 36%)
+    opacity: 1
+
+.content
+  gap: 0
+  padding: 0 0.9rem 1rem
+
+.heroGlowTop,
+.heroGlowBottom,
+.heroSpecular
+  display: none !important
+
+.heroCard
+  padding: 0.6rem 0 0.7rem
+  border: 0
+  border-radius: 0
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.06)
+  background: transparent
+  box-shadow: none
+  backdrop-filter: none
+  -webkit-backdrop-filter: none
+
+  &::before,
+  &::after
+    display: none
+
+.heroCardCollapsed
+  padding-top: 0.5rem
+  padding-bottom: 0.6rem
+  box-shadow: none
+
+.heroTitle
+  font-size: clamp(0.86rem, 1vw + 0.5rem, 1.02rem)
+  font-weight: 620
+  letter-spacing: -0.014em
+  color: $text
+
+.heroDescription
+  color: $text-muted
+  font-size: 0.66rem
+  line-height: 1.4
+  max-width: min(38ch, 100%)
+
+.card
+  gap: 0.45rem
+  padding: 0.7rem 0
+  border: 0
+  border-radius: 0
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.06)
+  background: transparent
+  box-shadow: none
+  backdrop-filter: none
+  -webkit-backdrop-filter: none
+  overflow: visible
+
+  &::before,
+  &::after
+    display: none
+
+.progressCard
+  gap: 0.35rem
+  padding: 0.65rem 0
+
+.progressHeader
+  gap: 0.22rem
+
+.progressCompactLine
+  display: flex
+  align-items: baseline
+  flex-wrap: wrap
+  gap: 0.22rem 0.35rem
+  margin: 0
+  min-height: 1.05rem
+
+.progressCompactPercent
+  color: $text
+  font-size: 0.72rem
+  font-weight: 600
+  letter-spacing: -0.01em
+  font-variant-numeric: tabular-nums
+
+.progressCompactDivider
+  color: $text-faint
+  font-size: 0.66rem
+
+.progressCompactStatus
+  color: $text-muted
+  font-size: 0.64rem
+  font-weight: 450
+  line-height: 1.3
+
+.progressHeaderKicker
+  margin: 0 0 0.22rem
+  padding: 0
+  color: $text-faint
+  font-size: 0.48rem
+  font-weight: 600
+  letter-spacing: 0.1em
+
+.progressHeaderCleanCard,
+.progressRingWrap,
+.progressRing
+  display: none !important
+
+.stageActionCard
+  gap: 0.4rem
+  padding: 0.7rem 0
+  border-color: transparent !important
+  background: transparent !important
+  box-shadow: none !important
+
+  .sectionKicker
+    color: color-mix(in srgb, var(--stage-accent, #{$stage-inputs}) 34%, $text-muted)
+    font-size: 0.48rem
+    letter-spacing: 0.1em
+    font-weight: 620
+
+  .sectionText
+    font-size: 0.7rem
+    line-height: 1.4
+    color: rgba(230, 232, 238, 0.88)
+    max-width: 34ch
+
+  .sectionHintMuted
+    font-size: 0.62rem
+
+.stageActionInnerPanel
+  padding: 0
+  border: 0
+  background: transparent
+  box-shadow: none
+
+  &::after
+    display: none
+
+.stageActionCard .dragCard
+  min-height: 2.45rem
+  padding: 0.55rem 0.7rem
+  border-radius: 0.85rem
+  border-color: color-mix(in srgb, var(--stage-accent, #{$stage-inputs}) 28%, $border-soft)
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12)
+
+  &:hover
+    transform: translateY(-0.0625rem)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.14)
+
+  strong
+    text-transform: none
+    letter-spacing: 0.01em
+    font-size: 0.72rem
+
+  small
+    font-size: 0.58rem
+    letter-spacing: 0
+
+.stageBody
+  gap: 0.28rem
+  padding: 0.08rem 0.45rem 0.55rem 1.85rem
+
+  p
+    font-size: 0.64rem
+    line-height: 1.4
+    color: $text-muted
+
+  ul
+    font-size: 0.62rem
+    line-height: 1.35
+    color: rgba(180, 184, 194, 0.7)
+
+.stageSummary
+  min-height: 1.9rem
+  padding-block: 0.28rem
+
+.stageSummaryCopy small
+  display: -webkit-box
+  -webkit-line-clamp: 1
+  -webkit-box-orient: vertical
+  overflow: hidden
+  opacity: 0.7
+
+.stageCountBadge
+  min-width: 1.05rem
+  height: 1.05rem
+  border-radius: 0.28rem
+  font-size: 0.5rem
+  background: rgba(255, 255, 255, 0.04)
+  border-color: rgba(255, 255, 255, 0.08)
+  box-shadow: none
+
+.stageUnderstandKicker
+  margin: 0 0 0.14rem
+  color: color-mix(in srgb, var(--stage-accent, #{$stage-inputs}) 32%, $text-muted)
+  font-size: 0.46rem
+  font-weight: 600
+  letter-spacing: 0.08em
+  text-transform: uppercase
+
+.stageGuideQuestion
+  margin: 0.1rem 0 0.06rem
+  color: rgba(210, 214, 224, 0.72)
+  font-size: 0.62rem
+  font-weight: 500
+  line-height: 1.3
+
+.stageAccordion
+  border-color: rgba(255, 255, 255, 0.04)
+  background: transparent
+  box-shadow: none
+
+.stageAccordion[open]
+  border-color: rgba(255, 255, 255, 0.08)
+  background: rgba(255, 255, 255, 0.012)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04)
+
+.canvasOrganizationCard
+  padding: 0.45rem 0
+  opacity: 0.86
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.05)
+
+.canvasOrganizationHeader
+  min-height: 1.9rem
+  padding: 0.32rem 0
+
+.canvasOrganizationTitle
+  color: $text-faint
+  font-size: 0.48rem
+  letter-spacing: 0.08em
+
+.canvasOrganizationText
+  font-size: 0.64rem
+  line-height: 1.35
+  color: $text-muted
+
+.blockFormsPanel
+  margin-top: 0.1rem
+  padding: 0.65rem 0
+  border: 0
+  border-radius: 0
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.06)
+  background: transparent
+  box-shadow: none
+  backdrop-filter: none
+  -webkit-backdrop-filter: none
+  opacity: 1
+  gap: 0.45rem
+
+  &::before
+    content: none
+    display: none
+
+.blockFormsPanel .blockSidebarAccordion
+  border-color: rgba(255, 255, 255, 0.08)
+  background: rgba(255, 255, 255, 0.012)
+  box-shadow: none
+  border-radius: 0.85rem
+
+.blockFormsPanel .blockSidebarAccordion.sidebarAccordionOpen
+  border-color: rgba(255, 255, 255, 0.12)
+  background: radial-gradient(72% 20% at 50% 0%, rgba(255, 255, 255, 0.06), transparent 72%), linear-gradient(180deg, rgba(21, 22, 26, 0.72) 0%, rgba(12, 13, 16, 0.55) 100%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1)
+
+.blockFormsPanel :global(.formInput),
+.blockFormsPanel :global(.formTextarea),
+.blockFormsPanel :global(input),
+.blockFormsPanel :global(textarea)
+  min-height: 2.1rem
+  padding: 0.45rem 1.75rem 0.45rem 0.65rem
+  border-radius: 0.75rem
+  font-size: 0.75rem
+  background: rgba(14, 15, 18, 0.92) !important
+  border-color: $border-soft !important
+  box-shadow: none !important
+
+.blockFormsPanel :global(.formTextarea),
+.blockFormsPanel :global(textarea)
+  min-height: 3.5rem
+
+.blockFormsPanel :global(label),
+.blockFormsPanel :global(.fieldLabel)
+  font-size: 0.52rem
+  letter-spacing: 0.06em
+
+// Quick shortcuts — two discrete rows, Exemplos + Guia only
+.quickShortcutsCard
+  padding: 0.55rem 0
+  opacity: 1
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.05)
+  gap: 0.4rem
+
+  &::before
+    content: none
+    display: none
+
+.quickShortcutsHeader
+  margin-bottom: 0
+
+.quickShortcutsTitleRow
+  gap: 0.28rem
+
+  > span
+    width: 1rem
+    height: 1rem
+    opacity: 0.55
+    border-color: transparent
+    background: transparent
+    box-shadow: none
+
+    svg
+      width: 0.62rem
+      height: 0.62rem
+
+.quickShortcutsTitle
+  margin: 0
+  color: $text-faint
+  font-size: 0.48rem
+  font-weight: 600
+  letter-spacing: 0.08em
+  text-transform: uppercase
+
+.quickShortcutsGrid
+  display: flex
+  flex-direction: column
+  flex-wrap: nowrap
+  gap: 0.2rem
+  width: 100%
+  grid-template-columns: none
+
+.quickShortcutBtn
+  appearance: none
+  position: relative
+  isolation: isolate
+  display: inline-flex
+  flex-direction: row
+  align-items: center
+  justify-content: flex-start
+  width: 100%
+  min-width: 0
+  gap: 0.45rem
+  min-height: 1.85rem
+  padding: 0.28rem 0.55rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.07)
+  border-radius: 0.75rem
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
+  color: $text-muted
+  font-size: 0.68rem
+  font-weight: 520
+  letter-spacing: 0.01em
+  line-height: 1.2
+  text-decoration: none
+  text-transform: none
+  white-space: nowrap
+  overflow: hidden
+  cursor: pointer
+  transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease
+
+  &::before
+    display: none
+
+  > *
+    position: relative
+    z-index: 1
+
+  &:hover:not(:disabled),
+  &:focus-visible:not(:disabled)
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03))
+    border-color: rgba(255, 255, 255, 0.12)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1)
+    color: $text
+    outline: none
+    transform: translateY(-0.0625rem)
+
+    .quickShortcutBtnIcon
+      color: $text
+      opacity: 0.92
+      border-color: transparent
+      background: transparent
+
+    .quickShortcutBtnLabel
+      color: $text
+
+.quickShortcutBtnIcon
+  display: inline-grid
+  place-items: center
+  width: 0.95rem
+  height: 0.95rem
+  flex: 0 0 auto
+  border: 0
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+  color: $text-faint
+  opacity: 0.78
+
+  svg
+    width: 0.72rem
+    height: 0.72rem
+    display: block
+
+.quickShortcutBtnLabel
+  display: block
+  flex: 1
+  min-width: 0
+  text-align: left
+  color: inherit
+  font-weight: 520
+  letter-spacing: 0.01em
+  overflow: hidden
+  text-overflow: ellipsis
+
+.resultCard
+  padding: 0.55rem 0 0
+  opacity: 1
+  border-bottom: 0
+  background: transparent
+  box-shadow: none
+  gap: 0.35rem
+
+.finalResultAccent,
+.finalResultGlassVeil,
+.finalResultGlassHighlight,
+.finalResultGlassSpecular,
+.finalResultGlassEdge,
+.finalResultGlassNoise,
+.finalResultGlassHaze,
+.finalResultHazeCore,
+.finalResultHazeBand,
+.finalResultHazeSpread,
+.finalResultSculptureZone,
+.finalResultAtmosphere,
+.finalResultPanelGlassSvg,
+.finalResultPanelGlassBackdrop,
+.finalResultPanelGlassGrain,
+.finalResultPanelGlassRefraction,
+.finalResultPanelGlassDepth,
+.finalResultPanelGlassRimLeft,
+.finalResultPanelGlassRimTop,
+.finalResultPanelVeil,
+.finalResultPanelSpecular,
+.finalResultPanelEdge,
+.finalResultHairline,
+.finalResultKicker
+  display: none !important
+
+.finalResultScene
+  min-height: 0
+  padding: 0
+
+.finalResultComposition
+  gap: 0.2rem
+
+.finalResultGlassPanel
+  padding: 0
+  border: 0
+  background: transparent
+  box-shadow: none
+
+.finalResultEditorial
+  gap: 0.2rem
+
+.finalResultHeadline
+  margin: 0
+  font-size: 0.78rem
+  line-height: 1.25
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+
+.finalResultHeadlineLead,
+.finalResultHeadlineAccent
+  color: $text
+  font-weight: 600
+  font-size: 0.78rem
+  letter-spacing: -0.01em
+
+.finalResultLead
+  margin: 0.2rem 0 0
+  font-size: 0.62rem
+  line-height: 1.35
+  color: $text-muted
+  max-width: 32ch
+
+.finalResultFooter
+  margin-top: 0.45rem
+  gap: 0.3rem
+
+.finalResultCta
+  min-height: 2.1rem !important
+  border-radius: 0.85rem !important
+  font-size: 0.72rem !important
+  letter-spacing: 0.01em !important
+  text-transform: none !important
+
+.finalResultHelper
+  font-size: 0.58rem
+  line-height: 1.35
+
+.workflowAdvanceButton
+  margin-top: 0.28rem
+  min-height: 2.1rem !important
+  border-radius: 0.85rem !important
+  font-size: 0.72rem !important
+  letter-spacing: 0.01em !important
+  text-transform: none !important
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04)) !important
+  border-color: color-mix(in srgb, var(--stage-accent, #{$stage-inputs}) 42%, rgba(255, 255, 255, 0.1)) !important
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.14) !important
+  color: $text !important
+
+.heroFormShell
+  :global(.formInput),
+  :global(.formTextarea),
+  :global(input),
+  :global(textarea)
+    min-height: 2.1rem
+    padding: 0.45rem 1.75rem 0.45rem 0.65rem
+    border-radius: 0.75rem
+    font-size: 0.75rem
+    background: rgba(14, 15, 18, 0.92) !important
+    border-color: $border-soft !important
+    box-shadow: none !important
+
+  :global(.fieldLabel),
+  :global(label)
+    font-size: 0.52rem
+    letter-spacing: 0.06em
+
+.sidebarCtaPrimary,
+.sidebarCtaStage,
+.blockFormsPanel :global(button),
+.stageActionCard :global(button),
+.progressCard :global(button),
+.resultCard :global(button)
+  border-radius: 0.85rem
+  text-transform: none
+  letter-spacing: 0.01em
+  min-height: 2.1rem
+  font-size: 0.72rem
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04))
+  border-color: color-mix(in srgb, var(--stage-accent, #{$stage-inputs}) 38%, rgba(255, 255, 255, 0.1))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.14)
+  color: $text
+
+  &:hover:not(:disabled),
+  &:focus-visible:not(:disabled)
+    transform: translateY(-0.0625rem)
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05))
+    border-color: color-mix(in srgb, var(--stage-accent, #{$stage-inputs}) 48%, rgba(255, 255, 255, 0.14))
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.16)
+
+.sidebarCtaSecondary,
+.sidebarCtaGhost
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02))
+  border-color: rgba(255, 255, 255, 0.1)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08)
+
+.sidebarCtaDanger
+  background: transparent
+  border-color: rgba(255, 255, 255, 0.08)
+  color: rgba(251, 113, 133, 0.92)
+  box-shadow: none
+
+  &:hover,
+  &:focus-visible
+    background: rgba(251, 113, 133, 0.06)
+    border-color: rgba(251, 113, 133, 0.28)
+    color: rgba(255, 140, 160, 1)
+    box-shadow: none
+
+.progressCard :global(button)
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04))
+  border-color: color-mix(in srgb, var(--stage-accent, #{$stage-inputs}) 42%, rgba(255, 255, 255, 0.1))
+
+.resultCardBlocked :global(button)
+  background: linear-gradient(180deg, rgba(26, 27, 32, 0.88), rgba(14, 15, 18, 0.92))
+  border-color: rgba(255, 255, 255, 0.1)
+  color: rgba(210, 214, 224, 0.78)
+
+.contextActions
+  gap: 0.4rem
+
+.markerBlock
+  gap: 0.45rem
+  padding: 0.55rem 0
+
+  :global(.formInput),
+  :global(input),
+  :global(textarea)
+    min-height: 2.1rem
+    border-radius: 0.75rem
+    box-shadow: none !important
+
+.stagecurrent
+  border-color: rgba(255, 255, 255, 0.08)
+  background: rgba(255, 255, 255, 0.02)
+  box-shadow: inset 0.12rem 0 0 color-mix(in srgb, var(--stage-accent) 55%, transparent)
+
+  .stageDot
+    box-shadow: none
+
+  &:hover
+    border-color: rgba(255, 255, 255, 0.1)
+    background: rgba(255, 255, 255, 0.03)
+
+.stageProgressSegment
+  border-radius: 0.05rem
+
+.stageProgressSegmentLit
+  box-shadow: none
+
+.stageDot
+  box-shadow: none !important
+  filter: none
+
+.dragCard
+  &:hover
+    transform: translateY(-0.0625rem) !important
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12) !important
+
+.sidebarCtaSpaced
+  min-height: 2rem !important
+  font-size: 0.68rem !important
+  letter-spacing: 0.01em !important
+  text-transform: none !important
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)) !important
+  border-color: rgba(255, 255, 255, 0.08) !important
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06) !important

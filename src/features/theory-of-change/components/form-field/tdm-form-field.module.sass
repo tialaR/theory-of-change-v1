@@ -2,19 +2,19 @@
 
 .form
   display: grid
-  gap: 0.625rem
+  gap: 0.5rem
 
 .field
   display: grid
-  gap: 0.4375rem
+  gap: 0.32rem
   color: $color-text-muted
-  font-size: 0.75rem
+  font-size: 0.72rem
 
 .fieldLabel
-  color: rgba(180, 180, 186, 0.82)
-  font-size: 0.625rem
-  font-weight: 800
-  letter-spacing: 0.16em
+  color: rgba(176, 180, 188, 0.64)
+  font-size: 0.5rem
+  font-weight: 600
+  letter-spacing: 0.06em
   text-transform: uppercase
 
 .fieldControl
@@ -25,65 +25,74 @@
 .formTextarea
   width: 100%
   +ds-editable-field
-  border-radius: $sidebar-field-radius
-  padding: 0.625rem 2rem 0.625rem 0.75rem
-  color: rgba(244, 244, 246, 0.96)
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1)
+  border-radius: 0.75rem
+  background: rgba(14, 15, 18, 0.92)
+  box-shadow: none
+  padding: 0.45rem 1.75rem 0.45rem 0.65rem
+  color: rgba(248, 248, 250, 0.94)
   font: inherit
-  font-size: 0.8125rem
-  line-height: 1.45
+  font-size: 0.75rem
+  line-height: 1.4
+  min-height: 2.1rem
 
   &::placeholder
-    color: rgba(164, 164, 170, 0.78)
+    color: rgba(168, 172, 184, 0.42)
 
   &:hover:not(:focus):not(:focus-visible)
-    +ds-editable-field-hover
+    border-color: rgba(255, 255, 255, 0.14)
+    background: rgba(16, 17, 22, 0.96)
+    box-shadow: none
 
   &:focus,
   &:focus-visible
-    +ds-editable-field-focus-neutral
+    border-color: color-mix(in srgb, var(--stage-accent, #a78bfa) 36%, rgba(255, 255, 255, 0.12))
+    background: rgba(16, 17, 22, 0.96)
+    box-shadow: 0 0 0 0.0625rem color-mix(in srgb, var(--stage-accent, #a78bfa) 12%, transparent)
+    outline: none
 
 .formTextarea
   resize: vertical
-  min-height: 4.75rem
-  padding-top: 0.6875rem
+  min-height: 3.5rem
+  padding-top: 0.5rem
 
 .clearFieldButton
   position: absolute
   top: 50%
-  right: 0.4375rem
+  right: 0.4rem
   transform: translateY(-50%)
   display: inline-grid
   place-items: center
-  width: 1.25rem
-  height: 1.25rem
+  width: 1.15rem
+  height: 1.15rem
   padding: 0
   border: 0
-  border-radius: $noir-radius-chip
+  border-radius: 0.35rem
   background: transparent
-  color: rgba(148, 148, 154, 0.72)
+  color: rgba(148, 148, 154, 0.68)
   cursor: pointer
   transition: color 160ms ease, background 160ms ease
 
   svg
-    width: 0.6875rem
-    height: 0.6875rem
+    width: 0.65rem
+    height: 0.65rem
 
   &:hover,
   &:focus-visible
-    color: rgba(220, 220, 226, 0.92)
+    color: rgba(220, 220, 226, 0.9)
     background: rgba(255, 255, 255, 0.05)
     outline: none
 
 .fieldControl textarea + .clearFieldButton
-  top: 0.6875rem
+  top: 0.55rem
   transform: none
 
 .errorMessage
   margin: 0
-  padding: 0.625rem 0.75rem
-  border: 0.0625rem solid rgba(244, 114, 182, 0.28)
-  border-radius: $noir-radius-panel
-  background: rgba(244, 114, 182, 0.07)
+  padding: 0.5rem 0.65rem
+  border: 0.0625rem solid rgba(244, 114, 182, 0.24)
+  border-radius: 0.75rem
+  background: rgba(244, 114, 182, 0.05)
   color: #fecdd3
-  font-size: 0.75rem
-  line-height: 1.45
+  font-size: 0.7rem
+  line-height: 1.4

@@ -249,8 +249,8 @@ export function TdmTheoryEdge({
                   ]
                     .filter(Boolean)
                     .join(' ')}
-                  whileHover={prefersReducedMotion ? undefined : { scale: 1.05, y: -1 }}
-                  whileTap={prefersReducedMotion ? undefined : { scale: 0.96 }}
+                  whileHover={prefersReducedMotion ? undefined : { y: -1 }}
+                  whileTap={prefersReducedMotion ? undefined : { opacity: 0.9 }}
                   transition={{ duration: 0.14, ease: [0.22, 1, 0.36, 1] }}
                   onClick={(event) => {
                     event.stopPropagation();

@@ -7,12 +7,35 @@ import buttonStyles from '@/shared/ui/tdm-button/tdm-button.module.sass';
 import { TdmSectionIcon } from '../tdm-section-icon/tdm-section-icon';
 import { FinalResultDecorLayer, FinalResultGlassSculpture } from './final-result-glass-sculpture';
 import { TDM_STAGE_ORDER, type TdmStage } from '../../domain/tdm-stages';
-import { getTdmStageTheme } from '../../domain/tdm-theme';
 import type { StageCreation } from '../../utils/stage-creation';
 import styles from './tdm-sidebar.module.sass';
 
 const PREVIEW_MAX_BLOCKS = 5;
 const PREMIUM_EASE = [0.22, 1, 0.36, 1] as const;
+
+/** Local visual stage accents for canvas inspector (DS V1 — not domain theme). */
+const CANVAS_DS_STAGE: Record<TdmStage, { accent: string; soft: string; border: string }> = {
+  input: {
+    accent: '#a78bfa',
+    soft: 'rgba(167, 139, 250, 0.18)',
+    border: 'rgba(167, 139, 250, 0.34)'
+  },
+  activity: {
+    accent: '#60a5fa',
+    soft: 'rgba(96, 165, 250, 0.16)',
+    border: 'rgba(96, 165, 250, 0.34)'
+  },
+  output: {
+    accent: '#f6b35d',
+    soft: 'rgba(246, 179, 93, 0.16)',
+    border: 'rgba(246, 179, 93, 0.34)'
+  },
+  outcome: {
+    accent: '#5ee0b5',
+    soft: 'rgba(94, 224, 181, 0.16)',
+    border: 'rgba(94, 224, 181, 0.34)'
+  }
+};
 
 const STAGE_PREVIEW_CLASS: Record<TdmStage, string> = {
   input: styles.previewInput,
@@ -70,7 +93,7 @@ function CanvasAlignmentPreview({ stageCounts }: { stageCounts: Record<TdmStage,
       TDM_STAGE_ORDER.map((stage) => ({
         stage,
         count: stageCounts[stage],
-        theme: getTdmStageTheme(stage)
+        accent: CANVAS_DS_STAGE[stage].accent
       })),
     [stageCounts]
   );
@@ -102,7 +125,7 @@ function CanvasAlignmentPreview({ stageCounts }: { stageCounts: Record<TdmStage,
             key={column.stage}
             layout
             className={[styles.alignmentPreviewColumn, STAGE_PREVIEW_CLASS[column.stage]].join(' ')}
-            style={{ '--stage-accent': column.theme.accent } as CSSProperties}
+            style={{ '--stage-accent': column.accent } as CSSProperties}
           >
             {column.count === 0 ? (
               <span className={styles.alignmentPreviewBlockEmpty} aria-hidden="true" />
@@ -124,7 +147,7 @@ function CanvasAlignmentPreview({ stageCounts }: { stageCounts: Record<TdmStage,
                           : {
                               y: -1,
                               scale: 1.03,
-                              boxShadow: `0 0.4rem 0.85rem color-mix(in srgb, ${column.theme.accent} 28%, transparent)`
+                              boxShadow: `0 0.4rem 0.85rem color-mix(in srgb, ${column.accent} 28%, transparent)`
                             }
                       }
                       aria-hidden="true"
@@ -136,7 +159,7 @@ function CanvasAlignmentPreview({ stageCounts }: { stageCounts: Record<TdmStage,
                     <motion.span
                       key={`${column.stage}-overflow-${overflow}`}
                       className={styles.alignmentPreviewOverflow}
-                      style={{ '--stage-accent': column.theme.accent } as CSSProperties}
+                      style={{ '--stage-accent': column.accent } as CSSProperties}
                       initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.92 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.92 }}
@@ -165,7 +188,7 @@ export function V1CanvasOrganizationAccordion({
   stageCounts: Record<TdmStage, number>;
   onOrganize?: () => void;
 }) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const shouldReduceMotion = useReducedMotion();
   const contentId = `${id}-content`;
   const accordionTransition = shouldReduceMotion
@@ -200,7 +223,7 @@ export function V1CanvasOrganizationAccordion({
             style={{ overflow: 'hidden' }}
           >
             <p className={styles.canvasOrganizationText}>
-              Organize o canvas automaticamente. Alinhe os blocos por etapa para visualizar a teoria com mais clareza.
+              Alinhe os blocos por etapa para ler a teoria com mais clareza.
             </p>
             <div className={styles.canvasOrgPreviewShell}>
               <p className={styles.canvasOrgPreviewLabel}>Prévia do alinhamento</p>
@@ -217,16 +240,16 @@ export function V1CanvasOrganizationAccordion({
 }
 
 export function V1BlockFormsPanel({ stage, children }: { stage: TdmStage; children: ReactNode }) {
-  const theme = getTdmStageTheme(stage);
+  const stageTone = CANVAS_DS_STAGE[stage];
 
   return (
     <section
       className={styles.blockFormsPanel}
       style={
         {
-          '--stage-accent': theme.accent,
-          '--stage-border': theme.border,
-          '--stage-soft': theme.accentSoft
+          '--stage-accent': stageTone.accent,
+          '--stage-border': stageTone.border,
+          '--stage-soft': stageTone.soft
         } as CSSProperties
       }
     >
@@ -350,7 +373,7 @@ export function V1FinalResultCard({
       ]
         .filter(Boolean)
         .join(' ')}
-      aria-label="Resultado final"
+      aria-label="Resultado da sua teoria"
     >
       <span className={styles.finalResultAccent} aria-hidden="true" />
       <span className={styles.finalResultGlassVeil} aria-hidden="true" />
@@ -377,14 +400,11 @@ export function V1FinalResultCard({
             <span className={styles.finalResultPanelSpecular} aria-hidden="true" />
             <span className={styles.finalResultPanelEdge} aria-hidden="true" />
             <div className={styles.finalResultEditorial}>
-              <p className={styles.finalResultKicker}>Resultado final</p>
               <h3 className={styles.finalResultHeadline}>
-                <span className={styles.finalResultHeadlineLead}>Sua teoria</span>
-                <span className={styles.finalResultHeadlineAccent}>ganha forma</span>
+                <span className={styles.finalResultHeadlineLead}>Resultado da sua teoria</span>
               </h3>
-              <span className={styles.finalResultHairline} aria-hidden="true" />
               <p className={styles.finalResultLead}>
-                A síntese visual de cada etapa reunida em uma visão completa.
+                Revise etapas, conexões, riscos e hipóteses.
               </p>
             </div>
           </div>
@@ -400,7 +420,7 @@ export function V1FinalResultCard({
           icon={<FinalResultCtaArrowIcon />}
           iconPosition="right"
         >
-          Visualizar teoria completa
+          Visualizar resultado
         </TdmButton>
         {!canViewTdmResult ? (
           <p className={styles.finalResultHelper}>
@@ -415,208 +435,6 @@ export function V1FinalResultCard({
   );
 }
 
-function TheoryProgressOrbitalSculpture() {
-  const uid = useId().replace(/:/g, '');
-
-  return (
-    <div className={styles.progressOrbitalSculpture} aria-hidden="true">
-      <span className={styles.progressOrbitalNucleusGlow} />
-      <span className={styles.progressOrbitalSmoke} />
-      <span className={styles.progressOrbitalAmbient} />
-      <span className={styles.progressOrbitalHazeEmit} />
-      <svg
-        className={styles.progressOrbitalSvg}
-        viewBox="0 0 220 150"
-        preserveAspectRatio="xMinYMid slice"
-        fill="none"
-        aria-hidden="true"
-      >
-        <defs>
-          <radialGradient
-            id={`tpo-core-${uid}`}
-            cx="0"
-            cy="0"
-            r="1"
-            gradientUnits="userSpaceOnUse"
-            gradientTransform="translate(72 74) scale(38)"
-          >
-            <stop stopColor="rgba(252, 252, 255, 0.42)" />
-            <stop offset="0.28" stopColor="rgba(236, 238, 244, 0.28)" />
-            <stop offset="0.55" stopColor="rgba(168, 170, 176, 0.14)" />
-            <stop offset="0.82" stopColor="rgba(68, 70, 76, 0.1)" />
-            <stop offset="1" stopColor="rgba(12, 13, 16, 0.52)" />
-          </radialGradient>
-          <radialGradient
-            id={`tpo-halo-${uid}`}
-            cx="0"
-            cy="0"
-            r="1"
-            gradientUnits="userSpaceOnUse"
-            gradientTransform="translate(72 74) scale(88 62)"
-          >
-            <stop stopColor="rgba(236, 238, 244, 0.2)" />
-            <stop offset="0.42" stopColor="rgba(196, 198, 204, 0.08)" />
-            <stop offset="0.72" stopColor="rgba(120, 122, 128, 0.04)" />
-            <stop offset="1" stopColor="rgba(214, 216, 222, 0)" />
-          </radialGradient>
-          <linearGradient id={`tpo-orbit-${uid}`} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="rgba(236, 238, 244, 0.28)" />
-            <stop offset="50%" stopColor="rgba(196, 198, 204, 0.12)" />
-            <stop offset="100%" stopColor="rgba(120, 122, 128, 0.04)" />
-          </linearGradient>
-          <linearGradient id={`tpo-haze-${uid}`} x1="0%" y1="50%" x2="100%" y2="50%">
-            <stop offset="0%" stopColor="rgba(236, 238, 244, 0.18)" />
-            <stop offset="38%" stopColor="rgba(196, 198, 204, 0.1)" />
-            <stop offset="72%" stopColor="rgba(148, 150, 156, 0.04)" />
-            <stop offset="100%" stopColor="rgba(214, 216, 222, 0)" />
-          </linearGradient>
-          <filter id={`tpo-blur-soft-${uid}`} x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="4" />
-          </filter>
-          <filter id={`tpo-blur-haze-${uid}`} x="-60%" y="-60%" width="220%" height="220%">
-            <feGaussianBlur stdDeviation="8" />
-          </filter>
-          <filter id={`tpo-blur-progressive-${uid}`} x="-20%" y="-40%" width="180%" height="180%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="0" result="sharp" />
-            <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blurred" />
-            <feMerge>
-              <feMergeNode in="blurred" />
-              <feMergeNode in="sharp" />
-            </feMerge>
-          </filter>
-        </defs>
-
-        <ellipse
-          cx="108"
-          cy="74"
-          rx="92"
-          ry="48"
-          fill={`url(#tpo-haze-${uid})`}
-          filter={`url(#tpo-blur-haze-${uid})`}
-          opacity="0.72"
-          className={styles.progressOrbitalHazeField}
-        />
-
-        <ellipse cx="72" cy="74" rx="72" ry="50" fill={`url(#tpo-halo-${uid})`} className={styles.progressOrbitalHalo} />
-
-        <g className={styles.progressOrbitalRingOuter}>
-          <ellipse cx="72" cy="76" rx="58" ry="24" stroke={`url(#tpo-orbit-${uid})`} strokeWidth="0.7" opacity="0.95" />
-          <ellipse
-            cx="108"
-            cy="72"
-            rx="78"
-            ry="18"
-            stroke="rgba(214, 216, 222, 0.14)"
-            strokeWidth="0.5"
-            transform="rotate(-6 108 72)"
-          />
-        </g>
-        <g className={styles.progressOrbitalRingMid}>
-          <ellipse
-            cx="72"
-            cy="74"
-            rx="46"
-            ry="32"
-            stroke="rgba(236, 238, 244, 0.22)"
-            strokeWidth="0.58"
-            transform="rotate(-22 72 74)"
-          />
-          <ellipse
-            cx="96"
-            cy="78"
-            rx="62"
-            ry="14"
-            stroke="rgba(168, 170, 176, 0.09)"
-            strokeWidth="0.38"
-            transform="rotate(8 96 78)"
-            strokeDasharray="2.5 3"
-          />
-        </g>
-        <g className={styles.progressOrbitalRingInner}>
-          <ellipse
-            cx="72"
-            cy="74"
-            rx="32"
-            ry="18"
-            stroke="rgba(236, 238, 244, 0.16)"
-            strokeWidth="0.45"
-            transform="rotate(16 72 74)"
-            strokeDasharray="2 2.8"
-          />
-        </g>
-        <g className={styles.progressOrbitalRingFine}>
-          <ellipse
-            cx="72"
-            cy="74"
-            rx="24"
-            ry="12"
-            stroke="rgba(168, 170, 176, 0.12)"
-            strokeWidth="0.35"
-            transform="rotate(-38 72 74)"
-          />
-        </g>
-
-        <circle cx="72" cy="74" r="22" fill={`url(#tpo-core-${uid})`} filter={`url(#tpo-blur-soft-${uid})`} opacity="0.38" />
-        <circle cx="72" cy="74" r="21" fill={`url(#tpo-core-${uid})`} />
-        <circle cx="72" cy="74" r="21" stroke="rgba(252, 252, 255, 0.26)" strokeWidth="0.55" />
-        <path
-          d="M60 62 C66 56, 78 58, 82 66 C86 74, 82 84, 72 86"
-          stroke="rgba(252, 252, 255, 0.34)"
-          strokeWidth="0.65"
-          strokeLinecap="round"
-        />
-        <ellipse cx="64" cy="66" rx="5" ry="2.8" fill="rgba(252, 252, 255, 0.18)" transform="rotate(-16 64 66)" />
-
-        <circle cx="128" cy="58" r="1.8" fill="rgba(236, 238, 244, 0.52)" className={styles.progressOrbitalSatellite} />
-        <circle cx="38" cy="88" r="1.4" fill="rgba(196, 198, 204, 0.42)" className={styles.progressOrbitalSatelliteAlt} />
-        <circle cx="104" cy="98" r="1.1" fill="rgba(214, 216, 222, 0.34)" />
-        <circle cx="54" cy="48" r="1" fill="rgba(236, 238, 244, 0.3)" />
-        <circle cx="118" cy="86" r="0.85" fill="rgba(168, 170, 176, 0.28)" />
-        <circle cx="148" cy="72" r="0.7" fill="rgba(148, 150, 156, 0.22)" />
-        <circle cx="162" cy="64" r="0.55" fill="rgba(196, 198, 204, 0.16)" />
-
-        <path
-          d="M12 52 C 38 32, 72 44, 108 28 S 168 18, 204 38"
-          stroke="rgba(168, 170, 176, 0.11)"
-          strokeWidth="0.4"
-        />
-        <path
-          d="M6 104 C 34 84, 68 108, 102 90 S 158 78, 198 94"
-          stroke="rgba(196, 198, 204, 0.08)"
-          strokeWidth="0.36"
-        />
-        <line x1="28" y1="58" x2="52" y2="48" stroke="rgba(214, 216, 222, 0.12)" strokeWidth="0.32" />
-        <line x1="112" y1="42" x2="138" y2="52" stroke="rgba(168, 170, 176, 0.1)" strokeWidth="0.3" />
-        <line x1="68" y1="118" x2="92" y2="110" stroke="rgba(196, 198, 204, 0.07)" strokeWidth="0.28" />
-      </svg>
-    </div>
-  );
-}
-
-function TheoryProgressRing({ percent, accent }: { percent: number; accent: string }) {
-  const radius = 17;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (percent / 100) * circumference;
-
-  return (
-    <div className={styles.progressRingWrap} style={{ '--stage-accent': accent } as CSSProperties}>
-      <svg className={styles.progressRing} viewBox="0 0 48 48" aria-hidden="true">
-        <circle className={styles.progressRingTrackOuter} cx="24" cy="24" r="21" />
-        <circle className={styles.progressRingTrack} cx="24" cy="24" r={radius} />
-        <circle
-          className={styles.progressRingFill}
-          cx="24"
-          cy="24"
-          r={radius}
-          stroke={accent}
-          strokeDasharray={circumference}
-          strokeDashoffset={offset}
-        />
-      </svg>
-    </div>
-  );
-}
-
 export function V1TheoryProgressHeader({
   percent,
   accent,
@@ -627,16 +445,21 @@ export function V1TheoryProgressHeader({
   stageTitle: string;
   stageInstruction: string;
 }) {
+  const statusLine =
+    percent >= 100
+      ? 'lógica pronta para revisão'
+      : stageTitle.replace(/^\d+\.\s*/, '').toLowerCase();
+
   return (
-    <div className={styles.progressHeader}>
-      <p className={styles.progressHeaderKicker}>Progresso da teoria</p>
-      <div className={styles.progressHeaderCleanCard} style={{ '--stage-accent': accent } as CSSProperties}>
-        <TheoryProgressRing percent={percent} accent={accent} />
-        <div className={styles.progressHeaderCleanCopy}>
-          <p className={styles.progressPercent}>{percent}%</p>
-          <p className={styles.progressOverviewLabel}>{stageTitle}</p>
-        </div>
-      </div>
+    <div className={styles.progressHeader} style={{ '--stage-accent': accent } as CSSProperties}>
+      <p className={styles.progressHeaderKicker}>ETAPAS DA TEORIA</p>
+      <p className={styles.progressCompactLine}>
+        <span className={styles.progressCompactPercent}>{percent}% completo</span>
+        <span className={styles.progressCompactDivider} aria-hidden="true">
+          ·
+        </span>
+        <span className={styles.progressCompactStatus}>{statusLine}</span>
+      </p>
     </div>
   );
 }
@@ -650,7 +473,7 @@ export function V1StageActionSection({
   actionLabel?: string;
   onStageDragStart?: (event: DragEvent<HTMLElement>, stage: TdmStage) => void;
 }) {
-  const selectedStageTheme = stageCreation === 'ready-to-connect' ? null : getTdmStageTheme(stageCreation);
+  const selectedStageTheme = stageCreation === 'ready-to-connect' ? null : CANVAS_DS_STAGE[stageCreation];
   const canUseStageActions = stageCreation !== 'ready-to-connect';
   const dragStage = stageCreation === 'ready-to-connect' ? undefined : stageCreation;
 
@@ -662,18 +485,20 @@ export function V1StageActionSection({
           ? ({
               '--stage-accent': selectedStageTheme.accent,
               '--stage-border': selectedStageTheme.border,
-              '--stage-soft': selectedStageTheme.accentSoft
+              '--stage-soft': selectedStageTheme.soft
             } as CSSProperties)
           : undefined
       }
     >
-      <p className={styles.sectionKicker}>Ações da etapa</p>
+      <p className={styles.sectionKicker}>AGORA</p>
       {canUseStageActions && dragStage ? (
         <>
           <p className={styles.sectionText}>
-            Crie um novo bloco arrastando esse card para o canvas e solte-o na posição desejada. Personalize o conteúdo
-            clicando no card ou através do formulário logo abaixo.
+            {dragStage === 'input'
+              ? 'Crie o primeiro insumo — o que precisa existir antes da ação.'
+              : 'Crie o próximo bloco. Use as setas depois para registrar riscos e hipóteses.'}
           </p>
+          <p className={styles.sectionHintMuted}>Arraste para o canvas ou use o formulário abaixo.</p>
           <div className={styles.stageActionInnerPanel}>
             <button
               type="button"
@@ -686,14 +511,14 @@ export function V1StageActionSection({
               </span>
               <span>
                 <strong>{actionLabel ?? 'Adicionar bloco'}</strong>
-                <small>Clique, arraste, solte e crie.</small>
+                <small>Arraste e solte no canvas</small>
               </span>
             </button>
           </div>
         </>
       ) : (
         <div className={styles.stageActionInnerPanel}>
-          <p className={styles.sectionHint}>Quando uma etapa estiver ativa, este bloco vira o facilitador para criar novos itens.</p>
+          <p className={styles.sectionHint}>Conecte a lógica entre os blocos no canvas.</p>
         </div>
       )}
     </section>

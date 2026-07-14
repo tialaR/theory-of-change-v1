@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  useCallback,
   useEffect,
   useId,
   useMemo,
@@ -12,6 +11,7 @@ import {
   type ReactNode,
   type RefObject
 } from 'react';
+import Link from 'next/link';
 import { motion, useReducedMotion } from 'motion/react';
 import { Surface } from '@/shared/ui/surface/surface';
 import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
@@ -19,13 +19,10 @@ import buttonStyles from '@/shared/ui/tdm-button/tdm-button.module.sass';
 import { TdmAnchoredTooltip } from '@/shared/ui/tooltip/tdm-anchored-tooltip';
 import type { TdmNodeDraft } from '../../domain/tdm-types';
 import { TDM_STAGE_ORDER, type TdmStage } from '../../domain/tdm-stages';
-import { getTheoryGuideProgressStage, type TheoryGuideStageId } from '../../domain/tdm-theory-guide';
-import { getTdmStageTheme, TDM_THEORY_NEUTRAL } from '../../domain/tdm-theme';
 import type { StageCreation } from '../../utils/stage-creation';
 import { TdmBlockFormFields, TdmFormField } from '../form-field/tdm-form-field';
 import fieldStyles from '../form-field/tdm-form-field.module.sass';
 import { TdmSectionIcon } from '../tdm-section-icon/tdm-section-icon';
-import LiquidGlassLogoInfiniteLoop from './liquid-glass-logo-infinite-loop';
 import { TheoryHeaderForm, THEORY_DEFAULT_DESCRIPTION } from './theory-header-form';
 import { SidebarToggleIcon } from './sidebar-toggle-icon';
 import {
@@ -38,6 +35,33 @@ import {
 import styles from './tdm-sidebar.module.sass';
 
 export { SidebarToggleIcon };
+
+/** Local visual stage accents for canvas inspector (DS V1 — not domain theme). */
+const CANVAS_DS_STAGE: Record<
+  TdmStage,
+  { accent: string; soft: string; border: string }
+> = {
+  input: {
+    accent: '#a78bfa',
+    soft: 'rgba(167, 139, 250, 0.18)',
+    border: 'rgba(167, 139, 250, 0.34)'
+  },
+  activity: {
+    accent: '#60a5fa',
+    soft: 'rgba(96, 165, 250, 0.16)',
+    border: 'rgba(96, 165, 250, 0.34)'
+  },
+  output: {
+    accent: '#f6b35d',
+    soft: 'rgba(246, 179, 93, 0.16)',
+    border: 'rgba(246, 179, 93, 0.34)'
+  },
+  outcome: {
+    accent: '#5ee0b5',
+    soft: 'rgba(94, 224, 181, 0.16)',
+    border: 'rgba(94, 224, 181, 0.34)'
+  }
+};
 
 export type ExportFormat = 'pdf' | 'png' | 'jpeg' | 'svg';
 
@@ -104,36 +128,27 @@ const STAGE_GUIDE: Record<
 > = {
   input: {
     title: '1. Insumos',
-    summary: 'Recursos necessários para a política acontecer.',
-    technical:
-      'Insumos são recursos, capacidades e condições de partida. Eles não são ações. São aquilo que permite que as atividades aconteçam.',
-    examples: ['equipe técnica', 'orçamento', 'dados educacionais', 'materiais', 'tecnologia', 'parcerias']
+    summary: 'O que precisa estar disponível?',
+    technical: 'Insumos são recursos que precisam existir antes da ação começar.',
+    examples: ['equipe', 'orçamento', 'dados', 'parceiros']
   },
   activity: {
     title: '2. Atividades',
-    summary: 'Ações realizadas com os insumos.',
-    technical:
-      'Atividades são o que a política faz com os recursos disponíveis. Normalmente começam com verbos de ação, como formar, acompanhar, aplicar, distribuir ou monitorar.',
-    examples: ['formar professores', 'aplicar diagnóstico', 'acompanhar escolas', 'distribuir materiais', 'monitorar frequência']
+    summary: 'O que será feito com os recursos disponíveis?',
+    technical: 'Atividades são ações realizadas usando os insumos.',
+    examples: ['oficinas', 'capacitações', 'atendimento', 'articulação']
   },
   output: {
     title: '3. Produtos',
-    summary: 'Entregas concretas geradas pelas atividades.',
-    technical:
-      'Produtos são entregas observáveis e contáveis. Eles mostram o que foi produzido diretamente pelas atividades, antes de medir mudança.',
-    examples: ['oficinas realizadas', 'relatórios emitidos', 'planos validados', 'materiais entregues', 'estudantes atendidos']
+    summary: 'O que será entregue?',
+    technical: 'Produtos são entregas concretas geradas pelas atividades.',
+    examples: ['relatórios', 'materiais', 'serviços', 'pessoas atendidas']
   },
   outcome: {
     title: '4. Resultados',
-    summary: 'Mudanças esperadas após as entregas.',
-    technical:
-      'Resultados são mudanças em comportamento, prática, capacidade ou condição. Eles mostram o que deve melhorar depois que produtos foram entregues.',
-    examples: [
-      'escolas acompanham melhor estudantes',
-      'professores usam dados',
-      'estudantes frequentam mais aulas',
-      'gestão toma decisões mais rápidas'
-    ]
+    summary: 'O que muda para o público ou território?',
+    technical: 'Resultados são mudanças esperadas após as entregas.',
+    examples: ['acesso', 'renda', 'risco', 'aprendizagem', 'capacidade']
   }
 };
 
@@ -141,27 +156,27 @@ const STAGE_CREATION_HINTS: Record<StageCreation, { title: string; description: 
   input: {
     title: '1. Insumos',
     description: 'Liste os recursos que tornam a política possível.',
-    help: 'Pense em equipe, orçamento, dados, materiais, tecnologia, parcerias ou tempo disponível.'
+    help: 'Equipe, orçamento, dados, materiais, parcerias.'
   },
   activity: {
     title: '2. Atividades',
-    description: 'Descreva o que será feito usando esses recursos.',
-    help: 'Use verbos de ação: formar, acompanhar, distribuir, aplicar, monitorar, orientar.'
+    description: 'Descreva o que será feito com esses recursos.',
+    help: 'Use verbos de ação: formar, acompanhar, distribuir.'
   },
   output: {
     title: '3. Produtos',
-    description: 'Registre as entregas concretas geradas pelas atividades.',
-    help: 'Produtos são coisas que podem ser contadas: oficinas realizadas, relatórios emitidos, materiais entregues.'
+    description: 'Registre as entregas concretas das atividades.',
+    help: 'Coisas contáveis: oficinas, relatórios, materiais.'
   },
   outcome: {
     title: '4. Resultados',
     description: 'Descreva a mudança esperada depois das entregas.',
-    help: 'Resultados mostram o que muda no público, na prática ou na gestão.'
+    help: 'O que muda no público, na prática ou na gestão.'
   },
   'ready-to-connect': {
     title: '5. Conectar a lógica',
-    description: 'Agora conecte os blocos da esquerda para a direita para mostrar como a mudança acontece.',
-    help: 'Ligue insumos com atividades, atividades com produtos e produtos com resultados.'
+    description: 'Conecte os blocos da esquerda para a direita.',
+    help: 'Ligue insumos → atividades → produtos → resultados.'
   }
 };
 
@@ -194,56 +209,6 @@ const STAGE_ADVANCE_HINTS: Record<TdmStage, string> = {
 };
 
 const THEORY_PROGRESS_ITEM_GOAL = 10;
-
-type HeroLogoTheme = {
-  color: string;
-  glowColor: string;
-  tintOpacity: number;
-  glassIntensity: number;
-  isConnectionBlend: boolean;
-};
-
-function getHeroLogoTheme(guideStage: TheoryGuideStageId): HeroLogoTheme {
-  if (guideStage === 'theory') {
-    return {
-      color: '#f5f3ee',
-      glowColor: 'rgba(255, 255, 255, 0.32)',
-      tintOpacity: 0.42,
-      glassIntensity: 1.18,
-      isConnectionBlend: false
-    };
-  }
-
-  if (guideStage === 'connect') {
-    return {
-      color: '#f5f3ee',
-      glowColor: TDM_THEORY_NEUTRAL.glow,
-      tintOpacity: 0.52,
-      glassIntensity: 1.25,
-      isConnectionBlend: true
-    };
-  }
-
-  if (guideStage !== 'input' && guideStage !== 'activity' && guideStage !== 'output' && guideStage !== 'outcome') {
-    return getHeroLogoTheme('theory');
-  }
-
-  const theme = getTdmStageTheme(guideStage);
-  const stageGlass: Partial<Record<TdmStage, Pick<HeroLogoTheme, 'tintOpacity' | 'glassIntensity'>>> = {
-    input: { tintOpacity: 0.62, glassIntensity: 1.22 },
-    activity: { tintOpacity: 0.58, glassIntensity: 1.18 },
-    output: { tintOpacity: 0.6, glassIntensity: 1.18 },
-    outcome: { tintOpacity: 0.6, glassIntensity: 1.18 }
-  };
-
-  return {
-    color: theme.accent,
-    glowColor: theme.glow,
-    tintOpacity: stageGlass[guideStage]?.tintOpacity ?? 0.6,
-    glassIntensity: stageGlass[guideStage]?.glassIntensity ?? 1.18,
-    isConnectionBlend: false
-  };
-}
 
 function getStageLockTooltip(stage: TdmStage) {
   const stageIndex = TDM_STAGE_ORDER.indexOf(stage);
@@ -375,6 +340,7 @@ function BackArrowIcon() {
 }
 
 const QUICK_SHORTCUT_SPRING = { type: 'spring' as const, stiffness: 260, damping: 22 };
+const MotionLink = motion.create(Link);
 
 function ExamplesPreviewIcon() {
   return (
@@ -386,37 +352,6 @@ function ExamplesPreviewIcon() {
         strokeLinejoin="round"
       />
       <path d="M10 3.75v12.5M4.5 6.5 10 9.25 15.5 6.5" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" opacity="0.45" />
-    </svg>
-  );
-}
-
-function LibraryIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 20 20" className={styles.quickShortcutBtnIcon} fill="none">
-      <path
-        d="M4.25 4.5h4.5a1 1 0 0 1 1 1v10.25H5.25a1 1 0 0 0-1 1V5.5a1 1 0 0 1 1-1Z"
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M9.75 5.5h4.5a1 1 0 0 1 1 1v10.25h-4.5a1 1 0 0 0-1-1V5.5Z"
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinejoin="round"
-      />
-      <path d="M6.25 7.75h1.5M12.75 7.75h1.5M6.25 10.25h1.5M12.75 10.25h1.5" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" opacity="0.45" />
-    </svg>
-  );
-}
-
-function ModelsGridIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 20 20" className={styles.quickShortcutBtnIcon} fill="none">
-      <rect x="4" y="4" width="5.25" height="5.25" rx="1.25" stroke="currentColor" strokeWidth="1.3" />
-      <rect x="10.75" y="4" width="5.25" height="5.25" rx="1.25" stroke="currentColor" strokeWidth="1.3" />
-      <rect x="4" y="10.75" width="5.25" height="5.25" rx="1.25" stroke="currentColor" strokeWidth="1.3" />
-      <rect x="10.75" y="10.75" width="5.25" height="5.25" rx="1.25" stroke="currentColor" strokeWidth="1.3" />
     </svg>
   );
 }
@@ -437,83 +372,60 @@ function GuidesDocIcon() {
 }
 
 function QuickShortcutButton({
-  onClick,
+  href,
   icon,
   label,
   shouldReduceMotion
 }: {
-  onClick: () => void;
+  href: string;
   icon: ReactNode;
   label: string;
   shouldReduceMotion: boolean;
 }) {
   return (
-    <motion.button
-      type="button"
+    <MotionLink
+      href={href}
       className={styles.quickShortcutBtn}
-      onClick={onClick}
-      whileHover={shouldReduceMotion ? undefined : { y: -2, scale: 1.008 }}
-      whileTap={shouldReduceMotion ? undefined : { scale: 0.988 }}
+      whileHover={shouldReduceMotion ? undefined : { y: -1 }}
+      whileTap={shouldReduceMotion ? undefined : { y: 0 }}
       transition={QUICK_SHORTCUT_SPRING}
     >
-      {icon}
+      <span className={styles.quickShortcutBtnIcon} aria-hidden="true">
+        {icon}
+      </span>
       <span className={styles.quickShortcutBtnLabel}>{label}</span>
-    </motion.button>
+    </MotionLink>
   );
 }
 
 function QuickShortcutsCard({
-  onViewExampleCanvas,
-  onViewExampleResult,
   canRestoreTheory,
   onRestoreTheory
 }: {
-  onViewExampleCanvas: () => void;
-  onViewExampleResult: () => void;
   canRestoreTheory: boolean;
   onRestoreTheory: () => void;
 }) {
   const shouldReduceMotion = useReducedMotion();
-
-  const handleQuickLibraryClick = useCallback(() => {
-    // Reservado para futura navegação à biblioteca.
-  }, []);
-
-  const handleQuickModelsClick = useCallback(() => {
-    // Reservado para futura navegação aos modelos.
-  }, []);
 
   return (
     <section className={[styles.card, styles.quickShortcutsCard].join(' ')}>
       <div className={styles.quickShortcutsHeader}>
         <div className={styles.quickShortcutsTitleRow}>
           <TdmSectionIcon variant="quickShortcuts" />
-          <p className={styles.quickShortcutsTitle}>Atalhos rápidos</p>
+          <p className={styles.quickShortcutsTitle}>Atalhos</p>
         </div>
       </div>
       <div className={styles.quickShortcutsGrid}>
         <QuickShortcutButton
-          onClick={onViewExampleCanvas}
+          href="/exemplos"
           icon={<ExamplesPreviewIcon />}
           label="Exemplos"
           shouldReduceMotion={shouldReduceMotion ?? false}
         />
         <QuickShortcutButton
-          onClick={handleQuickLibraryClick}
-          icon={<LibraryIcon />}
-          label="Biblioteca"
-          shouldReduceMotion={shouldReduceMotion ?? false}
-        />
-        <QuickShortcutButton
-          onClick={handleQuickModelsClick}
-          icon={<ModelsGridIcon />}
-          label="Modelos"
-          shouldReduceMotion={shouldReduceMotion ?? false}
-        />
-        <QuickShortcutButton
-          onClick={onViewExampleResult}
+          href="/guia-de-aprendizado"
           icon={<GuidesDocIcon />}
-          label="Guias"
+          label="Guia"
           shouldReduceMotion={shouldReduceMotion ?? false}
         />
       </div>
@@ -565,7 +477,7 @@ function SidebarAccordion({
   variant?: 'default' | 'block';
   children: ReactNode;
 }) {
-  const theme = getTdmStageTheme(stage);
+  const stageTone = CANVAS_DS_STAGE[stage];
   const contentId = `${id}-content`;
 
   return (
@@ -579,9 +491,9 @@ function SidebarAccordion({
         .join(' ')}
       style={
         {
-          '--stage-accent': theme.accent,
-          '--stage-accent-soft': theme.accentSoft,
-          '--stage-border': theme.border
+          '--stage-accent': stageTone.accent,
+          '--stage-accent-soft': stageTone.soft,
+          '--stage-border': stageTone.border
         } as CSSProperties
       }
     >
@@ -694,8 +606,6 @@ export function TdmSidebar({
   canAdvance,
   canViewTdmResult,
   resultAvailabilityMessage,
-  onViewExampleCanvas,
-  onViewExampleResult,
   canRestoreTheory,
   onRestoreTheory,
   onViewResult,
@@ -716,8 +626,6 @@ export function TdmSidebar({
   canAdvance?: boolean;
   canViewTdmResult: boolean;
   resultAvailabilityMessage: string;
-  onViewExampleCanvas: () => void;
-  onViewExampleResult: () => void;
   canRestoreTheory: boolean;
   onRestoreTheory: () => void;
   onViewResult: () => void;
@@ -798,13 +706,7 @@ export function TdmSidebar({
   }, [stageCreation, totalRegisteredItems]);
 
   const progressStage: TdmStage = stageCreation === 'ready-to-connect' ? 'outcome' : stageCreation;
-  const progressAccent = getTdmStageTheme(progressStage).accent;
-
-  const heroGuideStage = useMemo(
-    () => getTheoryGuideProgressStage({ stageCounts, stageCreation }),
-    [stageCounts, stageCreation]
-  );
-  const heroLogoTheme = useMemo(() => getHeroLogoTheme(heroGuideStage), [heroGuideStage]);
+  const progressAccent = CANVAS_DS_STAGE[progressStage].accent;
 
   const handleCreateAccordionToggle = () => {
     if (!blockForms) return;
@@ -837,7 +739,7 @@ export function TdmSidebar({
                 <div className={styles.heroLead}>
                   <h1 className={styles.heroTitle}>Construtor de Teoria da Mudança</h1>
                   <p className={styles.heroDescription}>
-                    Um espaço guiado para mapear impacto, alinhar estratégias e criar resultados significativos.
+                    Guia curto enquanto você constrói a lógica no canvas.
                   </p>
                 </div>
                 <div
@@ -856,38 +758,17 @@ export function TdmSidebar({
                   />
                 </div>
               </div>
-              <div className={styles.heroSculptureWrap} aria-hidden="true">
-                <div
-                  className={[
-                    styles.heroLiquidGlassLogoWrap,
-                    heroLogoTheme.isConnectionBlend ? styles.heroLiquidGlassLogoWrapConnection : ''
-                  ]
-                    .filter(Boolean)
-                    .join(' ')}
-                >
-                  <LiquidGlassLogoInfiniteLoop
-                    className={styles.heroLiquidGlassLogo}
-                    size="clamp(5.75rem, 8.4vw, 7.25rem)"
-                    speed={1}
-                    hoverSpeed={1.8}
-                    color={heroLogoTheme.color}
-                    glowColor={heroLogoTheme.glowColor}
-                    glowSize="0.72rem"
-                    textureStrength={0.68}
-                    tintOpacity={heroLogoTheme.tintOpacity}
-                    glassIntensity={heroLogoTheme.glassIntensity}
-                    showBackground={false}
-                    backgroundGlow
-                    spriteQuality="sidebar"
-                    ariaHidden
-                  />
-                </div>
-              </div>
             </section>
           </div>
         </header>
 
         <div ref={contentRef} className={styles.content}>
+          <V1StageActionSection
+            stageCreation={stageCreation}
+            actionLabel={actionLabel}
+            onStageDragStart={onStageDragStart}
+          />
+
           <section
             className={[styles.card, styles.progressCard].join(' ')}
             style={{ '--stage-accent': progressAccent } as CSSProperties}
@@ -901,7 +782,7 @@ export function TdmSidebar({
             <div className={styles.timeline} aria-label="Progresso da teoria">
               {TDM_STAGE_ORDER.map((stage, index) => {
                 const guide = STAGE_GUIDE[stage];
-                const theme = getTdmStageTheme(stage);
+                const stageTone = CANVAS_DS_STAGE[stage];
                 const status = getStageStatus(stage, stageCreation, index);
                 const isCurrentStage = stageCreation !== 'ready-to-connect' && stageCreation === stage;
                 const isStageExpanded = openStage === stage || isCurrentStage;
@@ -924,8 +805,8 @@ export function TdmSidebar({
                       .join(' ')}
                     style={
                       {
-                        '--stage-accent': theme.accent,
-                        '--stage-border': theme.border
+                        '--stage-accent': stageTone.accent,
+                        '--stage-border': stageTone.border
                       } as CSSProperties
                     }
                     onToggle={(event) => {
@@ -982,7 +863,9 @@ export function TdmSidebar({
                       />
                     </summary>
                     <div className={styles.stageBody}>
+                      <p className={styles.stageUnderstandKicker}>Entenda esta etapa</p>
                       <p>{guide.technical}</p>
+                      <p className={styles.stageGuideQuestion}>Pergunta-guia: {guide.summary}</p>
                       <ul>
                         {guide.examples.map((example) => (
                           <li key={example}>{example}</li>
@@ -1013,12 +896,6 @@ export function TdmSidebar({
               </p>
             ) : null}
           </section>
-
-          <V1StageActionSection
-            stageCreation={stageCreation}
-            actionLabel={actionLabel}
-            onStageDragStart={onStageDragStart}
-          />
 
           <V1CanvasOrganizationAccordion
             id={canvasOrganizationAccordionId}
@@ -1122,8 +999,6 @@ export function TdmSidebar({
           ) : null}
 
           <QuickShortcutsCard
-            onViewExampleCanvas={onViewExampleCanvas}
-            onViewExampleResult={onViewExampleResult}
             canRestoreTheory={canRestoreTheory}
             onRestoreTheory={onRestoreTheory}
           />

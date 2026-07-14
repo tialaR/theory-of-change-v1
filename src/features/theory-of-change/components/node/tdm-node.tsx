@@ -3,6 +3,7 @@
 import { Handle, NodeProps, Position } from '@xyflow/react';
 import {
   createContext,
+  memo,
   useContext,
   useState,
   type MouseEvent,
@@ -55,7 +56,7 @@ export function useTdmNodeInteractions() {
   return context;
 }
 
-export function TdmNode({ id, data, selected }: NodeProps<TdmNodeModel>) {
+export const TdmNode = memo(function TdmNode({ id, data, selected }: NodeProps<TdmNodeModel>) {
   const {
     editingNodeId: contextEditingNodeId,
     onBeginEditNode,
@@ -286,7 +287,7 @@ export function TdmNode({ id, data, selected }: NodeProps<TdmNodeModel>) {
       {canSend ? <Handle type="source" position={Position.Right} className={styles.handle} /> : null}
     </article>
   );
-}
+});
 
 function CloseIcon() {
   return (
