@@ -386,8 +386,8 @@ function QuickShortcutButton({
     <MotionLink
       href={href}
       className={styles.quickShortcutBtn}
-      whileHover={shouldReduceMotion ? undefined : { y: -1 }}
-      whileTap={shouldReduceMotion ? undefined : { y: 0 }}
+      whileHover={undefined}
+      whileTap={shouldReduceMotion ? undefined : { opacity: 0.88 }}
       transition={QUICK_SHORTCUT_SPRING}
     >
       <span className={styles.quickShortcutBtnIcon} aria-hidden="true">
@@ -739,7 +739,7 @@ export function TdmSidebar({
                 <div className={styles.heroLead}>
                   <h1 className={styles.heroTitle}>Construtor de Teoria da Mudança</h1>
                   <p className={styles.heroDescription}>
-                    Guia curto enquanto você constrói a lógica no canvas.
+                    Mapeie como recursos viram ações, entregas e resultados.
                   </p>
                 </div>
                 <div
@@ -768,6 +768,34 @@ export function TdmSidebar({
             actionLabel={actionLabel}
             onStageDragStart={onStageDragStart}
           />
+
+          <section
+            className={[styles.card, styles.understandSection].join(' ')}
+            style={
+              stageCreation !== 'ready-to-connect'
+                ? ({ '--stage-accent': CANVAS_DS_STAGE[stageCreation].accent } as CSSProperties)
+                : undefined
+            }
+            aria-label="Entenda esta etapa"
+          >
+            <p className={styles.sectionKicker}>ENTENDA</p>
+            {stageCreation !== 'ready-to-connect' ? (
+              <>
+                <p className={styles.understandTitle}>{stripStageNumber(STAGE_GUIDE[stageCreation].title)}</p>
+                <p className={styles.sectionText}>{STAGE_GUIDE[stageCreation].technical}</p>
+                <p className={styles.understandQuestion}>Pergunta-guia: {STAGE_GUIDE[stageCreation].summary}</p>
+                <p className={styles.understandExamples}>
+                  Exemplos: {STAGE_GUIDE[stageCreation].examples.join(', ')}.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className={styles.understandTitle}>{stripStageNumber(STAGE_CREATION_HINTS['ready-to-connect'].title)}</p>
+                <p className={styles.sectionText}>{STAGE_CREATION_HINTS['ready-to-connect'].description}</p>
+                <p className={styles.understandExamples}>{STAGE_CREATION_HINTS['ready-to-connect'].help}</p>
+              </>
+            )}
+          </section>
 
           <section
             className={[styles.card, styles.progressCard].join(' ')}
@@ -863,9 +891,6 @@ export function TdmSidebar({
                       />
                     </summary>
                     <div className={styles.stageBody}>
-                      <p className={styles.stageUnderstandKicker}>Entenda esta etapa</p>
-                      <p>{guide.technical}</p>
-                      <p className={styles.stageGuideQuestion}>Pergunta-guia: {guide.summary}</p>
                       <ul>
                         {guide.examples.map((example) => (
                           <li key={example}>{example}</li>
@@ -896,12 +921,6 @@ export function TdmSidebar({
               </p>
             ) : null}
           </section>
-
-          <V1CanvasOrganizationAccordion
-            id={canvasOrganizationAccordionId}
-            stageCounts={stageCounts}
-            onOrganize={onOrganize}
-          />
 
           {blockForms ? (
             <V1BlockFormsPanel stage={blockForms.stage}>
@@ -997,6 +1016,12 @@ export function TdmSidebar({
               ) : null}
             </section>
           ) : null}
+
+          <V1CanvasOrganizationAccordion
+            id={canvasOrganizationAccordionId}
+            stageCounts={stageCounts}
+            onOrganize={onOrganize}
+          />
 
           <QuickShortcutsCard
             canRestoreTheory={canRestoreTheory}

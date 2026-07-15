@@ -132,25 +132,29 @@ $resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rg
     flex-direction: column
     width: auto
     z-index: 12
-    border: 0.0625rem solid rgba(255, 255, 255, 0.1)
-    border-radius: 1rem
-    background: $resend-surface
-    box-shadow: $resend-shadow
-    backdrop-filter: blur(0.5rem) saturate(1.02)
-    -webkit-backdrop-filter: blur(0.5rem) saturate(1.02)
+    border: 0.0625rem solid rgba(255, 255, 255, 0.09)
+    border-radius: 0.5rem
+    background: linear-gradient(180deg, rgba(18, 19, 24, 0.88) 0%, rgba(8, 9, 12, 0.9) 100%)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), 0 0.75rem 1.5rem rgba(0, 0, 0, 0.28)
+    backdrop-filter: blur(0.4rem) saturate(1.02)
+    -webkit-backdrop-filter: blur(0.4rem) saturate(1.02)
     overflow: hidden
 
   :global(.react-flow__controls-button)
-    width: 2rem
-    height: 2rem
+    width: 1.75rem
+    height: 1.75rem
     border: 0
     background: transparent
-    color: rgba(200, 204, 214, 0.7)
+    color: rgba(190, 193, 204, 0.55)
     fill: currentColor
     transition: background 140ms ease, color 140ms ease, opacity 140ms ease
 
     &:hover
-      background: rgba(255, 255, 255, 0.045)
+      background: rgba(255, 255, 255, 0.04)
+      color: rgba(248, 248, 250, 0.88)
+
+    &:active
+      background: rgba(255, 255, 255, 0.06)
       color: $text
 
   :global(.react-flow__minimap)
@@ -158,15 +162,15 @@ $resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rg
     bottom: 1rem
     top: auto
     z-index: 11
-    border: 0.0625rem solid rgba(255, 255, 255, 0.1)
-    border-radius: 1rem
-    background: $resend-surface
-    box-shadow: $resend-shadow
-    backdrop-filter: blur(0.45rem) saturate(1.02)
-    -webkit-backdrop-filter: blur(0.45rem) saturate(1.02)
+    border: 0.0625rem solid rgba(255, 255, 255, 0.08)
+    border-radius: 0.5rem
+    background: rgba(8, 9, 12, 0.9)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06), 0 0.75rem 1.5rem rgba(0, 0, 0, 0.26)
+    backdrop-filter: blur(0.35rem) saturate(1.02)
+    -webkit-backdrop-filter: blur(0.35rem) saturate(1.02)
     overflow: hidden
     pointer-events: none
-    opacity: 0.72
+    opacity: 0.58
 
   :global(.react-flow__panel.react-flow__controls)
     top: auto !important
@@ -211,7 +215,7 @@ $resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rg
   margin: 0
 
 .minimap
-  opacity: 0.78
+  opacity: 0.58
 
 .emptyState
   position: absolute

@@ -121,10 +121,10 @@ const CANVAS_MINIMAP_STYLE = { width: 152, height: 96, pointerEvents: 'none' as 
 
 /** Local visual stage fills for minimap (DS V1 — not domain theme). */
 const CANVAS_DS_MINIMAP: Record<TdmStage, { fill: string; stroke: string }> = {
-  input: { fill: 'rgba(167, 139, 250, 0.22)', stroke: '#a78bfa' },
-  activity: { fill: 'rgba(96, 165, 250, 0.2)', stroke: '#60a5fa' },
-  output: { fill: 'rgba(246, 179, 93, 0.2)', stroke: '#f6b35d' },
-  outcome: { fill: 'rgba(94, 224, 181, 0.2)', stroke: '#5ee0b5' }
+  input: { fill: 'rgba(167, 139, 250, 0.16)', stroke: 'rgba(167, 139, 250, 0.55)' },
+  activity: { fill: 'rgba(96, 165, 250, 0.14)', stroke: 'rgba(96, 165, 250, 0.5)' },
+  output: { fill: 'rgba(246, 179, 93, 0.14)', stroke: 'rgba(246, 179, 93, 0.5)' },
+  outcome: { fill: 'rgba(94, 224, 181, 0.14)', stroke: 'rgba(94, 224, 181, 0.5)' }
 };
 
 export const nodeTypes = {

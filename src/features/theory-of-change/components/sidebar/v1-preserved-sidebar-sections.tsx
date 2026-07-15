@@ -413,7 +413,7 @@ export function V1FinalResultCard({
 
       <div className={styles.finalResultFooter}>
         <TdmButton
-          variant={canViewTdmResult ? 'primary' : 'secondary'}
+          variant="secondary"
           fullWidth
           className={styles.finalResultCta}
           onClick={onViewResult}
@@ -495,10 +495,10 @@ export function V1StageActionSection({
         <>
           <p className={styles.sectionText}>
             {dragStage === 'input'
-              ? 'Crie o primeiro insumo — o que precisa existir antes da ação.'
-              : 'Crie o próximo bloco. Use as setas depois para registrar riscos e hipóteses.'}
+              ? 'Crie seu primeiro insumo.'
+              : 'Crie o próximo bloco desta etapa.'}
           </p>
-          <p className={styles.sectionHintMuted}>Arraste para o canvas ou use o formulário abaixo.</p>
+          <p className={styles.sectionHintMuted}>Arraste para o canvas ou use o formulário.</p>
           <div className={styles.stageActionInnerPanel}>
             <button
               type="button"

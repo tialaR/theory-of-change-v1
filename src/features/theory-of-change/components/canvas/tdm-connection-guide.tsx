@@ -114,7 +114,7 @@ export function TdmConnectionGuide({
   const previewAccent = getNextStagePreviewAccent(content.nextStageLabel);
   const shortHelp =
     content.action?.trim() || content.message?.trim() || 'Crie o próximo bloco para avançar.';
-  const compactCounts = TDM_STAGE_ORDER.map((stage) => stageCounts[stage]).join(' / ');
+  const compactCounts = TDM_STAGE_ORDER.map((stage) => stageCounts[stage]).join('/');
 
   const setExpanded = useCallback(
     (nextExpanded: boolean) => {
