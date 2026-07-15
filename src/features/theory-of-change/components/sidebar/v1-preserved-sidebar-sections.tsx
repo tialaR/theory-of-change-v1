@@ -44,17 +44,6 @@ const STAGE_PREVIEW_CLASS: Record<TdmStage, string> = {
   outcome: styles.previewOutcome
 };
 
-function StageDragIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 32 32" focusable="false" className={styles.dragGlyph}>
-      <rect x="5" y="13" width="12" height="12" rx="2.5" />
-      <rect x="14" y="5" width="13" height="13" rx="2.5" className={styles.dragGhost} />
-      <path d="M14 16 25 27" />
-      <path d="m18.5 26.5 6.5.5-.5-6.5" />
-    </svg>
-  );
-}
-
 function AccordionChevron({ isOpen, className }: { isOpen: boolean; className?: string }) {
   return (
     <svg
@@ -400,12 +389,15 @@ export function V1FinalResultCard({
             <span className={styles.finalResultPanelSpecular} aria-hidden="true" />
             <span className={styles.finalResultPanelEdge} aria-hidden="true" />
             <div className={styles.finalResultEditorial}>
-              <h3 className={styles.finalResultHeadline}>
-                <span className={styles.finalResultHeadlineLead}>Resultado da sua teoria</span>
-              </h3>
-              <p className={styles.finalResultLead}>
-                Revise etapas, conexões, riscos e hipóteses.
-              </p>
+              <div className={[styles.finalResultHeadline, styles.blockFormGroupHeader].filter(Boolean).join(' ')}>
+                <TdmSectionIcon variant="alignColumns" />
+                <div className={styles.finalResultCopy}>
+                  <h3 className={styles.blockFormGroupTitle}>Resultado da sua teoria</h3>
+                  <p className={styles.finalResultLead}>
+                    Revise etapas, conexões, riscos e hipóteses.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -451,7 +443,15 @@ export function V1TheoryProgressHeader({
       : stageTitle.replace(/^\d+\.\s*/, '').toLowerCase();
 
   return (
-    <div className={styles.progressHeader} style={{ '--stage-accent': accent } as CSSProperties}>
+    <div
+      className={styles.progressHeader}
+      style={
+        {
+          '--stage-accent': accent,
+          '--theory-progress': `${percent}%`
+        } as CSSProperties
+      }
+    >
       <p className={styles.progressHeaderKicker}>ETAPAS DA TEORIA</p>
       <p className={styles.progressCompactLine}>
         <span className={styles.progressCompactPercent}>{percent}% completo</span>
@@ -460,6 +460,9 @@ export function V1TheoryProgressHeader({
         </span>
         <span className={styles.progressCompactStatus}>{statusLine}</span>
       </p>
+      <div className={styles.theoryProgressTrack} aria-hidden="true">
+        <span className={styles.theoryProgressFill} />
+      </div>
     </div>
   );
 }
@@ -504,16 +507,18 @@ export function V1StageActionSection({
               type="button"
               className={styles.dragCard}
               draggable
+              aria-label={actionLabel ?? 'Adicionar bloco'}
               onDragStart={(event) => onStageDragStart?.(event, dragStage)}
             >
-              <span className={styles.dragIcon}>
-                <StageDragIcon />
-              </span>
-              <span>
-                <strong>{actionLabel ?? 'Adicionar bloco'}</strong>
-                <small>Arraste e solte no canvas</small>
+              <span className={styles.dragSheet} aria-hidden="true">
+                <span className={styles.dragSheetShine} />
+                <span className={styles.dragSheetLine} data-len="title" />
+                <span className={styles.dragSheetLine} data-len="lg" />
+                <span className={styles.dragSheetLine} data-len="md" />
+                <span className={styles.dragSheetLine} data-len="sm" />
               </span>
             </button>
+            <p className={styles.dragSheetLegend}>Clique, arraste e solte</p>
           </div>
         </>
       ) : (

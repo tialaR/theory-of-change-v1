@@ -12,7 +12,7 @@ import {
   type RefObject
 } from 'react';
 import Link from 'next/link';
-import { motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { Surface } from '@/shared/ui/surface/surface';
 import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
 import buttonStyles from '@/shared/ui/tdm-button/tdm-button.module.sass';
@@ -24,6 +24,7 @@ import { TdmBlockFormFields, TdmFormField } from '../form-field/tdm-form-field';
 import fieldStyles from '../form-field/tdm-form-field.module.sass';
 import { TdmSectionIcon } from '../tdm-section-icon/tdm-section-icon';
 import { TheoryHeaderForm, THEORY_DEFAULT_DESCRIPTION } from './theory-header-form';
+import headerFormStyles from './theory-header-form.module.sass';
 import { SidebarToggleIcon } from './sidebar-toggle-icon';
 import {
   V1BlockFormsPanel,
@@ -398,6 +399,31 @@ function QuickShortcutButton({
   );
 }
 
+// BEGIN CANVAS QUICK SHORTCUTS ACCORDION MICROFIX 10
+function QuickShortcutsChevron({ isOpen }: { isOpen: boolean }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className={[
+        styles.quickShortcutsChevron,
+        isOpen ? styles.quickShortcutsChevronOpen : ''
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      fill="none"
+    >
+      <path
+        d="M6 9l6 6 6-6"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function QuickShortcutsCard({
   canRestoreTheory,
   onRestoreTheory
@@ -406,44 +432,78 @@ function QuickShortcutsCard({
   onRestoreTheory: () => void;
 }) {
   const shouldReduceMotion = useReducedMotion();
+  const [isOpen, setIsOpen] = useState(false);
+  const contentId = useId();
+  const accordionTransition = shouldReduceMotion
+    ? { duration: 0.01 }
+    : { duration: 0.3, ease: [0.22, 1, 0.36, 1] as const };
 
   return (
     <section className={[styles.card, styles.quickShortcutsCard].join(' ')}>
-      <div className={styles.quickShortcutsHeader}>
-        <div className={styles.quickShortcutsTitleRow}>
+      <button
+        type="button"
+        className={styles.quickShortcutsHeader}
+        aria-expanded={isOpen}
+        aria-controls={contentId}
+        onClick={() => setIsOpen((current) => !current)}
+      >
+        <span className={styles.quickShortcutsTitleRow}>
           <TdmSectionIcon variant="quickShortcuts" />
-          <p className={styles.quickShortcutsTitle}>Atalhos</p>
-        </div>
-      </div>
-      <div className={styles.quickShortcutsGrid}>
-        <QuickShortcutButton
-          href="/exemplos"
-          icon={<ExamplesPreviewIcon />}
-          label="Exemplos"
-          shouldReduceMotion={shouldReduceMotion ?? false}
-        />
-        <QuickShortcutButton
-          href="/guia-de-aprendizado"
-          icon={<GuidesDocIcon />}
-          label="Guia"
-          shouldReduceMotion={shouldReduceMotion ?? false}
-        />
-      </div>
-      {canRestoreTheory ? (
-        <TdmButton
-          variant="ghost"
-          fullWidth
-          icon={<BackArrowIcon />}
-          iconPosition="left"
-          className={styles.sidebarCtaSpaced}
-          onClick={onRestoreTheory}
-        >
-          Voltar para minha teoria
-        </TdmButton>
-      ) : null}
+          <span className={styles.quickShortcutsTitle}>Atalhos</span>
+        </span>
+        <QuickShortcutsChevron isOpen={isOpen} />
+      </button>
+
+      <AnimatePresence initial={false}>
+        {isOpen ? (
+          <motion.div
+            key={contentId}
+            id={contentId}
+            className={styles.quickShortcutsContent}
+            initial={shouldReduceMotion ? false : { height: 0, opacity: 0, y: -4 }}
+            animate={{ height: 'auto', opacity: 1, y: 0 }}
+            exit={
+              shouldReduceMotion
+                ? { height: 0, opacity: 0 }
+                : { height: 0, opacity: 0, y: -3 }
+            }
+            transition={accordionTransition}
+            style={{ overflow: 'hidden' }}
+          >
+            <div className={styles.quickShortcutsGrid}>
+              <QuickShortcutButton
+                href="/exemplos"
+                icon={<ExamplesPreviewIcon />}
+                label="Exemplos"
+                shouldReduceMotion={shouldReduceMotion ?? false}
+              />
+              <QuickShortcutButton
+                href="/guia-de-aprendizado"
+                icon={<GuidesDocIcon />}
+                label="Guia"
+                shouldReduceMotion={shouldReduceMotion ?? false}
+              />
+            </div>
+
+            {canRestoreTheory ? (
+              <TdmButton
+                variant="ghost"
+                fullWidth
+                icon={<BackArrowIcon />}
+                iconPosition="left"
+                className={styles.sidebarCtaSpaced}
+                onClick={onRestoreTheory}
+              >
+                Voltar para minha teoria
+              </TdmButton>
+            ) : null}
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </section>
   );
 }
+// END CANVAS QUICK SHORTCUTS ACCORDION MICROFIX 10
 
 function AdvanceArrowIcon() {
   return (
@@ -453,6 +513,21 @@ function AdvanceArrowIcon() {
         fill="none"
         stroke="currentColor"
         strokeWidth="1.45"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/** Visual-only glyph reused from the existing quickShortcuts connection path. */
+function ConnectLogicIcon({ className }: { className?: string }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" className={className} fill="none">
+      <path
+        d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"
+        stroke="currentColor"
+        strokeWidth="1.6"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -635,7 +710,9 @@ export function TdmSidebar({
 }) {
   const shouldReduceMotion = useReducedMotion();
   const [theoryDescription, setTheoryDescription] = useState(THEORY_DEFAULT_DESCRIPTION);
-  const [openStage, setOpenStage] = useState<TdmStage>(stageCreation === 'ready-to-connect' ? 'outcome' : stageCreation);
+  const [openStage, setOpenStage] = useState<TdmStage | 'ready-to-connect'>(
+    stageCreation === 'ready-to-connect' ? 'ready-to-connect' : stageCreation
+  );
   const contentRef = useRef<HTMLDivElement | null>(null);
   const heroFormShellRef = useRef<HTMLDivElement | null>(null);
   const scrollRafRef = useRef<number | null>(null);
@@ -705,8 +782,10 @@ export function TdmSidebar({
     return Math.min(100, Math.round((totalRegisteredItems / THEORY_PROGRESS_ITEM_GOAL) * 100));
   }, [stageCreation, totalRegisteredItems]);
 
-  const progressStage: TdmStage = stageCreation === 'ready-to-connect' ? 'outcome' : stageCreation;
-  const progressAccent = CANVAS_DS_STAGE[progressStage].accent;
+  const progressAccent =
+    stageCreation === 'ready-to-connect'
+      ? 'rgba(232, 234, 240, 0.92)'
+      : CANVAS_DS_STAGE[stageCreation].accent;
 
   const handleCreateAccordionToggle = () => {
     if (!blockForms) return;
@@ -735,6 +814,16 @@ export function TdmSidebar({
               <span className={styles.heroGlowTop} aria-hidden="true" />
               <span className={styles.heroGlowBottom} aria-hidden="true" />
               <span className={styles.heroSpecular} aria-hidden="true" />
+              <div className={styles.heroHideSidebarToolbar}>
+                <button
+                  type="button"
+                  className={headerFormStyles.hideSidebarButton}
+                  aria-label="Esconder sidebar"
+                  onClick={onToggle}
+                >
+                  <SidebarToggleIcon direction="right" />
+                </button>
+              </div>
               <div className={styles.heroContent}>
                 <div className={styles.heroLead}>
                   <h1 className={styles.heroTitle}>Construtor de Teoria da Mudança</h1>
@@ -754,7 +843,6 @@ export function TdmSidebar({
                     theoryDescription={theoryDescription}
                     onTheoryNameChange={onTheoryNameChange}
                     onTheoryDescriptionChange={setTheoryDescription}
-                    onHideSidebar={onToggle}
                   />
                 </div>
               </div>
@@ -826,7 +914,6 @@ export function TdmSidebar({
                       styles.stageAccordion,
                       styles[`stage${status}`] as string,
                       index === 0 ? styles.stageFirst : '',
-                      index === TDM_STAGE_ORDER.length - 1 ? styles.stageLast : '',
                       isStageExpanded ? styles.stageExpanded : ''
                     ]
                       .filter(Boolean)
@@ -849,7 +936,7 @@ export function TdmSidebar({
                       }
 
                       if (openStage === stage) {
-                        setOpenStage(stageCreation !== 'ready-to-connect' ? stageCreation : 'outcome');
+                        setOpenStage(stageCreation !== 'ready-to-connect' ? stageCreation : 'ready-to-connect');
                       }
                     }}
                   >
@@ -900,6 +987,92 @@ export function TdmSidebar({
                   </details>
                 );
               })}
+              {(() => {
+                const connectStatus = stageCreation === 'ready-to-connect' ? 'current' : 'blocked';
+                const isConnectCurrent = stageCreation === 'ready-to-connect';
+                const isConnectExpanded = openStage === 'ready-to-connect' || isConnectCurrent;
+                const connectLockTooltip = 'Conclua ao menos 1 resultado para desbloquear esta etapa.';
+                const isConnectTopLit = connectStatus === 'current';
+
+                return (
+                  <details
+                    key="ready-to-connect"
+                    open={isConnectExpanded}
+                    className={[
+                      styles.stageAccordion,
+                      styles.stageConnectLogic,
+                      styles[`stage${connectStatus}`] as string,
+                      styles.stageLast,
+                      isConnectExpanded ? styles.stageExpanded : ''
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
+                    style={
+                      {
+                        '--stage-accent': 'rgba(232, 234, 240, 0.92)',
+                        '--stage-border': 'rgba(210, 214, 224, 0.28)'
+                      } as CSSProperties
+                    }
+                    onToggle={(event) => {
+                      if (event.currentTarget.open) {
+                        setOpenStage('ready-to-connect');
+                        return;
+                      }
+
+                      if (isConnectCurrent) {
+                        setOpenStage('ready-to-connect');
+                        return;
+                      }
+
+                      if (openStage === 'ready-to-connect') {
+                        setOpenStage(stageCreation);
+                      }
+                    }}
+                  >
+                    <summary className={styles.stageSummary}>
+                      <span className={styles.stageColorBar} aria-hidden="true" />
+                      <span className={styles.stageProgressColumn} aria-hidden="true">
+                        <span
+                          className={[
+                            styles.stageProgressSegment,
+                            styles.stageProgressSegmentTop,
+                            isConnectTopLit ? styles.stageProgressSegmentLit : ''
+                          ]
+                            .filter(Boolean)
+                            .join(' ')}
+                        />
+                        <span className={styles.stageDot}>5</span>
+                        <span
+                          className={[
+                            styles.stageProgressSegment,
+                            styles.stageProgressSegmentBottom
+                          ]
+                            .filter(Boolean)
+                            .join(' ')}
+                        />
+                      </span>
+                      <span className={styles.stageSummaryCopy}>
+                        <strong>Conectar lógica</strong>
+                        <small>Conecte etapas, riscos e hipóteses.</small>
+                      </span>
+                      <span className={styles.stageConnectIcon} aria-hidden="true">
+                        <ConnectLogicIcon />
+                      </span>
+                      {connectStatus === 'blocked' ? (
+                        <TimelineLockIcon tooltip={connectLockTooltip} boundaryRef={contentRef} />
+                      ) : null}
+                      <TimelineChevron
+                        isOpen={isConnectExpanded}
+                        isActive={connectStatus === 'current' || isConnectExpanded}
+                        isBlocked={connectStatus === 'blocked'}
+                      />
+                    </summary>
+                    <div className={styles.stageBody}>
+                      <p>{STAGE_CREATION_HINTS['ready-to-connect'].help}</p>
+                    </div>
+                  </details>
+                );
+              })()}
             </div>
             <TdmButton
               variant="primary"

@@ -46,6 +46,7 @@ $resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rg
   --tdm-sidebar-width: #{$sidebar-width}
   --tdm-sidebar-gap: 0px
   background: $noir-bg
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
   transition: grid-template-columns 220ms ease
 
 .sidebarOpen
@@ -270,7 +271,7 @@ $resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rg
   height: 2rem
   padding: 0
   border: 0.0625rem solid rgba(255, 255, 255, 0.1)
-  border-radius: 1rem
+  border-radius: 0.5rem
   background: $resend-surface
   box-shadow: $resend-shadow
   cursor: pointer
@@ -291,10 +292,16 @@ $resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rg
     outline-offset: 0.1rem
 
 .sidebarToggleSvg
-  width: 2rem
-  height: 2rem
+  width: 1.125rem
+  height: 1.125rem
   display: block
   filter: none
+
+  path
+    stroke: currentColor
+    stroke-width: 1.5
+    stroke-linecap: round
+    stroke-linejoin: round
 
 .confirmOverlay
   position: absolute
@@ -325,3 +332,99 @@ $resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rg
   justify-content: flex-end
   gap: 0.75rem
   margin-top: 1rem
+
+// BEGIN CANVAS NODE POLISH MICROFIX 09 — REACT FLOW CONTROLS
+// Visual only. Keeps React Flow handlers, icons and animations intact.
+:global(.react-flow__controls)
+  left: 1rem
+  right: auto
+  bottom: 1rem
+  top: auto
+  display: inline-flex
+  flex-direction: column
+  width: 3.25rem
+  z-index: 12
+  border: 0.0625rem solid rgba(255, 255, 255, 0.09)
+  border-radius: 1rem
+  background: linear-gradient(180deg, rgba(16, 17, 22, 0.82) 0%, rgba(8, 9, 12, 0.94) 100%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), 0 0.9rem 1.9rem rgba(0, 0, 0, 0.28)
+  backdrop-filter: blur(0.875rem) saturate(1.03)
+  -webkit-backdrop-filter: blur(0.875rem) saturate(1.03)
+  overflow: hidden
+
+:global(.react-flow__controls-button)
+  width: 3.25rem
+  height: 2.875rem
+  border: 0
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.055)
+  background: transparent
+  color: rgba(231, 234, 242, 0.72)
+  fill: currentColor
+  transition: background 140ms ease, color 140ms ease, opacity 140ms ease
+
+  svg
+    width: 1.125rem
+    height: 1.125rem
+
+  &:hover
+    background: rgba(255, 255, 255, 0.035)
+    color: rgba(248, 249, 252, 0.94)
+
+  &:active
+    background: rgba(255, 255, 255, 0.055)
+    color: rgba(248, 249, 252, 0.98)
+
+:global(.react-flow__controls-button:last-child)
+  border-bottom: 0
+
+:global(.react-flow__panel.react-flow__controls)
+  bottom: 1rem !important
+  left: 1rem !important
+// END CANVAS NODE POLISH MICROFIX 09 — REACT FLOW CONTROLS
+// BEGIN CANVAS CONTROLS ALIGN MICROFIX 11
+// Mantém os controles inferiores como régua visual do dock superior.
+:global(.react-flow__controls)
+  left: 1rem
+  right: auto
+  bottom: 1rem
+  top: auto
+  display: inline-flex
+  flex-direction: column
+  width: auto
+  z-index: 12
+  border: 0.0625rem solid rgba(255, 255, 255, 0.09)
+  border-radius: 0.5rem
+  background: linear-gradient(180deg, rgba(18, 19, 24, 0.88) 0%, rgba(8, 9, 12, 0.9) 100%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), 0 0.75rem 1.5rem rgba(0, 0, 0, 0.28)
+  backdrop-filter: blur(0.4rem) saturate(1.02)
+  -webkit-backdrop-filter: blur(0.4rem) saturate(1.02)
+  overflow: hidden
+
+:global(.react-flow__controls-button)
+  width: 1.75rem
+  height: 1.75rem
+  min-width: 1.75rem
+  min-height: 1.75rem
+  padding: 0
+  border: 0
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.055)
+  border-radius: 0
+  background: transparent
+  color: rgba(190, 193, 204, 0.62)
+  fill: currentColor
+
+  &:hover
+    background: rgba(255, 255, 255, 0.04)
+    color: rgba(248, 248, 250, 0.9)
+
+:global(.react-flow__controls-button:last-child)
+  border-bottom: 0
+
+:global(.react-flow__panel.react-flow__controls)
+  top: auto !important
+  right: auto !important
+  bottom: 1rem !important
+  left: 1rem !important
+  width: auto !important
+  height: auto !important
+// END CANVAS CONTROLS ALIGN MICROFIX 11

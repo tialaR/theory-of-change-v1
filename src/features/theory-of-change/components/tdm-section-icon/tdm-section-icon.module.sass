@@ -1,17 +1,28 @@
 @use '../../../../shared/styles/tokens' as *
 
 .sectionIcon
-  +tdm-section-icon-vars
-  +noir-icon-tile
-  transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  width: 1.125rem
+  height: 1.5rem
+  min-width: 1.125rem
+  flex: 0 0 1.125rem
+  padding: 0
+  border: 0
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+  color: rgb(161, 164, 165)
+  opacity: 1
+  transition: color 180ms ease, opacity 180ms ease
 
   &:hover
-    border-color: $noir-stroke-medium
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1), 0 0.5rem 1rem rgba(0, 0, 0, 0.22)
+    color: rgba(224, 226, 232, 0.92)
 
   svg
-    width: var(--tdm-section-icon-size)
-    height: var(--tdm-section-icon-size)
+    width: 1.125rem
+    height: 1.5rem
     display: block
     overflow: visible
 
@@ -22,8 +33,19 @@
     polygon,
     circle
       stroke: currentColor
-      stroke-width: var(--tdm-section-icon-stroke)
+      stroke-width: 1.5
       stroke-linecap: round
       stroke-linejoin: round
       fill: none
       vector-effect: non-scaling-stroke
+
+// SURGERY 03 — unified experience icon size for /canvas
+.sectionIcon
+  width: 1.35rem
+  height: 1.35rem
+  min-width: 1.35rem
+  flex-basis: 1.35rem
+
+  svg
+    width: 1.35rem
+    height: 1.35rem
