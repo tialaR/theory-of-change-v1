@@ -299,7 +299,7 @@
     background: transparent
 
   &::-webkit-scrollbar-thumb
-    border-radius: 62.4375rem
+    border-radius: 0.75rem
     background: rgba(255, 255, 255, 0.14)
 
 // ─── Cards (redesigned) ──────────────────────────────────────────────────────
@@ -679,7 +679,7 @@
   z-index: 1
   width: 100%
   height: 0.0625rem
-  border-radius: 999rem
+  border-radius: 0.75rem
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12) 18%, rgba(255, 255, 255, 0.16) 50%, rgba(255, 255, 255, 0.12) 82%, transparent)
 
 .progressHeaderInstruction
@@ -824,7 +824,7 @@
     top: 1.4375rem
     bottom: 1.4375rem
     width: 0.0625rem
-    border-radius: 999rem
+    border-radius: 0.75rem
     background: rgba(255, 255, 255, 0.12)
     pointer-events: none
     z-index: 0
@@ -989,7 +989,7 @@
 .stageProgressSegment
   width: 0.0625rem
   height: 100%
-  border-radius: 999rem
+  border-radius: 0.75rem
   background: transparent
   box-shadow: none
   transition: background 220ms ease, box-shadow 220ms ease
@@ -1130,9 +1130,9 @@
 
 .stageblocked
   --stage-bar-opacity: 0.16
-  border-color: color-mix(in srgb, var(--stage-accent) 6%, $noir-stroke-hairline)
-  background: radial-gradient(ellipse 80% 60% at 0% 50%, color-mix(in srgb, var(--stage-accent) 3%, transparent), transparent 55%), linear-gradient(180deg, rgba(27, 28, 32, 0.82), rgba(16, 17, 20, 0.9))
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04), inset 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.28)
+  border-color: rgba(255, 255, 255, 0.06)
+  background: linear-gradient(180deg, rgba(27, 28, 32, 0.82), rgba(16, 17, 20, 0.9))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04)
 
   .stageSummaryCopy strong
     color: rgba(172, 172, 178, 0.68)
@@ -1153,22 +1153,22 @@
     box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.03)
 
   .stageLockIcon
-    color: color-mix(in srgb, var(--stage-accent) 28%, rgba(100, 100, 106, 0.48))
+    color: rgba(128, 128, 134, 0.72)
     border-color: rgba(255, 255, 255, 0.04)
     background: rgba(255, 255, 255, 0.008)
     opacity: 0.68
 
     &:hover,
     &:focus-visible
-      color: color-mix(in srgb, var(--stage-accent) 36%, rgba(128, 128, 134, 0.62))
+      color: rgba(168, 168, 174, 0.86)
       border-color: rgba(255, 255, 255, 0.06)
       background: rgba(255, 255, 255, 0.014)
       opacity: 0.82
 
   &:hover
-    border-color: color-mix(in srgb, var(--stage-accent) 12%, $noir-stroke-soft)
-    background: radial-gradient(ellipse 80% 60% at 0% 50%, color-mix(in srgb, var(--stage-accent) 5%, transparent), transparent 55%), linear-gradient(180deg, rgba(32, 33, 38, 0.78), rgba(21, 22, 26, 0.88))
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05), inset 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.2), 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1)
+    border-color: rgba(255, 255, 255, 0.1)
+    background: linear-gradient(180deg, rgba(32, 33, 38, 0.78), rgba(21, 22, 26, 0.88))
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05)
     --stage-bar-opacity: 0.26
 
     .stageSummaryCopy strong
@@ -1188,9 +1188,9 @@
   &[open],
   &.stageExpanded
     --stage-bar-opacity: 0.22
-    border-color: color-mix(in srgb, var(--stage-accent) 10%, $noir-stroke-soft)
-    background: radial-gradient(ellipse 80% 60% at 0% 50%, color-mix(in srgb, var(--stage-accent) 4%, transparent), transparent 55%), linear-gradient(180deg, rgba(27, 28, 32, 0.8), rgba(16, 17, 20, 0.88))
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04), inset 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.22)
+    border-color: rgba(255, 255, 255, 0.08)
+    background: linear-gradient(180deg, rgba(27, 28, 32, 0.8), rgba(16, 17, 20, 0.88))
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04)
 
     .stageSummaryCopy strong
       color: rgba(180, 180, 186, 0.74)
@@ -1215,8 +1215,8 @@
     pointer-events: auto
     transform: none
     filter: none
-    border-color: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 28%, $noir-stroke-soft)
-    background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--stage-accent, #{$stage-1}) 14%, transparent), transparent 58%), linear-gradient(180deg, rgba(44, 44, 46, 0.82), $noir-surface-cta-neutral)
+    border-color: rgba(255, 255, 255, 0.1)
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)), rgba(16, 17, 22, 0.82)
     box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05)
     opacity: 0.42
 
@@ -1226,8 +1226,8 @@
       transform: none !important
       scale: 1 !important
       translate: 0 !important
-      border-color: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 28%, $noir-stroke-soft) !important
-      background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--stage-accent, #{$stage-1}) 14%, transparent), transparent 58%), linear-gradient(180deg, rgba(44, 44, 46, 0.82), $noir-surface-cta-neutral) !important
+      border-color: rgba(255, 255, 255, 0.1) !important
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)), rgba(16, 17, 22, 0.82) !important
       box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05) !important
       filter: none !important
       opacity: 0.42 !important
@@ -1338,15 +1338,14 @@
 
   &:not(.sidebarAccordionOpen):has(.blockAccordionHeader:hover),
   &:not(.sidebarAccordionOpen):has(.blockAccordionHeader:focus-visible)
-    +sidebar-block-accordion-stage-accent
-    background: radial-gradient(ellipse 100% 58% at 50% 0%, color-mix(in srgb, var(--stage-accent, #{$stage-1}) 4%, transparent), transparent 62%), linear-gradient(180deg, rgba(255, 255, 255, 0.022), rgba(255, 255, 255, 0.008))
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04), 0 0 0.625rem color-mix(in srgb, var(--stage-accent, #{$stage-1}) 3%, transparent)
+    border-color: rgba(255, 255, 255, 0.12)
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012))
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08)
 
   &.sidebarAccordionOpen
-    +sidebar-block-accordion-stage-accent
-    border-color: color-mix(in srgb, var(--stage-accent, #{$stage-1}) 10%, $noir-stroke-hairline)
-    background: radial-gradient(ellipse 115% 88% at 50% 0%, color-mix(in srgb, var(--stage-accent, #{$stage-1}) 7%, transparent), transparent 64%), radial-gradient(ellipse 72% 48% at 100% 100%, color-mix(in srgb, var(--stage-accent, #{$stage-1}) 4%, transparent), transparent 58%), linear-gradient(180deg, color-mix(in srgb, var(--stage-accent, #{$stage-1}) 3%, rgba(30, 31, 35, 0.48)), rgba(20, 21, 25, 0.32))
-    box-shadow: inset 0 0.0625rem 0 color-mix(in srgb, var(--stage-accent, #{$stage-1}) 5%, rgba(255, 255, 255, 0.04)), 0 0 0.75rem color-mix(in srgb, var(--stage-accent, #{$stage-1}) 3%, transparent)
+    border-color: color-mix(in srgb, var(--stage-accent, rgba(255, 255, 255, 0.5)) 12%, rgba(255, 255, 255, 0.1))
+    background: radial-gradient(76% 18% at 50% 0%, rgba(255, 255, 255, 0.1), transparent 72%), linear-gradient(180deg, rgba(22, 23, 28, 0.72) 0%, rgba(13, 14, 18, 0.55) 100%)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1)
 
 .blockFormsPanel .blockAccordionHeader
   min-height: 2.875rem
@@ -2026,7 +2025,7 @@
   width: 0.0625rem
   z-index: 5
   pointer-events: none
-  border-radius: 999rem
+  border-radius: 0.75rem
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.32) 18%, rgba(255, 255, 255, 0.14) 72%, rgba(255, 255, 255, 0.03))
   opacity: 0.88
 
@@ -2038,7 +2037,7 @@
   height: 0.0625rem
   z-index: 5
   pointer-events: none
-  border-radius: 999rem
+  border-radius: 0.75rem
   background: linear-gradient(90deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.34) 22%, rgba(255, 255, 255, 0.42) 50%, rgba(255, 255, 255, 0.34) 78%, rgba(255, 255, 255, 0.04))
   opacity: 0.92
 
@@ -2116,7 +2115,7 @@
   width: clamp(2rem, 32%, 3.25rem)
   height: 0.0625rem
   margin-top: 0.1875rem
-  border-radius: 999rem
+  border-radius: 0.75rem
   background: linear-gradient(90deg, rgba(236, 238, 244, 0.48), rgba(168, 170, 176, 0.14))
   opacity: 0.82
 
@@ -2269,41 +2268,45 @@
   color: currentColor
 
 .sidebarCtaPrimary
-  border-color: color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 28%, $noir-stroke-soft)
-  background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--stage-accent, #{$ds-stage-input}) 14%, transparent), transparent 58%), linear-gradient(180deg, rgba(44, 44, 46, 0.82), $noir-surface-cta-neutral)
-  color: rgba(255, 255, 255, 0.95)
+  border-color: color-mix(in srgb, var(--stage-accent, rgba(255, 255, 255, 0.5)) 24%, rgba(255, 255, 255, 0.1))
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03)), rgba(16, 17, 22, 0.88)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13)
+  color: rgba(248, 248, 250, 0.94)
 
 .sidebarCtaSecondary
-  border-color: $noir-stroke-soft
-  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08), transparent 58%), linear-gradient(180deg, rgba(38, 38, 40, 0.72), $noir-surface-cta-neutral)
+  border-color: rgba(255, 255, 255, 0.12)
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)), rgba(14, 15, 18, 0.88)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08)
+  color: rgba(224, 226, 232, 0.72)
 
 .sidebarCtaGhost
-  border-color: $noir-stroke-hairline
+  border-color: rgba(255, 255, 255, 0.08)
   background: transparent
   box-shadow: none
 
 .sidebarCtaDanger
-  border-color: rgba(255, 107, 139, 0.22)
-  background: rgba(255, 107, 139, 0.055)
-  color: rgba(255, 122, 154, 0.96)
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 107, 139, 0.06)
+  border-color: rgba(251, 113, 133, 0.28)
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)), rgba(14, 15, 18, 0.88)
+  color: rgba(251, 113, 133, 0.92)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
 
   &:hover,
   &:focus-visible
-    border-color: rgba(255, 107, 139, 0.42)
-    color: rgba(255, 132, 164, 1)
-    background: rgba(255, 107, 139, 0.08)
-    box-shadow: 0 0.375rem 0.875rem rgba(0, 0, 0, 0.2), inset 0 0.0625rem 0 rgba(255, 107, 139, 0.08)
+    border-color: rgba(251, 113, 133, 0.4)
+    color: rgba(253, 164, 175, 1)
+    background: rgba(251, 113, 133, 0.08)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
 
 .sidebarCtaStage
-  border-color: color-mix(in srgb, var(--stage-accent) 28%, $noir-stroke-soft)
-  background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--stage-accent) 12%, transparent), transparent 58%), linear-gradient(180deg, rgba(40, 40, 42, 0.78), $noir-surface-cta-neutral)
-  color: rgba(255, 255, 255, 0.95)
+  border-color: color-mix(in srgb, var(--stage-accent, rgba(255, 255, 255, 0.5)) 28%, rgba(255, 255, 255, 0.1))
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03)), rgba(16, 17, 22, 0.88)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13)
+  color: rgba(248, 248, 250, 0.94)
 
   &:hover,
   &:focus-visible
-    border-color: color-mix(in srgb, var(--stage-accent) 42%, $noir-stroke-medium)
-    background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--stage-accent) 18%, transparent), transparent 58%), linear-gradient(180deg, rgba(46, 46, 48, 0.84), rgba(26, 26, 28, 0.96))
+    border-color: color-mix(in srgb, var(--stage-accent, rgba(255, 255, 255, 0.5)) 40%, rgba(255, 255, 255, 0.14))
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)), rgba(18, 19, 24, 0.9)
 
 .stageActionCard
   gap: 0.65rem
@@ -3036,17 +3039,40 @@
   overflow-x: hidden
 
 
-// ─── Resend Surface — Coach Inspector ────────────────────────────────────────
+// ─── Resend Command Canvas — Coach Inspector atoms ───────────────────────────
 
-$noir-bg: #050506
-$surface: rgba(16, 17, 21, 0.84)
-$surface-strong: rgba(22, 23, 28, 0.92)
-$border-soft: rgba(255, 255, 255, 0.1)
-$border-strong: rgba(255, 255, 255, 0.16)
-$text: rgba(248, 248, 250, 0.94)
-$text-muted: rgba(210, 212, 220, 0.62)
-$text-faint: rgba(210, 212, 220, 0.42)
+$noir-0: #050506
+$noir-1: #08090c
+$noir-2: #101116
+$noir-3: #15161c
+
+$surface-soft: rgba(16, 17, 22, 0.72)
+$surface-mid: rgba(20, 21, 27, 0.82)
+$surface-strong: rgba(24, 25, 31, 0.92)
+
+$border-soft: rgba(255, 255, 255, 0.08)
+$border-mid: rgba(255, 255, 255, 0.12)
+$border-strong: rgba(255, 255, 255, 0.18)
+
+$text-main: rgba(248, 248, 250, 0.94)
+$text-soft: rgba(224, 226, 232, 0.72)
+$text-muted: rgba(190, 193, 204, 0.54)
+$text-faint: rgba(180, 184, 194, 0.38)
+
+$white-light: rgba(255, 255, 255, 0.16)
+$white-light-soft: rgba(255, 255, 255, 0.08)
+
 $stage-inputs: #a78bfa
+$stage-activities: #60a5fa
+$stage-products: #f6b35d
+$stage-results: #5ee0b5
+$danger: #fb7185
+
+$noir-bg: $noir-0
+$surface: $surface-soft
+$text: $text-main
+$resend-surface: radial-gradient(76% 18% at 50% 0%, rgba(255, 255, 255, 0.13), transparent 72%), linear-gradient(180deg, rgba(22, 23, 28, 0.88) 0%, rgba(13, 14, 18, 0.78) 48%, rgba(5, 5, 7, 0.96) 100%)
+$resend-field: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015)), rgba(9, 10, 13, 0.72)
 
 .surface
   background: radial-gradient(72% 20% at 50% 0%, rgba(255, 255, 255, 0.1), transparent 72%), linear-gradient(180deg, rgba(21, 22, 26, 0.96) 0%, rgba(12, 13, 16, 0.98) 48%, rgba(5, 5, 7, 1) 100%)
@@ -3323,11 +3349,20 @@ $stage-inputs: #a78bfa
 .blockFormsPanel :global(textarea)
   min-height: 2.1rem
   padding: 0.45rem 1.75rem 0.45rem 0.65rem
-  border-radius: 0.75rem
+  border-radius: 0.875rem
   font-size: 0.75rem
-  background: rgba(14, 15, 18, 0.92) !important
-  border-color: $border-soft !important
-  box-shadow: none !important
+  background: $resend-field !important
+  border-color: rgba(255, 255, 255, 0.1) !important
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08) !important
+  color: $text-main !important
+
+  &::placeholder
+    color: rgba(190, 193, 204, 0.46) !important
+
+  &:focus,
+  &:focus-visible
+    border-color: color-mix(in srgb, var(--stage-accent, #ffffff) 28%, rgba(255, 255, 255, 0.12)) !important
+    box-shadow: 0 0 0 0.0625rem color-mix(in srgb, var(--stage-accent, #ffffff) 10%, transparent) !important
 
 .blockFormsPanel :global(.formTextarea),
 .blockFormsPanel :global(textarea)
@@ -3337,6 +3372,7 @@ $stage-inputs: #a78bfa
 .blockFormsPanel :global(.fieldLabel)
   font-size: 0.52rem
   letter-spacing: 0.06em
+  color: $text-muted
 
 // Quick shortcuts — two discrete rows, Exemplos + Guia only
 .quickShortcutsCard
@@ -3544,10 +3580,14 @@ $stage-inputs: #a78bfa
 
 .finalResultCta
   min-height: 2.1rem !important
-  border-radius: 0.85rem !important
+  border-radius: 0.875rem !important
   font-size: 0.72rem !important
   letter-spacing: 0.01em !important
   text-transform: none !important
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03)), rgba(16, 17, 22, 0.88) !important
+  border-color: rgba(255, 255, 255, 0.14) !important
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13) !important
+  color: $text-main !important
 
 .finalResultHelper
   font-size: 0.58rem
@@ -3556,14 +3596,14 @@ $stage-inputs: #a78bfa
 .workflowAdvanceButton
   margin-top: 0.28rem
   min-height: 2.1rem !important
-  border-radius: 0.85rem !important
+  border-radius: 0.875rem !important
   font-size: 0.72rem !important
   letter-spacing: 0.01em !important
   text-transform: none !important
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04)) !important
-  border-color: color-mix(in srgb, var(--stage-accent, #{$stage-inputs}) 42%, rgba(255, 255, 255, 0.1)) !important
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.14) !important
-  color: $text !important
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03)), rgba(16, 17, 22, 0.88) !important
+  border-color: color-mix(in srgb, var(--stage-accent, #{$stage-inputs}) 28%, rgba(255, 255, 255, 0.1)) !important
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13) !important
+  color: $text-main !important
 
 .heroFormShell
   :global(.formInput),
@@ -3572,67 +3612,99 @@ $stage-inputs: #a78bfa
   :global(textarea)
     min-height: 2.1rem
     padding: 0.45rem 1.75rem 0.45rem 0.65rem
-    border-radius: 0.75rem
+    border-radius: 0.875rem
     font-size: 0.75rem
-    background: rgba(14, 15, 18, 0.92) !important
-    border-color: $border-soft !important
-    box-shadow: none !important
+    background: $resend-field !important
+    border-color: rgba(255, 255, 255, 0.1) !important
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08) !important
+    color: $text-main !important
+
+    &::placeholder
+      color: rgba(190, 193, 204, 0.46) !important
+
+    &:focus,
+    &:focus-visible
+      border-color: rgba(255, 255, 255, 0.22) !important
+      box-shadow: 0 0 0 0.0625rem rgba(255, 255, 255, 0.1) !important
 
   :global(.fieldLabel),
   :global(label)
     font-size: 0.52rem
     letter-spacing: 0.06em
+    color: $text-muted
 
+// Stage-contextual primary CTAs only — soft stage border, neutral fill
 .sidebarCtaPrimary,
 .sidebarCtaStage,
-.blockFormsPanel :global(button),
-.stageActionCard :global(button),
-.progressCard :global(button),
-.resultCard :global(button)
-  border-radius: 0.85rem
+.workflowAdvanceButton,
+.stageActionCard :global(button)
+  border-radius: 0.875rem
   text-transform: none
   letter-spacing: 0.01em
   min-height: 2.1rem
   font-size: 0.72rem
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04))
-  border-color: color-mix(in srgb, var(--stage-accent, #{$stage-inputs}) 38%, rgba(255, 255, 255, 0.1))
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.14)
-  color: $text
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03)), rgba(16, 17, 22, 0.88)
+  border-color: color-mix(in srgb, var(--stage-accent, #{$stage-inputs}) 28%, rgba(255, 255, 255, 0.1))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13)
+  color: $text-main
 
   &:hover:not(:disabled),
   &:focus-visible:not(:disabled)
     transform: translateY(-0.0625rem)
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05))
-    border-color: color-mix(in srgb, var(--stage-accent, #{$stage-inputs}) 48%, rgba(255, 255, 255, 0.14))
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.16)
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)), rgba(18, 19, 24, 0.9)
+    border-color: color-mix(in srgb, var(--stage-accent, #{$stage-inputs}) 40%, rgba(255, 255, 255, 0.14))
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.15)
 
+// Neutral CTAs — no stage color
 .sidebarCtaSecondary,
 .sidebarCtaGhost
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02))
-  border-color: rgba(255, 255, 255, 0.1)
+  border-radius: 0.875rem
+  text-transform: none
+  letter-spacing: 0.01em
+  min-height: 2.1rem
+  font-size: 0.72rem
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)), rgba(14, 15, 18, 0.88)
+  border-color: rgba(255, 255, 255, 0.12)
   box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08)
+  color: $text-soft
+
+  &:hover:not(:disabled),
+  &:focus-visible:not(:disabled)
+    transform: translateY(-0.0625rem)
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)), rgba(16, 17, 22, 0.9)
+    border-color: rgba(255, 255, 255, 0.18)
+    color: $text-main
 
 .sidebarCtaDanger
-  background: transparent
-  border-color: rgba(255, 255, 255, 0.08)
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)), rgba(14, 15, 18, 0.88)
+  border-color: rgba(251, 113, 133, 0.28)
   color: rgba(251, 113, 133, 0.92)
-  box-shadow: none
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
 
   &:hover,
   &:focus-visible
-    background: rgba(251, 113, 133, 0.06)
-    border-color: rgba(251, 113, 133, 0.28)
-    color: rgba(255, 140, 160, 1)
-    box-shadow: none
+    background: rgba(251, 113, 133, 0.08)
+    border-color: rgba(251, 113, 133, 0.4)
+    color: rgba(253, 164, 175, 1)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
 
-.progressCard :global(button)
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04))
-  border-color: color-mix(in srgb, var(--stage-accent, #{$stage-inputs}) 42%, rgba(255, 255, 255, 0.1))
+// Result / shortcuts: always neutral (no stage bleed)
+.resultCard :global(button),
+.quickShortcutsCard :global(button)
+  border-color: rgba(255, 255, 255, 0.12) !important
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)), rgba(14, 15, 18, 0.88) !important
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08) !important
+  color: $text-soft !important
+
+.resultCard .finalResultCta
+  border-color: rgba(255, 255, 255, 0.14) !important
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03)), rgba(16, 17, 22, 0.88) !important
+  color: $text-main !important
 
 .resultCardBlocked :global(button)
-  background: linear-gradient(180deg, rgba(26, 27, 32, 0.88), rgba(14, 15, 18, 0.92))
-  border-color: rgba(255, 255, 255, 0.1)
-  color: rgba(210, 214, 224, 0.78)
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)), rgba(14, 15, 18, 0.88) !important
+  border-color: rgba(255, 255, 255, 0.1) !important
+  color: $text-muted !important
 
 .contextActions
   gap: 0.4rem
@@ -3640,13 +3712,24 @@ $stage-inputs: #a78bfa
 .markerBlock
   gap: 0.45rem
   padding: 0.55rem 0
+  border-color: rgba(255, 255, 255, 0.08)
+  background: transparent
+  box-shadow: none
 
   :global(.formInput),
   :global(input),
   :global(textarea)
     min-height: 2.1rem
-    border-radius: 0.75rem
-    box-shadow: none !important
+    border-radius: 0.875rem
+    background: $resend-field !important
+    border-color: rgba(255, 255, 255, 0.1) !important
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08) !important
+    color: $text-main !important
+
+    &:focus,
+    &:focus-visible
+      border-color: rgba(255, 255, 255, 0.22) !important
+      box-shadow: 0 0 0 0.0625rem rgba(255, 255, 255, 0.1) !important
 
 .stagecurrent
   border-color: rgba(255, 255, 255, 0.08)

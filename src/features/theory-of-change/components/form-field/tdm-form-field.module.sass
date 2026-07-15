@@ -1,5 +1,31 @@
 @use '../../../../shared/styles/tokens' as *
 
+// Resend Command Canvas — local atoms
+$noir-0: #050506
+$noir-1: #08090c
+$noir-2: #101116
+$noir-3: #15161c
+
+$surface-soft: rgba(16, 17, 22, 0.72)
+$surface-mid: rgba(20, 21, 27, 0.82)
+$surface-strong: rgba(24, 25, 31, 0.92)
+
+$border-soft: rgba(255, 255, 255, 0.08)
+$border-mid: rgba(255, 255, 255, 0.12)
+$border-strong: rgba(255, 255, 255, 0.18)
+
+$text-main: rgba(248, 248, 250, 0.94)
+$text-soft: rgba(224, 226, 232, 0.72)
+$text-muted: rgba(190, 193, 204, 0.54)
+$text-faint: rgba(180, 184, 194, 0.38)
+
+$white-light: rgba(255, 255, 255, 0.16)
+$white-light-soft: rgba(255, 255, 255, 0.08)
+
+$danger: #fb7185
+
+$resend-field: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015)), rgba(9, 10, 13, 0.72)
+
 .form
   display: grid
   gap: 0.5rem
@@ -7,11 +33,11 @@
 .field
   display: grid
   gap: 0.32rem
-  color: $color-text-muted
+  color: $text-muted
   font-size: 0.72rem
 
 .fieldLabel
-  color: rgba(176, 180, 188, 0.64)
+  color: $text-muted
   font-size: 0.5rem
   font-weight: 600
   letter-spacing: 0.06em
@@ -26,29 +52,31 @@
   width: 100%
   +ds-editable-field
   border: 0.0625rem solid rgba(255, 255, 255, 0.1)
-  border-radius: 0.75rem
-  background: rgba(14, 15, 18, 0.92)
-  box-shadow: none
+  border-radius: 0.875rem
+  background: $resend-field
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08)
   padding: 0.45rem 1.75rem 0.45rem 0.65rem
-  color: rgba(248, 248, 250, 0.94)
+  color: $text-main
   font: inherit
   font-size: 0.75rem
   line-height: 1.4
   min-height: 2.1rem
 
   &::placeholder
-    color: rgba(168, 172, 184, 0.42)
+    color: rgba(190, 193, 204, 0.46)
 
   &:hover:not(:focus):not(:focus-visible)
-    border-color: rgba(255, 255, 255, 0.14)
-    background: rgba(16, 17, 22, 0.96)
-    box-shadow: none
+    border-color: $border-mid
+    background: $resend-field
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1)
 
   &:focus,
   &:focus-visible
-    border-color: color-mix(in srgb, var(--stage-accent, #a78bfa) 36%, rgba(255, 255, 255, 0.12))
-    background: rgba(16, 17, 22, 0.96)
-    box-shadow: 0 0 0 0.0625rem color-mix(in srgb, var(--stage-accent, #a78bfa) 12%, transparent)
+    // Neutral white/silver focus by default (no purple fallback).
+    // Stage-scoped parents may override with --stage-accent when the field is stage-tied.
+    border-color: color-mix(in srgb, var(--stage-accent, #ffffff) 22%, rgba(255, 255, 255, 0.14))
+    background: $resend-field
+    box-shadow: 0 0 0 0.0625rem color-mix(in srgb, var(--stage-accent, #ffffff) 8%, transparent)
     outline: none
 
 .formTextarea
@@ -67,9 +95,9 @@
   height: 1.15rem
   padding: 0
   border: 0
-  border-radius: 0.35rem
+  border-radius: 0.75rem
   background: transparent
-  color: rgba(148, 148, 154, 0.68)
+  color: $text-muted
   cursor: pointer
   transition: color 160ms ease, background 160ms ease
 
@@ -79,8 +107,8 @@
 
   &:hover,
   &:focus-visible
-    color: rgba(220, 220, 226, 0.9)
-    background: rgba(255, 255, 255, 0.05)
+    color: $text-soft
+    background: $white-light-soft
     outline: none
 
 .fieldControl textarea + .clearFieldButton
@@ -90,9 +118,9 @@
 .errorMessage
   margin: 0
   padding: 0.5rem 0.65rem
-  border: 0.0625rem solid rgba(244, 114, 182, 0.24)
-  border-radius: 0.75rem
-  background: rgba(244, 114, 182, 0.05)
-  color: #fecdd3
+  border: 0.0625rem solid rgba(251, 113, 133, 0.24)
+  border-radius: 0.875rem
+  background: rgba(251, 113, 133, 0.05)
+  color: rgba(254, 205, 211, 0.96)
   font-size: 0.7rem
   line-height: 1.4

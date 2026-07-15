@@ -4,45 +4,67 @@ $node-compact-width: $node-compact-width-fluid
 $node-compact-min-height: $node-compact-min-height-fluid
 $node-compact-padding-y: $node-compact-padding-y-fluid
 $node-compact-padding-x: $node-compact-padding-x-fluid
-$node-compact-radius: clamp(0.44rem, 0.48vw, 0.56rem)
-$node-toolbar-radius: clamp(0.36rem, 0.4vw, 0.44rem)
-$node-edit-radius-diamond: clamp(0.44rem, 0.48vw, 0.56rem)
-$node-field-radius-diamond: clamp(0.38rem, 0.42vw, 0.5rem)
-$node-button-radius-diamond: clamp(0.38rem, 0.42vw, 0.5rem)
+$node-compact-radius: 1rem
+$node-toolbar-radius: 0.875rem
+$node-edit-radius-diamond: 1rem
+$node-field-radius-diamond: 0.875rem
+$node-button-radius-diamond: 0.875rem
 $node-accent-bar-width: 0.125rem
 $node-accent-blade-width: 0.35rem
 $node-toolbar-gap: 1rem
 $inline-editor-width: $node-edit-width
 
-// Editorial Glass Node — stage accents (functional only)
+// Resend Command Canvas — local atoms
+$noir-0: #050506
+$noir-1: #08090c
+$noir-2: #101116
+$noir-3: #15161c
+
+$surface-soft: rgba(16, 17, 22, 0.72)
+$surface-mid: rgba(20, 21, 27, 0.82)
+$surface-strong: rgba(24, 25, 31, 0.92)
+
+$border-soft: rgba(255, 255, 255, 0.08)
+$border-mid: rgba(255, 255, 255, 0.12)
+$border-strong: rgba(255, 255, 255, 0.18)
+
+$text-main: rgba(248, 248, 250, 0.94)
+$text-soft: rgba(224, 226, 232, 0.72)
+$text-muted: rgba(190, 193, 204, 0.54)
+$text-faint: rgba(180, 184, 194, 0.38)
+
+$white-light: rgba(255, 255, 255, 0.16)
+$white-light-soft: rgba(255, 255, 255, 0.08)
+
 $stage-inputs: #a78bfa
 $stage-activities: #60a5fa
 $stage-products: #f6b35d
 $stage-results: #5ee0b5
+$danger: #fb7185
+
+$resend-surface: radial-gradient(76% 18% at 50% 0%, rgba(255, 255, 255, 0.13), transparent 72%), linear-gradient(180deg, rgba(22, 23, 28, 0.88) 0%, rgba(13, 14, 18, 0.78) 48%, rgba(5, 5, 7, 0.96) 100%)
+$resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rgba(0, 0, 0, 0.3)
+$resend-field: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015)), rgba(9, 10, 13, 0.72)
 
 $node-stage-input-accent: $stage-inputs
-$node-stage-input-soft: rgba(167, 139, 250, 0.06)
-$node-stage-input-haze: rgba(167, 139, 250, 0.08)
+$node-stage-input-soft: rgba(167, 139, 250, 0.04)
+$node-stage-input-haze: rgba(167, 139, 250, 0.05)
 $node-stage-input-line: rgba(167, 139, 250, 0.18)
-$node-stage-input-glow: rgba(167, 139, 250, 0.1)
 
 $node-stage-activity-accent: $stage-activities
-$node-stage-activity-soft: rgba(96, 165, 250, 0.06)
-$node-stage-activity-haze: rgba(96, 165, 250, 0.08)
+$node-stage-activity-soft: rgba(96, 165, 250, 0.04)
+$node-stage-activity-haze: rgba(96, 165, 250, 0.05)
 $node-stage-activity-line: rgba(96, 165, 250, 0.18)
-$node-stage-activity-glow: rgba(96, 165, 250, 0.1)
 
 $node-stage-output-accent: $stage-products
-$node-stage-output-soft: rgba(246, 179, 93, 0.06)
-$node-stage-output-haze: rgba(246, 179, 93, 0.08)
+$node-stage-output-soft: rgba(246, 179, 93, 0.04)
+$node-stage-output-haze: rgba(246, 179, 93, 0.05)
 $node-stage-output-line: rgba(246, 179, 93, 0.18)
-$node-stage-output-glow: rgba(246, 179, 93, 0.1)
 
 $node-stage-outcome-accent: $stage-results
-$node-stage-outcome-soft: rgba(94, 224, 181, 0.06)
-$node-stage-outcome-haze: rgba(94, 224, 181, 0.08)
+$node-stage-outcome-soft: rgba(94, 224, 181, 0.04)
+$node-stage-outcome-haze: rgba(94, 224, 181, 0.05)
 $node-stage-outcome-line: rgba(94, 224, 181, 0.18)
-$node-stage-outcome-glow: rgba(94, 224, 181, 0.1)
 
 .nodeWrapper,
 .node
@@ -61,8 +83,8 @@ $node-stage-outcome-glow: rgba(94, 224, 181, 0.1)
   padding: $node-compact-padding-y $node-compact-padding-x
   border: 0.0625rem solid rgba(255, 255, 255, 0.1)
   border-radius: $node-compact-radius
-  background: radial-gradient(72% 20% at 50% 0%, rgba(255, 255, 255, 0.1), transparent 72%), linear-gradient(180deg, rgba(21, 22, 26, 0.9) 0%, rgba(12, 13, 16, 0.86) 48%, rgba(5, 5, 7, 0.94) 100%)
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 0.45rem 1rem rgba(0, 0, 0, 0.22)
+  background: $resend-surface
+  box-shadow: $resend-shadow
   backdrop-filter: blur(0.45rem) saturate(1.02)
   -webkit-backdrop-filter: blur(0.45rem) saturate(1.02)
   font-family: $ds-font-family
@@ -94,18 +116,18 @@ $node-stage-outcome-glow: rgba(94, 224, 181, 0.1)
     opacity: 0.72
 
   &:hover:not(.editing)
-    border-color: rgba(255, 255, 255, 0.15)
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.14), 0 0.5rem 1.1rem rgba(0, 0, 0, 0.24)
+    border-color: $border-mid
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.14), 0 1.25rem 3rem rgba(0, 0, 0, 0.32)
     transform: translateY(-0.0625rem)
 
 .selected
   z-index: 20
-  border-color: color-mix(in srgb, var(--node-accent, #{$stage-inputs}) 22%, rgba(255, 255, 255, 0.14))
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.14), 0 0.5rem 1.15rem rgba(0, 0, 0, 0.24), 0 0 0 0.0625rem color-mix(in srgb, var(--node-accent, #{$stage-inputs}) 10%, transparent)
+  border-color: color-mix(in srgb, var(--node-accent, #{$stage-inputs}) 18%, rgba(255, 255, 255, 0.14))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.14), 0 1.25rem 3rem rgba(0, 0, 0, 0.3)
 
 .toolbarOpen:not(.editing)
-  border-color: color-mix(in srgb, var(--node-accent, #{$stage-inputs}) 18%, rgba(255, 255, 255, 0.14))
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12), 0 0.45rem 1.05rem rgba(0, 0, 0, 0.22)
+  border-color: $border-mid
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rgba(0, 0, 0, 0.3)
 
 .editing
   width: $inline-editor-width
@@ -113,9 +135,9 @@ $node-stage-outcome-glow: rgba(94, 224, 181, 0.1)
   max-width: $inline-editor-width
   padding: 0
   overflow: visible
-  border-color: color-mix(in srgb, var(--node-accent, #{$stage-inputs}) 20%, rgba(255, 255, 255, 0.12))
-  background: radial-gradient(72% 20% at 50% 0%, rgba(255, 255, 255, 0.08), transparent 72%), linear-gradient(180deg, rgba(21, 22, 26, 0.96) 0%, rgba(12, 13, 16, 0.98) 100%)
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12), 0 0.7rem 1.5rem rgba(0, 0, 0, 0.26)
+  border-color: color-mix(in srgb, var(--node-accent, #{$stage-inputs}) 16%, rgba(255, 255, 255, 0.12))
+  background: $resend-surface
+  box-shadow: $resend-shadow
 
 :global(.react-flow__node.dragging) .node:not(.editing)
   border-color: rgba(255, 255, 255, 0.16)
@@ -212,26 +234,26 @@ $node-stage-outcome-glow: rgba(94, 224, 181, 0.1)
   +ds-editable-field
   border: 0.0625rem solid rgba(255, 255, 255, 0.1)
   border-radius: $node-field-radius-diamond
-  background: #14151a
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04)
-  color: rgba(248, 248, 250, 0.96)
+  background: $resend-field
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08)
+  color: $text-main
   font-size: clamp(0.76rem, 0.8vw, 0.86rem)
   font-weight: 400
   line-height: 1.45
 
   &::placeholder
-    color: rgba(168, 172, 184, 0.48)
+    color: rgba(190, 193, 204, 0.46)
 
   &:hover:not(:focus):not(:focus-visible)
-    border-color: rgba(255, 255, 255, 0.14)
-    background: #16171d
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05)
+    border-color: $border-mid
+    background: $resend-field
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1)
 
   &:focus,
   &:focus-visible
-    border-color: color-mix(in srgb, var(--node-accent, #{$stage-inputs}) 48%, rgba(255, 255, 255, 0.12))
-    background: #16171d
-    box-shadow: 0 0 0 0.0625rem color-mix(in srgb, var(--node-accent, #{$stage-inputs}) 18%, transparent)
+    border-color: color-mix(in srgb, var(--node-accent, #{$stage-inputs}) 36%, rgba(255, 255, 255, 0.12))
+    background: $resend-field
+    box-shadow: 0 0 0 0.0625rem color-mix(in srgb, var(--node-accent, #{$stage-inputs}) 12%, transparent)
     outline: none
 
 .nodeEditInput
@@ -297,39 +319,36 @@ $node-stage-outcome-glow: rgba(94, 224, 181, 0.1)
   min-width: 0
   min-height: $node-edit-button-height
   padding: 0.58rem 0.72rem
-  border-radius: $node-button-radius-diamond
+  border-radius: 0.875rem
   font-size: clamp(0.64rem, 0.68vw, 0.74rem)
   font-weight: 600
-  letter-spacing: 0.055em
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), 0 0.35rem 0.9rem rgba(0, 0, 0, 0.2)
+  letter-spacing: 0.02em
+  text-transform: none
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13)
 
 .nodeEditActionButtonPrimary
-  border-color: color-mix(in srgb, var(--node-accent, #{$stage-inputs}) 36%, rgba(255, 255, 255, 0.1))
-  background: color-mix(in srgb, var(--node-accent, #{$stage-inputs}) 78%, #111217)
-  color: rgba(255, 255, 255, 0.96)
-  text-transform: none
-  letter-spacing: 0.02em
-  border-radius: 0.75rem
+  border-color: color-mix(in srgb, var(--node-accent, #{$stage-inputs}) 28%, rgba(255, 255, 255, 0.1))
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03)), rgba(16, 17, 22, 0.88)
+  color: $text-main
 
   &:hover:not(:disabled),
   &:focus-visible:not(:disabled)
-    border-color: color-mix(in srgb, var(--node-accent, #{$stage-inputs}) 48%, rgba(255, 255, 255, 0.14))
-    background: color-mix(in srgb, var(--node-accent, #{$stage-inputs}) 86%, #111217)
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.14), 0 0.35rem 0.85rem rgba(0, 0, 0, 0.2)
+    border-color: color-mix(in srgb, var(--node-accent, #{$stage-inputs}) 40%, rgba(255, 255, 255, 0.14))
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)), rgba(18, 19, 24, 0.9)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.15)
+    transform: translateY(-0.0625rem)
 
 .nodeEditActionButtonSecondary
-  border-color: rgba(255, 255, 255, 0.1)
-  background: linear-gradient(180deg, rgba(26, 27, 32, 0.9), rgba(14, 15, 18, 0.94))
-  color: rgba(228, 230, 238, 0.86)
-  text-transform: none
-  letter-spacing: 0.02em
-  border-radius: 0.75rem
+  border-color: $border-mid
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)), rgba(14, 15, 18, 0.88)
+  color: $text-soft
 
   &:hover:not(:disabled),
   &:focus-visible:not(:disabled)
-    border-color: rgba(255, 255, 255, 0.14)
-    background: linear-gradient(180deg, rgba(30, 31, 36, 0.94), rgba(18, 19, 22, 0.96))
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1), 0 0.3rem 0.75rem rgba(0, 0, 0, 0.18)
+    border-color: $border-strong
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)), rgba(16, 17, 22, 0.9)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1)
+    transform: translateY(-0.0625rem)
 
 .title
   position: relative
@@ -395,34 +414,30 @@ $node-stage-outcome-glow: rgba(94, 224, 181, 0.1)
   --node-accent-soft: #{$node-stage-input-soft}
   --node-accent-haze: #{$node-stage-input-haze}
   --node-border: #{$node-stage-input-line}
-  --node-glow: #{$node-stage-input-glow}
 
 .activity
   --node-accent: #{$node-stage-activity-accent}
   --node-accent-soft: #{$node-stage-activity-soft}
   --node-accent-haze: #{$node-stage-activity-haze}
   --node-border: #{$node-stage-activity-line}
-  --node-glow: #{$node-stage-activity-glow}
 
 .output
   --node-accent: #{$node-stage-output-accent}
   --node-accent-soft: #{$node-stage-output-soft}
   --node-accent-haze: #{$node-stage-output-haze}
   --node-border: #{$node-stage-output-line}
-  --node-glow: #{$node-stage-output-glow}
 
 .outcome
   --node-accent: #{$node-stage-outcome-accent}
   --node-accent-soft: #{$node-stage-outcome-soft}
   --node-accent-haze: #{$node-stage-outcome-haze}
   --node-border: #{$node-stage-outcome-line}
-  --node-glow: #{$node-stage-outcome-glow}
 
 .nodeToolbar
   position: absolute
   top: calc(-2rem - #{$node-toolbar-gap})
   left: 50%
-  z-index: 999
+  z-index: 40
   display: flex
   align-items: stretch
   width: max-content
@@ -431,9 +446,9 @@ $node-stage-outcome-glow: rgba(94, 224, 181, 0.1)
   overflow: hidden
   transform: translateX(-50%)
   border: 0.0625rem solid rgba(255, 255, 255, 0.1)
-  border-radius: 0.85rem
-  background: radial-gradient(72% 20% at 50% 0%, rgba(255, 255, 255, 0.08), transparent 72%), linear-gradient(180deg, rgba(21, 22, 26, 0.92), rgba(12, 13, 16, 0.94))
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12), 0 0.45rem 1.1rem rgba(0, 0, 0, 0.26)
+  border-radius: 1rem
+  background: $resend-surface
+  box-shadow: $resend-shadow
   backdrop-filter: blur(0.55rem) saturate(1.02)
   -webkit-backdrop-filter: blur(0.55rem) saturate(1.02)
   pointer-events: auto
@@ -474,7 +489,7 @@ $node-stage-outcome-glow: rgba(94, 224, 181, 0.1)
   border: 0
   border-radius: 0
   background: none
-  color: rgba(232, 234, 242, 0.86)
+  color: $text-soft
   font-size: clamp(0.56rem, 0.6vw, 0.64rem)
   font-weight: 520
   line-height: 1
@@ -485,8 +500,8 @@ $node-stage-outcome-glow: rgba(94, 224, 181, 0.1)
   transition: color 160ms ease, background 160ms ease, opacity 160ms ease
 
   &:hover
-    background: rgba(255, 255, 255, 0.05)
-    color: rgba(255, 255, 255, 0.96)
+    background: $white-light-soft
+    color: $text-main
 
   &:active
     opacity: 0.88
@@ -496,11 +511,12 @@ $node-stage-outcome-glow: rgba(94, 224, 181, 0.1)
     outline-offset: -0.0625rem
 
 .nodeToolbarButtonDanger
-  color: #fb7185
+  color: $danger
   background: transparent
+  border-color: transparent
 
   &:hover
-    background: transparent
+    background: rgba(251, 113, 133, 0.06)
     color: #fda4af
     opacity: 1
 
@@ -517,15 +533,14 @@ $node-stage-outcome-glow: rgba(94, 224, 181, 0.1)
   width: clamp(0.76rem, 0.82vw, 0.88rem)
   height: clamp(0.76rem, 0.82vw, 0.88rem)
   flex: 0 0 auto
-  color: rgba(196, 200, 210, 0.72)
-  transition: color 160ms ease, transform 160ms ease
+  color: $text-muted
+  transition: color 160ms ease
 
 .nodeToolbarButton:hover .nodeToolbarIcon
   color: currentColor
-  transform: translateY(-0.03125rem)
 
 .nodeToolbarButtonDanger .nodeToolbarIcon
-  color: #fb7185
+  color: $danger
 
 .nodeToolbarSvg,
 .nodeToolbarSvgClose
