@@ -10,6 +10,7 @@ import {
   type ReactNode,
   type SyntheticEvent
 } from 'react';
+import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
 import { TDM_STAGE_LABELS } from '../../domain/tdm-stages';
 import type { TdmNode as TdmNodeModel, TdmNodeDraft } from '../../domain/tdm-types';
 import { TdmBlockFormFields } from '../form-field/tdm-form-field';
@@ -237,8 +238,9 @@ export const TdmNode = memo(function TdmNode({ id, data, selected }: NodeProps<T
           </div>
           {errorMessage ? <p className={styles.nodeEditErrorMessage}>{errorMessage}</p> : null}
           <div className={styles.nodeEditActions}>
-            <button
+            <TdmButton
               type="button"
+              variant="primary"
               className={[styles.nodeEditActionButton, styles.nodeEditActionButtonPrimary, 'nodrag', 'nopan'].join(' ')}
               onPointerDown={(event) => event.stopPropagation()}
               onMouseDown={(event) => event.stopPropagation()}
@@ -259,9 +261,10 @@ export const TdmNode = memo(function TdmNode({ id, data, selected }: NodeProps<T
               }}
             >
               SALVAR
-            </button>
-            <button
+            </TdmButton>
+            <TdmButton
               type="button"
+              variant="secondary"
               className={[styles.nodeEditActionButton, styles.nodeEditActionButtonSecondary, 'nodrag', 'nopan'].join(' ')}
               onPointerDown={(event) => event.stopPropagation()}
               onMouseDown={(event) => event.stopPropagation()}
@@ -271,7 +274,7 @@ export const TdmNode = memo(function TdmNode({ id, data, selected }: NodeProps<T
               }}
             >
               FECHAR
-            </button>
+            </TdmButton>
           </div>
         </div>
       ) : (

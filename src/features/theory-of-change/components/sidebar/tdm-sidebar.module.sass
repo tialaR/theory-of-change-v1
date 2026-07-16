@@ -2502,8 +2502,8 @@
 
 .canvasOrganizationContent
   display: grid
-  gap: 0.625rem
-  padding: 0 $sidebar-card-padding 0.8125rem
+  gap: 0.5rem
+  padding: 0.125rem 0 0.875rem
   visibility: visible
   opacity: 1
 
@@ -4247,7 +4247,8 @@ $skin-border: rgba(255, 255, 255, 0.1)
   align-items: center
 
 .canvasOrganizationContent
-  padding-top: 1.5rem
+  padding-top: 0.125rem
+  padding-bottom: 0.875rem
 
 // Hero: a top-weighted rim that dissolves before the lower sides and bottom.
 .heroCard
@@ -5486,7 +5487,8 @@ $skin-border: rgba(255, 255, 255, 0.1)
 
 .canvasOrganizationContent,
 .quickShortcutsContent
-  padding-top: 1.5rem
+  padding-top: 0.125rem
+  padding-bottom: 0.875rem
 
 .quickShortcutsCard,
 .quickShortcutsHeader
@@ -5698,15 +5700,24 @@ $skin-border: rgba(255, 255, 255, 0.1)
 
 .canvasOrganizationContent,
 .quickShortcutsContent
-  padding-top: 0.25rem
-  padding-bottom: 0.25rem
+  padding-top: 0.125rem
+  padding-bottom: 0.875rem
   background: transparent !important
+
+.canvasOrganizationContent
+  display: grid
+  gap: 0.5rem
+
+.quickShortcutsContent
+  display: grid
+  gap: 0
 
 .quickShortcutsGrid
   display: flex !important
   flex-direction: column
   gap: 0
   width: 100%
+  margin-top: 0.125rem
 
 .quickShortcutBtn
   display: inline-flex !important
@@ -5714,8 +5725,8 @@ $skin-border: rgba(255, 255, 255, 0.1)
   align-items: center
   justify-content: flex-start
   width: 100%
-  min-height: 2.25rem
-  padding: 0.375rem 0
+  min-height: 2rem
+  padding: 0.25rem 0
   gap: 0.5rem
   border: 0
   border-bottom: 0.0625rem solid rgba(161, 164, 165, 0.18)
@@ -5783,6 +5794,21 @@ $skin-border: rgba(255, 255, 255, 0.1)
   font-weight: 500
   line-height: 1.125rem
 
+// Breathing room between Organization / Atalhos / Resultado without stacked dividers fighting.
+.canvasOrganizationCard
+  margin-bottom: 0.25rem
+
+.quickShortcutsCard
+  margin-top: 0.25rem
+  margin-bottom: 0.75rem
+
+.canvasOrganizationCard:has(.canvasOrganizationContent)
+  padding-bottom: 0.25rem
+
+.quickShortcutsCard:has(.quickShortcutsContent)
+  padding-bottom: 0.25rem
+  margin-bottom: 0.875rem
+
 // 5) Resultado — header editorial: ícone + bloco textual (título/subtítulo no mesmo eixo).
 // Título reutiliza tokens visuais de “Editar bloco” (.blockFormGroupTitle / SURGERY 03).
 .resultCard .finalResultEditorial
@@ -5849,9 +5875,11 @@ $skin-border: rgba(255, 255, 255, 0.1)
   padding-left: 0
   max-width: 36ch
   text-align: left
+  text-transform: none
   color: rgba(148, 150, 156, 0.94) !important
-  font-size: 0.75rem !important
-  font-weight: 450
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.71875rem !important
+  font-weight: 400
   line-height: 1.45
 
 .finalResultFooter
@@ -5864,19 +5892,19 @@ $skin-border: rgba(255, 255, 255, 0.1)
     opacity: 0.9
 // END CANVAS SIDEBAR SURGERY MICROFIX 18
 
-// BEGIN CANVAS SIDEBAR COGNITIVE COST SURGERY — AGORA + ETAPAS
+// BEGIN CANVAS SIDEBAR COGNITIVE COST SURGERY — AGORA + ETAPAS + ACCORDIONS
 // Visual-only. Does not touch drag payload, domain, stores, or animations.
 
 .stageActionCard
   display: grid
   gap: 0
-  padding: 0.85rem 0 1.4rem
+  padding: 0.85rem 0 1rem
   border-color: transparent !important
   background: transparent !important
   box-shadow: none !important
 
   > .sectionKicker
-    margin: 0 0 0.45rem
+    margin: 0 0 0.55rem
     font-family: Inter, ui-sans-serif, system-ui, sans-serif
     font-size: 0.6875rem
     font-weight: 500
@@ -5884,13 +5912,13 @@ $skin-border: rgba(255, 255, 255, 0.1)
     line-height: 1.2
     text-transform: uppercase
     color: transparent
-    background: linear-gradient(180deg, rgba(248, 248, 250, 0.96) 0%, rgba(176, 180, 188, 0.78) 100%)
+    background: linear-gradient(180deg, color-mix(in srgb, var(--stage-accent, rgba(248, 248, 250, 0.96)) 82%, rgba(255, 255, 255, 0.92)) 0%, color-mix(in srgb, var(--stage-accent, rgba(176, 180, 188, 0.78)) 48%, rgba(176, 180, 188, 0.72)) 100%)
     background-clip: text
     -webkit-background-clip: text
     -webkit-text-fill-color: transparent
 
   > .sectionText
-    margin: 0 0 0.4rem
+    margin: 0 0 0.35rem
     max-width: 34ch
     font-family: Inter, ui-sans-serif, system-ui, sans-serif
     font-size: 0.875rem
@@ -5900,13 +5928,13 @@ $skin-border: rgba(255, 255, 255, 0.1)
     color: rgba(236, 238, 244, 0.94)
 
   > .sectionHintMuted
-    margin: 0 0 0.9rem
+    margin: 0 0 0.75rem
     max-width: 36ch
     font-family: Inter, ui-sans-serif, system-ui, sans-serif
-    font-size: 0.75rem
-    font-weight: 450
-    line-height: 1.5
-    color: rgba(168, 172, 182, 0.78)
+    font-size: 0.6875rem
+    font-weight: 400
+    line-height: 1.45
+    color: rgba(148, 152, 162, 0.7)
 
   .stageActionInnerPanel
     display: grid
@@ -6017,84 +6045,42 @@ $skin-border: rgba(255, 255, 255, 0.1)
   color: rgba(176, 180, 188, 0.78)
   text-transform: none
 
-.understandSection
-  display: grid
-  gap: 0
-  padding: 0.15rem 0 1.35rem
-
-  > .sectionKicker
-    margin: 0 0 0.45rem
-    font-family: Inter, ui-sans-serif, system-ui, sans-serif
-    font-size: 0.625rem
-    font-weight: 500
-    letter-spacing: 0.08em
-    line-height: 1.2
-    text-transform: uppercase
-    color: transparent
-    background: linear-gradient(180deg, rgba(236, 238, 244, 0.86) 0%, rgba(156, 160, 168, 0.66) 100%)
-    background-clip: text
-    -webkit-background-clip: text
-    -webkit-text-fill-color: transparent
-
-  > .sectionText
-    margin: 0.35rem 0 0
-    max-width: 36ch
-    font-family: Inter, ui-sans-serif, system-ui, sans-serif
-    font-size: 0.8125rem
-    font-weight: 450
-    line-height: 1.55
-    color: rgba(196, 200, 210, 0.88)
-
-.understandTitle
-  margin: 0
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif
-  font-size: 0.9375rem
-  font-weight: 600
-  letter-spacing: -0.015em
-  line-height: 1.3
-  color: rgba(244, 246, 250, 0.96)
-
-.understandQuestion
-  margin: 0.55rem 0 0
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif
-  font-size: 0.75rem
-  font-weight: 500
-  line-height: 1.5
-  color: rgba(210, 214, 224, 0.82)
-
-.understandExamples
-  margin: 0.5rem 0 0
-  max-width: 36ch
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif
-  font-size: 0.71875rem
-  font-weight: 450
-  line-height: 1.5
-  color: rgba(168, 172, 182, 0.74)
-
 .progressCard
   gap: 0.7rem
-  padding: 0.35rem 0 0.85rem
+  padding: 0.85rem 0 0.85rem
+  margin-top: 0.35rem
 
 .progressHeader
   display: grid
-  gap: 0.45rem
+  gap: 0.55rem
   overflow: visible
   padding: 0 0.0625rem
 
-.progressHeaderKicker
+.progressHeaderTitleRow.blockFormGroupHeader,
+.progressHeader .blockFormGroupHeader
+  display: flex
+  align-items: center
+  justify-content: flex-start
+  gap: 0.5rem
   margin: 0
   padding: 0
+  min-height: 1.35rem
+
+.progressHeaderKicker.blockFormGroupTitle,
+.progressHeader .blockFormGroupTitle
+  margin: 0
+  padding: 0
+  color: transparent !important
+  background: linear-gradient(90deg, rgba(240, 240, 240, 0.94) 0%, rgba(161, 164, 165, 0.76) 100%) !important
+  background-clip: text !important
+  -webkit-background-clip: text !important
+  -webkit-text-fill-color: transparent !important
   font-family: Inter, ui-sans-serif, system-ui, sans-serif
-  font-size: 0.6875rem
-  font-weight: 500
-  letter-spacing: 0.08em
-  line-height: 1.2
+  font-size: 0.78125rem
+  font-weight: 400
+  line-height: 1.1rem
+  letter-spacing: 0.04em
   text-transform: uppercase
-  color: transparent
-  background: linear-gradient(180deg, rgba(248, 248, 250, 0.96) 0%, rgba(176, 180, 188, 0.78) 100%)
-  background-clip: text
-  -webkit-background-clip: text
-  -webkit-text-fill-color: transparent
 
 .progressCompactLine
   display: flex
@@ -6304,7 +6290,85 @@ $skin-border: rgba(255, 255, 255, 0.1)
   &.stageblocked
     .stageConnectIcon
       color: rgba(148, 152, 162, 0.55)
-// END CANVAS SIDEBAR COGNITIVE COST SURGERY — AGORA + ETAPAS
+
+// Criar / Editar bloco — collapsed: thin stage border visible by default; hover refines.
+.blockFormsPanel .blockSidebarAccordion:not(.sidebarAccordionOpen)
+  border: 0.0625rem solid color-mix(in srgb, var(--stage-accent, rgba(224, 226, 232, 0.7)) 38%, rgba(255, 255, 255, 0.1)) !important
+  border-radius: 0.625rem !important
+  background: transparent !important
+  box-shadow: none !important
+  opacity: 0.92
+
+  &::before
+    display: block !important
+    content: ''
+    position: absolute
+    z-index: 4
+    inset: 0
+    padding: 0.0625rem 0.0625rem 0
+    border-radius: inherit
+    background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--stage-accent, rgba(224, 226, 232, 0.7)) 42%, rgba(224, 226, 232, 0.12)) 50%, transparent 100%)
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)
+    -webkit-mask-composite: xor
+    mask-composite: exclude
+    opacity: 0
+    pointer-events: none
+
+  &::after
+    display: none !important
+
+  &:has(.blockAccordionHeader:hover),
+  &:has(.blockAccordionHeader:focus-visible)
+    background: transparent !important
+    box-shadow: none !important
+    opacity: 1
+    transform: none
+    border-color: color-mix(in srgb, var(--stage-accent, rgba(224, 226, 232, 0.85)) 52%, rgba(255, 255, 255, 0.14)) !important
+
+    &::before
+      opacity: 0.72
+      background: linear-gradient(90deg, transparent 8%, color-mix(in srgb, var(--stage-accent, rgba(224, 226, 232, 0.85)) 58%, rgba(255, 255, 255, 0.22)) 50%, transparent 92%)
+
+.blockFormsPanel .blockSidebarAccordion:not(.sidebarAccordionOpen) .blockAccordionHeader
+  min-height: 2.5rem
+  padding: 0.625rem 0.5rem
+  border-radius: 0.5rem
+  color: rgba(161, 164, 165, 0.72)
+  opacity: 0.9
+  background: transparent !important
+
+  &:hover,
+  &:focus-visible
+    background: transparent !important
+    color: rgba(236, 238, 244, 0.94)
+    opacity: 1
+    box-shadow: none !important
+
+    .sidebarAccordionTitle
+      color: rgba(236, 238, 244, 0.94)
+
+    .sidebarAccordionChevron
+      color: rgba(224, 226, 232, 0.9)
+      opacity: 1
+
+.blockFormsPanel .blockSidebarAccordion:not(.sidebarAccordionOpen) .sidebarAccordionTitle
+  color: rgba(161, 164, 165, 0.72)
+  font-size: 0.75rem
+  font-weight: 500
+  letter-spacing: 0.06em
+
+.blockFormsPanel .blockSidebarAccordion:not(.sidebarAccordionOpen) .sidebarAccordionChevron
+  color: rgba(148, 152, 162, 0.62)
+  opacity: 0.82
+
+.blockFormsPanel .blockSidebarAccordion.sidebarAccordionOpen
+  opacity: 1
+
+  .blockAccordionHeader
+    &:hover,
+    &:focus-visible
+      background: transparent !important
+// END CANVAS SIDEBAR COGNITIVE COST SURGERY — AGORA + ETAPAS + ACCORDIONS
 
 // BEGIN CANVAS HERO DIVIDER SHEEN MICROFIX
 // Classe real do hero recolhido: .heroCardCollapsed (em .heroCard).
@@ -6327,3 +6391,202 @@ $skin-border: rgba(255, 255, 255, 0.1)
     mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 78%, transparent 100%)
     -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 78%, transparent 100%)
 // END CANVAS HERO DIVIDER SHEEN MICROFIX
+
+// BEGIN CANVAS SIDEBAR VISUAL SURGERY — AGORA / ETAPAS / ATALHOS / ORG / RESULTADO / ACCORDIONS
+// Somente casca. Sem lógica, stores, Motion ou DnD payload.
+
+// 4) AGORA — texto dinâmico com hierarquia de helper; divider inferior limpo.
+.stageActionCard
+  padding: 0.7rem 0 0.85rem !important
+  margin-bottom: 0
+  border: 0 !important
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.055) !important
+  border-radius: 0 !important
+  background: transparent !important
+  box-shadow: none !important
+
+  > .sectionText
+    margin: 0 0 0.65rem !important
+    max-width: 36ch
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif
+    font-size: 0.71875rem !important
+    font-weight: 400 !important
+    line-height: 1.45 !important
+    letter-spacing: 0 !important
+    color: rgba(168, 172, 182, 0.78) !important
+
+  > .sectionHintMuted
+    display: none !important
+
+  .stageActionInnerPanel
+    margin-top: 0.15rem
+
+// 5) ETAPAS DA TEORIA — mais respiro header→conteúdo; só o percentual.
+.progressCard
+  gap: 0.55rem !important
+  padding-top: 0.95rem !important
+
+.progressHeader
+  gap: 0.7rem !important
+
+.progressHeaderTitleRow.blockFormGroupHeader,
+.progressHeader .blockFormGroupHeader
+  margin-bottom: 0.15rem !important
+
+.progressCompactLine
+  margin-top: 0.1rem !important
+
+.progressCompactDivider,
+.progressCompactStatus
+  display: none !important
+
+.timeline
+  margin-top: 0.45rem !important
+
+// 6) ATALHOS — compactar, setas perto do texto, sem dividers internos.
+.quickShortcutsCard
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.055) !important
+  margin-bottom: 0.35rem !important
+
+.quickShortcutsHeader
+  padding: 0.65rem 0 !important
+  min-height: 1.35rem !important
+
+.quickShortcutsContent
+  padding: 0 0 0.35rem !important
+  gap: 0 !important
+
+.quickShortcutsGrid
+  margin-top: 0 !important
+  gap: 0 !important
+
+.quickShortcutBtn
+  min-height: 1.55rem !important
+  padding: 0.2rem 0 !important
+  gap: 0.4rem !important
+  justify-content: flex-start !important
+  width: fit-content !important
+  max-width: 100%
+  border-bottom: 0 !important
+  opacity: 0.82
+
+  &::after
+    margin-left: 0.35rem !important
+    width: 0.95rem !important
+    height: 0.95rem !important
+    font-size: 0.8125rem !important
+    opacity: 0.7
+    transform: translateY(0.03rem)
+
+  &:last-child
+    border-bottom: 0 !important
+
+.quickShortcutBtnLabel
+  flex: 0 1 auto !important
+  width: auto !important
+
+// 7) ORGANIZAÇÃO — remove divider inferior; respiro entre subtítulo, prévia e CTA.
+.canvasOrganizationCard
+  border-bottom: 0 !important
+  margin-bottom: 0 !important
+
+  &:has(.canvasOrganizationContent)
+    padding-bottom: 0.15rem !important
+    border-bottom: 0 !important
+
+.canvasOrganizationHeader
+  padding: 0.65rem 0 !important
+  min-height: 1.35rem !important
+
+.canvasOrganizationContent
+  gap: 0.875rem !important
+
+// 8) RESULTADO — sobe e compacta; CTA com mesma altura do “Centralizar colunas”.
+.quickShortcutsCard
+  margin-bottom: 0.2rem !important
+
+  &:has(.quickShortcutsContent)
+    margin-bottom: 0.25rem !important
+    padding-bottom: 0.15rem !important
+
+.resultCard
+  margin-top: 0.15rem !important
+  padding-top: 0.35rem !important
+  gap: 0.25rem !important
+
+.resultCard .finalResultCopy
+  gap: 0.22rem !important
+
+.resultCard .finalResultLead
+  margin: 0 !important
+  font-size: 0.6875rem !important
+  line-height: 1.4 !important
+
+.finalResultFooter
+  margin-top: 0.3rem !important
+  gap: 0.22rem !important
+
+.resultCard .finalResultCta
+  min-height: 3rem !important
+  height: auto !important
+  padding-inline: 1.25rem !important
+  border-radius: 1rem !important
+  font-size: 1rem !important
+  font-weight: 500 !important
+  line-height: 1.5rem !important
+
+.finalResultHelper
+  margin-top: 0.15rem !important
+  font-size: 0.625rem !important
+  line-height: 1.4 !important
+
+// 9) Criar / Editar recolhidos — borda fina da etapa no default; hover só refina.
+.blockFormsPanel .blockSidebarAccordion:not(.sidebarAccordionOpen)
+  border: 0.0625rem solid color-mix(in srgb, var(--stage-accent, rgba(224, 226, 232, 0.7)) 38%, rgba(255, 255, 255, 0.1)) !important
+  border-radius: 0.5rem !important
+  background: transparent !important
+  box-shadow: none !important
+  opacity: 0.92
+
+  &::before
+    display: block !important
+    padding: 0.05rem 0.05rem 0 !important
+    border-radius: 0.5rem !important
+    opacity: 0 !important
+    background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--stage-accent, rgba(224, 226, 232, 0.7)) 36%, rgba(224, 226, 232, 0.1)) 18%, color-mix(in srgb, var(--stage-accent, rgba(224, 226, 232, 0.7)) 22%, transparent) 72%, transparent 100%) !important
+
+  &:has(.blockAccordionHeader:hover),
+  &:has(.blockAccordionHeader:focus-visible)
+    background: transparent !important
+    box-shadow: none !important
+    opacity: 1
+    border-color: color-mix(in srgb, var(--stage-accent, rgba(224, 226, 232, 0.85)) 52%, rgba(255, 255, 255, 0.14)) !important
+
+    &::before
+      opacity: 0.72 !important
+      background: linear-gradient(90deg, color-mix(in srgb, var(--stage-accent, rgba(224, 226, 232, 0.85)) 55%, rgba(255, 255, 255, 0.18)) 0%, color-mix(in srgb, var(--stage-accent, rgba(224, 226, 232, 0.85)) 42%, rgba(255, 255, 255, 0.12)) 42%, transparent 100%) !important
+
+.blockFormsPanel .blockSidebarAccordion:not(.sidebarAccordionOpen) .blockAccordionHeader
+  min-height: 2.25rem !important
+  padding: 0.5rem 0.4rem !important
+  border-radius: 0.4rem !important
+  background: transparent !important
+
+  &:hover,
+  &:focus-visible
+    background: transparent !important
+    box-shadow: none !important
+
+    .sidebarAccordionTitle
+      color: color-mix(in srgb, var(--stage-accent, rgba(236, 238, 244, 0.94)) 42%, rgba(236, 238, 244, 0.94)) !important
+
+    .sidebarAccordionChevron
+      color: color-mix(in srgb, var(--stage-accent, rgba(224, 226, 232, 0.9)) 55%, rgba(236, 238, 244, 0.92)) !important
+      opacity: 1 !important
+
+.blockFormsPanel .blockSidebarAccordion:not(.sidebarAccordionOpen) .sidebarAccordionTitle
+  font-size: 0.71875rem !important
+  font-weight: 480 !important
+  letter-spacing: 0.05em !important
+  color: rgba(168, 172, 180, 0.78) !important
+// END CANVAS SIDEBAR VISUAL SURGERY — AGORA / ETAPAS / ATALHOS / ORG / RESULTADO / ACCORDIONS

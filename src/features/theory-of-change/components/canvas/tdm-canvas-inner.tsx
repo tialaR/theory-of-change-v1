@@ -32,7 +32,7 @@ import {
 } from '../toast/tdm-toast-messages';
 import { TdmToastViewport } from '../toast/tdm-toast';
 import { useContextualFlowTooltip } from '../toast/use-contextual-flow-tooltip';
-import { TdmConnectionGuide } from './tdm-connection-guide';
+import { TdmCanvasProcessDock } from './tdm-canvas-process-dock/tdm-canvas-process-dock';
 import { TdmCanvasCommandDock } from './tdm-canvas-command-dock';
 import {
   getConnectionKind,
@@ -1440,12 +1440,13 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
               colorMode="dark"
               attributionPosition="bottom-left"
             >
-              <TdmConnectionGuide
+              <TdmCanvasProcessDock
                 content={guideContent}
                 stageCounts={stageCounts}
                 isTheoryComplete={canGenerateResult}
                 isExpanded={isGuideExpanded}
                 onExpandedChange={setIsGuideExpanded}
+                onViewResult={openResultView}
               />
               <TdmCanvasCommandDock
                 isGuideExpanded={isGuideExpanded}

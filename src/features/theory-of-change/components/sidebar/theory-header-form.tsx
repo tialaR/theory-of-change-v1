@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { TdmFormField } from '../form-field/tdm-form-field';
+import { TdmClearFieldButton, TdmFormField } from '../form-field/tdm-form-field';
 import fieldStyles from '../form-field/tdm-form-field.module.sass';
 import styles from './theory-header-form.module.sass';
 
@@ -49,6 +49,12 @@ export function TheoryHeaderForm({
                 }
               }}
             />
+            {theoryName ? (
+              <TdmClearFieldButton
+                ariaLabel="Limpar nome da teoria"
+                onClear={() => onTheoryNameChange('')}
+              />
+            ) : null}
           </div>
         </label>
         <TdmFormField

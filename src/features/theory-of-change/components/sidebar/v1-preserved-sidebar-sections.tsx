@@ -429,19 +429,13 @@ export function V1FinalResultCard({
 
 export function V1TheoryProgressHeader({
   percent,
-  accent,
-  stageTitle
+  accent
 }: {
   percent: number;
   accent: string;
   stageTitle: string;
   stageInstruction: string;
 }) {
-  const statusLine =
-    percent >= 100
-      ? 'lógica pronta para revisão'
-      : stageTitle.replace(/^\d+\.\s*/, '').toLowerCase();
-
   return (
     <div
       className={styles.progressHeader}
@@ -452,13 +446,14 @@ export function V1TheoryProgressHeader({
         } as CSSProperties
       }
     >
-      <p className={styles.progressHeaderKicker}>ETAPAS DA TEORIA</p>
+      <div className={[styles.progressHeaderTitleRow, styles.blockFormGroupHeader].filter(Boolean).join(' ')}>
+        <TdmSectionIcon variant="organization" />
+        <p className={[styles.progressHeaderKicker, styles.blockFormGroupTitle].filter(Boolean).join(' ')}>
+          ETAPAS DA TEORIA
+        </p>
+      </div>
       <p className={styles.progressCompactLine}>
         <span className={styles.progressCompactPercent}>{percent}% completo</span>
-        <span className={styles.progressCompactDivider} aria-hidden="true">
-          ·
-        </span>
-        <span className={styles.progressCompactStatus}>{statusLine}</span>
       </p>
       <div className={styles.theoryProgressTrack} aria-hidden="true">
         <span className={styles.theoryProgressFill} />
@@ -466,6 +461,14 @@ export function V1TheoryProgressHeader({
     </div>
   );
 }
+
+const STAGE_ACTION_PROMPTS: Record<StageCreation, string> = {
+  input: 'Crie insumos.',
+  activity: 'Crie atividades.',
+  output: 'Crie produtos.',
+  outcome: 'Crie resultados.',
+  'ready-to-connect': 'Crie as conexões entre as etapas.'
+};
 
 export function V1StageActionSection({
   stageCreation,
@@ -479,6 +482,7 @@ export function V1StageActionSection({
   const selectedStageTheme = stageCreation === 'ready-to-connect' ? null : CANVAS_DS_STAGE[stageCreation];
   const canUseStageActions = stageCreation !== 'ready-to-connect';
   const dragStage = stageCreation === 'ready-to-connect' ? undefined : stageCreation;
+  const actionPrompt = STAGE_ACTION_PROMPTS[stageCreation];
 
   return (
     <section
@@ -494,38 +498,27 @@ export function V1StageActionSection({
       }
     >
       <p className={styles.sectionKicker}>AGORA</p>
+      <p className={styles.sectionText}>{actionPrompt}</p>
       {canUseStageActions && dragStage ? (
-        <>
-          <p className={styles.sectionText}>
-            {dragStage === 'input'
-              ? 'Crie seu primeiro insumo.'
-              : 'Crie o próximo bloco desta etapa.'}
-          </p>
-          <p className={styles.sectionHintMuted}>Arraste para o canvas ou use o formulário.</p>
-          <div className={styles.stageActionInnerPanel}>
-            <button
-              type="button"
-              className={styles.dragCard}
-              draggable
-              aria-label={actionLabel ?? 'Adicionar bloco'}
-              onDragStart={(event) => onStageDragStart?.(event, dragStage)}
-            >
-              <span className={styles.dragSheet} aria-hidden="true">
-                <span className={styles.dragSheetShine} />
-                <span className={styles.dragSheetLine} data-len="title" />
-                <span className={styles.dragSheetLine} data-len="lg" />
-                <span className={styles.dragSheetLine} data-len="md" />
-                <span className={styles.dragSheetLine} data-len="sm" />
-              </span>
-            </button>
-            <p className={styles.dragSheetLegend}>Clique, arraste e solte</p>
-          </div>
-        </>
-      ) : (
         <div className={styles.stageActionInnerPanel}>
-          <p className={styles.sectionHint}>Conecte a lógica entre os blocos no canvas.</p>
+          <button
+            type="button"
+            className={styles.dragCard}
+            draggable
+            aria-label={actionLabel ?? 'Adicionar bloco'}
+            onDragStart={(event) => onStageDragStart?.(event, dragStage)}
+          >
+            <span className={styles.dragSheet} aria-hidden="true">
+              <span className={styles.dragSheetShine} />
+              <span className={styles.dragSheetLine} data-len="title" />
+              <span className={styles.dragSheetLine} data-len="lg" />
+              <span className={styles.dragSheetLine} data-len="md" />
+              <span className={styles.dragSheetLine} data-len="sm" />
+            </span>
+          </button>
+          <p className={styles.dragSheetLegend}>Clique, arraste e solte.</p>
         </div>
-      )}
+      ) : null}
     </section>
   );
 }

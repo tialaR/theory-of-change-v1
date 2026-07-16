@@ -128,25 +128,25 @@ const STAGE_GUIDE: Record<
   }
 > = {
   input: {
-    title: '1. Insumos',
+    title: '1. Insumo',
     summary: 'O que precisa estar disponível?',
     technical: 'Insumos são recursos que precisam existir antes da ação começar.',
     examples: ['equipe', 'orçamento', 'dados', 'parceiros']
   },
   activity: {
-    title: '2. Atividades',
+    title: '2. Atividade',
     summary: 'O que será feito com os recursos disponíveis?',
     technical: 'Atividades são ações realizadas usando os insumos.',
     examples: ['oficinas', 'capacitações', 'atendimento', 'articulação']
   },
   output: {
-    title: '3. Produtos',
+    title: '3. Produto',
     summary: 'O que será entregue?',
     technical: 'Produtos são entregas concretas geradas pelas atividades.',
     examples: ['relatórios', 'materiais', 'serviços', 'pessoas atendidas']
   },
   outcome: {
-    title: '4. Resultados',
+    title: '4. Resultado',
     summary: 'O que muda para o público ou território?',
     technical: 'Resultados são mudanças esperadas após as entregas.',
     examples: ['acesso', 'renda', 'risco', 'aprendizagem', 'capacidade']
@@ -155,22 +155,22 @@ const STAGE_GUIDE: Record<
 
 const STAGE_CREATION_HINTS: Record<StageCreation, { title: string; description: string; help: string }> = {
   input: {
-    title: '1. Insumos',
+    title: '1. Insumo',
     description: 'Liste os recursos que tornam a política possível.',
     help: 'Equipe, orçamento, dados, materiais, parcerias.'
   },
   activity: {
-    title: '2. Atividades',
+    title: '2. Atividade',
     description: 'Descreva o que será feito com esses recursos.',
     help: 'Use verbos de ação: formar, acompanhar, distribuir.'
   },
   output: {
-    title: '3. Produtos',
+    title: '3. Produto',
     description: 'Registre as entregas concretas das atividades.',
     help: 'Coisas contáveis: oficinas, relatórios, materiais.'
   },
   outcome: {
-    title: '4. Resultados',
+    title: '4. Resultado',
     description: 'Descreva a mudança esperada depois das entregas.',
     help: 'O que muda no público, na prática ou na gestão.'
   },
@@ -851,40 +851,6 @@ export function TdmSidebar({
         </header>
 
         <div ref={contentRef} className={styles.content}>
-          <V1StageActionSection
-            stageCreation={stageCreation}
-            actionLabel={actionLabel}
-            onStageDragStart={onStageDragStart}
-          />
-
-          <section
-            className={[styles.card, styles.understandSection].join(' ')}
-            style={
-              stageCreation !== 'ready-to-connect'
-                ? ({ '--stage-accent': CANVAS_DS_STAGE[stageCreation].accent } as CSSProperties)
-                : undefined
-            }
-            aria-label="Entenda esta etapa"
-          >
-            <p className={styles.sectionKicker}>ENTENDA</p>
-            {stageCreation !== 'ready-to-connect' ? (
-              <>
-                <p className={styles.understandTitle}>{stripStageNumber(STAGE_GUIDE[stageCreation].title)}</p>
-                <p className={styles.sectionText}>{STAGE_GUIDE[stageCreation].technical}</p>
-                <p className={styles.understandQuestion}>Pergunta-guia: {STAGE_GUIDE[stageCreation].summary}</p>
-                <p className={styles.understandExamples}>
-                  Exemplos: {STAGE_GUIDE[stageCreation].examples.join(', ')}.
-                </p>
-              </>
-            ) : (
-              <>
-                <p className={styles.understandTitle}>{stripStageNumber(STAGE_CREATION_HINTS['ready-to-connect'].title)}</p>
-                <p className={styles.sectionText}>{STAGE_CREATION_HINTS['ready-to-connect'].description}</p>
-                <p className={styles.understandExamples}>{STAGE_CREATION_HINTS['ready-to-connect'].help}</p>
-              </>
-            )}
-          </section>
-
           <section
             className={[styles.card, styles.progressCard].join(' ')}
             style={{ '--stage-accent': progressAccent } as CSSProperties}
@@ -1094,6 +1060,12 @@ export function TdmSidebar({
               </p>
             ) : null}
           </section>
+
+          <V1StageActionSection
+            stageCreation={stageCreation}
+            actionLabel={actionLabel}
+            onStageDragStart={onStageDragStart}
+          />
 
           {blockForms ? (
             <V1BlockFormsPanel stage={blockForms.stage}>

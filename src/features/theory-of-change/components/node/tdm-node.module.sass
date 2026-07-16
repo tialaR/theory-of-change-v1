@@ -781,3 +781,258 @@ $node-polish-radius-toolbar: $noir-radius-icon-tile
 .compactBody .description
   line-height: 1.42 !important
 // END CANVAS NODE POLISH MICROFIX 09
+
+// BEGIN CANVAS NODE FORM DS CONSOLIDATION
+// Align inline stage forms with approved Sidebar / Hero / TdmFormField language.
+// Heights, resize behavior, handlers and node geometry stay intact.
+
+$node-form-field: radial-gradient(70% 80% at 50% 0%, rgba(255, 255, 255, 0.045) 3%, transparent 70%), linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.008)), rgba(8, 9, 12, 0.82)
+
+.nodeEditForm
+  gap: 0.625rem !important
+  padding: 0.75rem 0.75rem 0.7rem !important
+  border-radius: 0.75rem !important
+  max-height: min(28rem, calc(100vh - 5rem)) !important
+
+.editing
+  border-radius: 0.75rem !important
+
+.nodeEditHeader
+  padding: 0 0 0.4rem !important
+  border-bottom-color: color-mix(in srgb, var(--node-accent, #{$stage-inputs}) 12%, rgba(255, 255, 255, 0.05)) !important
+
+.nodeEditStage
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif !important
+  font-size: 0.625rem !important
+  font-weight: 500 !important
+  line-height: 1.2 !important
+  letter-spacing: 0.08em !important
+
+.nodeEditFields
+  gap: 0.625rem !important
+
+.nodeEditField
+  gap: 0.3rem !important
+
+.nodeEditLabel
+  color: rgb(161, 164, 165) !important
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif !important
+  font-size: 0.625rem !important
+  font-weight: 400 !important
+  line-height: 1.2 !important
+  letter-spacing: 0.04em !important
+
+.nodeEditInput,
+.nodeEditTextarea
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1) !important
+  background: $node-form-field !important
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.07) !important
+  color: rgba(248, 248, 250, 0.94) !important
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif !important
+  font-size: 0.875rem !important
+  font-weight: 450 !important
+  line-height: 1.35 !important
+  transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease !important
+
+  &::placeholder
+    color: rgba(161, 164, 165, 0.48) !important
+    font-weight: 400 !important
+
+  &:hover:not(:focus):not(:focus-visible)
+    border-color: color-mix(in srgb, var(--stage-accent, var(--node-accent, rgba(255, 255, 255, 0.5))) 28%, rgba(255, 255, 255, 0.12)) !important
+    background: radial-gradient(70% 80% at 50% 0%, color-mix(in srgb, var(--stage-accent, var(--node-accent, rgba(255, 255, 255, 0.5))) 5%, transparent) 3%, transparent 70%), linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012)), rgba(8, 9, 12, 0.84) !important
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.09) !important
+
+  &:focus,
+  &:focus-visible
+    border-color: color-mix(in srgb, var(--stage-accent, var(--node-accent, rgba(255, 255, 255, 0.5))) 52%, rgba(255, 255, 255, 0.18)) !important
+    background: radial-gradient(70% 80% at 50% 0%, color-mix(in srgb, var(--stage-accent, var(--node-accent, rgba(255, 255, 255, 0.5))) 7%, transparent) 3%, transparent 70%), linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.012)), rgba(8, 9, 12, 0.86) !important
+    box-shadow: 0 0 0 0.0625rem color-mix(in srgb, var(--stage-accent, var(--node-accent, rgba(255, 255, 255, 0.5))) 10%, transparent), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1) !important
+    outline: none !important
+
+.nodeEditInput
+  min-height: 2.1rem !important
+  border-radius: 0.5rem !important
+  padding: 0.45rem 1.85rem 0.45rem 0.7rem !important
+
+.nodeEditTextarea
+  min-height: 3.25rem !important
+  max-height: 4.5rem !important
+  border-radius: 0.625rem !important
+  padding: 0.5rem 1.85rem 0.5rem 0.7rem !important
+  overflow-y: auto !important
+  resize: none !important
+
+.nodeEditClearButton
+  right: 0.4rem !important
+  width: 1.25rem !important
+  height: 1.25rem !important
+  padding: 0.2rem !important
+  border: 0 !important
+  border-radius: 0.35rem !important
+  color: rgba(161, 164, 165, 0.72) !important
+  background: transparent !important
+
+  &:hover,
+  &:focus-visible
+    color: rgba(224, 226, 232, 0.88) !important
+    background: transparent !important
+    outline: none !important
+
+.nodeEditFieldControl textarea + .nodeEditClearButton
+  top: 0.45rem !important
+  transform: none !important
+
+  &:hover,
+  &:focus-visible
+    transform: none !important
+
+.nodeEditClearIcon
+  width: 0.6875rem !important
+  height: 0.6875rem !important
+
+.nodeEditErrorMessage
+  border-radius: 0.5rem !important
+  border-color: rgba(251, 113, 133, 0.24) !important
+  background: rgba(251, 113, 133, 0.05) !important
+  color: rgba(254, 205, 211, 0.96) !important
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif !important
+  font-size: 0.6875rem !important
+  line-height: 1.35 !important
+  padding: 0.45rem 0.6rem !important
+
+.nodeEditActions
+  gap: 0.45rem !important
+  margin-top: 0.15rem !important
+
+// Compact shell over TdmButton primary/secondary material (Salvar alterações / Salvar marcador).
+.nodeEditActionButton
+  flex: 1 1 0 !important
+  min-width: 0 !important
+  min-height: 2.15rem !important
+  height: auto !important
+  padding: 0 0.75rem !important
+  border-radius: 0.625rem !important
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif !important
+  font-size: 0.6875rem !important
+  font-weight: 550 !important
+  letter-spacing: 0.04em !important
+  line-height: 1 !important
+  text-transform: uppercase !important
+  backdrop-filter: blur(1.25rem) saturate(1.04) !important
+  -webkit-backdrop-filter: blur(1.25rem) saturate(1.04) !important
+
+.nodeEditActionButtonPrimary
+  // Material from TdmButton variantPrimary (“Salvar alterações”)
+  border-color: color-mix(in srgb, var(--stage-accent, var(--node-accent, rgba(255, 255, 255, 0.55))) 40%, rgba(255, 255, 255, 0.11)) !important
+  background: linear-gradient(104deg, color-mix(in srgb, var(--stage-accent, var(--node-accent, rgba(255, 255, 255, 0.55))) 12%, rgba(255, 255, 255, 0.045)) 0%, rgba(255, 255, 255, 0.035) 48%, color-mix(in srgb, var(--stage-accent, var(--node-accent, rgba(255, 255, 255, 0.55))) 8%, rgba(255, 255, 255, 0.02)) 100%), rgba(12, 13, 16, 0.86) !important
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.11), 0 0.25rem 0.75rem rgba(0, 0, 0, 0.2) !important
+  color: rgba(248, 248, 250, 0.94) !important
+
+.nodeEditActionButtonSecondary
+  // Material from TdmButton variantSecondary (neutral CTA / “Salvar marcador” glass)
+  border-color: rgba(255, 255, 255, 0.12) !important
+  background: linear-gradient(104deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)), rgba(12, 13, 16, 0.84) !important
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.11), 0 0.25rem 0.75rem rgba(0, 0, 0, 0.2) !important
+  color: rgba(224, 226, 232, 0.76) !important
+
+.nodeEditActionButtonPrimary:hover:not(:disabled),
+.nodeEditActionButtonPrimary:focus-visible:not(:disabled),
+.nodeEditActionButtonSecondary:hover:not(:disabled),
+.nodeEditActionButtonSecondary:focus-visible:not(:disabled)
+  color: rgba(18, 19, 22, 0.94) !important
+  border-color: rgba(255, 255, 255, 0.24) !important
+  background: linear-gradient(104deg, rgba(248, 249, 252, 0.88) 0%, rgba(221, 224, 232, 0.82) 48%, rgba(245, 246, 249, 0.86) 100%) !important
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.62), 0 0.75rem 1.5rem rgba(0, 0, 0, 0.28) !important
+  transform: translateY(-0.0625rem) !important
+// END CANVAS NODE FORM DS CONSOLIDATION
+
+// BEGIN CANVAS VISUAL SURGERY — FORM + CARD + TOOLBAR
+// Somente casca tipográfica/espacial. Sem handlers, stores ou React Flow.
+
+// 1) Inline stage form — densidades menores, branco menos estourado.
+.nodeEditInput,
+.nodeEditTextarea
+  color: rgba(220, 222, 228, 0.82) !important
+  font-size: 0.75rem !important
+  font-weight: 400 !important
+  line-height: 1.4 !important
+
+  &::placeholder
+    color: rgba(161, 164, 165, 0.42) !important
+    font-size: 0.71875rem !important
+    font-weight: 400 !important
+
+.nodeEditInput
+  min-height: 2rem !important
+  padding: 0.4rem 1.75rem 0.4rem 0.65rem !important
+
+.nodeEditTextarea
+  min-height: 2.75rem !important
+  max-height: 3.75rem !important
+  padding: 0.45rem 1.75rem 0.45rem 0.65rem !important
+
+.nodeEditForm
+  gap: 0.55rem !important
+  padding: 0.7rem 0.7rem 0.65rem !important
+
+.nodeEditFields
+  gap: 0.55rem !important
+
+// 2) Compact card — respiro estágio→título + tipografia premium (anexo 8).
+.compactBody
+  gap: clamp(0.52rem, 0.58vw, 0.68rem) !important
+
+.compactBody .title
+  color: transparent !important
+  background: linear-gradient(90deg, rgba(236, 238, 244, 0.92) 0%, rgba(176, 180, 188, 0.72) 100%) !important
+  background-clip: text !important
+  -webkit-background-clip: text !important
+  -webkit-text-fill-color: transparent !important
+  font-family: $ds-font-family !important
+  font-size: clamp(0.8rem, 0.86vw, 0.9rem) !important
+  font-weight: 400 !important
+  letter-spacing: 0.005em !important
+  line-height: 1.32 !important
+
+.compactBody .stage
+  margin-bottom: 0.08rem !important
+
+// 3) Toolbar — menos pílula, tipografia menor, ícones um pouco maiores.
+.nodeToolbar
+  height: 1.875rem !important
+  border-width: 0.04rem !important
+  border-color: rgba(255, 255, 255, 0.09) !important
+  border-radius: 0.5rem !important
+
+.nodeToolbarButton
+  gap: 0.28rem !important
+  padding: 0 0.7rem !important
+  font-size: 0.53125rem !important
+  font-weight: 450 !important
+  letter-spacing: 0.015em !important
+  color: rgba(196, 200, 210, 0.72) !important
+
+  &:hover
+    background: none !important
+    color: rgba(236, 238, 244, 0.94) !important
+    transform: translateY(-0.05rem) !important
+
+  &:hover .nodeToolbarIcon
+    transform: translateY(-0.05rem) !important
+    color: currentColor !important
+
+.nodeToolbarButtonDanger
+  color: rgba(251, 113, 133, 0.82) !important
+
+  &:hover
+    background: none !important
+    color: rgba(253, 164, 175, 0.94) !important
+    transform: translateY(-0.05rem) !important
+
+.nodeToolbarIcon,
+.nodeToolbarSvg,
+.nodeToolbarSvgClose
+  width: 0.875rem !important
+  height: 0.875rem !important
+// END CANVAS VISUAL SURGERY — FORM + CARD + TOOLBAR

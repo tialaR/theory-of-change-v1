@@ -47,13 +47,6 @@ const STAGE_ACCENTS: Record<TdmStage, string> = {
   outcome: '#5ee0b5'
 };
 
-const STAGE_COUNTER_LABELS: Record<TdmStage, string> = {
-  input: 'Insumos',
-  activity: 'Atividades',
-  output: 'Produtos',
-  outcome: 'Resultados'
-};
-
 function getStageLabel(stage: TheoryGuideStageId): string {
   return THEORY_GUIDE_MAIN_TABS.find((tab) => tab.id === stage)?.label ?? 'Teoria';
 }
@@ -112,8 +105,6 @@ export function TdmConnectionGuide({
   const currentStageLabel = getStageLabel(content.activeStage);
   const stageAccent = getActiveStageAccent(content.activeStage);
   const previewAccent = getNextStagePreviewAccent(content.nextStageLabel);
-  const shortHelp =
-    content.action?.trim() || content.message?.trim() || 'Crie o próximo bloco para avançar.';
   const compactCounts = TDM_STAGE_ORDER.map((stage) => stageCounts[stage]).join('/');
 
   const setExpanded = useCallback(
@@ -155,7 +146,7 @@ export function TdmConnectionGuide({
               .join(' ')}
             aria-label="Conexões"
           >
-            Conexões
+            Conexões{isTheoryComplete ? ' ✓' : ''}
           </span>
 
           <button
@@ -171,43 +162,18 @@ export function TdmConnectionGuide({
 
         <div className={styles.expandedBlock} data-open={isExpanded ? 'true' : undefined}>
           <div className={styles.expandedInner}>
-            <div className={styles.expandedMeta}>
-              {content.nextStageLabel ? (
-                <span
-                  className={styles.nextStep}
-                  style={{ '--preview-accent': previewAccent } as CSSProperties}
-                >
-                  <span className={styles.nextStepPrefix}>Próximo</span>
-                  {content.nextStageLabel}
-                </span>
-              ) : null}
-
-              <div className={styles.counters} aria-label="Contadores por etapa">
-                {TDM_STAGE_ORDER.map((stage) => (
-                  <span
-                    key={stage}
-                    className={styles.counter}
-                    style={{ '--counter-accent': STAGE_ACCENTS[stage] } as CSSProperties}
-                  >
-                    <span className={styles.counterDot} aria-hidden="true" />
-                    <span className={styles.counterLabel}>{STAGE_COUNTER_LABELS[stage]}</span>
-                    <span className={styles.counterValue}>{stageCounts[stage]}</span>
-                  </span>
-                ))}
-              </div>
-
+            {content.nextStageLabel ? (
               <span
-                className={[styles.connectionsChip, isTheoryComplete ? styles.connectionsChipComplete : '']
-                  .filter(Boolean)
-                  .join(' ')}
-                aria-label="Conexões"
+                className={styles.nextStep}
+                style={{ '--preview-accent': previewAccent } as CSSProperties}
               >
-                <span className={styles.counterLabel}>Conexões</span>
-                <span className={styles.counterValue}>{isTheoryComplete ? '✓' : '—'}</span>
+                <span className={styles.nextStepPrefix}>Próximo</span>
+                <span className={styles.nextStepArrow} aria-hidden="true">
+                  →
+                </span>
+                <span className={styles.nextStepLabel}>{content.nextStageLabel}</span>
               </span>
-            </div>
-
-            <p className={styles.helpText}>{shortHelp}</p>
+            ) : null}
           </div>
         </div>
       </div>
