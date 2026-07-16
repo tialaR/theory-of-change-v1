@@ -315,7 +315,25 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
     setIsEditAccordionOpen(false);
     setMarkerEditorEdgeId(null);
     setGuideTransientMessage(null);
-  }, []);
+    setNodes((currentNodes) => {
+      const hasSelectedNodes = currentNodes.some((node) => node.selected);
+
+      if (!hasSelectedNodes) {
+        return currentNodes;
+      }
+
+      return currentNodes.map((node) => {
+        if (!node.selected) {
+          return node;
+        }
+
+        return {
+          ...node,
+          selected: false
+        };
+      });
+    });
+  }, [setNodes]);
 
   const replaceCanvasWithExample = useCallback(() => {
     if (canvasVariant === 'custom') {
@@ -1224,6 +1242,7 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
 
         return {
           ...nodeWithoutDimensions,
+          selected: selectedNodeId === node.id,
           ...(Object.keys(styleWithoutDimensions).length > 0 ? { style: styleWithoutDimensions } : {}),
           data: {
             ...node.data,
@@ -1427,6 +1446,7 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
               nodesDraggable
               nodesConnectable={canConnectNodes}
               elementsSelectable
+              multiSelectionKeyCode={null}
               panOnDrag
               zoomOnScroll
               zoomOnPinch
