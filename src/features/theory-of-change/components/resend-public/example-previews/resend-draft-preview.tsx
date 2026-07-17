@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from 'motion/react';
 import { useId, type CSSProperties } from 'react';
 import styles from './resend-draft-preview.module.sass';
 
-type PreviewVariant = 'flow' | 'result';
+type PreviewVariant = 'result';
 
 type StageDefinition = {
   key: 'input' | 'activity' | 'output' | 'outcome';
@@ -54,46 +54,14 @@ const STAGES: readonly StageDefinition[] = [
 ] as const;
 
 const CONNECTIONS: readonly ConnectionDefinition[] = [
-  {
-    key: 'input-1-activity-1',
-    d: 'M 272 144 C 318 144, 346 144, 392 144',
-    phase: 0,
-  },
-  {
-    key: 'input-2-activity-1',
-    d: 'M 272 284 C 330 284, 336 172, 392 168',
-    phase: -4,
-  },
-  {
-    key: 'input-3-activity-3',
-    d: 'M 272 424 C 330 424, 344 398, 392 396',
-    phase: -8,
-  },
-  {
-    key: 'activity-1-output-1',
-    d: 'M 600 144 C 646 144, 674 144, 720 144',
-    phase: -12,
-  },
-  {
-    key: 'activity-2-output-2',
-    d: 'M 600 284 C 646 284, 674 284, 720 284',
-    phase: -16,
-  },
-  {
-    key: 'activity-3-output-3',
-    d: 'M 600 424 C 646 424, 674 424, 720 424',
-    phase: -20,
-  },
-  {
-    key: 'output-1-outcome',
-    d: 'M 928 144 C 974 144, 1006 128, 1048 128',
-    phase: -24,
-  },
-  {
-    key: 'output-2-outcome',
-    d: 'M 928 284 C 978 284, 1008 174, 1048 168',
-    phase: -28,
-  },
+  { key: 'input-1-activity-1', d: 'M 272 144 C 318 144, 346 144, 392 144', phase: 0 },
+  { key: 'input-2-activity-1', d: 'M 272 284 C 330 284, 336 172, 392 168', phase: -4 },
+  { key: 'input-3-activity-3', d: 'M 272 424 C 330 424, 344 398, 392 396', phase: -8 },
+  { key: 'activity-1-output-1', d: 'M 600 144 C 646 144, 674 144, 720 144', phase: -12 },
+  { key: 'activity-2-output-2', d: 'M 600 284 C 646 284, 674 284, 720 284', phase: -16 },
+  { key: 'activity-3-output-3', d: 'M 600 424 C 646 424, 674 424, 720 424', phase: -20 },
+  { key: 'output-1-outcome', d: 'M 928 144 C 974 144, 1006 128, 1048 128', phase: -24 },
+  { key: 'output-2-outcome', d: 'M 928 284 C 978 284, 1008 174, 1048 168', phase: -28 },
 ] as const;
 
 function createCards(stage: StageDefinition): CardDefinition[] {
@@ -107,7 +75,7 @@ function createCards(stage: StageDefinition): CardDefinition[] {
   }));
 }
 
-function ResendColumn({ stage }: { stage: StageDefinition }) {
+function ResultColumn({ stage }: { stage: StageDefinition }) {
   const cards = createCards(stage);
 
   return (
@@ -120,17 +88,15 @@ function ResendColumn({ stage }: { stage: StageDefinition }) {
         height={COLUMN_HEIGHT}
         rx="12"
       />
-
-      <circle cx={stage.x + 18} cy={56} r="2.6" fill={stage.color} opacity="0.76" />
       <line
         x1={stage.x + 18}
-        y1={62}
+        y1={58}
         x2={stage.x + 64}
-        y2={62}
+        y2={58}
         stroke={stage.color}
         strokeWidth="1"
         strokeLinecap="round"
-        opacity="0.5"
+        opacity="0.55"
       />
       <line
         className={styles.columnDivider}
@@ -139,15 +105,14 @@ function ResendColumn({ stage }: { stage: StageDefinition }) {
         x2={stage.x + COLUMN_WIDTH - 16}
         y2={78}
       />
-
       {cards.map((card) => (
-        <ResendCard key={card.key} card={card} />
+        <ResultCard key={card.key} card={card} />
       ))}
     </g>
   );
 }
 
-function ResendCard({ card }: { card: CardDefinition }) {
+function ResultCard({ card }: { card: CardDefinition }) {
   const contentX = card.x + 48;
   const firstLineY = card.y + 27;
 
@@ -161,7 +126,6 @@ function ResendCard({ card }: { card: CardDefinition }) {
         height={card.height}
         rx="9"
       />
-
       <line
         x1={card.x + 1}
         y1={card.y + 9}
@@ -172,7 +136,6 @@ function ResendCard({ card }: { card: CardDefinition }) {
         strokeLinecap="round"
         opacity="0.58"
       />
-
       <rect
         className={styles.dotTile}
         x={card.x + 18}
@@ -182,7 +145,6 @@ function ResendCard({ card }: { card: CardDefinition }) {
         rx="5"
       />
       <circle cx={card.x + 28} cy={card.y + 28} r="2.8" fill={card.color} opacity="0.8" />
-
       <rect className={styles.titleLine} x={contentX} y={firstLineY} width="68" height="3" rx="1.5" />
       <rect className={styles.copyLine} x={contentX} y={firstLineY + 17} width="112" height="2.4" rx="1.2" />
       <rect className={styles.copyLine} x={contentX} y={firstLineY + 31} width="94" height="2.4" rx="1.2" />
@@ -191,27 +153,27 @@ function ResendCard({ card }: { card: CardDefinition }) {
   );
 }
 
-function ResendConnections({ animate }: { animate: boolean }) {
-  const markerId = `tdm-resend-arrow-${useId().replace(/:/g, '')}`;
+function ResultConnections({ animate }: { animate: boolean }) {
+  const markerId = `tdm-result-arrow-${useId().replace(/:/g, '')}`;
 
   return (
     <g>
       <defs>
         <marker
           id={markerId}
-          viewBox="0 0 6 6"
+          viewBox="0 0 5 5"
           markerWidth="4.25"
           markerHeight="4.25"
-          refX="5.1"
-          refY="3"
+          refX="4.1"
+          refY="2.5"
           orient="auto"
           markerUnits="userSpaceOnUse"
         >
           <path
-            d="M 1 1 L 5 3 L 1 5"
+            d="M 0.75 0.8 L 4 2.5 L 0.75 4.2"
             fill="none"
-            stroke="rgba(206, 210, 216, 0.52)"
-            strokeWidth="0.8"
+            stroke="rgba(206, 210, 216, 0.48)"
+            strokeWidth="0.76"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
@@ -228,13 +190,13 @@ function ResendConnections({ animate }: { animate: boolean }) {
           initial={false}
           animate={{
             strokeDashoffset: animate
-              ? [connection.phase, connection.phase - 36]
+              ? [connection.phase, connection.phase - 22]
               : connection.phase,
           }}
           transition={
             animate
               ? {
-                  duration: 12.8,
+                  duration: 4.8,
                   repeat: Number.POSITIVE_INFINITY,
                   ease: 'linear',
                 }
@@ -247,31 +209,30 @@ function ResendConnections({ animate }: { animate: boolean }) {
 }
 
 export function ResendDraftPreview({
-  variant,
   active = true,
   className = '',
   style,
-  ariaLabel,
+  ariaLabel = 'Prévia editorial do resultado conectado da teoria da mudança',
 }: ResendDraftPreviewProps) {
   const shouldReduceMotion = useReducedMotion();
   const shouldAnimate = active && !shouldReduceMotion;
-  const label =
-    ariaLabel ??
-    (variant === 'flow'
-      ? 'Prévia editorial do fluxo da teoria da mudança'
-      : 'Prévia editorial do resultado da teoria da mudança');
 
   return (
-    <div className={[styles.root, className].filter(Boolean).join(' ')} style={style} role="img" aria-label={label}>
+    <div
+      className={[styles.root, className].filter(Boolean).join(' ')}
+      style={style}
+      role="img"
+      aria-label={ariaLabel}
+    >
       <svg
         className={styles.svg}
         viewBox={`0 0 ${VIEWBOX_WIDTH} ${VIEWBOX_HEIGHT}`}
         preserveAspectRatio="xMidYMid meet"
         aria-hidden="true"
       >
-        <ResendConnections animate={shouldAnimate} />
+        <ResultConnections animate={shouldAnimate} />
         {STAGES.map((stage) => (
-          <ResendColumn key={stage.key} stage={stage} />
+          <ResultColumn key={stage.key} stage={stage} />
         ))}
       </svg>
     </div>

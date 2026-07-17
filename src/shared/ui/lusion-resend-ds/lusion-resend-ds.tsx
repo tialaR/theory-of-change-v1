@@ -166,11 +166,7 @@ export function PublicHeader({
 
   return (
     <>
-      <header
-        className={styles.header}
-        data-home={pathname === '/' ? 'true' : 'false'}
-        data-scrolled={isScrolled ? 'true' : 'false'}
-      >
+      <header className={styles.header} data-scrolled={isScrolled ? 'true' : 'false'}>
                 <GlassSurface
           aria-hidden="true"
           width="100%"
