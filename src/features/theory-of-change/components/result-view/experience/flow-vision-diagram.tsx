@@ -196,13 +196,12 @@ export function FlowVisionDiagram({
                     shouldReduceMotion
                       ? false
                       : shouldAnimate
-                        ? { pathLength: 0, opacity: 0, strokeDashoffset: 32 }
+                        ? { pathLength: 0, opacity: 0 }
                         : false
                   }
                   animate={{
                     pathLength: 1,
-                    opacity: hasSelection ? (isRelated ? 1 : 0.06) : isRelated ? 0.42 : 0.06,
-                    strokeDashoffset: 0
+                    opacity: hasSelection ? (isRelated ? 1 : 0.06) : isRelated ? 0.42 : 0.06
                   }}
                   transition={{
                     duration: shouldReduceMotion ? 0.01 : shouldAnimate ? PATH_DURATION : 0.32,

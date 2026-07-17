@@ -205,20 +205,26 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
 
 .flowVisionEdgePath
   fill: none
-  stroke: color-mix(in srgb, var(--edge-accent, rgba(255,255,255,.42)) 58%, rgba(255,255,255,.24))
+  stroke: color-mix(in srgb, var(--edge-accent, rgba(255, 255, 255, .42)) 58%, rgba(255, 255, 255, .24))
   stroke-width: 1.5
   stroke-dasharray: .38rem .42rem
+  stroke-dashoffset: 0
   stroke-linecap: round
   vector-effect: non-scaling-stroke
+  animation: flowVisionDashTravel 1.4s linear infinite
+  animation-play-state: running
+  will-change: stroke-dashoffset
 
 .flowVisionEdgePathActive
-  stroke: color-mix(in srgb, var(--edge-accent, rgba(255,255,255,.58)) 78%, rgba(255,255,255,.38))
+  stroke: color-mix(in srgb, var(--edge-accent, rgba(255, 255, 255, .58)) 78%, rgba(255, 255, 255, .38))
   stroke-width: 1.65
-  filter: drop-shadow(0 0 .35rem color-mix(in srgb, var(--edge-accent, white) 24%, transparent))
+  filter: drop-shadow(0 0 .25rem color-mix(in srgb, var(--edge-accent, white) 18%, transparent))
+  animation-duration: 1.15s
 
 .flowVisionEdgeDimmed .flowVisionEdgePath
-  stroke: rgba(244,244,245,.05)
-  stroke-width: 1px
+  stroke: rgba(244, 244, 245, .05)
+  stroke-width: 1
+  animation-duration: 1.7s
 
 .flowVisionEdgeBadgeGroup
   pointer-events: none
@@ -261,14 +267,38 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
     flex: 1
 
 .flowVisionColumnHeader
-  display: none
+  position: relative
+  display: flex
+  align-items: center
+  min-block-size: .75rem
+  margin-block-end: .95rem
+  padding: 0
+
+  &::before
+    content: none
+    dsplay: none
+
+  &::after
+    content: ''
+    display: block
+    inline-size: 2.45rem
+    block-size: .0625rem
+    border-radius: 999rem
+    background: color-mix(in srgb, var(--stage-color) 82%, rgba(255, 255, 255, .12))
+    box-shadow: 0 0 .35rem color-mix(in srgb, var(--stage-color) 14%, transparent)
+    opacity: .86
 
 .flowVisionColumnLabel
-  color: color-mix(in srgb, var(--stage-color) 78%, rgba(255,255,255,.72))
-  font-size: .65rem
-  font-weight: 700
-  letter-spacing: .16em
-  text-transform: uppercase
+  position: absolute
+  inline-size: 1px
+  block-size: 1px
+  margin: -1px
+  padding: 0
+  overflow: hidden
+  clip: rect(0, 0, 0, 0)
+  clip-path: inset(50%)
+  white-space: nowrap
+  border: 0
 
 .flowVisionColumnCards
   display: flex
@@ -367,3 +397,13 @@ $ease-out: cubic-bezier(.22, 1, .36, 1)
 
   .flowTranslatorCard
     max-block-size: min(22rem, calc(100% - 2rem))
+
+@keyframes flowVisionDashTravel
+  from
+    stroke-dashoffset: 0
+  to
+    stroke-dashoffset: -1.6rem
+
+@media (prefers-reduced-motion: reduce)
+  .flowVisionEdgePath
+    animation: none
