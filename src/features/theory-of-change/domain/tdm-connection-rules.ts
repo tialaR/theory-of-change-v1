@@ -89,23 +89,53 @@ export function getAllowedTargetStage(sourceStage: TdmStage): TdmStage | undefin
   return ALLOWED_CONNECTIONS[sourceStage][0];
 }
 
+/**
+ * Exclusive V1 matrix — docs/tdm-clear-interpreter-standard-v2.1.md
+ * input→activity: risk only
+ * activity→output (product): risk only
+ * output→outcome (result): hypothesis only
+ */
+export const CONNECTION_CONDITION_BY_TRANSITION = {
+  'input->activity': 'risk',
+  'activity->output': 'risk',
+  'output->outcome': 'hypothesis'
+} as const;
+
+export type ConnectionTransitionKey = keyof typeof CONNECTION_CONDITION_BY_TRANSITION;
+export type ConnectionConditionKind = (typeof CONNECTION_CONDITION_BY_TRANSITION)[ConnectionTransitionKey];
+
+export function getTransitionKey(
+  sourceStage: TdmStage,
+  targetStage: TdmStage
+): ConnectionTransitionKey | null {
+  const key = `${sourceStage}->${targetStage}` as ConnectionTransitionKey;
+  return key in CONNECTION_CONDITION_BY_TRANSITION ? key : null;
+}
+
+export function getAllowedConditionForTransition(
+  sourceStage: TdmStage,
+  targetStage: TdmStage
+): ConnectionConditionKind | null {
+  const key = getTransitionKey(sourceStage, targetStage);
+  return key ? CONNECTION_CONDITION_BY_TRANSITION[key] : null;
+}
+
+export function isConditionAllowed(params: {
+  sourceStage: TdmStage;
+  targetStage: TdmStage;
+  conditionKind: TdmMarkerType;
+}): boolean {
+  return (
+    getAllowedConditionForTransition(params.sourceStage, params.targetStage) === params.conditionKind
+  );
+}
+
 export function getAllowedMarkerTypesForConnection(
   sourceStage: TdmStage,
   targetStage: TdmStage
 ): readonly TdmMarkerType[] {
-  if (sourceStage === 'input' && targetStage === 'activity') {
-    return ['risk'];
-  }
-
-  if (sourceStage === 'activity' && targetStage === 'output') {
-    return ['risk'];
-  }
-
-  if (sourceStage === 'output' && targetStage === 'outcome') {
-    return ['hypothesis'];
-  }
-
-  return [];
+  const allowed = getAllowedConditionForTransition(sourceStage, targetStage);
+  return allowed ? [allowed] : [];
 }
 
 export function canCreateRisk(sourceStage: TdmStage, targetStage: TdmStage): boolean {
@@ -114,6 +144,26 @@ export function canCreateRisk(sourceStage: TdmStage, targetStage: TdmStage): boo
 
 export function canCreateHypothesis(sourceStage: TdmStage, targetStage: TdmStage): boolean {
   return getAllowedMarkerTypesForConnection(sourceStage, targetStage).includes('hypothesis');
+}
+
+/** Report invalid legacy markers without mutating stored data. */
+export function reportInvalidConnectionCondition(params: {
+  edgeId: string;
+  sourceStage: TdmStage;
+  targetStage: TdmStage;
+  conditionKind: TdmMarkerType;
+}): void {
+  if (process.env.NODE_ENV === 'production') {
+    return;
+  }
+
+  if (isConditionAllowed(params)) {
+    return;
+  }
+
+  console.info(
+    `[tdm-interpreter] ignored invalid ${params.conditionKind} on ${params.sourceStage}→${params.targetStage} (edge ${params.edgeId})`
+  );
 }
 
 export function canConnectStages(sourceStage: TdmStage, targetStage: TdmStage): boolean {

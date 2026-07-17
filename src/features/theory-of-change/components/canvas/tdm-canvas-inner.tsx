@@ -1,7 +1,6 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent, type MouseEvent as ReactMouseEvent, type TouchEvent as ReactTouchEvent } from 'react';
-import { useRouter } from 'next/navigation';
 import {
   addEdge,
   Background,
@@ -23,6 +22,7 @@ import {
 } from '@xyflow/react';
 import { TdmTheoryEdge } from '../edge/tdm-theory-edge';
 import { ResultView } from '../result-view/result-view';
+import { TdmResultPreview } from '../result-preview/tdm-result-preview';
 import { TdmNode as TdmNodeView, TdmNodeInteractionProvider } from '../node/tdm-node';
 import { SidebarToggleIcon, TdmSidebar, type TdmBlockForms, type TdmSidebarContext } from '../sidebar/tdm-sidebar';
 import {
@@ -161,7 +161,6 @@ type TdmCanvasInnerProps = {
 };
 
 export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProps) {
-  const router = useRouter();
   const isExampleInitial = initialVariant === 'example';
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [viewMode, setViewMode] = useState<ViewMode>('canvas');
@@ -434,10 +433,12 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
   }, [restorePreviousTheory]);
 
   const openResultView = useCallback(() => {
-    router.push('/canvas/resultado');
-  }, [router]);
+    setViewMode('result');
+  }, []);
 
-  const exportStub = useCallback((_format: 'pdf' | 'png' | 'jpeg' | 'svg') => {}, []);
+  const closeResultView = useCallback(() => {
+    setViewMode('canvas');
+  }, []);
 
   const centerNodes = useCallback(() => {
     setNodes((currentNodes) => layoutNodesByStage(currentNodes));
@@ -1369,20 +1370,6 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
         }
       : { kind: 'none' };
 
-  if (viewMode === 'result') {
-    return (
-      <ResultView
-        title={theoryTitle}
-        nodes={nodes}
-        edges={edges}
-        backLabel="Voltar ao canvas"
-        showExportActions
-        onExport={exportStub}
-        onBack={() => setViewMode('canvas')}
-      />
-    );
-  }
-
   if (viewMode === 'example-preview') {
     return (
       <ResultView
@@ -1521,6 +1508,13 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
         context={sidebarContext}
         blockForms={blockForms}
         onStageDragStart={handleStageDragStart}
+      />
+      <TdmResultPreview
+        open={viewMode === 'result'}
+        title={theoryTitle}
+        nodes={nodes}
+        edges={edges}
+        onClose={closeResultView}
       />
     </section>
   );

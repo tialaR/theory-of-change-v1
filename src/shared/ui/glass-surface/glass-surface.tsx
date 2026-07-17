@@ -120,9 +120,9 @@ export function GlassSurface({
   const gaussianBlurRef = useRef<SVGFEGaussianBlurElement>(null);
 
   const generateDisplacementMap = useCallback(() => {
-    const rect = containerRef.current?.getBoundingClientRect();
-    const actualWidth = Math.max(rect?.width || DEFAULT_WIDTH, 1);
-    const actualHeight = Math.max(rect?.height || DEFAULT_HEIGHT, 1);
+    const element = containerRef.current;
+    const actualWidth = Math.max(1, Math.round(element?.offsetWidth || DEFAULT_WIDTH));
+    const actualHeight = Math.max(1, Math.round(element?.offsetHeight || DEFAULT_HEIGHT));
     const edgeSize = Math.min(actualWidth, actualHeight) * (borderWidth * 0.5);
     const innerWidth = Math.max(actualWidth - edgeSize * 2, 1);
     const innerHeight = Math.max(actualHeight - edgeSize * 2, 1);
@@ -174,7 +174,23 @@ export function GlassSurface({
   useEffect(() => {
     if (!containerRef.current || typeof ResizeObserver === 'undefined') return undefined;
 
-    const resizeObserver = new ResizeObserver(() => {
+    let lastWidth = 0;
+    let lastHeight = 0;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (!entry) return;
+
+      const borderBox = Array.isArray(entry.borderBoxSize) ? entry.borderBoxSize[0] : entry.borderBoxSize;
+      const nextWidth = Math.round(borderBox?.inlineSize ?? entry.contentRect.width);
+      const nextHeight = Math.round(borderBox?.blockSize ?? entry.contentRect.height);
+
+      if (nextWidth === lastWidth && nextHeight === lastHeight) {
+        return;
+      }
+
+      lastWidth = nextWidth;
+      lastHeight = nextHeight;
       window.setTimeout(updateDisplacementMap, RESIZE_REFRESH_DELAY);
     });
 

@@ -46,8 +46,8 @@
     position: absolute
     inset: 0
     pointer-events: none
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.065), transparent), radial-gradient(circle at 12% 18%, rgba(167, 139, 250, 0.08), transparent 26%), radial-gradient(circle at 92% 24%, rgba(74, 222, 189, 0.065), transparent 24%)
-    opacity: 0.74
+    background: linear-gradient(180deg, rgba(248, 249, 250, 0.07), transparent 28%), linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent)
+    opacity: 0.9
 
   &:hover,
   &:focus-within
@@ -85,18 +85,40 @@
   min-block-size: clamp(18rem, 27vw, 26rem)
   border: 0.0625rem solid rgba(255, 255, 255, 0.09)
   border-radius: 1.25rem
-  background: radial-gradient(circle at 50% 12%, rgba(255, 255, 255, 0.055), transparent 44%), rgba(4, 5, 7, 0.64)
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
+  background: rgba(9, 10, 12, 0.82)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.045), 0 1.25rem 2.5rem rgba(0, 0, 0, 0.28)
 
 .previewCanvas
+  display: grid
+  place-items: center
   inline-size: 100%
   block-size: 100%
-  min-block-size: clamp(18rem, 27vw, 26rem)
+  min-block-size: 0
 
   svg
     display: block
     inline-size: 100%
     block-size: 100%
+    max-inline-size: 100%
+    max-block-size: 100%
+
+.editorialConnectionBase
+  fill: none
+  stroke: rgba(235, 237, 240, 0.22)
+  stroke-width: 1.05
+  stroke-linecap: round
+  stroke-linejoin: round
+  opacity: 1
+  vector-effect: non-scaling-stroke
+
+.editorialConnectionReveal
+  fill: none
+  stroke: rgba(249, 250, 251, 0.72)
+  stroke-width: 1.15
+  stroke-linecap: round
+  stroke-linejoin: round
+  pointer-events: none
+  vector-effect: non-scaling-stroke
 
 .previewCta
   position: relative
@@ -113,19 +135,29 @@
   text-decoration: none
 
   span:last-child
-    transition: transform 180ms ease
+    transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1)
 
 .previewCard:hover .previewCta span:last-child,
 .previewCard:focus-within .previewCta span:last-child
   transform: translateX(0.25rem)
 
-.dedicatedPreviewFrame
+.dedicatedPreviewFrame,
+.fullPreview
+  display: grid
+  place-items: center
+  min-block-size: 0
+  aspect-ratio: 1520 / 660
   overflow: hidden
-  min-block-size: clamp(20rem, 32vw, 28rem)
-  border: 0.0625rem solid rgba(255, 255, 255, 0.09)
+  border: 0.0625rem solid rgba(255, 255, 255, 0.075)
   border-radius: 1.25rem
-  background: radial-gradient(circle at 50% 12%, rgba(255, 255, 255, 0.055), transparent 44%), rgba(4, 5, 7, 0.64)
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 28%), rgba(9, 10, 12, 0.82)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.045), 0 1.25rem 2.75rem rgba(0, 0, 0, 0.32)
+
+.dedicatedPreviewFrame
+  inline-size: 100%
+
+.fullPreview
+  border-radius: 1.75rem
 
 .fullPage
   min-block-size: 100vh
@@ -158,17 +190,9 @@
     font-size: clamp(2.25rem, 5vw, 5rem)
     letter-spacing: -0.07em
 
-.fullPreview
-  min-block-size: min(64vh, 44rem)
-  overflow: hidden
-  border: 0.0625rem solid rgba(255, 255, 255, 0.12)
-  border-radius: 1.75rem
-  background: rgba(5, 6, 8, 0.88)
-
 @media (max-width: 58rem)
   .previewGrid
     grid-template-columns: 1fr
 
   .previewCard
     min-block-size: 31rem
-

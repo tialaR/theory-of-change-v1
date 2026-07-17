@@ -3,22 +3,22 @@ import { getResultStageAccent } from '../result-view-utils';
 import type { ThemeTokens } from './types';
 
 const BASE_THEME: ThemeTokens = {
-  accentColor: '#a98cff',
-  accentSoftColor: '#c1adff',
-  backgroundColor: '#121318',
-  panelColor: 'rgba(17, 18, 22, .12)',
-  cardColor: 'rgba(11, 12, 15, .12)',
-  titleColor: 'rgba(242, 242, 245, .94)',
-  bodyColor: 'rgba(218, 218, 222, .76)',
-  mutedColor: 'rgba(198, 198, 204, .68)',
-  lineColor: 'rgba(255, 255, 255, .065)'
+  accentColor: '#8b7cff',
+  accentSoftColor: '#a89cff',
+  backgroundColor: '#0e0f13',
+  panelColor: 'rgba(14, 15, 19, .94)',
+  cardColor: 'rgba(13, 14, 18, .96)',
+  titleColor: 'rgba(236, 237, 241, .94)',
+  bodyColor: 'rgba(206, 208, 214, .74)',
+  mutedColor: 'rgba(176, 178, 186, .58)',
+  lineColor: 'rgba(255, 255, 255, .05)'
 };
 
 const STAGE_SOFT_COLORS: Record<TdmStage, string> = {
-  input: 'rgba(196, 181, 253, 0.96)',
-  activity: 'rgba(147, 197, 253, 0.96)',
-  output: 'rgba(253, 186, 116, 0.96)',
-  outcome: 'rgba(110, 231, 183, 0.96)'
+  input: 'rgba(168, 156, 255, 0.58)',
+  activity: 'rgba(120, 196, 255, 0.58)',
+  output: 'rgba(242, 186, 128, 0.58)',
+  outcome: 'rgba(96, 210, 168, 0.58)'
 };
 
 export function getLiquidGlassStageTheme(stage: TdmStage): ThemeTokens {

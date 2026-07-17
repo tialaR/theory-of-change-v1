@@ -1,0 +1,90 @@
+.topbar
+  position: relative
+  display: flex
+  align-items: center
+  justify-content: space-between
+  gap: 1rem
+  min-block-size: 3rem
+  padding: .35rem .35rem .55rem .45rem
+  z-index: 2
+
+.start
+  display: flex
+  align-items: center
+  gap: .7rem
+  min-inline-size: 2.35rem
+  z-index: 2
+
+.backButton
+  flex-shrink: 0
+  inline-size: 2.35rem
+  block-size: 2.35rem
+  display: grid
+  place-items: center
+  border-radius: .72rem
+  border: .0625rem solid rgba(255,255,255,.1)
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(255,255,255,.03)
+  color: rgba(255,255,255,.78)
+  text-decoration: none
+  cursor: pointer
+  transition: transform 180ms cubic-bezier(.22, 1, .36, 1), border-color 180ms cubic-bezier(.22, 1, .36, 1), background 180ms cubic-bezier(.22, 1, .36, 1)
+
+  &:hover
+    transform: translateY(-.0625rem)
+    border-color: rgba(255,255,255,.2)
+    background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.03)), rgba(255,255,255,.04)
+
+.heading
+  position: absolute
+  left: 50%
+  top: 50%
+  transform: translate(-50%, -50%)
+  margin: 0
+  max-inline-size: min(28rem, calc(100% - 18rem))
+  color: rgba(246, 248, 252, .92)
+  background-image: linear-gradient(105deg, rgba(255, 255, 255, .55) 0%, rgba(255, 255, 255, .96) 38%, rgba(198, 205, 216, .78) 52%, rgba(255, 255, 255, .94) 72%, rgba(230, 234, 240, .82) 100%)
+  -webkit-background-clip: text
+  background-clip: text
+  -webkit-text-fill-color: transparent
+  font-size: .72rem
+  font-weight: 650
+  letter-spacing: .16em
+  text-transform: uppercase
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+  line-height: 1.2
+  pointer-events: none
+  text-align: center
+  z-index: 1
+  filter: drop-shadow(0 0 .55rem rgba(255, 255, 255, .12))
+
+.actions
+  display: flex
+  align-items: center
+  gap: .55rem
+  flex-shrink: 0
+  z-index: 2
+
+@media (max-width: 70rem)
+  .heading
+    max-inline-size: min(20rem, calc(100% - 14rem))
+    font-size: .64rem
+    letter-spacing: .12em
+
+@media (max-width: 56rem)
+  .topbar
+    flex-wrap: wrap
+    row-gap: .55rem
+
+  .heading
+    position: static
+    transform: none
+    max-inline-size: 100%
+    order: 3
+    width: 100%
+    text-align: left
+    pointer-events: auto
+
+  .actions
+    margin-left: auto

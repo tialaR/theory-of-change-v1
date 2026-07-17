@@ -1,5 +1,19 @@
 # Diretrizes de Experiência Visual
 
+## Fonte canônica de identidade visual e movimento
+
+O padrão obrigatório está em:
+
+`docs/resend-visual-motion-standard.md`
+
+- Resend é a principal referência de disciplina visual para UI de produto.
+- Lusion pode continuar como referência ambiental limitada a heros e
+  composições editoriais específicas.
+- Lusion não governa movimento de componentes.
+- Movimento de produto segue o padrão TDM Resend.
+- Cores da TDM permanecem como identidade semântica própria.
+- Não copiar marca, conteúdo ou assets do Resend.
+
 ## DS público: `lusion-resend-ds`
 
 Rotas públicas usam exclusivamente o design system em `src/shared/ui/lusion-resend-ds/`. Não reutilizar componentes visuais do DS antigo (`resend-ds`, `experience`, `resend-experience`) nas páginas públicas.
@@ -8,7 +22,7 @@ Rotas públicas usam exclusivamente o design system em `src/shared/ui/lusion-res
 
 | Área | Referência | Lógica replicada |
 |------|-----------|------------------|
-| Home `/` | [Lusion Labs About](https://labs.lusion.co/about) | Hero dark imersivo, composição central, tipografia editorial, motion cinematográfico |
+| Home `/` | [Lusion Labs About](https://labs.lusion.co/about) | Hero dark imersivo, composição central, tipografia editorial (referência ambiental; motion de produto segue TDM Resend) |
 | Rotas internas | Páginas de produto estilo SaaS dark | Header fino, grid/dots, seções amplas, cards com borda fina, CTAs pill, scroll narrativo |
 
 Não copiar marcas, logos, textos ou assets proprietários.
@@ -60,10 +74,12 @@ Paleta: fundo quase preto, texto branco/cinza, verde só como acento. Sem roxo/a
 ### Motion
 
 - Biblioteca: `motion/react`
-- Usar `initial`, `animate`, `whileInView`, `transition`, `useReducedMotion`
+- Movimento intencional; entrada única; estado final estático
+- Easing padrão: `[0.22, 1, 0.36, 1]`
+- Sem loops decorativos; sem `linear`; sem pulsação; sem glow animado
+- Usar `useReducedMotion` — com preferência ativa, mostrar o estado final imediatamente
 - Toda animação de `opacity` deve ter `initial={{ opacity: 0 }}` (ou valor numérico explícito) — nunca `undefined`
-- Proibido: animar height/padding/margin/font-size no scroll; loops piscando; parallax pesado
-- Respeitar `prefers-reduced-motion`
+- Consultar o documento canônico: `docs/resend-visual-motion-standard.md`
 
 ### Quando usar cada componente
 

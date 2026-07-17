@@ -45,8 +45,7 @@ export function ResourceCard({
     '--resource-body': theme?.bodyColor ?? 'rgba(218, 218, 222, .76)',
     '--resource-muted': theme?.mutedColor ?? 'rgba(198, 198, 204, .68)',
     '--resource-line': theme?.lineColor ?? 'rgba(255, 255, 255, .065)',
-    '--glass-accent': accentColor,
-    '--glass-background': surfaceColor ?? theme?.cardColor ?? 'rgba(15, 16, 20, .18)'
+    '--glass-background': surfaceColor ?? theme?.cardColor ?? 'rgba(13, 14, 18, .96)'
   } as CSSProperties;
 
   const hasDirectionalConnections = incomingCount !== undefined || outgoingCount !== undefined;

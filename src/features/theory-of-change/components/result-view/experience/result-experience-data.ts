@@ -1,3 +1,7 @@
+import {
+  isConditionAllowed,
+  reportInvalidConnectionCondition
+} from '../../../domain/tdm-connection-rules';
 import { TDM_STAGE_ORDER, type TdmStage } from '../../../domain/tdm-stages';
 import { TDM_STAGE_LABELS } from '../../../domain/tdm-stages';
 import type { TdmEdge, TdmNode, TdmMarkerType } from '../../../domain/tdm-types';
@@ -119,15 +123,12 @@ export function getEdgeRelationSet(relatedNodes: Set<string>, edges: TdmEdge[]):
   return relatedEdges;
 }
 
-export function getConnectionBadge(edge: TdmEdge): 'R' | 'H' | 'R/H' | null {
+export function getConnectionBadge(edge: TdmEdge): 'R' | 'H' | null {
   const badges = getEdgeBadges(edge);
   const hasRisk = badges.some((badge) => badge.label === 'R');
   const hasHypothesis = badges.some((badge) => badge.label === 'H');
 
-  if (hasRisk && hasHypothesis) {
-    return 'R/H';
-  }
-
+  // Exclusive matrix: never combine risk and hypothesis on one connection.
   if (hasRisk) {
     return 'R';
   }
@@ -180,6 +181,8 @@ export function getEdgeBadges(edge: TdmEdge): Array<{ type: TdmMarkerType; label
   const badges: Array<{ type: TdmMarkerType; label: 'R' | 'H'; text: string }> = [];
   const riskText = getEdgeMarkerText(edge, 'risk')?.trim();
   const hypothesisText = getEdgeMarkerText(edge, 'hypothesis')?.trim();
+  const sourceStage = edge.sourceStage ?? edge.data?.sourceStage;
+  const targetStage = edge.targetStage ?? edge.data?.targetStage;
 
   if (primaryType === 'risk' && edge.markerText?.trim() && !riskText) {
     badges.push({ type: 'risk', label: 'R', text: edge.markerText.trim() });
@@ -197,7 +200,26 @@ export function getEdgeBadges(edge: TdmEdge): Array<{ type: TdmMarkerType; label
     badges.push({ type: 'hypothesis', label: 'H', text: hypothesisText });
   }
 
-  return badges;
+  if (!sourceStage || !targetStage) {
+    return badges;
+  }
+
+  return badges.filter((badge) => {
+    const allowed = isConditionAllowed({
+      sourceStage,
+      targetStage,
+      conditionKind: badge.type
+    });
+    if (!allowed) {
+      reportInvalidConnectionCondition({
+        edgeId: edge.id,
+        sourceStage,
+        targetStage,
+        conditionKind: badge.type
+      });
+    }
+    return allowed;
+  });
 }
 
 export function getStageCounts(nodes: TdmNode[]) {

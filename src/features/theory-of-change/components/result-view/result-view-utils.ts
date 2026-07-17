@@ -78,28 +78,28 @@ export const RESULT_STAGE_ACCENTS: Record<
   { accent: string; accentSoft: string; border: string; glow: string }
 > = {
   input: {
-    accent: 'rgba(167, 139, 250, 0.9)',
-    accentSoft: 'rgba(167, 139, 250, 0.12)',
-    border: 'rgba(167, 139, 250, 0.32)',
-    glow: 'rgba(167, 139, 250, 0.16)'
+    accent: 'rgba(139, 124, 255, 0.68)',
+    accentSoft: 'rgba(139, 124, 255, 0.08)',
+    border: 'rgba(139, 124, 255, 0.14)',
+    glow: 'rgba(139, 124, 255, 0.05)'
   },
   activity: {
-    accent: 'rgba(96, 165, 250, 0.9)',
-    accentSoft: 'rgba(96, 165, 250, 0.12)',
-    border: 'rgba(96, 165, 250, 0.32)',
-    glow: 'rgba(96, 165, 250, 0.16)'
+    accent: 'rgba(73, 179, 255, 0.68)',
+    accentSoft: 'rgba(73, 179, 255, 0.08)',
+    border: 'rgba(73, 179, 255, 0.14)',
+    glow: 'rgba(73, 179, 255, 0.05)'
   },
   output: {
-    accent: 'rgba(245, 158, 66, 0.88)',
-    accentSoft: 'rgba(245, 158, 66, 0.12)',
-    border: 'rgba(245, 158, 66, 0.32)',
-    glow: 'rgba(245, 158, 66, 0.16)'
+    accent: 'rgba(242, 166, 90, 0.68)',
+    accentSoft: 'rgba(242, 166, 90, 0.08)',
+    border: 'rgba(242, 166, 90, 0.14)',
+    glow: 'rgba(242, 166, 90, 0.05)'
   },
   outcome: {
-    accent: 'rgba(72, 211, 165, 0.88)',
-    accentSoft: 'rgba(72, 211, 165, 0.12)',
-    border: 'rgba(72, 211, 165, 0.32)',
-    glow: 'rgba(72, 211, 165, 0.16)'
+    accent: 'rgba(55, 200, 147, 0.68)',
+    accentSoft: 'rgba(55, 200, 147, 0.08)',
+    border: 'rgba(55, 200, 147, 0.14)',
+    glow: 'rgba(55, 200, 147, 0.05)'
   }
 };
 
