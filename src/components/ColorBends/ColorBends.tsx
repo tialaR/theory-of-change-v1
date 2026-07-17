@@ -1,6 +1,8 @@
+'use client';
+
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import './ColorBends.css';
+import styles from './color-bends.module.sass';
 
 type ColorBendsProps = {
   className?: string;
@@ -363,7 +365,7 @@ export default function ColorBends({
   return (
     <div
       ref={containerRef}
-      className={`color-bends-container ${className ?? ''}`}
+      className={`${styles.container} ${className ?? ''}`.trim()}
       style={containerStyle}
     />
   );

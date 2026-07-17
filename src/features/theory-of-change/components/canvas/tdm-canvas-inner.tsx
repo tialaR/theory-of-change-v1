@@ -22,6 +22,7 @@ import {
 } from '@xyflow/react';
 import { TdmTheoryEdge } from '../edge/tdm-theory-edge';
 import { ResultView } from '../result-view/result-view';
+import { TdmResultPreview } from '../result-preview/tdm-result-preview';
 import { TdmNode as TdmNodeView, TdmNodeInteractionProvider } from '../node/tdm-node';
 import { SidebarToggleIcon, TdmSidebar, type TdmBlockForms, type TdmSidebarContext } from '../sidebar/tdm-sidebar';
 import {
@@ -31,7 +32,7 @@ import {
 } from '../toast/tdm-toast-messages';
 import { TdmToastViewport } from '../toast/tdm-toast';
 import { useContextualFlowTooltip } from '../toast/use-contextual-flow-tooltip';
-import { TdmConnectionGuide } from './tdm-connection-guide';
+import { TdmCanvasProcessDock } from './tdm-canvas-process-dock/tdm-canvas-process-dock';
 import { TdmCanvasCommandDock } from './tdm-canvas-command-dock';
 import {
   getConnectionKind,
@@ -43,7 +44,6 @@ import {
 } from '../../domain/tdm-connection-rules';
 import { getTheoryGuideContent, THEORY_GUIDE_INVALID_CONNECTION } from '../../domain/tdm-theory-guide';
 import { type TdmStage } from '../../domain/tdm-stages';
-import { getTdmStageTheme } from '../../domain/tdm-theme';
 import type { TdmEdge as TdmEdgeModel, TdmMarkerType, TdmNode as TdmNodeModel, TdmNodeDraft } from '../../domain/tdm-types';
 import { exampleTheory } from '../../data/example-theory';
 import { canViewTdmResult, getTdmResultAvailabilityMessage } from '../../utils/tdm-result';
@@ -111,6 +111,21 @@ const CANVAS_FIT_PADDING = 0.16;
 const CANVAS_MIN_ZOOM = 0.32;
 const CANVAS_MAX_ZOOM = 1.2;
 const CANVAS_MAX_AUTO_FIT_ZOOM = 1;
+const CANVAS_SNAP_GRID: [number, number] = [20, 20];
+const CANVAS_FIT_VIEW_OPTIONS = {
+  padding: CANVAS_FIT_PADDING,
+  maxZoom: CANVAS_MAX_AUTO_FIT_ZOOM
+} as const;
+const CANVAS_CONTROLS_STYLE = { left: 16, bottom: 16, top: 'auto', right: 'auto', width: 'auto' } as const;
+const CANVAS_MINIMAP_STYLE = { width: 152, height: 96, pointerEvents: 'none' as const };
+
+/** Local visual stage fills for minimap (DS V1 — not domain theme). */
+const CANVAS_DS_MINIMAP: Record<TdmStage, { fill: string; stroke: string }> = {
+  input: { fill: 'rgba(167, 139, 250, 0.16)', stroke: 'rgba(167, 139, 250, 0.55)' },
+  activity: { fill: 'rgba(96, 165, 250, 0.14)', stroke: 'rgba(96, 165, 250, 0.5)' },
+  output: { fill: 'rgba(246, 179, 93, 0.14)', stroke: 'rgba(246, 179, 93, 0.5)' },
+  outcome: { fill: 'rgba(94, 224, 181, 0.14)', stroke: 'rgba(94, 224, 181, 0.5)' }
+};
 
 export const nodeTypes = {
   tdm: TdmNodeView
@@ -299,7 +314,25 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
     setIsEditAccordionOpen(false);
     setMarkerEditorEdgeId(null);
     setGuideTransientMessage(null);
-  }, []);
+    setNodes((currentNodes) => {
+      const hasSelectedNodes = currentNodes.some((node) => node.selected);
+
+      if (!hasSelectedNodes) {
+        return currentNodes;
+      }
+
+      return currentNodes.map((node) => {
+        if (!node.selected) {
+          return node;
+        }
+
+        return {
+          ...node,
+          selected: false
+        };
+      });
+    });
+  }, [setNodes]);
 
   const replaceCanvasWithExample = useCallback(() => {
     if (canvasVariant === 'custom') {
@@ -403,7 +436,9 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
     setViewMode('result');
   }, []);
 
-  const exportStub = useCallback((_format: 'pdf' | 'png' | 'jpeg' | 'svg') => {}, []);
+  const closeResultView = useCallback(() => {
+    setViewMode('canvas');
+  }, []);
 
   const centerNodes = useCallback(() => {
     setNodes((currentNodes) => layoutNodesByStage(currentNodes));
@@ -1163,6 +1198,30 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
     [nodes, syncEditDraftFromNode]
   );
 
+  const handleNodeDoubleClick = useCallback(
+    (_event: ReactMouseEvent, node: TdmNodeModel) => {
+      openNodeEditor(node.id);
+    },
+    [openNodeEditor]
+  );
+
+  const handleEdgeClick = useCallback((_event: ReactMouseEvent, edge: TdmEdgeModel) => {
+    setSelectedEdgeId(edge.id);
+    setSelectedNodeId(null);
+    setToolbarNodeId(null);
+    setEditingNodeId(null);
+    setCreationError(undefined);
+    setEditError(undefined);
+    setEditDraft({ ...EMPTY_DRAFT });
+    setIsEditAccordionOpen(false);
+    setMarkerDraft(edge.markerText ?? '');
+    setGuideTransientMessage(null);
+  }, []);
+
+  const minimapNodeColor = useCallback((node: TdmNodeModel) => CANVAS_DS_MINIMAP[node.stage].fill, []);
+
+  const minimapNodeStrokeColor = useCallback((node: TdmNodeModel) => CANVAS_DS_MINIMAP[node.stage].stroke, []);
+
   const handleNodeClick = useCallback(
     (event: ReactMouseEvent, node: TdmNodeModel) => {
       event.stopPropagation();
@@ -1184,6 +1243,7 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
 
         return {
           ...nodeWithoutDimensions,
+          selected: selectedNodeId === node.id,
           ...(Object.keys(styleWithoutDimensions).length > 0 ? { style: styleWithoutDimensions } : {}),
           data: {
             ...node.data,
@@ -1310,20 +1370,6 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
         }
       : { kind: 'none' };
 
-  if (viewMode === 'result') {
-    return (
-      <ResultView
-        title={theoryTitle}
-        nodes={nodes}
-        edges={edges}
-        backLabel="Voltar ao canvas"
-        showExportActions
-        onExport={exportStub}
-        onBack={() => setViewMode('canvas')}
-      />
-    );
-  }
-
   if (viewMode === 'example-preview') {
     return (
       <ResultView
@@ -1350,6 +1396,12 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
       <div className={styles.canvasArea}>
         <TdmToastViewport toast={activeFlowTooltip} onClose={closeFlowTooltip} />
         <div className={styles.flowFrame} onClick={handleFlowBackgroundClick}>
+          {nodes.length === 0 ? (
+            <div className={styles.emptyState} aria-hidden="true">
+              <span className={styles.emptyStateMark} />
+              <p className={styles.emptyStateHint}>Arraste um insumo para começar</p>
+            </div>
+          ) : null}
           <TdmNodeInteractionProvider
             value={{
               editingNodeId,
@@ -1374,43 +1426,34 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
               onConnectEnd={handleConnectEnd}
               onDragOver={handleDragOver}
               onDrop={handleDrop}
-              onNodeDoubleClick={(_, node) => openNodeEditor(node.id)}
+              onNodeDoubleClick={handleNodeDoubleClick}
               onNodeClick={handleNodeClick}
-              onEdgeClick={(_, edge) => {
-                setSelectedEdgeId(edge.id);
-                setSelectedNodeId(null);
-                setToolbarNodeId(null);
-                setEditingNodeId(null);
-                setCreationError(undefined);
-                setEditError(undefined);
-                setEditDraft({ ...EMPTY_DRAFT });
-                setIsEditAccordionOpen(false);
-                setMarkerDraft(edge.markerText ?? '');
-                setGuideTransientMessage(null);
-              }}
+              onEdgeClick={handleEdgeClick}
               onPaneClick={handlePaneClick}
               nodesDraggable
               nodesConnectable={canConnectNodes}
               elementsSelectable
+              multiSelectionKeyCode={null}
               panOnDrag
               zoomOnScroll
               zoomOnPinch
               zoomOnDoubleClick={false}
               snapToGrid
-              snapGrid={[20, 20]}
+              snapGrid={CANVAS_SNAP_GRID}
               minZoom={CANVAS_MIN_ZOOM}
               maxZoom={CANVAS_MAX_ZOOM}
               fitView
-              fitViewOptions={{ padding: CANVAS_FIT_PADDING, maxZoom: CANVAS_MAX_AUTO_FIT_ZOOM }}
+              fitViewOptions={CANVAS_FIT_VIEW_OPTIONS}
               colorMode="dark"
               attributionPosition="bottom-left"
             >
-              <TdmConnectionGuide
+              <TdmCanvasProcessDock
                 content={guideContent}
                 stageCounts={stageCounts}
                 isTheoryComplete={canGenerateResult}
                 isExpanded={isGuideExpanded}
                 onExpandedChange={setIsGuideExpanded}
+                onViewResult={openResultView}
               />
               <TdmCanvasCommandDock
                 isGuideExpanded={isGuideExpanded}
@@ -1426,16 +1469,16 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
                 showInteractive={false}
                 position="bottom-left"
                 className={styles.controls}
-                style={{ left: 16, bottom: 16, top: 'auto', right: 'auto', width: 'auto' }}
+                style={CANVAS_CONTROLS_STYLE}
               />
               <MiniMap
                 position="bottom-right"
                 pannable={false}
                 zoomable={false}
                 className={styles.minimap}
-                style={{ width: 152, height: 96, pointerEvents: 'none' }}
-                nodeColor={(node) => getTdmStageTheme((node as TdmNodeModel).stage).surface}
-                nodeStrokeColor={(node) => getTdmStageTheme((node as TdmNodeModel).stage).accent}
+                style={CANVAS_MINIMAP_STYLE}
+                nodeColor={minimapNodeColor}
+                nodeStrokeColor={minimapNodeStrokeColor}
                 nodeBorderRadius={6}
                 nodeStrokeWidth={1}
                 bgColor="rgba(16, 17, 20, 0.86)"
@@ -1459,14 +1502,19 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
         canAdvance={canAdvance}
         canViewTdmResult={canGenerateResult}
         resultAvailabilityMessage={resultAvailabilityMessage}
-        onViewExampleCanvas={viewExampleCanvas}
-        onViewExampleResult={viewExampleResult}
         canRestoreTheory={canRestoreTheory}
         onRestoreTheory={restorePreviousTheory}
         onViewResult={openResultView}
         context={sidebarContext}
         blockForms={blockForms}
         onStageDragStart={handleStageDragStart}
+      />
+      <TdmResultPreview
+        open={viewMode === 'result'}
+        title={theoryTitle}
+        nodes={nodes}
+        edges={edges}
+        onClose={closeResultView}
       />
     </section>
   );

@@ -1,40 +1,89 @@
 @use '../../../../shared/styles/tokens' as *
 
 .formCard
-  +ds-sidebar-shell
   position: relative
   display: grid
   gap: 0
   width: 100%
   min-width: 0
-  padding: $sidebar-card-padding
-
-  :global(.fieldLabel)
-    color: rgba(180, 180, 186, 0.82)
-    font-size: 0.625rem
-    font-weight: 800
-    letter-spacing: 0.18em
-    text-transform: uppercase
-
-.formCardToolbar
-  position: relative
-  z-index: 1
-  display: flex
-  justify-content: flex-end
-  margin: -0.125rem 0 0.4375rem
-
-.hideSidebarButton
-  display: inline-grid
-  place-items: center
   padding: 0
   border: 0
+  border-radius: 0
   background: transparent
-  cursor: pointer
-  opacity: 0.72
-  transition: opacity 160ms ease, filter 160ms ease
+  box-shadow: none
 
-  &:hover,
-  &:focus-visible
-    outline: none
+  :global([class*='fieldLabel'])
+    color: rgb(161, 164, 165)
+    font-size: 0.65625rem
+    font-weight: 400
+    line-height: 1.25
+    letter-spacing: 0.02em
+    text-transform: uppercase
+    margin: 0
+
+// Hero sidebar toggle — icon only; hit area remains 1.875rem, visually transparent.
+.hideSidebarButton
+  appearance: none
+  display: grid
+  place-items: center
+  width: 1.875rem
+  height: 1.875rem
+  min-width: 1.875rem
+  padding: 0
+  border: 0
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+  color: rgba(232, 234, 240, 0.76)
+  opacity: 0.82
+  cursor: pointer
+  transition: color 0.18s ease, opacity 0.18s ease, filter 0.18s ease
+
+  &::before,
+  &::after
+    content: none
+    display: none
+
+  &:hover
+    background: transparent
+    color: rgba(248, 249, 252, 0.96)
     opacity: 1
-    filter: brightness(1.06)
+    filter: brightness(1.08)
+
+  &:focus-visible
+    outline: 0.0625rem solid rgba(244, 247, 251, 0.28)
+    outline-offset: 0.1875rem
+    background: transparent
+
+  svg
+    display: block
+    width: 1.125rem
+    height: 1.125rem
+    overflow: visible
+
+    path
+      fill: none
+      stroke: currentColor
+      stroke-width: 1.5
+      stroke-linecap: round
+      stroke-linejoin: round
+
+// BEGIN CANVAS FORM SHORTCUTS MICROFIX 05
+// Hero field wrapper must remain grid; compact inputs use rectangular radius.
+.formCard
+  :global(label)
+    display: grid
+    gap: 0.375rem
+    margin: 0
+
+  :global([class*='fieldLabel'])
+    margin: 0
+    font-size: 0.65625rem
+    line-height: 1.25
+
+  :global(input)
+    border-radius: 0.625rem !important
+
+  :global(textarea)
+    border-radius: 1rem !important
+// END CANVAS FORM SHORTCUTS MICROFIX 05

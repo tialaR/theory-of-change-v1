@@ -47,8 +47,9 @@ export function InteractiveExperienceShell({
             <Link href={backHref} className={styles.interactiveBackButton} aria-label="Voltar">
               <span aria-hidden="true">←</span>
             </Link>
-            <h1 className={styles.interactiveTopbarHeading}>{title}</h1>
           </div>
+
+          <h1 className={styles.interactiveTopbarHeading}>{title}</h1>
 
           <div className={styles.interactiveToolbar}>
             <div className={styles.interactiveToolbarCluster}>
@@ -65,9 +66,9 @@ export function InteractiveExperienceShell({
 
         <motion.section
           className={styles.workspaceShell}
-          initial={reduce ? false : { opacity: 0, scale: 0.985 }}
+          initial={false}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: reduce ? 0.01 : 0.42, ease }}
+          transition={{ duration: reduce ? 0.01 : 0.28, ease }}
         >
           {children}
         </motion.section>

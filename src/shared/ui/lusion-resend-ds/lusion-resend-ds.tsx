@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState, type ReactNode } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { HomeBrandLogo } from '@/features/theory-of-change/components/public-pages/home-brand-logo';
+import { GlassSurface } from '@/shared/ui/glass-surface';
 import styles from './lusion-resend-ds.module.sass';
 
 const NAV = [
@@ -166,7 +167,28 @@ export function PublicHeader({
   return (
     <>
       <header className={styles.header} data-scrolled={isScrolled ? 'true' : 'false'}>
-        <div className={styles.headerBar}>
+                <GlassSurface
+          aria-hidden="true"
+          width="100%"
+          height="5.625rem"
+          borderRadius={0}
+          borderWidth={0}
+          brightness={20}
+          opacity={0.93}
+          blur={30}
+          displace={5}
+          backgroundOpacity={0.26}
+          saturation={0.7}
+          distortionScale={-300}
+          redOffset={0}
+          greenOffset={0}
+          blueOffset={0}
+          xChannel="R"
+          yChannel="G"
+          mixBlendMode="screen"
+          className={styles.headerGlassSurface}
+        />
+<div className={styles.headerBar}>
           <Link href="/" className={styles.brand} aria-label="Ir para o início">
             <HomeBrandLogo variant="header" />
             <span className={styles.brandText}>TDM</span>
@@ -193,6 +215,7 @@ export function PublicHeader({
             </PublicButton>
           </div>
         </div>
+        
       </header>
       <div className={styles.headerOffset} aria-hidden="true" />
     </>

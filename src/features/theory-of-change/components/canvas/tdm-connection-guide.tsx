@@ -2,9 +2,8 @@
 
 import { useCallback, useState, type CSSProperties } from 'react';
 import { Panel } from '@xyflow/react';
-import { AnimatePresence, motion, type Transition } from 'motion/react';
 import { TDM_STAGE_ORDER, type TdmStage } from '../../domain/tdm-stages';
-import { getTdmStageTheme, TDM_THEORY_NEUTRAL } from '../../domain/tdm-theme';
+import { TDM_THEORY_NEUTRAL } from '../../domain/tdm-theme';
 import {
   THEORY_GUIDE_MAIN_TABS,
   type TheoryGuideContent,
@@ -40,23 +39,24 @@ type TdmConnectionGuideProps = {
   onExpandedChange?: (expanded: boolean) => void;
 };
 
-/** Stable SSR/client kicker — responsive shortening is CSS-only. */
-const GUIDE_META_LABEL = 'Etapa';
-
-const GUIDE_EXPAND_TRANSITION: Transition = {
-  duration: 0.22,
-  ease: [0.22, 1, 0.36, 1]
-};
-
-const STAGE_COUNTER_LABELS: Record<TdmStage, string> = {
-  input: 'Insumos',
-  activity: 'Atividades',
-  output: 'Produtos',
-  outcome: 'Resultados'
+/** Local visual accents for Stage Plate (module DS — not domain theme). */
+const STAGE_ACCENTS: Record<TdmStage, string> = {
+  input: '#a78bfa',
+  activity: '#60a5fa',
+  output: '#f6b35d',
+  outcome: '#5ee0b5'
 };
 
 function getStageLabel(stage: TheoryGuideStageId): string {
   return THEORY_GUIDE_MAIN_TABS.find((tab) => tab.id === stage)?.label ?? 'Teoria';
+}
+
+function getActiveStageAccent(stage: TheoryGuideStageId): string {
+  if (stage === 'input') return STAGE_ACCENTS.input;
+  if (stage === 'activity') return STAGE_ACCENTS.activity;
+  if (stage === 'output') return STAGE_ACCENTS.output;
+  if (stage === 'outcome') return STAGE_ACCENTS.outcome;
+  return TDM_THEORY_NEUTRAL.muted;
 }
 
 function getNextStagePreviewAccent(label: string | null): string {
@@ -70,15 +70,7 @@ function getNextStagePreviewAccent(label: string | null): string {
     return TDM_THEORY_NEUTRAL.muted;
   }
 
-  if (stageEntry.id === 'input') {
-    return 'rgba(186, 178, 220, 0.72)';
-  }
-
-  if (stageEntry.id === 'activity' || stageEntry.id === 'output' || stageEntry.id === 'outcome') {
-    return getTdmStageTheme(stageEntry.id).accent;
-  }
-
-  return TDM_THEORY_NEUTRAL.muted;
+  return getActiveStageAccent(stageEntry.id);
 }
 
 function ChevronIcon({ expanded }: { expanded: boolean }) {
@@ -111,9 +103,9 @@ export function TdmConnectionGuide({
   const isExpanded = isExpandedProp ?? internalExpanded;
 
   const currentStageLabel = getStageLabel(content.activeStage);
+  const stageAccent = getActiveStageAccent(content.activeStage);
   const previewAccent = getNextStagePreviewAccent(content.nextStageLabel);
-  const shortHelp =
-    content.action?.trim() || content.message?.trim() || 'Crie o próximo bloco para avançar.';
+  const compactCounts = TDM_STAGE_ORDER.map((stage) => stageCounts[stage]).join('/');
 
   const setExpanded = useCallback(
     (nextExpanded: boolean) => {
@@ -132,52 +124,30 @@ export function TdmConnectionGuide({
 
   return (
     <Panel position="top-left" className={styles.panel}>
-      <div className={[styles.shell, isExpanded ? styles.shellExpanded : ''].filter(Boolean).join(' ')}>
-        <div className={styles.toolbarRow}>
-          <div className={styles.guideBlock}>
-            <span className={styles.guideLabel}>
-              <span className={styles.guideLabelText}>{GUIDE_META_LABEL}</span>
-              <span className={styles.guideLabelSuffix} aria-hidden="true">
-                {' '}
-                atual
-              </span>
-            </span>
-            <span className={styles.stageTitle}>{currentStageLabel}</span>
-          </div>
-
-          {content.nextStageLabel ? (
-            <>
-              <span className={styles.divider} aria-hidden="true" />
-              <span
-                className={styles.nextStep}
-                style={{ '--preview-accent': previewAccent } as CSSProperties}
-              >
-                Próximo: {content.nextStageLabel}
-              </span>
-            </>
-          ) : null}
-
-          <div className={styles.counters} aria-label="Contadores rápidos">
-            {TDM_STAGE_ORDER.map((stage) => (
-              <span
-                key={stage}
-                className={styles.counter}
-                style={{ '--counter-accent': getTdmStageTheme(stage).accent } as CSSProperties}
-              >
-                <span className={styles.counterDot} aria-hidden="true" />
-                <span className={styles.counterLabel}>{STAGE_COUNTER_LABELS[stage]}</span>
-                <span className={styles.counterValue}>{stageCounts[stage]}</span>
-              </span>
-            ))}
-            <span
-              className={[styles.counter, isTheoryComplete ? styles.counterComplete : '']
-                .filter(Boolean)
-                .join(' ')}
-            >
-              <span className={styles.counterLabel}>Conexões</span>
-              <span className={styles.counterValue}>{isTheoryComplete ? '✓' : '—'}</span>
-            </span>
-          </div>
+      <div
+        className={[styles.shell, isExpanded ? styles.shellExpanded : ''].filter(Boolean).join(' ')}
+        style={{ '--stage-accent': stageAccent } as CSSProperties}
+      >
+        <div className={styles.compactRow}>
+          <span className={styles.stageDot} aria-hidden="true" />
+          <span className={styles.stageTitle}>{currentStageLabel}</span>
+          <span className={styles.compactDivider} aria-hidden="true">
+            ·
+          </span>
+          <span className={styles.compactCounts} aria-label="Contadores rápidos">
+            {compactCounts}
+          </span>
+          <span className={styles.compactDivider} aria-hidden="true">
+            ·
+          </span>
+          <span
+            className={[styles.compactConnections, isTheoryComplete ? styles.compactConnectionsReady : '']
+              .filter(Boolean)
+              .join(' ')}
+            aria-label="Conexões"
+          >
+            Conexões{isTheoryComplete ? ' ✓' : ''}
+          </span>
 
           <button
             type="button"
@@ -190,20 +160,22 @@ export function TdmConnectionGuide({
           </button>
         </div>
 
-        <AnimatePresence initial={false}>
-          {isExpanded ? (
-            <motion.div
-              key="guide-help"
-              className={styles.helpRow}
-              initial={{ opacity: 0, y: -6, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -6, scale: 0.98 }}
-              transition={GUIDE_EXPAND_TRANSITION}
-            >
-              <p className={styles.helpText}>{shortHelp}</p>
-            </motion.div>
-          ) : null}
-        </AnimatePresence>
+        <div className={styles.expandedBlock} data-open={isExpanded ? 'true' : undefined}>
+          <div className={styles.expandedInner}>
+            {content.nextStageLabel ? (
+              <span
+                className={styles.nextStep}
+                style={{ '--preview-accent': previewAccent } as CSSProperties}
+              >
+                <span className={styles.nextStepPrefix}>Próximo</span>
+                <span className={styles.nextStepArrow} aria-hidden="true">
+                  →
+                </span>
+                <span className={styles.nextStepLabel}>{content.nextStageLabel}</span>
+              </span>
+            ) : null}
+          </div>
+        </div>
       </div>
     </Panel>
   );

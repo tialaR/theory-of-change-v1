@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { useState } from 'react';
-import { motion } from 'motion/react';
+import { useRef } from 'react';
+import { motion, useInView } from 'motion/react';
 import { FlowDraftPreview } from './flow-draft-preview';
 import { ResultDraftPreview } from './result-draft-preview';
 import styles from './example-previews.module.sass';
@@ -19,18 +19,16 @@ type PreviewCardProps = {
 };
 
 function PreviewCard({ type, href, title, description, icon }: PreviewCardProps) {
-  const [active, setActive] = useState(false);
+  const cardRef = useRef<HTMLElement>(null);
+  const isInView = useInView(cardRef, { amount: 0.2 });
   const Preview = type === 'flow' ? FlowDraftPreview : ResultDraftPreview;
 
   return (
     <motion.article
+      ref={cardRef}
       className={styles.previewCard}
-      onHoverStart={() => setActive(true)}
-      onHoverEnd={() => setActive(false)}
-      onFocus={() => setActive(true)}
-      onBlur={() => setActive(false)}
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={{ y: -1 }}
+      transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className={styles.cardIntro}>
         <span className={styles.iconTile} aria-hidden="true">{icon}</span>
@@ -41,7 +39,7 @@ function PreviewCard({ type, href, title, description, icon }: PreviewCardProps)
       </div>
 
       <div className={styles.previewFrame}>
-        <Preview active={active} />
+        <Preview active={isInView} />
       </div>
 
       <Link className={styles.previewCta} href={href}>

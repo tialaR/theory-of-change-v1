@@ -3,12 +3,14 @@
 import { Handle, NodeProps, Position } from '@xyflow/react';
 import {
   createContext,
+  memo,
   useContext,
   useState,
   type MouseEvent,
   type ReactNode,
   type SyntheticEvent
 } from 'react';
+import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
 import { TDM_STAGE_LABELS } from '../../domain/tdm-stages';
 import type { TdmNode as TdmNodeModel, TdmNodeDraft } from '../../domain/tdm-types';
 import { TdmBlockFormFields } from '../form-field/tdm-form-field';
@@ -55,7 +57,7 @@ export function useTdmNodeInteractions() {
   return context;
 }
 
-export function TdmNode({ id, data, selected }: NodeProps<TdmNodeModel>) {
+export const TdmNode = memo(function TdmNode({ id, data, selected }: NodeProps<TdmNodeModel>) {
   const {
     editingNodeId: contextEditingNodeId,
     onBeginEditNode,
@@ -236,8 +238,9 @@ export function TdmNode({ id, data, selected }: NodeProps<TdmNodeModel>) {
           </div>
           {errorMessage ? <p className={styles.nodeEditErrorMessage}>{errorMessage}</p> : null}
           <div className={styles.nodeEditActions}>
-            <button
+            <TdmButton
               type="button"
+              variant="primary"
               className={[styles.nodeEditActionButton, styles.nodeEditActionButtonPrimary, 'nodrag', 'nopan'].join(' ')}
               onPointerDown={(event) => event.stopPropagation()}
               onMouseDown={(event) => event.stopPropagation()}
@@ -258,9 +261,10 @@ export function TdmNode({ id, data, selected }: NodeProps<TdmNodeModel>) {
               }}
             >
               SALVAR
-            </button>
-            <button
+            </TdmButton>
+            <TdmButton
               type="button"
+              variant="secondary"
               className={[styles.nodeEditActionButton, styles.nodeEditActionButtonSecondary, 'nodrag', 'nopan'].join(' ')}
               onPointerDown={(event) => event.stopPropagation()}
               onMouseDown={(event) => event.stopPropagation()}
@@ -270,7 +274,7 @@ export function TdmNode({ id, data, selected }: NodeProps<TdmNodeModel>) {
               }}
             >
               FECHAR
-            </button>
+            </TdmButton>
           </div>
         </div>
       ) : (
@@ -286,7 +290,7 @@ export function TdmNode({ id, data, selected }: NodeProps<TdmNodeModel>) {
       {canSend ? <Handle type="source" position={Position.Right} className={styles.handle} /> : null}
     </article>
   );
-}
+});
 
 function CloseIcon() {
   return (
@@ -294,13 +298,13 @@ function CloseIcon() {
       <path
         d="M10.5 10.5L28.5 28.5"
         stroke="currentColor"
-        strokeWidth="2.4"
+        strokeWidth="1.55"
         strokeLinecap="round"
       />
       <path
         d="M28.5 10.5L10.5 28.5"
         stroke="currentColor"
-        strokeWidth="2.4"
+        strokeWidth="1.55"
         strokeLinecap="round"
       />
     </svg>
@@ -313,14 +317,14 @@ function EditIcon() {
       <path
         d="M11.2 30.9L12.4 24.4L26.2 10.6C28.3 8.5 31.8 8.5 33.9 10.6C36 12.7 36 16.2 33.9 18.3L20.1 32.1L13.6 33.3C12.1 33.6 10.9 32.4 11.2 30.9Z"
         stroke="currentColor"
-        strokeWidth="2.4"
+        strokeWidth="1.55"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M24.3 12.7L31.8 20.2"
         stroke="currentColor"
-        strokeWidth="2.4"
+        strokeWidth="1.55"
         strokeLinecap="round"
       />
     </svg>
@@ -337,7 +341,7 @@ function DuplicateIcon() {
         height="22"
         rx="2.8"
         stroke="currentColor"
-        strokeWidth="2.3"
+        strokeWidth="1.55"
       />
       <rect
         x="16"
@@ -346,7 +350,7 @@ function DuplicateIcon() {
         height="22"
         rx="2.8"
         stroke="currentColor"
-        strokeWidth="2.3"
+        strokeWidth="1.55"
       />
     </svg>
   );
@@ -358,19 +362,19 @@ function TrashIcon() {
       <path
         d="M11 14.5H32"
         stroke="currentColor"
-        strokeWidth="2.4"
+        strokeWidth="1.55"
         strokeLinecap="round"
       />
       <path
         d="M18 14.5V10.8C18 9.4 19.1 8.3 20.5 8.3H22.5C23.9 8.3 25 9.4 25 10.8V14.5"
         stroke="currentColor"
-        strokeWidth="2.4"
+        strokeWidth="1.55"
         strokeLinecap="round"
       />
       <path
         d="M14.2 18.5L15.5 32.2C15.7 34.2 17.3 35.7 19.3 35.7H23.7C25.7 35.7 27.3 34.2 27.5 32.2L28.8 18.5"
         stroke="currentColor"
-        strokeWidth="2.4"
+        strokeWidth="1.55"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

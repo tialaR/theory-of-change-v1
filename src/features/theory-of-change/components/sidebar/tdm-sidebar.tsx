@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  useCallback,
   useEffect,
   useId,
   useMemo,
@@ -12,21 +11,20 @@ import {
   type ReactNode,
   type RefObject
 } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import Link from 'next/link';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { Surface } from '@/shared/ui/surface/surface';
 import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
 import buttonStyles from '@/shared/ui/tdm-button/tdm-button.module.sass';
 import { TdmAnchoredTooltip } from '@/shared/ui/tooltip/tdm-anchored-tooltip';
 import type { TdmNodeDraft } from '../../domain/tdm-types';
 import { TDM_STAGE_ORDER, type TdmStage } from '../../domain/tdm-stages';
-import { getTheoryGuideProgressStage, type TheoryGuideStageId } from '../../domain/tdm-theory-guide';
-import { getTdmStageTheme, TDM_THEORY_NEUTRAL } from '../../domain/tdm-theme';
 import type { StageCreation } from '../../utils/stage-creation';
 import { TdmBlockFormFields, TdmFormField } from '../form-field/tdm-form-field';
 import fieldStyles from '../form-field/tdm-form-field.module.sass';
 import { TdmSectionIcon } from '../tdm-section-icon/tdm-section-icon';
-import LiquidGlassLogoInfiniteLoop from './liquid-glass-logo-infinite-loop';
 import { TheoryHeaderForm, THEORY_DEFAULT_DESCRIPTION } from './theory-header-form';
+import headerFormStyles from './theory-header-form.module.sass';
 import { SidebarToggleIcon } from './sidebar-toggle-icon';
 import {
   V1BlockFormsPanel,
@@ -38,6 +36,33 @@ import {
 import styles from './tdm-sidebar.module.sass';
 
 export { SidebarToggleIcon };
+
+/** Local visual stage accents for canvas inspector (DS V1 — not domain theme). */
+const CANVAS_DS_STAGE: Record<
+  TdmStage,
+  { accent: string; soft: string; border: string }
+> = {
+  input: {
+    accent: '#a78bfa',
+    soft: 'rgba(167, 139, 250, 0.18)',
+    border: 'rgba(167, 139, 250, 0.34)'
+  },
+  activity: {
+    accent: '#60a5fa',
+    soft: 'rgba(96, 165, 250, 0.16)',
+    border: 'rgba(96, 165, 250, 0.34)'
+  },
+  output: {
+    accent: '#f6b35d',
+    soft: 'rgba(246, 179, 93, 0.16)',
+    border: 'rgba(246, 179, 93, 0.34)'
+  },
+  outcome: {
+    accent: '#5ee0b5',
+    soft: 'rgba(94, 224, 181, 0.16)',
+    border: 'rgba(94, 224, 181, 0.34)'
+  }
+};
 
 export type ExportFormat = 'pdf' | 'png' | 'jpeg' | 'svg';
 
@@ -103,65 +128,56 @@ const STAGE_GUIDE: Record<
   }
 > = {
   input: {
-    title: '1. Insumos',
-    summary: 'Recursos necessários para a política acontecer.',
-    technical:
-      'Insumos são recursos, capacidades e condições de partida. Eles não são ações. São aquilo que permite que as atividades aconteçam.',
-    examples: ['equipe técnica', 'orçamento', 'dados educacionais', 'materiais', 'tecnologia', 'parcerias']
+    title: '1. Insumo',
+    summary: 'O que precisa estar disponível?',
+    technical: 'Insumos são recursos que precisam existir antes da ação começar.',
+    examples: ['equipe', 'orçamento', 'dados', 'parceiros']
   },
   activity: {
-    title: '2. Atividades',
-    summary: 'Ações realizadas com os insumos.',
-    technical:
-      'Atividades são o que a política faz com os recursos disponíveis. Normalmente começam com verbos de ação, como formar, acompanhar, aplicar, distribuir ou monitorar.',
-    examples: ['formar professores', 'aplicar diagnóstico', 'acompanhar escolas', 'distribuir materiais', 'monitorar frequência']
+    title: '2. Atividade',
+    summary: 'O que será feito com os recursos disponíveis?',
+    technical: 'Atividades são ações realizadas usando os insumos.',
+    examples: ['oficinas', 'capacitações', 'atendimento', 'articulação']
   },
   output: {
-    title: '3. Produtos',
-    summary: 'Entregas concretas geradas pelas atividades.',
-    technical:
-      'Produtos são entregas observáveis e contáveis. Eles mostram o que foi produzido diretamente pelas atividades, antes de medir mudança.',
-    examples: ['oficinas realizadas', 'relatórios emitidos', 'planos validados', 'materiais entregues', 'estudantes atendidos']
+    title: '3. Produto',
+    summary: 'O que será entregue?',
+    technical: 'Produtos são entregas concretas geradas pelas atividades.',
+    examples: ['relatórios', 'materiais', 'serviços', 'pessoas atendidas']
   },
   outcome: {
-    title: '4. Resultados',
-    summary: 'Mudanças esperadas após as entregas.',
-    technical:
-      'Resultados são mudanças em comportamento, prática, capacidade ou condição. Eles mostram o que deve melhorar depois que produtos foram entregues.',
-    examples: [
-      'escolas acompanham melhor estudantes',
-      'professores usam dados',
-      'estudantes frequentam mais aulas',
-      'gestão toma decisões mais rápidas'
-    ]
+    title: '4. Resultado',
+    summary: 'O que muda para o público ou território?',
+    technical: 'Resultados são mudanças esperadas após as entregas.',
+    examples: ['acesso', 'renda', 'risco', 'aprendizagem', 'capacidade']
   }
 };
 
 const STAGE_CREATION_HINTS: Record<StageCreation, { title: string; description: string; help: string }> = {
   input: {
-    title: '1. Insumos',
+    title: '1. Insumo',
     description: 'Liste os recursos que tornam a política possível.',
-    help: 'Pense em equipe, orçamento, dados, materiais, tecnologia, parcerias ou tempo disponível.'
+    help: 'Equipe, orçamento, dados, materiais, parcerias.'
   },
   activity: {
-    title: '2. Atividades',
-    description: 'Descreva o que será feito usando esses recursos.',
-    help: 'Use verbos de ação: formar, acompanhar, distribuir, aplicar, monitorar, orientar.'
+    title: '2. Atividade',
+    description: 'Descreva o que será feito com esses recursos.',
+    help: 'Use verbos de ação: formar, acompanhar, distribuir.'
   },
   output: {
-    title: '3. Produtos',
-    description: 'Registre as entregas concretas geradas pelas atividades.',
-    help: 'Produtos são coisas que podem ser contadas: oficinas realizadas, relatórios emitidos, materiais entregues.'
+    title: '3. Produto',
+    description: 'Registre as entregas concretas das atividades.',
+    help: 'Coisas contáveis: oficinas, relatórios, materiais.'
   },
   outcome: {
-    title: '4. Resultados',
+    title: '4. Resultado',
     description: 'Descreva a mudança esperada depois das entregas.',
-    help: 'Resultados mostram o que muda no público, na prática ou na gestão.'
+    help: 'O que muda no público, na prática ou na gestão.'
   },
   'ready-to-connect': {
     title: '5. Conectar a lógica',
-    description: 'Agora conecte os blocos da esquerda para a direita para mostrar como a mudança acontece.',
-    help: 'Ligue insumos com atividades, atividades com produtos e produtos com resultados.'
+    description: 'Conecte os blocos da esquerda para a direita.',
+    help: 'Ligue insumos → atividades → produtos → resultados.'
   }
 };
 
@@ -194,56 +210,6 @@ const STAGE_ADVANCE_HINTS: Record<TdmStage, string> = {
 };
 
 const THEORY_PROGRESS_ITEM_GOAL = 10;
-
-type HeroLogoTheme = {
-  color: string;
-  glowColor: string;
-  tintOpacity: number;
-  glassIntensity: number;
-  isConnectionBlend: boolean;
-};
-
-function getHeroLogoTheme(guideStage: TheoryGuideStageId): HeroLogoTheme {
-  if (guideStage === 'theory') {
-    return {
-      color: '#f5f3ee',
-      glowColor: 'rgba(255, 255, 255, 0.32)',
-      tintOpacity: 0.42,
-      glassIntensity: 1.18,
-      isConnectionBlend: false
-    };
-  }
-
-  if (guideStage === 'connect') {
-    return {
-      color: '#f5f3ee',
-      glowColor: TDM_THEORY_NEUTRAL.glow,
-      tintOpacity: 0.52,
-      glassIntensity: 1.25,
-      isConnectionBlend: true
-    };
-  }
-
-  if (guideStage !== 'input' && guideStage !== 'activity' && guideStage !== 'output' && guideStage !== 'outcome') {
-    return getHeroLogoTheme('theory');
-  }
-
-  const theme = getTdmStageTheme(guideStage);
-  const stageGlass: Partial<Record<TdmStage, Pick<HeroLogoTheme, 'tintOpacity' | 'glassIntensity'>>> = {
-    input: { tintOpacity: 0.62, glassIntensity: 1.22 },
-    activity: { tintOpacity: 0.58, glassIntensity: 1.18 },
-    output: { tintOpacity: 0.6, glassIntensity: 1.18 },
-    outcome: { tintOpacity: 0.6, glassIntensity: 1.18 }
-  };
-
-  return {
-    color: theme.accent,
-    glowColor: theme.glow,
-    tintOpacity: stageGlass[guideStage]?.tintOpacity ?? 0.6,
-    glassIntensity: stageGlass[guideStage]?.glassIntensity ?? 1.18,
-    isConnectionBlend: false
-  };
-}
 
 function getStageLockTooltip(stage: TdmStage) {
   const stageIndex = TDM_STAGE_ORDER.indexOf(stage);
@@ -375,6 +341,7 @@ function BackArrowIcon() {
 }
 
 const QUICK_SHORTCUT_SPRING = { type: 'spring' as const, stiffness: 260, damping: 22 };
+const MotionLink = motion.create(Link);
 
 function ExamplesPreviewIcon() {
   return (
@@ -386,37 +353,6 @@ function ExamplesPreviewIcon() {
         strokeLinejoin="round"
       />
       <path d="M10 3.75v12.5M4.5 6.5 10 9.25 15.5 6.5" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" opacity="0.45" />
-    </svg>
-  );
-}
-
-function LibraryIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 20 20" className={styles.quickShortcutBtnIcon} fill="none">
-      <path
-        d="M4.25 4.5h4.5a1 1 0 0 1 1 1v10.25H5.25a1 1 0 0 0-1 1V5.5a1 1 0 0 1 1-1Z"
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M9.75 5.5h4.5a1 1 0 0 1 1 1v10.25h-4.5a1 1 0 0 0-1-1V5.5Z"
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinejoin="round"
-      />
-      <path d="M6.25 7.75h1.5M12.75 7.75h1.5M6.25 10.25h1.5M12.75 10.25h1.5" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" opacity="0.45" />
-    </svg>
-  );
-}
-
-function ModelsGridIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 20 20" className={styles.quickShortcutBtnIcon} fill="none">
-      <rect x="4" y="4" width="5.25" height="5.25" rx="1.25" stroke="currentColor" strokeWidth="1.3" />
-      <rect x="10.75" y="4" width="5.25" height="5.25" rx="1.25" stroke="currentColor" strokeWidth="1.3" />
-      <rect x="4" y="10.75" width="5.25" height="5.25" rx="1.25" stroke="currentColor" strokeWidth="1.3" />
-      <rect x="10.75" y="10.75" width="5.25" height="5.25" rx="1.25" stroke="currentColor" strokeWidth="1.3" />
     </svg>
   );
 }
@@ -437,101 +373,137 @@ function GuidesDocIcon() {
 }
 
 function QuickShortcutButton({
-  onClick,
+  href,
   icon,
   label,
   shouldReduceMotion
 }: {
-  onClick: () => void;
+  href: string;
   icon: ReactNode;
   label: string;
   shouldReduceMotion: boolean;
 }) {
   return (
-    <motion.button
-      type="button"
+    <MotionLink
+      href={href}
       className={styles.quickShortcutBtn}
-      onClick={onClick}
-      whileHover={shouldReduceMotion ? undefined : { y: -2, scale: 1.008 }}
-      whileTap={shouldReduceMotion ? undefined : { scale: 0.988 }}
+      whileHover={undefined}
+      whileTap={shouldReduceMotion ? undefined : { opacity: 0.88 }}
       transition={QUICK_SHORTCUT_SPRING}
     >
-      {icon}
+      <span className={styles.quickShortcutBtnIcon} aria-hidden="true">
+        {icon}
+      </span>
       <span className={styles.quickShortcutBtnLabel}>{label}</span>
-    </motion.button>
+    </MotionLink>
+  );
+}
+
+// BEGIN CANVAS QUICK SHORTCUTS ACCORDION MICROFIX 10
+function QuickShortcutsChevron({ isOpen }: { isOpen: boolean }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className={[
+        styles.quickShortcutsChevron,
+        isOpen ? styles.quickShortcutsChevronOpen : ''
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      fill="none"
+    >
+      <path
+        d="M6 9l6 6 6-6"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
 
 function QuickShortcutsCard({
-  onViewExampleCanvas,
-  onViewExampleResult,
   canRestoreTheory,
   onRestoreTheory
 }: {
-  onViewExampleCanvas: () => void;
-  onViewExampleResult: () => void;
   canRestoreTheory: boolean;
   onRestoreTheory: () => void;
 }) {
   const shouldReduceMotion = useReducedMotion();
-
-  const handleQuickLibraryClick = useCallback(() => {
-    // Reservado para futura navegação à biblioteca.
-  }, []);
-
-  const handleQuickModelsClick = useCallback(() => {
-    // Reservado para futura navegação aos modelos.
-  }, []);
+  const [isOpen, setIsOpen] = useState(false);
+  const contentId = useId();
+  const accordionTransition = shouldReduceMotion
+    ? { duration: 0.01 }
+    : { duration: 0.3, ease: [0.22, 1, 0.36, 1] as const };
 
   return (
     <section className={[styles.card, styles.quickShortcutsCard].join(' ')}>
-      <div className={styles.quickShortcutsHeader}>
-        <div className={styles.quickShortcutsTitleRow}>
+      <button
+        type="button"
+        className={styles.quickShortcutsHeader}
+        aria-expanded={isOpen}
+        aria-controls={contentId}
+        onClick={() => setIsOpen((current) => !current)}
+      >
+        <span className={styles.quickShortcutsTitleRow}>
           <TdmSectionIcon variant="quickShortcuts" />
-          <p className={styles.quickShortcutsTitle}>Atalhos rápidos</p>
-        </div>
-      </div>
-      <div className={styles.quickShortcutsGrid}>
-        <QuickShortcutButton
-          onClick={onViewExampleCanvas}
-          icon={<ExamplesPreviewIcon />}
-          label="Exemplos"
-          shouldReduceMotion={shouldReduceMotion ?? false}
-        />
-        <QuickShortcutButton
-          onClick={handleQuickLibraryClick}
-          icon={<LibraryIcon />}
-          label="Biblioteca"
-          shouldReduceMotion={shouldReduceMotion ?? false}
-        />
-        <QuickShortcutButton
-          onClick={handleQuickModelsClick}
-          icon={<ModelsGridIcon />}
-          label="Modelos"
-          shouldReduceMotion={shouldReduceMotion ?? false}
-        />
-        <QuickShortcutButton
-          onClick={onViewExampleResult}
-          icon={<GuidesDocIcon />}
-          label="Guias"
-          shouldReduceMotion={shouldReduceMotion ?? false}
-        />
-      </div>
-      {canRestoreTheory ? (
-        <TdmButton
-          variant="ghost"
-          fullWidth
-          icon={<BackArrowIcon />}
-          iconPosition="left"
-          className={styles.sidebarCtaSpaced}
-          onClick={onRestoreTheory}
-        >
-          Voltar para minha teoria
-        </TdmButton>
-      ) : null}
+          <span className={styles.quickShortcutsTitle}>Atalhos</span>
+        </span>
+        <QuickShortcutsChevron isOpen={isOpen} />
+      </button>
+
+      <AnimatePresence initial={false}>
+        {isOpen ? (
+          <motion.div
+            key={contentId}
+            id={contentId}
+            className={styles.quickShortcutsContent}
+            initial={shouldReduceMotion ? false : { height: 0, opacity: 0, y: -4 }}
+            animate={{ height: 'auto', opacity: 1, y: 0 }}
+            exit={
+              shouldReduceMotion
+                ? { height: 0, opacity: 0 }
+                : { height: 0, opacity: 0, y: -3 }
+            }
+            transition={accordionTransition}
+            style={{ overflow: 'hidden' }}
+          >
+            <div className={styles.quickShortcutsGrid}>
+              <QuickShortcutButton
+                href="/exemplos"
+                icon={<ExamplesPreviewIcon />}
+                label="Exemplos"
+                shouldReduceMotion={shouldReduceMotion ?? false}
+              />
+              <QuickShortcutButton
+                href="/guia-de-aprendizado"
+                icon={<GuidesDocIcon />}
+                label="Guia"
+                shouldReduceMotion={shouldReduceMotion ?? false}
+              />
+            </div>
+
+            {canRestoreTheory ? (
+              <TdmButton
+                variant="ghost"
+                fullWidth
+                icon={<BackArrowIcon />}
+                iconPosition="left"
+                className={styles.sidebarCtaSpaced}
+                onClick={onRestoreTheory}
+              >
+                Voltar para minha teoria
+              </TdmButton>
+            ) : null}
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </section>
   );
 }
+// END CANVAS QUICK SHORTCUTS ACCORDION MICROFIX 10
 
 function AdvanceArrowIcon() {
   return (
@@ -541,6 +513,21 @@ function AdvanceArrowIcon() {
         fill="none"
         stroke="currentColor"
         strokeWidth="1.45"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/** Visual-only glyph reused from the existing quickShortcuts connection path. */
+function ConnectLogicIcon({ className }: { className?: string }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" className={className} fill="none">
+      <path
+        d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"
+        stroke="currentColor"
+        strokeWidth="1.6"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -565,7 +552,7 @@ function SidebarAccordion({
   variant?: 'default' | 'block';
   children: ReactNode;
 }) {
-  const theme = getTdmStageTheme(stage);
+  const stageTone = CANVAS_DS_STAGE[stage];
   const contentId = `${id}-content`;
 
   return (
@@ -579,9 +566,9 @@ function SidebarAccordion({
         .join(' ')}
       style={
         {
-          '--stage-accent': theme.accent,
-          '--stage-accent-soft': theme.accentSoft,
-          '--stage-border': theme.border
+          '--stage-accent': stageTone.accent,
+          '--stage-accent-soft': stageTone.soft,
+          '--stage-border': stageTone.border
         } as CSSProperties
       }
     >
@@ -694,8 +681,6 @@ export function TdmSidebar({
   canAdvance,
   canViewTdmResult,
   resultAvailabilityMessage,
-  onViewExampleCanvas,
-  onViewExampleResult,
   canRestoreTheory,
   onRestoreTheory,
   onViewResult,
@@ -716,8 +701,6 @@ export function TdmSidebar({
   canAdvance?: boolean;
   canViewTdmResult: boolean;
   resultAvailabilityMessage: string;
-  onViewExampleCanvas: () => void;
-  onViewExampleResult: () => void;
   canRestoreTheory: boolean;
   onRestoreTheory: () => void;
   onViewResult: () => void;
@@ -727,7 +710,9 @@ export function TdmSidebar({
 }) {
   const shouldReduceMotion = useReducedMotion();
   const [theoryDescription, setTheoryDescription] = useState(THEORY_DEFAULT_DESCRIPTION);
-  const [openStage, setOpenStage] = useState<TdmStage>(stageCreation === 'ready-to-connect' ? 'outcome' : stageCreation);
+  const [openStage, setOpenStage] = useState<TdmStage | 'ready-to-connect'>(
+    stageCreation === 'ready-to-connect' ? 'ready-to-connect' : stageCreation
+  );
   const contentRef = useRef<HTMLDivElement | null>(null);
   const heroFormShellRef = useRef<HTMLDivElement | null>(null);
   const scrollRafRef = useRef<number | null>(null);
@@ -797,14 +782,10 @@ export function TdmSidebar({
     return Math.min(100, Math.round((totalRegisteredItems / THEORY_PROGRESS_ITEM_GOAL) * 100));
   }, [stageCreation, totalRegisteredItems]);
 
-  const progressStage: TdmStage = stageCreation === 'ready-to-connect' ? 'outcome' : stageCreation;
-  const progressAccent = getTdmStageTheme(progressStage).accent;
-
-  const heroGuideStage = useMemo(
-    () => getTheoryGuideProgressStage({ stageCounts, stageCreation }),
-    [stageCounts, stageCreation]
-  );
-  const heroLogoTheme = useMemo(() => getHeroLogoTheme(heroGuideStage), [heroGuideStage]);
+  const progressAccent =
+    stageCreation === 'ready-to-connect'
+      ? 'rgba(232, 234, 240, 0.92)'
+      : CANVAS_DS_STAGE[stageCreation].accent;
 
   const handleCreateAccordionToggle = () => {
     if (!blockForms) return;
@@ -833,11 +814,21 @@ export function TdmSidebar({
               <span className={styles.heroGlowTop} aria-hidden="true" />
               <span className={styles.heroGlowBottom} aria-hidden="true" />
               <span className={styles.heroSpecular} aria-hidden="true" />
+              <div className={styles.heroHideSidebarToolbar}>
+                <button
+                  type="button"
+                  className={headerFormStyles.hideSidebarButton}
+                  aria-label="Esconder sidebar"
+                  onClick={onToggle}
+                >
+                  <SidebarToggleIcon direction="right" />
+                </button>
+              </div>
               <div className={styles.heroContent}>
                 <div className={styles.heroLead}>
                   <h1 className={styles.heroTitle}>Construtor de Teoria da Mudança</h1>
                   <p className={styles.heroDescription}>
-                    Um espaço guiado para mapear impacto, alinhar estratégias e criar resultados significativos.
+                    Mapeie como recursos viram ações, entregas e resultados.
                   </p>
                 </div>
                 <div
@@ -852,34 +843,6 @@ export function TdmSidebar({
                     theoryDescription={theoryDescription}
                     onTheoryNameChange={onTheoryNameChange}
                     onTheoryDescriptionChange={setTheoryDescription}
-                    onHideSidebar={onToggle}
-                  />
-                </div>
-              </div>
-              <div className={styles.heroSculptureWrap} aria-hidden="true">
-                <div
-                  className={[
-                    styles.heroLiquidGlassLogoWrap,
-                    heroLogoTheme.isConnectionBlend ? styles.heroLiquidGlassLogoWrapConnection : ''
-                  ]
-                    .filter(Boolean)
-                    .join(' ')}
-                >
-                  <LiquidGlassLogoInfiniteLoop
-                    className={styles.heroLiquidGlassLogo}
-                    size="clamp(5.75rem, 8.4vw, 7.25rem)"
-                    speed={1}
-                    hoverSpeed={1.8}
-                    color={heroLogoTheme.color}
-                    glowColor={heroLogoTheme.glowColor}
-                    glowSize="0.72rem"
-                    textureStrength={0.68}
-                    tintOpacity={heroLogoTheme.tintOpacity}
-                    glassIntensity={heroLogoTheme.glassIntensity}
-                    showBackground={false}
-                    backgroundGlow
-                    spriteQuality="sidebar"
-                    ariaHidden
                   />
                 </div>
               </div>
@@ -901,7 +864,7 @@ export function TdmSidebar({
             <div className={styles.timeline} aria-label="Progresso da teoria">
               {TDM_STAGE_ORDER.map((stage, index) => {
                 const guide = STAGE_GUIDE[stage];
-                const theme = getTdmStageTheme(stage);
+                const stageTone = CANVAS_DS_STAGE[stage];
                 const status = getStageStatus(stage, stageCreation, index);
                 const isCurrentStage = stageCreation !== 'ready-to-connect' && stageCreation === stage;
                 const isStageExpanded = openStage === stage || isCurrentStage;
@@ -917,15 +880,14 @@ export function TdmSidebar({
                       styles.stageAccordion,
                       styles[`stage${status}`] as string,
                       index === 0 ? styles.stageFirst : '',
-                      index === TDM_STAGE_ORDER.length - 1 ? styles.stageLast : '',
                       isStageExpanded ? styles.stageExpanded : ''
                     ]
                       .filter(Boolean)
                       .join(' ')}
                     style={
                       {
-                        '--stage-accent': theme.accent,
-                        '--stage-border': theme.border
+                        '--stage-accent': stageTone.accent,
+                        '--stage-border': stageTone.border
                       } as CSSProperties
                     }
                     onToggle={(event) => {
@@ -940,7 +902,7 @@ export function TdmSidebar({
                       }
 
                       if (openStage === stage) {
-                        setOpenStage(stageCreation !== 'ready-to-connect' ? stageCreation : 'outcome');
+                        setOpenStage(stageCreation !== 'ready-to-connect' ? stageCreation : 'ready-to-connect');
                       }
                     }}
                   >
@@ -982,7 +944,6 @@ export function TdmSidebar({
                       />
                     </summary>
                     <div className={styles.stageBody}>
-                      <p>{guide.technical}</p>
                       <ul>
                         {guide.examples.map((example) => (
                           <li key={example}>{example}</li>
@@ -992,6 +953,92 @@ export function TdmSidebar({
                   </details>
                 );
               })}
+              {(() => {
+                const connectStatus = stageCreation === 'ready-to-connect' ? 'current' : 'blocked';
+                const isConnectCurrent = stageCreation === 'ready-to-connect';
+                const isConnectExpanded = openStage === 'ready-to-connect' || isConnectCurrent;
+                const connectLockTooltip = 'Conclua ao menos 1 resultado para desbloquear esta etapa.';
+                const isConnectTopLit = connectStatus === 'current';
+
+                return (
+                  <details
+                    key="ready-to-connect"
+                    open={isConnectExpanded}
+                    className={[
+                      styles.stageAccordion,
+                      styles.stageConnectLogic,
+                      styles[`stage${connectStatus}`] as string,
+                      styles.stageLast,
+                      isConnectExpanded ? styles.stageExpanded : ''
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
+                    style={
+                      {
+                        '--stage-accent': 'rgba(232, 234, 240, 0.92)',
+                        '--stage-border': 'rgba(210, 214, 224, 0.28)'
+                      } as CSSProperties
+                    }
+                    onToggle={(event) => {
+                      if (event.currentTarget.open) {
+                        setOpenStage('ready-to-connect');
+                        return;
+                      }
+
+                      if (isConnectCurrent) {
+                        setOpenStage('ready-to-connect');
+                        return;
+                      }
+
+                      if (openStage === 'ready-to-connect') {
+                        setOpenStage(stageCreation);
+                      }
+                    }}
+                  >
+                    <summary className={styles.stageSummary}>
+                      <span className={styles.stageColorBar} aria-hidden="true" />
+                      <span className={styles.stageProgressColumn} aria-hidden="true">
+                        <span
+                          className={[
+                            styles.stageProgressSegment,
+                            styles.stageProgressSegmentTop,
+                            isConnectTopLit ? styles.stageProgressSegmentLit : ''
+                          ]
+                            .filter(Boolean)
+                            .join(' ')}
+                        />
+                        <span className={styles.stageDot}>5</span>
+                        <span
+                          className={[
+                            styles.stageProgressSegment,
+                            styles.stageProgressSegmentBottom
+                          ]
+                            .filter(Boolean)
+                            .join(' ')}
+                        />
+                      </span>
+                      <span className={styles.stageSummaryCopy}>
+                        <strong>Conectar lógica</strong>
+                        <small>Conecte etapas, riscos e hipóteses.</small>
+                      </span>
+                      <span className={styles.stageConnectIcon} aria-hidden="true">
+                        <ConnectLogicIcon />
+                      </span>
+                      {connectStatus === 'blocked' ? (
+                        <TimelineLockIcon tooltip={connectLockTooltip} boundaryRef={contentRef} />
+                      ) : null}
+                      <TimelineChevron
+                        isOpen={isConnectExpanded}
+                        isActive={connectStatus === 'current' || isConnectExpanded}
+                        isBlocked={connectStatus === 'blocked'}
+                      />
+                    </summary>
+                    <div className={styles.stageBody}>
+                      <p>{STAGE_CREATION_HINTS['ready-to-connect'].help}</p>
+                    </div>
+                  </details>
+                );
+              })()}
             </div>
             <TdmButton
               variant="primary"
@@ -1018,12 +1065,6 @@ export function TdmSidebar({
             stageCreation={stageCreation}
             actionLabel={actionLabel}
             onStageDragStart={onStageDragStart}
-          />
-
-          <V1CanvasOrganizationAccordion
-            id={canvasOrganizationAccordionId}
-            stageCounts={stageCounts}
-            onOrganize={onOrganize}
           />
 
           {blockForms ? (
@@ -1121,9 +1162,13 @@ export function TdmSidebar({
             </section>
           ) : null}
 
+          <V1CanvasOrganizationAccordion
+            id={canvasOrganizationAccordionId}
+            stageCounts={stageCounts}
+            onOrganize={onOrganize}
+          />
+
           <QuickShortcutsCard
-            onViewExampleCanvas={onViewExampleCanvas}
-            onViewExampleResult={onViewExampleResult}
             canRestoreTheory={canRestoreTheory}
             onRestoreTheory={onRestoreTheory}
           />

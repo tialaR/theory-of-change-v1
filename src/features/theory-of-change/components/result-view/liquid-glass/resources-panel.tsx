@@ -23,13 +23,13 @@ export interface ResourcesPanelProps {
 const defaultTheme: ThemeTokens = {
   accentColor: '#a98cff',
   accentSoftColor: '#c1adff',
-  backgroundColor: '#121318',
-  panelColor: 'rgba(17, 18, 22, .12)',
-  cardColor: 'rgba(11, 12, 15, .12)',
-  titleColor: 'rgba(242, 242, 245, .94)',
-  bodyColor: 'rgba(218, 218, 222, .76)',
-  mutedColor: 'rgba(198, 198, 204, .68)',
-  lineColor: 'rgba(255, 255, 255, .065)'
+  backgroundColor: '#0e0f13',
+  panelColor: 'rgba(14, 15, 19, .94)',
+  cardColor: 'rgba(13, 14, 18, .96)',
+  titleColor: 'rgba(236, 237, 241, .94)',
+  bodyColor: 'rgba(206, 208, 214, .74)',
+  mutedColor: 'rgba(176, 178, 186, .58)',
+  lineColor: 'rgba(255, 255, 255, .05)'
 };
 
 export function ResourcesPanel({
@@ -52,7 +52,6 @@ export function ResourcesPanel({
     '--panel-accent-soft': resolvedTheme.accentSoftColor,
     '--panel-title': resolvedTheme.titleColor,
     '--panel-line': resolvedTheme.lineColor,
-    '--glass-accent': resolvedTheme.accentColor,
     '--glass-background': resolvedTheme.panelColor
   } as CSSProperties;
 

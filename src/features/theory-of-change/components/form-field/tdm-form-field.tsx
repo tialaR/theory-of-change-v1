@@ -8,7 +8,7 @@ export const TDM_FIELD_PLACEHOLDERS = {
   title: 'Nome do bloco',
   description: 'Descreva rapidamente este bloco.',
   advancedDetails: 'Detalhes complementares do bloco.',
-  shortNotes: 'Notas de apoio para leitura rápida.'
+  shortNotes: 'Notas de apoio...'
 } as const;
 
 export const TDM_FIELD_CLEAR_LABELS: Record<keyof TdmNodeDraft, string> = {

@@ -1,195 +1,209 @@
 'use client';
 
-import { motion } from 'motion/react';
-import styles from './example-previews.module.sass';
+import { motion, useReducedMotion } from 'motion/react';
+import { useId, type CSSProperties } from 'react';
+import styles from './flow-draft-preview.module.sass';
 
-type FlowDraftPreviewProps = {
+export type FlowDraftPreviewProps = {
   active?: boolean;
   className?: string;
+  style?: CSSProperties;
+  ariaLabel?: string;
+  [key: string]: unknown;
 };
 
-const lineTransition = {
-  duration: 1.35,
-  repeat: Infinity,
-  ease: 'linear' as const,
+type StageKey = 'input' | 'activity' | 'output' | 'outcome';
+
+type NodeDefinition = {
+  key: string;
+  stage: StageKey;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 };
 
-function AnimatedPath({
-  active,
-  d,
-  stroke,
-  width = 2.25,
-  markerEnd,
-}: {
-  active?: boolean;
+type ConnectionDefinition = {
+  key: string;
   d: string;
-  stroke: string;
-  width?: number;
-  markerEnd?: string;
+  stage: Exclude<StageKey, 'outcome'>;
+  phase: number;
+};
+
+const COLORS: Record<StageKey, string> = {
+  input: '#8f7cf5',
+  activity: '#55a6df',
+  output: '#d2974d',
+  outcome: '#48b995',
+};
+
+const NODES: readonly NodeDefinition[] = [
+  { key: 'input-1', stage: 'input', x: 70, y: 152, width: 238, height: 92 },
+  { key: 'input-2', stage: 'input', x: 70, y: 354, width: 238, height: 92 },
+  { key: 'input-3', stage: 'input', x: 70, y: 556, width: 238, height: 92 },
+  { key: 'activity-1', stage: 'activity', x: 466, y: 152, width: 238, height: 92 },
+  { key: 'activity-2', stage: 'activity', x: 466, y: 354, width: 238, height: 92 },
+  { key: 'activity-3', stage: 'activity', x: 466, y: 556, width: 238, height: 92 },
+  { key: 'output-1', stage: 'output', x: 862, y: 152, width: 238, height: 92 },
+  { key: 'output-2', stage: 'output', x: 862, y: 354, width: 238, height: 92 },
+  { key: 'output-3', stage: 'output', x: 862, y: 556, width: 238, height: 92 },
+  { key: 'outcome-1', stage: 'outcome', x: 1234, y: 320, width: 218, height: 92 },
+] as const;
+
+const CONNECTIONS: readonly ConnectionDefinition[] = [
+  { key: 'i1-a1', d: 'M 308 198 C 356 198, 402 198, 466 198', stage: 'input', phase: 0 },
+  { key: 'i2-a1', d: 'M 308 400 C 376 400, 392 252, 466 214', stage: 'input', phase: -5 },
+  { key: 'i3-a3', d: 'M 308 602 C 374 594, 408 602, 466 602', stage: 'input', phase: -10 },
+  { key: 'a1-p1', d: 'M 704 198 C 758 198, 804 198, 862 198', stage: 'activity', phase: -15 },
+  { key: 'a2-p2', d: 'M 704 400 C 758 400, 804 400, 862 400', stage: 'activity', phase: -20 },
+  { key: 'a3-p3', d: 'M 704 602 C 758 602, 804 602, 862 602', stage: 'activity', phase: -25 },
+  { key: 'p1-r1', d: 'M 1100 198 C 1168 198, 1186 316, 1234 346', stage: 'output', phase: -30 },
+  { key: 'p2-r1', d: 'M 1100 400 C 1164 400, 1192 380, 1234 366', stage: 'output', phase: -35 },
+] as const;
+
+function FlowNode({ node }: { node: NodeDefinition }) {
+  const color = COLORS[node.stage];
+  const contentX = node.x + 54;
+  const titleY = node.y + 28;
+
+  return (
+    <g>
+      <rect
+        className={styles.nodeSurface}
+        x={node.x}
+        y={node.y}
+        width={node.width}
+        height={node.height}
+        rx="9"
+      />
+      <line
+        x1={node.x + 1}
+        y1={node.y + 11}
+        x2={node.x + 1}
+        y2={node.y + node.height - 11}
+        stroke={color}
+        strokeWidth="1"
+        strokeLinecap="round"
+        opacity="0.54"
+      />
+      <rect
+        className={styles.nodeTile}
+        x={node.x + 18}
+        y={node.y + 18}
+        width="24"
+        height="24"
+        rx="6"
+      />
+      <circle cx={node.x + 30} cy={node.y + 30} r="2.8" fill={color} opacity="0.76" />
+      <rect className={styles.nodeTitleLine} x={contentX} y={titleY} width="74" height="3" rx="1.5" />
+      <rect className={styles.nodeCopyLine} x={contentX} y={titleY + 18} width="116" height="2.5" rx="1.25" />
+      <rect className={styles.nodeCopyLine} x={contentX} y={titleY + 32} width="94" height="2.5" rx="1.25" />
+      <rect className={styles.nodeCopyLineSoft} x={contentX} y={titleY + 48} width="72" height="2.25" rx="1.125" />
+    </g>
+  );
+}
+
+function FlowConnection({
+  connection,
+  markerId,
+  animate,
+}: {
+  connection: ConnectionDefinition;
+  markerId: string;
+  animate: boolean;
 }) {
+  const color = COLORS[connection.stage];
+
   return (
     <motion.path
-      d={d}
-      fill="none"
-      stroke={stroke}
-      strokeWidth={width}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeDasharray="6 11"
-      initial={false}
-      animate={active ? { strokeDashoffset: [34, 0], opacity: [0.42, 0.86, 0.48] } : { strokeDashoffset: 0, opacity: 0.48 }}
-      transition={active ? lineTransition : { duration: 0.28 }}
+      className={styles.connection}
+      d={connection.d}
+      style={{ '--connection-color': color } as CSSProperties}
+      markerEnd={`url(#${markerId})`}
       vectorEffect="non-scaling-stroke"
-      markerEnd={markerEnd}
+      initial={false}
+      animate={{
+        strokeDashoffset: animate
+          ? [connection.phase, connection.phase - 22]
+          : connection.phase,
+      }}
+      transition={
+        animate
+          ? {
+              duration: 4.8,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: 'linear',
+            }
+          : { duration: 0 }
+      }
     />
   );
 }
 
-function NodeCard({
-  x,
-  y,
-  stage,
-  compact = false,
-}: {
-  x: number;
-  y: number;
-  stage: 'input' | 'activity' | 'product' | 'outcome';
-  compact?: boolean;
-}) {
-  const colorByStage = {
-    input: '#a78bfa',
-    activity: '#60a5fa',
-    product: '#f6ad55',
-    outcome: '#4adebd',
-  };
-  const color = colorByStage[stage];
-  const width = compact ? 226 : 244;
-  const height = compact ? 88 : 94;
-  const tile = compact ? 46 : 50;
-  const topLine = compact ? 78 : 84;
-  const midLine = compact ? 128 : 142;
-  const bottomLine = compact ? 112 : 124;
+export function FlowDraftPreview({
+  active = true,
+  className = '',
+  style,
+  ariaLabel = 'Prévia editorial do fluxo causal da teoria da mudança',
+}: FlowDraftPreviewProps) {
+  const shouldReduceMotion = useReducedMotion();
+  const shouldAnimate = active && !shouldReduceMotion;
+  const markerId = `tdm-flow-arrow-${useId().replace(/:/g, '')}`;
 
   return (
-    <g filter="url(#previewSoftShadow)">
-      <rect
-        x={x}
-        y={y}
-        width={width}
-        height={height}
-        rx="7"
-        fill="url(#cardFill)"
-        stroke="rgba(255,255,255,.13)"
-        strokeWidth="1"
-      />
-      <rect x={x} y={y} width="4" height={height} rx="2" fill={color} opacity=".75" filter="url(#stageGlow)" />
-      <rect x={x + 22} y={y + 25} width={tile} height={tile} rx="4" fill={color} opacity=".1" />
-      <rect x={x + 30} y={y + 30} width={tile - 16} height={tile - 16} rx="3" fill={color} opacity=".08" />
-      <rect x={x + 82} y={y + 24} width={topLine} height="13" rx="3" fill="rgba(255,255,255,.09)" />
-      <rect x={x + 82} y={y + 47} width={midLine} height="12" rx="3" fill="rgba(255,255,255,.075)" />
-      <rect x={x + 82} y={y + 68} width={bottomLine} height="11" rx="3" fill="rgba(255,255,255,.06)" />
-      <rect x={x + 1} y={y + 1} width={width - 2} height="1" fill="rgba(255,255,255,.16)" />
-    </g>
-  );
-}
-
-function Port({ x, y, color }: { x: number; y: number; color: string }) {
-  return <circle cx={x} cy={y} r="4.5" fill="#131519" stroke={color} strokeWidth="1.35" opacity=".82" />;
-}
-
-function Badge({ x, y, color }: { x: number; y: number; color: string }) {
-  return (
-    <g opacity=".86">
-      <circle cx={x} cy={y} r="11" fill="rgba(9, 10, 12, .82)" stroke={color} strokeWidth="1.15" />
-      <circle cx={x} cy={y} r="3.2" fill={color} opacity=".56" />
-    </g>
-  );
-}
-
-export function FlowDraftPreview({ active, className }: FlowDraftPreviewProps) {
-  return (
-    <div className={[styles.previewCanvas, className].filter(Boolean).join(' ')} aria-hidden="true">
-      <svg viewBox="0 0 1520 820" role="img" preserveAspectRatio="xMidYMid meet">
+    <div
+      className={[styles.root, className].filter(Boolean).join(' ')}
+      style={style}
+      role="img"
+      aria-label={ariaLabel}
+    >
+      <svg
+        className={styles.svg}
+        viewBox="0 0 1520 800"
+        preserveAspectRatio="xMidYMid meet"
+        aria-hidden="true"
+      >
         <defs>
-          <radialGradient id="flowBg" cx="48%" cy="44%" r="65%">
-            <stop offset="0" stopColor="rgba(255,255,255,.065)" />
-            <stop offset=".52" stopColor="rgba(255,255,255,.025)" />
-            <stop offset="1" stopColor="rgba(0,0,0,0)" />
-          </radialGradient>
-          <linearGradient id="cardFill" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="rgba(32,35,40,.84)" />
-            <stop offset=".55" stopColor="rgba(18,20,24,.82)" />
-            <stop offset="1" stopColor="rgba(9,10,12,.88)" />
-          </linearGradient>
-          <filter id="previewSoftShadow" x="-30%" y="-45%" width="160%" height="190%">
-            <feDropShadow dx="0" dy="20" stdDeviation="18" floodColor="rgba(0,0,0,.55)" />
-            <feDropShadow dx="0" dy="0" stdDeviation="9" floodColor="rgba(255,255,255,.04)" />
-          </filter>
-          <filter id="stageGlow" x="-800%" y="-90%" width="1700%" height="280%">
-            <feGaussianBlur stdDeviation="6" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-          <pattern id="dotGrid" width="34" height="34" patternUnits="userSpaceOnUse">
-            <circle cx="2" cy="2" r="1.1" fill="rgba(255,255,255,.16)" />
-          </pattern>
-          <marker id="arrowPurple" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M 0 0 L 10 5 L 0 10 z" fill="#a78bfa" opacity=".7" />
-          </marker>
-          <marker id="arrowBlue" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M 0 0 L 10 5 L 0 10 z" fill="#60a5fa" opacity=".72" />
-          </marker>
-          <marker id="arrowGreen" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M 0 0 L 10 5 L 0 10 z" fill="#4adebd" opacity=".74" />
+          <marker
+            id={markerId}
+            viewBox="0 0 5 5"
+            markerWidth="4.5"
+            markerHeight="4.5"
+            refX="4.1"
+            refY="2.5"
+            orient="auto"
+            markerUnits="userSpaceOnUse"
+          >
+            <path
+              d="M 0.75 0.8 L 4 2.5 L 0.75 4.2"
+              fill="none"
+              stroke="rgba(218, 221, 226, 0.48)"
+              strokeWidth="0.78"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </marker>
         </defs>
 
-        <rect width="1520" height="820" fill="rgba(8,9,11,.94)" />
-        <rect width="1520" height="820" fill="url(#flowBg)" />
-        <rect width="1520" height="820" fill="url(#dotGrid)" opacity=".46" />
+        <g className={styles.connectionsLayer}>
+          {CONNECTIONS.map((connection) => (
+            <FlowConnection
+              key={connection.key}
+              connection={connection}
+              markerId={markerId}
+              animate={shouldAnimate}
+            />
+          ))}
+        </g>
 
-        <AnimatedPath active={active} d="M 310 203 C 370 203, 395 203, 438 203" stroke="#a78bfa" markerEnd="url(#arrowPurple)" />
-        <AnimatedPath active={active} d="M 310 407 C 372 408, 386 308, 438 236" stroke="#a78bfa" markerEnd="url(#arrowPurple)" />
-        <AnimatedPath active={active} d="M 310 616 C 390 606, 398 504, 438 458" stroke="#a78bfa" markerEnd="url(#arrowPurple)" />
-        <AnimatedPath active={active} d="M 700 203 C 758 203, 803 203, 872 203" stroke="#60a5fa" markerEnd="url(#arrowBlue)" />
-        <AnimatedPath active={active} d="M 700 407 C 760 407, 810 407, 872 407" stroke="#60a5fa" markerEnd="url(#arrowBlue)" />
-        <AnimatedPath active={active} d="M 700 616 C 760 616, 810 616, 872 616" stroke="#60a5fa" markerEnd="url(#arrowBlue)" />
-        <AnimatedPath active={active} d="M 1115 203 C 1187 202, 1216 284, 1260 333" stroke="#4adebd" markerEnd="url(#arrowGreen)" />
-        <AnimatedPath active={active} d="M 1115 407 C 1192 408, 1218 379, 1260 352" stroke="#4adebd" markerEnd="url(#arrowGreen)" />
-
-        <NodeCard x={70} y={158} stage="input" />
-        <NodeCard x={70} y={362} stage="input" />
-        <NodeCard x={70} y={570} stage="input" />
-        <NodeCard x={480} y={158} stage="activity" />
-        <NodeCard x={480} y={362} stage="activity" />
-        <NodeCard x={480} y={570} stage="activity" />
-        <NodeCard x={880} y={158} stage="product" />
-        <NodeCard x={880} y={362} stage="product" />
-        <NodeCard x={880} y={570} stage="product" />
-        <NodeCard x={1260} y={306} stage="outcome" compact />
-
-        <Port x={310} y={203} color="#a78bfa" />
-        <Port x={310} y={407} color="#a78bfa" />
-        <Port x={310} y={616} color="#a78bfa" />
-        <Port x={480} y={203} color="#60a5fa" />
-        <Port x={480} y={407} color="#60a5fa" />
-        <Port x={480} y={616} color="#60a5fa" />
-        <Port x={700} y={203} color="#60a5fa" />
-        <Port x={700} y={407} color="#60a5fa" />
-        <Port x={700} y={616} color="#60a5fa" />
-        <Port x={880} y={203} color="#f6ad55" />
-        <Port x={880} y={407} color="#f6ad55" />
-        <Port x={880} y={616} color="#f6ad55" />
-        <Port x={1115} y={203} color="#4adebd" />
-        <Port x={1115} y={407} color="#4adebd" />
-        <Port x={1260} y={350} color="#4adebd" />
-
-        <Badge x={400} y={203} color="#f59e0b" />
-        <Badge x={810} y={203} color="#f59e0b" />
-        <Badge x={1188} y={238} color="#4adebd" />
+        <g className={styles.nodesLayer}>
+          {NODES.map((node) => (
+            <FlowNode key={node.key} node={node} />
+          ))}
+        </g>
       </svg>
     </div>
   );
 }
+
+export default FlowDraftPreview;

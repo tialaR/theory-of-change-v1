@@ -1,5 +1,41 @@
 @use '../../../../shared/styles/tokens' as *
 
+// Resend Command Canvas — local atoms
+$noir-0: #050506
+$noir-1: #08090c
+$noir-2: #101116
+$noir-3: #15161c
+
+$surface-soft: rgba(16, 17, 22, 0.72)
+$surface-mid: rgba(20, 21, 27, 0.82)
+$surface-strong: rgba(24, 25, 31, 0.92)
+
+$border-soft: rgba(255, 255, 255, 0.08)
+$border-mid: rgba(255, 255, 255, 0.12)
+$border-strong: rgba(255, 255, 255, 0.18)
+
+$text-main: rgba(248, 248, 250, 0.94)
+$text-soft: rgba(224, 226, 232, 0.72)
+$text-muted: rgba(190, 193, 204, 0.54)
+$text-faint: rgba(180, 184, 194, 0.38)
+
+$white-light: rgba(255, 255, 255, 0.16)
+$white-light-soft: rgba(255, 255, 255, 0.08)
+
+$stage-inputs: #a78bfa
+$stage-activities: #60a5fa
+$stage-products: #f6b35d
+$stage-results: #5ee0b5
+$danger: #fb7185
+
+// Legacy aliases used below
+$noir-bg: $noir-0
+$noir-bg-soft: $noir-1
+$surface: $surface-soft
+$text: $text-main
+$resend-surface: radial-gradient(76% 18% at 50% 0%, rgba(255, 255, 255, 0.13), transparent 72%), linear-gradient(180deg, rgba(22, 23, 28, 0.88) 0%, rgba(13, 14, 18, 0.78) 48%, rgba(5, 5, 7, 0.96) 100%)
+$resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rgba(0, 0, 0, 0.3)
+
 .shell
   position: relative
   display: grid
@@ -9,7 +45,8 @@
   overflow: hidden
   --tdm-sidebar-width: #{$sidebar-width}
   --tdm-sidebar-gap: 0px
-  background: radial-gradient(circle at 20% 0%, rgba(167, 139, 250, 0.11), transparent 34%), linear-gradient(180deg, rgba(7, 9, 15, 1), rgba(5, 7, 12, 1))
+  background: $noir-bg
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
   transition: grid-template-columns 220ms ease
 
 .sidebarOpen
@@ -37,7 +74,7 @@
   height: 100%
   overflow: hidden
   isolation: isolate
-  background: linear-gradient(168deg, #111216 0%, $noir-surface-shell 28%, $noir-surface-page 58%, #07080b 100%)
+  background: radial-gradient(ellipse 70% 42% at 50% 0%, rgba(255, 255, 255, 0.055), transparent 62%), radial-gradient(ellipse 90% 70% at 50% 48%, rgba(14, 15, 18, 0.88) 0%, transparent 64%), linear-gradient(180deg, $noir-bg-soft 0%, $noir-bg 42%, #030304 100%)
 
   &::before
     content: ''
@@ -45,7 +82,7 @@
     inset: 0
     z-index: 0
     pointer-events: none
-    background: linear-gradient(112deg, rgba(255, 255, 255, 0.016) 0%, transparent 38%, transparent 62%, rgba(255, 255, 255, 0.01) 100%), linear-gradient(198deg, rgba(14, 15, 19, 0.42) 0%, transparent 48%, rgba(6, 7, 10, 0.52) 100%), linear-gradient(90deg, rgba(0, 0, 0, 0.14) 0%, transparent 12%, transparent 88%, rgba(0, 0, 0, 0.14) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.028) 0%, transparent 14%, transparent 78%, rgba(0, 0, 0, 0.16) 100%), radial-gradient(ellipse 220% 160% at -18% -32%, rgba(255, 255, 255, 0.032), transparent 78%), radial-gradient(ellipse 200% 140% at 118% 108%, rgba(255, 255, 255, 0.018), transparent 76%), radial-gradient(ellipse 180% 120% at 50% 122%, rgba(0, 0, 0, 0.22), transparent 74%)
+    background: radial-gradient(ellipse 120% 90% at 50% 50%, transparent 38%, rgba(0, 0, 0, 0.42) 100%), linear-gradient(90deg, rgba(0, 0, 0, 0.28) 0%, transparent 16%, transparent 84%, rgba(0, 0, 0, 0.28) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, transparent 14%, transparent 86%, rgba(0, 0, 0, 0.36) 100%)
 
   &::after
     content: ''
@@ -54,9 +91,10 @@
     z-index: 1
     pointer-events: none
     opacity: 0.42
-    mix-blend-mode: overlay
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
-    background-size: 192px 192px
+    background-image: linear-gradient(rgba(178, 184, 196, 0.028) 0.0625rem, transparent 0.0625rem), linear-gradient(90deg, rgba(178, 184, 196, 0.028) 0.0625rem, transparent 0.0625rem)
+    background-size: 1.5rem 1.5rem
+    mask-image: radial-gradient(ellipse 72% 62% at 50% 44%, #000 18%, transparent 76%)
+    -webkit-mask-image: radial-gradient(ellipse 72% 62% at 50% 44%, #000 18%, transparent 76%)
 
   :global(.react-flow)
     position: relative
@@ -64,16 +102,16 @@
     width: 100%
     height: 100%
     background: transparent
-    --xy-background-pattern-dots-color-default: rgba(178, 184, 196, 0.15)
-    --xy-background-pattern-lines-color-default: rgba(178, 184, 196, 0.1)
-    --xy-edge-stroke-default: rgba(186, 192, 204, 0.28)
-    --xy-edge-stroke-selected-default: rgba(214, 220, 230, 0.54)
-    --xy-connectionline-stroke-default: rgba(186, 192, 204, 0.36)
-    --xy-minimap-background-color-default: rgba(16, 17, 20, 0.86)
+    --xy-background-pattern-dots-color-default: rgba(178, 184, 196, 0.09)
+    --xy-background-pattern-lines-color-default: rgba(178, 184, 196, 0.06)
+    --xy-edge-stroke-default: rgba(186, 192, 204, 0.22)
+    --xy-edge-stroke-selected-default: rgba(214, 220, 230, 0.44)
+    --xy-connectionline-stroke-default: rgba(186, 192, 204, 0.3)
+    --xy-minimap-background-color-default: rgba(10, 11, 14, 0.92)
     --xy-controls-button-background-color-default: transparent
-    --xy-controls-button-background-color-hover-default: rgba(255, 255, 255, 0.07)
-    --xy-controls-button-border-color-default: rgba(255, 255, 255, 0.08)
-    --xy-controls-button-color-default: rgba(244, 244, 248, 0.92)
+    --xy-controls-button-background-color-hover-default: rgba(255, 255, 255, 0.05)
+    --xy-controls-button-border-color-default: rgba(255, 255, 255, 0.07)
+    --xy-controls-button-color-default: rgba(244, 244, 248, 0.88)
     --xy-controls-box-shadow-default: none
 
   :global(.react-flow__renderer),
@@ -87,56 +125,67 @@
     pointer-events: none
 
   :global(.react-flow__controls)
-    left: 16px
+    left: 1rem
     right: auto
-    bottom: 16px
+    bottom: 1rem
     top: auto
     display: inline-flex
     flex-direction: column
     width: auto
     z-index: 12
-    border: 0.0625rem solid $noir-stroke-soft
-    border-radius: 14px
-    background: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(255, 255, 255, 0.09), transparent 58%), linear-gradient(180deg, rgba(27, 28, 32, 0.9), rgba(16, 17, 20, 0.94))
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1), 0 0.75rem 2rem rgba(0, 0, 0, 0.36)
+    border: 0.0625rem solid rgba(255, 255, 255, 0.09)
+    border-radius: 0.5rem
+    background: linear-gradient(180deg, rgba(18, 19, 24, 0.88) 0%, rgba(8, 9, 12, 0.9) 100%)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), 0 0.75rem 1.5rem rgba(0, 0, 0, 0.28)
+    backdrop-filter: blur(0.4rem) saturate(1.02)
+    -webkit-backdrop-filter: blur(0.4rem) saturate(1.02)
     overflow: hidden
 
   :global(.react-flow__controls-button)
-    width: 32px
-    height: 32px
+    width: 1.75rem
+    height: 1.75rem
     border: 0
     background: transparent
-    color: $color-text
+    color: rgba(190, 193, 204, 0.55)
     fill: currentColor
+    transition: background 140ms ease, color 140ms ease, opacity 140ms ease
 
     &:hover
-      background: rgba(255, 255, 255, 0.07)
+      background: rgba(255, 255, 255, 0.04)
+      color: rgba(248, 248, 250, 0.88)
+
+    &:active
+      background: rgba(255, 255, 255, 0.06)
+      color: $text
 
   :global(.react-flow__minimap)
-    right: 16px
-    bottom: 16px
+    right: 1rem
+    bottom: 1rem
     top: auto
     z-index: 11
-    border: 0.0625rem solid $noir-stroke-soft
-    border-radius: 14px
-    background: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(255, 255, 255, 0.07), transparent 58%), linear-gradient(180deg, rgba(27, 28, 32, 0.86), rgba(16, 17, 20, 0.92))
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), 0 0.75rem 2rem rgba(0, 0, 0, 0.3)
+    border: 0.0625rem solid rgba(255, 255, 255, 0.08)
+    border-radius: 0.5rem
+    background: rgba(8, 9, 12, 0.9)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06), 0 0.75rem 1.5rem rgba(0, 0, 0, 0.26)
+    backdrop-filter: blur(0.35rem) saturate(1.02)
+    -webkit-backdrop-filter: blur(0.35rem) saturate(1.02)
     overflow: hidden
     pointer-events: none
+    opacity: 0.58
 
   :global(.react-flow__panel.react-flow__controls)
     top: auto !important
     right: auto !important
-    bottom: 16px !important
-    left: 16px !important
+    bottom: 1rem !important
+    left: 1rem !important
     width: auto !important
     height: auto !important
 
   :global(.react-flow__panel.react-flow__minimap)
     top: auto !important
     left: auto !important
-    bottom: 16px !important
-    right: 16px !important
+    bottom: 1rem !important
+    right: 1rem !important
 
   :global(.react-flow__attribution)
     display: none
@@ -167,42 +216,92 @@
   margin: 0
 
 .minimap
-  opacity: 0.88
+  opacity: 0.58
+
+.emptyState
+  position: absolute
+  inset: 0
+  z-index: 3
+  display: grid
+  place-content: center
+  justify-items: center
+  gap: 0.5rem
+  pointer-events: none
+  user-select: none
+  padding-bottom: 5rem
+  padding-right: clamp(0rem, 12vw, 8rem)
+  opacity: 0.48
+
+.emptyStateMark
+  width: 3rem
+  height: 3rem
+  border-radius: 0.75rem
+  border: 0.0625rem dashed rgba(255, 255, 255, 0.09)
+  background: rgba(16, 17, 21, 0.32)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04)
+  position: relative
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0.9rem
+    border-radius: 0.4rem
+    border: 0.0625rem solid rgba(255, 255, 255, 0.08)
+    background: rgba(255, 255, 255, 0.015)
+
+.emptyStateHint
+  margin: 0
+  color: $text-muted
+  font-size: 0.68rem
+  font-weight: 450
+  letter-spacing: 0.012em
+  line-height: 1.35
+  text-align: center
+  max-width: 14rem
 
 .sidebarToggleButton
   position: absolute
-  top: 18px
-  right: 18px
+  top: 1.125rem
+  right: 1.125rem
   z-index: 20
   display: inline-flex
   align-items: center
   justify-content: center
-  width: 2.25rem
-  height: 2.25rem
+  width: 2rem
+  height: 2rem
   padding: 0
-  border: 0
-  border-radius: 0.9rem
-  background: transparent
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1)
+  border-radius: 0.5rem
+  background: $resend-surface
+  box-shadow: $resend-shadow
   cursor: pointer
-  transition: transform 180ms ease, opacity 180ms ease, filter 180ms ease
-  color: #fff
+  transition: opacity 160ms ease, border-color 160ms ease, transform 160ms ease
+  color: $text-main
 
   &:hover
     transform: translateY(-0.0625rem)
-    filter: brightness(1.06)
+    border-color: $border-mid
+    background: radial-gradient(76% 18% at 50% 0%, rgba(255, 255, 255, 0.16), transparent 72%), linear-gradient(180deg, rgba(24, 25, 31, 0.9) 0%, rgba(13, 14, 18, 0.82) 48%, rgba(5, 5, 7, 0.96) 100%)
 
   &:active
-    transform: translateY(0) scale(0.97)
+    transform: translateY(0)
+    opacity: 0.9
 
   &:focus-visible
-    outline: 2px solid rgba(167, 139, 250, 0.72)
-    outline-offset: 2px
+    outline: 0.1rem solid rgba(255, 255, 255, 0.28)
+    outline-offset: 0.1rem
 
 .sidebarToggleSvg
-  width: 2.25rem
-  height: 2.25rem
+  width: 1.125rem
+  height: 1.125rem
   display: block
-  filter: drop-shadow(0 0.75rem 1.25rem rgba(0, 0, 0, 0.32))
+  filter: none
+
+  path
+    stroke: currentColor
+    stroke-width: 1.5
+    stroke-linecap: round
+    stroke-linejoin: round
 
 .confirmOverlay
   position: absolute
@@ -210,37 +309,122 @@
   z-index: 16
   display: grid
   place-items: center
-  padding: 20px
-  background: rgba(5, 7, 12, 0.56)
-  backdrop-filter: blur(8px)
+  padding: 1.25rem
+  background: rgba(5, 5, 6, 0.58)
+  backdrop-filter: blur(0.4rem)
 
 .confirmCard
-  width: min(100%, 420px)
-  padding: 18px
-  border: 1px solid $color-border
-  border-radius: 20px
-  background: $color-surface-strong
-  box-shadow: $shadow-elevated
+  width: min(100%, 26.25rem)
+  padding: 1.125rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1)
+  border-radius: 1rem
+  background: $resend-surface
+  box-shadow: $resend-shadow
 
 .confirmTitle
   margin: 0
-  color: $color-text
-  font-size: 15px
+  color: $text
+  font-size: 0.9375rem
   line-height: 1.5
 
 .confirmActions
   display: flex
   justify-content: flex-end
-  gap: 12px
-  margin-top: 16px
+  gap: 0.75rem
+  margin-top: 1rem
 
+// BEGIN CANVAS NODE POLISH MICROFIX 09 — REACT FLOW CONTROLS
+// Visual only. Keeps React Flow handlers, icons and animations intact.
+:global(.react-flow__controls)
+  left: 1rem
+  right: auto
+  bottom: 1rem
+  top: auto
+  display: inline-flex
+  flex-direction: column
+  width: 3.25rem
+  z-index: 12
+  border: 0.0625rem solid rgba(255, 255, 255, 0.09)
+  border-radius: 1rem
+  background: linear-gradient(180deg, rgba(16, 17, 22, 0.82) 0%, rgba(8, 9, 12, 0.94) 100%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), 0 0.9rem 1.9rem rgba(0, 0, 0, 0.28)
+  backdrop-filter: blur(0.875rem) saturate(1.03)
+  -webkit-backdrop-filter: blur(0.875rem) saturate(1.03)
+  overflow: hidden
 
-// TDM canvas under-sidebar backdrop fix v1
-.shell
-  background: linear-gradient(168deg, #111216 0%, #0d0e11 42%, #08090c 100%) !important
+:global(.react-flow__controls-button)
+  width: 3.25rem
+  height: 2.875rem
+  border: 0
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.055)
+  background: transparent
+  color: rgba(231, 234, 242, 0.72)
+  fill: currentColor
+  transition: background 140ms ease, color 140ms ease, opacity 140ms ease
 
-.sidebarOpen
-  column-gap: 0
+  svg
+    width: 1.125rem
+    height: 1.125rem
 
-.canvasArea
-  padding-right: 0
+  &:hover
+    background: rgba(255, 255, 255, 0.035)
+    color: rgba(248, 249, 252, 0.94)
+
+  &:active
+    background: rgba(255, 255, 255, 0.055)
+    color: rgba(248, 249, 252, 0.98)
+
+:global(.react-flow__controls-button:last-child)
+  border-bottom: 0
+
+:global(.react-flow__panel.react-flow__controls)
+  bottom: 1rem !important
+  left: 1rem !important
+// END CANVAS NODE POLISH MICROFIX 09 — REACT FLOW CONTROLS
+// BEGIN CANVAS CONTROLS ALIGN MICROFIX 11
+// Mantém os controles inferiores como régua visual do dock superior.
+:global(.react-flow__controls)
+  left: 1rem
+  right: auto
+  bottom: 1rem
+  top: auto
+  display: inline-flex
+  flex-direction: column
+  width: auto
+  z-index: 12
+  border: 0.0625rem solid rgba(255, 255, 255, 0.09)
+  border-radius: 0.5rem
+  background: linear-gradient(180deg, rgba(18, 19, 24, 0.88) 0%, rgba(8, 9, 12, 0.9) 100%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), 0 0.75rem 1.5rem rgba(0, 0, 0, 0.28)
+  backdrop-filter: blur(0.4rem) saturate(1.02)
+  -webkit-backdrop-filter: blur(0.4rem) saturate(1.02)
+  overflow: hidden
+
+:global(.react-flow__controls-button)
+  width: 1.75rem
+  height: 1.75rem
+  min-width: 1.75rem
+  min-height: 1.75rem
+  padding: 0
+  border: 0
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.055)
+  border-radius: 0
+  background: transparent
+  color: rgba(190, 193, 204, 0.62)
+  fill: currentColor
+
+  &:hover
+    background: rgba(255, 255, 255, 0.04)
+    color: rgba(248, 248, 250, 0.9)
+
+:global(.react-flow__controls-button:last-child)
+  border-bottom: 0
+
+:global(.react-flow__panel.react-flow__controls)
+  top: auto !important
+  right: auto !important
+  bottom: 1rem !important
+  left: 1rem !important
+  width: auto !important
+  height: auto !important
+// END CANVAS CONTROLS ALIGN MICROFIX 11

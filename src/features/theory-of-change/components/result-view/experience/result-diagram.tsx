@@ -67,9 +67,9 @@ type CardRect = {
 type Point = { x: number; y: number };
 
 const EDGE_GAP = 10;
-const EDGE_STAGGER = 0.24;
+const EDGE_STAGGER = 0.12;
 const CARD_TRANSITION = 0.36;
-const PATH_DURATION = 0.85;
+const PATH_DURATION = 0.78;
 const ease = [0.22, 1, 0.36, 1] as const;
 
 function cubicBezierPoint(t: number, p0: Point, p1: Point, p2: Point, p3: Point): Point {
@@ -269,26 +269,32 @@ export function ResultDiagram({
             }
 
             const geometry = buildMeasuredEdgePath(sourceRect, targetRect);
-            const isRelated =
-              !hasSelection ||
-              (flow.edgeIds.has(edge.id) && flow.nodeIds.has(edge.source) && flow.nodeIds.has(edge.target));
-            const badgeDetails = hasSelection && isRelated ? getEdgeBadges(edge) : [];
+            const isActiveEdge =
+              hasSelection &&
+              flow.edgeIds.has(edge.id) &&
+              flow.nodeIds.has(edge.source) &&
+              flow.nodeIds.has(edge.target);
+            const badgeDetails = isActiveEdge ? getEdgeBadges(edge) : [];
             const edgeDelay = relatedEdgeOrder.get(edge.id) ?? 0;
-            const shouldAnimatePath = hasSelection && isRelated;
-            const edgeTransitionDelay = shouldAnimatePath ? edgeDelay * EDGE_STAGGER : 0;
+            const edgeTransitionDelay = isActiveEdge ? edgeDelay * EDGE_STAGGER : 0;
 
             return (
-              <g key={edge.id} className={isRelated ? styles.edgeGroup : styles.edgeDimmed}>
+              <g
+                key={edge.id}
+                className={isActiveEdge ? styles.edgeGroup : styles.edgeDimmed}
+                style={{ pointerEvents: 'none' }}
+              >
                 <motion.path
-                  className={[styles.edgePath, isRelated ? styles.edgePathActive : ''].filter(Boolean).join(' ')}
+                  className={[styles.edgePath, isActiveEdge ? styles.edgePathActive : ''].filter(Boolean).join(' ')}
                   d={geometry.path}
-                  markerEnd={isRelated ? 'url(#tdm-arrow-workspace)' : undefined}
+                  markerEnd={isActiveEdge ? 'url(#tdm-arrow-workspace)' : undefined}
                   initial={false}
                   animate={{
-                    opacity: hasSelection ? (isRelated ? 1 : 0.08) : isRelated ? 0.35 : 0.08
+                    opacity: isActiveEdge ? 1 : 0,
+                    pathLength: isActiveEdge ? 1 : 0
                   }}
                   transition={{
-                    duration: shouldReduceMotion ? 0.01 : shouldAnimatePath ? PATH_DURATION : CARD_TRANSITION,
+                    duration: shouldReduceMotion ? 0.01 : isActiveEdge ? PATH_DURATION : CARD_TRANSITION,
                     delay: edgeTransitionDelay,
                     ease
                   }}
@@ -297,14 +303,14 @@ export function ResultDiagram({
                   <motion.g
                     className={styles.edgeBadgeGroup}
                     transform={`translate(${geometry.midX}, ${geometry.midY})`}
-                    initial={shouldReduceMotion ? false : { scale: 0.85, opacity: 0 }}
+                    initial={false}
                     animate={{
-                      scale: 1,
-                      opacity: 1
+                      scale: isActiveEdge ? 1 : 0.85,
+                      opacity: isActiveEdge ? 1 : 0
                     }}
                     transition={{
                       duration: shouldReduceMotion ? 0.01 : CARD_TRANSITION,
-                      delay: edgeTransitionDelay + 0.12,
+                      delay: edgeTransitionDelay + 0.1,
                       ease
                     }}
                   >
@@ -361,6 +367,7 @@ export function ResultDiagram({
                   const isSelected = selected === node.id;
                   const isRelated = !hasSelection || flow.nodeIds.has(node.id);
                   const isRelatedOnly = isRelated && !isSelected;
+                  const isReceded = hasSelection && !isRelated;
 
                   return (
                     <motion.button
@@ -369,17 +376,19 @@ export function ResultDiagram({
                       type="button"
                       className={[
                         styles.diagramCardButton,
-                        isRelated ? '' : styles.diagramCardDisabled
+                        isRelated ? '' : styles.diagramCardDisabled,
+                        isReceded ? styles.diagramCardReceded : ''
                       ]
                         .filter(Boolean)
                         .join(' ')}
+                      data-selected={isSelected ? 'true' : 'false'}
+                      data-related={isRelatedOnly ? 'true' : 'false'}
                       style={{ '--stage-color': meta.accent, '--stage-soft': meta.accentSoft } as CustomStyle}
                       onClick={() => handleSelectNode(node.id)}
                       whileTap={shouldReduceMotion ? undefined : { scale: 0.985 }}
                       initial={false}
                       animate={{
-                        opacity: isRelated ? 1 : 0.22,
-                        y: isSelected ? -5 : isRelatedOnly ? -2 : 0
+                        y: shouldReduceMotion ? 0 : isSelected ? -4 : isRelatedOnly ? -1 : 0
                       }}
                       transition={{ duration: shouldReduceMotion ? 0.01 : CARD_TRANSITION, ease }}
                     >

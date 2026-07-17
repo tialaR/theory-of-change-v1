@@ -1,13 +1,33 @@
 @use '../../../../shared/styles/tokens' as *
 
+// Resend Command Canvas — local atoms
+$border-soft: rgba(255, 255, 255, 0.08)
+$border-mid: rgba(255, 255, 255, 0.12)
+$border-strong: rgba(255, 255, 255, 0.18)
+
+$text-main: rgba(248, 248, 250, 0.94)
+$text-soft: rgba(224, 226, 232, 0.72)
+$text-muted: rgba(190, 193, 204, 0.54)
+$text-faint: rgba(180, 184, 194, 0.38)
+
+$danger: #fb7185
+
+$resend-surface: radial-gradient(76% 18% at 50% 0%, rgba(255, 255, 255, 0.13), transparent 72%), linear-gradient(180deg, rgba(22, 23, 28, 0.88) 0%, rgba(13, 14, 18, 0.78) 48%, rgba(5, 5, 7, 0.96) 100%)
+$resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rgba(0, 0, 0, 0.3)
+
 .edge
   transition: stroke 160ms ease, opacity 160ms ease
+  stroke-width: 1.15
+  opacity: 0.58
 
 .selected
-  filter: drop-shadow(0 0 10px rgba(139, 124, 255, 0.22))
+  opacity: 1
+  stroke-width: 1.4
+  filter: none
 
 .hovered
-  filter: drop-shadow(0 0 8px rgba(139, 124, 255, 0.16))
+  opacity: 0.92
+  filter: none
 
 .animated
   animation: edgeDash 0.9s linear 2
@@ -38,33 +58,31 @@
 .markerPreview
   width: max-content
   max-width: 13.5rem
-  padding: 0.45rem 0.55rem
-  border-radius: 0.55rem
-  border: 0.0625rem solid rgba(255, 255, 255, 0.08)
-  background: linear-gradient(180deg, rgba(24, 25, 30, 0.96), rgba(14, 15, 18, 0.98))
-  box-shadow: 0 0.35rem 1rem rgba(0, 0, 0, 0.34), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05)
-  backdrop-filter: blur(0.75rem)
+  padding: 0.35rem 0.45rem
+  border-radius: 0.875rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1)
+  background: $resend-surface
+  box-shadow: $resend-shadow
+  backdrop-filter: blur(0.45rem)
 
 .markerPreviewRisk
-  border-color: rgba(196, 108, 74, 0.28)
-  box-shadow: 0 0.35rem 1rem rgba(0, 0, 0, 0.34), 0 0 0.55rem rgba(196, 108, 74, 0.1), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05)
+  border-color: rgba(251, 113, 133, 0.28)
 
 .markerPreviewHypothesis
-  border-color: rgba(88, 168, 154, 0.28)
-  box-shadow: 0 0.35rem 1rem rgba(0, 0, 0, 0.34), 0 0 0.55rem rgba(88, 168, 154, 0.1), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05)
+  border-color: $border-mid
 
 .markerPreviewTitle
-  margin: 0 0 0.2rem
-  color: rgba(244, 244, 248, 0.94)
-  font-size: 0.62rem
+  margin: 0 0 0.18rem
+  color: $text-main
+  font-size: 0.56rem
   font-weight: 600
-  letter-spacing: 0.03em
+  letter-spacing: 0.02em
   line-height: 1.2
 
 .markerPreviewText
   margin: 0
-  color: rgba(198, 198, 206, 0.86)
-  font-size: 0.6rem
+  color: $text-muted
+  font-size: 0.54rem
   line-height: 1.35
   display: -webkit-box
   -webkit-line-clamp: 3
@@ -72,9 +90,9 @@
   overflow: hidden
 
 .markerPreviewHint
-  margin: 0.28rem 0 0
-  color: rgba(156, 163, 175, 0.72)
-  font-size: 0.54rem
+  margin: 0.22rem 0 0
+  color: $text-faint
+  font-size: 0.48rem
   line-height: 1.2
 
 .editorLayer
@@ -87,70 +105,70 @@
   display: inline-flex
   align-items: center
   justify-content: center
-  min-width: 1.35rem
-  height: 1.35rem
-  padding: 0 0.3rem
-  border: 0.0625rem solid rgba(255, 255, 255, 0.12)
-  border-radius: 999rem
-  background: rgba(20, 21, 26, 0.94)
-  color: rgba(244, 244, 248, 0.94)
-  font-size: 0.66rem
-  font-weight: 700
-  letter-spacing: 0.05em
+  min-width: 1.15rem
+  height: 1.15rem
+  padding: 0 0.26rem
+  border: 0.0625rem solid $border-mid
+  border-radius: 0.75rem
+  background: rgba(14, 15, 18, 0.92)
+  color: $text-soft
+  font-size: 0.54rem
+  font-weight: 600
+  letter-spacing: 0.02em
   cursor: pointer
-  box-shadow: 0 0.2rem 0.55rem rgba(0, 0, 0, 0.24)
-  transition: border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), 0 0.12rem 0.35rem rgba(0, 0, 0, 0.2)
+  transition: border-color 140ms ease, opacity 140ms ease, background 140ms ease
 
   &:hover
-    transform: translateY(-0.0625rem)
+    border-color: $border-strong
+    background: rgba(20, 21, 26, 0.94)
+    color: $text-main
 
 .markerRisk
-  border-color: rgba(196, 108, 74, 0.42)
-  background: linear-gradient(180deg, rgba(44, 26, 22, 0.96), rgba(28, 18, 16, 0.98))
-  color: rgba(255, 198, 152, 0.94)
-  box-shadow: 0 0.2rem 0.6rem rgba(24, 10, 8, 0.34), inset 0 0.0625rem 0 rgba(255, 196, 148, 0.08)
+  border-color: rgba(251, 113, 133, 0.32)
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)), rgba(14, 15, 18, 0.92)
+  color: rgba(251, 113, 133, 0.92)
 
   &:hover
-    border-color: rgba(214, 128, 88, 0.52)
+    border-color: rgba(251, 113, 133, 0.42)
+    color: rgba(253, 164, 175, 1)
 
 .markerHypothesis
-  border-color: rgba(88, 168, 154, 0.4)
-  background: linear-gradient(180deg, rgba(22, 30, 32, 0.96), rgba(16, 22, 24, 0.98))
-  color: rgba(186, 220, 210, 0.94)
-  box-shadow: 0 0.2rem 0.6rem rgba(8, 18, 16, 0.32), inset 0 0.0625rem 0 rgba(176, 212, 204, 0.08)
+  border-color: $border-mid
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)), rgba(14, 15, 18, 0.92)
+  color: $text-soft
 
   &:hover
-    border-color: rgba(108, 188, 172, 0.5)
+    border-color: $border-strong
+    color: $text-main
 
 .markerHighlighted
-  box-shadow: 0 0 0 0.125rem rgba(255, 255, 255, 0.08), 0 0.25rem 0.75rem rgba(0, 0, 0, 0.28)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1), 0 0.15rem 0.45rem rgba(0, 0, 0, 0.22)
 
 .markerRisk.markerHighlighted
-  border-color: rgba(214, 128, 88, 0.58)
-  box-shadow: 0 0 0 0.125rem rgba(214, 128, 88, 0.14), 0 0.3rem 0.8rem rgba(24, 10, 8, 0.36)
+  border-color: rgba(251, 113, 133, 0.45)
 
 .markerHypothesis.markerHighlighted
-  border-color: rgba(108, 188, 172, 0.54)
-  box-shadow: 0 0 0 0.125rem rgba(108, 188, 172, 0.12), 0 0.3rem 0.8rem rgba(8, 18, 16, 0.34)
+  border-color: $border-strong
 
 .cta
   display: inline-flex
   align-items: center
   justify-content: center
-  min-height: 1.25rem
-  padding: 0 0.45rem
-  border: 0.0625rem dashed rgba(255, 255, 255, 0.14)
-  border-radius: 999rem
-  background: rgba(18, 19, 24, 0.78)
-  color: rgba(198, 198, 206, 0.78)
-  font-size: 0.62rem
+  min-height: 1.15rem
+  padding: 0 0.38rem
+  border: 0.0625rem dashed rgba(255, 255, 255, 0.12)
+  border-radius: 0.75rem
+  background: rgba(14, 15, 18, 0.78)
+  color: $text-muted
+  font-size: 0.54rem
   font-weight: 500
-  letter-spacing: 0.02em
+  letter-spacing: 0.01em
   cursor: pointer
-  opacity: 0.92
+  opacity: 0.88
   transition: border-color 140ms ease, color 140ms ease, background 140ms ease
 
   &:hover
-    border-color: rgba(255, 255, 255, 0.24)
-    background: rgba(22, 23, 28, 0.88)
-    color: rgba(236, 236, 242, 0.9)
+    border-color: rgba(255, 255, 255, 0.2)
+    background: rgba(20, 21, 26, 0.86)
+    color: $text-soft

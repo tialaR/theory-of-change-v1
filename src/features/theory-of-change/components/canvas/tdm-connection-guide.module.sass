@@ -1,5 +1,27 @@
 @use '../../../../shared/styles/tokens' as *
 
+// Resend Command Canvas — local atoms
+$noir-0: #050506
+$noir-1: #08090c
+$noir-2: #101116
+$noir-3: #15161c
+
+$surface-soft: rgba(16, 17, 22, 0.72)
+$surface-mid: rgba(20, 21, 27, 0.82)
+$surface-strong: rgba(24, 25, 31, 0.92)
+
+$border-soft: rgba(255, 255, 255, 0.08)
+$border-mid: rgba(255, 255, 255, 0.12)
+$border-strong: rgba(255, 255, 255, 0.18)
+
+$text-main: rgba(248, 248, 250, 0.94)
+$text-soft: rgba(224, 226, 232, 0.72)
+$text-muted: rgba(190, 193, 204, 0.54)
+$text-faint: rgba(180, 184, 194, 0.38)
+
+$white-light: rgba(255, 255, 255, 0.16)
+$white-light-soft: rgba(255, 255, 255, 0.08)
+
 .panel
   z-index: 8
   box-sizing: border-box
@@ -9,13 +31,14 @@
   margin: 0 !important
   inline-size: fit-content !important
   width: fit-content !important
-  min-inline-size: 28rem
-  max-inline-size: min(52rem, calc(100vw - var(--tdm-sidebar-width, #{$sidebar-width}) - 4rem))
+  min-inline-size: 0
+  max-inline-size: min(24rem, calc(100vw - var(--tdm-sidebar-width, #{$sidebar-width}) - 4rem))
   pointer-events: none
   cursor: default
   font-family: $ds-font-family
 
 .shell
+  --stage-accent: #{$text-muted}
   position: relative
   isolation: isolate
   pointer-events: auto
@@ -24,210 +47,188 @@
   justify-content: center
   inline-size: fit-content
   width: fit-content
-  min-inline-size: 28rem
-  max-inline-size: min(52rem, 100%)
-  min-block-size: 3.25rem
-  padding: 0.45rem 0.55rem 0.45rem 0.75rem
-  border: 0.0625rem solid $noir-stroke-hairline
-  border-radius: 1.15rem
-  background: linear-gradient(176deg, rgba(27, 28, 32, 0.92) 0%, rgba(21, 22, 26, 0.94) 48%, rgba(16, 17, 20, 0.96) 100%)
-  box-shadow: $noir-shadow-floating, inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1), inset 0 -0.0625rem 0 rgba(0, 0, 0, 0.16)
-  backdrop-filter: blur($ds-blur-glass) saturate(1.08)
-  -webkit-backdrop-filter: blur($ds-blur-glass) saturate(1.08)
+  min-inline-size: 0
+  max-inline-size: min(22rem, 100%)
+  min-block-size: 0
+  padding: 0.45rem 0.5rem 0.45rem 0.7rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1)
+  border-radius: 0.625rem
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0.015) 42%, rgba(255, 255, 255, 0.02) 100%), rgba(14, 15, 18, 0.42)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1), 0 0.5rem 1.25rem rgba(0, 0, 0, 0.18)
+  backdrop-filter: blur(0.85rem) saturate(1.08)
+  -webkit-backdrop-filter: blur(0.85rem) saturate(1.08)
   overflow: clip
-  +noir-glass-highlight
-  +noir-edge-light
+  transition: border-color 0.16s ease, box-shadow 0.16s ease
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0
+    pointer-events: none
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 42%)
+    opacity: 0.7
 
   > *
     position: relative
     z-index: 2
 
 .shellExpanded
-  padding-block: 0.38rem 0.45rem
+  padding-block: 0.45rem 0.55rem
 
-.toolbarRow
-  display: flex
-  align-items: center
-  gap: 0.55rem
-  min-inline-size: 0
-  min-block-size: 2.35rem
-
-.guideBlock
-  display: flex
-  flex-direction: column
-  gap: 0.04rem
-  flex-shrink: 0
-  min-width: 0
-
-.guideLabel
-  color: rgba(140, 146, 158, 0.78)
-  font-size: 0.55rem
-  font-weight: 600
-  letter-spacing: 0.07em
-  text-transform: uppercase
-  line-height: 1.15
-  white-space: nowrap
-
-.guideLabelText,
-.guideLabelSuffix
-  display: inline
-
-.stageTitle
-  color: rgba(244, 244, 248, 0.96)
-  font-size: 0.84rem
-  font-weight: 600
-  letter-spacing: 0.01em
-  line-height: 1.2
-  white-space: nowrap
-
-.divider
-  flex-shrink: 0
-  width: 0.0625rem
-  height: 1.35rem
-  background: rgba(255, 255, 255, 0.1)
-
-.nextStep
-  flex-shrink: 0
-  color: var(--preview-accent, rgba(196, 198, 208, 0.88))
-  font-size: 0.74rem
-  font-weight: 500
-  line-height: 1.25
-  white-space: nowrap
-
-.counters
+.compactRow
   display: flex
   align-items: center
   gap: 0.4rem
-  min-width: 0
-  margin-inline-start: auto
-  overflow: hidden
+  min-inline-size: 0
+  min-block-size: 1.5rem
 
-.counter
-  display: inline-flex
-  align-items: center
-  gap: 0.22rem
+.stageDot
   flex-shrink: 0
-  padding: 0.18rem 0.38rem
-  border-radius: 999rem
-  border: 0.0625rem solid rgba(255, 255, 255, 0.06)
-  background: rgba(255, 255, 255, 0.03)
-  color: rgba(168, 172, 182, 0.86)
-  white-space: nowrap
-
-.counterDot
   width: 0.32rem
   height: 0.32rem
-  border-radius: 999rem
-  background: var(--counter-accent, rgba(180, 184, 194, 0.7))
-  box-shadow: 0 0 0.28rem color-mix(in srgb, var(--counter-accent, rgba(180, 184, 194, 0.7)) 28%, transparent)
+  border-radius: 0.08rem
+  background: var(--stage-accent, #{$text-muted})
 
-.counterLabel
-  font-size: 0.58rem
+.stageTitle
+  color: $text-main
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.75rem
+  font-weight: 600
+  letter-spacing: -0.01em
+  line-height: 1.2
+  white-space: nowrap
+
+.compactDivider
+  color: $text-faint
+  font-size: 0.7rem
+  line-height: 1
+  flex-shrink: 0
+
+.compactCounts
+  color: $text-soft
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.6875rem
+  font-weight: 500
+  font-variant-numeric: tabular-nums
+  letter-spacing: 0.01em
+  white-space: nowrap
+
+.compactConnections
+  color: $text-faint
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.6875rem
   font-weight: 500
   letter-spacing: 0.01em
-  line-height: 1.2
+  white-space: nowrap
+  margin-inline-end: 0.35rem
 
-.counterValue
-  color: rgba(228, 230, 236, 0.92)
-  font-size: 0.62rem
-  font-weight: 600
-  line-height: 1.2
-  font-variant-numeric: tabular-nums
-
-.counterComplete
-  border-color: rgba(255, 255, 255, 0.1)
-  background: rgba(255, 255, 255, 0.045)
-
-  .counterValue
-    color: rgba(244, 244, 248, 0.96)
+.compactConnectionsReady
+  color: $text-soft
 
 .toggleButton
   display: inline-flex
   align-items: center
   justify-content: center
   flex-shrink: 0
-  width: 1.75rem
-  height: 1.75rem
-  min-width: 1.75rem
-  min-height: 1.75rem
+  width: 1.25rem
+  height: 1.25rem
+  min-width: 1.25rem
+  min-height: 1.25rem
+  margin-inline-start: auto
   padding: 0
-  border: 0.0625rem solid $noir-stroke-hairline
-  border-radius: 999rem
-  background: rgba(255, 255, 255, 0.03)
-  color: rgba(176, 182, 194, 0.86)
+  border: 0
+  border-radius: 0.3rem
+  background: transparent
+  box-shadow: none
+  color: $text-faint
   cursor: pointer
-  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease
+  transition: color 0.16s ease
 
   &:hover
-    color: rgba(228, 230, 236, 0.94)
-    background: rgba(255, 255, 255, 0.06)
-    border-color: rgba(255, 255, 255, 0.14)
+    color: $text-main
+    background: transparent
+    border-color: transparent
 
   &:focus-visible
-    outline: 0.12rem solid rgba(250, 250, 250, 0.45)
-    outline-offset: 0.08rem
+    outline: 0.1rem solid rgba(250, 250, 250, 0.28)
+    outline-offset: 0.06rem
 
 .chevronSvg
-  width: 0.85rem
-  height: 0.85rem
+  width: 0.625rem
+  height: 0.625rem
   flex: 0 0 auto
-  transition: transform 0.2s ease
+  transition: transform 0.16s ease
 
 .chevronExpanded
   transform: rotate(180deg)
 
-.helpRow
-  overflow: visible
-  padding: 0.05rem 0.15rem 0.1rem
-  border-top: 0.0625rem solid rgba(255, 255, 255, 0.05)
-  margin-top: 0.2rem
+.expandedBlock
+  display: grid
+  grid-template-rows: 0fr
+  opacity: 0
+  pointer-events: none
+  transition: opacity 0.16s ease
 
-.helpText
-  margin: 0.28rem 0 0.08rem
-  color: rgba(176, 180, 190, 0.86)
-  font-size: 0.68rem
-  font-weight: 500
-  line-height: 1.35
-  white-space: nowrap
+  &[data-open='true']
+    grid-template-rows: 1fr
+    opacity: 1
+    pointer-events: auto
+    margin-top: 0.35rem
+    padding-top: 0.35rem
+    border-top: 0.0625rem solid rgba(255, 255, 255, 0.06)
+
+.expandedInner
+  min-height: 0
   overflow: hidden
-  text-overflow: ellipsis
-  max-inline-size: 48rem
+  display: grid
+  gap: 0
+
+.nextStep
+  flex-shrink: 0
+  display: inline-flex
+  align-items: center
+  gap: 0.4rem
+  min-height: 0
+  padding: 0
+  border: 0
+  border-radius: 0
+  background: transparent
+  color: $text-main
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.6875rem
+  font-weight: 500
+  line-height: 1.3
+  white-space: nowrap
+
+.nextStepPrefix
+  color: $text-faint
+  font-weight: 450
+
+.nextStepArrow
+  color: color-mix(in srgb, var(--preview-accent, #{$text-muted}) 70%, rgba(224, 226, 232, 0.85))
+  font-size: 0.75rem
+  line-height: 1
+  font-weight: 500
+
+.nextStepLabel
+  color: $text-main
+  font-weight: 550
 
 @media (max-width: 56rem)
   .panel
     left: 0.75rem !important
     top: 0.75rem !important
-    min-inline-size: 0
     max-inline-size: calc(100vw - 1.5rem)
 
   .shell
-    min-inline-size: 0
     max-inline-size: min(100%, calc(100vw - 1.5rem))
-    max-block-size: none
 
-  .toolbarRow
-    flex-wrap: wrap
-    gap: 0.4rem
-
-  // Same DOM text on SSR/client; only visibility changes by viewport.
-  .guideLabelSuffix
-    display: none
-
-  .counters
-    margin-inline-start: 0
-    order: 3
-    flex-wrap: wrap
-    width: 100%
-
-  .toggleButton
-    margin-inline-start: auto
-
-  .helpText
-    white-space: normal
+  .compactCounts
+    font-size: 0.625rem
 
 @media (prefers-reduced-motion: reduce)
-  .chevronSvg
-    transition: none
-
-  .toggleButton
+  .chevronSvg,
+  .toggleButton,
+  .shell,
+  .expandedBlock
     transition: none

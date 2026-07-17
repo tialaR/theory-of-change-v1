@@ -1,9 +1,8 @@
 'use client';
 
 import { useRef } from 'react';
-import { TdmFormField } from '../form-field/tdm-form-field';
+import { TdmClearFieldButton, TdmFormField } from '../form-field/tdm-form-field';
 import fieldStyles from '../form-field/tdm-form-field.module.sass';
-import { SidebarToggleIcon } from './sidebar-toggle-icon';
 import styles from './theory-header-form.module.sass';
 
 export const THEORY_DEFAULT_DESCRIPTION =
@@ -13,14 +12,12 @@ export function TheoryHeaderForm({
   theoryName,
   theoryDescription,
   onTheoryNameChange,
-  onTheoryDescriptionChange,
-  onHideSidebar
+  onTheoryDescriptionChange
 }: {
   theoryName: string;
   theoryDescription: string;
   onTheoryNameChange: (nextValue: string) => void;
   onTheoryDescriptionChange: (nextValue: string) => void;
-  onHideSidebar?: () => void;
 }) {
   const nameInputRef = useRef<HTMLInputElement>(null);
 
@@ -31,18 +28,6 @@ export function TheoryHeaderForm({
 
   return (
     <div className={styles.formCard}>
-      {onHideSidebar ? (
-        <div className={styles.formCardToolbar}>
-          <button
-            type="button"
-            className={styles.hideSidebarButton}
-            aria-label="Esconder sidebar"
-            onClick={onHideSidebar}
-          >
-            <SidebarToggleIcon direction="right" />
-          </button>
-        </div>
-      ) : null}
       <div className={fieldStyles.form}>
         <label className={fieldStyles.field}>
           <span className={fieldStyles.fieldLabel}>Sua teoria da mudança</span>
@@ -64,6 +49,12 @@ export function TheoryHeaderForm({
                 }
               }}
             />
+            {theoryName ? (
+              <TdmClearFieldButton
+                ariaLabel="Limpar nome da teoria"
+                onClear={() => onTheoryNameChange('')}
+              />
+            ) : null}
           </div>
         </label>
         <TdmFormField

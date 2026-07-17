@@ -1,12 +1,15 @@
 import { exampleTheory } from '@/features/theory-of-change/data/example-theory';
-import { ResultInteractiveWorkspace } from '@/features/theory-of-change/components/result-view/experience/result-interactive-workspace';
+import { ResultExperience } from '@/features/theory-of-change/components/result-view/result-experience';
 
 export default function ResultadoInterativoPage() {
   return (
-    <ResultInteractiveWorkspace
-      title={exampleTheory.title}
-      nodes={exampleTheory.nodes}
-      edges={exampleTheory.edges}
+    <ResultExperience
+      mode="example"
+      viewModel={{
+        title: exampleTheory.title,
+        nodes: exampleTheory.nodes,
+        edges: exampleTheory.edges
+      }}
     />
   );
 }

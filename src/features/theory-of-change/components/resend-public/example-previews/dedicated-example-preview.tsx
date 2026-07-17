@@ -1,5 +1,7 @@
 'use client';
 
+import { useRef } from 'react';
+import { MotionConfig, useInView } from 'motion/react';
 import { FlowDraftPreview } from './flow-draft-preview';
 import { ResultDraftPreview } from './result-draft-preview';
 import styles from './example-previews.module.sass';
@@ -9,12 +11,20 @@ type DedicatedExamplePreviewProps = {
   active?: boolean;
 };
 
-export function DedicatedExamplePreview({ type, active = true }: DedicatedExamplePreviewProps) {
+export function DedicatedExamplePreview({ type, active }: DedicatedExamplePreviewProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, {
+    once: true,
+    amount: 0.45,
+  });
+  const isActive = active ?? isInView;
   const Preview = type === 'flow' ? FlowDraftPreview : ResultDraftPreview;
 
   return (
-    <div className={styles.dedicatedPreviewFrame} aria-hidden="true">
-      <Preview active={active} />
-    </div>
+    <MotionConfig reducedMotion="user">
+      <div ref={ref} className={styles.dedicatedPreviewFrame} aria-hidden="true">
+        <Preview active={isActive} />
+      </div>
+    </MotionConfig>
   );
 }
