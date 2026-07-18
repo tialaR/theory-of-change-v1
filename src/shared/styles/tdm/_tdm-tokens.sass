@@ -1,0 +1,18 @@
+@use 'tdm-font' as font
+@use 'tdm-foreground' as fg
+@use 'tdm-spacing' as space
+@use 'tdm-measure' as measure
+@use 'tdm-cta' as cta
+
+// Agregador canônico TDM — publica --tdm-* em :root.
+:root
+  // Tipografia
+  +font.tokens
+  // Foreground
+  +fg.tokens
+  // Spacing + recipes
+  +space.tokens
+  // Medidas de leitura
+  +measure.tokens
+  // CTA roles (font/fg/height/padding)
+  +cta.tokens

@@ -4,8 +4,8 @@
   --graphite: #0c0c0d
   --smoke: #141416
   --ash: #1c1c1f
-  --white: #f4f4f5
-  --muted: rgba(244, 244, 245, 0.58)
+  --white: var(--tdm-fg-primary)
+  --muted: var(--tdm-fg-tertiary)
   --border: rgba(255, 255, 255, 0.09)
   --glow: rgba(255, 255, 255, 0.14)
   --glow-soft: rgba(255, 255, 255, 0.06)
@@ -16,10 +16,10 @@
   --card-bg: rgba(255, 255, 255, 0.025)
   --card-border: rgba(255, 255, 255, 0.1)
   --grid-dot: rgba(255, 255, 255, 0.055)
-  --hero-title: clamp(2.35rem, 5.8vw, 4.25rem)
+  --hero-title: var(--tdm-type-display-md)
   --hero-title-compact: clamp(2rem, 4.8vw, 3.35rem)
   --radius-cta: 0.5rem
-  --body-muted: rgba(244, 244, 245, 0.62)
+  --body-muted: var(--tdm-fg-secondary)
   --space-xs: clamp(0.5rem, 1vw, 0.75rem)
   --space-sm: clamp(0.75rem, 1.4vw, 1rem)
   --space-md: clamp(1.25rem, 2.2vw, 1.75rem)
@@ -296,14 +296,15 @@
   display: inline-flex
   align-items: center
   justify-content: center
-  gap: 0.45rem
-  min-block-size: 2.5rem
-  padding: 0.625rem 1.15rem
+  gap: var(--tdm-cta-gap)
+  min-block-size: var(--tdm-cta-min-height)
+  padding: 0 var(--tdm-cta-padding-inline)
   border-radius: var(--radius-cta)
-  font-size: 0.8125rem
-  font-weight: 600
+  font-size: var(--tdm-cta-font-size)
+  font-weight: var(--tdm-cta-font-weight)
+  line-height: var(--tdm-cta-line-height)
   border: 1px solid transparent
-  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease, color 0.18s ease
   cursor: pointer
   white-space: nowrap
   text-decoration: none
@@ -326,22 +327,25 @@
 
 .button_primary
   background: var(--white)
-  color: var(--noir)
+  color: var(--tdm-cta-primary-fg)
   box-shadow: 0 0 0.5rem rgba(255, 255, 255, 0.35), 0 0 2rem rgba(255, 255, 255, 0.08)
 
 .button_secondary
   background: var(--card-bg)
   border-color: var(--card-border)
-  color: var(--white)
+  color: var(--tdm-cta-secondary-fg)
 
-.button_ghost
+.button_ghost,
+.button_tertiary
   background: transparent
   border-color: var(--border)
-  color: var(--muted)
+  color: var(--tdm-cta-tertiary-fg)
 
-.button_ghost:hover
-  color: var(--white)
+.button_ghost:hover,
+.button_tertiary:hover
+  color: var(--tdm-fg-primary)
   border-color: rgba(255,255,255,0.18)
+
 
 // Section
 .section
@@ -721,8 +725,8 @@
   --graphite: #0c0c0d
   --smoke: #141416
   --ash: #1c1c1f
-  --white: #f4f4f5
-  --muted: rgba(244, 244, 245, 0.58)
+  --white: var(--tdm-fg-primary)
+  --muted: var(--tdm-fg-tertiary)
   --border: rgba(255, 255, 255, 0.09)
   --glow: rgba(255, 255, 255, 0.14)
   --glow-soft: rgba(255, 255, 255, 0.06)
@@ -733,10 +737,10 @@
   --card-bg: rgba(255, 255, 255, 0.025)
   --card-border: rgba(255, 255, 255, 0.1)
   --grid-dot: rgba(255, 255, 255, 0.055)
-  --hero-title: clamp(2.35rem, 5.8vw, 4.25rem)
+  --hero-title: var(--tdm-type-display-md)
   --hero-title-compact: clamp(2rem, 4.8vw, 3.35rem)
   --radius-cta: 0.5rem
-  --body-muted: rgba(244, 244, 245, 0.62)
+  --body-muted: var(--tdm-fg-secondary)
   --space-xs: clamp(0.5rem, 1vw, 0.75rem)
   --space-sm: clamp(0.75rem, 1.4vw, 1rem)
   --space-md: clamp(1.25rem, 2.2vw, 1.75rem)

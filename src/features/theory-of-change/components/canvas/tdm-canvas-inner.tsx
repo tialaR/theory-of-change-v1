@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent, type MouseEvent as ReactMouseEvent, type TouchEvent as ReactTouchEvent } from 'react';
 import {
   addEdge,
@@ -20,10 +21,11 @@ import {
   type OnConnectEnd,
   type OnConnectStart
 } from '@xyflow/react';
+
 import { TdmTheoryEdge } from '../edge/tdm-theory-edge';
 import { ResultView } from '../result-view/result-view';
 import { TdmResultPreview } from '../result-preview/tdm-result-preview';
-import { TdmNode as TdmNodeView, TdmNodeInteractionProvider } from '../node/tdm-node';
+import { TdmCanvasNode, TdmNodeInteractionProvider } from './tdm-canvas-node/tdm-canvas-node';
 import { SidebarToggleIcon, TdmSidebar, type TdmBlockForms, type TdmSidebarContext } from '../sidebar/tdm-sidebar';
 import {
   stageAdvancedFlowTooltipEvent,
@@ -128,7 +130,7 @@ const CANVAS_DS_MINIMAP: Record<TdmStage, { fill: string; stroke: string }> = {
 };
 
 export const nodeTypes = {
-  tdm: TdmNodeView
+  tdm: TdmCanvasNode
 } satisfies NodeTypes;
 
 export const edgeTypes = {
@@ -1384,6 +1386,13 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
 
   return (
     <section className={[styles.shell, isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed].join(' ')}>
+      <Link href="/" className={styles.backLink} aria-label="Voltar ao inicio">
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" className={styles.backLinkIcon}>
+          <path d="M9.5 3.5 4.5 8l5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M4.75 8h6.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+        <span>Voltar</span>
+      </Link>
       <button
         type="button"
         className={styles.sidebarToggleButton}
@@ -1396,6 +1405,7 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
       <div className={styles.canvasArea}>
         <TdmToastViewport toast={activeFlowTooltip} onClose={closeFlowTooltip} />
         <div className={styles.flowFrame} onClick={handleFlowBackgroundClick}>
+
           {nodes.length === 0 ? (
             <div className={styles.emptyState} aria-hidden="true">
               <span className={styles.emptyStateMark} />

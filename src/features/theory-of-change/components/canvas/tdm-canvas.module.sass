@@ -259,6 +259,55 @@ $resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rg
   text-align: center
   max-width: 14rem
 
+// CTA terciário de navegação — chrome do shell, fora do viewport React Flow.
+.backLink
+  position: absolute
+  top: var(--tdm-space-4)
+  left: var(--tdm-space-4)
+  z-index: 20
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  gap: var(--tdm-cta-gap)
+  min-height: var(--tdm-cta-min-height)
+  padding: 0 var(--tdm-cta-padding-inline)
+  border: 0.0625rem solid transparent
+  border-radius: 0.5rem
+  background: transparent
+  color: var(--tdm-cta-tertiary-fg)
+  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: var(--tdm-cta-font-size)
+  font-weight: var(--tdm-cta-font-weight)
+  line-height: var(--tdm-cta-line-height)
+  letter-spacing: -0.01em
+  text-transform: none
+  text-decoration: none
+  cursor: pointer
+  transition: color 160ms ease, opacity 160ms ease, transform 160ms ease
+
+  &:hover
+    color: var(--tdm-fg-primary)
+
+    .backLinkIcon
+      opacity: 1
+      transform: translateX(-0.125rem)
+
+  &:active
+    transform: scale(0.985)
+    opacity: 0.92
+
+  &:focus-visible
+    outline: 0.1rem solid rgba(255, 255, 255, 0.28)
+    outline-offset: 0.1rem
+    color: var(--tdm-fg-primary)
+
+.backLinkIcon
+  width: 1rem
+  height: 1rem
+  flex: 0 0 auto
+  opacity: 0.82
+  transition: opacity 160ms ease, transform 160ms ease
+
 .sidebarToggleButton
   position: absolute
   top: 1.125rem
@@ -290,6 +339,7 @@ $resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rg
   &:focus-visible
     outline: 0.1rem solid rgba(255, 255, 255, 0.28)
     outline-offset: 0.1rem
+
 
 .sidebarToggleSvg
   width: 1.125rem

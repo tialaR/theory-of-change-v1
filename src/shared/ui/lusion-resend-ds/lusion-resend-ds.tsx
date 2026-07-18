@@ -210,10 +210,11 @@ export function PublicHeader({
             })}
           </nav>
           <div className={styles.headerCtaWrap}>
-            <PublicButton href={ctaHref} variant="primary">
+            <PublicButton href={ctaHref} variant="tertiary">
               {ctaLabel}
             </PublicButton>
           </div>
+
         </div>
         
       </header>
@@ -259,7 +260,7 @@ export function PublicButton({
 }: {
   href?: string;
   children: ReactNode;
-  variant?: 'primary' | 'secondary' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'tertiary';
   onClick?: () => void;
   type?: 'button' | 'submit';
 }) {

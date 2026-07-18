@@ -1,8 +1,8 @@
 'use client';
 
-import { BaseEdge, EdgeLabelRenderer, EdgeProps, getBezierPath, useStore } from '@xyflow/react';
+import { BaseEdge, EdgeLabelRenderer, EdgeProps, getBezierPath, MarkerType, useStore } from '@xyflow/react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
+import { useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import {
   canCreateHypothesis,
   canCreateRisk,
@@ -11,7 +11,6 @@ import {
 import {
   getConnectionStrokeColor,
   TDM_CONNECTION_STROKE_WIDTH,
-  TDM_EDGE_DASH,
   TDM_EDGE_INTERACTION_WIDTH
 } from '../../domain/tdm-connection-theme';
 import { getTdmStageTheme } from '../../domain/tdm-theme';
@@ -22,6 +21,7 @@ import { TdmEdgeMarkerEditor } from './tdm-edge-marker-editor';
 import styles from './tdm-theory-edge.module.sass';
 
 const MARKER_PREVIEW_MAX_LENGTH = 110;
+const COMPACT_ARROW_SIZE = 10;
 
 function truncateMarkerPreview(text: string): string {
   if (text.length <= MARKER_PREVIEW_MAX_LENGTH) {
@@ -79,6 +79,26 @@ function resolveMarkerType(sourceStage: TdmStage, targetStage: TdmStage): TdmMar
   return null;
 }
 
+function resolveCompactMarkerEnd(
+  markerEnd: EdgeProps<TdmEdgeModel>['markerEnd'],
+  strokeColor: string
+): EdgeProps<TdmEdgeModel>['markerEnd'] {
+  if (!markerEnd) {
+    return undefined;
+  }
+
+  if (typeof markerEnd === 'string') {
+    return markerEnd;
+  }
+
+  return {
+    type: MarkerType.ArrowClosed,
+    width: COMPACT_ARROW_SIZE,
+    height: COMPACT_ARROW_SIZE,
+    color: strokeColor
+  } as unknown as EdgeProps<TdmEdgeModel>['markerEnd'];
+}
+
 export function TdmTheoryEdge({
   id,
   sourceX,
@@ -94,7 +114,6 @@ export function TdmTheoryEdge({
 }: EdgeProps<TdmEdgeModel>) {
   const [isHovered, setIsHovered] = useState(false);
   const [isMarkerHovered, setIsMarkerHovered] = useState(false);
-  const [pulseAnimation, setPulseAnimation] = useState(false);
   const editorRef = useRef<HTMLDivElement>(null);
   const [editorSize, setEditorSize] = useState({ width: 288, height: 176 });
   const prefersReducedMotion = useReducedMotion();
@@ -113,10 +132,27 @@ export function TdmTheoryEdge({
   const hasMarker = Boolean(markerType && markerText);
   const allowedMarkerType = resolveMarkerType(sourceStage, targetStage);
   const isInteractive = selected || isHovered;
-  const shouldAnimate = isHovered || pulseAnimation || Boolean(data?.recentlyUpdated);
   const isEditorOpen = Boolean(data?.isEditorOpen);
   const showCta = !hasMarker && allowedMarkerType && isInteractive && !isEditorOpen;
   const showMarkerHighlight = hasMarker && isInteractive && !isEditorOpen;
+  const isRecentlyUpdated = Boolean(data?.recentlyUpdated);
+  const compactMarkerEnd = resolveCompactMarkerEnd(markerEnd, strokeColor);
+
+  let strokeWidth: number = TDM_CONNECTION_STROKE_WIDTH.rest;
+  if (selected) {
+    strokeWidth = TDM_CONNECTION_STROKE_WIDTH.active;
+  } else if (isHovered) {
+    strokeWidth = TDM_CONNECTION_STROKE_WIDTH.rest + 0.2;
+  }
+
+  let strokeOpacity = 0.58;
+  if (data?.validationStatus === 'invalid') {
+    strokeOpacity = 0.4;
+  } else if (selected) {
+    strokeOpacity = 1;
+  } else if (isHovered) {
+    strokeOpacity = 0.92;
+  }
 
   const [edgePath, labelX, labelY] = getBezierPath({
     sourceX,
@@ -172,26 +208,6 @@ export function TdmTheoryEdge({
     });
   }, [isEditorOpen, markerText, markerType]);
 
-  useEffect(() => {
-    if (!selected) {
-      return;
-    }
-
-    setPulseAnimation(true);
-    const timeout = window.setTimeout(() => setPulseAnimation(false), 1200);
-    return () => window.clearTimeout(timeout);
-  }, [selected]);
-
-  useEffect(() => {
-    if (!data?.recentlyUpdated) {
-      return;
-    }
-
-    setPulseAnimation(true);
-    const timeout = window.setTimeout(() => setPulseAnimation(false), 1800);
-    return () => window.clearTimeout(timeout);
-  }, [data?.recentlyUpdated]);
-
   const openEditor = () => {
     data?.onOpenMarkerEditor?.(id);
   };
@@ -210,16 +226,17 @@ export function TdmTheoryEdge({
             ...style,
             '--edge-stroke': strokeColor,
             stroke: strokeColor,
-            strokeDasharray: shouldAnimate ? TDM_EDGE_DASH.active : TDM_EDGE_DASH.rest,
-            strokeWidth: selected ? TDM_CONNECTION_STROKE_WIDTH.active : TDM_CONNECTION_STROKE_WIDTH.rest,
-            opacity: data?.validationStatus === 'invalid' ? 0.55 : 0.9
+            strokeDasharray: 'none',
+            strokeDashoffset: 0,
+            strokeWidth,
+            opacity: strokeOpacity
           } as CSSProperties}
-          markerEnd={markerEnd}
+          markerEnd={compactMarkerEnd}
           className={[
             styles.edge,
             selected ? styles.selected : '',
             isHovered ? styles.hovered : '',
-            shouldAnimate ? styles.animated : ''
+            isRecentlyUpdated ? styles.recentlyUpdated : ''
           ]
             .filter(Boolean)
             .join(' ')}
@@ -249,7 +266,6 @@ export function TdmTheoryEdge({
                   ]
                     .filter(Boolean)
                     .join(' ')}
-                  whileHover={prefersReducedMotion ? undefined : { y: -1 }}
                   whileTap={prefersReducedMotion ? undefined : { opacity: 0.9 }}
                   transition={{ duration: 0.14, ease: [0.22, 1, 0.36, 1] }}
                   onClick={(event) => {

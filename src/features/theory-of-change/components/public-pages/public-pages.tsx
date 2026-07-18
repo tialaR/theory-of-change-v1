@@ -126,10 +126,13 @@ export function HomePage() {
         description="Um espaço visual para transformar problema, etapas, conexões, riscos e hipóteses em narrativa clara."
         actions={
           <>
-            <PublicButton href="/canvas">Criar teoria</PublicButton>
+            <PublicButton href="/canvas" variant="primary">
+              Criar teoria
+            </PublicButton>
             <PublicButton href="/exemplos/resultado" variant="ghost">
               Ver exemplo
             </PublicButton>
+
           </>
         }
       />

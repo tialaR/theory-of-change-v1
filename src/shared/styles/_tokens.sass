@@ -99,12 +99,14 @@ $ds-gradient-card-quiet: linear-gradient(180deg, rgba(32, 32, 34, 0.84), rgba(18
 $ds-gradient-hero-glow: radial-gradient(circle at 50% 36%, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.09) 28%, rgba(255, 255, 255, 0.025) 58%, rgba(0, 0, 0, 0) 100%)
 $ds-gradient-smoke: linear-gradient(115deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.02))
 
-$ds-font-family: "SF Pro Display", "SF Pro Text", Inter, system-ui, sans-serif
+// Legado tipográfico — canônico em --tdm-font-* (src/shared/styles/tdm/).
+$ds-font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif
 $ds-font-card-title-size: 1.25rem
 $ds-font-body-size: 0.9375rem
 $ds-font-caption-size: 0.8125rem
 $ds-font-label-size: 0.75rem
 
+// Escala legada alinhada a --tdm-space-* (nomes preservados).
 $ds-space-1: 0.25rem
 $ds-space-2: 0.5rem
 $ds-space-3: 0.75rem
@@ -112,6 +114,7 @@ $ds-space-4: 1rem
 $ds-space-5: 1.25rem
 $ds-space-6: 1.5rem
 $ds-space-8: 2rem
+
 
 $ds-radius-xs: 0.5rem
 $ds-radius-sm: 0.75rem
@@ -222,15 +225,17 @@ $ds-btn-radius: 9px
   --tdm-section-icon-stroke: 1.75
 
 =tdm-button-vars
-  --tdm-button-height: 2.75rem
+  // Alias de compatibilidade → tokens canônicos de CTA.
+  --tdm-button-height: var(--tdm-cta-min-height, 2.75rem)
   --tdm-button-radius: #{$noir-radius-button}
   --tdm-button-border-width: 0.0625rem
-  --tdm-button-padding-x: 1rem
-  --tdm-button-font-size: 0.8125rem
-  --tdm-button-font-weight: 600
+  --tdm-button-padding-x: var(--tdm-cta-padding-inline, 1rem)
+  --tdm-button-font-size: var(--tdm-cta-font-size, 0.875rem)
+  --tdm-button-font-weight: var(--tdm-cta-font-weight, 600)
   --tdm-button-letter-spacing: 0.055em
   --tdm-button-icon-size: 1rem
-  --tdm-button-gap: 0.5rem
+  --tdm-button-gap: var(--tdm-cta-gap, 0.5rem)
+
 
 // ─── Apple Noir Glass — perfume mixins ────────────────────────────────────────
 
@@ -466,10 +471,12 @@ $ds-btn-radius: 9px
   --ds-glass-highlight: #{$ds-glass-highlight}
   --ds-glass-stroke: #{$ds-glass-stroke}
   --ds-glass-stroke-strong: #{$ds-glass-stroke-strong}
-  --ds-text-primary: #{$ds-text-primary}
-  --ds-text-secondary: #{$ds-text-secondary}
-  --ds-text-muted: #{$ds-text-muted}
-  --ds-text-subtle: #{$ds-text-subtle}
+  // Foreground legado → aliases canônicos TDM (nomes --ds-text-* preservados).
+  --ds-text-primary: var(--tdm-fg-primary)
+  --ds-text-secondary: var(--tdm-fg-secondary)
+  --ds-text-muted: var(--tdm-fg-tertiary)
+  --ds-text-subtle: var(--tdm-fg-quaternary)
+
   --ds-stage-input: #{$stage-1}
   --ds-stage-activity: #{$stage-2}
   --ds-stage-output: #{$stage-3}
