@@ -1,0 +1,255 @@
+// Contrato B — public feature card surface (local values when token lacks exact match)
+$card-radius: 2rem
+$card-padding-block: 2.5rem
+$card-padding-inline: 2.75rem
+$icon-well: 4rem
+$column-gap: 2rem
+$row-gap: 2rem
+$min-block-compact: 16.5rem
+$min-block-standard: 20rem
+$min-block-choice: 16rem
+$choice-padding: 1.75rem
+$choice-icon: 2.875rem
+$choice-icon-title-gap: 0.9375rem
+$choice-title-body-gap: 0.875rem
+$choice-body-action-gap: 1.375rem
+$perimeter-travel-duration: 1.4s
+
+@property --tdm-public-feature-border-angle
+  syntax: '<angle>'
+  inherits: false
+  initial-value: 0deg
+
+.card
+  position: relative
+  isolation: isolate
+  display: grid
+  align-content: start
+  block-size: 100%
+  min-inline-size: 0
+  padding: $card-padding-block $card-padding-inline
+  border-radius: $card-radius
+  border: var(--tdm-border-width-hairline) solid color-mix(in srgb, var(--tdm-fg-primary) 16%, transparent)
+  background: radial-gradient(100% 80% at 50% 0%, color-mix(in srgb, var(--tdm-fg-primary) 3.5%, transparent), transparent 58%), linear-gradient(180deg, color-mix(in srgb, var(--tdm-neutral-950) 98%, var(--tdm-neutral-1000)) 0%, color-mix(in srgb, var(--tdm-neutral-975) 99%, var(--tdm-neutral-1000)) 100%)
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--tdm-fg-primary) 4%, transparent)
+  color: inherit
+  text-decoration: none
+  overflow: hidden
+  transform: none
+
+  &::after
+    content: ''
+    position: absolute
+    inset: 0
+    border-radius: inherit
+    pointer-events: none
+    z-index: 2
+    opacity: 0
+    padding: 1px
+    background: conic-gradient(from var(--tdm-public-feature-border-angle), transparent 0deg 200deg, color-mix(in srgb, var(--tdm-fg-primary) 22%, transparent) 240deg, color-mix(in srgb, var(--tdm-fg-primary) 88%, transparent) 292deg, color-mix(in srgb, var(--tdm-fg-primary) 36%, transparent) 328deg, transparent 360deg)
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)
+    -webkit-mask-composite: xor
+    mask-composite: exclude
+
+.sizeCompact
+  min-block-size: $min-block-compact
+
+.sizeStandard
+  min-block-size: $min-block-standard
+
+.sizeChoice
+  min-block-size: $min-block-choice
+  padding: $choice-padding
+  align-content: start
+
+.withIcon
+  grid-template-columns: auto minmax(0, 1fr)
+  grid-template-rows: auto minmax(0, 1fr) auto
+  grid-template-areas: 'icon title' 'body body' 'action action'
+  column-gap: $column-gap
+  row-gap: $row-gap
+
+.withoutIcon
+  grid-template-columns: minmax(0, 1fr)
+  grid-template-rows: auto minmax(0, 1fr) auto
+  grid-template-areas: 'title' 'body' 'action'
+  row-gap: $row-gap
+
+.sizeChoice.withIcon
+  grid-template-columns: auto minmax(0, 1fr)
+  grid-template-rows: auto auto auto
+  grid-template-areas: 'icon title' '. body' '. action'
+  column-gap: $choice-icon-title-gap
+  row-gap: 0
+
+.sizeChoice.withoutIcon
+  grid-template-rows: auto auto auto
+  row-gap: 0
+
+.iconWell
+  grid-area: icon
+  display: grid
+  place-items: center
+  flex-shrink: 0
+  inline-size: $icon-well
+  block-size: $icon-well
+  border-radius: var(--tdm-radius-md)
+  border: var(--tdm-border-width-hairline) solid var(--tdm-border-default)
+  color: var(--tdm-fg-primary)
+  background: linear-gradient(180deg, color-mix(in srgb, var(--tdm-fg-primary) 6%, transparent), color-mix(in srgb, var(--tdm-fg-primary) 2%, transparent)), var(--tdm-surface-base)
+  box-shadow: var(--tdm-highlight-top)
+  transition: color var(--tdm-duration-ui) var(--tdm-ease-standard), border-color var(--tdm-duration-ui) var(--tdm-ease-standard)
+
+  svg
+    inline-size: var(--tdm-icon-size-md)
+    block-size: var(--tdm-icon-size-md)
+
+.sizeChoice .iconWell
+  inline-size: $choice-icon
+  block-size: $choice-icon
+
+  svg
+    inline-size: 1.125rem
+    block-size: 1.125rem
+
+.titleBlock
+  grid-area: title
+  display: grid
+  gap: var(--tdm-space-2)
+  align-content: center
+  min-inline-size: 0
+
+.sizeChoice .titleBlock
+  gap: 0
+
+.eyebrow
+  margin: 0
+  color: var(--tdm-fg-muted)
+  font-size: var(--tdm-font-label-size)
+  font-weight: 600
+  letter-spacing: var(--tdm-font-label-tracking)
+  line-height: 1.2
+
+.title
+  margin: 0
+  color: var(--tdm-fg-primary)
+  font-size: var(--tdm-font-card-title-size)
+  font-weight: var(--tdm-font-card-title-weight)
+  line-height: var(--tdm-font-card-title-line)
+  letter-spacing: -0.02em
+  overflow-wrap: break-word
+  transition: color var(--tdm-duration-ui) var(--tdm-ease-standard)
+
+.body
+  grid-area: body
+  min-inline-size: 0
+
+.sizeChoice .body
+  margin-block-start: $choice-title-body-gap
+
+.description
+  margin: 0
+  max-inline-size: 36ch
+  color: var(--tdm-fg-secondary)
+  font-size: var(--tdm-font-body-size)
+  line-height: var(--tdm-font-body-line)
+
+.sizeChoice .description
+  max-inline-size: 34ch
+
+.action
+  grid-area: action
+  align-self: end
+  margin-block-start: auto
+  color: var(--tdm-fg-secondary)
+  font-size: 0.9375rem
+  font-weight: 500
+  letter-spacing: -0.02em
+  transition: color var(--tdm-duration-ui) var(--tdm-ease-standard)
+
+.sizeChoice .action
+  display: inline-flex
+  align-items: center
+  gap: var(--tdm-space-2)
+  align-self: start
+  inline-size: fit-content
+  margin-block-start: $choice-body-action-gap
+
+.actionArrow
+  display: inline-block
+  transition: transform var(--tdm-duration-ui) var(--tdm-ease-standard)
+
+.badge
+  position: absolute
+  inset-block-start: var(--tdm-space-4)
+  inset-inline-end: var(--tdm-space-4)
+  z-index: 1
+  margin: 0
+  padding: var(--tdm-space-1) var(--tdm-space-2)
+  border-radius: var(--tdm-radius-round)
+  border: var(--tdm-border-width-hairline) solid var(--tdm-border-default)
+  background: var(--tdm-surface-hover)
+  color: var(--tdm-fg-secondary)
+  font-size: var(--tdm-font-label-size)
+  font-style: normal
+  font-weight: 600
+  letter-spacing: 0.04em
+  line-height: 1
+
+.interactive
+  cursor: default
+
+  &:focus-visible
+    outline: var(--tdm-focus-ring-width) solid var(--tdm-focus-ring-color)
+    outline-offset: var(--tdm-focus-ring-offset)
+
+  &:hover::after,
+  &:focus-visible::after
+    opacity: 1
+    animation: tdm-public-feature-border-travel $perimeter-travel-duration linear infinite
+
+  &:hover .action,
+  &:focus-visible .action
+    color: var(--tdm-fg-primary)
+
+.isLink
+  cursor: pointer
+
+.sizeChoice.interactive
+  &:hover .title,
+  &:focus-visible .title,
+  &:hover .iconWell,
+  &:focus-visible .iconWell
+    color: var(--tdm-fg-primary)
+
+  &:hover .actionArrow,
+  &:focus-visible .actionArrow
+    transform: translateX(0.2rem)
+
+@keyframes tdm-public-feature-border-travel
+  to
+    --tdm-public-feature-border-angle: 360deg
+
+@media (max-width: 56rem)
+  .sizeChoice
+    min-block-size: 19.5rem
+
+@media (prefers-reduced-motion: reduce)
+  .interactive
+    &:hover,
+    &:focus-visible
+      border-color: color-mix(in srgb, var(--tdm-fg-primary) 28%, transparent)
+
+    &:hover::after,
+    &:focus-visible::after
+      opacity: 0
+      animation: none
+
+  .actionArrow
+    transition: none
+
+  .sizeChoice.interactive
+    &:hover .actionArrow,
+    &:focus-visible .actionArrow
+      transform: none

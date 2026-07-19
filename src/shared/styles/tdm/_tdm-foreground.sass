@@ -1,11 +1,18 @@
 // Foregrounds canônicos TDM — contraste institucional; sem branco absoluto em massa.
 
 @mixin tokens
+  --tdm-fg-strong: rgba(250, 250, 250, 0.98)
   --tdm-fg-primary: rgba(250, 250, 250, 0.96)
   --tdm-fg-secondary: rgba(232, 232, 236, 0.72)
-  --tdm-fg-tertiary: rgba(214, 214, 220, 0.52)
-  --tdm-fg-quaternary: rgba(200, 200, 208, 0.34)
+  --tdm-fg-muted: rgba(214, 214, 220, 0.52)
+  --tdm-fg-subtle: rgba(200, 200, 208, 0.34)
   --tdm-fg-disabled: rgba(200, 200, 208, 0.24)
-  --tdm-fg-on-primary: rgba(10, 10, 12, 0.96)
+  --tdm-fg-inverse: rgba(10, 10, 12, 0.96)
   --tdm-fg-link: var(--tdm-fg-primary)
+  --tdm-fg-danger: rgba(253, 164, 175, 0.94)
+
+  // DEPRECATED → destino canônico (remover em fase futura)
+  --tdm-fg-tertiary: var(--tdm-fg-muted)
+  --tdm-fg-quaternary: var(--tdm-fg-subtle)
+  --tdm-fg-on-primary: var(--tdm-fg-inverse)
   --tdm-fg-link-muted: var(--tdm-fg-secondary)

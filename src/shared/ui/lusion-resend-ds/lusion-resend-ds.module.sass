@@ -1,34 +1,34 @@
-// Tokens — paleta noir / acento prata reluzente (verde apenas para etapa Resultados)
+// Tokens locais mapeados para --tdm-* (acento de etapa Resultados permanece semântico).
 .shell
-  --noir: #050505
-  --graphite: #0c0c0d
-  --smoke: #141416
-  --ash: #1c1c1f
+  --noir: var(--tdm-surface-app)
+  --graphite: var(--tdm-neutral-950)
+  --smoke: var(--tdm-surface-base)
+  --ash: var(--tdm-surface-elevated)
   --white: var(--tdm-fg-primary)
-  --muted: var(--tdm-fg-tertiary)
-  --border: rgba(255, 255, 255, 0.09)
-  --glow: rgba(255, 255, 255, 0.14)
-  --glow-soft: rgba(255, 255, 255, 0.06)
-  --shine-kicker: linear-gradient(92deg, rgba(255, 255, 255, 0.96) 0%, rgba(214, 218, 228, 0.78) 48%, rgba(255, 255, 255, 0.9) 100%)
-  --shine-hero: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.9) 38%, rgba(196, 202, 214, 0.72) 100%)
+  --muted: var(--tdm-fg-muted)
+  --border: var(--tdm-border-subtle)
+  --glow: var(--tdm-border-strong)
+  --glow-soft: var(--tdm-surface-hover)
+  --shine-kicker: linear-gradient(92deg, var(--tdm-fg-primary) 0%, var(--tdm-fg-secondary) 48%, var(--tdm-fg-primary) 100%)
+  --shine-hero: linear-gradient(180deg, var(--tdm-fg-strong) 0%, var(--tdm-fg-primary) 38%, var(--tdm-fg-secondary) 100%)
   --green: #4ade80
   --green-soft: rgba(74, 222, 128, 0.12)
-  --card-bg: rgba(255, 255, 255, 0.025)
-  --card-border: rgba(255, 255, 255, 0.1)
-  --grid-dot: rgba(255, 255, 255, 0.055)
+  --card-bg: var(--tdm-surface-hover)
+  --card-border: var(--tdm-border-subtle)
+  --grid-dot: var(--tdm-border-disabled)
   --hero-title: var(--tdm-type-display-md)
-  --hero-title-compact: clamp(2rem, 4.8vw, 3.35rem)
-  --radius-cta: 0.5rem
+  --hero-title-compact: clamp(2rem, 3.25rem, 3.35rem)
+  --radius-cta: var(--tdm-radius-sm)
   --body-muted: var(--tdm-fg-secondary)
-  --space-xs: clamp(0.5rem, 1vw, 0.75rem)
-  --space-sm: clamp(0.75rem, 1.4vw, 1rem)
-  --space-md: clamp(1.25rem, 2.2vw, 1.75rem)
-  --space-lg: clamp(2rem, 4vw, 3.5rem)
-  --space-xl: clamp(3rem, 6vw, 5.5rem)
-  --radius-sm: 0.5rem
-  --radius-md: 0.875rem
-  --radius-lg: 1.25rem
-  --radius-pill: 999rem
+  --space-xs: var(--tdm-space-2)
+  --space-sm: var(--tdm-space-3)
+  --space-md: var(--tdm-space-5)
+  --space-lg: var(--tdm-space-8)
+  --space-xl: var(--tdm-space-12)
+  --radius-sm: var(--tdm-radius-sm)
+  --radius-md: var(--tdm-radius-md)
+  --radius-lg: var(--tdm-radius-lg)
+  --radius-pill: var(--tdm-radius-round)
   --header-h: 4.75rem
   --public-header-height: 4.75rem
   position: relative
@@ -36,11 +36,12 @@
   color: var(--white)
   background: var(--noir)
   overflow-x: hidden
+  font-family: var(--tdm-font-sans)
 
 .shellInner
   position: relative
   z-index: 1
-  width: min(76rem, calc(100% - clamp(1.25rem, 4vw, 3rem)))
+  width: min(76rem, calc(100% - var(--tdm-space-8)))
   margin: 0 auto
   padding-bottom: var(--space-xl)
 
@@ -50,7 +51,7 @@
   inset: 0
   z-index: 0
   pointer-events: none
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.07) 10%, rgba(255, 255, 255, 0.02) 28%, transparent 42%), radial-gradient(ellipse 80% 50% at 50% -10%, var(--glow), transparent 55%), radial-gradient(ellipse 60% 40% at 80% 100%, var(--glow-soft), transparent 50%), var(--noir)
+  background: radial-gradient(ellipse 80% 50% at 50% -10%, var(--glow-soft), transparent 55%), radial-gradient(ellipse 60% 40% at 80% 100%, var(--tdm-surface-pressed), transparent 50%), var(--noir)
 
 .gridBg::before
   content: ''
@@ -67,10 +68,10 @@
   background: linear-gradient(to bottom, transparent 60%, var(--noir) 100%)
 
 .shell[data-public-tone='silver']
-  --glow: rgba(255, 255, 255, 0.1)
+  --glow: var(--tdm-border-default)
 
   .gridBg
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.05) 10%, rgba(255, 255, 255, 0.015) 28%, transparent 42%), radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255, 255, 255, 0.08), transparent 55%), radial-gradient(ellipse 60% 40% at 80% 100%, rgba(255, 255, 255, 0.03), transparent 50%), var(--noir)
+    background: radial-gradient(ellipse 80% 50% at 50% -10%, var(--tdm-surface-hover), transparent 55%), radial-gradient(ellipse 60% 40% at 80% 100%, var(--tdm-surface-disabled), transparent 50%), var(--noir)
 
 // Header — fixed + glass fumê granulado (::after) + brilho (::before)
 .header
@@ -81,7 +82,7 @@
   z-index: 80
   width: 100%
   background-color: transparent
-  transition: all 0.2s ease-in-out
+  transition: background-color var(--tdm-duration-ui) var(--tdm-ease-standard), border-color var(--tdm-duration-ui) var(--tdm-ease-standard), box-shadow var(--tdm-duration-ui) var(--tdm-ease-standard)
   isolation: isolate
   overflow: visible
   border: 0
@@ -95,14 +96,14 @@
   inset: 0
   z-index: -1
   pointer-events: none
-  background-color: rgba(0, 0, 0, 0.6)
+  background-color: var(--tdm-surface-scrim)
   background-image: url('/static/texture-btn.png')
   background-repeat: repeat
   background-size: 27.625rem 3rem
   backdrop-filter: blur(0.75rem)
   -webkit-backdrop-filter: blur(0.75rem)
   opacity: 1
-  transition: opacity 0.15s ease-in-out
+  transition: opacity var(--tdm-duration-fast) var(--tdm-ease-standard)
   border: 0
   outline: 0
 
@@ -141,11 +142,11 @@
   display: grid
   grid-template-columns: 1fr auto 1fr
   align-items: center
-  width: min(76rem, calc(100% - clamp(1.25rem, 4vw, 3rem)))
+  width: min(76rem, calc(100% - var(--tdm-space-8)))
   min-height: var(--public-header-height)
   margin: 0 auto
-  padding-block: clamp(0.75rem, 1.2vw, 1.05rem)
-  padding-inline: clamp(0.25rem, 1vw, 0.5rem)
+  padding-block: var(--tdm-space-3)
+  padding-inline: var(--tdm-space-2)
 
 .headerOffset
   height: calc(var(--public-header-height) + var(--space-md))
@@ -155,33 +156,49 @@
 .brand
   display: inline-flex
   align-items: center
-  gap: 0.625rem
-  font-weight: 600
-  letter-spacing: 0.04em
-  text-transform: uppercase
+  justify-content: flex-start
+  inline-size: clamp(12.5rem, 14vw, 15rem)
+  block-size: auto
+  max-block-size: 2.75rem
+  padding: 0
+  text-decoration: none
+  color: inherit
+  background: transparent
+  box-shadow: none
 
-.brandText
-  font-size: clamp(0.9rem, 0.2vw + 0.88rem, 0.9875rem)
-  line-height: 1
+  &:focus-visible
+    outline: var(--tdm-focus-ring-width) solid var(--tdm-focus-ring-color)
+    outline-offset: var(--tdm-focus-ring-offset)
+    border-radius: var(--tdm-radius-xs)
+
+.brandMark
+  display: block
+  inline-size: 100%
+  block-size: auto
+  max-block-size: 2.75rem
+  object-fit: contain
+  object-position: left center
+  opacity: 1
+  image-rendering: auto
 
 .nav
   display: flex
   align-items: center
-  gap: 3rem
+  gap: var(--tdm-space-12)
   overflow: visible
 
 .navLink
   position: relative
   display: inline-block
-  font-size: 1.0625rem
+  font-size: var(--tdm-font-body-size)
   font-weight: 500
   line-height: 1
   letter-spacing: 0.01em
-  color: rgba(255, 255, 255, 0.52)
+  color: var(--tdm-fg-muted)
   white-space: nowrap
   text-decoration: none
   overflow: visible
-  transition: color 0.28s ease, transform 0.28s ease
+  transition: color var(--tdm-duration-ui) var(--tdm-ease-standard), transform var(--tdm-duration-ui) var(--tdm-ease-standard)
 
 .navLink::after
   content: ''
@@ -190,18 +207,17 @@
   bottom: -0.9rem
   width: calc(100% + 1.75rem)
   height: 0.0625rem
-  border-radius: 999rem
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.32), transparent)
-  box-shadow: 0 0 0.375rem rgba(255, 255, 255, 0.22)
+  border-radius: var(--tdm-radius-round)
+  background: linear-gradient(90deg, transparent, var(--tdm-fg-subtle), var(--tdm-fg-primary), var(--tdm-fg-subtle), transparent)
   opacity: 0
   transform: translateX(-50%) scaleX(0.18)
   transform-origin: left center
-  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), opacity 260ms ease
+  transition: transform var(--tdm-duration-panel) var(--tdm-ease-enter), opacity var(--tdm-duration-emphasis) var(--tdm-ease-standard)
   pointer-events: none
 
 .navLink:hover
-  color: rgba(255, 255, 255, 0.92)
-  transform: translateY(-0.15rem)
+  color: var(--tdm-fg-primary)
+  transform: translateY(-0.125rem)
 
 .navLink:hover::after,
 .navLink:focus-visible::after
@@ -209,17 +225,33 @@
   transform: translateX(-50%) scaleX(1)
 
 .navLink:focus-visible
-  outline: 1px solid rgba(255, 255, 255, 0.35)
-  outline-offset: 0.125rem
-  border-radius: 0.125rem
+  outline: var(--tdm-focus-ring-width) solid var(--tdm-focus-ring-color)
+  outline-offset: var(--tdm-focus-ring-offset)
+  border-radius: var(--tdm-radius-xs)
 
 .navLink_active
-  color: rgba(255, 255, 255, 0.92)
+  color: var(--tdm-fg-primary)
   font-weight: 600
 
 .headerCtaWrap
   display: flex
   justify-content: flex-end
+
+.headerCta
+  white-space: nowrap
+
+.headerCtaIcon
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  flex-shrink: 0
+  width: var(--tdm-icon-size-sm)
+  height: var(--tdm-icon-size-sm)
+  opacity: 0.88
+
+  svg
+    width: 100%
+    height: 100%
 
 // Hero
 .hero
@@ -241,26 +273,9 @@
 .heroCopy
   max-width: 42rem
 
-.kicker
-  margin: 0 0 var(--space-sm)
-  font-size: 0.75rem
-  font-weight: 600
-  letter-spacing: 0.14em
-  text-transform: uppercase
-  background: var(--shine-kicker)
-  -webkit-background-clip: text
-  background-clip: text
-  color: transparent
-
-.kickerOutcome
-  background: none
-  -webkit-background-clip: initial
-  background-clip: initial
-  color: var(--green)
-
 .hero h1
   margin: 0 auto
-  max-inline-size: 11.5em
+  max-inline-size: var(--tdm-measure-display)
   font-size: var(--hero-title)
   font-weight: 500
   line-height: 1.08
@@ -270,18 +285,17 @@
   -webkit-background-clip: text
   background-clip: text
   color: transparent
-  filter: drop-shadow(0 0 0.5rem rgba(255, 255, 255, 0.08))
 
 .hero_compact h1
   font-size: var(--hero-title-compact)
-  max-inline-size: 13em
+  max-inline-size: var(--tdm-measure-intro)
   line-height: 1.1
 
 .heroDescription
-  margin: var(--space-md) auto 0
-  max-width: 32rem
-  font-size: clamp(1rem, 1.8vw, 1.125rem)
-  line-height: 1.65
+  margin: var(--tdm-stack-heading-description) auto 0
+  max-width: var(--tdm-measure-body)
+  font-size: var(--tdm-font-body-lg-size)
+  line-height: var(--tdm-font-body-lg-line)
   color: var(--body-muted)
 
 .heroActions
@@ -289,63 +303,21 @@
   flex-wrap: wrap
   gap: var(--space-sm)
   justify-content: center
-  margin-top: var(--space-lg)
+  margin-top: var(--tdm-stack-description-actions)
 
-// Buttons
-.button
-  display: inline-flex
-  align-items: center
-  justify-content: center
-  gap: var(--tdm-cta-gap)
-  min-block-size: var(--tdm-cta-min-height)
-  padding: 0 var(--tdm-cta-padding-inline)
-  border-radius: var(--radius-cta)
-  font-size: var(--tdm-cta-font-size)
-  font-weight: var(--tdm-cta-font-weight)
-  line-height: var(--tdm-cta-line-height)
-  border: 1px solid transparent
-  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease, color 0.18s ease
-  cursor: pointer
-  white-space: nowrap
-  text-decoration: none
-
-.button:hover
-  transform: translateY(-0.0625rem)
-
+// Button icon slot used by PublicButton → TdmButton
 .buttonIcon
   display: inline-flex
   align-items: center
   justify-content: center
   flex-shrink: 0
-  inline-size: 0.95rem
-  block-size: 0.95rem
+  inline-size: var(--tdm-icon-size-sm)
+  block-size: var(--tdm-icon-size-sm)
   opacity: 0.88
 
   svg
     inline-size: 100%
     block-size: 100%
-
-.button_primary
-  background: var(--white)
-  color: var(--tdm-cta-primary-fg)
-  box-shadow: 0 0 0.5rem rgba(255, 255, 255, 0.35), 0 0 2rem rgba(255, 255, 255, 0.08)
-
-.button_secondary
-  background: var(--card-bg)
-  border-color: var(--card-border)
-  color: var(--tdm-cta-secondary-fg)
-
-.button_ghost,
-.button_tertiary
-  background: transparent
-  border-color: var(--border)
-  color: var(--tdm-cta-tertiary-fg)
-
-.button_ghost:hover,
-.button_tertiary:hover
-  color: var(--tdm-fg-primary)
-  border-color: rgba(255,255,255,0.18)
-
 
 // Section
 .section
@@ -355,42 +327,52 @@
   padding: var(--space-lg) 0
 
 .sectionHeader
-  max-width: 36rem
+  max-width: var(--tdm-measure-intro)
   margin-bottom: var(--space-lg)
 
 .sectionHeader h2
   margin: 0
-  font-size: clamp(1.75rem, 3.5vw, 2.75rem)
-  font-weight: 500
-  line-height: 1.12
-  letter-spacing: -0.02em
+  font-size: var(--tdm-font-page-title-size)
+  font-weight: var(--tdm-font-page-title-weight)
+  line-height: var(--tdm-font-page-title-line)
+  letter-spacing: var(--tdm-font-page-title-tracking)
+  color: var(--tdm-fg-primary)
 
-.sectionHeader p
-  margin: var(--space-sm) 0 0
+.sectionDescription
+  margin: var(--tdm-stack-heading-description) 0 0
   color: var(--body-muted)
-  line-height: 1.65
+  line-height: var(--tdm-font-body-line)
+  max-width: var(--tdm-measure-body)
 
 // Card
+.cardLink
+  display: block
+  text-decoration: none
+  color: inherit
+
 .card
-  padding: var(--space-md)
-  border-radius: var(--radius-lg)
-  border: 1px solid var(--card-border)
-  background: var(--card-bg)
-  transition: border-color 0.2s ease, transform 0.2s ease
+  padding: var(--tdm-pad-card-block) var(--tdm-pad-card-inline)
+  border-radius: var(--tdm-radius-lg)
+  border: var(--tdm-border-width-hairline) solid var(--tdm-border-subtle)
+  background: var(--tdm-surface-raised)
+  box-shadow: var(--tdm-highlight-top), var(--tdm-shadow-low)
+  transition: border-color var(--tdm-duration-ui) var(--tdm-ease-standard), transform var(--tdm-duration-ui) var(--tdm-ease-standard)
 
 .card:hover
-  border-color: rgba(255,255,255,0.16)
+  border-color: var(--tdm-border-strong)
 
 .card h3
-  margin: 0 0 0.5rem
-  font-size: 1.0625rem
-  font-weight: 500
+  margin: 0 0 var(--tdm-stack-compact-label-title)
+  font-size: var(--tdm-font-card-title-size)
+  font-weight: var(--tdm-font-card-title-weight)
+  line-height: var(--tdm-font-card-title-line)
+  color: var(--tdm-fg-primary)
 
 .card p
   margin: 0
-  font-size: 0.875rem
-  line-height: 1.6
-  color: var(--body-muted)
+  font-size: var(--tdm-font-body-size)
+  line-height: var(--tdm-font-body-line)
+  color: var(--tdm-fg-secondary)
 
 // Mockup
 .mockup
@@ -576,225 +558,7 @@
   .header::after
     transition: none
 
-// GLASS_SURFACE_HEADER_V9_START
-// Header liquid glass com GlassSurface compartilhado e props exatas do anexo.
-.header
-  --public-header-height: 5.625rem
-  height: var(--public-header-height)
-  min-height: var(--public-header-height)
-  background: transparent !important
-  background-color: transparent !important
-  backdrop-filter: none !important
-  -webkit-backdrop-filter: none !important
-  border: 0 !important
-  border-top: 0 !important
-  border-right: 0 !important
-  border-bottom: 0 !important
-  border-left: 0 !important
-  outline: 0 !important
-  border-radius: 0 !important
-  box-shadow: none !important
-  overflow: visible
-  isolation: isolate
-
-.header::before,
-.header::after
-  content: none !important
-  display: none !important
-  opacity: 0 !important
-  border: 0 !important
-  box-shadow: none !important
-  background: none !important
-  pointer-events: none
-
-.header[data-scrolled='true']
-  background: transparent !important
-  background-color: transparent !important
-  backdrop-filter: none !important
-  -webkit-backdrop-filter: none !important
-  border: 0 !important
-  border-bottom: 0 !important
-  outline: 0 !important
-  box-shadow: none !important
-
-.headerGlassSurface
-  position: absolute !important
-  inset: 0 0 auto 0
-  z-index: 0
-  width: 100% !important
-  height: var(--public-header-height) !important
-  min-height: var(--public-header-height)
-  border: 0 !important
-  border-top: 0 !important
-  border-right: 0 !important
-  border-bottom: 0 !important
-  border-left: 0 !important
-  outline: 0 !important
-  border-radius: 0 !important
-  box-shadow: none !important
-  opacity: 0
-  pointer-events: none
-  overflow: hidden
-  filter: saturate(1) brightness(1.02) contrast(1.06)
-  mask-image: linear-gradient(180deg, black 0%, black 66%, rgba(0, 0, 0, 0.88) 78%, rgba(0, 0, 0, 0.34) 91%, transparent 100%)
-  -webkit-mask-image: linear-gradient(180deg, black 0%, black 66%, rgba(0, 0, 0, 0.88) 78%, rgba(0, 0, 0, 0.34) 91%, transparent 100%)
-  transition: opacity 360ms cubic-bezier(0.22, 1, 0.36, 1), filter 360ms cubic-bezier(0.22, 1, 0.36, 1)
-
-.headerGlassSurface,
-.headerGlassSurface *
-  border: 0 !important
-  outline: 0 !important
-
-.header[data-scrolled='true'] .headerGlassSurface
-  opacity: 1
-
-.header[data-scrolled='true']:hover .headerGlassSurface
-  opacity: 1
-  filter: saturate(1.04) brightness(1.06) contrast(1.1)
-
-.headerBar
-  position: relative
-  z-index: 2
-  min-height: var(--public-header-height)
-
-.headerOffset
-  height: calc(var(--public-header-height) + var(--space-md))
-
-.header[data-scrolled='true'] .brand,
-.header[data-scrolled='true'] .brandText,
-.header[data-scrolled='true'] .navLink
-  text-shadow: 0 0.0625rem 0.75rem rgba(0, 0, 0, 0.62), 0 0 1.5rem rgba(255, 255, 255, 0.08)
-
-.header[data-scrolled='true'] .navLink_active
-  color: rgba(255, 255, 255, 0.96)
-// GLASS_SURFACE_HEADER_V9_END
-
-
-// header-glass-layer-v11
-.header
-  opacity: 1 !important
-  visibility: visible !important
-  pointer-events: auto
-  isolation: isolate
-
-  &::before,
-  &::after
-    content: none !important
-
-  &[data-scrolled='false'] .headerGlassSurface
-    opacity: 0
-
-  &[data-scrolled='true'] .headerGlassSurface
-    opacity: 1
-
-.headerGlassSurface
-  position: absolute !important
-  inset: 0 !important
-  z-index: 0 !important
-  width: 100% !important
-  height: 5.625rem !important
-  opacity: 0
-  pointer-events: none !important
-  border: 0 !important
-  outline: 0 !important
-  border-radius: 0 !important
-  overflow: hidden
-  transition: opacity 0.38s ease, filter 0.38s ease
-
-  &::after
-    content: ''
-    position: absolute
-    right: 0
-    bottom: 0
-    left: 0
-    height: 0.03125rem
-    pointer-events: none
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent)
-
-.headerBar
-  position: relative
-  z-index: 2
-  pointer-events: auto
-
-  a,
-  button
-    pointer-events: auto\n\n
-// Tokens — paleta noir / acento prata reluzente (verde apenas para etapa Resultados)
-.shell
-  --noir: #050505
-  --graphite: #0c0c0d
-  --smoke: #141416
-  --ash: #1c1c1f
-  --white: var(--tdm-fg-primary)
-  --muted: var(--tdm-fg-tertiary)
-  --border: rgba(255, 255, 255, 0.09)
-  --glow: rgba(255, 255, 255, 0.14)
-  --glow-soft: rgba(255, 255, 255, 0.06)
-  --shine-kicker: linear-gradient(92deg, rgba(255, 255, 255, 0.96) 0%, rgba(214, 218, 228, 0.78) 48%, rgba(255, 255, 255, 0.9) 100%)
-  --shine-hero: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.9) 38%, rgba(196, 202, 214, 0.72) 100%)
-  --green: #4ade80
-  --green-soft: rgba(74, 222, 128, 0.12)
-  --card-bg: rgba(255, 255, 255, 0.025)
-  --card-border: rgba(255, 255, 255, 0.1)
-  --grid-dot: rgba(255, 255, 255, 0.055)
-  --hero-title: var(--tdm-type-display-md)
-  --hero-title-compact: clamp(2rem, 4.8vw, 3.35rem)
-  --radius-cta: 0.5rem
-  --body-muted: var(--tdm-fg-secondary)
-  --space-xs: clamp(0.5rem, 1vw, 0.75rem)
-  --space-sm: clamp(0.75rem, 1.4vw, 1rem)
-  --space-md: clamp(1.25rem, 2.2vw, 1.75rem)
-  --space-lg: clamp(2rem, 4vw, 3.5rem)
-  --space-xl: clamp(3rem, 6vw, 5.5rem)
-  --radius-sm: 0.5rem
-  --radius-md: 0.875rem
-  --radius-lg: 1.25rem
-  --radius-pill: 999rem
-  --header-h: 4.75rem
-  --public-header-height: 4.75rem
-  position: relative
-  min-height: 100vh
-  color: var(--white)
-  background: var(--noir)
-  overflow-x: hidden
-
-.shellInner
-  position: relative
-  z-index: 1
-  width: min(76rem, calc(100% - clamp(1.25rem, 4vw, 3rem)))
-  margin: 0 auto
-  padding-bottom: var(--space-xl)
-
-// Grid background
-.gridBg
-  position: fixed
-  inset: 0
-  z-index: 0
-  pointer-events: none
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.07) 10%, rgba(255, 255, 255, 0.02) 28%, transparent 42%), radial-gradient(ellipse 80% 50% at 50% -10%, var(--glow), transparent 55%), radial-gradient(ellipse 60% 40% at 80% 100%, var(--glow-soft), transparent 50%), var(--noir)
-
-.gridBg::before
-  content: ''
-  position: absolute
-  inset: 0
-  background-image: radial-gradient(circle, var(--grid-dot) 1px, transparent 1px)
-  background-size: 1.5rem 1.5rem
-  mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%)
-
-.gridBg::after
-  content: ''
-  position: absolute
-  inset: 0
-  background: linear-gradient(to bottom, transparent 60%, var(--noir) 100%)
-
-.shell[data-public-tone='silver']
-  --glow: rgba(255, 255, 255, 0.1)
-
-  .gridBg
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.05) 10%, rgba(255, 255, 255, 0.015) 28%, transparent 42%), radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255, 255, 255, 0.08), transparent 55%), radial-gradient(ellipse 60% 40% at 80% 100%, rgba(255, 255, 255, 0.03), transparent 50%), var(--noir)
-
-
-// header-opaque-glass-final
+// header-opaque-glass-final — superfície canônica (sem glass decorativo)
 .header
   position: fixed
   top: 0
@@ -804,57 +568,29 @@
   z-index: 80
   isolation: isolate
   overflow: visible
-  opacity: 1 !important
-  visibility: visible !important
-  transform: none !important
   pointer-events: auto
-  background: linear-gradient(180deg, rgba(18, 18, 22, 0.98), rgba(7, 7, 10, 0.96)) !important
-  backdrop-filter: blur(2.25rem) saturate(1.45) brightness(0.2) !important
-  -webkit-backdrop-filter: blur(2.25rem) saturate(1.45) brightness(0.2) !important
-  border: 0 !important
-  border-bottom: 0.03125rem solid rgba(38, 38, 44, 0.92) !important
-  box-shadow: inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.045), 0 1.25rem 3rem rgba(0, 0, 0, 0.44) !important
-  transition: background 260ms ease, backdrop-filter 260ms ease, -webkit-backdrop-filter 260ms ease, box-shadow 260ms ease
+  background: linear-gradient(180deg, var(--tdm-surface-elevated), var(--tdm-surface-app))
+  border: 0
+  border-bottom: var(--tdm-border-width-hairline) solid var(--tdm-border-subtle)
+  box-shadow: var(--tdm-highlight-top), var(--tdm-shadow-medium)
+  transition: background var(--tdm-duration-emphasis) var(--tdm-ease-standard), box-shadow var(--tdm-duration-emphasis) var(--tdm-ease-standard)
 
 .header[data-scrolled='true'],
 .header.isScrolled,
 .header.scrolled
-  opacity: 1 !important
-  visibility: visible !important
-  transform: none !important
-  background: linear-gradient(180deg, rgba(20, 20, 24, 0.99), rgba(5, 5, 8, 0.98)) !important
-  backdrop-filter: blur(2.75rem) saturate(1.55) brightness(0.2) !important
-  -webkit-backdrop-filter: blur(2.75rem) saturate(1.55) brightness(0.2) !important
-  border-bottom-color: rgba(48, 48, 56, 0.96) !important
-  box-shadow: inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.055), 0 1.5rem 3.75rem rgba(0, 0, 0, 0.52) !important
+  background: linear-gradient(180deg, var(--tdm-surface-overlay), var(--tdm-surface-app))
+  border-bottom-color: var(--tdm-border-default)
+  box-shadow: var(--tdm-highlight-top), var(--tdm-shadow-high)
 
-.header::before
-  content: ''
-  position: absolute
-  inset: 0
-  z-index: 0
-  pointer-events: none
-  background: radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.08), transparent 30%), radial-gradient(circle at 74% 8%, rgba(255, 255, 255, 0.055), transparent 34%), linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.014) 48%, rgba(0, 0, 0, 0.18))
-  opacity: 0.7
-  mix-blend-mode: screen
-
+.header::before,
 .header::after
-  content: ''
-  position: absolute
-  left: 0
-  right: 0
-  bottom: -1rem
-  height: 1.25rem
-  z-index: 0
-  pointer-events: none
-  background: linear-gradient(180deg, rgba(5, 5, 8, 0.52), rgba(5, 5, 8, 0))
-  filter: blur(0.625rem)
-  opacity: 0.72
+  content: none
+  display: none
 
 .headerGlassLayer,
 .headerGlassSurface
-  display: none !important
-  pointer-events: none !important
+  display: none
+  pointer-events: none
 
 .headerBar
   position: relative

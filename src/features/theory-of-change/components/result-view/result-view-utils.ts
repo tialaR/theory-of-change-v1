@@ -40,15 +40,14 @@ export const EXPORT_FORMAT_OPTIONS: ExportFormatOption[] = [
   {
     id: 'pdf',
     label: 'PDF',
-    description: 'Documento para impressão ou compartilhamento.',
+    description: 'Documento do Intérprete (estruturado).',
     available: true
   },
   {
     id: 'png',
     label: 'PNG',
-    description: 'Imagem em alta qualidade.',
-    available: false,
-    unavailableNote: 'Em breve — não disponível'
+    description: 'Imagem em alta qualidade do fluxo.',
+    available: true
   },
   {
     id: 'jpeg',
@@ -60,14 +59,13 @@ export const EXPORT_FORMAT_OPTIONS: ExportFormatOption[] = [
   {
     id: 'svg',
     label: 'SVG',
-    description: 'Versão vetorial quando disponível.',
-    available: false,
-    unavailableNote: 'Em breve — não disponível'
+    description: 'Versão vetorial do fluxo.',
+    available: true
   },
   {
     id: 'word',
     label: 'Word',
-    description: 'Documento editável (.doc).',
+    description: 'Documento editável do Intérprete (.docx).',
     available: true
   }
 ];

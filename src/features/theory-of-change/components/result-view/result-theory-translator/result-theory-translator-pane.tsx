@@ -3,6 +3,8 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useEffect, useId, useRef, useState } from 'react';
 import type { TdmEdge, TdmNode } from '@/features/theory-of-change/domain/tdm-types';
+import { TDM_MOTION_TRANSITIONS } from '@/shared/motion/tdm-motion';
+import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
 import { TheoryNarrativeDocument } from '../result-theory-narrative/theory-narrative-document';
 import type { TheoryDocumentModel } from '../result-theory-narrative/theory-narrative.types';
 import { exportTheoryDocumentDocx } from './export/theory-document-export-docx';
@@ -14,9 +16,23 @@ import type {
 } from './export/theory-document-export.types';
 import { ResultTheoryTranslatorExportMenu } from './result-theory-translator-export-menu';
 import { ResultTheoryTranslatorHeader } from './result-theory-translator-header';
-import { THEORY_TRANSLATOR_LABELS, THEORY_TRANSLATOR_MOTION } from './result-theory-translator.constants';
+import { THEORY_TRANSLATOR_LABELS } from './result-theory-translator.constants';
 import { buildTheoryTranslatorViewModel } from './result-theory-translator.mapper';
 import styles from './result-theory-translator-pane.module.sass';
+
+function CloseIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 12 12">
+      <path
+        d="M3 3l6 6M9 3 3 9"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
 
 type ResultTheoryTranslatorPaneProps = {
   viewModel: TheoryDocumentModel | null;
@@ -140,11 +156,16 @@ export function ResultTheoryTranslatorPane({
     };
   }, [isExpanded, viewModel?.selection]);
 
-  const duration = reduce ? 0.01 : THEORY_TRANSLATOR_MOTION.duration;
-  const contentDuration = reduce ? 0.01 : THEORY_TRANSLATOR_MOTION.contentDuration;
+  const duration = reduce ? 0.01 : TDM_MOTION_TRANSITIONS.panel.duration;
+  const contentDuration = reduce ? 0.01 : TDM_MOTION_TRANSITIONS.opacity.duration;
+  const panelEase = TDM_MOTION_TRANSITIONS.panel.ease;
+  const contentEase = TDM_MOTION_TRANSITIONS.opacity.ease;
   const hasScopedSelection = viewModel?.scope === 'scoped';
 
-  const handleExport = (scope: TheoryDocumentExportScope, format: TheoryDocumentExportFormat) => {
+  const handleExport = async (
+    scope: TheoryDocumentExportScope,
+    format: TheoryDocumentExportFormat
+  ) => {
     setIsExporting(true);
     setExportStatus({ tone: 'info', message: THEORY_TRANSLATOR_LABELS.exporting });
 
@@ -182,12 +203,15 @@ export function ResultTheoryTranslatorPane({
       );
 
       const result =
-        format === 'pdf' ? exportTheoryDocumentPdf(payload) : exportTheoryDocumentDocx(payload);
+        format === 'pdf'
+          ? await exportTheoryDocumentPdf(payload)
+          : await exportTheoryDocumentDocx(payload);
 
       if (result.status === 'success') {
+        const label = format === 'pdf' ? 'PDF' : 'DOCX';
         setExportStatus({
           tone: 'info',
-          message: `PDF preparado: ${result.filename}. Use “Salvar como PDF” na impressão.`
+          message: `${label} gerado: ${result.filename}`
         });
         return;
       }
@@ -198,6 +222,14 @@ export function ResultTheoryTranslatorPane({
       }
 
       setExportStatus({ tone: 'error', message: result.message });
+    } catch (error) {
+      setExportStatus({
+        tone: 'error',
+        message:
+          error instanceof Error
+            ? error.message
+            : 'Falha inesperada ao exportar a narrativa.'
+      });
     } finally {
       setIsExporting(false);
     }
@@ -223,10 +255,11 @@ export function ResultTheoryTranslatorPane({
           <motion.div
             key="translator-rail"
             className={styles.railHost}
+            data-export-exclude="true"
             initial={reduce ? false : { opacity: 0, x: 12 }}
             animate={{ opacity: 1, x: 0 }}
             exit={reduce ? undefined : { opacity: 0, x: 10 }}
-            transition={{ duration, ease: THEORY_TRANSLATOR_MOTION.ease }}
+            transition={{ duration, ease: panelEase }}
           >
             <button
               type="button"
@@ -257,12 +290,16 @@ export function ResultTheoryTranslatorPane({
             initial={reduce ? false : { opacity: 0, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
             exit={reduce ? undefined : { opacity: 0, x: 16 }}
-            transition={{ duration, ease: THEORY_TRANSLATOR_MOTION.ease }}
+            transition={{ duration, ease: panelEase }}
             onAnimationComplete={onPaneAnimationComplete}
           >
             {viewModel ? (
               <>
-                <div className={styles.stickyHeader}>
+                <div
+                  className={styles.stickyHeader}
+                  data-export-exclude="true"
+                  aria-busy={isExporting || undefined}
+                >
                   <ResultTheoryTranslatorHeader
                     onClose={onCollapse}
                     closeRef={closeRef}
@@ -288,7 +325,7 @@ export function ResultTheoryTranslatorPane({
                   tabIndex={0}
                   initial={reduce ? false : { opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: contentDuration, ease: THEORY_TRANSLATOR_MOTION.ease }}
+                  transition={{ duration: contentDuration, ease: contentEase }}
                 >
                   <TheoryNarrativeDocument
                     document={viewModel}
@@ -307,15 +344,16 @@ export function ResultTheoryTranslatorPane({
                       <h2 className={styles.title}>{THEORY_TRANSLATOR_LABELS.documentTitleMacro}</h2>
                     </div>
                     <div className={styles.headerActions}>
-                      <button
+                      <TdmIconButton
                         ref={closeRef}
-                        className={styles.closeButton}
-                        type="button"
-                        onClick={onCollapse}
+                        variant="subtle"
+                        size="md"
                         aria-label={THEORY_TRANSLATOR_LABELS.close}
+                        tooltip={THEORY_TRANSLATOR_LABELS.close}
+                        onClick={onCollapse}
                       >
-                        <span aria-hidden="true">×</span>
-                      </button>
+                        <CloseIcon />
+                      </TdmIconButton>
                     </div>
                   </header>
                 </div>

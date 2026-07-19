@@ -1,0 +1,17 @@
+// Bordas e separadores TDM — hairline 1px, baixo contraste.
+
+@mixin tokens
+  --tdm-border-width-hairline: 1px
+  --tdm-border-subtle: rgba(255, 255, 255, 0.08)
+  --tdm-border-default: rgba(255, 255, 255, 0.12)
+  --tdm-border-strong: rgba(255, 255, 255, 0.18)
+  --tdm-border-interactive: rgba(255, 255, 255, 0.22)
+  --tdm-border-disabled: rgba(255, 255, 255, 0.06)
+  --tdm-border-danger: rgba(244, 63, 94, 0.42)
+  --tdm-separator: rgba(255, 255, 255, 0.1)
+  // 5B.14.1 — field mask hairline (generic white; stage overrides via --tdm-stage-field-rgb).
+  --tdm-field-hairline: 0.03125rem
+  --tdm-field-mask-ink: #000
+  --tdm-field-border-gradient-rest: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.1) 52%, rgba(255, 255, 255, 0.22))
+  --tdm-field-border-gradient-hot: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.52) 52%, rgba(255, 255, 255, 0.82))
+  --tdm-field-border-gradient-disabled: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06) 52%, rgba(255, 255, 255, 0.1))

@@ -1,21 +1,28 @@
+import { exportTheoryDocx } from '@/features/theory-of-change/export';
 import type {
   TheoryDocumentExportPayload,
   TheoryDocumentExportResult
 } from './theory-document-export.types';
 
-export const DOCX_EXPORT_PENDING_REASON =
-  'Exportação DOCX pendente: o projeto não possui biblioteca para gerar arquivos .docx reais (ex.: `docx`). HTML renomeado ou .doc não são aceitos.';
-
 /**
- * DOCX export is intentionally unavailable until an approved dependency is installed.
- * Do not fabricate .docx / .doc files from HTML.
+ * DOCX export — delegates to the Fase 5B.8 export module.
  */
-export function exportTheoryDocumentDocx(
-  _payload: TheoryDocumentExportPayload
-): TheoryDocumentExportResult {
+export async function exportTheoryDocumentDocx(
+  payload: TheoryDocumentExportPayload
+): Promise<TheoryDocumentExportResult> {
+  const result = await exportTheoryDocx(payload.document, payload.theoryTitle);
+
+  if (result.status === 'success') {
+    return {
+      status: 'success',
+      format: 'docx',
+      filename: result.filename
+    };
+  }
+
   return {
-    status: 'unavailable',
+    status: 'error',
     format: 'docx',
-    reason: DOCX_EXPORT_PENDING_REASON
+    message: result.message
   };
 }

@@ -1,0 +1,82 @@
+.compactBody
+  position: relative
+  z-index: 1
+  display: flex
+  flex-direction: column
+  gap: var(--tdm-stack-compact-label-title)
+  min-width: 0
+  flex: 1 1 auto
+  overflow: hidden
+
+.cardHeader
+  position: relative
+  z-index: 1
+  display: flex
+  align-items: center
+  justify-content: space-between
+  gap: var(--tdm-space-2)
+  min-inline-size: 0
+
+.stageLabel
+  margin: 0
+  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: var(--tdm-font-label-size)
+  font-weight: var(--tdm-font-label-weight)
+  letter-spacing: var(--tdm-font-label-tracking)
+  line-height: var(--tdm-font-label-line)
+  text-transform: uppercase
+  color: color-mix(in srgb, var(--stage-color) 72%, var(--tdm-fg-muted))
+
+.indicator
+  flex-shrink: 0
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  width: 0.75rem
+  height: 0.75rem
+  border: 0
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+  pointer-events: none
+
+.indicatorDot
+  width: 0.40625rem
+  height: 0.40625rem
+  border-radius: var(--tdm-radius-round)
+  background: var(--stage-color)
+
+.title
+  position: relative
+  z-index: 1
+  margin: 0
+  display: -webkit-box
+  -webkit-box-orient: vertical
+  -webkit-line-clamp: 2
+  overflow: hidden
+  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: var(--tdm-font-card-title-size)
+  font-weight: var(--tdm-font-card-title-weight)
+  line-height: var(--tdm-font-card-title-line)
+  letter-spacing: -0.01em
+  color: var(--tdm-fg-primary)
+  transition: color var(--tdm-duration-ui) var(--tdm-ease-standard)
+
+.summary
+  position: relative
+  z-index: 1
+  margin: 0
+  display: -webkit-box
+  -webkit-box-orient: vertical
+  -webkit-line-clamp: 2
+  overflow: hidden
+  max-width: var(--tdm-measure-intro)
+  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: var(--tdm-cta-sm-font-size)
+  font-weight: var(--tdm-font-body-weight)
+  line-height: 1.4
+  color: var(--tdm-fg-secondary)
+
+@media (prefers-reduced-motion: reduce)
+  .title
+    transition: none

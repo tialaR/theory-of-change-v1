@@ -1,9 +1,10 @@
+import { TDM_MOTION_TRANSITIONS } from '@/shared/motion/tdm-motion';
 import { NARRATIVE_LABELS, NARRATIVE_TITLES } from '../result-theory-narrative/theory-narrative.templates';
 
 export const THEORY_TRANSLATOR_MOTION = {
-  duration: 0.22,
-  contentDuration: 0.18,
-  ease: [0.22, 1, 0.36, 1] as const,
+  duration: TDM_MOTION_TRANSITIONS.panel.duration,
+  contentDuration: TDM_MOTION_TRANSITIONS.opacity.duration,
+  ease: TDM_MOTION_TRANSITIONS.panel.ease,
   spring: { type: 'spring' as const, stiffness: 380, damping: 38, mass: 0.9 }
 };
 

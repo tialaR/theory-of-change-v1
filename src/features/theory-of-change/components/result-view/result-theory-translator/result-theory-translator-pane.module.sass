@@ -21,7 +21,7 @@
   position: absolute
   z-index: 4
   inset-block: 0
-  right: .65rem
+  right: var(--tdm-space-3)
   display: flex
   align-items: center
 
@@ -31,36 +31,36 @@
   flex-direction: row
   align-items: center
   justify-content: center
-  gap: .45rem
-  width: 2.75rem
+  gap: var(--tdm-space-2)
+  width: var(--tdm-icon-container-lg)
   height: fit-content
-  max-height: calc(100% - 2rem)
-  padding: .9rem .35rem
-  border: .0625rem solid rgba(255, 255, 255, .10)
-  border-radius: .5rem
-  background: rgba(15, 16, 18, .96)
-  color: rgba(238, 239, 242, .58)
+  max-height: calc(100% - var(--tdm-space-8))
+  padding: var(--tdm-space-4) var(--tdm-space-2)
+  border: var(--tdm-border-width-hairline) solid var(--tdm-border-default)
+  border-radius: var(--tdm-radius-sm)
+  background: var(--tdm-surface-elevated)
+  color: var(--tdm-fg-secondary)
   cursor: pointer
   writing-mode: vertical-rl
   text-orientation: mixed
   transform: rotate(180deg)
-  transition: border-color .18s ease, background-color .18s ease, color .18s ease
+  transition: border-color var(--tdm-duration-ui) var(--tdm-ease-standard), background-color var(--tdm-duration-ui) var(--tdm-ease-standard), color var(--tdm-duration-ui) var(--tdm-ease-standard)
 
   &:hover
-    border-color: rgba(255, 255, 255, .18)
-    background: rgba(18, 19, 22, .98)
-    color: rgba(248, 248, 250, .92)
+    border-color: var(--tdm-border-strong)
+    background: var(--tdm-surface-overlay)
+    color: var(--tdm-fg-primary)
 
     .railChevron
-      color: rgba(248, 248, 250, .98)
+      color: var(--tdm-fg-primary)
 
   &:focus-visible
-    outline: .125rem solid rgba(255, 255, 255, .42)
-    outline-offset: .15rem
+    outline: var(--tdm-focus-ring-width) solid var(--tdm-focus-ring-color)
+    outline-offset: var(--tdm-focus-ring-offset)
 
   &:active
-    background: rgba(12, 13, 15, .98)
-    color: rgba(238, 239, 242, .72)
+    background: var(--tdm-surface-pressed)
+    color: var(--tdm-fg-secondary)
 
 // Source glyph is › because .rail is rotated 180°; on screen it reads as ‹ (toward expansion).
 .railChevron
@@ -68,16 +68,17 @@
   flex-shrink: 0
   align-items: center
   justify-content: center
-  font-size: 1rem
+  font-size: var(--tdm-icon-size-sm)
   font-weight: 500
   line-height: 1
-  color: rgba(238, 239, 242, .58)
+  color: var(--tdm-fg-secondary)
 
 .railLabel
-  font-size: .6875rem
-  font-weight: 700
-  letter-spacing: .12em
-  line-height: 1.2
+  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: var(--tdm-font-label-size)
+  font-weight: var(--tdm-font-label-weight)
+  letter-spacing: var(--tdm-font-label-tracking)
+  line-height: var(--tdm-font-label-line)
   text-transform: uppercase
   color: currentColor
 
@@ -90,196 +91,158 @@
   min-height: 0
   overflow: hidden
   border: 0
-  border-left: .0625rem solid rgba(30, 30, 32, .14)
+  border-left: var(--tdm-border-width-hairline) solid var(--tdm-border-default)
   border-radius: 0
-  background: #f7f7f4
-  color: #242426
-  backdrop-filter: none
-  -webkit-backdrop-filter: none
-  box-shadow: none
+  background: var(--tdm-surface-base)
+  color: var(--tdm-fg-primary)
+  box-shadow: var(--tdm-shadow-none)
 
 .stickyHeader
   position: sticky
   top: 0
   z-index: 2
   flex-shrink: 0
-  background: #f7f7f4
+  background: var(--tdm-surface-base)
 
 .toolbar
   display: flex
   align-items: center
   justify-content: flex-end
-  gap: 1rem
-  padding: .85rem clamp(1.5rem, 3vw, 2.25rem) .75rem
-  border-bottom: .0625rem solid rgba(30, 30, 32, .10)
+  gap: var(--tdm-space-4)
+  padding: var(--tdm-space-4) var(--tdm-space-6) var(--tdm-space-3)
+  border-bottom: var(--tdm-border-width-hairline) solid var(--tdm-border-subtle)
 
 .header
   display: flex
   align-items: flex-start
   justify-content: space-between
-  gap: 1rem
-  padding: 1.15rem clamp(1.5rem, 3vw, 2.25rem) 1.25rem
-  border-bottom: .0625rem solid rgba(30, 30, 32, .12)
+  gap: var(--tdm-space-4)
+  padding: var(--tdm-space-5) var(--tdm-space-6) var(--tdm-space-5)
+  border-bottom: var(--tdm-border-width-hairline) solid var(--tdm-border-subtle)
 
 .headerCopy
   min-width: 0
-  padding-right: .25rem
+  padding-right: var(--tdm-space-1)
 
 .headerActions
   display: flex
   flex-shrink: 0
   align-items: flex-start
-  gap: .45rem
+  gap: var(--tdm-space-2)
 
 .kicker
-  margin: 0 0 .5rem
-  color: rgba(36, 36, 38, .52)
-  font-family: var(--font-inter), Inter, ui-sans-serif, system-ui, sans-serif
-  font-size: .6875rem
-  font-weight: 600
-  letter-spacing: .1em
+  margin: 0 0 var(--tdm-space-2)
+  color: var(--tdm-fg-muted)
+  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: var(--tdm-font-label-size)
+  font-weight: var(--tdm-font-label-weight)
+  letter-spacing: var(--tdm-font-label-tracking)
   text-transform: uppercase
 
 .title
-  margin: 0 0 .5rem
-  color: rgba(24, 24, 26, .94)
-  font-family: var(--font-inter), Inter, ui-sans-serif, system-ui, sans-serif
-  font-size: clamp(1.25rem, 2vw, 1.5rem)
-  font-weight: 600
-  line-height: 1.25
+  margin: 0 0 var(--tdm-space-2)
+  color: var(--tdm-fg-primary)
+  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: var(--tdm-font-section-title-size)
+  font-weight: var(--tdm-font-section-title-weight)
+  line-height: var(--tdm-font-section-title-line)
   overflow-wrap: anywhere
 
 .meta
   margin: 0
-  color: rgba(36, 36, 38, .58)
-  font-family: var(--font-inter), Inter, ui-sans-serif, system-ui, sans-serif
-  font-size: .8125rem
-  font-weight: 400
+  color: var(--tdm-fg-muted)
+  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: var(--tdm-cta-sm-font-size)
+  font-weight: var(--tdm-font-body-weight)
   letter-spacing: 0
   line-height: 1.4
-
-.closeButton,
-.exportButton
-  flex-shrink: 0
-  display: inline-flex
-  align-items: center
-  justify-content: center
-  width: 2rem
-  height: 2rem
-  border: .0625rem solid rgba(20, 20, 22, .14)
-  border-radius: .45rem
-  background: rgba(255, 255, 255, .55)
-  color: rgba(22, 22, 24, .82)
-  font-size: 1.25rem
-  line-height: 1
-  cursor: pointer
-
-  &:hover
-    background: rgba(255, 255, 255, .82)
-
-  &:focus-visible
-    outline: .125rem solid rgba(22, 22, 24, .35)
-    outline-offset: .1rem
-
-  &:disabled
-    opacity: .55
-    cursor: not-allowed
-
-.exportIcon
-  width: 1rem
-  height: 1rem
 
 .exportMenuRoot
   position: relative
 
 .exportMenu
   position: absolute
-  top: calc(100% + .35rem)
+  top: calc(100% + var(--tdm-space-2))
   right: 0
   left: auto
   z-index: 5
   display: flex
   flex-direction: column
-  gap: .25rem
+  gap: var(--tdm-space-1)
   width: clamp(12rem, 16vw, 15rem)
-  max-width: min(15rem, calc(100vw - 2rem))
-  padding: .5rem
-  border: .0625rem solid rgba(20, 20, 22, .14)
-  border-radius: .625rem
-  background: #fbfbf9
-  box-shadow: 0 .2rem .55rem rgba(16, 16, 18, .10)
+  max-width: min(15rem, calc(100vw - var(--tdm-space-8)))
 
 .exportMenuHeading
   margin: 0
-  padding: .2rem .5rem .35rem
-  color: rgba(22, 22, 24, .52)
-  font-family: var(--font-inter), Inter, ui-sans-serif, system-ui, sans-serif
-  font-size: .6875rem
-  font-weight: 600
-  letter-spacing: .08em
-  line-height: 1.35
+  padding: var(--tdm-space-1) var(--tdm-space-2) var(--tdm-space-2)
+  color: var(--tdm-fg-muted)
+  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: var(--tdm-font-label-size)
+  font-weight: var(--tdm-font-label-weight)
+  letter-spacing: var(--tdm-font-label-tracking)
+  line-height: var(--tdm-font-label-line)
   text-transform: uppercase
 
 .exportMenuItem
   display: flex
   align-items: center
   justify-content: space-between
-  gap: .65rem
+  gap: var(--tdm-space-3)
   width: 100%
-  min-height: 2.625rem
-  height: 2.625rem
+  min-height: var(--tdm-cta-sm-min-height)
   margin: 0
-  padding: 0 .6rem
+  padding: 0 var(--tdm-space-3)
   border: 0
-  border-radius: .375rem
+  border-radius: var(--tdm-radius-xs)
   background: transparent
-  color: rgba(22, 22, 24, .88)
-  font-family: var(--font-inter), Inter, ui-sans-serif, system-ui, sans-serif
-  font-size: .8125rem
+  color: var(--tdm-fg-primary)
+  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: var(--tdm-cta-sm-font-size)
   font-weight: 500
   text-align: left
   cursor: pointer
+  transition: background-color var(--tdm-duration-ui) var(--tdm-ease-standard), color var(--tdm-duration-ui) var(--tdm-ease-standard)
 
   &:hover:not(:disabled)
-    background: rgba(20, 20, 22, .05)
+    background: var(--tdm-surface-hover)
 
   &:focus-visible
-    outline: .125rem solid rgba(22, 22, 24, .3)
+    outline: var(--tdm-focus-ring-width) solid var(--tdm-focus-ring-color)
     outline-offset: 0
 
   &:disabled
-    color: rgba(22, 22, 24, .42)
+    color: var(--tdm-fg-disabled)
     cursor: not-allowed
 
 .exportMenuItemLabel
   font-weight: 600
 
 .exportSoon
-  color: rgba(22, 22, 24, .42)
-  font-size: .6875rem
+  color: var(--tdm-fg-muted)
+  font-size: var(--tdm-font-label-size)
   font-weight: 500
-  letter-spacing: .02em
+  letter-spacing: 0.02em
   line-height: 1
   text-transform: none
 
 .exportStatus
   margin: 0
-  padding: 0 clamp(1.5rem, 3vw, 2.25rem) .65rem
-  color: rgba(36, 36, 38, .58)
-  font-family: var(--font-inter), Inter, ui-sans-serif, system-ui, sans-serif
-  font-size: .75rem
+  padding: 0 var(--tdm-space-6) var(--tdm-space-3)
+  color: var(--tdm-fg-muted)
+  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: var(--tdm-font-label-size)
   line-height: 1.4
 
   &[data-tone='error']
-    color: rgba(120, 36, 36, .92)
+    color: var(--tdm-fg-danger)
 
 .scroll
   flex: 1
   min-height: 0
   overflow-x: hidden
   overflow-y: auto
-  padding: 1rem clamp(1rem, 2.5vw, 1.5rem) 2rem
-  background: rgba(232, 232, 229, .72)
+  padding: var(--tdm-space-4) var(--tdm-space-4) var(--tdm-space-8)
+  background: var(--tdm-surface-canvas)
   outline: none
   scrollbar-width: thin
   scrollbar-gutter: stable
@@ -288,29 +251,24 @@
   &:hover,
   &:focus-within,
   &[data-scrolling='true']
-    scrollbar-color: rgba(20, 20, 22, .28) transparent
+    scrollbar-color: var(--tdm-border-strong) transparent
 
   &::-webkit-scrollbar
-    width: .375rem
+    width: var(--tdm-space-2)
 
   &::-webkit-scrollbar-track
     background: transparent
 
   &::-webkit-scrollbar-thumb
-    border: .125rem solid transparent
-    border-radius: 999rem
-    background: rgba(20, 20, 22, .18)
+    border: var(--tdm-space-1) solid transparent
+    border-radius: var(--tdm-radius-round)
+    background: var(--tdm-border-default)
     background-clip: padding-box
 
   &:hover::-webkit-scrollbar-thumb,
   &:focus-within::-webkit-scrollbar-thumb,
   &[data-scrolling='true']::-webkit-scrollbar-thumb
-    background: rgba(20, 20, 22, .30)
-    background-clip: padding-box
-
-  &:hover::-webkit-scrollbar-thumb:hover,
-  &[data-scrolling='true']::-webkit-scrollbar-thumb:hover
-    background: rgba(20, 20, 22, .4)
+    background: var(--tdm-border-strong)
     background-clip: padding-box
 
 .emptyState
@@ -322,19 +280,16 @@
 
 .emptyCopy
   margin: 0
-  padding: 1.75rem clamp(1.5rem, 3vw, 2.25rem) 1.25rem
-  color: rgba(36, 36, 38, .64)
-  font-family: var(--font-inter), Inter, ui-sans-serif, system-ui, sans-serif
-  font-size: .9375rem
-  line-height: 1.55
-
-@media (max-width: 56rem)
-  .root[data-expanded='true']
-    width: min(100%, 100vw)
-    max-width: 100%
+  max-width: var(--tdm-measure-body)
+  padding: var(--tdm-space-6) var(--tdm-space-6) var(--tdm-space-5)
+  color: var(--tdm-fg-secondary)
+  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: var(--tdm-font-body-size)
+  line-height: var(--tdm-font-body-line)
 
 @media (prefers-reduced-motion: reduce)
   .rail,
   .panel,
-  .scroll
-    transition: none !important
+  .scroll,
+  .exportMenuItem
+    transition: none

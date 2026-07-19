@@ -34,7 +34,6 @@ function getFlowRelationSet(nodeId: string | null, edges: typeof exampleTheory.e
 }
 import {
   PublicButton,
-  PublicCard,
   PublicCodePanel,
   PublicFooter,
   PublicHeader,
@@ -44,7 +43,24 @@ import {
   PublicShell,
   PublicTimeline
 } from '@/shared/ui/lusion-resend-ds';
+import { ExampleOverviewCard } from '@/features/theory-of-change/components/example-overview-card';
 import { ExamplePreviewsSection, DedicatedExamplePreview } from '@/features/theory-of-change/components/resend-public/example-previews';
+import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
+import {
+  ContextLabelBookOpenIcon,
+  ContextLabelCompassIcon,
+  ContextLabelEyeIcon,
+  ContextLabelFileTextIcon,
+  ContextLabelGitBranchIcon,
+  ContextLabelLayoutGridIcon,
+  ContextLabelLibraryIcon,
+  ContextLabelNetworkIcon,
+  ContextLabelSparklesIcon,
+  ContextLabelWorkflowIcon,
+  TdmContextLabel
+} from '@/shared/ui/tdm-context-label';
+import { TdmPublicFeatureCard } from '@/shared/ui/tdm-public-feature-card';
+import { TdmSurface } from '@/shared/ui/tdm-surface/tdm-surface';
 import { HomeOnboardingPreview } from './home-onboarding-preview';
 import { HomeBrandLogo } from './home-brand-logo';
 import { TheoryFlowBoard } from './theory-flow-board';
@@ -83,23 +99,6 @@ const FLOW_CONTEXT_CARDS = [
   }
 ] as const;
 
-function ExampleContextActions({
-  primaryHref,
-  primaryLabel
-}: {
-  primaryHref: string;
-  primaryLabel: string;
-}) {
-  return (
-    <div className={styles.contextActions}>
-      <PublicButton href={primaryHref}>{primaryLabel}</PublicButton>
-      <PublicButton href="/exemplos" variant="secondary">
-        Voltar para exemplos
-      </PublicButton>
-    </div>
-  );
-}
-
 function ExportFormatIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -121,7 +120,11 @@ export function HomePage() {
       <PublicHeader />
       <PublicHero
         visual={<HomeBrandLogo variant="hero" />}
-        kicker="Teoria da Mudança"
+        kicker={
+          <TdmContextLabel icon={ContextLabelCompassIcon} align="center">
+            Teoria da Mudança
+          </TdmContextLabel>
+        }
         title="Desenhe a mudança antes de explicá-la."
         description="Um espaço visual para transformar problema, etapas, conexões, riscos e hipóteses em narrativa clara."
         actions={
@@ -137,7 +140,11 @@ export function HomePage() {
         }
       />
       <PublicSection
-        eyebrow="Por que usar"
+        eyebrow={
+          <TdmContextLabel icon={ContextLabelSparklesIcon} align="start">
+            Por que usar
+          </TdmContextLabel>
+        }
         title="Leia o caminho da intervenção."
         description="Organize etapas, evidencie relações e apresente decisões com clareza visual."
       >
@@ -147,19 +154,25 @@ export function HomePage() {
             ['02', 'Evidenciar relações', 'Mostre conexões, riscos e hipóteses que sustentam o fluxo.'],
             ['03', 'Apresentar decisão', 'Transforme a teoria em relatório visual, não em documento seco.']
           ].map(([num, title, text], i) => (
-            <PublicReveal key={title} delay={i * 0.05}>
-              <PublicCard className={styles.homeFeatureCard}>
-                <span>{num}</span>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </PublicCard>
+            <PublicReveal key={title} delay={i * 0.05} className={styles.featureCardReveal}>
+              <TdmPublicFeatureCard
+                eyebrow={num}
+                title={title}
+                description={text}
+                size="compact"
+                interactive
+              />
             </PublicReveal>
           ))}
         </div>
       </PublicSection>
       <PublicSection
         compact
-        eyebrow="PRÉVIA GUIADA"
+        eyebrow={
+          <TdmContextLabel icon={ContextLabelEyeIcon} align="start">
+            PRÉVIA GUIADA
+          </TdmContextLabel>
+        }
         title="Veja a teoria ganhar forma."
         description="Primeiro, os elementos entram em sequência e revelam o caminho causal. Depois, o fluxo se organiza em uma leitura final por etapas."
       >
@@ -178,7 +191,11 @@ export function GuidePage() {
       <PublicHeader />
       <PublicHero
         compact
-        kicker="Guia de aprendizado"
+        kicker={
+          <TdmContextLabel icon={ContextLabelBookOpenIcon} align="center">
+            Guia de aprendizado
+          </TdmContextLabel>
+        }
         title="Construa a teoria etapa por etapa."
         description="Cada passo revela uma fase do processo com texto curto e contexto visual."
         actions={<PublicButton href="/canvas">Abrir canvas</PublicButton>}
@@ -195,7 +212,11 @@ export function ExamplesPage() {
       <PublicHeader />
       <PublicHero
         compact
-        kicker="EXEMPLOS"
+        kicker={
+          <TdmContextLabel icon={ContextLabelLayoutGridIcon} align="center">
+            EXEMPLOS
+          </TdmContextLabel>
+        }
         title="Explore exemplos guiados."
         description="Veja prévias animadas da teoria antes de abrir a experiência completa."
         actions={<PublicButton href="#examples-experiences">Ver exemplos</PublicButton>}
@@ -214,45 +235,50 @@ export function FlowPage() {
       <PublicHeader />
       <PublicHero
         compact
-        kicker="Fluxo"
+        kicker={
+          <TdmContextLabel icon={ContextLabelWorkflowIcon} align="center">
+            Fluxo
+          </TdmContextLabel>
+        }
         title="Visão do fluxo com prévia viva."
         description="Entenda como insumos, atividades, produtos e resultados se conectam antes de abrir a experiência completa."
       />
       <div className={styles.resultLayout}>
         <PublicReveal>
-          <div className={styles.resultContext}>
-            <p className={styles.inspectorKicker}>Exemplo</p>
-            <h3>Rascunho da teoria de mudança</h3>
-            <p>
-              Veja como insumos, atividades, produtos e resultados se organizam em uma sequência causal
-              antes da leitura final.
-            </p>
-            <ExampleContextActions
-              primaryHref="/exemplos/visao-do-fluxo/interativo"
-              primaryLabel="Abrir experiência interativa"
-            />
-          </div>
+          <ExampleOverviewCard
+            eyebrow="Exemplo"
+            title="Rascunho da teoria de mudança"
+            description="Veja como insumos, atividades, produtos e resultados se organizam em uma sequência causal antes da leitura final."
+            primaryHref="/exemplos/visao-do-fluxo/interativo"
+            primaryLabel="Abrir experiência interativa"
+          />
         </PublicReveal>
         <PublicReveal delay={0.05}>
-          <div className={styles.resultPreview}>
+          <TdmSurface as="div" variant="base" padding="none" radius="lg" className={styles.resultPreview}>
             <DedicatedExamplePreview type="flow" />
-          </div>
+          </TdmSurface>
         </PublicReveal>
       </div>
       <PublicSection
         compact
-        eyebrow="Visão do fluxo"
+        eyebrow={
+          <TdmContextLabel icon={ContextLabelNetworkIcon} align="start">
+            Visão do fluxo
+          </TdmContextLabel>
+        }
         title="O caminho antes da leitura final."
         description="A prévia mostra como cada etapa alimenta a próxima, revelando a lógica causal em construção."
       >
         <div className={styles.relationGrid}>
           {FLOW_CONTEXT_CARDS.map((card, index) => (
-            <PublicReveal key={card.number} delay={index * 0.03}>
-              <PublicCard className={styles.relationCard}>
-                <span>{card.number}</span>
-                <h3>{card.title}</h3>
-                <p>{card.text}</p>
-              </PublicCard>
+            <PublicReveal key={card.number} delay={index * 0.03} className={styles.featureCardReveal}>
+              <TdmPublicFeatureCard
+                eyebrow={card.number}
+                title={card.title}
+                description={card.text}
+                size="compact"
+                interactive
+              />
             </PublicReveal>
           ))}
         </div>
@@ -268,44 +294,54 @@ export function ResultPage() {
       <PublicHeader />
       <PublicHero
         compact
-        kicker="Resultado"
+        kicker={
+          <TdmContextLabel icon={ContextLabelFileTextIcon} align="center">
+            Resultado
+          </TdmContextLabel>
+        }
         title="Leitura executiva com prévia viva."
         description="Contexto à esquerda, prévia abstrata à direita. A exploração completa fica na rota interativa."
       />
       <div className={styles.resultLayout}>
         <PublicReveal>
-          <div className={styles.resultContext}>
-            <p className={styles.inspectorKicker}>Exemplo</p>
-            <h3>{exampleTheory.title}</h3>
-            <p>
-              Política educacional com formação de professores, acompanhamento nas escolas e melhoria
-              no uso de dados. A prévia resume a estrutura conectada antes da leitura interativa.
-            </p>
-            <ExampleContextActions
-              primaryHref="/exemplos/resultado/interativo"
-              primaryLabel="Abrir visualização interativa"
-            />
-          </div>
+          <ExampleOverviewCard
+            eyebrow="Exemplo"
+            title={exampleTheory.title}
+            description="Política educacional com formação de professores, acompanhamento nas escolas e melhoria no uso de dados. A prévia resume a estrutura conectada antes da leitura interativa."
+            primaryHref="/exemplos/resultado/interativo"
+            primaryLabel="Abrir visualização interativa"
+          />
         </PublicReveal>
         <PublicReveal delay={0.05}>
-          <div className={styles.resultPreview}>
+          <TdmSurface as="div" variant="base" padding="none" radius="lg" className={styles.resultPreview}>
             <DedicatedExamplePreview type="result" />
-          </div>
+          </TdmSurface>
         </PublicReveal>
       </div>
       <div className={styles.exportBar}>
         {['PDF', 'PNG', 'SVG'].map((format) => (
-          <button key={format} type="button">
-            <span className={styles.exportIcon} aria-hidden="true">
-              <ExportFormatIcon />
-            </span>
+          <TdmButton
+            key={format}
+            type="button"
+            variant="secondary"
+            size="sm"
+            leadingIcon={
+              <span className={styles.exportIcon} aria-hidden="true">
+                <ExportFormatIcon />
+              </span>
+            }
+          >
             Exportar {format}
-          </button>
+          </TdmButton>
         ))}
       </div>
       <PublicSection
         compact
-        eyebrow="Relações causais"
+        eyebrow={
+          <TdmContextLabel icon={ContextLabelGitBranchIcon} align="start">
+            Relações causais
+          </TdmContextLabel>
+        }
         title="O que cada seta está dizendo."
         description="Origem, destino e atenção em risco ou hipótese."
       >
@@ -316,19 +352,19 @@ export function ResultPage() {
             const badges = getEdgeBadges(edge);
             const badgeLabel = badges.map((b) => b.label).join('/');
             return (
-              <PublicReveal key={edge.id} delay={index * 0.03}>
-                <PublicCard className={styles.relationCard}>
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <h3>
-                    {source?.title} → {target?.title}
-                  </h3>
-                  <p>
-                    {badges.length
+              <PublicReveal key={edge.id} delay={index * 0.03} className={styles.featureCardReveal}>
+                <TdmPublicFeatureCard
+                  eyebrow={String(index + 1).padStart(2, '0')}
+                  title={`${source?.title} → ${target?.title}`}
+                  description={
+                    badges.length
                       ? badges[0].text
-                      : 'Relação causal direta entre etapas do fluxo.'}
-                  </p>
-                  {badgeLabel ? <em>{badgeLabel}</em> : null}
-                </PublicCard>
+                      : 'Relação causal direta entre etapas do fluxo.'
+                  }
+                  badge={badgeLabel || undefined}
+                  size="compact"
+                  interactive
+                />
               </PublicReveal>
             );
           })}
@@ -439,7 +475,11 @@ export function ReferencesPage() {
       <PublicHeader />
       <PublicHero
         compact
-        kicker="Referências"
+        kicker={
+          <TdmContextLabel icon={ContextLabelLibraryIcon} align="center">
+            Referências
+          </TdmContextLabel>
+        }
         title="Base visual e técnica."
         description="Organize as referências por uso: experiência, arquitetura e lógica da Teoria da Mudança."
         actions={<PublicButton href="/guia-de-aprendizado">Ver guia</PublicButton>}
@@ -452,12 +492,14 @@ export function ReferencesPage() {
             ['Teoria da Mudança', 'Etapas, conexões, riscos e hipóteses como núcleo da lógica de negócio.', '/guia-de-aprendizado'],
             ['Inspirações Visuais', 'Home cinematográfica e rotas internas com scroll narrativo e motion suave.', '/']
           ].map(([title, text, href], i) => (
-            <PublicReveal key={title} delay={i * 0.04}>
-              <PublicCard className={styles.refCard}>
-                <h3>{title}</h3>
-                <p>{text}</p>
-                <Link href={href}>Abrir →</Link>
-              </PublicCard>
+            <PublicReveal key={title} delay={i * 0.04} className={styles.featureCardReveal}>
+              <TdmPublicFeatureCard
+                title={title}
+                description={text}
+                actionLabel="Abrir →"
+                href={href}
+                size="compact"
+              />
             </PublicReveal>
           ))}
         </div>

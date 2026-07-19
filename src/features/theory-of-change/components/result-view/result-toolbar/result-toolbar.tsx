@@ -1,7 +1,10 @@
 'use client';
 
-import Link from 'next/link';
+import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
+import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
 import styles from './result-toolbar.module.sass';
+
+export type ResultImageExportFormat = 'png' | 'svg';
 
 type ResultToolbarProps = {
   zoom: number;
@@ -12,6 +15,10 @@ type ResultToolbarProps = {
   closeHref?: string;
   onClose?: () => void;
   closeLabel?: string;
+  onExportImage?: (format: ResultImageExportFormat) => void;
+  isExportingImage?: boolean;
+  exportingImageFormat?: ResultImageExportFormat | null;
+  exportImageError?: string | null;
 };
 
 export function ResultToolbar({
@@ -22,36 +29,89 @@ export function ResultToolbar({
   onReset,
   closeHref,
   onClose,
-  closeLabel = 'Fechar'
+  closeLabel = 'Fechar',
+  onExportImage,
+  isExportingImage = false,
+  exportingImageFormat = null,
+  exportImageError = null
 }: ResultToolbarProps) {
   return (
-    <>
-      <div className={styles.cluster}>
-        <button className={styles.toolButton} type="button" aria-label="Aumentar zoom" onClick={onZoomIn}>
+    <div data-export-exclude="true" className={styles.toolbarRoot}>
+      <div className={styles.cluster} role="group" aria-label="Controles de visualização">
+        <TdmIconButton aria-label="Aumentar zoom" tooltip="Aumentar zoom" variant="ghost" size="sm" onClick={onZoomIn}>
           +
-        </button>
+        </TdmIconButton>
         <span className={styles.zoomLabel}>{Math.round(zoom * 100)}%</span>
-        <button className={styles.toolButton} type="button" aria-label="Diminuir zoom" onClick={onZoomOut}>
+        <TdmIconButton aria-label="Diminuir zoom" tooltip="Diminuir zoom" variant="ghost" size="sm" onClick={onZoomOut}>
           −
-        </button>
+        </TdmIconButton>
         <span className={styles.divider} aria-hidden="true" />
-        <button className={styles.toolButton} type="button" aria-label="Centralizar visualização" onClick={onCenter}>
+        <TdmIconButton
+          aria-label="Centralizar visualização"
+          tooltip="Centralizar"
+          variant="ghost"
+          size="sm"
+          onClick={onCenter}
+        >
           ⌖
-        </button>
-        <button className={styles.toolButton} type="button" aria-label="Reiniciar visualização" onClick={onReset}>
+        </TdmIconButton>
+        <TdmIconButton
+          aria-label="Reiniciar visualização"
+          tooltip="Reiniciar"
+          variant="ghost"
+          size="sm"
+          onClick={onReset}
+        >
           ↺
-        </button>
+        </TdmIconButton>
       </div>
 
+      {onExportImage ? (
+        <div
+          className={styles.exportCluster}
+          role="group"
+          aria-label="Exportar diagrama"
+          aria-busy={isExportingImage || undefined}
+        >
+          <TdmButton
+            type="button"
+            variant="secondary"
+            tone="neutral"
+            size="sm"
+            disabled={isExportingImage}
+            isLoading={isExportingImage && exportingImageFormat === 'png'}
+            onClick={() => onExportImage('png')}
+          >
+            PNG
+          </TdmButton>
+          <TdmButton
+            type="button"
+            variant="secondary"
+            tone="neutral"
+            size="sm"
+            disabled={isExportingImage}
+            isLoading={isExportingImage && exportingImageFormat === 'svg'}
+            onClick={() => onExportImage('svg')}
+          >
+            SVG
+          </TdmButton>
+          {exportImageError ? (
+            <span className={styles.exportError} role="status" aria-live="polite">
+              {exportImageError}
+            </span>
+          ) : null}
+        </div>
+      ) : null}
+
       {closeHref ? (
-        <Link className={styles.closeButton} href={closeHref}>
+        <TdmButton href={closeHref} variant="primary" tone="neutral" size="sm">
           {closeLabel}
-        </Link>
+        </TdmButton>
       ) : (
-        <button type="button" className={styles.closeButton} onClick={onClose}>
+        <TdmButton type="button" variant="primary" tone="neutral" size="sm" onClick={onClose}>
           {closeLabel}
-        </button>
+        </TdmButton>
       )}
-    </>
+    </div>
   );
 }

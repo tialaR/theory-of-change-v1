@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent, type MouseEvent as ReactMouseEvent, type TouchEvent as ReactTouchEvent } from 'react';
 import {
   addEdge,
@@ -22,6 +21,8 @@ import {
   type OnConnectStart
 } from '@xyflow/react';
 
+import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
+import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
 import { TdmTheoryEdge } from '../edge/tdm-theory-edge';
 import { ResultView } from '../result-view/result-view';
 import { TdmResultPreview } from '../result-preview/tdm-result-preview';
@@ -1346,7 +1347,8 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
           marker: {
             sourceLabel: nodes.find((node) => node.id === selectedEdge.source)?.title ?? 'Origem',
             targetLabel: nodes.find((node) => node.id === selectedEdge.target)?.title ?? 'Destino',
-            markerText: markerDraft
+            markerText: markerDraft,
+            markerType: selectedEdge.markerType
           },
           onDraftChange: setMarkerDraft,
           onSubmit: saveMarkerOnSelectedEdge,
@@ -1384,24 +1386,39 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
     );
   }
 
+  const sidebarToggleLabel = isSidebarOpen ? 'Fechar sidebar' : 'Abrir sidebar';
+
   return (
     <section className={[styles.shell, isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed].join(' ')}>
-      <Link href="/" className={styles.backLink} aria-label="Voltar ao inicio">
-        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" className={styles.backLinkIcon}>
-          <path d="M9.5 3.5 4.5 8l5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M4.75 8h6.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
-        <span>Voltar</span>
-      </Link>
-      <button
-        type="button"
-        className={styles.sidebarToggleButton}
-        aria-label={isSidebarOpen ? 'Fechar sidebar' : 'Abrir sidebar'}
-        title={isSidebarOpen ? 'Fechar sidebar' : 'Abrir sidebar'}
-        onClick={() => setIsSidebarOpen((current) => !current)}
-      >
-        <SidebarToggleIcon direction={isSidebarOpen ? 'right' : 'left'} className={styles.sidebarToggleSvg} />
-      </button>
+      <div className={styles.shellChromeTopLeft} data-dock-expanded={isGuideExpanded ? 'true' : 'false'}>
+        <TdmButton
+          href="/"
+          variant="tertiary"
+          size="sm"
+          className={styles.backLink}
+          leadingIcon={
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" className={styles.backLinkIcon}>
+              <path d="M9.5 3.5 4.5 8l5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M4.75 8h6.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          }
+        >
+          Voltar
+        </TdmButton>
+      </div>
+      <div className={styles.sidebarToggleAnchor}>
+        <TdmIconButton
+          aria-label={sidebarToggleLabel}
+          tooltip={sidebarToggleLabel}
+          tooltipPosition="left"
+          variant="ghost"
+          size="md"
+          className={styles.sidebarToggleButton}
+          onClick={() => setIsSidebarOpen((current) => !current)}
+        >
+          <SidebarToggleIcon direction={isSidebarOpen ? 'right' : 'left'} className={styles.sidebarToggleSvg} />
+        </TdmIconButton>
+      </div>
       <div className={styles.canvasArea}>
         <TdmToastViewport toast={activeFlowTooltip} onClose={closeFlowTooltip} />
         <div className={styles.flowFrame} onClick={handleFlowBackgroundClick}>
@@ -1500,7 +1517,6 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
       </div>
       <TdmSidebar
         isOpen={isSidebarOpen}
-        onToggle={() => setIsSidebarOpen((current) => !current)}
         theoryName={theoryTitle}
         onTheoryNameChange={setTheoryTitle}
         stageCreation={stageCreation}

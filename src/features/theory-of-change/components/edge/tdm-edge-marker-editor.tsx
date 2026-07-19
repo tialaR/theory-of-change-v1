@@ -1,8 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
+import { TdmField, TdmTextarea } from '@/shared/ui/tdm-field/tdm-field';
+import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
+import { TdmSurface } from '@/shared/ui/tdm-surface/tdm-surface';
 import type { TdmMarkerType } from '../../domain/tdm-types';
-import { TdmClearFieldButton } from '../form-field/tdm-form-field';
 import styles from './tdm-edge-marker-editor.module.sass';
 
 type TdmEdgeMarkerEditorProps = {
@@ -20,7 +23,13 @@ const HEADER_TITLES: Record<TdmMarkerType, string> = {
 
 const PLACEHOLDERS: Record<TdmMarkerType, string> = {
   risk: 'Ex.: baixa adesão, atraso de recursos, equipe insuficiente...',
-  hypothesis: 'Ex.: se as escolas usarem os planos, então poderão acompanhar melhor a aprendizagem...'
+  hypothesis:
+    'Ex.: se as escolas usarem os planos, então poderão acompanhar melhor a aprendizagem...'
+};
+
+const CREATE_LABELS: Record<TdmMarkerType, string> = {
+  risk: 'Adicionar risco',
+  hypothesis: 'Adicionar hipótese'
 };
 
 const SAVE_LABELS: Record<TdmMarkerType, string> = {
@@ -38,6 +47,11 @@ const CLEAR_LABELS: Record<TdmMarkerType, string> = {
   hypothesis: 'Limpar hipótese'
 };
 
+const FIELD_LABELS: Record<TdmMarkerType, string> = {
+  risk: 'Risco',
+  hypothesis: 'Hipótese'
+};
+
 export function TdmEdgeMarkerEditor({
   markerType,
   initialText,
@@ -47,13 +61,20 @@ export function TdmEdgeMarkerEditor({
 }: TdmEdgeMarkerEditorProps) {
   const [draft, setDraft] = useState(initialText);
   const [error, setError] = useState<string | null>(null);
-  const canDelete = Boolean(initialText.trim());
-  const hasDraftText = Boolean(draft);
+  const [syncedInitialText, setSyncedInitialText] = useState(initialText);
+  const [syncedMarkerType, setSyncedMarkerType] = useState(markerType);
 
-  useEffect(() => {
+  if (initialText !== syncedInitialText || markerType !== syncedMarkerType) {
+    setSyncedInitialText(initialText);
+    setSyncedMarkerType(markerType);
     setDraft(initialText);
     setError(null);
-  }, [initialText, markerType]);
+  }
+
+  const isEditingExisting = Boolean(initialText.trim());
+  const canDelete = isEditingExisting;
+  const hasDraftText = Boolean(draft);
+  const submitLabel = isEditingExisting ? SAVE_LABELS[markerType] : CREATE_LABELS[markerType];
 
   const handleSave = () => {
     const trimmed = draft.trim();
@@ -72,8 +93,14 @@ export function TdmEdgeMarkerEditor({
   };
 
   return (
-    <div
+    <TdmSurface
+      as="div"
+      variant="elevated"
+      padding="md"
+      radius="lg"
       className={`${styles.editor} nodrag nopan`}
+      data-export-exclude="true"
+      data-marker-type={markerType}
       onPointerDown={(event) => event.stopPropagation()}
       onMouseDown={(event) => event.stopPropagation()}
       onClick={(event) => event.stopPropagation()}
@@ -87,55 +114,59 @@ export function TdmEdgeMarkerEditor({
         </div>
         <div className={styles.headerActions}>
           {canDelete ? (
-            <button
-              type="button"
-              className={`${styles.iconButton} ${styles.iconButtonDanger}`}
+            <TdmIconButton
               aria-label={DELETE_LABELS[markerType]}
-              title={DELETE_LABELS[markerType]}
+              tooltip={DELETE_LABELS[markerType]}
+              variant="destructive"
+              size="sm"
               onClick={onDelete}
             >
               <TrashIcon />
-            </button>
+            </TdmIconButton>
           ) : null}
-          <button
-            type="button"
-            className={styles.iconButton}
-            aria-label="Fechar"
-            title="Fechar"
-            onClick={onCancel}
-          >
+          <TdmIconButton aria-label="Fechar" tooltip="Fechar" variant="ghost" size="sm" onClick={onCancel}>
             <CloseIcon />
-          </button>
+          </TdmIconButton>
         </div>
       </header>
 
-      {error ? <p className={styles.error}>{error}</p> : null}
-
-      <div className={styles.textareaField}>
-        <textarea
+      <TdmField
+        size="sm"
+        filled={hasDraftText}
+        invalid={Boolean(error)}
+        error={error}
+        className={styles.field}
+        trailingAdornment={
+          hasDraftText ? (
+            <TdmIconButton
+              aria-label={CLEAR_LABELS[markerType]}
+              variant="ghost"
+              size="sm"
+              onClick={handleClearDraft}
+            >
+              <ClearIcon />
+            </TdmIconButton>
+          ) : null
+        }
+      >
+        <TdmTextarea
           className={styles.textarea}
           value={draft}
           placeholder={PLACEHOLDERS[markerType]}
-          rows={3}
+          aria-label={FIELD_LABELS[markerType]}
+          rows={4}
           autoFocus
           onChange={(event) => {
             setDraft(event.target.value);
             setError(null);
           }}
         />
-        {hasDraftText ? (
-          <TdmClearFieldButton
-            ariaLabel={CLEAR_LABELS[markerType]}
-            onClear={handleClearDraft}
-            className={styles.clearButton}
-          />
-        ) : null}
-      </div>
+      </TdmField>
 
-      <button type="button" className={styles.primary} onClick={handleSave}>
-        {SAVE_LABELS[markerType]}
-      </button>
-    </div>
+      <TdmButton type="button" variant="primary" tone="neutral" size="sm" fullWidth onClick={handleSave}>
+        {submitLabel}
+      </TdmButton>
+    </TdmSurface>
   );
 }
 
@@ -184,6 +215,14 @@ function CloseIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
       <path d="M4.8 4.8 11.2 11.2M11.2 4.8 4.8 11.2" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function ClearIcon() {
+  return (
+    <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
+      <path d="M3 3l6 6M9 3 3 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   );
 }

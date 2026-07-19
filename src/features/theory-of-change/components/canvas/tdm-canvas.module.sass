@@ -40,14 +40,22 @@ $resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rg
   position: relative
   display: grid
   width: 100%
-  height: 100vh
-  min-height: 100vh
+  height: 100dvh
+  min-height: 100dvh
+  grid-template-rows: minmax(0, 1fr)
   overflow: hidden
   --tdm-sidebar-width: #{$sidebar-width}
   --tdm-sidebar-gap: 0px
   background: $noir-bg
   font-family: Inter, ui-sans-serif, system-ui, sans-serif
   transition: grid-template-columns 220ms ease
+
+  // Keep the sidebar on the same row as the canvas, regardless of chrome overlays.
+  > :global(aside)
+    grid-column: 2
+    grid-row: 1
+    min-width: 0
+    min-height: 0
 
 .sidebarOpen
   grid-template-columns: minmax(0, 1fr) $sidebar-width
@@ -61,9 +69,12 @@ $resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rg
 
 .canvasArea
   position: relative
+  grid-column: 1
+  grid-row: 1
   width: 100%
   min-width: 0
   height: 100%
+  min-height: 0
   overflow: hidden
   padding-right: 0
 
@@ -71,7 +82,9 @@ $resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rg
   position: absolute
   inset: 0
   width: 100%
+  min-width: 0
   height: 100%
+  min-height: 0
   overflow: hidden
   isolation: isolate
   background: radial-gradient(ellipse 70% 42% at 50% 0%, rgba(255, 255, 255, 0.055), transparent 62%), radial-gradient(ellipse 90% 70% at 50% 48%, rgba(14, 15, 18, 0.88) 0%, transparent 64%), linear-gradient(180deg, $noir-bg-soft 0%, $noir-bg 42%, #030304 100%)
@@ -124,17 +137,24 @@ $resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rg
   :global(.react-flow__background)
     pointer-events: none
 
+  // Left rail — zoom controls. Shared metrics with command dock ($rail-*).
+  $rail-size: 2rem
+  $rail-left: var(--tdm-space-4)
+  $rail-bottom: var(--tdm-space-4)
+
   :global(.react-flow__controls)
-    left: 1rem
+    left: $rail-left
     right: auto
-    bottom: 1rem
+    bottom: $rail-bottom
     top: auto
     display: inline-flex
     flex-direction: column
-    width: auto
+    align-items: stretch
+    box-sizing: border-box
+    width: $rail-size
     z-index: 12
-    border: 0.0625rem solid rgba(255, 255, 255, 0.09)
-    border-radius: 0.5rem
+    border: var(--tdm-border-width-hairline) solid rgba(255, 255, 255, 0.09)
+    border-radius: var(--tdm-radius-sm)
     background: linear-gradient(180deg, rgba(18, 19, 24, 0.88) 0%, rgba(8, 9, 12, 0.9) 100%)
     box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), 0 0.75rem 1.5rem rgba(0, 0, 0, 0.28)
     backdrop-filter: blur(0.4rem) saturate(1.02)
@@ -142,29 +162,46 @@ $resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rg
     overflow: hidden
 
   :global(.react-flow__controls-button)
-    width: 1.75rem
-    height: 1.75rem
+    box-sizing: border-box
+    width: 100%
+    height: $rail-size
+    min-width: 0
+    min-height: $rail-size
+    padding: 0
     border: 0
+    border-bottom: var(--tdm-border-width-hairline) solid rgba(255, 255, 255, 0.055)
+    border-radius: 0
     background: transparent
-    color: rgba(190, 193, 204, 0.55)
+    color: rgba(190, 193, 204, 0.62)
     fill: currentColor
     transition: background 140ms ease, color 140ms ease, opacity 140ms ease
 
+    svg
+      width: 1rem
+      height: 1rem
+
     &:hover
       background: rgba(255, 255, 255, 0.04)
-      color: rgba(248, 248, 250, 0.88)
+      color: rgba(248, 248, 250, 0.9)
 
     &:active
       background: rgba(255, 255, 255, 0.06)
       color: $text
 
+    &:focus-visible
+      outline: var(--tdm-border-width-hairline) solid rgba(255, 255, 255, 0.24)
+      outline-offset: -0.0625rem
+
+  :global(.react-flow__controls-button:last-child)
+    border-bottom: 0
+
   :global(.react-flow__minimap)
-    right: 1rem
-    bottom: 1rem
+    right: var(--tdm-space-4)
+    bottom: var(--tdm-space-4)
     top: auto
     z-index: 11
-    border: 0.0625rem solid rgba(255, 255, 255, 0.08)
-    border-radius: 0.5rem
+    border: var(--tdm-border-width-hairline) solid rgba(255, 255, 255, 0.08)
+    border-radius: var(--tdm-radius-sm)
     background: rgba(8, 9, 12, 0.9)
     box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06), 0 0.75rem 1.5rem rgba(0, 0, 0, 0.26)
     backdrop-filter: blur(0.35rem) saturate(1.02)
@@ -176,16 +213,16 @@ $resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rg
   :global(.react-flow__panel.react-flow__controls)
     top: auto !important
     right: auto !important
-    bottom: 1rem !important
-    left: 1rem !important
-    width: auto !important
+    bottom: var(--tdm-space-4) !important
+    left: var(--tdm-space-4) !important
+    width: $rail-size !important
     height: auto !important
 
   :global(.react-flow__panel.react-flow__minimap)
     top: auto !important
     left: auto !important
-    bottom: 1rem !important
-    right: 1rem !important
+    bottom: var(--tdm-space-4) !important
+    right: var(--tdm-space-4) !important
 
   :global(.react-flow__attribution)
     display: none
@@ -259,93 +296,71 @@ $resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rg
   text-align: center
   max-width: 14rem
 
-// CTA terciário de navegação — chrome do shell, fora do viewport React Flow.
-.backLink
+// Chrome superior esquerdo — fora do plano do React Flow.
+// Offset à direita do process dock: fechado = ícone; aberto = largura do painel.
+// Process dock permanece em top/left space-4; Voltar nunca invade o header do dock.
+$chrome-top: var(--tdm-space-4)
+$chrome-left: var(--tdm-space-4)
+$process-dock-closed-size: var(--tdm-icon-container-sm)
+$process-dock-open-width: min(19rem, calc(100vw - 2rem))
+$chrome-cluster-gap: var(--tdm-space-3)
+
+.shellChromeTopLeft
   position: absolute
-  top: var(--tdm-space-4)
-  left: var(--tdm-space-4)
-  z-index: 20
-  display: inline-flex
+  grid-column: 1
+  grid-row: 1
+  top: $chrome-top
+  left: calc(#{$chrome-left} + #{$process-dock-closed-size} + #{$chrome-cluster-gap})
+  z-index: 30
+  display: flex
   align-items: center
-  justify-content: center
-  gap: var(--tdm-cta-gap)
-  min-height: var(--tdm-cta-min-height)
-  padding: 0 var(--tdm-cta-padding-inline)
-  border: 0.0625rem solid transparent
-  border-radius: 0.5rem
-  background: transparent
-  color: var(--tdm-cta-tertiary-fg)
-  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
-  font-size: var(--tdm-cta-font-size)
-  font-weight: var(--tdm-cta-font-weight)
-  line-height: var(--tdm-cta-line-height)
-  letter-spacing: -0.01em
-  text-transform: none
-  text-decoration: none
-  cursor: pointer
-  transition: color 160ms ease, opacity 160ms ease, transform 160ms ease
+  gap: var(--tdm-space-2)
+  pointer-events: none
+  width: max-content
+  height: max-content
+  justify-self: start
+  align-self: start
+  transition: left var(--tdm-duration-ui) var(--tdm-ease-standard)
+
+  &[data-dock-expanded='true']
+    left: calc(#{$chrome-left} + #{$process-dock-open-width} + #{$chrome-cluster-gap})
+
+@media (prefers-reduced-motion: reduce)
+  .shellChromeTopLeft
+    transition: none
+
+.backLink
+  pointer-events: auto
 
   &:hover
-    color: var(--tdm-fg-primary)
-
     .backLinkIcon
       opacity: 1
       transform: translateX(-0.125rem)
 
-  &:active
-    transform: scale(0.985)
-    opacity: 0.92
-
-  &:focus-visible
-    outline: 0.1rem solid rgba(255, 255, 255, 0.28)
-    outline-offset: 0.1rem
-    color: var(--tdm-fg-primary)
-
 .backLinkIcon
-  width: 1rem
-  height: 1rem
+  width: var(--tdm-icon-size-sm)
+  height: var(--tdm-icon-size-sm)
   flex: 0 0 auto
   opacity: 0.82
-  transition: opacity 160ms ease, transform 160ms ease
+  transition: opacity var(--tdm-duration-ui) var(--tdm-ease-standard), transform var(--tdm-duration-ui) var(--tdm-ease-standard)
+
+// Shell-scoped chrome: same viewport point open/closed (not grid column 1).
+.sidebarToggleAnchor
+  position: absolute
+  top: var(--tdm-space-4)
+  right: var(--tdm-space-4)
+  z-index: 20
+  pointer-events: auto
 
 .sidebarToggleButton
-  position: absolute
-  top: 1.125rem
-  right: 1.125rem
-  z-index: 20
-  display: inline-flex
-  align-items: center
-  justify-content: center
-  width: 2rem
-  height: 2rem
-  padding: 0
-  border: 0.0625rem solid rgba(255, 255, 255, 0.1)
-  border-radius: 0.5rem
-  background: $resend-surface
-  box-shadow: $resend-shadow
-  cursor: pointer
-  transition: opacity 160ms ease, border-color 160ms ease, transform 160ms ease
-  color: $text-main
-
-  &:hover
-    transform: translateY(-0.0625rem)
-    border-color: $border-mid
-    background: radial-gradient(76% 18% at 50% 0%, rgba(255, 255, 255, 0.16), transparent 72%), linear-gradient(180deg, rgba(24, 25, 31, 0.9) 0%, rgba(13, 14, 18, 0.82) 48%, rgba(5, 5, 7, 0.96) 100%)
-
-  &:active
-    transform: translateY(0)
-    opacity: 0.9
-
-  &:focus-visible
-    outline: 0.1rem solid rgba(255, 255, 255, 0.28)
-    outline-offset: 0.1rem
-
+  position: relative
 
 .sidebarToggleSvg
-  width: 1.125rem
-  height: 1.125rem
+  width: var(--tdm-icon-size-md)
+  height: var(--tdm-icon-size-md)
   display: block
   filter: none
+  color: currentColor
 
   path
     stroke: currentColor
@@ -382,99 +397,3 @@ $resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rg
   justify-content: flex-end
   gap: 0.75rem
   margin-top: 1rem
-
-// BEGIN CANVAS NODE POLISH MICROFIX 09 — REACT FLOW CONTROLS
-// Visual only. Keeps React Flow handlers, icons and animations intact.
-:global(.react-flow__controls)
-  left: 1rem
-  right: auto
-  bottom: 1rem
-  top: auto
-  display: inline-flex
-  flex-direction: column
-  width: 3.25rem
-  z-index: 12
-  border: 0.0625rem solid rgba(255, 255, 255, 0.09)
-  border-radius: 1rem
-  background: linear-gradient(180deg, rgba(16, 17, 22, 0.82) 0%, rgba(8, 9, 12, 0.94) 100%)
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), 0 0.9rem 1.9rem rgba(0, 0, 0, 0.28)
-  backdrop-filter: blur(0.875rem) saturate(1.03)
-  -webkit-backdrop-filter: blur(0.875rem) saturate(1.03)
-  overflow: hidden
-
-:global(.react-flow__controls-button)
-  width: 3.25rem
-  height: 2.875rem
-  border: 0
-  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.055)
-  background: transparent
-  color: rgba(231, 234, 242, 0.72)
-  fill: currentColor
-  transition: background 140ms ease, color 140ms ease, opacity 140ms ease
-
-  svg
-    width: 1.125rem
-    height: 1.125rem
-
-  &:hover
-    background: rgba(255, 255, 255, 0.035)
-    color: rgba(248, 249, 252, 0.94)
-
-  &:active
-    background: rgba(255, 255, 255, 0.055)
-    color: rgba(248, 249, 252, 0.98)
-
-:global(.react-flow__controls-button:last-child)
-  border-bottom: 0
-
-:global(.react-flow__panel.react-flow__controls)
-  bottom: 1rem !important
-  left: 1rem !important
-// END CANVAS NODE POLISH MICROFIX 09 — REACT FLOW CONTROLS
-// BEGIN CANVAS CONTROLS ALIGN MICROFIX 11
-// Mantém os controles inferiores como régua visual do dock superior.
-:global(.react-flow__controls)
-  left: 1rem
-  right: auto
-  bottom: 1rem
-  top: auto
-  display: inline-flex
-  flex-direction: column
-  width: auto
-  z-index: 12
-  border: 0.0625rem solid rgba(255, 255, 255, 0.09)
-  border-radius: 0.5rem
-  background: linear-gradient(180deg, rgba(18, 19, 24, 0.88) 0%, rgba(8, 9, 12, 0.9) 100%)
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), 0 0.75rem 1.5rem rgba(0, 0, 0, 0.28)
-  backdrop-filter: blur(0.4rem) saturate(1.02)
-  -webkit-backdrop-filter: blur(0.4rem) saturate(1.02)
-  overflow: hidden
-
-:global(.react-flow__controls-button)
-  width: 1.75rem
-  height: 1.75rem
-  min-width: 1.75rem
-  min-height: 1.75rem
-  padding: 0
-  border: 0
-  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.055)
-  border-radius: 0
-  background: transparent
-  color: rgba(190, 193, 204, 0.62)
-  fill: currentColor
-
-  &:hover
-    background: rgba(255, 255, 255, 0.04)
-    color: rgba(248, 248, 250, 0.9)
-
-:global(.react-flow__controls-button:last-child)
-  border-bottom: 0
-
-:global(.react-flow__panel.react-flow__controls)
-  top: auto !important
-  right: auto !important
-  bottom: 1rem !important
-  left: 1rem !important
-  width: auto !important
-  height: auto !important
-// END CANVAS CONTROLS ALIGN MICROFIX 11

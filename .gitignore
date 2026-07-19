@@ -29,6 +29,14 @@ node_modules/
 .DS_Store
 __MACOSX/
 tdm-backups/
-tdm-*/
+.tdm-patch-backups/
+.tdm-patches/
+.tmp-phase-5a/
+.tmp-*/
+/tdm-*/
 *.before-*
 *.zip
+
+# Local QA / Playwright artifacts
+output/
+.playwright-cli/

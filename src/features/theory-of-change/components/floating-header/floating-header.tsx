@@ -1,6 +1,6 @@
 'use client';
 
-import { IconButton } from '@/shared/ui/icon-button/icon-button';
+import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
 import styles from './floating-header.module.sass';
 
 export function FloatingHeader({ isSidebarOpen, onToggleSidebar }: { isSidebarOpen: boolean; onToggleSidebar: () => void; }) {
@@ -10,9 +10,14 @@ export function FloatingHeader({ isSidebarOpen, onToggleSidebar }: { isSidebarOp
         <p className={styles.kicker}>Teoria da Mudança</p>
         <h1 className={styles.title}>Teoria da Mudança</h1>
       </div>
-      <IconButton aria-label={isSidebarOpen ? 'Esconder sidebar' : 'Mostrar sidebar'} onClick={onToggleSidebar}>
+      <TdmIconButton
+        aria-label={isSidebarOpen ? 'Esconder sidebar' : 'Mostrar sidebar'}
+        variant="ghost"
+        size="md"
+        onClick={onToggleSidebar}
+      >
         {isSidebarOpen ? '—' : '+'}
-      </IconButton>
+      </TdmIconButton>
     </header>
   );
 }

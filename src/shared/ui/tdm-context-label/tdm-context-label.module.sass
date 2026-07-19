@@ -1,0 +1,53 @@
+.root
+  display: inline-flex
+  align-items: center
+  gap: var(--tdm-space-2)
+  max-width: 100%
+  margin: 0 0 var(--tdm-space-4)
+  font-family: var(--tdm-font-sans)
+  font-size: 0.875rem
+  font-weight: 500
+  line-height: 1.25rem
+  letter-spacing: 0
+  color: var(--tdm-fg-secondary)
+  white-space: nowrap
+
+.toneStrong
+  color: var(--tdm-fg-primary)
+  opacity: 0.72
+
+.alignStart
+  justify-content: flex-start
+
+.alignCenter
+  // Center the whole control; keep icon→text order start-aligned inside.
+  justify-content: flex-start
+  justify-self: center
+  margin-inline: auto
+  width: max-content
+  max-width: 100%
+
+.isUppercase
+  letter-spacing: 0.06em
+
+.icon
+  display: inline-flex
+  flex-shrink: 0
+  align-items: center
+  justify-content: center
+  width: var(--tdm-icon-size-sm)
+  height: var(--tdm-icon-size-sm)
+  color: inherit
+
+  svg
+    display: block
+    width: 100%
+    height: 100%
+    stroke: currentColor
+    fill: none
+
+.text
+  min-width: 0
+  color: inherit
+  overflow: hidden
+  text-overflow: ellipsis

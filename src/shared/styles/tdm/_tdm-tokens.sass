@@ -1,3 +1,11 @@
+@use 'tdm-color' as color
+@use 'tdm-surface' as surface
+@use 'tdm-border' as border
+@use 'tdm-radius' as radius
+@use 'tdm-shadow' as shadow
+@use 'tdm-icon' as icon
+@use 'tdm-focus' as focus
+@use 'tdm-motion' as motion
 @use 'tdm-font' as font
 @use 'tdm-foreground' as fg
 @use 'tdm-spacing' as space
@@ -6,6 +14,22 @@
 
 // Agregador canônico TDM — publica --tdm-* em :root.
 :root
+  // Cor primitiva + suporte
+  +color.tokens
+  // Superfícies semânticas
+  +surface.tokens
+  // Bordas
+  +border.tokens
+  // Radius
+  +radius.tokens
+  // Elevação
+  +shadow.tokens
+  // Ícones
+  +icon.tokens
+  // Foco
+  +focus.tokens
+  // Motion CSS
+  +motion.tokens
   // Tipografia
   +font.tokens
   // Foreground

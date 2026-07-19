@@ -3,36 +3,47 @@
   display: flex
   align-items: center
   justify-content: space-between
-  gap: 1rem
+  gap: var(--tdm-space-4)
   min-block-size: 3rem
-  padding: .35rem .35rem .55rem .45rem
+  padding: var(--tdm-space-1) var(--tdm-space-1) var(--tdm-space-2) var(--tdm-space-2)
   z-index: 2
 
 .start
   display: flex
   align-items: center
-  gap: .7rem
-  min-inline-size: 2.35rem
+  gap: var(--tdm-space-3)
+  min-inline-size: var(--tdm-icon-container-md)
   z-index: 2
 
-.backButton
+.backLink
   flex-shrink: 0
-  inline-size: 2.35rem
-  block-size: 2.35rem
+  inline-size: var(--tdm-icon-container-md)
+  block-size: var(--tdm-icon-container-md)
   display: grid
   place-items: center
-  border-radius: .72rem
-  border: .0625rem solid rgba(255,255,255,.1)
-  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(255,255,255,.03)
-  color: rgba(255,255,255,.78)
+  border-radius: var(--tdm-radius-md)
+  border: var(--tdm-border-width-hairline) solid var(--tdm-border-subtle)
+  background: var(--tdm-surface-hover)
+  color: var(--tdm-fg-secondary)
   text-decoration: none
-  cursor: pointer
-  transition: transform 180ms cubic-bezier(.22, 1, .36, 1), border-color 180ms cubic-bezier(.22, 1, .36, 1), background 180ms cubic-bezier(.22, 1, .36, 1)
+  transition: border-color var(--tdm-duration-ui) var(--tdm-ease-standard), background var(--tdm-duration-ui) var(--tdm-ease-standard)
 
   &:hover
-    transform: translateY(-.0625rem)
-    border-color: rgba(255,255,255,.2)
-    background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.03)), rgba(255,255,255,.04)
+    border-color: var(--tdm-border-interactive)
+    background: var(--tdm-surface-pressed)
+
+  &:focus-visible
+    outline: var(--tdm-focus-ring-width) solid var(--tdm-focus-ring-color)
+    outline-offset: var(--tdm-focus-ring-offset)
+
+.backIcon
+  display: inline-flex
+  inline-size: var(--tdm-icon-size-md)
+  block-size: var(--tdm-icon-size-md)
+
+  svg
+    inline-size: 100%
+    block-size: 100%
 
 .heading
   position: absolute
@@ -41,14 +52,10 @@
   transform: translate(-50%, -50%)
   margin: 0
   max-inline-size: min(28rem, calc(100% - 18rem))
-  color: rgba(246, 248, 252, .92)
-  background-image: linear-gradient(105deg, rgba(255, 255, 255, .55) 0%, rgba(255, 255, 255, .96) 38%, rgba(198, 205, 216, .78) 52%, rgba(255, 255, 255, .94) 72%, rgba(230, 234, 240, .82) 100%)
-  -webkit-background-clip: text
-  background-clip: text
-  -webkit-text-fill-color: transparent
-  font-size: .72rem
-  font-weight: 650
-  letter-spacing: .16em
+  color: var(--tdm-fg-primary)
+  font-size: var(--tdm-font-label-size)
+  font-weight: 600
+  letter-spacing: var(--tdm-font-label-tracking)
   text-transform: uppercase
   white-space: nowrap
   overflow: hidden
@@ -57,25 +64,22 @@
   pointer-events: none
   text-align: center
   z-index: 1
-  filter: drop-shadow(0 0 .55rem rgba(255, 255, 255, .12))
 
 .actions
   display: flex
   align-items: center
-  gap: .55rem
+  gap: var(--tdm-space-2)
   flex-shrink: 0
   z-index: 2
 
 @media (max-width: 70rem)
   .heading
     max-inline-size: min(20rem, calc(100% - 14rem))
-    font-size: .64rem
-    letter-spacing: .12em
 
 @media (max-width: 56rem)
   .topbar
     flex-wrap: wrap
-    row-gap: .55rem
+    row-gap: var(--tdm-space-2)
 
   .heading
     position: static

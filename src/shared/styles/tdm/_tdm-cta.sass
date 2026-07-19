@@ -1,7 +1,9 @@
-// Papéis semânticos de CTA — tipografia, foreground, altura e padding apenas.
-// Roles: primary | secondary | tertiary | destructive
+// Papéis semânticos de CTA — tipografia, foreground, altura e padding.
+// Roles legados: primary | secondary | tertiary | destructive
+// Família dedicada do TdmButton: --tdm-button-*
 
 @mixin tokens
+  // ── Legado (--tdm-cta-*) — fields e presentation; não usar na nova pele do botão ──
   --tdm-cta-font-size: 0.875rem
   --tdm-cta-font-weight: 600
   --tdm-cta-line-height: 1.25rem
@@ -9,7 +11,124 @@
   --tdm-cta-padding-inline: 1rem
   --tdm-cta-gap: 0.5rem
 
-  --tdm-cta-primary-fg: var(--tdm-fg-on-primary)
+  --tdm-cta-sm-min-height: 2.25rem
+  --tdm-cta-sm-padding-inline: 0.75rem
+  --tdm-cta-sm-font-size: 0.8125rem
+  --tdm-cta-md-min-height: var(--tdm-cta-min-height)
+  --tdm-cta-md-padding-inline: var(--tdm-cta-padding-inline)
+  --tdm-cta-md-font-size: var(--tdm-cta-font-size)
+  --tdm-cta-lg-min-height: 3rem
+  --tdm-cta-lg-padding-inline: 1.25rem
+  --tdm-cta-lg-font-size: 0.9375rem
+
+  --tdm-cta-primary-bg: var(--tdm-surface-inverse)
+  --tdm-cta-primary-fg: var(--tdm-fg-inverse)
+  --tdm-cta-secondary-bg: var(--tdm-surface-elevated)
   --tdm-cta-secondary-fg: var(--tdm-fg-secondary)
-  --tdm-cta-tertiary-fg: var(--tdm-fg-tertiary)
-  --tdm-cta-destructive-fg: rgba(253, 164, 175, 0.94)
+  --tdm-cta-tertiary-fg: var(--tdm-fg-muted)
+  --tdm-cta-destructive-fg: var(--tdm-fg-danger)
+  --tdm-cta-destructive-bg: var(--tdm-surface-danger-soft)
+
+  // ── TdmButton canônico (Resend semântico) ──
+  --tdm-button-font-size: 1rem
+  --tdm-button-font-weight: 500
+  --tdm-button-line-height: 1.25rem
+  --tdm-button-letter-spacing: -0.015em
+  --tdm-button-icon-size: 1.125rem
+  --tdm-button-gap: 0.625rem
+  --tdm-button-duration: 190ms
+  --tdm-button-ease: cubic-bezier(0.2, 0.75, 0.25, 1)
+
+  --tdm-button-sm-height: 2.25rem
+  --tdm-button-sm-radius: 0.75rem
+  --tdm-button-sm-padding-inline: 0.875rem
+  --tdm-button-sm-font-size: 0.875rem
+
+  --tdm-button-md-height: 3.25rem
+  --tdm-button-md-radius: 1rem
+  --tdm-button-md-padding-inline: 1.25rem
+  --tdm-button-md-font-size: var(--tdm-button-font-size)
+
+  --tdm-button-lg-height: 3.25rem
+  --tdm-button-lg-radius: 1rem
+  --tdm-button-lg-padding-inline: 1.375rem
+  --tdm-button-lg-font-size: var(--tdm-button-font-size)
+
+  --tdm-button-bg-rest: rgba(25, 26, 31, 0.78)
+  --tdm-button-bg-rest-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.044), rgba(255, 255, 255, 0.014) 45%, rgba(0, 0, 0, 0.08))
+  --tdm-button-bg-hover: rgba(25, 26, 31, 0.86)
+  --tdm-button-shadow-rest: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.065), inset 0 -0.0625rem 0 rgba(0, 0, 0, 0.26), 0 0.55rem 1.4rem rgba(0, 0, 0, 0.2)
+  --tdm-button-shadow-hover-base: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.105), inset 0 -0.0625rem 0 rgba(0, 0, 0, 0.22), 0 0.75rem 1.85rem rgba(0, 0, 0, 0.26)
+  --tdm-button-stage-text-hover: rgba(247, 248, 251, 0.95)
+
+  // Neutral
+  --tdm-button-neutral-rgb: 241, 243, 248
+  --tdm-button-neutral-border-rest: rgba(242, 244, 248, 0.48)
+  --tdm-button-neutral-border-hover: rgba(248, 249, 252, 0.78)
+  --tdm-button-neutral-text-rest: rgba(239, 241, 246, 0.88)
+  --tdm-button-neutral-text-hover: rgba(250, 250, 252, 0.97)
+  --tdm-button-neutral-fill-hover: linear-gradient(180deg, rgba(250, 251, 253, 0.105), rgba(242, 244, 248, 0.055) 48%, rgba(235, 238, 244, 0.028)), rgba(25, 26, 31, 0.88)
+  --tdm-button-neutral-wash: radial-gradient(68% 110% at 50% -18%, rgba(252, 252, 254, 0.18), transparent 62%), linear-gradient(180deg, rgba(244, 246, 250, 0.11), rgba(238, 241, 246, 0.06) 56%, rgba(234, 237, 244, 0.025))
+  --tdm-button-neutral-shadow-hover: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.15), inset 0 -0.0625rem 0 rgba(0, 0, 0, 0.2), 0 0.75rem 1.85rem rgba(0, 0, 0, 0.26), 0 0 1.8rem rgba(246, 248, 252, 0.08)
+  --tdm-button-neutral-top-light: linear-gradient(90deg, transparent, rgba(241, 243, 248, 0.7), transparent)
+
+  // Danger (token semântico equivalente ao preview)
+  --tdm-button-danger-rgb: 244, 63, 94
+  --tdm-button-danger-border-rest: rgba(244, 63, 94, 0.42)
+  --tdm-button-danger-border-hover: rgba(244, 63, 94, 0.82)
+  --tdm-button-danger-text-rest: rgba(253, 164, 175, 0.94)
+  --tdm-button-danger-text-hover: rgba(253, 164, 175, 0.98)
+  --tdm-button-danger-wash: radial-gradient(68% 110% at 50% -18%, rgba(255, 255, 255, 0.12), transparent 62%), linear-gradient(180deg, rgba(244, 63, 94, 0.14), rgba(244, 63, 94, 0.075) 56%, rgba(244, 63, 94, 0.045))
+  --tdm-button-danger-shadow-hover: var(--tdm-button-shadow-hover-base), 0 0 1.7rem rgba(244, 63, 94, 0.09)
+  --tdm-button-danger-top-light: linear-gradient(90deg, transparent, rgba(244, 63, 94, 0.7), transparent)
+
+  // Stages — valores resolvidos (sem rgba(var(--rgb)) em runtime)
+  --tdm-button-input-rgb: 139, 124, 255
+  --tdm-button-input-border-rest: rgba(139, 124, 255, 0.42)
+  --tdm-button-input-border-hover: rgba(139, 124, 255, 0.82)
+  --tdm-button-input-text-rest: rgba(139, 124, 255, 0.76)
+  --tdm-button-input-text-hover: var(--tdm-button-stage-text-hover)
+  --tdm-button-input-wash: radial-gradient(68% 110% at 50% -18%, rgba(255, 255, 255, 0.15), transparent 62%), linear-gradient(180deg, rgba(139, 124, 255, 0.14), rgba(139, 124, 255, 0.075) 56%, rgba(139, 124, 255, 0.045))
+  --tdm-button-input-shadow-hover: var(--tdm-button-shadow-hover-base), 0 0 1.7rem rgba(139, 124, 255, 0.09)
+  --tdm-button-input-top-light: linear-gradient(90deg, transparent, rgba(139, 124, 255, 0.7), transparent)
+
+  --tdm-button-activity-rgb: 73, 179, 255
+  --tdm-button-activity-border-rest: rgba(73, 179, 255, 0.42)
+  --tdm-button-activity-border-hover: rgba(73, 179, 255, 0.82)
+  --tdm-button-activity-text-rest: rgba(73, 179, 255, 0.76)
+  --tdm-button-activity-text-hover: var(--tdm-button-stage-text-hover)
+  --tdm-button-activity-wash: radial-gradient(68% 110% at 50% -18%, rgba(255, 255, 255, 0.15), transparent 62%), linear-gradient(180deg, rgba(73, 179, 255, 0.14), rgba(73, 179, 255, 0.075) 56%, rgba(73, 179, 255, 0.045))
+  --tdm-button-activity-shadow-hover: var(--tdm-button-shadow-hover-base), 0 0 1.7rem rgba(73, 179, 255, 0.09)
+  --tdm-button-activity-top-light: linear-gradient(90deg, transparent, rgba(73, 179, 255, 0.7), transparent)
+
+  --tdm-button-output-rgb: 242, 166, 90
+  --tdm-button-output-border-rest: rgba(242, 166, 90, 0.42)
+  --tdm-button-output-border-hover: rgba(242, 166, 90, 0.82)
+  --tdm-button-output-text-rest: rgba(242, 166, 90, 0.76)
+  --tdm-button-output-text-hover: var(--tdm-button-stage-text-hover)
+  --tdm-button-output-wash: radial-gradient(68% 110% at 50% -18%, rgba(255, 255, 255, 0.15), transparent 62%), linear-gradient(180deg, rgba(242, 166, 90, 0.14), rgba(242, 166, 90, 0.075) 56%, rgba(242, 166, 90, 0.045))
+  --tdm-button-output-shadow-hover: var(--tdm-button-shadow-hover-base), 0 0 1.7rem rgba(242, 166, 90, 0.09)
+  --tdm-button-output-top-light: linear-gradient(90deg, transparent, rgba(242, 166, 90, 0.7), transparent)
+
+  --tdm-button-outcome-rgb: 55, 200, 147
+  --tdm-button-outcome-border-rest: rgba(55, 200, 147, 0.42)
+  --tdm-button-outcome-border-hover: rgba(55, 200, 147, 0.82)
+  --tdm-button-outcome-text-rest: rgba(55, 200, 147, 0.76)
+  --tdm-button-outcome-text-hover: var(--tdm-button-stage-text-hover)
+  --tdm-button-outcome-wash: radial-gradient(68% 110% at 50% -18%, rgba(255, 255, 255, 0.15), transparent 62%), linear-gradient(180deg, rgba(55, 200, 147, 0.14), rgba(55, 200, 147, 0.075) 56%, rgba(55, 200, 147, 0.045))
+  --tdm-button-outcome-shadow-hover: var(--tdm-button-shadow-hover-base), 0 0 1.7rem rgba(55, 200, 147, 0.09)
+  --tdm-button-outcome-top-light: linear-gradient(90deg, transparent, rgba(55, 200, 147, 0.7), transparent)
+
+  // Defaults ativos (sobrescritos pelas classes .tone*)
+  --tdm-button-border-rest: var(--tdm-button-neutral-border-rest)
+  --tdm-button-border-hover: var(--tdm-button-neutral-border-hover)
+  --tdm-button-text-rest: var(--tdm-button-neutral-text-rest)
+  --tdm-button-text-hover: var(--tdm-button-neutral-text-hover)
+  --tdm-button-wash: var(--tdm-button-neutral-wash)
+  --tdm-button-shadow-hover: var(--tdm-button-neutral-shadow-hover)
+  --tdm-button-top-light: var(--tdm-button-neutral-top-light)
+
+  --tdm-button-disabled-opacity: 0.42
+  --tdm-button-tertiary-fg: var(--tdm-fg-muted)
+  --tdm-button-tertiary-fg-hover: var(--tdm-fg-secondary)
+  --tdm-button-tertiary-bg-hover: var(--tdm-surface-hover)

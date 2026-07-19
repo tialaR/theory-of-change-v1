@@ -1,52 +1,28 @@
 'use client';
 
-import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { useRef } from 'react';
-import { motion, useInView } from 'motion/react';
-import { FlowDraftPreview } from './flow-draft-preview';
-import { ResultDraftPreview } from './result-draft-preview';
+import { ContextLabelPanelsIcon, TdmContextLabel } from '@/shared/ui/tdm-context-label';
+import { TdmPublicFeatureCard } from '@/shared/ui/tdm-public-feature-card';
 import styles from './example-previews.module.sass';
 
-type PreviewKey = 'flow' | 'result';
-
-type PreviewCardProps = {
-  type: PreviewKey;
+type ExperienceCardProps = {
   href: string;
   title: string;
   description: string;
   icon: ReactNode;
 };
 
-function PreviewCard({ type, href, title, description, icon }: PreviewCardProps) {
-  const cardRef = useRef<HTMLElement>(null);
-  const isInView = useInView(cardRef, { amount: 0.2 });
-  const Preview = type === 'flow' ? FlowDraftPreview : ResultDraftPreview;
-
+function ExperienceCard({ href, title, description, icon }: ExperienceCardProps) {
   return (
-    <motion.article
-      ref={cardRef}
-      className={styles.previewCard}
-      whileHover={{ y: -1 }}
-      transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-    >
-      <div className={styles.cardIntro}>
-        <span className={styles.iconTile} aria-hidden="true">{icon}</span>
-        <div>
-          <h3>{title}</h3>
-          <p>{description}</p>
-        </div>
-      </div>
-
-      <div className={styles.previewFrame}>
-        <Preview active={isInView} />
-      </div>
-
-      <Link className={styles.previewCta} href={href}>
-        <span>Abrir</span>
-        <span aria-hidden="true">→</span>
-      </Link>
-    </motion.article>
+    <TdmPublicFeatureCard
+      href={href}
+      icon={icon}
+      title={title}
+      description={description}
+      actionLabel="Abrir"
+      size="choice"
+      className={styles.experienceCard}
+    />
   );
 }
 
@@ -76,7 +52,9 @@ export function ExamplePreviewsSection() {
   return (
     <section className={styles.previewsSection} aria-labelledby="example-previews-title">
       <div className={styles.sectionHeader}>
-        <p className={styles.sectionKicker}>PRÉVIA DAS EXPERIÊNCIAS</p>
+        <TdmContextLabel icon={ContextLabelPanelsIcon} align="center">
+          PRÉVIA DAS EXPERIÊNCIAS
+        </TdmContextLabel>
         <h2 id="example-previews-title" className={styles.sectionTitle}>
           Escolha como visualizar a teoria.
         </h2>
@@ -86,15 +64,13 @@ export function ExamplePreviewsSection() {
       </div>
 
       <div className={styles.previewGrid}>
-        <PreviewCard
-          type="flow"
+        <ExperienceCard
           href="/exemplos/visao-do-fluxo"
           title="Visualização do fluxo"
           description="Veja a lógica causal em rascunho: etapas, cards e conexões animadas antes de abrir a experiência completa."
           icon={<FlowIcon />}
         />
-        <PreviewCard
-          type="result"
+        <ExperienceCard
           href="/exemplos/resultado"
           title="Resultado conectado"
           description="Abra a leitura final com relações, riscos e hipóteses organizados em uma experiência visual."

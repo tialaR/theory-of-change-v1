@@ -56,7 +56,7 @@
 
 .edgeBadge text
   fill: var(--white, #f4f4f5)
-  font-size: 0.6875rem
+  font-size: var(--tdm-font-label-size)
   font-weight: 600
   font-family: inherit
 
@@ -71,7 +71,7 @@
   left: var(--x)
   top: var(--y)
   transform: translateX(-50%)
-  font-size: 0.6875rem
+  font-size: var(--tdm-font-label-size)
   letter-spacing: 0.1em
   text-transform: uppercase
   color: rgba(244,244,245,0.5)
@@ -114,14 +114,14 @@
 
 .flowCard span
   display: block
-  font-size: 0.6875rem
+  font-size: var(--tdm-font-label-size)
   line-height: 1.45
   color: rgba(244,244,245,0.52)
 
 .flowCard small
   display: block
   margin-top: 0.375rem
-  font-size: 0.625rem
+  font-size: var(--tdm-font-label-size)
   color: rgba(74,222,128,0.7)
 
 .flowCardSelected
@@ -131,25 +131,23 @@
 .flowCardDisabled
   pointer-events: none
 
-// Home sections
+// Home sections — Contrato B grid
 .homeFeatures
   display: grid
-  grid-template-columns: repeat(3, 1fr)
-  gap: clamp(1rem, 2.5vw, 1.5rem)
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr))
+  grid-auto-rows: 1fr
+  gap: 1.5rem
 
-.homeFeatureCard
-  padding: clamp(1.25rem, 2.5vw, 1.75rem)
+.featureCardReveal
+  display: flex
+  flex-direction: column
+  min-block-size: 100%
+  block-size: 100%
 
-.homeFeatureCard span
-  display: block
-  margin-bottom: 0.75rem
-  font-size: 0.6875rem
-  letter-spacing: 0.1em
-  font-weight: 600
-  background: linear-gradient(92deg, rgba(255, 255, 255, 0.92) 0%, rgba(214, 218, 228, 0.72) 48%, rgba(255, 255, 255, 0.86) 100%)
-  -webkit-background-clip: text
-  background-clip: text
-  color: transparent
+  > *
+    flex: 1 1 auto
+    min-block-size: 100%
+    block-size: 100%
 
 // Gallery
 .galleryGrid
@@ -174,7 +172,7 @@
   transform: translateY(-0.25rem)
 
 .galleryCard span
-  font-size: 0.6875rem
+  font-size: var(--tdm-font-label-size)
   letter-spacing: 0.1em
   font-weight: 600
   background: linear-gradient(92deg, rgba(255, 255, 255, 0.92) 0%, rgba(214, 218, 228, 0.72) 48%, rgba(255, 255, 255, 0.86) 100%)
@@ -207,29 +205,31 @@
   min-height: 8rem
   background: rgba(0,0,0,0.35)
 
-// Result page
+// Result / flow example pages
 .resultLayout
   display: grid
   grid-template-columns: 1fr 1.4fr
-  gap: clamp(1.5rem, 3vw, 2.5rem)
+  gap: var(--tdm-space-8)
   align-items: start
 
 .resultContext
-  padding: clamp(1.25rem, 2.5vw, 1.75rem)
-  border-radius: 1.25rem
-  border: 1px solid rgba(255,255,255,0.1)
-  background: rgba(255,255,255,0.025)
+  display: flex
+  flex-direction: column
+  gap: var(--tdm-stack-compact-title-body)
 
 .resultContext h3
-  margin: 0.5rem 0
-  font-size: 1.25rem
-  font-weight: 500
+  margin: 0
+  font-size: var(--tdm-font-section-title-size)
+  font-weight: var(--tdm-font-section-title-weight)
+  line-height: var(--tdm-font-section-title-line)
+  color: var(--tdm-fg-primary)
 
 .resultContext p
-  margin: 0 0 1.25rem
-  font-size: 0.875rem
-  line-height: 1.6
-  color: rgba(244,244,245,0.58)
+  margin: 0
+  font-size: var(--tdm-font-body-size)
+  line-height: var(--tdm-font-body-line)
+  color: var(--tdm-fg-secondary)
+  max-width: var(--tdm-measure-body)
 
 .contextActions
   display: flex
@@ -237,44 +237,25 @@
   flex-wrap: wrap
   align-items: center
   justify-content: flex-start
-  gap: 0.875rem
+  gap: var(--tdm-space-3)
+  margin-top: var(--tdm-stack-description-actions)
 
 .resultPreview
-  border-radius: 1.25rem
-  border: 1px solid rgba(255,255,255,0.1)
-  background: rgba(12,12,13,0.6)
-  padding: 0
   overflow: hidden
 
 .exportBar
   display: flex
   flex-wrap: wrap
-  gap: 0.75rem
-  margin: clamp(1.5rem, 3vw, 2rem) 0
-
-.exportBar button
-  display: inline-flex
-  align-items: center
-  gap: 0.35rem
-  padding: 0.5rem 1rem
-  border-radius: 0.5rem
-  border: 1px solid rgba(255,255,255,0.12)
-  background: rgba(255,255,255,0.04)
-  color: rgba(244,244,245,0.78)
-  font-size: 0.8125rem
-  cursor: pointer
-  transition: border-color 0.18s ease
-
-.exportBar button:hover
-  border-color: rgba(255,255,255,0.22)
+  gap: var(--tdm-space-3)
+  margin: var(--tdm-space-8) 0
 
 .exportIcon
   display: inline-flex
   align-items: center
   justify-content: center
   flex-shrink: 0
-  inline-size: 0.95rem
-  block-size: 0.95rem
+  inline-size: var(--tdm-icon-size-sm)
+  block-size: var(--tdm-icon-size-sm)
   opacity: 0.88
 
   svg
@@ -283,39 +264,16 @@
 
 .relationGrid
   display: grid
-  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr))
-  gap: clamp(0.75rem, 2vw, 1.25rem)
-
-.relationCard
-  position: relative
-
-.relationCard span
-  font-size: 0.6875rem
-  letter-spacing: 0.1em
-  font-weight: 600
-  background: linear-gradient(92deg, rgba(255, 255, 255, 0.9) 0%, rgba(214, 218, 228, 0.68) 48%, rgba(255, 255, 255, 0.84) 100%)
-  -webkit-background-clip: text
-  background-clip: text
-  color: transparent
-
-.relationCard em
-  position: absolute
-  top: 1rem
-  right: 1rem
-  font-style: normal
-  font-size: 0.75rem
-  font-weight: 600
-  padding: 0.2rem 0.5rem
-  border-radius: 999rem
-  border: 1px solid rgba(255,255,255,0.15)
-  color: rgba(244,244,245,0.8)
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr))
+  grid-auto-rows: 1fr
+  gap: 1.5rem
 
 // Interactive workspace
 .interactiveShell
   position: relative
   min-height: 100vh
-  background: #050505
-  color: #f4f4f5
+  background: var(--tdm-surface-app)
+  color: var(--tdm-fg-primary)
 
 .interactiveTopbar
   position: sticky
@@ -411,15 +369,12 @@
   background: rgba(12,12,13,0.5)
 
 .inspectorKicker
-  margin: 0 0 0.5rem
-  font-size: 0.6875rem
-  letter-spacing: 0.12em
+  margin: 0 0 var(--tdm-stack-compact-label-title)
+  font-size: var(--tdm-font-label-size)
+  letter-spacing: var(--tdm-font-label-tracking)
   text-transform: uppercase
   font-weight: 600
-  background: linear-gradient(92deg, rgba(255, 255, 255, 0.9) 0%, rgba(214, 218, 228, 0.68) 48%, rgba(255, 255, 255, 0.84) 100%)
-  -webkit-background-clip: text
-  background-clip: text
-  color: transparent
+  color: var(--tdm-fg-muted)
 
 .inspector h2
   margin: 0
@@ -449,29 +404,14 @@
   margin-right: 0.375rem
   border-radius: 50%
   border: 1px solid rgba(255,255,255,0.15)
-  font-size: 0.625rem
+  font-size: var(--tdm-font-label-size)
 
-// References
+// References — Contrato B grid
 .refGrid
   display: grid
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr))
-  gap: clamp(1rem, 2.5vw, 1.5rem)
-
-.refCard h3
-  margin: 0 0 0.5rem
-
-.refCard a
-  display: inline-flex
-  align-items: center
-  gap: 0.25rem
-  margin-top: 0.75rem
-  font-size: 0.8125rem
-  color: rgba(244, 244, 245, 0.78)
-  text-decoration: none
-  transition: color 0.18s ease
-
-  &:hover
-    color: rgba(255, 255, 255, 0.96)
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr))
+  grid-auto-rows: 1fr
+  gap: 1.5rem
 
 @media (max-width: 56rem)
   .homeFeatures

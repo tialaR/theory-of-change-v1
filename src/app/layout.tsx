@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { Inter } from 'next/font/google';
+import { TdmMotionProvider } from '@/shared/motion/tdm-motion';
 import '@xyflow/react/dist/style.css';
 import './globals.sass';
 
@@ -23,7 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className={inter.variable}>
-      <body>{children}</body>
+      <body>
+        <TdmMotionProvider>{children}</TdmMotionProvider>
+      </body>
     </html>
   );
 }

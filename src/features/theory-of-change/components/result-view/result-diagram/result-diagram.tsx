@@ -137,7 +137,12 @@ export function ResultDiagram({
 
   return (
     <div className={styles.workspace}>
-      <div className={styles.board} ref={boardRef} data-result-board="true">
+      <div
+        className={styles.board}
+        ref={boardRef}
+        data-result-board="true"
+        data-theory-export-diagram="true"
+      >
         <ResultConnectionsLayer
           edges={edges}
           cardRects={cardRects}

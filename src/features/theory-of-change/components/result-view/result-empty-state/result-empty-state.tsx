@@ -1,5 +1,6 @@
 'use client';
 
+import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
 import styles from './result-empty-state.module.sass';
 
 type ResultEmptyStateProps = {
@@ -19,9 +20,9 @@ export function ResultEmptyState({
       <h2 className={styles.title}>Sua teoria ainda está em construção.</h2>
       <p className={styles.message}>{message}</p>
       {onBack ? (
-        <button type="button" className={styles.backButton} onClick={onBack}>
+        <TdmButton type="button" variant="primary" tone="neutral" size="md" onClick={onBack}>
           {backLabel}
-        </button>
+        </TdmButton>
       ) : null}
     </section>
   );

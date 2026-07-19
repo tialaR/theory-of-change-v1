@@ -1,0 +1,17 @@
+// Foco canônico TDM — apenas :focus-visible; claro no dark mode.
+
+@mixin tokens
+  --tdm-focus-ring-width: 0.125rem
+  --tdm-focus-ring-offset: 0.125rem
+  --tdm-focus-ring-color: var(--tdm-focus-accent)
+  --tdm-focus-ring-offset-color: var(--tdm-surface-canvas)
+
+@mixin focus-visible
+  &:focus-visible
+    outline: var(--tdm-focus-ring-width) solid var(--tdm-focus-ring-color)
+    outline-offset: var(--tdm-focus-ring-offset)
+
+@mixin focus-within-visible
+  &:focus-within
+    outline: var(--tdm-focus-ring-width) solid var(--tdm-focus-ring-color)
+    outline-offset: var(--tdm-focus-ring-offset)

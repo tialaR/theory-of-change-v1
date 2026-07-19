@@ -14,26 +14,33 @@ const PREVIEW_MAX_BLOCKS = 5;
 const PREMIUM_EASE = [0.22, 1, 0.36, 1] as const;
 
 /** Local visual stage accents for canvas inspector (DS V1 — not domain theme). */
-const CANVAS_DS_STAGE: Record<TdmStage, { accent: string; soft: string; border: string }> = {
+const CANVAS_DS_STAGE: Record<
+  TdmStage,
+  { accent: string; soft: string; border: string; fieldRgb: string }
+> = {
   input: {
     accent: '#a78bfa',
     soft: 'rgba(167, 139, 250, 0.18)',
-    border: 'rgba(167, 139, 250, 0.34)'
+    border: 'rgba(167, 139, 250, 0.34)',
+    fieldRgb: '167, 139, 250'
   },
   activity: {
     accent: '#60a5fa',
     soft: 'rgba(96, 165, 250, 0.16)',
-    border: 'rgba(96, 165, 250, 0.34)'
+    border: 'rgba(96, 165, 250, 0.34)',
+    fieldRgb: '96, 165, 250'
   },
   output: {
     accent: '#f6b35d',
     soft: 'rgba(246, 179, 93, 0.16)',
-    border: 'rgba(246, 179, 93, 0.34)'
+    border: 'rgba(246, 179, 93, 0.34)',
+    fieldRgb: '246, 179, 93'
   },
   outcome: {
     accent: '#5ee0b5',
     soft: 'rgba(94, 224, 181, 0.16)',
-    border: 'rgba(94, 224, 181, 0.34)'
+    border: 'rgba(94, 224, 181, 0.34)',
+    fieldRgb: '94, 224, 181'
   }
 };
 
@@ -218,7 +225,13 @@ export function V1CanvasOrganizationAccordion({
               <p className={styles.canvasOrgPreviewLabel}>Prévia do alinhamento</p>
               <CanvasAlignmentPreview stageCounts={stageCounts} />
             </div>
-            <TdmButton variant="secondary" fullWidth icon={<ColumnsAlignIcon />} onClick={() => onOrganize?.()}>
+            <TdmButton
+              variant="secondary"
+              tone="neutral"
+              fullWidth
+              icon={<ColumnsAlignIcon />}
+              onClick={() => onOrganize?.()}
+            >
               Centralizar colunas
             </TdmButton>
           </motion.div>
@@ -238,7 +251,11 @@ export function V1BlockFormsPanel({ stage, children }: { stage: TdmStage; childr
         {
           '--stage-accent': stageTone.accent,
           '--stage-border': stageTone.border,
-          '--stage-soft': stageTone.soft
+          '--stage-soft': stageTone.soft,
+          '--tdm-stage-field-rgb': stageTone.fieldRgb,
+          '--tdm-field-use-mask-border': 1,
+          '--tdm-field-accent': 'var(--stage-accent)',
+          '--tdm-field-accent-rest': 'color-mix(in srgb, var(--stage-accent) 34%, transparent)'
         } as CSSProperties
       }
     >
@@ -406,6 +423,7 @@ export function V1FinalResultCard({
       <div className={styles.finalResultFooter}>
         <TdmButton
           variant="secondary"
+          tone="neutral"
           fullWidth
           className={styles.finalResultCta}
           onClick={onViewResult}

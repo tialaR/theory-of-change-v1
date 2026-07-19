@@ -5,31 +5,14 @@ import type {
   TheoryDocumentExportScope
 } from './theory-document-export.types';
 
-function scopedFlowSlug(document: TheoryDocumentModel): string {
-  const intro = document.executiveSummary[0]?.text ?? document.title;
-  const quoted = intro.match(/[“"]([^”"]+)[”"]/g);
-  if (quoted && quoted.length > 0) {
-    const last = quoted[quoted.length - 1]?.replace(/[“”"]/g, '') ?? '';
-    const slug = sanitizeExportFilename(last);
-    if (slug && slug !== 'teoria-da-mudanca') {
-      return slug;
-    }
-  }
-  return 'selecionado';
-}
-
 export function buildTheoryDocumentExportFilename(
   theoryTitle: string,
-  scope: TheoryDocumentExportScope,
+  _scope: TheoryDocumentExportScope,
   format: 'pdf' | 'docx',
-  document: TheoryDocumentModel
+  _document: TheoryDocumentModel
 ): string {
   const theorySlug = sanitizeExportFilename(theoryTitle || 'teoria-da-mudanca');
-  const base =
-    scope === 'macro'
-      ? `${theorySlug}-narrativa-completa`
-      : `${theorySlug}-fluxo-${scopedFlowSlug(document)}`;
-  return `${base}.${format}`;
+  return `${theorySlug}-interprete.${format}`;
 }
 
 export function buildTheoryDocumentExportPayload(
