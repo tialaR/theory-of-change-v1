@@ -1,6 +1,14 @@
 'use client';
 
-import { BaseEdge, EdgeLabelRenderer, EdgeProps, getBezierPath, MarkerType, useStore } from '@xyflow/react';
+import {
+  BaseEdge,
+  EdgeLabelRenderer,
+  EdgeProps,
+  getBezierPath,
+  MarkerType,
+  useStore,
+  ViewportPortal
+} from '@xyflow/react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import {
@@ -24,31 +32,27 @@ const COMPACT_ARROW_SIZE = 10;
 
 function MarkerPreview({
   markerType,
-  visible
+  onEdit
 }: {
   markerType: 'risk' | 'hypothesis';
-  visible: boolean;
+  onEdit: () => void;
 }) {
-  const prefersReducedMotion = useReducedMotion();
   const title = markerType === 'risk' ? 'Risco' : 'Hipótese';
 
   return (
-    <AnimatePresence>
-      {visible ? (
-        <div className={styles.markerPreviewHost}>
-          <motion.div
-            className={styles.markerPreview}
-            initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 4 }}
-            animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-            exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 2 }}
-            transition={{ duration: prefersReducedMotion ? 0.16 : 0.2, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <p className={styles.markerPreviewTitle}>{title}</p>
-            <p className={styles.markerPreviewHint}>Clique para editar</p>
-          </motion.div>
-        </div>
-      ) : null}
-    </AnimatePresence>
+    <div className={styles.markerPreviewHost}>
+      <button
+        type="button"
+        className={styles.markerPreview}
+        onClick={(event) => {
+          event.stopPropagation();
+          onEdit();
+        }}
+      >
+        <p className={styles.markerPreviewTitle}>{title}</p>
+        <p className={styles.markerPreviewHint}>Clique para editar</p>
+      </button>
+    </div>
   );
 }
 
@@ -98,7 +102,6 @@ export function TdmTheoryEdge({
   data
 }: EdgeProps<TdmEdgeModel>) {
   const [isHovered, setIsHovered] = useState(false);
-  const [isMarkerHovered, setIsMarkerHovered] = useState(false);
   const editorRef = useRef<HTMLDivElement>(null);
   const [editorSize, setEditorSize] = useState({ width: 288, height: 176 });
   const prefersReducedMotion = useReducedMotion();
@@ -197,6 +200,10 @@ export function TdmTheoryEdge({
     data?.onOpenMarkerEditor?.(id);
   };
 
+  const markerLabelStyle = {
+    transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`
+  } as const;
+
   return (
     <>
       <g
@@ -228,19 +235,11 @@ export function TdmTheoryEdge({
         />
       </g>
       <EdgeLabelRenderer>
-        {!isEditorOpen ? (
-          <div
-            className={styles.labelLayer}
-            style={{
-              transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`
-            }}
-          >
-            {hasMarker ? (
-              <div
-                className={styles.markerWrap}
-                onMouseEnter={() => setIsMarkerHovered(true)}
-                onMouseLeave={() => setIsMarkerHovered(false)}
-              >
+        {!isEditorOpen && hasMarker ? (
+          // ViewportPortal sits above nodes (edgelabel-renderer paints under NodeRenderer).
+          <ViewportPortal>
+            <div className={styles.labelLayer} style={markerLabelStyle}>
+              <div className={styles.markerWrap}>
                 <motion.button
                   type="button"
                   className={[
@@ -260,23 +259,23 @@ export function TdmTheoryEdge({
                 >
                   {markerType === 'risk' ? 'R' : 'H'}
                 </motion.button>
-                <MarkerPreview
-                  markerType={markerType!}
-                  visible={isMarkerHovered && !isEditorOpen}
-                />
+                <MarkerPreview markerType={markerType!} onEdit={openEditor} />
               </div>
-            ) : showCta ? (
-              <button
-                type="button"
-                className={styles.cta}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  openEditor();
-                }}
-              >
-                {allowedMarkerType === 'risk' ? '+ Risco' : '+ Hipótese'}
-              </button>
-            ) : null}
+            </div>
+          </ViewportPortal>
+        ) : null}
+        {!isEditorOpen && !hasMarker && showCta ? (
+          <div className={styles.labelLayer} style={markerLabelStyle}>
+            <button
+              type="button"
+              className={styles.cta}
+              onClick={(event) => {
+                event.stopPropagation();
+                openEditor();
+              }}
+            >
+              {allowedMarkerType === 'risk' ? '+ Risco' : '+ Hipótese'}
+            </button>
           </div>
         ) : null}
         {isEditorOpen && (markerType ?? allowedMarkerType) ? (

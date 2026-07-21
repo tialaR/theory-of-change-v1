@@ -57,7 +57,6 @@ import {
   getStageCounts,
   getStageCreationActionLabel,
   getStageCreationAdvanceLabel,
-  isReadyToConnect,
   type StageCreation
 } from '../../utils/stage-creation';
 import { layoutNodesByStage } from '../../utils/layout-nodes-by-stage';
@@ -196,9 +195,10 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
   const { fitView, zoomIn, zoomOut, screenToFlowPosition } = useReactFlow<TdmNodeModel, TdmEdgeModel>();
 
   const stageCounts = useMemo(() => getStageCounts(nodes), [nodes]);
-  const readyToConnect = useMemo(() => isReadyToConnect(nodes), [nodes]);
-  const canConnectNodes = readyToConnect;
+  // Connections unlock only after explicit advance into ready-to-connect — not from counts alone.
+  const canConnectNodes = stageCreation === 'ready-to-connect';
   const currentStageCount = stageCreation === 'ready-to-connect' ? 0 : stageCounts[stageCreation];
+  // resultCount >= 1 (on the current stage) only enables the CTA; it does not unlock connections.
   const canAdvance = stageCreation !== 'ready-to-connect' && currentStageCount > 0;
   const selectedNode = useMemo(() => nodes.find((node) => node.id === selectedNodeId) ?? null, [nodes, selectedNodeId]);
   const selectedEdge = useMemo(() => edges.find((edge) => edge.id === selectedEdgeId) ?? null, [edges, selectedEdgeId]);
@@ -1039,6 +1039,10 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
 
   const isValidConnection: IsValidConnection<TdmEdgeModel> = useCallback(
     (connection) => {
+      if (!canConnectNodes) {
+        return false;
+      }
+
       if (!connection.source || !connection.target) {
         return false;
       }
@@ -1052,11 +1056,15 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
 
       return isAllowedTdmConnection(sourceNode.stage, targetNode.stage);
     },
-    [nodes]
+    [canConnectNodes, nodes]
   );
 
   const handleConnect = useCallback(
     (connection: Connection) => {
+      if (!canConnectNodes) {
+        return;
+      }
+
       if (!connection.source || !connection.target) {
         return;
       }
@@ -1084,11 +1092,15 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
       setToolbarNodeId(null);
       setGuideTransientMessage(null);
     },
-    [nodes, setEdges]
+    [canConnectNodes, nodes, setEdges]
   );
 
   const handleConnectStart: OnConnectStart = useCallback(
     (_event, params) => {
+      if (!canConnectNodes) {
+        return;
+      }
+
       if (!params.nodeId) {
         return;
       }
@@ -1101,7 +1113,7 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
       setConnectingFromStage(sourceNode.stage);
       setGuideTransientMessage(null);
     },
-    [nodes]
+    [canConnectNodes, nodes]
   );
 
   const handleConnectEnd: OnConnectEnd = useCallback(
@@ -1349,7 +1361,9 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
             sourceLabel: nodes.find((node) => node.id === selectedEdge.source)?.title ?? 'Origem',
             targetLabel: nodes.find((node) => node.id === selectedEdge.target)?.title ?? 'Destino',
             markerText: markerDraft,
-            markerType: selectedEdge.markerType
+            markerType: selectedEdge.markerType,
+            // Same existence rule as the floating editor: persisted text, not draft.
+            isEditingExisting: Boolean(selectedEdge.markerText?.trim())
           },
           onDraftChange: setMarkerDraft,
           onSubmit: saveMarkerOnSelectedEdge,

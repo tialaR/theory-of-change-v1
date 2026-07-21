@@ -210,6 +210,7 @@ export function TdmMarkerInspector({
   sourceLabel,
   targetLabel,
   markerText,
+  isEditingExisting,
   onDraftChange,
   onSubmit,
   onDelete
@@ -218,6 +219,8 @@ export function TdmMarkerInspector({
   sourceLabel: string;
   targetLabel: string;
   markerText: string;
+  /** Persisted marker on the edge — not the live draft. */
+  isEditingExisting: boolean;
   onDraftChange: (nextValue: string) => void;
   onSubmit: () => void;
   onDelete: () => void;
@@ -229,7 +232,8 @@ export function TdmMarkerInspector({
     ? 'Ex.: baixa adesão, atraso de recursos, equipe insuficiente...'
     : 'Ex.: se as escolas usarem os planos, então poderão acompanhar melhor a aprendizagem...';
   const clearLabel = isRisk ? 'Limpar risco' : 'Limpar hipótese';
-  const saveLabel = isRisk ? 'Salvar risco' : 'Salvar hipótese';
+  // Create flow keeps current CTAs; edit uses the shared save label.
+  const saveLabel = isEditingExisting ? 'Salvar alterações' : isRisk ? 'Salvar risco' : 'Salvar hipótese';
   const deleteLabel = isRisk ? 'Excluir risco' : 'Excluir hipótese';
   const headerIcon: ReactNode = isRisk ? <WarningIcon /> : <HypothesisIcon />;
 
