@@ -20,10 +20,13 @@ import {
   type OnConnectEnd,
   type OnConnectStart
 } from '@xyflow/react';
+
+import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
+import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
 import { TdmTheoryEdge } from '../edge/tdm-theory-edge';
 import { ResultView } from '../result-view/result-view';
 import { TdmResultPreview } from '../result-preview/tdm-result-preview';
-import { TdmNode as TdmNodeView, TdmNodeInteractionProvider } from '../node/tdm-node';
+import { TdmCanvasNode, TdmNodeInteractionProvider } from './tdm-canvas-node/tdm-canvas-node';
 import { SidebarToggleIcon, TdmSidebar, type TdmBlockForms, type TdmSidebarContext } from '../sidebar/tdm-sidebar';
 import {
   stageAdvancedFlowTooltipEvent,
@@ -60,6 +63,7 @@ import {
 import { layoutNodesByStage } from '../../utils/layout-nodes-by-stage';
 import { layoutNodesByFlow } from '../../utils/layout-nodes-by-flow';
 import { getCreateNodePosition, getDuplicateNodePosition } from '../../utils/node-placement';
+import ctaScope from './canvas-cta-scope.module.sass';
 import styles from './tdm-canvas.module.sass';
 
 const EMPTY_DRAFT: TdmNodeDraft = {
@@ -128,7 +132,7 @@ const CANVAS_DS_MINIMAP: Record<TdmStage, { fill: string; stroke: string }> = {
 };
 
 export const nodeTypes = {
-  tdm: TdmNodeView
+  tdm: TdmCanvasNode
 } satisfies NodeTypes;
 
 export const edgeTypes = {
@@ -164,7 +168,7 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
   const isExampleInitial = initialVariant === 'example';
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [viewMode, setViewMode] = useState<ViewMode>('canvas');
-  const [theoryTitle, setTheoryTitle] = useState(isExampleInitial ? exampleTheory.title : 'Nova teoria da mudança');
+  const [theoryTitle, setTheoryTitle] = useState(isExampleInitial ? exampleTheory.title : '');
   const [nodes, setNodes, onNodesChange] = useNodesState<TdmNodeModel>(isExampleInitial ? exampleTheory.nodes : []);
   const [edges, setEdges, onEdgesChange] = useEdgesState<TdmEdgeModel>(isExampleInitial ? exampleTheory.edges : []);
   const [stageCreation, setStageCreation] = useState<StageCreation>(isExampleInitial ? 'ready-to-connect' : 'input');
@@ -1344,7 +1348,8 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
           marker: {
             sourceLabel: nodes.find((node) => node.id === selectedEdge.source)?.title ?? 'Origem',
             targetLabel: nodes.find((node) => node.id === selectedEdge.target)?.title ?? 'Destino',
-            markerText: markerDraft
+            markerText: markerDraft,
+            markerType: selectedEdge.markerType
           },
           onDraftChange: setMarkerDraft,
           onSubmit: saveMarkerOnSelectedEdge,
@@ -1382,20 +1387,44 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
     );
   }
 
+  const sidebarToggleLabel = isSidebarOpen ? 'Fechar sidebar' : 'Abrir sidebar';
+
   return (
-    <section className={[styles.shell, isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed].join(' ')}>
-      <button
-        type="button"
-        className={styles.sidebarToggleButton}
-        aria-label={isSidebarOpen ? 'Fechar sidebar' : 'Abrir sidebar'}
-        title={isSidebarOpen ? 'Fechar sidebar' : 'Abrir sidebar'}
-        onClick={() => setIsSidebarOpen((current) => !current)}
-      >
-        <SidebarToggleIcon direction={isSidebarOpen ? 'right' : 'left'} className={styles.sidebarToggleSvg} />
-      </button>
+    <section className={[styles.shell, ctaScope.scope, isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed].join(' ')}>
+      <div className={styles.shellChromeTopLeft} data-dock-expanded={isGuideExpanded ? 'true' : 'false'}>
+        <TdmButton
+          href="/"
+          variant="tertiary"
+          size="sm"
+          className={styles.backLink}
+          leadingIcon={
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" className={styles.backLinkIcon}>
+              <path d="M9.5 3.5 4.5 8l5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M4.75 8h6.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          }
+        >
+          Voltar
+        </TdmButton>
+      </div>
+      <div className={styles.sidebarToggleAnchor}>
+        <TdmIconButton
+          aria-label={sidebarToggleLabel}
+          tooltip={sidebarToggleLabel}
+          tooltipPosition="left"
+          tooltipSkin="canvas"
+          variant="ghost"
+          size="md"
+          className={styles.sidebarToggleButton}
+          onClick={() => setIsSidebarOpen((current) => !current)}
+        >
+          <SidebarToggleIcon direction={isSidebarOpen ? 'right' : 'left'} className={styles.sidebarToggleSvg} />
+        </TdmIconButton>
+      </div>
       <div className={styles.canvasArea}>
         <TdmToastViewport toast={activeFlowTooltip} onClose={closeFlowTooltip} />
         <div className={styles.flowFrame} onClick={handleFlowBackgroundClick}>
+
           {nodes.length === 0 ? (
             <div className={styles.emptyState} aria-hidden="true">
               <span className={styles.emptyStateMark} />
@@ -1490,7 +1519,6 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
       </div>
       <TdmSidebar
         isOpen={isSidebarOpen}
-        onToggle={() => setIsSidebarOpen((current) => !current)}
         theoryName={theoryTitle}
         onTheoryNameChange={setTheoryTitle}
         stageCreation={stageCreation}

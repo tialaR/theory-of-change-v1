@@ -1,11 +1,12 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState, type ReactNode } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { HomeBrandLogo } from '@/features/theory-of-change/components/public-pages/home-brand-logo';
-import { GlassSurface } from '@/shared/ui/glass-surface';
+import { TDM_MOTION_TRANSITIONS } from '@/shared/motion/tdm-motion';
+import { TdmButton, type TdmButtonVariant } from '@/shared/ui/tdm-button/tdm-button';
 import styles from './lusion-resend-ds.module.sass';
 
 const NAV = [
@@ -30,17 +31,6 @@ function isNavActive(pathname: string, href: string) {
 function shouldHidePublicHeader(pathname: string) {
   if (pathname.startsWith('/canvas')) return true;
   return HIDDEN_HEADER_ROUTES.some((route) => pathname === route || pathname.startsWith(`${route}/`));
-}
-
-const ease = [0.22, 1, 0.36, 1] as const;
-
-function isOutcomeKicker(text?: string) {
-  if (!text) return false;
-  const normalized = text
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
-  return normalized === 'resultado' || normalized === 'resultados';
 }
 
 function resolveActionIcon(label: string): ReactNode | null {
@@ -164,34 +154,31 @@ export function PublicHeader({
 
   if (shouldHidePublicHeader(pathname)) return null;
 
+  const ctaIcon = resolveActionIcon(ctaLabel);
+  const ctaLeadingIcon = ctaIcon ? (
+    <span className={styles.headerCtaIcon} aria-hidden="true">
+      {ctaIcon}
+    </span>
+  ) : null;
+
   return (
     <>
       <header className={styles.header} data-scrolled={isScrolled ? 'true' : 'false'}>
-                <GlassSurface
-          aria-hidden="true"
-          width="100%"
-          height="5.625rem"
-          borderRadius={0}
-          borderWidth={0}
-          brightness={20}
-          opacity={0.93}
-          blur={30}
-          displace={5}
-          backgroundOpacity={0.26}
-          saturation={0.7}
-          distortionScale={-300}
-          redOffset={0}
-          greenOffset={0}
-          blueOffset={0}
-          xChannel="R"
-          yChannel="G"
-          mixBlendMode="screen"
-          className={styles.headerGlassSurface}
-        />
-<div className={styles.headerBar}>
-          <Link href="/" className={styles.brand} aria-label="Ir para o início">
-            <HomeBrandLogo variant="header" />
-            <span className={styles.brandText}>TDM</span>
+        <div className={styles.headerBar}>
+          <Link
+            href="/"
+            className={styles.brand}
+            aria-label="TMD Construtor — Página inicial"
+          >
+            <Image
+              src="/assets/brand/tmd-construtor-header-canonical.png"
+              alt="TMD Construtor"
+              width={1184}
+              height={247}
+              priority
+              quality={100}
+              className={styles.brandMark}
+            />
           </Link>
           <nav className={styles.nav} aria-label="Navegação principal">
             {NAV.map((item) => {
@@ -210,12 +197,17 @@ export function PublicHeader({
             })}
           </nav>
           <div className={styles.headerCtaWrap}>
-            <PublicButton href={ctaHref} variant="primary">
+            <TdmButton
+              href={ctaHref}
+              variant="tertiary"
+              size="sm"
+              leadingIcon={ctaLeadingIcon}
+              className={styles.headerCta}
+            >
               {ctaLabel}
-            </PublicButton>
+            </TdmButton>
           </div>
         </div>
-        
       </header>
       <div className={styles.headerOffset} aria-hidden="true" />
     </>
@@ -230,7 +222,7 @@ export function PublicHero({
   visual,
   compact = false
 }: {
-  kicker?: string;
+  kicker?: ReactNode;
   title: string;
   description?: string;
   actions?: ReactNode;
@@ -241,13 +233,20 @@ export function PublicHero({
     <section className={`${styles.hero} ${compact ? styles.hero_compact : ''}`}>
       {visual ? <PublicReveal className={styles.heroVisual}>{visual}</PublicReveal> : null}
       <PublicReveal className={styles.heroCopy} delay={0.06}>
-        {kicker ? <p className={styles.kicker}>{kicker}</p> : null}
+        {kicker ?? null}
         <h1>{title}</h1>
         {description ? <p className={styles.heroDescription}>{description}</p> : null}
         {actions ? <div className={styles.heroActions}>{actions}</div> : null}
       </PublicReveal>
     </section>
   );
+}
+
+function resolvePublicButtonVariant(
+  variant: 'primary' | 'secondary' | 'ghost' | 'tertiary'
+): TdmButtonVariant {
+  if (variant === 'ghost' || variant === 'tertiary') return 'tertiary';
+  return variant;
 }
 
 export function PublicButton({
@@ -259,31 +258,31 @@ export function PublicButton({
 }: {
   href?: string;
   children: ReactNode;
-  variant?: 'primary' | 'secondary' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'tertiary';
   onClick?: () => void;
   type?: 'button' | 'submit';
 }) {
-  const className = `${styles.button} ${styles[`button_${variant}`]}`;
   const label = typeof children === 'string' ? children : '';
   const icon = label ? resolveActionIcon(label) : null;
-  const content = (
-    <>
-      {icon ? <span className={styles.buttonIcon}>{icon}</span> : null}
-      {children}
-    </>
-  );
+  const leadingIcon = icon ? (
+    <span className={styles.buttonIcon} aria-hidden="true">
+      {icon}
+    </span>
+  ) : null;
+  const resolvedVariant = resolvePublicButtonVariant(variant);
 
   if (href) {
     return (
-      <Link href={href} className={className}>
-        {content}
-      </Link>
+      <TdmButton href={href} variant={resolvedVariant} leadingIcon={leadingIcon}>
+        {children}
+      </TdmButton>
     );
   }
+
   return (
-    <button type={type} className={className} onClick={onClick}>
-      {content}
-    </button>
+    <TdmButton type={type} variant={resolvedVariant} leadingIcon={leadingIcon} onClick={onClick}>
+      {children}
+    </TdmButton>
   );
 }
 
@@ -295,7 +294,7 @@ export function PublicSection({
   compact = false,
   className = ''
 }: {
-  eyebrow?: string;
+  eyebrow?: ReactNode;
   title?: string;
   description?: string;
   children: ReactNode;
@@ -306,9 +305,9 @@ export function PublicSection({
     <section className={`${styles.section} ${compact ? styles.section_compact : ''} ${className}`}>
       {(eyebrow || title || description) && (
         <PublicReveal className={styles.sectionHeader}>
-          {eyebrow ? <p className={isOutcomeKicker(eyebrow) ? styles.kickerOutcome : styles.kicker}>{eyebrow}</p> : null}
+          {eyebrow ?? null}
           {title ? <h2>{title}</h2> : null}
-          {description ? <p>{description}</p> : null}
+          {description ? <p className={styles.sectionDescription}>{description}</p> : null}
         </PublicReveal>
       )}
       {children}
@@ -328,7 +327,7 @@ export function PublicCard({
   const content = <article className={`${styles.card} ${className}`}>{children}</article>;
   if (href) {
     return (
-      <Link href={href} style={{ display: 'block', textDecoration: 'none' }}>
+      <Link href={href} className={styles.cardLink}>
         {content}
       </Link>
     );
@@ -369,7 +368,11 @@ export function PublicTimeline({
           initial={{ scaleY: reduced ? 1 : 0 }}
           whileInView={{ scaleY: 1 }}
           viewport={{ once: false, amount: 0.1 }}
-          transition={{ duration: reduced ? 0.01 : 1.2, ease }}
+          transition={
+            reduced
+              ? { duration: 0.01 }
+              : { ...TDM_MOTION_TRANSITIONS.panel, duration: TDM_MOTION_TRANSITIONS.panel.duration * 2.8 }
+          }
         />
       </div>
       {steps.map((step, index) => (
@@ -394,7 +397,7 @@ function PublicTimelineStep({
       initial={{ opacity: reduced ? 1 : 0.35 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: false, amount: 0.45 }}
-      transition={{ duration: reduced ? 0.01 : 0.4, ease }}
+      transition={reduced ? { duration: 0.01 } : TDM_MOTION_TRANSITIONS.layout}
     >
       <div>
         <span className={styles.timelineStepNumber}>{step.number}</span>
@@ -438,10 +441,14 @@ export function PublicReveal({
   return (
     <motion.div
       className={`${styles.reveal} ${className}`}
-      initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : '1.5rem' }}
+      initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : '0.75rem' }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount }}
-      transition={{ duration: reduced ? 0.01 : 0.55, delay, ease }}
+      transition={
+        reduced
+          ? { duration: 0.01 }
+          : { ...TDM_MOTION_TRANSITIONS.layout, delay }
+      }
     >
       {children}
     </motion.div>
@@ -462,18 +469,14 @@ export function PublicHomeOrb() {
   return (
     <motion.div
       className={styles.homeOrb}
-      initial={{ opacity: reduced ? 1 : 0, scale: reduced ? 1 : 0.88 }}
+      initial={{ opacity: reduced ? 1 : 0, scale: reduced ? 1 : 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: reduced ? 0.01 : 0.9, ease }}
+      transition={reduced ? { duration: 0.01 } : TDM_MOTION_TRANSITIONS.panel}
     >
       <span className={styles.homeOrbRing} />
       <span className={styles.homeOrbRing} />
       <span className={styles.homeOrbRing} />
-      <motion.span
-        className={styles.homeOrbCore}
-        animate={reduced ? undefined : { scale: [1, 1.04, 1] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-      />
+      <span className={styles.homeOrbCore} />
     </motion.div>
   );
 }

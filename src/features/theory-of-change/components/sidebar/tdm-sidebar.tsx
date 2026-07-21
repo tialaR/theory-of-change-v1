@@ -13,19 +13,22 @@ import {
 } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { Surface } from '@/shared/ui/surface/surface';
 import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
 import buttonStyles from '@/shared/ui/tdm-button/tdm-button.module.sass';
+import { TdmSurface } from '@/shared/ui/tdm-surface/tdm-surface';
 import { TdmAnchoredTooltip } from '@/shared/ui/tooltip/tdm-anchored-tooltip';
 import type { TdmNodeDraft } from '../../domain/tdm-types';
 import { TDM_STAGE_ORDER, type TdmStage } from '../../domain/tdm-stages';
 import type { StageCreation } from '../../utils/stage-creation';
-import { TdmBlockFormFields, TdmFormField } from '../form-field/tdm-form-field';
+import { TdmBlockFormFields } from '../form-field/tdm-form-field';
 import fieldStyles from '../form-field/tdm-form-field.module.sass';
 import { TdmSectionIcon } from '../tdm-section-icon/tdm-section-icon';
-import { TheoryHeaderForm, THEORY_DEFAULT_DESCRIPTION } from './theory-header-form';
-import headerFormStyles from './theory-header-form.module.sass';
+import { TheoryHeaderForm } from './theory-header-form';
 import { SidebarToggleIcon } from './sidebar-toggle-icon';
+import {
+  TdmConnectionInspector,
+  TdmMarkerInspector
+} from './tdm-connection-inspector/tdm-connection-inspector';
 import {
   V1BlockFormsPanel,
   V1CanvasOrganizationAccordion,
@@ -40,27 +43,31 @@ export { SidebarToggleIcon };
 /** Local visual stage accents for canvas inspector (DS V1 — not domain theme). */
 const CANVAS_DS_STAGE: Record<
   TdmStage,
-  { accent: string; soft: string; border: string }
+  { accent: string; soft: string; border: string; fieldRgb: string }
 > = {
   input: {
     accent: '#a78bfa',
     soft: 'rgba(167, 139, 250, 0.18)',
-    border: 'rgba(167, 139, 250, 0.34)'
+    border: 'rgba(167, 139, 250, 0.34)',
+    fieldRgb: '167, 139, 250'
   },
   activity: {
     accent: '#60a5fa',
     soft: 'rgba(96, 165, 250, 0.16)',
-    border: 'rgba(96, 165, 250, 0.34)'
+    border: 'rgba(96, 165, 250, 0.34)',
+    fieldRgb: '96, 165, 250'
   },
   output: {
     accent: '#f6b35d',
     soft: 'rgba(246, 179, 93, 0.16)',
-    border: 'rgba(246, 179, 93, 0.34)'
+    border: 'rgba(246, 179, 93, 0.34)',
+    fieldRgb: '246, 179, 93'
   },
   outcome: {
     accent: '#5ee0b5',
     soft: 'rgba(94, 224, 181, 0.16)',
-    border: 'rgba(94, 224, 181, 0.34)'
+    border: 'rgba(94, 224, 181, 0.34)',
+    fieldRgb: '94, 224, 181'
   }
 };
 
@@ -89,6 +96,7 @@ export type TdmSidebarContext =
         sourceLabel: string;
         targetLabel: string;
         markerText: string;
+        markerType: 'risk' | 'hypothesis';
       };
       onDraftChange: (nextValue: string) => void;
       onSubmit: () => void;
@@ -487,10 +495,9 @@ function QuickShortcutsCard({
 
             {canRestoreTheory ? (
               <TdmButton
-                variant="ghost"
+                variant="tertiary"
                 fullWidth
-                icon={<BackArrowIcon />}
-                iconPosition="left"
+                leadingIcon={<BackArrowIcon />}
                 className={styles.sidebarCtaSpaced}
                 onClick={onRestoreTheory}
               >
@@ -568,7 +575,11 @@ function SidebarAccordion({
         {
           '--stage-accent': stageTone.accent,
           '--stage-accent-soft': stageTone.soft,
-          '--stage-border': stageTone.border
+          '--stage-border': stageTone.border,
+          '--tdm-stage-field-rgb': stageTone.fieldRgb,
+          '--tdm-field-use-mask-border': 1,
+          '--tdm-field-accent': 'var(--stage-accent)',
+          '--tdm-field-accent-rest': 'color-mix(in srgb, var(--stage-accent) 34%, transparent)'
         } as CSSProperties
       }
     >
@@ -610,7 +621,7 @@ function CreateBlockForm({
     <div className={fieldStyles.form}>
       {errorMessage ? <p className={fieldStyles.errorMessage}>{errorMessage}</p> : null}
       <TdmBlockFormFields draft={draft} onDraftChange={onDraftChange} />
-      <TdmButton variant="primary" fullWidth onClick={onSubmit}>
+      <TdmButton variant="primary" tone={stage} fullWidth onClick={onSubmit}>
         {STAGE_CREATE_LABELS[stage]}
       </TdmButton>
     </div>
@@ -618,6 +629,7 @@ function CreateBlockForm({
 }
 
 function EditBlockForm({
+  editStage,
   draft,
   errorMessage,
   hasSelection,
@@ -626,6 +638,7 @@ function EditBlockForm({
   onDuplicate,
   onDelete
 }: {
+  editStage: TdmStage;
   draft: TdmNodeDraft;
   errorMessage?: string;
   hasSelection: boolean;
@@ -642,14 +655,20 @@ function EditBlockForm({
         <>
           {errorMessage ? <p className={fieldStyles.errorMessage}>{errorMessage}</p> : null}
           <TdmBlockFormFields draft={draft} onDraftChange={onDraftChange} />
-          <TdmButton variant="primary" fullWidth onClick={onSubmit}>
+          <TdmButton variant="primary" tone={editStage} fullWidth onClick={onSubmit}>
             Salvar alterações
           </TdmButton>
           <div className={styles.sidebarCtaRow}>
-            <TdmButton variant="secondary" fullWidth icon={<DuplicateIcon />} onClick={onDuplicate}>
+            <TdmButton
+              variant="secondary"
+              tone={editStage}
+              fullWidth
+              leadingIcon={<DuplicateIcon />}
+              onClick={onDuplicate}
+            >
               Duplicar
             </TdmButton>
-            <TdmButton variant="danger" fullWidth icon={<TrashIcon />} onClick={onDelete}>
+            <TdmButton variant="destructive" tone="danger" fullWidth leadingIcon={<TrashIcon />} onClick={onDelete}>
               Deletar
             </TdmButton>
           </div>
@@ -669,7 +688,6 @@ function getStageStatus(stage: TdmStage, stageCreation: StageCreation, index: nu
 
 export function TdmSidebar({
   isOpen,
-  onToggle,
   theoryName,
   onTheoryNameChange,
   stageCreation,
@@ -689,7 +707,6 @@ export function TdmSidebar({
   onStageDragStart
 }: {
   isOpen: boolean;
-  onToggle: () => void;
   theoryName: string;
   onTheoryNameChange: (nextValue: string) => void;
   stageCreation: StageCreation;
@@ -709,7 +726,7 @@ export function TdmSidebar({
   onStageDragStart?: (event: DragEvent<HTMLElement>, stage: TdmStage) => void;
 }) {
   const shouldReduceMotion = useReducedMotion();
-  const [theoryDescription, setTheoryDescription] = useState(THEORY_DEFAULT_DESCRIPTION);
+  const [theoryDescription, setTheoryDescription] = useState('');
   const [openStage, setOpenStage] = useState<TdmStage | 'ready-to-connect'>(
     stageCreation === 'ready-to-connect' ? 'ready-to-connect' : stageCreation
   );
@@ -804,7 +821,7 @@ export function TdmSidebar({
 
   return (
     <aside className={[styles.sidebar, isOpen ? styles.open : styles.closed].join(' ')}>
-      <Surface className={styles.surface}>
+      <TdmSurface as="div" variant="base" padding="none" radius="sm" className={styles.surface}>
         <header className={[styles.header, isSidebarScrolled ? styles.headerScrolled : ''].filter(Boolean).join(' ')}>
           <div className={styles.headerCopy}>
             <section
@@ -814,16 +831,6 @@ export function TdmSidebar({
               <span className={styles.heroGlowTop} aria-hidden="true" />
               <span className={styles.heroGlowBottom} aria-hidden="true" />
               <span className={styles.heroSpecular} aria-hidden="true" />
-              <div className={styles.heroHideSidebarToolbar}>
-                <button
-                  type="button"
-                  className={headerFormStyles.hideSidebarButton}
-                  aria-label="Esconder sidebar"
-                  onClick={onToggle}
-                >
-                  <SidebarToggleIcon direction="right" />
-                </button>
-              </div>
               <div className={styles.heroContent}>
                 <div className={styles.heroLead}>
                   <h1 className={styles.heroTitle}>Construtor de Teoria da Mudança</h1>
@@ -1042,6 +1049,7 @@ export function TdmSidebar({
             </div>
             <TdmButton
               variant="primary"
+              tone="neutral"
               fullWidth
               className={styles.workflowAdvanceButton}
               disabled={!canAdvance}
@@ -1100,6 +1108,7 @@ export function TdmSidebar({
                   variant="block"
                 >
                   <EditBlockForm
+                    editStage={editStage}
                     draft={blockForms.edit.draft}
                     errorMessage={blockForms.edit.errorMessage}
                     hasSelection={blockForms.edit.selectedStage !== null}
@@ -1113,52 +1122,32 @@ export function TdmSidebar({
             </V1BlockFormsPanel>
           ) : null}
 
-          {context.kind === 'edge' || context.kind === 'marker' ? (
+          {context.kind === 'edge' ? (
             <section className={styles.card}>
-              <p className={styles.sectionKicker}>{context.kind === 'edge' ? 'Editar conexão' : 'Editar marcador'}</p>
+              <TdmConnectionInspector
+                sourceLabel={context.edge.sourceLabel}
+                targetLabel={context.edge.targetLabel}
+                statusTitle={context.edge.message || 'Conexão válida'}
+                canAddRisk={context.edge.canAddRisk}
+                canAddHypothesis={context.edge.canAddHypothesis}
+                onAddRisk={context.onAddRisk}
+                onAddHypothesis={context.onAddHypothesis}
+                onDelete={context.onDelete}
+              />
+            </section>
+          ) : null}
 
-              {context.kind === 'edge' ? (
-                <div className={styles.edgeDetails}>
-                  <p className={styles.detailLabel}>Origem</p>
-                  <p className={styles.detailValue}>{context.edge.sourceLabel}</p>
-                  <p className={styles.detailLabel}>Destino</p>
-                  <p className={styles.detailValue}>{context.edge.targetLabel}</p>
-                  <p className={styles.detailLabel}>Status</p>
-                  <p className={styles.detailValue}>{context.edge.message}</p>
-                  {context.edge.markerType ? (
-                    <>
-                      <p className={styles.detailLabel}>Marcador</p>
-                      <p className={styles.detailValue}>{context.edge.markerText ?? context.edge.markerType}</p>
-                    </>
-                  ) : null}
-                  <div className={styles.contextActions}>
-                    {context.edge.canAddRisk ? (
-                      <TdmButton variant="secondary" onClick={context.onAddRisk}>
-                        Adicionar risco
-                      </TdmButton>
-                    ) : null}
-                    {context.edge.canAddHypothesis ? (
-                      <TdmButton variant="secondary" onClick={context.onAddHypothesis}>
-                        Adicionar hipótese
-                      </TdmButton>
-                    ) : null}
-                    <TdmButton variant="danger" onClick={context.onDelete}>
-                      Excluir conexão
-                    </TdmButton>
-                  </div>
-                </div>
-              ) : null}
-
-              {context.kind === 'marker' ? (
-                <MarkerBlock
-                  sourceLabel={context.marker.sourceLabel}
-                  targetLabel={context.marker.targetLabel}
-                  markerText={context.marker.markerText}
-                  onDraftChange={context.onDraftChange}
-                  onSubmit={context.onSubmit}
-                  onDelete={context.onDelete}
-                />
-              ) : null}
+          {context.kind === 'marker' ? (
+            <section className={styles.card}>
+              <TdmMarkerInspector
+                markerType={context.marker.markerType}
+                sourceLabel={context.marker.sourceLabel}
+                targetLabel={context.marker.targetLabel}
+                markerText={context.marker.markerText}
+                onDraftChange={context.onDraftChange}
+                onSubmit={context.onSubmit}
+                onDelete={context.onDelete}
+              />
             </section>
           ) : null}
 
@@ -1179,48 +1168,7 @@ export function TdmSidebar({
             onViewResult={onViewResult}
           />
         </div>
-      </Surface>
+      </TdmSurface>
     </aside>
-  );
-}
-
-function MarkerBlock({
-  sourceLabel,
-  targetLabel,
-  markerText,
-  onDraftChange,
-  onSubmit,
-  onDelete
-}: {
-  sourceLabel: string;
-  targetLabel: string;
-  markerText: string;
-  onDraftChange: (nextValue: string) => void;
-  onSubmit: () => void;
-  onDelete: () => void;
-}) {
-  return (
-    <div className={styles.markerBlock}>
-      <p className={styles.detailLabel}>Conexão marcada</p>
-      <p className={styles.detailValue}>
-        {sourceLabel} → {targetLabel}
-      </p>
-      <TdmFormField
-        label="Texto do marcador"
-        value={markerText}
-        placeholder="Risco ou hipótese"
-        clearAriaLabel="Limpar texto do marcador"
-        onChange={onDraftChange}
-        onClear={() => onDraftChange('')}
-      />
-      <div className={styles.contextActions}>
-        <TdmButton variant="primary" onClick={onSubmit}>
-          Salvar marcador
-        </TdmButton>
-        <TdmButton variant="danger" onClick={onDelete}>
-          Excluir marcador
-        </TdmButton>
-      </div>
-    </div>
   );
 }

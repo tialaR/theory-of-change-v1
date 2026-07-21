@@ -1,0 +1,189 @@
+// Shell + handles + toolbar. Compact/edit visuals live in card/form modules.
+
+$card-width: 14.5rem
+$card-min-height: 6rem
+$card-max-height: 7.5rem
+
+.node
+  --stage-color: rgba(139, 124, 255, 0.68)
+  --stage-soft: rgba(139, 124, 255, 0.1)
+  position: relative
+  box-sizing: border-box
+  display: flex
+  flex-direction: column
+  gap: var(--tdm-stack-compact-label-title)
+  width: $card-width
+  min-width: $card-width
+  max-width: $card-width
+  min-height: $card-min-height
+  max-height: $card-max-height
+  padding: var(--tdm-space-4)
+  border-radius: var(--tdm-radius-sm)
+  border: var(--tdm-border-width-hairline) solid var(--tdm-border-subtle)
+  background-color: var(--tdm-surface-raised)
+  box-shadow: var(--tdm-highlight-top), var(--tdm-shadow-low)
+  overflow: visible
+  color: var(--tdm-fg-primary)
+  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
+  transition: border-color var(--tdm-duration-ui) var(--tdm-ease-standard), box-shadow var(--tdm-duration-ui) var(--tdm-ease-standard)
+
+  &::before
+    content: ''
+    position: absolute
+    top: 0
+    left: 0
+    width: 38%
+    height: var(--tdm-border-width-hairline)
+    pointer-events: none
+    background: linear-gradient(90deg, color-mix(in srgb, var(--stage-color) 78%, transparent) 0%, color-mix(in srgb, var(--stage-color) 32%, transparent) 58%, transparent 100%)
+
+  &::after
+    content: ''
+    position: absolute
+    top: 0
+    left: 0
+    width: var(--tdm-border-width-hairline)
+    height: 72%
+    pointer-events: none
+    background: linear-gradient(180deg, color-mix(in srgb, var(--stage-color) 82%, transparent) 0%, color-mix(in srgb, var(--stage-color) 28%, transparent) 62%, transparent 100%)
+
+  &:hover:not(.editing)
+    border-color: var(--tdm-border-default)
+    box-shadow: var(--tdm-highlight-top), var(--tdm-shadow-medium)
+
+.input
+  --stage-color: rgba(139, 124, 255, 0.68)
+  --stage-soft: rgba(139, 124, 255, 0.1)
+
+.activity
+  --stage-color: rgba(73, 179, 255, 0.68)
+  --stage-soft: rgba(73, 179, 255, 0.1)
+
+.output
+  --stage-color: rgba(242, 166, 90, 0.68)
+  --stage-soft: rgba(242, 166, 90, 0.1)
+
+.outcome
+  --stage-color: rgba(55, 200, 147, 0.68)
+  --stage-soft: rgba(55, 200, 147, 0.1)
+
+.selected
+  border-color: color-mix(in srgb, var(--stage-color) 36%, var(--tdm-border-strong))
+  box-shadow: var(--tdm-highlight-top), var(--tdm-shadow-medium)
+
+  &::after
+    height: 82%
+    background: linear-gradient(180deg, color-mix(in srgb, var(--stage-color) 92%, transparent) 0%, color-mix(in srgb, var(--stage-color) 34%, transparent) 62%, transparent 100%)
+
+.toolbarOpen:not(.editing)
+  border-color: var(--tdm-border-default)
+  box-shadow: var(--tdm-highlight-top), var(--tdm-shadow-medium)
+
+.connectionTarget
+  border-color: color-mix(in srgb, var(--stage-color) 28%, var(--tdm-border-default))
+
+  .handle
+    border-color: color-mix(in srgb, var(--stage-color) 42%, var(--tdm-border-interactive))
+    background: color-mix(in srgb, var(--stage-color) 18%, var(--tdm-surface-base))
+
+.editing
+  max-height: none
+  min-height: $card-min-height
+  border-color: color-mix(in srgb, var(--stage-color) 36%, var(--tdm-border-strong))
+  box-shadow: var(--tdm-highlight-top), var(--tdm-shadow-medium)
+
+  &::after
+    height: 82%
+    background: linear-gradient(180deg, color-mix(in srgb, var(--stage-color) 92%, transparent) 0%, color-mix(in srgb, var(--stage-color) 34%, transparent) 62%, transparent 100%)
+
+:global(.react-flow__node.dragging) .node:not(.editing)
+  border-color: var(--tdm-border-interactive)
+  box-shadow: var(--tdm-highlight-top), var(--tdm-shadow-medium)
+  cursor: grabbing
+
+.handle
+  z-index: 3
+  width: 0.4375rem
+  height: 0.4375rem
+  border: var(--tdm-border-width-hairline) solid var(--tdm-border-interactive)
+  border-radius: var(--tdm-radius-round)
+  background: var(--tdm-surface-base)
+  box-shadow: var(--tdm-highlight-top), var(--tdm-shadow-low)
+  cursor: crosshair
+  transition: border-color var(--tdm-duration-fast) var(--tdm-ease-standard), background-color var(--tdm-duration-fast) var(--tdm-ease-standard)
+
+  &::after
+    content: ''
+    position: absolute
+    top: 50%
+    left: 50%
+    width: 1.4rem
+    height: 1.4rem
+    transform: translate(-50%, -50%)
+    border-radius: var(--tdm-radius-round)
+    pointer-events: all
+
+  &:hover
+    border-color: color-mix(in srgb, var(--stage-color) 40%, var(--tdm-border-interactive))
+    background: color-mix(in srgb, var(--stage-color) 16%, var(--tdm-surface-base))
+
+.selected .handle,
+.toolbarOpen .handle,
+.editing .handle
+  border-color: color-mix(in srgb, var(--stage-color) 34%, var(--tdm-border-interactive))
+
+.toolbar
+  position: absolute
+  // Ancora pela base: gap vertical estável independente da altura da toolbar.
+  top: auto
+  bottom: calc(100% + 0.75rem)
+  left: 50%
+  z-index: 40
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  gap: 0
+  width: fit-content
+  max-width: none
+  min-width: 0
+  min-height: var(--tdm-icon-container-sm)
+  padding: var(--tdm-space-1)
+  overflow: visible
+  transform: translateX(-50%)
+  border: var(--tdm-border-width-hairline) solid var(--tdm-border-subtle)
+  border-radius: var(--tdm-radius-sm)
+  background-color: var(--tdm-surface-raised)
+  box-shadow: var(--tdm-highlight-top), var(--tdm-shadow-medium)
+  pointer-events: auto
+
+.toolbarDivider
+  width: var(--tdm-border-width-hairline)
+  height: 1.25rem
+  flex: 0 0 var(--tdm-border-width-hairline)
+  margin-inline: var(--tdm-space-1)
+  background: var(--tdm-separator)
+
+.toolbarButton
+  flex: 0 0 auto
+  color: var(--tdm-fg-secondary)
+
+.toolbarDelete
+  background-color: transparent
+  border-color: transparent
+  color: var(--tdm-fg-secondary)
+
+  &:hover:not(:disabled),
+  &:focus-visible:not(:disabled)
+    background-color: transparent
+    border-color: transparent
+    color: var(--tdm-fg-danger)
+
+.toolbarSvg
+  width: 100%
+  height: 100%
+  display: block
+
+@media (prefers-reduced-motion: reduce)
+  .node,
+  .handle
+    transition: none

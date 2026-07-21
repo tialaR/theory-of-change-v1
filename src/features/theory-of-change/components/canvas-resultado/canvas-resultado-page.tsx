@@ -1,20 +1,31 @@
 'use client';
 
-import Link from 'next/link';
+import { useState } from 'react';
+import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
+import { TdmSurface } from '@/shared/ui/tdm-surface/tdm-surface';
 import styles from './canvas-resultado-page.module.sass';
 
+/**
+ * Standalone `/canvas/resultado` shell.
+ * Active theory export (DOCX/PDF/PNG/SVG) lives on ResultExperience —
+ * opened from Canvas via “Visualizar teoria” (TdmResultPreview overlay)
+ * and on `/exemplos/resultado/interativo`.
+ */
 const EXPORT_ACTIONS = [
+  { id: 'docx', label: 'Exportar DOCX' },
+  { id: 'pdf', label: 'Exportar PDF' },
   { id: 'png', label: 'Exportar PNG' },
-  { id: 'jpeg', label: 'Exportar JPEG' },
-  { id: 'pdf', label: 'Exportar PDF' }
+  { id: 'svg', label: 'Exportar SVG' }
 ] as const;
 
+const NO_DIAGRAM_MESSAGE =
+  'Abra o resultado a partir do Canvas (Visualizar teoria) para exportar.';
+
 export function CanvasResultadoPage() {
+  const [exportMessage, setExportMessage] = useState<string | null>(null);
+
   return (
     <main className={styles.page} data-canvas-resultado="true">
-      <div className={styles.atmosphere} aria-hidden="true" />
-      <div className={styles.grid} aria-hidden="true" />
-
       <div className={styles.shell}>
         <header className={styles.header}>
           <div className={styles.headerCopy}>
@@ -26,36 +37,46 @@ export function CanvasResultadoPage() {
           </div>
 
           <div className={styles.actions}>
-            <Link href="/canvas" className={styles.primaryAction}>
+            <TdmButton href="/canvas" variant="tertiary" size="md">
               Voltar ao canvas
-            </Link>
+            </TdmButton>
             <div className={styles.exportGroup} aria-label="Exportações">
               {EXPORT_ACTIONS.map((action) => (
-                <button
+                <TdmButton
                   key={action.id}
                   type="button"
-                  className={styles.exportAction}
-                  disabled
-                  title="Exportação em breve"
-                  aria-label={`${action.label} — Exportação em breve`}
+                  variant="secondary"
+                  size="md"
+                  title={NO_DIAGRAM_MESSAGE}
+                  aria-label={`${action.label} — ${NO_DIAGRAM_MESSAGE}`}
+                  onClick={() => setExportMessage(NO_DIAGRAM_MESSAGE)}
                 >
-                  <span>{action.label}</span>
-                  <small>em breve</small>
-                </button>
+                  {action.label}
+                </TdmButton>
               ))}
             </div>
           </div>
         </header>
 
-        <section className={styles.panel} aria-label="Painel de resultado">
-          <div className={styles.panelFrame}>
-            <div className={styles.panelInner}>
-              <p className={styles.emptyState}>
-                Seu resultado aparecerá aqui quando a teoria tiver blocos suficientes.
-              </p>
-            </div>
-          </div>
-        </section>
+        {exportMessage ? (
+          <p className={styles.emptyState} role="status" aria-live="polite">
+            {exportMessage}
+          </p>
+        ) : null}
+
+        <TdmSurface
+          as="section"
+          variant="raised"
+          padding="lg"
+          radius="md"
+          className={styles.panel}
+          aria-label="Painel de resultado"
+        >
+          <p className={styles.emptyState}>
+            Seu resultado aparecerá aqui quando a teoria tiver blocos suficientes. Use Visualizar
+            teoria no Canvas para abrir o resultado interativo com exportações DOCX, PDF, PNG e SVG.
+          </p>
+        </TdmSurface>
       </div>
     </main>
   );

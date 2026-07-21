@@ -6,6 +6,13 @@ import type { TdmEdge, TdmNode } from '../../domain/tdm-types';
 import { TDM_STAGE_LABELS, TDM_STAGE_ORDER, type TdmStage } from '../../domain/tdm-stages';
 import { canViewTdmResult } from '../../utils/tdm-result';
 import {
+  buildTheoryExportModel,
+  exportTheoryDocx,
+  exportTheoryPdf,
+  exportTheoryPng,
+  exportTheorySvg
+} from '@/features/theory-of-change/export';
+import {
   EXPORT_FORMAT_OPTIONS,
   HERO_COMPACT_SCROLL_THRESHOLD,
   RESULT_FLOW_BRIDGES,
@@ -15,8 +22,6 @@ import {
   buildFlowReportContent,
   buildFlowReportContentForEdge,
   buildTheoryStatusSummary,
-  buildWordExportHtml,
-  downloadWordDocument,
   getCardHighlightState,
   getCausalFamily,
   getCausalFamilyForEdge,
@@ -27,7 +32,6 @@ import {
   getEdgeMarkerText,
   getEdgeMarkerType,
   groupNodesByStage,
-  sanitizeExportFilename,
   type ExportFormatOption,
   type FlowPathDescriptor,
   type ResultBridgeKind,
@@ -130,13 +134,15 @@ function ExportMenu({
   onToggle,
   onClose,
   onExport,
-  shouldReduceMotion
+  shouldReduceMotion,
+  isExporting = false
 }: {
   isOpen: boolean;
   onToggle: () => void;
   onClose: () => void;
-  onExport: (format: ResultExportFormat) => void;
+  onExport: (format: ResultExportFormat) => void | Promise<void>;
   shouldReduceMotion: boolean | null;
+  isExporting?: boolean;
 }) {
   const menuRef = useRef<HTMLDivElement>(null);
   const menuTransition = shouldReduceMotion ? { duration: 0.01 } : { duration: 0.24, ease: PREMIUM_EASE };
@@ -169,6 +175,8 @@ function ExportMenu({
           className={styles.exportTriggerInner}
           aria-expanded={isOpen}
           aria-haspopup="menu"
+          aria-busy={isExporting || undefined}
+          disabled={isExporting}
           onClick={onToggle}
         >
           <svg viewBox="0 0 24 24" aria-hidden="true" className={styles.exportTriggerIcon}>
@@ -824,6 +832,8 @@ export function ResultView({
   const [focusedNodeId, setFocusedNodeId] = useState<string | null>(null);
   const [focusedEdgeId, setFocusedEdgeId] = useState<string | null>(null);
   const [exportMenuOpen, setExportMenuOpen] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportStatus, setExportStatus] = useState<string | null>(null);
   const [isHeroCompact, setIsHeroCompact] = useState(false);
   const viewRef = useRef<HTMLElement>(null);
   const resultExportRef = useRef<HTMLDivElement>(null);
@@ -1005,20 +1015,82 @@ export function ResultView({
   );
 
   const handleExport = useCallback(
-    (format: ResultExportFormat) => {
+    async (format: ResultExportFormat) => {
       setExportMenuOpen(false);
+      setExportStatus(null);
 
-      if (format === 'pdf') {
-        window.print();
+      if (format === 'jpeg') {
+        setExportStatus('JPEG ainda não está disponível.');
         return;
       }
 
-      if (format === 'word') {
-        const html = buildWordExportHtml({ title, description, nodes, edges });
-        downloadWordDocument(html, `${sanitizeExportFilename(title)}.doc`);
+      setIsExporting(true);
+
+      try {
+        if (format === 'png' || format === 'svg') {
+          const container = resultExportRef.current;
+          if (!container) {
+            setExportStatus('Área do diagrama indisponível para exportação.');
+            return;
+          }
+
+          const result =
+            format === 'png'
+              ? await exportTheoryPng({
+                  container,
+                  theoryTitle: title,
+                  nodeCount: nodes.length,
+                  edgeCount: edges.length
+                })
+              : await exportTheorySvg({
+                  container,
+                  theoryTitle: title,
+                  nodeCount: nodes.length,
+                  edgeCount: edges.length
+                });
+
+          if (result.status === 'error') {
+            setExportStatus(result.message);
+            return;
+          }
+
+          setExportStatus(result.message ?? `${format.toUpperCase()} gerado: ${result.filename}`);
+          return;
+        }
+
+        const documentModel = buildTheoryExportModel(null, nodes, edges);
+        if (!documentModel) {
+          setExportStatus('Não há narrativa disponível para exportar.');
+          return;
+        }
+
+        if (format === 'pdf') {
+          const result = await exportTheoryPdf(documentModel, title);
+          setExportStatus(
+            result.status === 'success'
+              ? result.message ?? `PDF gerado: ${result.filename}`
+              : result.message
+          );
+          return;
+        }
+
+        if (format === 'word') {
+          const result = await exportTheoryDocx(documentModel, title);
+          setExportStatus(
+            result.status === 'success'
+              ? result.message ?? `DOCX gerado: ${result.filename}`
+              : result.message
+          );
+        }
+      } catch (error) {
+        setExportStatus(
+          error instanceof Error ? error.message : 'Falha inesperada ao exportar.'
+        );
+      } finally {
+        setIsExporting(false);
       }
     },
-    [description, edges, nodes, title]
+    [edges, nodes, title]
   );
 
   useEffect(() => {
@@ -1063,7 +1135,16 @@ export function ResultView({
       <ResultViewGrainientBackdrop />
 
       <div className={[styles.resultShell, styles.content, styles.resultContent].join(' ')}>
-        <div ref={resultExportRef} className={styles.exportTarget}>
+        <div
+          ref={resultExportRef}
+          className={styles.exportTarget}
+          aria-busy={isExporting || undefined}
+        >
+          {exportStatus ? (
+            <p className={styles.noPrint} role="status" aria-live="polite">
+              {exportStatus}
+            </p>
+          ) : null}
           <motion.header
             className={[
               styles.hero,
@@ -1071,6 +1152,7 @@ export function ResultView({
             ]
               .filter(Boolean)
               .join(' ')}
+            data-export-exclude="true"
             initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={shouldReduceMotion ? { duration: 0.01 } : HERO_ENTRANCE}
@@ -1108,6 +1190,7 @@ export function ResultView({
                       onClose={() => setExportMenuOpen(false)}
                       onExport={handleExport}
                       shouldReduceMotion={shouldReduceMotion}
+                      isExporting={isExporting}
                     />
                   ) : null}
                   <TdmGlassSurface
@@ -1162,7 +1245,11 @@ export function ResultView({
             </AnimatePresence>
           </div>
 
-          <section className={styles.flowSection} aria-label="Fluxo da teoria da mudança">
+          <section
+            className={styles.flowSection}
+            aria-label="Fluxo da teoria da mudança"
+            data-theory-export-diagram="true"
+          >
             <div className={styles.flowViewport} ref={flowViewportRef}>
               <LiquidGlassMonochromeBackdrop
                 preset="gray-layers"

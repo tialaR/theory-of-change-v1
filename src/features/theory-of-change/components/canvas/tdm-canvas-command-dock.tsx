@@ -2,7 +2,7 @@
 
 import type { ReactElement } from 'react';
 import { Panel } from '@xyflow/react';
-import { motion, useReducedMotion } from 'motion/react';
+import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
 import { TdmAnchoredTooltip } from '@/shared/ui/tooltip/tdm-anchored-tooltip';
 import styles from './tdm-canvas-command-dock.module.sass';
 
@@ -116,8 +116,6 @@ export function TdmCanvasCommandDock({
   onToggleGuide,
   onClearSelection
 }: TdmCanvasCommandDockProps) {
-  const prefersReducedMotion = useReducedMotion();
-
   const handlers: Record<DockActionId, () => void> = {
     fit: onFitView,
     columns: onCenterColumns,
@@ -131,26 +129,25 @@ export function TdmCanvasCommandDock({
       <nav className={styles.dock} aria-label="Atalhos do canvas">
         {DOCK_ACTIONS.map((action, index) => {
           const isDisabled = action.id === 'clear' && isClearDisabled;
+          const isGuideAction = action.id === 'guide';
 
           return (
             <span key={action.id} className={styles.buttonWrap}>
               {index === 3 ? <span className={styles.divider} aria-hidden="true" /> : null}
               <TdmAnchoredTooltip content={action.label} preferredPlacements={['right', 'top']}>
-                <motion.button
-                  type="button"
-                  className={[styles.button, action.id === 'guide' && isGuideExpanded ? styles.buttonActive : '']
+                <TdmIconButton
+                  aria-label={action.label}
+                  aria-pressed={isGuideAction ? isGuideExpanded : undefined}
+                  variant={isGuideAction && isGuideExpanded ? 'filled' : 'ghost'}
+                  size="sm"
+                  disabled={isDisabled}
+                  className={[styles.button, isGuideAction && isGuideExpanded ? styles.buttonActive : '']
                     .filter(Boolean)
                     .join(' ')}
-                  aria-label={action.label}
-                  aria-pressed={action.id === 'guide' ? isGuideExpanded : undefined}
-                  disabled={isDisabled}
-                  whileHover={prefersReducedMotion || isDisabled ? undefined : { scale: 1.03 }}
-                  whileTap={prefersReducedMotion || isDisabled ? undefined : { scale: 0.97 }}
-                  transition={{ duration: 0.14, ease: [0.22, 1, 0.36, 1] }}
                   onClick={handlers[action.id]}
                 >
                   <action.Icon />
-                </motion.button>
+                </TdmIconButton>
               </TdmAnchoredTooltip>
             </span>
           );

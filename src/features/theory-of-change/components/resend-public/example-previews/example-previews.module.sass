@@ -3,90 +3,35 @@
 .previewsSection
   inline-size: min(100%, 96rem)
   margin: 0 auto
-  padding: clamp(2.5rem, 5vw, 4rem) clamp(1.25rem, 4vw, 3.5rem)
+  padding: var(--tdm-space-12) var(--tdm-space-8)
 
 .sectionHeader
   display: grid
-  gap: clamp(0.625rem, 1.2vw, 0.875rem)
-  max-inline-size: 42rem
+  gap: 0
+  max-inline-size: var(--tdm-measure-intro)
   margin-inline: auto
-  margin-block-end: clamp(1.75rem, 4vw, 3rem)
+  margin-block-end: var(--tdm-space-10)
   text-align: center
-
-.sectionKicker
-  @include type.public-kicker
 
 .sectionTitle
   @include type.public-section-title
 
 .sectionDescription
   @include type.public-section-description
+  margin-block-start: var(--tdm-space-3)
+
+// Contrato A — hub experience cards (surface via TdmPublicFeatureCard size=choice)
+$card-gap-desktop: 1.25rem
 
 .previewGrid
   display: grid
   grid-template-columns: repeat(2, minmax(0, 1fr))
-  gap: clamp(1rem, 2vw, 1.5rem)
+  gap: $card-gap-desktop
+  align-items: stretch
 
-.previewCard
-  position: relative
-  display: grid
-  grid-template-rows: auto minmax(18rem, 1fr) auto
-  gap: clamp(1.25rem, 2vw, 1.75rem)
-  min-block-size: clamp(32rem, 45vw, 42rem)
-  padding: clamp(1.25rem, 2.25vw, 2rem)
-  border: 0.0625rem solid rgba(255, 255, 255, 0.105)
-  border-radius: 1.75rem
-  overflow: hidden
-  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.09), transparent 34%), linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.018) 42%, rgba(255, 255, 255, 0.01)), rgba(6, 7, 9, 0.68)
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1), 0 2rem 5rem rgba(0, 0, 0, 0.42)
-  transform: translateZ(0)
-
-  &::before
-    content: ''
-    position: absolute
-    inset: 0
-    pointer-events: none
-    background: linear-gradient(180deg, rgba(248, 249, 250, 0.07), transparent 28%), linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent)
-    opacity: 0.9
-
-  &:hover,
-  &:focus-within
-    border-color: rgba(255, 255, 255, 0.18)
-
-.cardIntro
-  position: relative
-  z-index: 2
-  display: grid
-  grid-template-columns: auto minmax(0, 1fr)
-  gap: 1rem
-  align-items: start
-
-  h3
-    @include type.public-card-title
-
-  p
-    @include type.public-card-description
-
-.iconTile
-  display: grid
-  place-items: center
-  inline-size: 3.25rem
-  block-size: 3.25rem
-  border: 0.0625rem solid rgba(255, 255, 255, 0.14)
-  border-radius: 0.9rem
-  color: rgba(255, 255, 255, 0.84)
-  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.16), transparent 58%), rgba(255, 255, 255, 0.035)
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.14), 0 0.75rem 1.5rem rgba(0, 0, 0, 0.22)
-
-.previewFrame
-  position: relative
-  z-index: 1
-  overflow: hidden
-  min-block-size: clamp(18rem, 27vw, 26rem)
-  border: 0.0625rem solid rgba(255, 255, 255, 0.09)
-  border-radius: 1.25rem
-  background: rgba(9, 10, 12, 0.82)
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.045), 0 1.25rem 2.5rem rgba(0, 0, 0, 0.28)
+.experienceCard
+  min-inline-size: 0
+  block-size: 100%
 
 .previewCanvas
   display: grid
@@ -104,7 +49,7 @@
 
 .editorialConnectionBase
   fill: none
-  stroke: rgba(235, 237, 240, 0.22)
+  stroke: var(--tdm-fg-subtle)
   stroke-width: 1.05
   stroke-linecap: round
   stroke-linejoin: round
@@ -113,33 +58,12 @@
 
 .editorialConnectionReveal
   fill: none
-  stroke: rgba(249, 250, 251, 0.72)
+  stroke: var(--tdm-fg-secondary)
   stroke-width: 1.15
   stroke-linecap: round
   stroke-linejoin: round
   pointer-events: none
   vector-effect: non-scaling-stroke
-
-.previewCta
-  position: relative
-  z-index: 2
-  display: inline-flex
-  align-items: center
-  justify-content: flex-start
-  gap: 0.45rem
-  inline-size: fit-content
-  color: rgba(255, 255, 255, 0.9)
-  font-size: 1rem
-  font-weight: 700
-  letter-spacing: -0.02em
-  text-decoration: none
-
-  span:last-child
-    transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1)
-
-.previewCard:hover .previewCta span:last-child,
-.previewCard:focus-within .previewCta span:last-child
-  transform: translateX(0.25rem)
 
 .dedicatedPreviewFrame,
 .fullPreview
@@ -148,25 +72,48 @@
   min-block-size: 0
   aspect-ratio: 1520 / 660
   overflow: hidden
-  border: 0.0625rem solid rgba(255, 255, 255, 0.075)
-  border-radius: 1.25rem
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 28%), rgba(9, 10, 12, 0.82)
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.045), 0 1.25rem 2.75rem rgba(0, 0, 0, 0.32)
+  border: var(--tdm-border-width-hairline) solid var(--tdm-border-subtle)
+  border-radius: var(--tdm-radius-lg)
+  background: var(--tdm-surface-app)
+  box-shadow: var(--tdm-highlight-top), var(--tdm-shadow-medium)
 
 .dedicatedPreviewFrame
   inline-size: 100%
 
+// Contrato D — flow preview viewport centering
+.previewViewport
+  position: relative
+  display: grid
+  place-items: center
+  inline-size: 100%
+  min-block-size: 100%
+  aspect-ratio: 1520 / 660
+  padding-block: 2rem
+  overflow: hidden
+
+.previewStage
+  position: absolute
+  inset: 2rem 0
+  display: grid
+  place-items: center
+  inline-size: 100%
+  min-inline-size: 0
+  min-block-size: 0
+  margin: 0
+  overflow: hidden
+  transform-origin: center
+
 .fullPreview
-  border-radius: 1.75rem
+  border-radius: var(--tdm-radius-xl)
 
 .fullPage
   min-block-size: 100vh
-  padding: clamp(5rem, 9vw, 8rem) clamp(1rem, 4vw, 4rem)
-  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.07), transparent 30rem), #050608
+  padding: var(--tdm-space-16) var(--tdm-space-8)
+  background: var(--tdm-surface-app)
 
 .fullShell
   display: grid
-  gap: 1.5rem
+  gap: var(--tdm-space-6)
   inline-size: min(100%, 92rem)
   margin-inline: auto
 
@@ -174,25 +121,23 @@
   display: flex
   align-items: center
   justify-content: space-between
-  gap: 1rem
+  gap: var(--tdm-space-4)
 
   a
-    color: rgba(255, 255, 255, 0.82)
+    color: var(--tdm-fg-secondary)
     text-decoration: none
-    border: 0.0625rem solid rgba(255, 255, 255, 0.12)
-    border-radius: 999rem
-    padding: 0.75rem 1rem
-    background: rgba(255, 255, 255, 0.035)
+    border: var(--tdm-border-width-hairline) solid var(--tdm-border-default)
+    border-radius: var(--tdm-radius-round)
+    padding: var(--tdm-space-3) var(--tdm-space-4)
+    background: var(--tdm-surface-hover)
 
   h1
     margin: 0
-    color: rgba(255, 255, 255, 0.96)
-    font-size: clamp(2.25rem, 5vw, 5rem)
-    letter-spacing: -0.07em
+    color: var(--tdm-fg-primary)
+    font-size: var(--tdm-font-page-title-size)
+    letter-spacing: var(--tdm-font-page-title-tracking)
 
-@media (max-width: 58rem)
+@media (max-width: 56rem)
   .previewGrid
-    grid-template-columns: 1fr
-
-  .previewCard
-    min-block-size: 31rem
+    grid-template-columns: minmax(0, 1fr)
+    gap: var(--tdm-space-5)

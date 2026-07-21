@@ -26,18 +26,18 @@
 
 .path
   fill: none
-  stroke: rgba(244, 247, 251, .1)
+  stroke: var(--tdm-border-subtle)
   stroke-width: 1.15
   stroke-linecap: round
   pointer-events: none
 
 .pathActive
-  stroke: rgba(244, 247, 251, .42)
+  stroke: var(--tdm-fg-subtle)
   stroke-width: 1.4
   filter: none
 
 .pathSelected
-  stroke: rgba(244, 247, 251, .58)
+  stroke: var(--tdm-fg-secondary)
   stroke-width: 1.55
 
 .badgeGroup
@@ -49,7 +49,7 @@
   outline: none
 
   &:focus-visible .badgeCircle
-    stroke: rgba(255, 255, 255, .55)
+    stroke: var(--tdm-focus-ring-color)
 
 .badgeHitArea
   fill: transparent
@@ -57,22 +57,22 @@
   pointer-events: all
 
 .badgeCircle
-  fill: rgba(12, 13, 16, .92)
+  fill: var(--tdm-surface-raised)
   stroke-width: 1
   pointer-events: none
 
 .badgeRisk
-  stroke: rgba(224, 164, 96, .42)
+  stroke: color-mix(in srgb, var(--tdm-fg-danger) 42%, transparent)
 
 .badgeHypothesis
-  stroke: rgba(184, 195, 208, .42)
+  stroke: var(--tdm-border-strong)
 
 .badgeText
-  font-size: 8px
-  font-weight: 650
+  font-size: var(--tdm-font-label-size)
+  font-weight: 600
 
 .badgeTextRisk
-  fill: rgba(224, 196, 160, .82)
+  fill: var(--tdm-fg-danger)
 
 .badgeTextHypothesis
-  fill: rgba(200, 206, 216, .82)
+  fill: var(--tdm-fg-secondary)

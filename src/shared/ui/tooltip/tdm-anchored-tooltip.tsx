@@ -31,11 +31,15 @@ const PLACEMENT_CLASS: Record<Placement, string> = {
   right: styles.tooltipRight
 };
 
+export type TdmAnchoredTooltipSize = 'default' | 'compact';
+
 export type TdmAnchoredTooltipProps = {
   content: ReactNode;
   boundaryRef?: RefObject<HTMLElement | null>;
   preferredPlacements?: Placement[];
   showDelayMs?: number;
+  /** Compact shell for short labels; default matches the lock/help tooltip. */
+  size?: TdmAnchoredTooltipSize;
   children: ReactElement<{ ref?: React.Ref<HTMLElement> }>;
 };
 
@@ -159,6 +163,7 @@ export function TdmAnchoredTooltip({
   boundaryRef,
   preferredPlacements = ['bottom', 'top', 'left', 'right'],
   showDelayMs = SHOW_DELAY_MS,
+  size = 'default',
   children
 }: TdmAnchoredTooltipProps) {
   const tooltipId = useId();
@@ -333,6 +338,7 @@ export function TdmAnchoredTooltip({
             data-placement={position?.placement ?? preferredPlacements[0]}
             className={[
               styles.tooltip,
+              size === 'compact' ? styles.tooltipCompact : '',
               position ? PLACEMENT_CLASS[position.placement] : '',
               isPositioned ? styles.tooltipVisible : ''
             ]

@@ -1,76 +1,56 @@
-// Seções públicas devem seguir o padrão tipográfico: kicker uppercase com tracking,
-// título prata/cinza premium, descrição cinza suave, hierarquia controlada e
-// cards com título forte + descrição secundária.
-
-@mixin public-kicker
-  margin: 0
-  font-size: 0.75rem
-  font-weight: 600
-  letter-spacing: 0.14em
-  text-transform: uppercase
-  background: var(--shine-kicker)
-  -webkit-background-clip: text
-  background-clip: text
-  color: transparent
+// Tipografia pública alinhada aos tokens canônicos --tdm-*.
 
 @mixin public-hero-title
   margin: 0 auto
-  max-inline-size: 11.5em
-  font-size: var(--hero-title)
+  max-inline-size: var(--tdm-measure-display)
+  font-size: var(--hero-title, var(--tdm-type-display-md))
   font-weight: 500
   line-height: 1.08
   letter-spacing: -0.03em
   text-wrap: balance
-  background: var(--shine-hero)
-  -webkit-background-clip: text
-  background-clip: text
-  color: transparent
-  filter: drop-shadow(0 0 0.5rem rgba(255, 255, 255, 0.08))
+  color: var(--tdm-fg-primary)
 
 @mixin public-hero-title-compact
   @include public-hero-title
-  font-size: var(--hero-title-compact)
-  max-inline-size: 13em
+  font-size: var(--hero-title-compact, var(--tdm-font-page-title-size))
+  max-inline-size: var(--tdm-measure-intro)
   line-height: 1.1
 
 @mixin public-hero-description
   margin: 0 auto
-  max-width: 32rem
-  font-size: clamp(1rem, 1.8vw, 1.125rem)
-  line-height: 1.65
-  color: var(--body-muted)
+  max-width: var(--tdm-measure-body)
+  font-size: var(--tdm-font-body-lg-size)
+  line-height: var(--tdm-font-body-lg-line)
+  color: var(--body-muted, var(--tdm-fg-secondary))
 
 @mixin public-section-title
   margin: 0 auto
-  max-inline-size: 15em
-  font-size: clamp(1.5rem, 2.6vw, 2.125rem)
-  font-weight: 500
-  line-height: 1.14
-  letter-spacing: -0.022em
+  max-inline-size: var(--tdm-measure-intro)
+  font-size: var(--tdm-font-page-title-size)
+  font-weight: var(--tdm-font-page-title-weight)
+  line-height: var(--tdm-font-page-title-line)
+  letter-spacing: var(--tdm-font-page-title-tracking)
   text-wrap: balance
-  background: var(--shine-hero)
-  -webkit-background-clip: text
-  background-clip: text
-  color: transparent
+  color: var(--tdm-fg-primary)
 
 @mixin public-section-description
   margin: 0 auto
-  max-width: 32rem
-  font-size: clamp(0.9375rem, 1.45vw, 1.0625rem)
-  line-height: 1.65
-  color: var(--body-muted)
+  max-width: var(--tdm-measure-body)
+  font-size: var(--tdm-font-body-size)
+  line-height: var(--tdm-font-body-line)
+  color: var(--body-muted, var(--tdm-fg-secondary))
 
 @mixin public-card-title
   margin: 0
-  font-size: 1.0625rem
-  font-weight: 500
-  line-height: 1.3
+  font-size: var(--tdm-font-card-title-size)
+  font-weight: var(--tdm-font-card-title-weight)
+  line-height: var(--tdm-font-card-title-line)
   letter-spacing: -0.015em
-  color: var(--white)
+  color: var(--tdm-fg-primary)
 
 @mixin public-card-description
-  margin: 0.5rem 0 0
-  max-inline-size: 36rem
-  font-size: 0.875rem
-  line-height: 1.55
-  color: var(--body-muted)
+  margin: var(--tdm-stack-compact-label-title) 0 0
+  max-inline-size: var(--tdm-measure-body)
+  font-size: var(--tdm-font-body-size)
+  line-height: var(--tdm-font-body-line)
+  color: var(--tdm-fg-secondary)

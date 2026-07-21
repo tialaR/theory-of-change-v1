@@ -1,0 +1,65 @@
+.surface
+  position: relative
+  isolation: isolate
+  min-width: 0
+  border: var(--tdm-border-width-hairline) solid var(--tdm-border-subtle)
+  background-color: var(--tdm-surface-base)
+  color: var(--tdm-fg-primary)
+  box-shadow: var(--tdm-highlight-top), var(--tdm-shadow-low)
+
+.variantBase
+  background-color: var(--tdm-surface-base)
+  border-color: var(--tdm-border-subtle)
+  box-shadow: var(--tdm-highlight-top), var(--tdm-shadow-low)
+
+.variantRaised
+  background-color: var(--tdm-surface-raised)
+  border-color: var(--tdm-border-default)
+  box-shadow: var(--tdm-highlight-top), var(--tdm-shadow-low)
+
+.variantElevated
+  background-color: var(--tdm-surface-elevated)
+  border-color: var(--tdm-border-default)
+  box-shadow: var(--tdm-highlight-top), var(--tdm-shadow-medium)
+
+.variantOverlay
+  background-color: var(--tdm-surface-overlay)
+  border-color: var(--tdm-border-strong)
+  box-shadow: var(--tdm-highlight-top), var(--tdm-shadow-overlay)
+
+.variantInteractive
+  background-color: var(--tdm-surface-raised)
+  border-color: var(--tdm-border-default)
+  transition: background-color var(--tdm-duration-ui) var(--tdm-ease-standard), border-color var(--tdm-duration-ui) var(--tdm-ease-standard), box-shadow var(--tdm-duration-ui) var(--tdm-ease-standard)
+
+  &:hover
+    background-color: color-mix(in srgb, var(--tdm-surface-raised) 88%, var(--tdm-surface-hover))
+    border-color: var(--tdm-border-strong)
+
+.paddingNone
+  padding: 0
+
+.paddingSm
+  padding: var(--tdm-space-3)
+
+.paddingMd
+  padding: var(--tdm-space-4)
+
+.paddingLg
+  padding: var(--tdm-space-6)
+
+.radiusSm
+  border-radius: var(--tdm-radius-sm)
+
+.radiusMd
+  border-radius: var(--tdm-radius-md)
+
+.radiusLg
+  border-radius: var(--tdm-radius-lg)
+
+.radiusXl
+  border-radius: var(--tdm-radius-xl)
+
+@media (prefers-reduced-motion: reduce)
+  .variantInteractive
+    transition: none

@@ -1,5 +1,6 @@
 .heroRoot
-  --brand-logo-size: clamp(8rem, 14vw, 12rem)
+  --brand-logo-size: clamp(7.04rem, 12.32vw, 10.56rem)
+  position: relative
   display: flex
   align-items: center
   justify-content: center
@@ -7,13 +8,45 @@
   height: var(--brand-logo-size)
   flex-shrink: 0
   pointer-events: none
+  overflow: hidden
 
-.heroVideo,
-.heroImage
+.heroImage,
+.heroImageMotion
   display: block
   width: 100%
   height: 100%
   object-fit: contain
+
+.heroImageMotion
+  position: absolute
+  inset: 0
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 38%, transparent 62%)
+  mask-image: radial-gradient(circle at 50% 50%, #000 38%, transparent 62%)
+  -webkit-mask-repeat: no-repeat
+  mask-repeat: no-repeat
+  -webkit-mask-size: 100% 100%
+  mask-size: 100% 100%
+  opacity: 0.5
+  animation: heroInnerBreath 24s ease-in-out alternate infinite
+  will-change: transform, opacity
+  pointer-events: none
+
+@keyframes heroInnerBreath
+  0%
+    transform: rotate(-1deg) scale(1) translate(0, 0)
+    opacity: 0.42
+  50%
+    transform: rotate(0.35deg) scale(1.01) translate(0.0625rem, -0.05rem)
+    opacity: 0.52
+  100%
+    transform: rotate(1deg) scale(1.018) translate(-0.125rem, 0.0625rem)
+    opacity: 0.48
+
+@media (prefers-reduced-motion: reduce)
+  .heroImageMotion
+    animation: none
+    opacity: 0
+    will-change: auto
 
 .headerIcon
   --brand-header-icon-size: clamp(1.55rem, 1.7vw, 2rem)

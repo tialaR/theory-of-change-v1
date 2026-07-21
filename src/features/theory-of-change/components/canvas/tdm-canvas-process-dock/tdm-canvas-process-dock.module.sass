@@ -1,0 +1,330 @@
+@use '../../../../../shared/styles/tokens' as *
+
+// Resend Command Canvas — local atoms
+$surface-glass: linear-gradient(180deg, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0.015) 42%, rgba(255, 255, 255, 0.02) 100%), rgba(14, 15, 18, 0.52)
+$border-soft: rgba(255, 255, 255, 0.1)
+$border-mid: rgba(255, 255, 255, 0.14)
+$text-main: rgba(248, 248, 250, 0.94)
+$text-soft: rgba(224, 226, 232, 0.72)
+$text-muted: rgba(190, 193, 204, 0.54)
+$text-faint: rgba(180, 184, 194, 0.38)
+$shadow-soft: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1), 0 0.5rem 1.25rem rgba(0, 0, 0, 0.2)
+
+.panel
+  // Below chrome Voltar (z-30). Expanded sheet grows downward from top-left;
+  // closed trigger stays beside Voltar without covering it.
+  z-index: 20
+  box-sizing: border-box
+  left: var(--tdm-space-4) !important
+  right: auto !important
+  top: var(--tdm-space-4) !important
+  margin: 0 !important
+  inline-size: fit-content !important
+  width: fit-content !important
+  min-inline-size: 0
+  max-inline-size: min(19rem, calc(100vw - 2rem))
+  pointer-events: none
+  cursor: default
+  font-family: $ds-font-family
+
+.shell
+  --stage-accent: #{$text-muted}
+  position: relative
+  isolation: isolate
+  pointer-events: auto
+  display: flex
+  flex-direction: column
+  overflow: clip
+  border: 0.0625rem solid $border-soft
+  background: $surface-glass
+  box-shadow: $shadow-soft
+  backdrop-filter: blur(0.85rem) saturate(1.08)
+  -webkit-backdrop-filter: blur(0.85rem) saturate(1.08)
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0
+    pointer-events: none
+    background: radial-gradient(76% 28% at 50% 0%, rgba(255, 255, 255, 0.1), transparent 70%), linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 42%)
+    opacity: 0.85
+
+  > *
+    position: relative
+    z-index: 2
+
+// Closed launcher chip size; padding keeps compact diamond optically centered.
+$shell-closed-size: 3rem
+$shell-closed-padding: 0.5625rem
+$header-min-height: 2.0625rem
+
+.shellClosed
+  // Closed launcher: flat chip; compact diamond ~1.875rem centered inside.
+  width: $shell-closed-size
+  height: $shell-closed-size
+  min-width: $shell-closed-size
+  min-height: $shell-closed-size
+  padding: $shell-closed-padding
+  align-items: center
+  justify-content: center
+  cursor: pointer
+  // Flat floating chip — no glass bubble / radial glow (open sheet keeps .shell glass).
+  background: var(--tdm-surface-elevated)
+  border-color: var(--tdm-border-default)
+  box-shadow: var(--tdm-shadow-low)
+  backdrop-filter: none
+  -webkit-backdrop-filter: none
+  transition: border-color 0.14s ease, box-shadow 0.14s ease
+
+  &::before
+    content: none
+
+  &:hover
+    border-color: var(--tdm-border-strong)
+    box-shadow: var(--tdm-shadow-medium)
+
+.shellOpen
+  width: min(19rem, calc(100vw - 2rem))
+  min-width: 0
+  height: auto
+  padding: 0.875rem 0.9rem 0.8rem
+  align-items: stretch
+  justify-content: flex-start
+  border-color: $border-mid
+  cursor: default
+
+.compactHost
+  display: grid
+  place-items: center
+  width: fit-content
+  height: fit-content
+  line-height: 0
+
+.trigger
+  // Closed shell is the button itself — keep chrome from .shell, only reset UA button chrome.
+  margin: 0
+  font: inherit
+  text-align: inherit
+  appearance: none
+  -webkit-appearance: none
+  color: rgba(236, 237, 242, 0.82)
+  cursor: pointer
+
+  &:hover
+    color: rgba(248, 248, 250, 0.96)
+
+  &:focus-visible
+    outline: 0.1rem solid rgba(250, 250, 250, 0.32)
+    outline-offset: 0.08rem
+
+.stageDot
+  position: absolute
+  top: 0.3rem
+  right: 0.3rem
+  width: 0.375rem
+  height: 0.375rem
+  border-radius: 50%
+  background: var(--stage-accent, #{$text-muted})
+  border: 0.0625rem solid rgba(10, 11, 14, 0.92)
+  box-shadow: 0 0 0 0.03125rem rgba(255, 255, 255, 0.08)
+  pointer-events: none
+
+.expanded
+  display: flex
+  flex-direction: column
+  gap: 0.75rem
+  min-width: 0
+  width: 100%
+
+.header
+  display: flex
+  align-items: center
+  gap: 0.5rem
+  min-height: $header-min-height
+  min-width: 0
+
+.visuallyHidden
+  position: absolute
+  width: 1px
+  height: 1px
+  padding: 0
+  margin: -1px
+  overflow: hidden
+  clip: rect(0, 0, 0, 0)
+  white-space: nowrap
+  border: 0
+
+.closeButton
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  flex-shrink: 0
+  width: 1.5rem
+  height: 1.5rem
+  margin: 0
+  padding: 0
+  border: 0
+  border-radius: 0.375rem
+  background: transparent
+  color: $text-faint
+  cursor: pointer
+  transition: color 0.14s ease, transform 0.14s ease
+
+  &:hover
+    color: $text-main
+    transform: translateY(-0.0625rem)
+
+  &:focus-visible
+    outline: 0.1rem solid rgba(250, 250, 250, 0.28)
+    outline-offset: 0.06rem
+
+.closeIcon
+  width: 0.875rem
+  height: 0.875rem
+  display: block
+
+.summary
+  display: grid
+  gap: 0.3rem
+
+.summaryCount
+  margin: 0
+  color: $text-soft
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.75rem
+  font-weight: 500
+  letter-spacing: -0.005em
+  line-height: 1.35
+
+.nextLine
+  display: flex
+  align-items: baseline
+  gap: 0.55rem
+  margin: 0
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.75rem
+  line-height: 1.35
+
+.nextPrefix
+  color: $text-muted
+  font-weight: 450
+  flex-shrink: 0
+
+.nextValue
+  color: $text-main
+  font-weight: 550
+  min-width: 0
+
+.progressTrack
+  display: grid
+  grid-template-columns: repeat(5, minmax(0, 1fr))
+  gap: 0.28rem
+  padding-block: 0.1rem
+
+.progressSegment
+  height: 0.2rem
+  border-radius: 999px
+  background: var(--segment-accent, #{$text-muted})
+  opacity: 0.28
+
+.progressComplete
+  opacity: 0.92
+
+.progressCurrent
+  opacity: 0.78
+  box-shadow: 0 0 0 0.03125rem color-mix(in srgb, var(--segment-accent, #{$text-muted}) 35%, transparent)
+
+.progressPending
+  opacity: 0.22
+
+.stageList
+  display: grid
+  gap: 0.45rem
+  margin: 0
+  padding: 0.15rem 0 0
+  list-style: none
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.06)
+
+.stageRow
+  display: grid
+  grid-template-columns: 0.375rem minmax(0, 1fr) auto
+  align-items: center
+  gap: 0.5rem
+  min-height: 1.15rem
+
+.rowDot
+  width: 0.375rem
+  height: 0.375rem
+  border-radius: 50%
+  background: var(--row-accent, #{$text-muted})
+  box-shadow: 0 0 0 0.0625rem rgba(8, 9, 12, 0.65)
+
+.rowLabel
+  color: $text-soft
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.78125rem
+  font-weight: 500
+  letter-spacing: -0.005em
+  line-height: 1.3
+
+.rowValue
+  color: $text-main
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.71875rem
+  font-weight: 500
+  font-variant-numeric: tabular-nums
+  line-height: 1.3
+
+.viewAction
+  display: inline-flex
+  align-items: center
+  gap: 0.35rem
+  width: fit-content
+  margin: 0.1rem 0 0
+  padding: 0.2rem 0
+  border: 0
+  border-bottom: 0.0625rem solid transparent
+  border-radius: 0
+  background: transparent
+  color: $text-soft
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.75rem
+  font-weight: 500
+  letter-spacing: -0.005em
+  line-height: 1.3
+  cursor: pointer
+  transition: color 0.14s ease, border-color 0.14s ease
+
+  &:hover:not(:disabled)
+    color: $text-main
+    border-bottom-color: rgba(255, 255, 255, 0.18)
+
+  &:focus-visible
+    outline: 0.1rem solid rgba(250, 250, 250, 0.28)
+    outline-offset: 0.12rem
+
+  &:disabled,
+  &[aria-disabled='true']
+    // Readable disabled: keep opacity at 1 and dim via color only.
+    opacity: 1
+    cursor: not-allowed
+    color: color-mix(in srgb, var(--tdm-fg-secondary) 72%, transparent)
+    background: transparent
+    border-color: transparent
+    box-shadow: none
+    transform: none
+
+@media (max-width: 56rem)
+  .panel
+    left: 0.75rem !important
+    top: 0.75rem !important
+    max-inline-size: calc(100vw - 1.5rem)
+
+  .shellOpen
+    width: min(19rem, calc(100vw - 1.5rem))
+
+@media (prefers-reduced-motion: reduce)
+  .closeButton,
+  .viewAction,
+  .trigger
+    transition: none

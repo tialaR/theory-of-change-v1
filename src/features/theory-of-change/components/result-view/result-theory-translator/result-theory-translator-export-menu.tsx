@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useId, useRef, useState } from 'react';
+import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
+import { TdmSurface } from '@/shared/ui/tdm-surface/tdm-surface';
 import type {
   TheoryDocumentExportFormat,
   TheoryDocumentExportScope
@@ -11,7 +13,10 @@ import styles from './result-theory-translator-pane.module.sass';
 type ResultTheoryTranslatorExportMenuProps = {
   hasScopedSelection: boolean;
   isExporting: boolean;
-  onExport: (scope: TheoryDocumentExportScope, format: TheoryDocumentExportFormat) => void;
+  onExport: (
+    scope: TheoryDocumentExportScope,
+    format: TheoryDocumentExportFormat
+  ) => void | Promise<void>;
 };
 
 type MenuItem = {
@@ -20,6 +25,35 @@ type MenuItem = {
   format: TheoryDocumentExportFormat;
   disabled?: boolean;
 };
+
+function ExportIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M12 4v11"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M8.5 11.5 12 15l3.5-3.5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M5 19h14"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
 
 export function ResultTheoryTranslatorExportMenu({
   hasScopedSelection,
@@ -45,8 +79,7 @@ export function ResultTheoryTranslatorExportMenu({
     {
       id: `${scope}-docx`,
       scope,
-      format: 'docx',
-      disabled: true
+      format: 'docx'
     }
   ];
 
@@ -86,46 +119,29 @@ export function ResultTheoryTranslatorExportMenu({
       ref={rootRef}
       data-export-menu-open={open ? 'true' : 'false'}
     >
-      <button
+      <TdmIconButton
         ref={triggerRef}
         type="button"
-        className={styles.exportButton}
+        variant="subtle"
+        size="md"
         aria-label={THEORY_TRANSLATOR_LABELS.export}
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={menuId}
         disabled={isExporting}
+        tooltip={THEORY_TRANSLATOR_LABELS.export}
         onClick={() => setOpen((value) => !value)}
       >
-        <svg viewBox="0 0 24 24" aria-hidden="true" className={styles.exportIcon}>
-          <path
-            d="M12 4v11"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-          />
-          <path
-            d="M8.5 11.5 12 15l3.5-3.5"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M5 19h14"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-          />
-        </svg>
-      </button>
+        <ExportIcon />
+      </TdmIconButton>
 
       {open ? (
-        <div
+        <TdmSurface
           id={menuId}
+          as="div"
+          variant="overlay"
+          padding="sm"
+          radius="md"
           className={styles.exportMenu}
           role="menu"
           aria-label={THEORY_TRANSLATOR_LABELS.exportMenu}
@@ -151,12 +167,10 @@ export function ResultTheoryTranslatorExportMenu({
               }}
             >
               <span className={styles.exportMenuItemLabel}>{item.format.toUpperCase()}</span>
-              {item.disabled ? (
-                <span className={styles.exportSoon}>Em breve</span>
-              ) : null}
+              {item.disabled ? <span className={styles.exportSoon}>Em breve</span> : null}
             </button>
           ))}
-        </div>
+        </TdmSurface>
       ) : null}
     </div>
   );

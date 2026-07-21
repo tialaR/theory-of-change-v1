@@ -1,227 +1,103 @@
-@use '../../../../shared/styles/tokens' as *
-
-// Marker editor — simplified header + field + primary CTA.
-// Visual language matches Sidebar “EDITAR BLOCO” + TdmFormField.
-
-$text-main: rgba(248, 248, 250, 0.94)
-$text-soft: rgba(224, 226, 232, 0.72)
-$text-muted: rgb(161, 164, 165)
-
-$resend-surface: radial-gradient(76% 18% at 50% 0%, rgba(255, 255, 255, 0.13), transparent 72%), linear-gradient(180deg, rgba(22, 23, 28, 0.88) 0%, rgba(13, 14, 18, 0.78) 48%, rgba(5, 5, 7, 0.96) 100%)
-$resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rgba(0, 0, 0, 0.3)
-$resend-field: radial-gradient(70% 80% at 50% 0%, rgba(255, 255, 255, 0.045) 3%, transparent 70%), linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.008)), rgba(8, 9, 12, 0.82)
-
+// Floating risk / hypothesis editor — real geometry at 70% (no transform/zoom).
 .editor
+  --marker-editor-size-ratio: 0.7
+  --marker-editor-max-inline-size: calc(22rem * var(--marker-editor-size-ratio))
+  --marker-editor-viewport-gutter: calc(4rem * var(--marker-editor-size-ratio))
+  --marker-editor-gap: calc(var(--tdm-space-3) * var(--marker-editor-size-ratio))
+  --marker-editor-padding: calc(var(--tdm-space-4) * var(--marker-editor-size-ratio))
+  --marker-editor-header-gap: calc(var(--tdm-space-2) * var(--marker-editor-size-ratio))
+  --marker-editor-header-min-block-size: calc(1.75rem * var(--marker-editor-size-ratio))
+  --marker-editor-icon-size: calc(1.25rem * var(--marker-editor-size-ratio))
+  --marker-editor-icon-svg-size: calc(1.0625rem * var(--marker-editor-size-ratio))
+  --marker-editor-actions-gap: calc(var(--tdm-space-1) * var(--marker-editor-size-ratio))
+  --marker-editor-textarea-min-block-size: calc(7rem * var(--marker-editor-size-ratio))
+  --marker-editor-textarea-max-block-size: calc(10rem * var(--marker-editor-size-ratio))
+  // CTA: 2.75rem × 0.7 = 1.925rem → floor at DS sm (2.25rem / 0.75rem radius).
+  --marker-editor-cta-height: max(2.25rem, calc(2.75rem * var(--marker-editor-size-ratio)))
+  --marker-editor-cta-radius: max(0.75rem, calc(0.875rem * var(--marker-editor-size-ratio)))
+  --marker-editor-radius: calc(var(--tdm-radius-lg) * var(--marker-editor-size-ratio))
   display: grid
-  gap: 0.75rem
-  width: min(18rem, calc(100vw - 4rem))
-  padding: 0.75rem
-  border: 0.0625rem solid rgba(255, 255, 255, 0.1)
-  border-radius: 1rem
-  background: $resend-surface
-  box-shadow: $resend-shadow
+  gap: var(--marker-editor-gap)
+  width: min(var(--marker-editor-max-inline-size), calc(100vw - var(--marker-editor-viewport-gutter)))
+  padding: var(--marker-editor-padding)
+  border-radius: var(--marker-editor-radius)
+  background-color: var(--tdm-surface-elevated)
+  background-image: none
+  backdrop-filter: none
+  -webkit-backdrop-filter: none
+  box-shadow: var(--tdm-shadow-high)
   pointer-events: all
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
+
+  &[data-marker-type='risk']
+    .headerIcon
+      color: color-mix(in srgb, var(--tdm-fg-danger) 72%, var(--tdm-fg-secondary))
+
+  &[data-marker-type='hypothesis']
+    .headerIcon
+      color: color-mix(in srgb, var(--tdm-border-interactive) 70%, var(--tdm-fg-secondary))
 
 .header
   display: flex
   align-items: center
   justify-content: space-between
-  gap: 0.5rem
-  min-height: 2rem
+  gap: var(--marker-editor-header-gap)
+  min-height: var(--marker-editor-header-min-block-size)
 
 .headerLead
   display: flex
   align-items: center
-  justify-content: flex-start
-  gap: 0.5rem
+  gap: var(--marker-editor-header-gap)
   min-width: 0
 
 .headerIcon
   display: inline-flex
   align-items: center
   justify-content: center
-  width: 1.5rem
-  height: 1.5rem
-  min-width: 1.5rem
-  flex: 0 0 1.5rem
-  padding: 0
-  border: 0
-  border-radius: 0
-  background: transparent
-  box-shadow: none
-  color: rgb(161, 164, 165)
+  width: var(--marker-editor-icon-size)
+  height: var(--marker-editor-icon-size)
+  min-width: var(--marker-editor-icon-size)
+  flex: 0 0 var(--marker-editor-icon-size)
+  color: var(--tdm-fg-muted)
 
   svg
     display: block
-    width: 1.5rem
-    height: 1.5rem
-    overflow: visible
-
-    path,
-    circle
-      stroke: currentColor
-      stroke-linecap: round
-      stroke-linejoin: round
-      fill: none
-      vector-effect: non-scaling-stroke
-
-    circle[fill]
-      fill: currentColor
-      stroke: none
+    width: var(--marker-editor-icon-svg-size)
+    height: var(--marker-editor-icon-svg-size)
 
 .headerTitle
   margin: 0
   min-width: 0
-  color: transparent
-  background: linear-gradient(90deg, rgba(240, 240, 240, 0.94) 0%, rgba(161, 164, 165, 0.76) 100%)
-  background-clip: text
-  -webkit-background-clip: text
-  -webkit-text-fill-color: transparent
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif
-  font-size: 0.78125rem
-  font-weight: 400
-  line-height: 1.1rem
-  letter-spacing: 0.04em
-  text-transform: uppercase
+  color: var(--tdm-fg-primary)
+  font-size: 0.875rem
+  font-weight: 600
+  line-height: 1.25
+  letter-spacing: -0.01em
 
 .headerActions
   display: inline-flex
   align-items: center
-  gap: 0.375rem
+  gap: var(--marker-editor-actions-gap)
   flex: 0 0 auto
 
-.iconButton
-  appearance: none
-  display: inline-grid
-  place-items: center
-  width: 2rem
-  height: 2rem
-  min-width: 2rem
-  padding: 0
-  border: 0
-  border-radius: 0
-  background: transparent
-  box-shadow: none
-  color: rgba(161, 164, 165, 0.82)
-  cursor: pointer
-  transition: color 160ms ease, transform 160ms ease, opacity 160ms ease
+.field
+  min-width: 0
 
-  svg
-    display: block
-    width: 1.0625rem
-    height: 1.0625rem
-
-    path
-      fill: none
-      stroke: currentColor
-      stroke-width: 1.35
-      stroke-linecap: round
-      stroke-linejoin: round
-
-  &:hover,
-  &:focus-visible
-    color: rgba(248, 249, 252, 0.96)
-    background: transparent
-    outline: none
-    transform: translateY(-0.0625rem)
-
-.iconButtonDanger
-  &:hover,
-  &:focus-visible
-    color: rgba(251, 113, 133, 0.96)
-    background: transparent
-
-.textareaField
-  position: relative
-  display: grid
-
-  .clearButton
-    top: 0.5rem
-    right: 0.5rem
-    transform: none
-    width: 1.5rem
-    height: 1.5rem
-    border-radius: 0
-    background: transparent
-    color: rgba(161, 164, 165, 0.82)
-
-    svg
-      width: 0.9375rem
-      height: 0.9375rem
-
-    &:hover,
-    &:focus-visible
-      color: rgba(248, 249, 252, 0.96)
-      background: transparent
-      outline: none
+.submitAction
+  --tdm-button-sm-height: var(--marker-editor-cta-height)
+  --tdm-button-sm-radius: var(--marker-editor-cta-radius)
 
 .textarea
-  display: block
-  width: 100%
-  min-height: 3.5rem
-  max-height: 7rem
-  margin: 0
-  padding: 0.75rem 2rem 0.75rem 0.875rem
-  border: 0.0625rem solid rgba(255, 255, 255, 0.1)
-  border-radius: 1rem
-  background: $resend-field
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.07)
-  color: $text-main
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif
   font-size: 0.875rem
-  font-weight: 400
-  line-height: 1.35
+  min-height: var(--marker-editor-textarea-min-block-size)
+  max-height: var(--marker-editor-textarea-max-block-size)
+  line-height: 1.375rem
   resize: none
+  overflow-x: hidden
   overflow-y: auto
-  outline: none
-  transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease
+  scrollbar-width: none
+  -ms-overflow-style: none
 
-  &::placeholder
-    color: rgba(161, 164, 165, 0.58)
-
-  &:hover:not(:focus):not(:focus-visible)
-    border-color: rgba(255, 255, 255, 0.14)
-    background: radial-gradient(70% 80% at 50% 0%, rgba(255, 255, 255, 0.055) 3%, transparent 70%), linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012)), rgba(8, 9, 12, 0.84)
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.09)
-
-  &:focus,
-  &:focus-visible
-    border-color: rgba(255, 255, 255, 0.22)
-    background: radial-gradient(70% 80% at 50% 0%, rgba(255, 255, 255, 0.065) 3%, transparent 70%), linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.012)), rgba(8, 9, 12, 0.86)
-    box-shadow: 0 0 0 0.0625rem rgba(255, 255, 255, 0.08), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1)
-
-.primary
-  +ds-sidebar-cta
-  display: inline-flex
-  width: 100%
-  min-height: 2.1rem
-  padding: 0 0.65rem
-  border-radius: 0.875rem
-  border-color: rgba(255, 255, 255, 0.16)
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03)), rgba(16, 17, 22, 0.88)
-  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13)
-  color: $text-main
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif
-  font-size: 0.72rem
-  font-weight: 600
-  letter-spacing: 0.01em
-  text-transform: none
-
-  &:hover:not(:disabled),
-  &:focus-visible:not(:disabled)
-    border-color: rgba(255, 255, 255, 0.22)
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)), rgba(18, 19, 24, 0.9)
-    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.15)
-    color: $text-main
-    transform: translateY(-0.0625rem)
-
-.error
-  margin: 0
-  padding: 0.5rem 0.625rem
-  border: 0.0625rem solid rgba(251, 113, 133, 0.24)
-  border-radius: 0.75rem
-  background: rgba(251, 113, 133, 0.05)
-  color: rgba(254, 205, 211, 0.96)
-  font-size: 0.75rem
-  line-height: 1.4
+  &::-webkit-scrollbar
+    inline-size: 0
+    block-size: 0

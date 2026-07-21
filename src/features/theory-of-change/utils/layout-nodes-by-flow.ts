@@ -1,6 +1,6 @@
 import { TDM_STAGE_ORDER, type TdmStage } from '../domain/tdm-stages';
 import type { TdmEdge, TdmNode } from '../domain/tdm-types';
-import { STAGE_ROW_GAP } from './stage-creation';
+import { CANVAS_COLUMN_ROW_GAP, getNodeLayoutHeight } from './stage-creation';
 
 const COLUMN_X_BY_STAGE: Record<TdmStage, number> = {
   input: 120,
@@ -55,11 +55,11 @@ function computeFlowRanks(nodes: TdmNode[], edges: TdmEdge[]): Map<string, numbe
 export function layoutNodesByFlow(nodes: TdmNode[], edges: TdmEdge[]) {
   const flowRanks = computeFlowRanks(nodes, edges);
 
-  const stageOffsets = {
-    input: 0,
-    activity: 0,
-    output: 0,
-    outcome: 0
+  const columnYByStage = {
+    input: BASE_Y,
+    activity: BASE_Y,
+    output: BASE_Y,
+    outcome: BASE_Y
   } as Record<TdmStage, number>;
 
   const sortedNodes = [...nodes].sort((left, right) => {
@@ -74,14 +74,16 @@ export function layoutNodesByFlow(nodes: TdmNode[], edges: TdmEdge[]) {
   });
 
   return sortedNodes.map((node) => {
-    const offset = stageOffsets[node.stage];
-    stageOffsets[node.stage] += 1;
+    const currentY = columnYByStage[node.stage];
+    const measuredHeight = getNodeLayoutHeight(node);
+
+    columnYByStage[node.stage] = currentY + measuredHeight + CANVAS_COLUMN_ROW_GAP;
 
     return {
       ...node,
       position: {
         x: COLUMN_X_BY_STAGE[node.stage],
-        y: BASE_Y + offset * STAGE_ROW_GAP
+        y: currentY
       }
     };
   });

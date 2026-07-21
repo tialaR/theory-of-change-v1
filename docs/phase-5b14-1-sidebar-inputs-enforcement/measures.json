@@ -1,0 +1,452 @@
+{
+  "measures": {
+    "generic": {
+      "rest": {
+        "width": 323.813,
+        "height": 44,
+        "borderTopWidth": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "useMask": "1",
+        "stageRgb": "",
+        "hairline": ".03125rem",
+        "beforeOpacity": "1",
+        "beforeBg": "linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.1) 52%, rgba(255, 255, 255, 0.22))",
+        "beforePaddingTop": "0.5px",
+        "borderGradient": "linear-gradient(135deg, #ffffff47, #ffffff1a 52%, #ffffff38)",
+        "box": {
+          "x": 926.59375,
+          "y": 185.796875,
+          "w": 323.8125,
+          "h": 44
+        }
+      },
+      "hover": {
+        "width": 323.813,
+        "height": 44,
+        "borderTopWidth": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "useMask": "1",
+        "stageRgb": "",
+        "hairline": ".03125rem",
+        "beforeOpacity": "1",
+        "beforeBg": "linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.52) 52%, rgba(255, 255, 255, 0.82))",
+        "beforePaddingTop": "0.5px",
+        "borderGradient": "linear-gradient(135deg, #ffffffeb, #ffffff85 52%, #ffffffd1)",
+        "box": {
+          "x": 926.59375,
+          "y": 185.796875,
+          "w": 323.8125,
+          "h": 44
+        }
+      },
+      "focus": {
+        "width": 323.813,
+        "height": 44,
+        "borderTopWidth": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "useMask": "1",
+        "stageRgb": "",
+        "hairline": ".03125rem",
+        "beforeOpacity": "1",
+        "beforeBg": "linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.52) 52%, rgba(255, 255, 255, 0.82))",
+        "beforePaddingTop": "0.5px",
+        "borderGradient": "linear-gradient(135deg, #ffffffeb, #ffffff85 52%, #ffffffd1)",
+        "box": {
+          "x": 926.59375,
+          "y": 185.796875,
+          "w": 323.8125,
+          "h": 44
+        }
+      }
+    },
+    "input": {
+      "rest": {
+        "width": 311.219,
+        "height": 36,
+        "borderTopWidth": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "useMask": "1",
+        "stageRgb": "167, 139, 250",
+        "hairline": ".03125rem",
+        "beforeOpacity": "1",
+        "beforeBg": "linear-gradient(135deg, rgba(167, 139, 250, 0.28), rgba(167, 139, 250, 0.16) 52%, rgba(167, 139, 250, 0.34))",
+        "beforePaddingTop": "0.5px",
+        "borderGradient": "linear-gradient(135deg, rgba(167, 139, 250, .28), rgba(167, 139, 250, .16) 52%, rgba(167, 139, 250, .34))",
+        "box": {
+          "x": 927.390625,
+          "y": 1380.546875,
+          "w": 311.21875,
+          "h": 36
+        }
+      },
+      "hover": {
+        "width": 311.219,
+        "height": 36,
+        "borderTopWidth": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "useMask": "1",
+        "stageRgb": "167, 139, 250",
+        "hairline": ".03125rem",
+        "beforeOpacity": "1",
+        "beforeBg": "linear-gradient(135deg, rgba(167, 139, 250, 0.28), rgba(167, 139, 250, 0.16) 52%, rgba(167, 139, 250, 0.34))",
+        "beforePaddingTop": "0.5px",
+        "borderGradient": "linear-gradient(135deg, rgba(167, 139, 250, .28), rgba(167, 139, 250, .16) 52%, rgba(167, 139, 250, .34))",
+        "box": {
+          "x": 927.390625,
+          "y": 1380.546875,
+          "w": 311.21875,
+          "h": 36
+        }
+      },
+      "focus": {
+        "width": 311.219,
+        "height": 36,
+        "borderTopWidth": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "useMask": "1",
+        "stageRgb": "167, 139, 250",
+        "hairline": ".03125rem",
+        "beforeOpacity": "1",
+        "beforeBg": "linear-gradient(135deg, rgba(167, 139, 250, 0.88), rgba(167, 139, 250, 0.72) 52%, rgba(167, 139, 250, 0.94))",
+        "beforePaddingTop": "0.5px",
+        "borderGradient": "linear-gradient(135deg, rgba(167, 139, 250, .88), rgba(167, 139, 250, .72) 52%, rgba(167, 139, 250, .94))",
+        "box": {
+          "x": 927.390625,
+          "y": 318.546875,
+          "w": 311.21875,
+          "h": 36
+        }
+      }
+    },
+    "activity": {
+      "rest": {
+        "width": 311.219,
+        "height": 36,
+        "borderTopWidth": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "useMask": "1",
+        "stageRgb": "96, 165, 250",
+        "hairline": ".03125rem",
+        "beforeOpacity": "1",
+        "beforeBg": "linear-gradient(135deg, rgba(96, 165, 250, 0.28), rgba(96, 165, 250, 0.16) 52%, rgba(96, 165, 250, 0.34))",
+        "beforePaddingTop": "0.5px",
+        "borderGradient": "linear-gradient(135deg, rgba(96, 165, 250, .28), rgba(96, 165, 250, .16) 52%, rgba(96, 165, 250, .34))",
+        "box": {
+          "x": 927.390625,
+          "y": 865.546875,
+          "w": 311.21875,
+          "h": 36
+        }
+      },
+      "hover": {
+        "width": 311.219,
+        "height": 36,
+        "borderTopWidth": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "useMask": "1",
+        "stageRgb": "96, 165, 250",
+        "hairline": ".03125rem",
+        "beforeOpacity": "1",
+        "beforeBg": "linear-gradient(135deg, rgba(96, 165, 250, 0.28), rgba(96, 165, 250, 0.16) 52%, rgba(96, 165, 250, 0.34))",
+        "beforePaddingTop": "0.5px",
+        "borderGradient": "linear-gradient(135deg, rgba(96, 165, 250, .28), rgba(96, 165, 250, .16) 52%, rgba(96, 165, 250, .34))",
+        "box": {
+          "x": 927.390625,
+          "y": 865.546875,
+          "w": 311.21875,
+          "h": 36
+        }
+      },
+      "focus": {
+        "width": 311.219,
+        "height": 36,
+        "borderTopWidth": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "useMask": "1",
+        "stageRgb": "96, 165, 250",
+        "hairline": ".03125rem",
+        "beforeOpacity": "1",
+        "beforeBg": "linear-gradient(135deg, rgba(96, 165, 250, 0.88), rgba(96, 165, 250, 0.72) 52%, rgba(96, 165, 250, 0.94))",
+        "beforePaddingTop": "0.5px",
+        "borderGradient": "linear-gradient(135deg, rgba(96, 165, 250, .88), rgba(96, 165, 250, .72) 52%, rgba(96, 165, 250, .94))",
+        "box": {
+          "x": 927.390625,
+          "y": 427.546875,
+          "w": 311.21875,
+          "h": 36
+        }
+      }
+    },
+    "product": {
+      "rest": {
+        "width": 311.219,
+        "height": 36,
+        "borderTopWidth": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "useMask": "1",
+        "stageRgb": "246, 179, 93",
+        "hairline": ".03125rem",
+        "beforeOpacity": "1",
+        "beforeBg": "linear-gradient(135deg, rgba(246, 179, 93, 0.28), rgba(246, 179, 93, 0.16) 52%, rgba(246, 179, 93, 0.34))",
+        "beforePaddingTop": "0.5px",
+        "borderGradient": "linear-gradient(135deg, rgba(246, 179, 93, .28), rgba(246, 179, 93, .16) 52%, rgba(246, 179, 93, .34))",
+        "box": {
+          "x": 927.390625,
+          "y": 865.546875,
+          "w": 311.21875,
+          "h": 36
+        }
+      },
+      "hover": {
+        "width": 311.219,
+        "height": 36,
+        "borderTopWidth": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "useMask": "1",
+        "stageRgb": "246, 179, 93",
+        "hairline": ".03125rem",
+        "beforeOpacity": "1",
+        "beforeBg": "linear-gradient(135deg, rgba(246, 179, 93, 0.28), rgba(246, 179, 93, 0.16) 52%, rgba(246, 179, 93, 0.34))",
+        "beforePaddingTop": "0.5px",
+        "borderGradient": "linear-gradient(135deg, rgba(246, 179, 93, .28), rgba(246, 179, 93, .16) 52%, rgba(246, 179, 93, .34))",
+        "box": {
+          "x": 927.390625,
+          "y": 865.546875,
+          "w": 311.21875,
+          "h": 36
+        }
+      },
+      "focus": {
+        "width": 311.219,
+        "height": 36,
+        "borderTopWidth": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "useMask": "1",
+        "stageRgb": "246, 179, 93",
+        "hairline": ".03125rem",
+        "beforeOpacity": "1",
+        "beforeBg": "linear-gradient(135deg, rgba(246, 179, 93, 0.88), rgba(246, 179, 93, 0.72) 52%, rgba(246, 179, 93, 0.94))",
+        "beforePaddingTop": "0.5px",
+        "borderGradient": "linear-gradient(135deg, rgba(246, 179, 93, .88), rgba(246, 179, 93, .72) 52%, rgba(246, 179, 93, .94))",
+        "box": {
+          "x": 927.390625,
+          "y": 427.546875,
+          "w": 311.21875,
+          "h": 36
+        }
+      }
+    },
+    "result": {
+      "rest": {
+        "width": 311.219,
+        "height": 36,
+        "borderTopWidth": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "useMask": "1",
+        "stageRgb": "94, 224, 181",
+        "hairline": ".03125rem",
+        "beforeOpacity": "1",
+        "beforeBg": "linear-gradient(135deg, rgba(94, 224, 181, 0.28), rgba(94, 224, 181, 0.16) 52%, rgba(94, 224, 181, 0.34))",
+        "beforePaddingTop": "0.5px",
+        "borderGradient": "linear-gradient(135deg, rgba(94, 224, 181, .28), rgba(94, 224, 181, .16) 52%, rgba(94, 224, 181, .34))",
+        "box": {
+          "x": 927.390625,
+          "y": 865.953125,
+          "w": 311.21875,
+          "h": 36
+        }
+      },
+      "hover": {
+        "width": 311.219,
+        "height": 36,
+        "borderTopWidth": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "useMask": "1",
+        "stageRgb": "94, 224, 181",
+        "hairline": ".03125rem",
+        "beforeOpacity": "1",
+        "beforeBg": "linear-gradient(135deg, rgba(94, 224, 181, 0.28), rgba(94, 224, 181, 0.16) 52%, rgba(94, 224, 181, 0.34))",
+        "beforePaddingTop": "0.5px",
+        "borderGradient": "linear-gradient(135deg, rgba(94, 224, 181, .28), rgba(94, 224, 181, .16) 52%, rgba(94, 224, 181, .34))",
+        "box": {
+          "x": 927.390625,
+          "y": 865.953125,
+          "w": 311.21875,
+          "h": 36
+        }
+      },
+      "focus": {
+        "width": 311.219,
+        "height": 36,
+        "borderTopWidth": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "useMask": "1",
+        "stageRgb": "94, 224, 181",
+        "hairline": ".03125rem",
+        "beforeOpacity": "1",
+        "beforeBg": "linear-gradient(135deg, rgba(94, 224, 181, 0.88), rgba(94, 224, 181, 0.72) 52%, rgba(94, 224, 181, 0.94))",
+        "beforePaddingTop": "0.5px",
+        "borderGradient": "linear-gradient(135deg, rgba(94, 224, 181, .88), rgba(94, 224, 181, .72) 52%, rgba(94, 224, 181, .94))",
+        "box": {
+          "x": 927.390625,
+          "y": 427.953125,
+          "w": 311.21875,
+          "h": 36
+        }
+      }
+    }
+  },
+  "invariant": {
+    "generic": {
+      "widthStable": true,
+      "heightStable": true,
+      "hairlineStable": true,
+      "bgTransparent": true,
+      "maskOn": true,
+      "borderWidthZeroInMask": true,
+      "widths": [
+        323.813,
+        323.813,
+        323.813
+      ],
+      "heights": [
+        44,
+        44,
+        44
+      ],
+      "stageRgb": "",
+      "beforeOpacity": [
+        "1",
+        "1",
+        "1"
+      ],
+      "hairline": ".03125rem",
+      "beforePaddingTop": "0.5px",
+      "restGradient": "linear-gradient(135deg, #ffffff47, #ffffff1a 52%, #ffffff38)",
+      "focusGradient": "linear-gradient(135deg, #ffffffeb, #ffffff85 52%, #ffffffd1)"
+    },
+    "input": {
+      "widthStable": true,
+      "heightStable": true,
+      "hairlineStable": true,
+      "bgTransparent": true,
+      "maskOn": true,
+      "borderWidthZeroInMask": true,
+      "widths": [
+        311.219,
+        311.219,
+        311.219
+      ],
+      "heights": [
+        36,
+        36,
+        36
+      ],
+      "stageRgb": "167, 139, 250",
+      "beforeOpacity": [
+        "1",
+        "1",
+        "1"
+      ],
+      "hairline": ".03125rem",
+      "beforePaddingTop": "0.5px",
+      "restGradient": "linear-gradient(135deg, rgba(167, 139, 250, .28), rgba(167, 139, 250, .16) 52%, rgba(167, 139, 250, .34))",
+      "focusGradient": "linear-gradient(135deg, rgba(167, 139, 250, .88), rgba(167, 139, 250, .72) 52%, rgba(167, 139, 250, .94))"
+    },
+    "activity": {
+      "widthStable": true,
+      "heightStable": true,
+      "hairlineStable": true,
+      "bgTransparent": true,
+      "maskOn": true,
+      "borderWidthZeroInMask": true,
+      "widths": [
+        311.219,
+        311.219,
+        311.219
+      ],
+      "heights": [
+        36,
+        36,
+        36
+      ],
+      "stageRgb": "96, 165, 250",
+      "beforeOpacity": [
+        "1",
+        "1",
+        "1"
+      ],
+      "hairline": ".03125rem",
+      "beforePaddingTop": "0.5px",
+      "restGradient": "linear-gradient(135deg, rgba(96, 165, 250, .28), rgba(96, 165, 250, .16) 52%, rgba(96, 165, 250, .34))",
+      "focusGradient": "linear-gradient(135deg, rgba(96, 165, 250, .88), rgba(96, 165, 250, .72) 52%, rgba(96, 165, 250, .94))"
+    },
+    "product": {
+      "widthStable": true,
+      "heightStable": true,
+      "hairlineStable": true,
+      "bgTransparent": true,
+      "maskOn": true,
+      "borderWidthZeroInMask": true,
+      "widths": [
+        311.219,
+        311.219,
+        311.219
+      ],
+      "heights": [
+        36,
+        36,
+        36
+      ],
+      "stageRgb": "246, 179, 93",
+      "beforeOpacity": [
+        "1",
+        "1",
+        "1"
+      ],
+      "hairline": ".03125rem",
+      "beforePaddingTop": "0.5px",
+      "restGradient": "linear-gradient(135deg, rgba(246, 179, 93, .28), rgba(246, 179, 93, .16) 52%, rgba(246, 179, 93, .34))",
+      "focusGradient": "linear-gradient(135deg, rgba(246, 179, 93, .88), rgba(246, 179, 93, .72) 52%, rgba(246, 179, 93, .94))"
+    },
+    "result": {
+      "widthStable": true,
+      "heightStable": true,
+      "hairlineStable": true,
+      "bgTransparent": true,
+      "maskOn": true,
+      "borderWidthZeroInMask": true,
+      "widths": [
+        311.219,
+        311.219,
+        311.219
+      ],
+      "heights": [
+        36,
+        36,
+        36
+      ],
+      "stageRgb": "94, 224, 181",
+      "beforeOpacity": [
+        "1",
+        "1",
+        "1"
+      ],
+      "hairline": ".03125rem",
+      "beforePaddingTop": "0.5px",
+      "restGradient": "linear-gradient(135deg, rgba(94, 224, 181, .28), rgba(94, 224, 181, .16) 52%, rgba(94, 224, 181, .34))",
+      "focusGradient": "linear-gradient(135deg, rgba(94, 224, 181, .88), rgba(94, 224, 181, .72) 52%, rgba(94, 224, 181, .94))"
+    }
+  },
+  "meta": {
+    "nodesAfterInput": 1,
+    "advancedToActivity": true,
+    "activityLabel": "CRIAR NOVA ATIVIDADE",
+    "nodesAfterActivity": 2,
+    "advancedToProduct": true,
+    "productLabel": "CRIAR NOVO PRODUTO",
+    "nodesAfterProduct": 3,
+    "advancedToResult": true,
+    "resultLabel": "CRIAR NOVO RESULTADO"
+  }
+}

@@ -2,7 +2,8 @@
 
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import type { ReactNode } from 'react';
-import { THEORY_TRANSLATOR_MOTION } from '../result-theory-translator/result-theory-translator.constants';
+import { TDM_MOTION_TRANSITIONS } from '@/shared/motion/tdm-motion';
+import { THEORY_TRANSLATOR_WIDTH } from '../result-theory-translator/result-theory-translator.constants';
 import styles from './result-experience-shell.module.sass';
 
 type ResultExperienceShellProps = {
@@ -20,7 +21,7 @@ export function ResultExperienceShell({
   onTranslatorLayoutComplete
 }: ResultExperienceShellProps) {
   const reduce = useReducedMotion();
-  const duration = reduce ? 0.01 : THEORY_TRANSLATOR_MOTION.duration;
+  const duration = reduce ? 0.01 : TDM_MOTION_TRANSITIONS.panel.duration;
 
   return (
     <div
@@ -38,9 +39,9 @@ export function ResultExperienceShell({
           data-expanded={isTranslatorExpanded ? 'true' : 'false'}
           initial={false}
           animate={{
-            width: isTranslatorExpanded ? 'clamp(28rem, 34vw, 36rem)' : 0
+            width: isTranslatorExpanded ? THEORY_TRANSLATOR_WIDTH : 0
           }}
-          transition={{ duration, ease: THEORY_TRANSLATOR_MOTION.ease }}
+          transition={{ duration, ease: TDM_MOTION_TRANSITIONS.panel.ease }}
           onAnimationComplete={onTranslatorLayoutComplete}
         >
           {translator}

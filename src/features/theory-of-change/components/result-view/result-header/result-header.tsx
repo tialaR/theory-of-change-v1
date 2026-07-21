@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
 import styles from './result-header.module.sass';
 
 type ResultHeaderProps = {
@@ -12,6 +13,20 @@ type ResultHeaderProps = {
   actions: ReactNode;
 };
 
+function BackChevron() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path
+        d="M9.5 3.5 4.5 8l5 4.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function ResultHeader({
   title,
   backHref,
@@ -20,16 +35,18 @@ export function ResultHeader({
   actions
 }: ResultHeaderProps) {
   return (
-    <header className={styles.topbar}>
+    <header className={styles.topbar} data-export-exclude="true">
       <div className={styles.start}>
         {backHref ? (
-          <Link href={backHref} className={styles.backButton} aria-label={backLabel}>
-            <span aria-hidden="true">←</span>
+          <Link href={backHref} className={styles.backLink} aria-label={backLabel}>
+            <span className={styles.backIcon} aria-hidden="true">
+              <BackChevron />
+            </span>
           </Link>
         ) : (
-          <button type="button" className={styles.backButton} aria-label={backLabel} onClick={onBack}>
-            <span aria-hidden="true">←</span>
-          </button>
+          <TdmIconButton aria-label={backLabel} variant="subtle" size="md" tooltip={backLabel} onClick={onBack}>
+            <BackChevron />
+          </TdmIconButton>
         )}
       </div>
 

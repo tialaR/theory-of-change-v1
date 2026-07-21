@@ -1,6 +1,8 @@
 import { TDM_STAGE_ORDER } from '../domain/tdm-stages';
 import { TdmNode } from '../domain/tdm-types';
-import { STAGE_ROW_GAP } from './stage-creation';
+import { CANVAS_COLUMN_ROW_GAP, getNodeLayoutHeight } from './stage-creation';
+
+const BASE_Y = 140;
 
 export function layoutNodesByStage(nodes: TdmNode[]) {
   const columnXByStage = {
@@ -10,25 +12,26 @@ export function layoutNodesByStage(nodes: TdmNode[]) {
     outcome: 1140
   } as const;
 
-  const stageOffsets = {
-    input: 0,
-    activity: 0,
-    output: 0,
-    outcome: 0
+  const columnYByStage = {
+    input: BASE_Y,
+    activity: BASE_Y,
+    output: BASE_Y,
+    outcome: BASE_Y
   } as Record<(typeof TDM_STAGE_ORDER)[number], number>;
 
   return nodes.map((node) => {
     const stageIndex = Math.max(TDM_STAGE_ORDER.indexOf(node.stage), 0);
     const stage = TDM_STAGE_ORDER[stageIndex];
-    const offset = stageOffsets[stage];
+    const currentY = columnYByStage[stage];
+    const measuredHeight = getNodeLayoutHeight(node);
 
-    stageOffsets[stage] += 1;
+    columnYByStage[stage] = currentY + measuredHeight + CANVAS_COLUMN_ROW_GAP;
 
     return {
       ...node,
       position: {
         x: columnXByStage[stage],
-        y: 140 + offset * STAGE_ROW_GAP
+        y: currentY
       }
     };
   });

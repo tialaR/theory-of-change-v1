@@ -1,0 +1,111 @@
+// Canvas tooltip shell — flat dark surface shared by TdmAnchoredTooltip,
+// edge marker previews, and canvas-scoped TdmTooltip skin.
+// Keep tokens local: do not pollute global DS.
+
+$tdm-anchored-tooltip-fg: rgba(244, 244, 245, 0.94)
+$tdm-anchored-tooltip-fg-muted: rgba(244, 244, 245, 0.62)
+$tdm-anchored-tooltip-border: rgba(255, 255, 255, 0.12)
+$tdm-anchored-tooltip-bg: #27272a
+$tdm-anchored-tooltip-radius: 0.5rem
+$tdm-anchored-tooltip-padding-y: 0.5rem
+$tdm-anchored-tooltip-padding-x: 0.625rem
+$tdm-anchored-tooltip-max-width: 12.5rem
+$tdm-anchored-tooltip-font-size: 0.6875rem
+$tdm-anchored-tooltip-font-weight: 500
+$tdm-anchored-tooltip-line-height: 1.4
+$tdm-anchored-tooltip-tracking: 0.01em
+$tdm-anchored-tooltip-arrow-size: 0.5rem
+$tdm-anchored-tooltip-arrow-offset: 0.25rem
+
+@mixin tdm-anchored-tooltip-surface
+  --tdm-anchored-tooltip-fg: #{$tdm-anchored-tooltip-fg}
+  --tdm-anchored-tooltip-fg-muted: #{$tdm-anchored-tooltip-fg-muted}
+  --tdm-anchored-tooltip-bg: #{$tdm-anchored-tooltip-bg}
+  --tdm-anchored-tooltip-border: #{$tdm-anchored-tooltip-border}
+  border-radius: $tdm-anchored-tooltip-radius
+  background: $tdm-anchored-tooltip-bg
+  border: 0.0625rem solid $tdm-anchored-tooltip-border
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.32)
+  color: var(--tdm-anchored-tooltip-fg)
+  font-size: $tdm-anchored-tooltip-font-size
+  font-weight: $tdm-anchored-tooltip-font-weight
+  letter-spacing: $tdm-anchored-tooltip-tracking
+  line-height: $tdm-anchored-tooltip-line-height
+  text-align: center
+  white-space: normal
+
+@mixin tdm-anchored-tooltip-padding
+  padding: $tdm-anchored-tooltip-padding-y $tdm-anchored-tooltip-padding-x
+
+@mixin tdm-anchored-tooltip-size-default
+  width: max-content
+  max-width: $tdm-anchored-tooltip-max-width
+  @include tdm-anchored-tooltip-padding
+
+@mixin tdm-anchored-tooltip-size-compact
+  display: flex
+  flex-direction: column
+  align-items: stretch
+  gap: 0.25rem
+  width: max-content
+  max-width: $tdm-anchored-tooltip-max-width
+  @include tdm-anchored-tooltip-padding
+
+@mixin tdm-anchored-tooltip-title
+  margin: 0
+  color: var(--tdm-anchored-tooltip-fg)
+  font-size: $tdm-anchored-tooltip-font-size
+  font-weight: $tdm-anchored-tooltip-font-weight
+  letter-spacing: $tdm-anchored-tooltip-tracking
+  line-height: $tdm-anchored-tooltip-line-height
+
+@mixin tdm-anchored-tooltip-description
+  margin: 0
+  color: var(--tdm-anchored-tooltip-fg-muted)
+  font-size: $tdm-anchored-tooltip-font-size
+  font-weight: $tdm-anchored-tooltip-font-weight
+  letter-spacing: $tdm-anchored-tooltip-tracking
+  line-height: $tdm-anchored-tooltip-line-height
+
+@mixin tdm-anchored-tooltip-arrow
+  &::before
+    content: ''
+    position: absolute
+    box-sizing: border-box
+    width: $tdm-anchored-tooltip-arrow-size
+    height: $tdm-anchored-tooltip-arrow-size
+    background: $tdm-anchored-tooltip-bg
+    border: 0.0625rem solid $tdm-anchored-tooltip-border
+    transform: rotate(45deg)
+
+@mixin tdm-anchored-tooltip-arrow-bottom
+  &::before
+    top: -#{$tdm-anchored-tooltip-arrow-offset}
+    left: 50%
+    margin-left: -#{$tdm-anchored-tooltip-arrow-offset}
+    border-bottom: 0
+    border-right: 0
+
+@mixin tdm-anchored-tooltip-arrow-top
+  &::before
+    bottom: -#{$tdm-anchored-tooltip-arrow-offset}
+    left: 50%
+    margin-left: -#{$tdm-anchored-tooltip-arrow-offset}
+    border-top: 0
+    border-left: 0
+
+@mixin tdm-anchored-tooltip-arrow-left
+  &::before
+    right: -#{$tdm-anchored-tooltip-arrow-offset}
+    top: 50%
+    margin-top: -#{$tdm-anchored-tooltip-arrow-offset}
+    border-bottom: 0
+    border-left: 0
+
+@mixin tdm-anchored-tooltip-arrow-right
+  &::before
+    left: -#{$tdm-anchored-tooltip-arrow-offset}
+    top: 50%
+    margin-top: -#{$tdm-anchored-tooltip-arrow-offset}
+    border-top: 0
+    border-right: 0

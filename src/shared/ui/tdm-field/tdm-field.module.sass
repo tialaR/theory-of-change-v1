@@ -1,0 +1,338 @@
+.field
+  display: flex
+  flex-direction: column
+  gap: var(--tdm-space-2)
+  min-width: 0
+
+.label
+  display: inline-flex
+  align-items: baseline
+  gap: var(--tdm-space-1)
+  color: var(--tdm-fg-secondary)
+  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.75rem
+  font-weight: 500
+  line-height: 1rem
+  letter-spacing: 0.02em
+
+.required
+  color: var(--tdm-fg-danger)
+
+.description
+  margin: 0
+  color: var(--tdm-fg-muted)
+  font-size: 0.75rem
+  line-height: var(--tdm-font-body-line)
+  max-width: var(--tdm-measure-body)
+
+// Single visual shell: only controlShell draws contour / radius / hover / focus.
+// Interior stays transparent in every state — never a nested plate.
+//
+// Dual chrome (5B.14.1):
+//   --tdm-field-use-mask-border: 1  → gradient hairline via ::before (sidebar)
+//   unset / 0                      → solid hairline (React Flow node forms, unchanged)
+//
+// Generic (Rule A): leave --tdm-stage-field-rgb unset → white gradient.
+// Stage (Rule B): ancestor sets --tdm-stage-field-rgb: R, G, B
+.controlShell
+  // Neutral canvas hooks — unset keeps prior hairline / stroke behavior identical.
+  --tdm-field-border-width: var(--canvas-field-border-width, var(--tdm-field-hairline))
+  // Inherit --tdm-field-use-mask-border and gradient tokens from sidebar ancestors.
+  // Fallback 0 keeps React Flow node forms on solid chrome (out of scope).
+  --tdm-field-fill: transparent
+  --tdm-field-rest-stroke: var(--tdm-field-accent-rest, var(--tdm-border-subtle))
+  --tdm-field-active-stroke: var(--tdm-field-accent, var(--tdm-border-interactive))
+  position: relative
+  box-sizing: border-box
+  display: grid
+  grid-template-columns: minmax(0, 1fr) 2.25rem
+  align-items: center
+  column-gap: 0
+  min-height: var(--tdm-cta-md-min-height)
+  padding-block: 0
+  padding-inline-start: 0.875rem
+  padding-inline-end: 0.375rem
+  border-width: calc(var(--tdm-field-border-width) * (1 - var(--tdm-field-use-mask-border, 0)))
+  border-style: solid
+  border-color: var(--canvas-field-border-rest, var(--tdm-field-rest-stroke))
+  border-radius: var(--tdm-radius-sm)
+  background: transparent
+  outline: none
+  box-shadow: none
+  transition-property: border-color, color
+  transition-duration: var(--tdm-duration-ui)
+  transition-timing-function: var(--tdm-ease-standard)
+
+  &::before
+    content: ""
+    position: absolute
+    inset: 0
+    z-index: 0
+    box-sizing: border-box
+    padding: var(--tdm-field-hairline)
+    border-radius: inherit
+    pointer-events: none
+    // Prefer ancestor --tdm-field-border-gradient (stage/generic), else token white rest.
+    background: var(--tdm-field-border-gradient, var(--tdm-field-border-gradient-rest))
+    opacity: var(--tdm-field-use-mask-border, 0)
+    -webkit-mask: linear-gradient(var(--tdm-field-mask-ink) 0 0) content-box, linear-gradient(var(--tdm-field-mask-ink) 0 0)
+    -webkit-mask-composite: xor
+    mask: linear-gradient(var(--tdm-field-mask-ink) 0 0) content-box, linear-gradient(var(--tdm-field-mask-ink) 0 0)
+    mask-composite: exclude
+    transition-property: background, opacity
+    transition-duration: var(--tdm-duration-ui)
+    transition-timing-function: var(--tdm-ease-standard)
+
+  > *
+    position: relative
+    z-index: 1
+
+  &:hover
+    border-width: calc(var(--tdm-field-border-width) * (1 - var(--tdm-field-use-mask-border, 0)))
+    border-color: var(--canvas-field-border-hover, var(--tdm-field-active-stroke))
+    background: transparent
+    outline: none
+    box-shadow: none
+    --tdm-field-border-gradient: var(--tdm-field-border-gradient-active, var(--tdm-field-border-gradient-hot))
+
+  &:focus,
+  &:focus-visible,
+  &:focus-within
+    border-width: calc(var(--tdm-field-border-width) * (1 - var(--tdm-field-use-mask-border, 0)))
+    border-color: var(--canvas-field-border-focus, var(--tdm-field-active-stroke))
+    background: transparent
+    outline: none
+    box-shadow: none
+    --tdm-field-border-gradient: var(--tdm-field-border-gradient-active, var(--tdm-field-border-gradient-hot))
+
+
+  &:has(.textarea)
+    align-items: flex-start
+    padding-block: var(--tdm-space-2)
+
+  &:has(.adornment:first-child)
+    grid-template-columns: 2.25rem minmax(0, 1fr) 2.25rem
+
+  &:not(:has(.adornment))
+    grid-template-columns: minmax(0, 1fr)
+    padding-inline-end: 0.875rem
+
+.adornment
+  display: inline-grid
+  place-items: center
+  flex: 0 0 auto
+  align-self: center
+  justify-self: center
+  color: var(--tdm-fg-muted)
+  width: 2.25rem
+  height: 2.25rem
+
+  :global(button)
+    display: inline-grid
+    place-items: center
+    box-sizing: border-box
+    width: 2.25rem
+    height: 2.25rem
+    min-width: 2.25rem
+    min-height: 2.25rem
+    padding: 0
+    border: 0
+    border-radius: var(--tdm-radius-sm)
+    background: transparent
+    box-shadow: none
+    color: inherit
+    transition-property: color
+    transition-duration: var(--tdm-duration-ui)
+    transition-timing-function: var(--tdm-ease-standard)
+
+    &:hover,
+    &:focus-visible
+      color: var(--tdm-fg-secondary)
+      background: transparent
+      outline: none
+      box-shadow: none
+
+    :global(svg)
+      width: 0.875rem
+      height: 0.875rem
+
+.control,
+.input,
+.textarea
+  width: 100%
+  min-width: 0
+  border: 0
+  border-radius: 0
+  background: transparent
+  color: var(--tdm-fg-primary)
+  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.875rem
+  line-height: 1.25rem
+  outline: none
+  box-shadow: none
+  padding-inline: 0
+  -webkit-appearance: none
+  appearance: none
+
+  &:focus,
+  &:focus-visible
+    outline: none
+    box-shadow: none
+    border: 0
+    background: transparent
+
+  &::placeholder
+    color: var(--tdm-fg-subtle)
+    font-size: 0.875rem
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active
+    -webkit-text-fill-color: var(--tdm-fg-primary)
+    caret-color: var(--tdm-fg-primary)
+    border: 0
+    box-shadow: none
+    transition: background-color 99999s ease-out 0s
+    background-color: transparent
+
+.control,
+.input
+  min-height: calc(var(--tdm-cta-md-min-height) - 0.125rem)
+  padding-block: 0
+
+.textarea
+  min-height: 6rem
+  max-height: 12rem
+  padding-block: var(--tdm-space-1)
+  padding-inline: 0
+  line-height: 1.375rem
+  resize: none
+  overflow-x: hidden
+  overflow-y: auto
+  scrollbar-width: none
+  -ms-overflow-style: none
+
+  &::-webkit-scrollbar
+    display: none
+    width: 0
+    height: 0
+
+.sizeMd
+  .label
+    font-size: 0.8125rem
+
+.sizeSm
+  .label
+    font-size: 0.75rem
+
+  .controlShell
+    min-height: var(--tdm-cta-sm-min-height)
+
+  .control,
+  .input,
+  .textarea
+    font-size: 0.875rem
+    line-height: 1.25rem
+
+  .control,
+  .input
+    min-height: calc(var(--tdm-cta-sm-min-height) - 0.25rem)
+
+  .textarea
+    min-height: 3.5rem
+    max-height: 5.5rem
+    padding-block: var(--tdm-space-1)
+    line-height: 1.375rem
+
+.error
+  margin: 0
+  color: var(--tdm-fg-danger)
+  font-size: var(--tdm-font-label-size)
+  line-height: var(--tdm-font-label-line)
+
+.filled .controlShell
+  --tdm-field-fill: transparent
+  background: transparent
+
+.invalid .controlShell
+  --tdm-field-rest-stroke: color-mix(in srgb, var(--tdm-border-danger) 70%, transparent)
+  --tdm-field-active-stroke: var(--tdm-border-danger)
+  // Remap canvas color hooks so invalid still wins when sidebar sets them.
+  --canvas-field-border-rest: var(--tdm-field-rest-stroke)
+  --canvas-field-border-hover: var(--tdm-field-active-stroke)
+  --canvas-field-border-focus: var(--tdm-field-active-stroke)
+  --tdm-field-border-gradient: linear-gradient(135deg, color-mix(in srgb, var(--tdm-border-danger) 55%, transparent), color-mix(in srgb, var(--tdm-border-danger) 28%, transparent) 52%, color-mix(in srgb, var(--tdm-border-danger) 48%, transparent))
+  --tdm-field-border-gradient-active: linear-gradient(135deg, var(--tdm-border-danger), color-mix(in srgb, var(--tdm-border-danger) 72%, transparent) 52%, var(--tdm-border-danger))
+  border-width: calc(var(--tdm-field-border-width) * (1 - var(--tdm-field-use-mask-border, 0)))
+  border-color: var(--canvas-field-border-rest, var(--tdm-field-rest-stroke))
+  background: transparent
+  outline: none
+  box-shadow: none
+
+  &:hover,
+  &:focus,
+  &:focus-visible,
+  &:focus-within
+    border-width: calc(var(--tdm-field-border-width) * (1 - var(--tdm-field-use-mask-border, 0)))
+    border-color: var(--canvas-field-border-focus, var(--tdm-field-active-stroke))
+    background: transparent
+    outline: none
+    box-shadow: none
+    --tdm-field-border-gradient: var(--tdm-field-border-gradient-active)
+
+.disabled .controlShell,
+.readonly .controlShell
+  --tdm-field-fill: transparent
+  --tdm-field-border-gradient: var(--tdm-field-border-gradient-disabled)
+  --tdm-field-border-gradient-active: var(--tdm-field-border-gradient-disabled)
+  --canvas-field-border-rest: var(--tdm-border-disabled)
+  --canvas-field-border-hover: var(--tdm-border-disabled)
+  --canvas-field-border-focus: var(--tdm-border-disabled)
+  border-width: calc(var(--tdm-field-border-width) * (1 - var(--tdm-field-use-mask-border, 0)))
+  border-color: var(--canvas-field-border-rest, var(--tdm-border-disabled))
+  background: transparent
+  outline: none
+  box-shadow: none
+
+  &:hover,
+  &:focus,
+  &:focus-visible,
+  &:focus-within
+    border-width: calc(var(--tdm-field-border-width) * (1 - var(--tdm-field-use-mask-border, 0)))
+    border-color: var(--canvas-field-border-focus, var(--tdm-border-disabled))
+    background: transparent
+    outline: none
+    box-shadow: none
+
+.disabled
+  opacity: 0.72
+
+  .label,
+  .description,
+  .control,
+  .input,
+  .textarea,
+  .adornment
+    color: var(--tdm-fg-disabled)
+
+.readonly .control,
+.readonly .input,
+.readonly .textarea
+  color: var(--tdm-fg-secondary)
+
+@media (prefers-reduced-motion: reduce)
+  .controlShell
+    transition: none
+
+    &::before
+      transition: none
+
+  .control,
+  .input,
+  .textarea
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active
+      transition: none

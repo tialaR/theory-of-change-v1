@@ -1,7 +1,16 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import { Inter } from 'next/font/google';
+import { TdmMotionProvider } from '@/shared/motion/tdm-motion';
 import '@xyflow/react/dist/style.css';
 import './globals.sass';
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  display: 'swap',
+  variable: '--tdm-font-sans'
+});
 
 export const metadata: Metadata = {
   title: 'Teoria da Mudança',
@@ -14,8 +23,10 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
-      <body>{children}</body>
+    <html lang="pt-BR" className={inter.variable}>
+      <body>
+        <TdmMotionProvider>{children}</TdmMotionProvider>
+      </body>
     </html>
   );
 }
