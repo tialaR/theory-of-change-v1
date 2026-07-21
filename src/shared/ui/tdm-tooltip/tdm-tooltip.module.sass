@@ -1,3 +1,5 @@
+@use '../tooltip/tdm-anchored-tooltip-surface' as surface
+
 .root
   position: relative
   display: inline-flex
@@ -45,6 +47,25 @@
   left: calc(100% + var(--tdm-space-2))
   top: 50%
   transform: translateY(-50%)
+
+// Canvas-only skin: same flat shell + arrow as TdmAnchoredTooltip.
+.tooltipCanvas
+  @include surface.tdm-anchored-tooltip-surface
+  @include surface.tdm-anchored-tooltip-size-default
+  font-family: inherit
+  @include surface.tdm-anchored-tooltip-arrow
+
+.tooltipCanvas.positionTop
+  @include surface.tdm-anchored-tooltip-arrow-top
+
+.tooltipCanvas.positionBottom
+  @include surface.tdm-anchored-tooltip-arrow-bottom
+
+.tooltipCanvas.positionLeft
+  @include surface.tdm-anchored-tooltip-arrow-left
+
+.tooltipCanvas.positionRight
+  @include surface.tdm-anchored-tooltip-arrow-right
 
 @media (prefers-reduced-motion: reduce)
   .tooltip

@@ -63,6 +63,7 @@ import {
 import { layoutNodesByStage } from '../../utils/layout-nodes-by-stage';
 import { layoutNodesByFlow } from '../../utils/layout-nodes-by-flow';
 import { getCreateNodePosition, getDuplicateNodePosition } from '../../utils/node-placement';
+import ctaScope from './canvas-cta-scope.module.sass';
 import styles from './tdm-canvas.module.sass';
 
 const EMPTY_DRAFT: TdmNodeDraft = {
@@ -167,7 +168,7 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
   const isExampleInitial = initialVariant === 'example';
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [viewMode, setViewMode] = useState<ViewMode>('canvas');
-  const [theoryTitle, setTheoryTitle] = useState(isExampleInitial ? exampleTheory.title : 'Nova teoria da mudança');
+  const [theoryTitle, setTheoryTitle] = useState(isExampleInitial ? exampleTheory.title : '');
   const [nodes, setNodes, onNodesChange] = useNodesState<TdmNodeModel>(isExampleInitial ? exampleTheory.nodes : []);
   const [edges, setEdges, onEdgesChange] = useEdgesState<TdmEdgeModel>(isExampleInitial ? exampleTheory.edges : []);
   const [stageCreation, setStageCreation] = useState<StageCreation>(isExampleInitial ? 'ready-to-connect' : 'input');
@@ -1389,7 +1390,7 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
   const sidebarToggleLabel = isSidebarOpen ? 'Fechar sidebar' : 'Abrir sidebar';
 
   return (
-    <section className={[styles.shell, isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed].join(' ')}>
+    <section className={[styles.shell, ctaScope.scope, isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed].join(' ')}>
       <div className={styles.shellChromeTopLeft} data-dock-expanded={isGuideExpanded ? 'true' : 'false'}>
         <TdmButton
           href="/"
@@ -1411,6 +1412,7 @@ export function TdmCanvasInner({ initialVariant = 'custom' }: TdmCanvasInnerProp
           aria-label={sidebarToggleLabel}
           tooltip={sidebarToggleLabel}
           tooltipPosition="left"
+          tooltipSkin="canvas"
           variant="ghost"
           size="md"
           className={styles.sidebarToggleButton}

@@ -1,0 +1,44 @@
+.root
+  display: inline-flex
+  align-items: center
+  gap: var(--tdm-space-2)
+  max-width: 100%
+  width: max-content
+  margin: 0 0 var(--tdm-space-4)
+  font-family: var(--tdm-font-sans)
+  font-size: 0.875rem
+  font-weight: 500
+  line-height: 1.25rem
+  letter-spacing: 0.06em
+  white-space: nowrap
+
+.icon
+  display: inline-flex
+  flex-shrink: 0
+  align-items: center
+  justify-content: center
+  width: var(--tdm-icon-size-sm)
+  height: var(--tdm-icon-size-sm)
+  color: var(--tdm-fg-secondary)
+
+  svg
+    display: block
+    width: 100%
+    height: 100%
+    stroke: currentColor
+    fill: none
+
+.text
+  min-width: 0
+  overflow: hidden
+  text-overflow: ellipsis
+  text-transform: uppercase
+  background: linear-gradient(
+    90deg,
+    var(--tdm-fg-metallic-start) 0%,
+    var(--tdm-fg-metallic-mid) 52%,
+    var(--tdm-fg-metallic-end) 100%
+  )
+  -webkit-background-clip: text
+  background-clip: text
+  color: transparent

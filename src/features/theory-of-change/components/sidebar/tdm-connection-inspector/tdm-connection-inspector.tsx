@@ -150,7 +150,7 @@ export function TdmConnectionInspector({
         <span className={styles.headerIcon} aria-hidden="true">
           <ConnectionIcon />
         </span>
-        <h3 className={styles.title}>Editar conexão</h3>
+        <h3 className={styles.title}>Editar conexão entre:</h3>
       </header>
 
       <ConnectionRouteSummary sourceLabel={sourceLabel} targetLabel={targetLabel} />
@@ -223,7 +223,7 @@ export function TdmMarkerInspector({
   onDelete: () => void;
 }) {
   const isRisk = markerType === 'risk';
-  const title = isRisk ? 'Editar risco' : 'Editar hipótese';
+  const title = isRisk ? 'Editar risco entre:' : 'Editar hipótese entre:';
   const fieldLabel = isRisk ? 'Risco' : 'Hipótese';
   const placeholder = isRisk
     ? 'Ex.: baixa adesão, atraso de recursos, equipe insuficiente...'

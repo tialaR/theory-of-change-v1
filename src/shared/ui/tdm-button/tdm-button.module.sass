@@ -29,7 +29,7 @@
   height: var(--tdm-button-md-height)
   min-height: var(--tdm-button-md-height)
   padding: 0 var(--tdm-button-md-padding-inline)
-  border: var(--tdm-border-width-hairline) solid var(--tdm-button-border-rest)
+  border: var(--tdm-button-border-width) solid var(--tdm-button-border-rest)
   border-radius: var(--tdm-button-md-radius)
   color: var(--tdm-button-text-rest)
   background: var(--tdm-button-bg-rest-gradient), var(--tdm-button-bg-rest)
@@ -168,9 +168,12 @@
   --tdm-button-shadow-hover: var(--tdm-button-neutral-shadow-hover)
   --tdm-button-top-light: var(--tdm-button-neutral-top-light)
 
+  // Mesmo caminho de hover dos tons semânticos (.bordered:hover → gradient + bg-hover).
+  // O fill especial do neutral entra só via --tdm-button-bg-hover (escopo /canvas iguala à superfície).
   &:hover:not(:disabled):not([aria-disabled='true']),
   &:focus-visible:not(:disabled):not([aria-disabled='true'])
-    background: var(--tdm-button-neutral-fill-hover)
+    --tdm-button-bg-rest-gradient: transparent
+    --tdm-button-bg-hover: var(--tdm-button-neutral-fill-hover)
 
 .toneDanger
   --tdm-button-border-rest: var(--tdm-button-danger-border-rest)
@@ -242,6 +245,10 @@
     display: block
     width: var(--tdm-button-icon-size)
     height: var(--tdm-button-icon-size)
+    stroke-width: var(--tdm-button-icon-stroke-width)
+
+    :global(*)
+      stroke-width: inherit
 
 .spinner
   width: var(--tdm-button-icon-size)

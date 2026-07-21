@@ -1,18 +1,16 @@
+@use '../tdm-experience-title' as experience-title
+
 .inspector
-  // Rule A — risk / hypothesis / marker fields stay generic white hairline.
-  --tdm-field-use-mask-border: 1
+  // Risk / hypothesis / connection fields — generic white solid hairline (tokens from .sidebar).
+  --tdm-field-use-mask-border: 0
   --tdm-field-accent: initial
   --tdm-field-accent-rest: initial
-  --tdm-field-border-gradient: var(--tdm-field-border-gradient-rest)
-  --tdm-field-border-gradient-active: var(--tdm-field-border-gradient-hot)
   display: grid
   gap: var(--tdm-space-4)
   min-width: 0
 
 .header
-  display: flex
-  align-items: center
-  gap: var(--tdm-space-2)
+  @include experience-title.experience-title-header
   min-width: 0
 
 .headerIcon
@@ -28,12 +26,7 @@
     height: 1.0625rem
 
 .title
-  margin: 0
-  color: var(--tdm-fg-primary)
-  font-size: 0.875rem
-  font-weight: 600
-  line-height: 1.25
-  letter-spacing: -0.01em
+  @include experience-title.experience-title-text
 
 // Read-only route summary — never looks like an input.
 .route

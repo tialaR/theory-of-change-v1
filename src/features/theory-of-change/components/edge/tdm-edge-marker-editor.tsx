@@ -96,7 +96,7 @@ export function TdmEdgeMarkerEditor({
     <TdmSurface
       as="div"
       variant="elevated"
-      padding="md"
+      padding="none"
       radius="lg"
       className={`${styles.editor} nodrag nopan`}
       data-export-exclude="true"
@@ -117,6 +117,7 @@ export function TdmEdgeMarkerEditor({
             <TdmIconButton
               aria-label={DELETE_LABELS[markerType]}
               tooltip={DELETE_LABELS[markerType]}
+              tooltipSkin="canvas"
               variant="destructive"
               size="sm"
               onClick={onDelete}
@@ -124,7 +125,14 @@ export function TdmEdgeMarkerEditor({
               <TrashIcon />
             </TdmIconButton>
           ) : null}
-          <TdmIconButton aria-label="Fechar" tooltip="Fechar" variant="ghost" size="sm" onClick={onCancel}>
+          <TdmIconButton
+            aria-label="Fechar"
+            tooltip="Fechar"
+            tooltipSkin="canvas"
+            variant="ghost"
+            size="sm"
+            onClick={onCancel}
+          >
             <CloseIcon />
           </TdmIconButton>
         </div>
@@ -163,7 +171,15 @@ export function TdmEdgeMarkerEditor({
         />
       </TdmField>
 
-      <TdmButton type="button" variant="primary" tone="neutral" size="sm" fullWidth onClick={handleSave}>
+      <TdmButton
+        type="button"
+        variant="primary"
+        tone="neutral"
+        size="sm"
+        fullWidth
+        className={styles.submitAction}
+        onClick={handleSave}
+      >
         {submitLabel}
       </TdmButton>
     </TdmSurface>

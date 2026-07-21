@@ -1,0 +1,119 @@
+// Escopo visual de CTAs bordered — exclusivo da rota /canvas (+ portal TdmResultPreview).
+// Tokens internos do módulo → rebind de --tdm-button-* já consumidos pelo TdmButton.
+// Nenhum valor desta pele é publicado em :root.
+
+.scope
+  // ── Tokens feature-scoped (fonte única) ──
+  // Superfície transparente: uma única borda (sem placa opaca + inset = “segunda borda”).
+  --canvas-cta-surface: transparent
+  --canvas-cta-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.006), inset 0 -0.625rem 0.875rem rgba(0, 0, 0, 0.08)
+
+  --canvas-cta-border-rest-opacity: 0.24
+  --canvas-cta-border-hover-opacity: 0.30
+  --canvas-cta-content-rest-opacity: 0.52
+  --canvas-cta-content-hover-opacity: 0.60
+
+  --canvas-cta-neutral-rgb: 245, 247, 251
+  --canvas-cta-input-rgb: 139, 119, 255
+  --canvas-cta-activity-rgb: 92, 158, 255
+  --canvas-cta-output-rgb: 232, 171, 82
+  --canvas-cta-outcome-rgb: 95, 202, 142
+  --canvas-cta-danger-rgb: 255, 133, 154
+
+  // ── Geometria / tipografia do escopo ──
+  --tdm-button-border-width: 0.0625rem
+  --tdm-button-font-weight: 320
+  --tdm-button-letter-spacing: -0.01em
+  --tdm-button-icon-size: 1rem
+  --tdm-button-icon-stroke-width: 1.1
+  --tdm-button-sm-font-size: 0.8125rem
+  --tdm-button-md-font-size: 0.875rem
+  --tdm-button-lg-font-size: 0.875rem
+
+  --tdm-button-sm-height: 2.5rem
+  --tdm-button-sm-radius: 0.75rem
+  --tdm-button-md-height: 2.5rem
+  --tdm-button-md-radius: 0.75rem
+  --tdm-button-lg-height: 2.5rem
+  --tdm-button-lg-radius: 0.75rem
+
+  // ── Superfície única transparente; hover não muda bg (neutral = semânticos) ──
+  --tdm-button-bg-rest: var(--canvas-cta-surface)
+  --tdm-button-bg-hover: var(--canvas-cta-surface)
+  // `none` (não `transparent`) evita camada inválida no shorthand multi-layer do .bordered
+  --tdm-button-bg-rest-gradient: none
+  // Sem fill especial do neutral — mesma superfície transparente dos semânticos
+  --tdm-button-neutral-fill-hover: var(--canvas-cta-surface)
+
+  // ── Uma sombra recessada; sem glow / sem mudança no hover ──
+  --tdm-button-shadow-rest: var(--canvas-cta-shadow)
+  --tdm-button-shadow-hover-base: var(--canvas-cta-shadow)
+  --tdm-button-shadow-hover: var(--canvas-cta-shadow)
+
+  // ── Anula wash / top-light / glow dos pseudos (todos os tons, incl. neutral) ──
+  --tdm-button-wash: transparent
+  --tdm-button-top-light: transparent
+
+  --tdm-button-neutral-wash: transparent
+  --tdm-button-neutral-top-light: transparent
+  --tdm-button-neutral-shadow-hover: var(--canvas-cta-shadow)
+
+  --tdm-button-danger-wash: transparent
+  --tdm-button-danger-top-light: transparent
+  --tdm-button-danger-shadow-hover: var(--canvas-cta-shadow)
+
+  --tdm-button-input-wash: transparent
+  --tdm-button-input-top-light: transparent
+  --tdm-button-input-shadow-hover: var(--canvas-cta-shadow)
+
+  --tdm-button-activity-wash: transparent
+  --tdm-button-activity-top-light: transparent
+  --tdm-button-activity-shadow-hover: var(--canvas-cta-shadow)
+
+  --tdm-button-output-wash: transparent
+  --tdm-button-output-top-light: transparent
+  --tdm-button-output-shadow-hover: var(--canvas-cta-shadow)
+
+  --tdm-button-outcome-wash: transparent
+  --tdm-button-outcome-top-light: transparent
+  --tdm-button-outcome-shadow-hover: var(--canvas-cta-shadow)
+
+  // ── Tons: cor só em borda / texto / ícone; opacidades compartilhadas ──
+  --tdm-button-neutral-border-rest: rgba(var(--canvas-cta-neutral-rgb), var(--canvas-cta-border-rest-opacity))
+  --tdm-button-neutral-border-hover: rgba(var(--canvas-cta-neutral-rgb), var(--canvas-cta-border-hover-opacity))
+  --tdm-button-neutral-text-rest: rgba(var(--canvas-cta-neutral-rgb), var(--canvas-cta-content-rest-opacity))
+  --tdm-button-neutral-text-hover: rgba(var(--canvas-cta-neutral-rgb), var(--canvas-cta-content-hover-opacity))
+
+  --tdm-button-input-border-rest: rgba(var(--canvas-cta-input-rgb), var(--canvas-cta-border-rest-opacity))
+  --tdm-button-input-border-hover: rgba(var(--canvas-cta-input-rgb), var(--canvas-cta-border-hover-opacity))
+  --tdm-button-input-text-rest: rgba(var(--canvas-cta-input-rgb), var(--canvas-cta-content-rest-opacity))
+  --tdm-button-input-text-hover: rgba(var(--canvas-cta-input-rgb), var(--canvas-cta-content-hover-opacity))
+
+  --tdm-button-activity-border-rest: rgba(var(--canvas-cta-activity-rgb), var(--canvas-cta-border-rest-opacity))
+  --tdm-button-activity-border-hover: rgba(var(--canvas-cta-activity-rgb), var(--canvas-cta-border-hover-opacity))
+  --tdm-button-activity-text-rest: rgba(var(--canvas-cta-activity-rgb), var(--canvas-cta-content-rest-opacity))
+  --tdm-button-activity-text-hover: rgba(var(--canvas-cta-activity-rgb), var(--canvas-cta-content-hover-opacity))
+
+  --tdm-button-output-border-rest: rgba(var(--canvas-cta-output-rgb), var(--canvas-cta-border-rest-opacity))
+  --tdm-button-output-border-hover: rgba(var(--canvas-cta-output-rgb), var(--canvas-cta-border-hover-opacity))
+  --tdm-button-output-text-rest: rgba(var(--canvas-cta-output-rgb), var(--canvas-cta-content-rest-opacity))
+  --tdm-button-output-text-hover: rgba(var(--canvas-cta-output-rgb), var(--canvas-cta-content-hover-opacity))
+
+  --tdm-button-outcome-border-rest: rgba(var(--canvas-cta-outcome-rgb), var(--canvas-cta-border-rest-opacity))
+  --tdm-button-outcome-border-hover: rgba(var(--canvas-cta-outcome-rgb), var(--canvas-cta-border-hover-opacity))
+  --tdm-button-outcome-text-rest: rgba(var(--canvas-cta-outcome-rgb), var(--canvas-cta-content-rest-opacity))
+  --tdm-button-outcome-text-hover: rgba(var(--canvas-cta-outcome-rgb), var(--canvas-cta-content-hover-opacity))
+
+  --tdm-button-danger-border-rest: rgba(var(--canvas-cta-danger-rgb), var(--canvas-cta-border-rest-opacity))
+  --tdm-button-danger-border-hover: rgba(var(--canvas-cta-danger-rgb), var(--canvas-cta-border-hover-opacity))
+  --tdm-button-danger-text-rest: rgba(var(--canvas-cta-danger-rgb), var(--canvas-cta-content-rest-opacity))
+  --tdm-button-danger-text-hover: rgba(var(--canvas-cta-danger-rgb), var(--canvas-cta-content-hover-opacity))
+
+  // Defaults ativos (neutral) — sobrescritos pelas classes .tone*
+  --tdm-button-border-rest: var(--tdm-button-neutral-border-rest)
+  --tdm-button-border-hover: var(--tdm-button-neutral-border-hover)
+  --tdm-button-text-rest: var(--tdm-button-neutral-text-rest)
+  --tdm-button-text-hover: var(--tdm-button-neutral-text-hover)
+  --tdm-button-wash: var(--tdm-button-neutral-wash)
+  --tdm-button-shadow-hover: var(--tdm-button-neutral-shadow-hover)
+  --tdm-button-top-light: var(--tdm-button-neutral-top-light)

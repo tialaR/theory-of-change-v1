@@ -13,6 +13,7 @@ import {
 import styles from './tdm-tooltip.module.sass';
 
 export type TdmTooltipPosition = 'top' | 'right' | 'bottom' | 'left';
+export type TdmTooltipSkin = 'default' | 'canvas';
 
 const SHOW_DELAY_MS = 500;
 const HIDE_DELAY_MS = 80;
@@ -27,6 +28,8 @@ const POSITION_CLASS: Record<TdmTooltipPosition, string> = {
 export type TdmTooltipProps = {
   content: string;
   position?: TdmTooltipPosition;
+  /** Visual shell only. `canvas` matches TdmAnchoredTooltip; default keeps non-canvas routes. */
+  skin?: TdmTooltipSkin;
   children: ReactElement;
 };
 
@@ -37,7 +40,7 @@ function findFocusable(root: HTMLElement | null) {
   );
 }
 
-export function TdmTooltip({ content, position = 'top', children }: TdmTooltipProps) {
+export function TdmTooltip({ content, position = 'top', skin = 'default', children }: TdmTooltipProps) {
   const tooltipId = useId();
   const rootRef = useRef<HTMLSpanElement | null>(null);
   const showTimeoutRef = useRef<number | null>(null);
@@ -141,7 +144,14 @@ export function TdmTooltip({ content, position = 'top', children }: TdmTooltipPr
         <span
           id={tooltipId}
           role="tooltip"
-          className={[styles.tooltip, POSITION_CLASS[position], styles.visible].filter(Boolean).join(' ')}
+          className={[
+            styles.tooltip,
+            skin === 'canvas' ? styles.tooltipCanvas : '',
+            POSITION_CLASS[position],
+            styles.visible
+          ]
+            .filter(Boolean)
+            .join(' ')}
         >
           {content}
         </span>

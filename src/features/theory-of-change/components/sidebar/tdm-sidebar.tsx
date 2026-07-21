@@ -23,7 +23,7 @@ import type { StageCreation } from '../../utils/stage-creation';
 import { TdmBlockFormFields } from '../form-field/tdm-form-field';
 import fieldStyles from '../form-field/tdm-form-field.module.sass';
 import { TdmSectionIcon } from '../tdm-section-icon/tdm-section-icon';
-import { TheoryHeaderForm, THEORY_DEFAULT_DESCRIPTION } from './theory-header-form';
+import { TheoryHeaderForm } from './theory-header-form';
 import { SidebarToggleIcon } from './sidebar-toggle-icon';
 import {
   TdmConnectionInspector,
@@ -726,7 +726,7 @@ export function TdmSidebar({
   onStageDragStart?: (event: DragEvent<HTMLElement>, stage: TdmStage) => void;
 }) {
   const shouldReduceMotion = useReducedMotion();
-  const [theoryDescription, setTheoryDescription] = useState(THEORY_DEFAULT_DESCRIPTION);
+  const [theoryDescription, setTheoryDescription] = useState('');
   const [openStage, setOpenStage] = useState<TdmStage | 'ready-to-connect'>(
     stageCreation === 'ready-to-connect' ? 'ready-to-connect' : stageCreation
   );
@@ -1049,7 +1049,7 @@ export function TdmSidebar({
             </div>
             <TdmButton
               variant="primary"
-              tone={stageCreation === 'ready-to-connect' ? 'neutral' : stageCreation}
+              tone="neutral"
               fullWidth
               className={styles.workflowAdvanceButton}
               disabled={!canAdvance}

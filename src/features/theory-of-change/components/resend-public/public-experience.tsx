@@ -8,7 +8,8 @@ import {
   PublicReveal,
   PublicShell
 } from '@/shared/ui/lusion-resend-ds';
-import { ContextLabelBookOpenIcon, TdmContextLabel } from '@/shared/ui/tdm-context-label';
+import { ContextLabelBookOpenIcon } from '@/shared/ui/tdm-context-label';
+import { TdmKicker } from '@/shared/ui/tdm-kicker';
 import styles from './public-experience.module.sass';
 import { GuideStageCard } from './guide-stage-card/guide-stage-card';
 
@@ -181,9 +182,9 @@ function GuideHero() {
   return (
     <section className={styles.guideHero}>
       <PublicReveal className={styles.guideHeroCopy} amount={0.35}>
-        <TdmContextLabel icon={ContextLabelBookOpenIcon} align="center">
+        <TdmKicker icon={ContextLabelBookOpenIcon}>
           Guia de aprendizado
-        </TdmContextLabel>
+        </TdmKicker>
         <h1>Construa a teoria etapa por etapa.</h1>
         <p className={styles.guideHeroDescription}>
           Cada etapa revela uma parte da lógica causal, com orientação prática e contexto visual.

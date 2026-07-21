@@ -1,7 +1,7 @@
 'use client';
 
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
-import { TdmTooltip, type TdmTooltipPosition } from '../tdm-tooltip/tdm-tooltip';
+import { TdmTooltip, type TdmTooltipPosition, type TdmTooltipSkin } from '../tdm-tooltip/tdm-tooltip';
 import styles from './tdm-icon-button.module.sass';
 
 export type TdmIconButtonVariant = 'ghost' | 'subtle' | 'filled' | 'destructive';
@@ -27,6 +27,8 @@ export type TdmIconButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, '
   size?: TdmIconButtonSize;
   tooltip?: string;
   tooltipPosition?: TdmTooltipPosition;
+  /** Pass `canvas` only on /canvas consumers to share the anchored tooltip shell. */
+  tooltipSkin?: TdmTooltipSkin;
 };
 
 export const TdmIconButton = forwardRef<HTMLButtonElement, TdmIconButtonProps>(function TdmIconButton(
@@ -37,6 +39,7 @@ export const TdmIconButton = forwardRef<HTMLButtonElement, TdmIconButtonProps>(f
     size = 'md',
     tooltip,
     tooltipPosition = 'top',
+    tooltipSkin = 'default',
     className = '',
     type = 'button',
     disabled,
@@ -64,7 +67,7 @@ export const TdmIconButton = forwardRef<HTMLButtonElement, TdmIconButtonProps>(f
   }
 
   return (
-    <TdmTooltip content={tooltip} position={tooltipPosition}>
+    <TdmTooltip content={tooltip} position={tooltipPosition} skin={tooltipSkin}>
       {button}
     </TdmTooltip>
   );

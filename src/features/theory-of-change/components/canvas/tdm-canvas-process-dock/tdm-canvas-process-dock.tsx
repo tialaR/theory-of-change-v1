@@ -22,6 +22,7 @@ import {
   type TheoryGuideContent,
   type TheoryGuideStageId
 } from '../../../domain/tdm-theory-guide';
+import { ProcessDockBrand } from './process-dock-brand';
 import styles from './tdm-canvas-process-dock.module.sass';
 
 export type TdmCanvasProcessDockContent = TheoryGuideContent;
@@ -82,27 +83,6 @@ function getActiveStageAccent(stage: TheoryGuideStageId): string {
 
 function isConnectionsStage(stage: TheoryGuideStageId): boolean {
   return stage === 'connect' || stage === 'review' || stage === 'visualize';
-}
-
-function ProcessGlyph() {
-  return (
-    <svg viewBox="0 0 16 16" className={styles.icon} aria-hidden="true">
-      <path
-        d="M4 3.75h8a1 1 0 0 1 1 1v8.5L8 11.25 3 13.25V4.75a1 1 0 0 1 1-1Z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.55"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M6.25 6.5h3.5M6.25 8.75h2.25"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.55"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
 }
 
 function CloseGlyph() {
@@ -261,7 +241,7 @@ function TdmCanvasProcessDockComponent({
       onPointerDown={handleShellPointerDown}
       onWheel={handleShellWheel}
     >
-      <ProcessGlyph />
+      <ProcessDockBrand compact />
       <span
         className={styles.stageDot}
         style={{ '--stage-accent': stageAccent } as CSSProperties}
@@ -294,20 +274,12 @@ function TdmCanvasProcessDockComponent({
               transition={contentTransition}
             >
               <motion.header className={styles.header} layout="position">
+                <ProcessDockBrand />
+                <h2 className={styles.visuallyHidden}>Teoria da mudança</h2>
                 <TdmIconButton
                   aria-label="Fechar progresso da teoria"
                   aria-expanded={true}
                   aria-controls={panelId}
-                  variant="ghost"
-                  size="sm"
-                  className={styles.headerIconButton}
-                  onClick={handleClose}
-                >
-                  <ProcessGlyph />
-                </TdmIconButton>
-                <h2 className={styles.title}>Teoria da mudança</h2>
-                <TdmIconButton
-                  aria-label="Fechar progresso da teoria"
                   variant="ghost"
                   size="sm"
                   className={styles.closeButton}
@@ -323,7 +295,7 @@ function TdmCanvasProcessDockComponent({
                 </p>
                 {content.nextStageLabel ? (
                   <p className={styles.nextLine}>
-                    <span className={styles.nextPrefix}>Próxima</span>
+                    <span className={styles.nextPrefix}>Próxima etapa →</span>
                     <span className={styles.nextValue}>{content.nextStageLabel}</span>
                   </p>
                 ) : null}

@@ -1,10 +1,8 @@
 .formCard
-  // Rule A — generic white gradient hairline (5B.14.1 mask border).
-  --tdm-field-use-mask-border: 1
+  // Generic white solid hairline — border tokens inherit from .sidebar.
+  --tdm-field-use-mask-border: 0
   --tdm-field-accent: initial
   --tdm-field-accent-rest: initial
-  --tdm-field-border-gradient: var(--tdm-field-border-gradient-rest)
-  --tdm-field-border-gradient-active: var(--tdm-field-border-gradient-hot)
   position: relative
   display: grid
   gap: var(--tdm-space-3)
@@ -17,7 +15,14 @@
   box-shadow: none
 
 // Density only — surface/border/focus live in TdmField.
+// Keep required asterisk on the same line as the label text (beats heroFormShell label{display:grid}).
 .panelField
+  :global(label)
+    display: inline-flex
+    align-items: baseline
+    gap: 0.25rem
+    flex-wrap: nowrap
+
   :global(textarea)
     resize: none
     max-height: 7.5rem

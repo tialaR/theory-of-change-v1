@@ -48,7 +48,6 @@ import { ExamplePreviewsSection, DedicatedExamplePreview } from '@/features/theo
 import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
 import {
   ContextLabelBookOpenIcon,
-  ContextLabelCompassIcon,
   ContextLabelEyeIcon,
   ContextLabelFileTextIcon,
   ContextLabelGitBranchIcon,
@@ -56,9 +55,9 @@ import {
   ContextLabelLibraryIcon,
   ContextLabelNetworkIcon,
   ContextLabelSparklesIcon,
-  ContextLabelWorkflowIcon,
-  TdmContextLabel
+  ContextLabelWorkflowIcon
 } from '@/shared/ui/tdm-context-label';
+import { TdmKicker } from '@/shared/ui/tdm-kicker';
 import { TdmPublicFeatureCard } from '@/shared/ui/tdm-public-feature-card';
 import { TdmSurface } from '@/shared/ui/tdm-surface/tdm-surface';
 import { HomeOnboardingPreview } from './home-onboarding-preview';
@@ -120,11 +119,6 @@ export function HomePage() {
       <PublicHeader />
       <PublicHero
         visual={<HomeBrandLogo variant="hero" />}
-        kicker={
-          <TdmContextLabel icon={ContextLabelCompassIcon} align="center">
-            Teoria da Mudança
-          </TdmContextLabel>
-        }
         title="Desenhe a mudança antes de explicá-la."
         description="Um espaço visual para transformar problema, etapas, conexões, riscos e hipóteses em narrativa clara."
         actions={
@@ -141,9 +135,9 @@ export function HomePage() {
       />
       <PublicSection
         eyebrow={
-          <TdmContextLabel icon={ContextLabelSparklesIcon} align="start">
+          <TdmKicker icon={ContextLabelSparklesIcon}>
             Por que usar
-          </TdmContextLabel>
+          </TdmKicker>
         }
         title="Leia o caminho da intervenção."
         description="Organize etapas, evidencie relações e apresente decisões com clareza visual."
@@ -169,9 +163,9 @@ export function HomePage() {
       <PublicSection
         compact
         eyebrow={
-          <TdmContextLabel icon={ContextLabelEyeIcon} align="start">
+          <TdmKicker icon={ContextLabelEyeIcon}>
             PRÉVIA GUIADA
-          </TdmContextLabel>
+          </TdmKicker>
         }
         title="Veja a teoria ganhar forma."
         description="Primeiro, os elementos entram em sequência e revelam o caminho causal. Depois, o fluxo se organiza em uma leitura final por etapas."
@@ -192,9 +186,9 @@ export function GuidePage() {
       <PublicHero
         compact
         kicker={
-          <TdmContextLabel icon={ContextLabelBookOpenIcon} align="center">
+          <TdmKicker icon={ContextLabelBookOpenIcon}>
             Guia de aprendizado
-          </TdmContextLabel>
+          </TdmKicker>
         }
         title="Construa a teoria etapa por etapa."
         description="Cada passo revela uma fase do processo com texto curto e contexto visual."
@@ -213,9 +207,9 @@ export function ExamplesPage() {
       <PublicHero
         compact
         kicker={
-          <TdmContextLabel icon={ContextLabelLayoutGridIcon} align="center">
+          <TdmKicker icon={ContextLabelLayoutGridIcon}>
             EXEMPLOS
-          </TdmContextLabel>
+          </TdmKicker>
         }
         title="Explore exemplos guiados."
         description="Veja prévias animadas da teoria antes de abrir a experiência completa."
@@ -236,9 +230,9 @@ export function FlowPage() {
       <PublicHero
         compact
         kicker={
-          <TdmContextLabel icon={ContextLabelWorkflowIcon} align="center">
+          <TdmKicker icon={ContextLabelWorkflowIcon}>
             Fluxo
-          </TdmContextLabel>
+          </TdmKicker>
         }
         title="Visão do fluxo com prévia viva."
         description="Entenda como insumos, atividades, produtos e resultados se conectam antes de abrir a experiência completa."
@@ -262,9 +256,9 @@ export function FlowPage() {
       <PublicSection
         compact
         eyebrow={
-          <TdmContextLabel icon={ContextLabelNetworkIcon} align="start">
+          <TdmKicker icon={ContextLabelNetworkIcon}>
             Visão do fluxo
-          </TdmContextLabel>
+          </TdmKicker>
         }
         title="O caminho antes da leitura final."
         description="A prévia mostra como cada etapa alimenta a próxima, revelando a lógica causal em construção."
@@ -295,9 +289,9 @@ export function ResultPage() {
       <PublicHero
         compact
         kicker={
-          <TdmContextLabel icon={ContextLabelFileTextIcon} align="center">
+          <TdmKicker icon={ContextLabelFileTextIcon}>
             Resultado
-          </TdmContextLabel>
+          </TdmKicker>
         }
         title="Leitura executiva com prévia viva."
         description="Contexto à esquerda, prévia abstrata à direita. A exploração completa fica na rota interativa."
@@ -338,9 +332,9 @@ export function ResultPage() {
       <PublicSection
         compact
         eyebrow={
-          <TdmContextLabel icon={ContextLabelGitBranchIcon} align="start">
+          <TdmKicker icon={ContextLabelGitBranchIcon}>
             Relações causais
-          </TdmContextLabel>
+          </TdmKicker>
         }
         title="O que cada seta está dizendo."
         description="Origem, destino e atenção em risco ou hipótese."
@@ -476,9 +470,9 @@ export function ReferencesPage() {
       <PublicHero
         compact
         kicker={
-          <TdmContextLabel icon={ContextLabelLibraryIcon} align="center">
+          <TdmKicker icon={ContextLabelLibraryIcon}>
             Referências
-          </TdmContextLabel>
+          </TdmKicker>
         }
         title="Base visual e técnica."
         description="Organize as referências por uso: experiência, arquitetura e lógica da Teoria da Mudança."

@@ -1,7 +1,8 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { ContextLabelPanelsIcon, TdmContextLabel } from '@/shared/ui/tdm-context-label';
+import { ContextLabelPanelsIcon } from '@/shared/ui/tdm-context-label';
+import { TdmKicker } from '@/shared/ui/tdm-kicker';
 import { TdmPublicFeatureCard } from '@/shared/ui/tdm-public-feature-card';
 import styles from './example-previews.module.sass';
 
@@ -52,9 +53,9 @@ export function ExamplePreviewsSection() {
   return (
     <section className={styles.previewsSection} aria-labelledby="example-previews-title">
       <div className={styles.sectionHeader}>
-        <TdmContextLabel icon={ContextLabelPanelsIcon} align="center">
+        <TdmKicker icon={ContextLabelPanelsIcon}>
           PRÉVIA DAS EXPERIÊNCIAS
-        </TdmContextLabel>
+        </TdmKicker>
         <h2 id="example-previews-title" className={styles.sectionTitle}>
           Escolha como visualizar a teoria.
         </h2>

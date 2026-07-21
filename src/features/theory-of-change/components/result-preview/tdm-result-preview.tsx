@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { TdmEdge, TdmNode } from '../../domain/tdm-types';
 import { ResultExperience } from '../result-view/result-experience';
+import ctaScope from '../canvas/canvas-cta-scope.module.sass';
 import styles from './tdm-result-preview.module.sass';
 
 export type TdmResultPreviewProps = {
@@ -75,7 +76,7 @@ export function TdmResultPreview({
 
   return createPortal(
     <div
-      className={styles.overlay}
+      className={[styles.overlay, ctaScope.scope].join(' ')}
       role="dialog"
       aria-modal="true"
       aria-label="Resultado da sua teoria"

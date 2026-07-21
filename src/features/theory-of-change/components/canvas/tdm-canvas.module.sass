@@ -301,9 +301,9 @@ $resend-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.13), 0 1.25rem 3rem rg
 // Process dock permanece em top/left space-4; Voltar nunca invade o header do dock.
 $chrome-top: var(--tdm-space-4)
 $chrome-left: var(--tdm-space-4)
-$process-dock-closed-size: var(--tdm-icon-container-sm)
+$process-dock-closed-size: 2.8125rem
 $process-dock-open-width: min(19rem, calc(100vw - 2rem))
-$chrome-cluster-gap: var(--tdm-space-3)
+$chrome-cluster-gap: 0.625rem
 
 .shellChromeTopLeft
   position: absolute
@@ -314,7 +314,7 @@ $chrome-cluster-gap: var(--tdm-space-3)
   z-index: 30
   display: flex
   align-items: center
-  gap: var(--tdm-space-2)
+  gap: 0.625rem
   pointer-events: none
   width: max-content
   height: max-content
@@ -329,13 +329,44 @@ $chrome-cluster-gap: var(--tdm-space-3)
   .shellChromeTopLeft
     transition: none
 
-.backLink
+// Hit target lives on the Link itself (icon + “Voltar” + padding). No ::before expander.
+.backLink.backLink
+  position: relative
+  z-index: 30
+  display: inline-flex
+  align-items: center
+  overflow: visible
   pointer-events: auto
+  cursor: pointer
+  min-block-size: 2.75rem
+  height: auto
+  min-height: 2.75rem
+  padding-block: 0.5625rem
+  padding-inline: 0.6875rem
+  background: transparent
+  background-color: transparent
+
+  &::before
+    content: none
+
+  &:hover,
+  &:focus-visible,
+  &:active,
+  &:hover:not(:disabled):not([aria-disabled='true']),
+  &:focus-visible:not(:disabled):not([aria-disabled='true']),
+  &:active:not(:disabled):not([aria-disabled='true'])
+    background: transparent
+    background-color: transparent
 
   &:hover
+    color: var(--tdm-fg-secondary)
+
     .backLinkIcon
       opacity: 1
       transform: translateX(-0.125rem)
+
+  &:focus-visible
+    color: var(--tdm-fg-secondary)
 
 .backLinkIcon
   width: var(--tdm-icon-size-sm)

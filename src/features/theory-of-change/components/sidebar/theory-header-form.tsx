@@ -37,7 +37,8 @@ export function TheoryHeaderForm({
   return (
     <div className={styles.formCard}>
       <TdmField
-        label="Sua teoria da mudança"
+        label="Nome da sua teoria"
+        required
         filled={Boolean(theoryName)}
         className={styles.panelField}
         trailingAdornment={

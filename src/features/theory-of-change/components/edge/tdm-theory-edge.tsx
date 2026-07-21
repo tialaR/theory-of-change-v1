@@ -20,24 +20,13 @@ import { computeEdgeEditorPosition } from '../../utils/tdm-edge-editor-position'
 import { TdmEdgeMarkerEditor } from './tdm-edge-marker-editor';
 import styles from './tdm-theory-edge.module.sass';
 
-const MARKER_PREVIEW_MAX_LENGTH = 110;
 const COMPACT_ARROW_SIZE = 10;
-
-function truncateMarkerPreview(text: string): string {
-  if (text.length <= MARKER_PREVIEW_MAX_LENGTH) {
-    return text;
-  }
-
-  return `${text.slice(0, MARKER_PREVIEW_MAX_LENGTH - 1).trimEnd()}…`;
-}
 
 function MarkerPreview({
   markerType,
-  text,
   visible
 }: {
   markerType: 'risk' | 'hypothesis';
-  text: string;
   visible: boolean;
 }) {
   const prefersReducedMotion = useReducedMotion();
@@ -48,17 +37,13 @@ function MarkerPreview({
       {visible ? (
         <div className={styles.markerPreviewHost}>
           <motion.div
-            className={[
-              styles.markerPreview,
-              markerType === 'risk' ? styles.markerPreviewRisk : styles.markerPreviewHypothesis
-            ].join(' ')}
+            className={styles.markerPreview}
             initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 4 }}
             animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
             exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 2 }}
             transition={{ duration: prefersReducedMotion ? 0.16 : 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
             <p className={styles.markerPreviewTitle}>{title}</p>
-            <p className={styles.markerPreviewText}>{truncateMarkerPreview(text)}</p>
             <p className={styles.markerPreviewHint}>Clique para editar</p>
           </motion.div>
         </div>
@@ -277,7 +262,6 @@ export function TdmTheoryEdge({
                 </motion.button>
                 <MarkerPreview
                   markerType={markerType!}
-                  text={markerText}
                   visible={isMarkerHovered && !isEditorOpen}
                 />
               </div>
