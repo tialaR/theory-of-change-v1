@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
+import { PublicButton } from '@/shared/ui/public-button';
 import styles from './example-overview-card.module.sass';
 
 export type ExampleOverviewCardProps = {
@@ -10,21 +10,6 @@ export type ExampleOverviewCardProps = {
   primaryLabel: string;
   className?: string;
 };
-
-function BackArrowIcon() {
-  return (
-    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path
-        d="M9.5 3.5 4.5 8l5 4.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path d="M4.75 8h6.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
 
 export function ExampleOverviewCard({
   eyebrow,
@@ -40,16 +25,12 @@ export function ExampleOverviewCard({
       <h3 className={styles.title}>{title}</h3>
       <div className={styles.description}>{description}</div>
       <div className={styles.actions}>
-        <TdmButton href={primaryHref} variant="primary">
+        <PublicButton href={primaryHref} variant="primary">
           {primaryLabel}
-        </TdmButton>
-        <TdmButton
-          href="/exemplos"
-          variant="tertiary"
-          leadingIcon={<BackArrowIcon />}
-        >
+        </PublicButton>
+        <PublicButton href="/exemplos" variant="text">
           Voltar para exemplos
-        </TdmButton>
+        </PublicButton>
       </div>
     </article>
   );

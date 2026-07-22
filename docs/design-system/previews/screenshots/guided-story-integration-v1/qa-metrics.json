@@ -1,0 +1,22 @@
+{
+  "headerCountTop": 1,
+  "scrolledTop": "false",
+  "top": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "bf": "none",
+    "bb": "1px solid rgba(0, 0, 0, 0)",
+    "bt": "1px",
+    "br": "1px",
+    "bl": "1px"
+  },
+  "headerCountScrolled": 1,
+  "scrolledAfter": "true",
+  "scrolled": {
+    "bg": "rgba(7, 8, 9, 0.76)",
+    "bf": "blur(20px) saturate(1.2)",
+    "bb": "1px solid rgba(255, 255, 255, 0.05)",
+    "bt": "0px",
+    "br": "0px",
+    "bl": "0px"
+  }
+}

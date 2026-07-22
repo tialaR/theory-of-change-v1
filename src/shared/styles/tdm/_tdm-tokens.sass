@@ -11,6 +11,7 @@
 @use 'tdm-spacing' as space
 @use 'tdm-measure' as measure
 @use 'tdm-cta' as cta
+@use 'tdm-public-action' as publicAction
 
 // Agregador canônico TDM — publica --tdm-* em :root.
 :root
@@ -40,3 +41,10 @@
   +measure.tokens
   // CTA roles (font/fg/height/padding)
   +cta.tokens
+  // CTAs / icon buttons / header públicos
+  +publicAction.tokens
+
+// Mobile — ritmo entre seções (TDM-PUBLIC-SECTION-RHYTHM-V1)
+@media (max-width: 48rem)
+  :root
+    --tdm-public-section-gap: clamp(3.5rem, 12vw, 4.5rem)

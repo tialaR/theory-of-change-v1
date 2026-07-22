@@ -1,0 +1,18 @@
+---
+description: Contrato obrigatório para CTAs, icon buttons e header das rotas públicas do TDM.
+globs: ["src/app/**/*.tsx", "src/features/**/*.tsx", "src/shared/ui/**/*.tsx", "src/**/*.module.sass"]
+alwaysApply: false
+---
+
+- `docs/design-system/public-actions-header-v2.md` é a especificação escrita.
+- `docs/design-system/previews/tdm-public-actions-header-v2.html` é a referência visual.
+- Antes de editar CTAs, icon buttons ou o header público, leia ambos.
+- `/canvas` e seus consumidores estão proibidos (sidebar, nodes, edges, React Flow, `/exemplos/canvas`, estilos feature-scoped do canvas).
+- Não aplicar overrides locais sobre `PublicButton` / `PublicIconButton`.
+- Não criar novos botões HTML quando existir o primitive público.
+- Nenhuma mudança funcional pode acompanhar uma mudança visual.
+- Qualquer nova variante exige atualização simultânea de:
+  1. componente;
+  2. documentação;
+  3. preview;
+  4. gate.

@@ -1,0 +1,22 @@
+---
+description: Preserva motion homologado e impede recriações ou animações sem função.
+globs: ["src/**/*.tsx", "src/**/*.module.sass"]
+alwaysApply: false
+---
+
+Antes de alterar motion, registre:
+
+- elemento;
+- gatilho;
+- duração;
+- easing;
+- loop ou estado final;
+- função comunicada;
+- reduced motion.
+
+Não altere motion homologado quando a tarefa disser respeito a wrapper, padding, surface, border ou alinhamento.
+
+Não use `transform: scale()` para corrigir geometria.
+Não introduza loop decorativo sem aprovação.
+Não permita layout shift em hover.
+Preserve `prefers-reduced-motion`.

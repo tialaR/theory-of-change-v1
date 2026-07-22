@@ -45,7 +45,7 @@ import {
 } from '@/shared/ui/lusion-resend-ds';
 import { ExampleOverviewCard } from '@/features/theory-of-change/components/example-overview-card';
 import { ExamplePreviewsSection, DedicatedExamplePreview } from '@/features/theory-of-change/components/resend-public/example-previews';
-import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
+import { PublicIconButton } from '@/shared/ui/public-icon-button';
 import {
   ContextLabelBookOpenIcon,
   ContextLabelEyeIcon,
@@ -100,22 +100,17 @@ const FLOW_CONTEXT_CARDS = [
 
 function ExportFormatIcon() {
   return (
-    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path
-        d="M4.25 2.75h5.5L12.25 5.25v8H4.25v-10.5Z"
-        stroke="currentColor"
-        strokeWidth="1.35"
-        strokeLinejoin="round"
-      />
-      <path d="M9.5 2.75V5.5h2.75" stroke="currentColor" strokeWidth="1.35" strokeLinejoin="round" />
-      <path d="M6.25 8.5h3.5M6.25 10.75h3.5" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M4.25 2.75h5.5L12.25 5.25v8H4.25v-10.5Z" />
+      <path d="M9.5 2.75V5.5h2.75" />
+      <path d="M6.25 8.5h3.5M6.25 10.75h3.5" />
     </svg>
   );
 }
 
 export function HomePage() {
   return (
-    <PublicShell>
+    <PublicShell sectionRhythm>
       <PublicHeader />
       <PublicHero
         visual={<HomeBrandLogo variant="hero" />}
@@ -123,10 +118,10 @@ export function HomePage() {
         description="Um espaço visual para transformar problema, etapas, conexões, riscos e hipóteses em narrativa clara."
         actions={
           <>
-            <PublicButton href="/canvas" variant="primary">
+            <PublicButton href="/canvas" variant="primary" size="hero">
               Criar teoria
             </PublicButton>
-            <PublicButton href="/exemplos/resultado" variant="ghost">
+            <PublicButton href="/exemplos/resultado" variant="text">
               Ver exemplo
             </PublicButton>
 
@@ -168,10 +163,9 @@ export function HomePage() {
           </TdmKicker>
         }
         title="Veja a teoria ganhar forma."
-        description="Primeiro, os elementos entram em sequência e revelam o caminho causal. Depois, o fluxo se organiza em uma leitura final por etapas."
       >
         <div className={styles.resultPreview}>
-          <HomeOnboardingPreview />
+          <HomeOnboardingPreview density="embedded" />
         </div>
       </PublicSection>
       <PublicFooter />
@@ -202,7 +196,7 @@ export function GuidePage() {
 
 export function ExamplesPage() {
   return (
-    <PublicShell>
+    <PublicShell headerContentGap sectionRhythm>
       <PublicHeader />
       <PublicHero
         compact
@@ -215,7 +209,7 @@ export function ExamplesPage() {
         description="Veja prévias animadas da teoria antes de abrir a experiência completa."
         actions={<PublicButton href="#examples-experiences">Ver exemplos</PublicButton>}
       />
-      <div id="examples-experiences">
+      <div id="examples-experiences" data-public-chapter="true">
         <ExamplePreviewsSection />
       </div>
       <PublicFooter />
@@ -225,7 +219,7 @@ export function ExamplesPage() {
 
 export function FlowPage() {
   return (
-    <PublicShell>
+    <PublicShell headerContentGap sectionRhythm>
       <PublicHeader />
       <PublicHero
         compact
@@ -237,7 +231,7 @@ export function FlowPage() {
         title="Visão do fluxo com prévia viva."
         description="Entenda como insumos, atividades, produtos e resultados se conectam antes de abrir a experiência completa."
       />
-      <div className={styles.resultLayout}>
+      <div className={styles.resultLayout} data-public-chapter="true">
         <PublicReveal>
           <ExampleOverviewCard
             eyebrow="Exemplo"
@@ -284,7 +278,7 @@ export function FlowPage() {
 
 export function ResultPage() {
   return (
-    <PublicShell>
+    <PublicShell headerContentGap sectionRhythm>
       <PublicHeader />
       <PublicHero
         compact
@@ -296,38 +290,35 @@ export function ResultPage() {
         title="Leitura executiva com prévia viva."
         description="Contexto à esquerda, prévia abstrata à direita. A exploração completa fica na rota interativa."
       />
-      <div className={styles.resultLayout}>
-        <PublicReveal>
-          <ExampleOverviewCard
-            eyebrow="Exemplo"
-            title={exampleTheory.title}
-            description="Política educacional com formação de professores, acompanhamento nas escolas e melhoria no uso de dados. A prévia resume a estrutura conectada antes da leitura interativa."
-            primaryHref="/exemplos/resultado/interativo"
-            primaryLabel="Abrir visualização interativa"
-          />
-        </PublicReveal>
-        <PublicReveal delay={0.05}>
-          <TdmSurface as="div" variant="base" padding="none" radius="lg" className={styles.resultPreview}>
-            <DedicatedExamplePreview type="result" />
-          </TdmSurface>
-        </PublicReveal>
-      </div>
-      <div className={styles.exportBar}>
-        {['PDF', 'PNG', 'SVG'].map((format) => (
-          <TdmButton
-            key={format}
-            type="button"
-            variant="secondary"
-            size="sm"
-            leadingIcon={
-              <span className={styles.exportIcon} aria-hidden="true">
-                <ExportFormatIcon />
-              </span>
-            }
-          >
-            Exportar {format}
-          </TdmButton>
-        ))}
+      <div className={styles.resultChapter} data-public-chapter="true">
+        <div className={styles.resultLayout}>
+          <PublicReveal>
+            <ExampleOverviewCard
+              eyebrow="Exemplo"
+              title={exampleTheory.title}
+              description="Política educacional com formação de professores, acompanhamento nas escolas e melhoria no uso de dados. A prévia resume a estrutura conectada antes da leitura interativa."
+              primaryHref="/exemplos/resultado/interativo"
+              primaryLabel="Abrir visualização interativa"
+            />
+          </PublicReveal>
+          <PublicReveal delay={0.05}>
+            <TdmSurface as="div" variant="base" padding="none" radius="lg" className={styles.resultPreview}>
+              <DedicatedExamplePreview type="result" />
+            </TdmSurface>
+          </PublicReveal>
+        </div>
+        <div className={styles.exportBar}>
+          {['PDF', 'PNG', 'SVG'].map((format) => (
+            <PublicButton
+              key={format}
+              type="button"
+              variant="exportCompact"
+              leadingIcon={<ExportFormatIcon />}
+            >
+              Exportar {format}
+            </PublicButton>
+          ))}
+        </div>
       </div>
       <PublicSection
         compact
@@ -397,32 +388,32 @@ export function InteractivePage() {
           <strong>{exampleTheory.title}</strong>
         </Link>
         <div className={styles.interactiveControls}>
-          <button
-            type="button"
-            className={styles.toolBtn}
+          <PublicIconButton
             aria-label="Aumentar zoom"
             onClick={() => setZoom((z) => Math.min(1.4, Number((z + 0.1).toFixed(2))))}
           >
-            +
-          </button>
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M8 3.25v9.5M3.25 8h9.5" />
+            </svg>
+          </PublicIconButton>
           <span className={styles.zoomLabel}>{Math.round(zoom * 100)}%</span>
-          <button
-            type="button"
-            className={styles.toolBtn}
+          <PublicIconButton
             aria-label="Diminuir zoom"
             onClick={() => setZoom((z) => Math.max(0.7, Number((z - 0.1).toFixed(2))))}
           >
-            −
-          </button>
-          <button type="button" className={styles.toolBtn} onClick={() => setZoom(1)}>
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M3.25 8h9.5" />
+            </svg>
+          </PublicIconButton>
+          <PublicButton type="button" variant="text" onClick={() => setZoom(1)}>
             Centralizar
-          </button>
-          <button type="button" className={styles.toolBtn} onClick={resetView}>
+          </PublicButton>
+          <PublicButton type="button" variant="text" onClick={resetView}>
             Reiniciar
-          </button>
-          <Link href="/exemplos/visao-do-fluxo" className={styles.closeLink}>
+          </PublicButton>
+          <PublicButton href="/exemplos/visao-do-fluxo" variant="text">
             Fechar
-          </Link>
+          </PublicButton>
         </div>
       </header>
       <motion.div
@@ -465,7 +456,7 @@ export function InteractivePage() {
 
 export function ReferencesPage() {
   return (
-    <PublicShell>
+    <PublicShell headerContentGap sectionRhythm>
       <PublicHeader />
       <PublicHero
         compact

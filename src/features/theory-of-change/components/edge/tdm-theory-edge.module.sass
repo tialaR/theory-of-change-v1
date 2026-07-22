@@ -41,6 +41,7 @@ $danger: #fb7185
   position: absolute
   pointer-events: all
   transform: translate(-50%, -50%)
+  z-index: 50
 
 .markerWrap
   position: relative
@@ -48,20 +49,54 @@ $danger: #fb7185
   flex-direction: column
   align-items: center
 
+  // Tooltip visibility: hover or keyboard focus-visible on marker / tooltip set.
+  &:hover .markerPreviewHost,
+  &:has(:focus-visible) .markerPreviewHost
+    opacity: 1
+    visibility: visible
+    pointer-events: auto
+    transform: translateX(-50%) translateY(0)
+
 .markerPreviewHost
   position: absolute
   bottom: calc(100% + 0.5rem)
   left: 50%
-  transform: translateX(-50%)
-  z-index: 11
+  // Above cards / handles / node toolbars (ViewportPortal + local stack).
+  z-index: 50
+  opacity: 0
+  visibility: hidden
   pointer-events: none
+  transform: translateX(-50%) translateY(0.15rem)
+  transition: opacity 160ms ease, visibility 160ms ease, transform 160ms ease
+
+  // Bridge the 0.5rem gap so hover persists while moving onto the tooltip.
+  &::before
+    content: ''
+    position: absolute
+    left: 0
+    right: 0
+    top: 100%
+    height: 0.5rem
 
 .markerPreview
   position: relative
+  display: block
+  margin: 0
+  padding: 0
+  border: 0
+  background: transparent
+  cursor: pointer
+  text-align: left
+  font: inherit
+  color: inherit
   @include tooltip-surface.tdm-anchored-tooltip-surface
   @include tooltip-surface.tdm-anchored-tooltip-size-compact
   @include tooltip-surface.tdm-anchored-tooltip-arrow
   @include tooltip-surface.tdm-anchored-tooltip-arrow-top
+
+  &:focus-visible
+    outline: 0.1rem solid rgba(250, 250, 250, 0.32)
+    outline-offset: 0.125rem
 
 .markerPreviewTitle
   @include tooltip-surface.tdm-anchored-tooltip-title

@@ -1,278 +1,756 @@
-$ease: cubic-bezier(0.22, 1, 0.36, 1)
-
-.preview
-  --guided-preview-content-height: clamp(17rem, 26vw, 22.5rem)
-  --guided-preview-flow-offset-y: 0rem
-  --guided-preview-columns-offset-y: 0rem
-  --guided-preview-text-max-width: clamp(22rem, 62vw, 46rem)
-  --guided-preview-text-area-width: clamp(22rem, 62vw, 46rem)
-  --guided-preview-text-area-height: clamp(12rem, 24vw, 20rem)
-  position: relative
-  display: grid
-  place-items: center
+.storySection
+  --story-line: var(--tdm-guided-story-line)
+  --story-line-soft: var(--tdm-guided-story-line-soft)
+  --story-muted: var(--tdm-guided-story-muted)
+  --story-text: var(--tdm-guided-story-text)
+  --story-ease: cubic-bezier(0.22, 1, 0.36, 1)
+  --story-risk: var(--tdm-guided-story-risk)
+  --story-hyp: var(--tdm-guided-story-hyp)
+  --logical-width: 1440
+  --logical-height: 620
+  margin: 0
   width: 100%
-  min-height: clamp(24rem, 36vw, 32rem)
-  padding: clamp(0.875rem, 2vw, 1.375rem)
+  color: var(--story-text)
+
+.storyShell
   overflow: hidden
-  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04), transparent 42%), linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.008)), rgba(8, 9, 11, 0.72)
+  border: 0.0625rem solid var(--story-line)
+  border-radius: 1.45rem
+  background: var(--tdm-guided-story-shell-bg)
+  box-shadow: 0 1.8rem 5rem var(--tdm-guided-story-shell-shadow)
 
-.previewInner
-  --preview-stage-width: minmax(0, 1fr)
-  --preview-card-width: clamp(7.5rem, 13vw, 10.75rem)
-  --preview-card-height: clamp(3.75rem, 5.6vw, 4.875rem)
-  --preview-stage-gap: clamp(1.5rem, 4vw, 3.25rem)
-  --preview-card-gap: clamp(0.75rem, 1.5vw, 1rem)
-  --preview-flow-scale: 1
-  --preview-flow-height: var(--guided-preview-content-height)
-  --result-column-width: clamp(12rem, 20vw, 18rem)
-  --result-column-height: clamp(14rem, 24vw, 20rem)
-  --result-card-height: clamp(3.5rem, 5vw, 4.75rem)
-  --result-card-gap: clamp(0.625rem, 1.2vw, 0.875rem)
-  --result-column-gap: clamp(1.25rem, 2.6vw, 2.25rem)
-  --result-preview-scale: 1
-  position: relative
+.storyHeader
   display: grid
-  place-items: center
-  width: 100%
-  height: 100%
-  min-height: var(--guided-preview-content-height)
-  overflow: visible
+  grid-template-columns: minmax(0, 1fr) auto
+  align-items: start
+  gap: 1.5rem
+  padding: 1.45rem 1.55rem 1.35rem
+  border-bottom: 0.0625rem solid var(--story-line-soft)
+  background: var(--tdm-guided-story-header-bg)
 
-.flowGrid
-  display: grid
-  grid-template-columns: repeat(4, var(--preview-stage-width))
-  gap: var(--preview-stage-gap)
+.chapterKicker
+  display: inline-flex
   align-items: center
-  align-content: center
-  justify-content: center
-  width: 100%
-  transform: scale(var(--preview-flow-scale)) translateY(var(--guided-preview-flow-offset-y))
-  transform-origin: center center
-  position: relative
-  z-index: 3
-
-.column
-  display: flex
-  flex-direction: column
-  gap: var(--preview-card-gap)
-  width: 100%
-  justify-content: center
-  align-items: stretch
-  align-content: center
-
-.columnHeader
-  margin: 0 0 0.1875rem
-  font-size: 0.53125rem
-  letter-spacing: 0.11em
-  text-transform: uppercase
+  gap: 0.5rem
+  color: var(--tdm-guided-story-kicker)
+  font-size: 0.75rem
   font-weight: 600
-  text-align: center
+  letter-spacing: 0.14em
+  text-transform: uppercase
 
-.columnHeaderPlaceholder
-  display: block
-  height: 0.75rem
-  margin-bottom: 0.1875rem
+  &::before
+    width: 0.38rem
+    aspect-ratio: 1
+    border-radius: 50%
+    background: var(--tdm-guided-story-kicker-dot)
+    content: ""
 
-.cardWrap
-  position: relative
+.storyCopy
+  h2
+    max-width: 48rem
+    margin: 0.48rem 0 0
+    font-size: clamp(1.55rem, 2.6vw, 2.55rem)
+    font-weight: 570
+    letter-spacing: -0.045em
+    line-height: 1.05
+    text-wrap: balance
+
+  p
+    max-width: 55rem
+    margin: 0.62rem 0 0
+    color: var(--story-muted)
+    font-size: 0.9rem
+    line-height: 1.62
+
+.densityEmbedded
+  .storyCopy
+    h2
+      font-size: var(--tdm-guided-story-embedded-title-size)
+
+    p
+      font-size: var(--tdm-guided-story-embedded-description-size)
+
+.storyControls
   display: flex
+  align-items: center
+  justify-content: flex-end
+  gap: 0.48rem
+
+.controlBtn
+  display: inline-flex
+  align-items: center
   justify-content: center
+  width: 2.72rem
+  height: 2.72rem
+  padding: 0
+  border: 0.0625rem solid var(--tdm-guided-story-control-border)
+  border-radius: 0.78rem
+  background: var(--tdm-guided-story-control-bg)
+  color: var(--tdm-guided-story-control-fg)
+  cursor: pointer
+  transition: transform 0.18s var(--story-ease), border-color 0.18s ease, background-color 0.18s ease
 
-.card
+  &:hover
+    transform: translateY(-0.07rem)
+    border-color: var(--tdm-guided-story-control-border-hover)
+    background: var(--tdm-guided-story-control-bg-hover)
+
+  &:active
+    transform: scale(0.975)
+
+  &:focus-visible
+    outline: 0.125rem solid var(--tdm-guided-story-focus)
+    outline-offset: 0.2rem
+
+  svg
+    width: 1rem
+    height: 1rem
+    fill: none
+    stroke: currentColor
+    stroke-width: 1.55
+    stroke-linecap: round
+    stroke-linejoin: round
+
+.playPath
+  fill: currentColor
+  stroke: none
+
+.storyPan
   position: relative
-  width: 100%
-  max-width: var(--preview-card-width)
-  min-height: var(--preview-card-height)
-  padding: 0.5rem 0.5rem 0.4375rem
-  border-radius: 0.4375rem
-  border: 1px solid rgba(255, 255, 255, 0.09)
-  background: rgba(12, 12, 13, 0.84)
-  backdrop-filter: blur(0.5rem)
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 0 1rem color-mix(in srgb, var(--stage-color) 12%, transparent)
-  overflow: hidden
+  overflow: auto
+  overscroll-behavior: contain
+  background: radial-gradient(circle at 50% 34%, var(--tdm-guided-story-pan-glow), transparent 33rem), var(--tdm-guided-story-pan-bg)
+  scrollbar-width: none
 
-.cardAccent
+  &::-webkit-scrollbar
+    display: none
+
+.canPan
+  &::after
+    position: sticky
+    left: 1rem
+    bottom: 1rem
+    display: inline-flex
+    margin: 0 0 0.85rem 0.85rem
+    padding: 0.45rem 0.65rem
+    border: 0.0625rem solid var(--story-line)
+    border-radius: 999rem
+    background: var(--tdm-guided-story-pan-hint-bg)
+    color: var(--tdm-guided-story-pan-hint-fg)
+    font-size: 0.75rem
+    letter-spacing: 0.04em
+    content: "Deslize para explorar toda a cena"
+
+.storySizer
+  position: relative
+  flex: 0 0 auto
+  margin: 0 auto
+
+.storyCanvas
   position: absolute
   left: 0
   top: 0
-  bottom: 0
-  width: 0.125rem
-  border-radius: 0.4375rem 0 0 0.4375rem
-  background: var(--stage-color)
-  box-shadow: 0 0 0.5rem color-mix(in srgb, var(--stage-color) 50%, transparent)
+  width: 1440px
+  height: 620px
+  transform-origin: top left
+  overflow: hidden
 
-.skeletonLine,
-.skeletonLineShort
-  display: block
-  height: 0.28125rem
-  border-radius: 999px
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05))
-  margin-top: 0.25rem
-
-.skeletonLine
-  width: 68%
-
-.skeletonLineShort
-  width: 42%
-  margin-top: 0.25rem
-  opacity: 0.5
-
-.connectionsSvg
+.scene
   position: absolute
   inset: 0
-  width: 100%
-  height: 100%
+  opacity: 0
   pointer-events: none
-  overflow: visible
-  z-index: 4
+  transition: opacity 0.58s var(--story-ease)
+  isolation: isolate
 
-.overlayMessage
+.active
+  opacity: 1
+  pointer-events: auto
+
+.sceneInner
   position: absolute
   inset: 0
+  padding: 42px 48px
+
+.openingLayout
   display: grid
+  height: 100%
   place-items: center
   text-align: center
-  padding: clamp(2rem, 4vw, 5rem)
-  pointer-events: none
-  z-index: 6
 
-.overlayBackdrop
-  background: radial-gradient(circle at 50% 48%, rgba(8, 9, 11, 1), rgba(8, 9, 11, 0.995) 48%, rgba(8, 9, 11, 0.985) 100%)
-  backdrop-filter: blur(0.75rem)
-
-.textSceneInner
-  width: min(100%, 46rem)
+.openingBrand
   display: grid
-  gap: clamp(1rem, 1.8vw, 1.25rem)
   justify-items: center
+  gap: 24px
+  opacity: 0.76
+  transform: translateY(8px) scale(0.992)
+  transition: opacity 1.05s var(--story-ease), transform 1.1s var(--story-ease)
 
-.overlayTitle
-  margin: 0
-  width: 100%
-  max-width: var(--guided-preview-text-max-width)
-  font-size: clamp(2.25rem, 5vw, 5rem)
-  font-weight: 700
-  line-height: 0.95
-  letter-spacing: -0.055em
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(190, 190, 198, 0.78))
-  -webkit-background-clip: text
-  background-clip: text
-  color: transparent
-  filter: drop-shadow(0 1.25rem 4rem rgba(255, 255, 255, 0.08))
+  img
+    display: block
+    width: 670px
+    height: auto
 
-.overlaySubtitle
-  margin: 0 auto
-  width: 100%
-  max-width: min(40rem, var(--guided-preview-text-max-width))
-  font-size: clamp(1.05rem, 1.8vw, 1.55rem)
-  line-height: 1.45
-  letter-spacing: -0.025em
-  color: rgba(235, 235, 240, 0.68)
+  p
+    max-width: 760px
+    margin: 0
+    color: var(--tdm-guided-story-opening-copy)
+    font-size: 1.125rem
+    line-height: 1.7
 
-.sceneLayer
+.isReady
+  opacity: 1
+  transform: none
+
+.overviewWrap
   position: absolute
-  inset: clamp(0.875rem, 2vw, 1.375rem)
+  left: 48px
+  right: 48px
+  top: 82px
+  height: 350px
+
+.overviewGrid
+  position: relative
+  z-index: 3
   display: grid
-  place-items: center
-  z-index: 1
+  grid-template-columns: repeat(4, 1fr)
+  gap: 72px
+  height: 100%
 
-.resultGrid
-  display: grid
-  grid-template-columns: repeat(4, minmax(0, var(--result-column-width)))
-  gap: var(--result-column-gap)
-  align-items: center
-  align-content: center
-  justify-content: center
-  width: 100%
-  transform: scale(var(--result-preview-scale)) translateY(var(--guided-preview-columns-offset-y))
-  transform-origin: center center
+.overviewCard
+  position: relative
+  min-width: 0
+  padding: 20px 20px 18px
+  border: 0.8px solid var(--tdm-guided-story-card-border)
+  border-radius: 16px
+  background: linear-gradient(180deg, var(--tdm-guided-story-card-bg-top), var(--tdm-guided-story-card-bg-bottom))
+  box-shadow: inset 0 0 0 0.5px var(--tdm-guided-story-card-inset)
+  opacity: 0.7
+  transform: translateY(2px)
+  transition: opacity 0.56s var(--story-ease), transform 0.68s var(--story-ease), border-color 0.4s ease, background 0.4s ease
 
-.resultColumn
+  &::before
+    position: absolute
+    left: 20px
+    right: 20px
+    top: 0
+    height: 2px
+    border-radius: 99px
+    background: linear-gradient(90deg, var(--stage), transparent 82%)
+    opacity: 0.34
+    content: ""
+
+  h3
+    margin: 13px 0 0
+    font-size: 1.125rem
+    font-weight: 600
+    letter-spacing: -0.025em
+
+  > p
+    margin: 7px 0 0
+    color: var(--tdm-guided-story-card-desc)
+    font-size: 0.75rem
+    line-height: 1.48
+
+  ul
+    display: grid
+    gap: 8px
+    margin: 17px 0 0
+    padding: 15px 0 0
+    border-top: 0.8px solid var(--tdm-guided-story-card-divider)
+    list-style: none
+
+  li
+    display: flex
+    align-items: flex-start
+    gap: 8px
+    color: var(--tdm-guided-story-card-item)
+    font-size: 0.75rem
+    line-height: 1.35
+
+    &::before
+      flex: 0 0 auto
+      width: 4px
+      aspect-ratio: 1
+      margin-top: 6px
+      border-radius: 50%
+      background: var(--stage)
+      opacity: 0.78
+      content: ""
+
+.stageKicker
   display: flex
-  flex-direction: column
-  gap: var(--result-card-gap)
-  min-height: var(--result-column-height)
-  padding: clamp(0.75rem, 1.4vw, 1rem) clamp(0.625rem, 1.1vw, 0.875rem)
-  border-radius: 0.625rem
-  border: 1px solid color-mix(in srgb, var(--stage-color) 18%, rgba(255, 255, 255, 0.08))
-  background: rgba(16, 18, 20, 0.42)
-  backdrop-filter: blur(0.5rem)
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 1rem color-mix(in srgb, var(--stage-color) 8%, transparent)
-
-.resultColumnHeader
-  display: flex
   align-items: center
-  gap: 0.375rem
-  margin-bottom: 0.125rem
-
-.resultColumnDot
-  width: 0.375rem
-  height: 0.375rem
-  border-radius: 50%
-  flex-shrink: 0
-  background: var(--stage-color)
-  box-shadow: 0 0 0.5rem color-mix(in srgb, var(--stage-color) 50%, transparent)
-
-.resultColumnLabel
-  font-size: 0.5625rem
-  letter-spacing: 0.1em
-  text-transform: uppercase
+  gap: 7px
+  color: var(--tdm-guided-story-stage-kicker)
+  font-size: 0.75rem
   font-weight: 600
-  color: var(--stage-color)
+  letter-spacing: 0.12em
+  text-transform: uppercase
 
-.resultColumnCount
-  margin-left: auto
-  font-size: 0.5rem
-  letter-spacing: 0.06em
-  color: rgba(244, 244, 245, 0.34)
+  &::before
+    width: 6px
+    aspect-ratio: 1
+    border-radius: 50%
+    background: var(--stage)
+    content: ""
 
-.resultCard
-  min-height: var(--result-card-height)
-  padding: clamp(0.5625rem, 1vw, 0.75rem) clamp(0.5rem, 0.9vw, 0.625rem)
-  border-radius: 0.4375rem
-  border: 1px solid rgba(255, 255, 255, 0.09)
-  background: rgba(12, 12, 13, 0.78)
-  backdrop-filter: blur(0.375rem)
-
-.resultCardTop
-  display: flex
-  align-items: center
-  gap: 0.375rem
-  margin-bottom: 0.25rem
-
-.resultCardDot
-  width: 0.375rem
-  height: 0.375rem
-  border-radius: 0.125rem
-  flex-shrink: 0
-  background: var(--stage-color)
-  opacity: 0.85
-
-.resultArrows
+.edgeLayer
   position: absolute
   inset: 0
+  z-index: 2
+  width: 100%
+  height: 100%
+  overflow: visible
   pointer-events: none
+
+.edgeBase
+  fill: none
+  stroke: var(--tdm-guided-story-edge-base)
+  stroke-width: 1.05
+  stroke-linecap: round
+  stroke-linejoin: round
+  vector-effect: non-scaling-stroke
+
+.edgeLive
+  fill: none
+  stroke: var(--tdm-guided-story-edge-live)
+  stroke-width: 1.15
+  stroke-linecap: round
+  stroke-linejoin: round
+  vector-effect: non-scaling-stroke
+  opacity: 0
+
+.relationBadge
+  position: absolute
+  z-index: 5
+  display: grid
+  place-items: center
+  width: 28px
+  height: 28px
+  margin: -14px 0 0 -14px
+  border: 0.8px solid var(--tdm-guided-story-badge-border)
+  border-radius: 50%
+  background: var(--tdm-guided-story-badge-bg)
+  color: var(--tdm-guided-story-badge-fg)
+  font-size: 0.75rem
+  font-weight: 600
+  opacity: 0.38
+  transform: scale(0.94)
+  transition: opacity 0.4s var(--story-ease), transform 0.42s var(--story-ease)
+
+.riskBadge
+  border-color: var(--tdm-guided-story-risk-badge-border)
+  color: var(--tdm-guided-story-risk-badge-fg)
+
+.hypBadge
+  border-color: var(--tdm-guided-story-hyp-badge-border)
+  color: var(--tdm-guided-story-hyp-badge-fg)
+
+.relationRail
+  position: absolute
+  left: 48px
+  right: 48px
+  bottom: 34px
+  z-index: 6
+  display: grid
+  grid-template-columns: repeat(2, minmax(0, 1fr))
+  gap: 16px
+
+.relationNote
+  min-height: 96px
+  padding: 17px 18px
+  border: 0.8px solid var(--tdm-guided-story-note-border)
+  border-radius: 14px
+  background: var(--tdm-guided-story-note-bg)
+  opacity: 0.52
+  transition: opacity 0.46s var(--story-ease), border-color 0.36s ease, background 0.36s ease
+
+  span
+    display: block
+    margin-bottom: 7px
+    font-size: 0.75rem
+    font-weight: 600
+    letter-spacing: 0.13em
+    text-transform: uppercase
+
+  p
+    margin: 0
+    color: var(--tdm-guided-story-note-body)
+    font-size: 0.75rem
+    line-height: 1.5
+
+.riskNote span
+  color: var(--tdm-guided-story-risk-label)
+
+.hypNote span
+  color: var(--tdm-guided-story-hyp-label)
+
+.detailWrap
+  position: absolute
+  left: 42px
+  right: 42px
+  top: 52px
+  height: 516px
+
+.detailWrapCausality
+  height: 424px
+
+.flowGrid
+  position: relative
   z-index: 3
+  display: grid
+  grid-template-columns: repeat(4, 1fr)
+  gap: 50px
+  height: 100%
 
-@media (max-width: 40rem)
-  .flowGrid,
-  .resultGrid
-    grid-template-columns: repeat(2, minmax(0, 1fr))
+.flowColumn
+  position: relative
+  padding: 16px
+  border: 0.8px solid var(--tdm-guided-story-column-border)
+  border-radius: 16px
+  background: var(--tdm-guided-story-column-bg)
+  opacity: 0.68
+  transition: opacity 0.5s var(--story-ease), border-color 0.4s ease, background 0.4s ease, transform 0.5s var(--story-ease)
 
-  .preview
-    --guided-preview-content-height: clamp(15rem, 40vw, 20rem)
-    --guided-preview-text-area-width: clamp(18rem, 88vw, 28rem)
-    --guided-preview-text-max-width: clamp(18rem, 88vw, 28rem)
-    --guided-preview-text-area-height: clamp(8.5rem, 28vw, 13rem)
-    min-height: clamp(22rem, 52vw, 28rem)
+  &::before
+    position: absolute
+    left: 16px
+    right: 16px
+    top: 0
+    height: 2px
+    border-radius: 99px
+    background: linear-gradient(90deg, var(--stage), transparent 80%)
+    opacity: 0.27
+    content: ""
 
-  .previewInner
-    --preview-card-width: clamp(5.5rem, 38vw, 8rem)
-    --preview-card-height: clamp(3rem, 8vw, 4rem)
-    --preview-stage-gap: clamp(0.875rem, 3.5vw, 1.5rem)
-    --preview-card-gap: clamp(0.625rem, 2vw, 0.875rem)
-    --result-column-width: clamp(9rem, 42vw, 14rem)
-    --result-column-height: clamp(11rem, 46vw, 16rem)
-    --result-card-height: clamp(3rem, 7vw, 4rem)
-    --result-card-gap: clamp(0.5rem, 2vw, 0.75rem)
-    --result-column-gap: clamp(0.75rem, 3vw, 1.25rem)
+.flowColumnCompact
+  padding: 13px
+
+.columnHeading
+  min-height: 78px
+  padding: 2px 2px 13px
+  border-bottom: 0.8px solid var(--tdm-guided-story-column-heading-border)
+
+  > span
+    display: flex
+    align-items: center
+    gap: 7px
+    color: var(--tdm-guided-story-column-kicker)
+    font-size: 0.75rem
+    font-weight: 600
+    letter-spacing: 0.13em
+    text-transform: uppercase
+
+    &::before
+      width: 6px
+      aspect-ratio: 1
+      border-radius: 50%
+      background: var(--stage)
+      content: ""
+
+  h3
+    margin: 8px 0 0
+    font-size: 1rem
+    font-weight: 600
+    letter-spacing: -0.02em
+
+  p
+    margin: 5px 0 0
+    color: var(--tdm-guided-story-column-desc)
+    font-size: 0.75rem
+    line-height: 1.4
+
+.columnHeadingCompact
+  min-height: 63px
+  padding-bottom: 9px
+
+  h3
+    margin-top: 6px
+
+  p
+    margin-top: 3px
+
+.cardStack
+  display: grid
+  gap: 12px
+  padding-top: 13px
+
+.cardStackCompact
+  gap: 8px
+  padding-top: 9px
+
+.flowCard
+  position: relative
+  min-height: 112px
+  padding: 15px 15px 14px
+  border: 0.8px solid var(--tdm-guided-story-flow-card-border)
+  border-radius: 13px
+  background: linear-gradient(180deg, var(--tdm-guided-story-flow-card-bg-top), var(--tdm-guided-story-flow-card-bg-bottom))
+  opacity: 0.62
+  transition: opacity 0.48s var(--story-ease), transform 0.56s var(--story-ease), border-color 0.36s ease, background 0.36s ease
+
+  h4
+    margin: 9px 0 0
+    font-size: 0.8125rem
+    font-weight: 600
+    letter-spacing: -0.015em
+    line-height: 1.28
+
+  p
+    margin: 6px 0 0
+    color: var(--tdm-guided-story-flow-card-desc)
+    font-size: 0.75rem
+    line-height: 1.48
+
+.flowCardCompact
+  min-height: 91px
+  padding: 11px 12px 10px
+
+  h4
+    margin-top: 7px
+    font-size: 0.78125rem
+
+  p
+    margin-top: 4px
+    font-size: 0.75rem
+    line-height: 1.4
+
+.cardLabel
+  display: flex
+  align-items: center
+  gap: 7px
+  color: var(--stage)
+  font-size: 0.75rem
+  font-weight: 600
+  letter-spacing: 0.12em
+  text-transform: uppercase
+
+  &::before
+    width: 4px
+    aspect-ratio: 1
+    border-radius: 50%
+    background: currentColor
+    content: ""
+
+.isActive,
+.isComplete
+  &.overviewCard,
+  &.flowColumn,
+  &.flowCard
+    opacity: 1
+
+  &.overviewCard
+    transform: none
+    border-color: var(--tdm-guided-story-active-border)
+    background: linear-gradient(180deg, var(--tdm-guided-story-active-card-bg-top), var(--tdm-guided-story-active-card-bg-bottom))
+
+  &.flowColumn
+    border-color: var(--tdm-guided-story-active-column-border)
+    background: var(--tdm-guided-story-active-column-bg)
+    transform: translateY(-1px)
+
+  &.flowCard
+    transform: translateY(-1px)
+    border-color: var(--tdm-guided-story-active-border)
+    background: linear-gradient(180deg, var(--tdm-guided-story-active-flow-bg-top), var(--tdm-guided-story-active-flow-bg-bottom))
+
+  &.relationBadge
+    opacity: 1
+    transform: scale(1)
+
+  &.relationNote
+    opacity: 1
+    border-color: var(--tdm-guided-story-active-border)
+    background: var(--tdm-guided-story-active-note-bg)
+
+.finalSummary
+  position: absolute
+  right: 52px
+  bottom: 34px
+  z-index: 7
+  display: flex
+  align-items: center
+  gap: 10px
+  padding: 9px 13px
+  border: 0.8px solid var(--tdm-guided-story-summary-border)
+  border-radius: 999rem
+  background: var(--tdm-guided-story-summary-bg)
+  color: var(--tdm-guided-story-summary-fg)
+  font-size: 0.75rem
+  letter-spacing: 0.02em
+
+  &::before
+    width: 5px
+    aspect-ratio: 1
+    border-radius: 50%
+    background: var(--tdm-guided-story-summary-dot)
+    content: ""
+
+.storyFooter
+  padding: 1.2rem 1.45rem 1.35rem
+  border-top: 0.0625rem solid var(--story-line-soft)
+  background: var(--tdm-guided-story-footer-bg)
+
+.footerMain
+  display: grid
+  grid-template-columns: var(--tdm-public-brand-mark-size) minmax(0, 1fr) auto
+  align-items: center
+  gap: 1rem
+
+.footerIcon
+  display: block
+  width: var(--tdm-public-brand-mark-size)
+  height: auto
+  opacity: 0.94
+
+.footerCopy
+  h3
+    margin: 0
+    font-size: 1rem
+    font-weight: 600
+    letter-spacing: 0.035em
+    text-transform: uppercase
+
+  p
+    max-width: 73rem
+    margin: 0.4rem 0 0
+    color: var(--tdm-guided-story-footer-copy)
+    font-size: 0.84rem
+    line-height: 1.58
+
+.footerStatus
+  align-self: start
+  color: var(--tdm-guided-story-footer-status)
+  font-size: 0.75rem
+  white-space: nowrap
+
+.chapterNav
+  display: grid
+  grid-template-columns: repeat(7, minmax(0, 1fr))
+  gap: 0.5rem
+  margin-top: 1rem
+
+.chapterStep
+  position: relative
+  display: grid
+  grid-template-columns: auto minmax(0, 1fr)
+  align-items: center
+  gap: 0.46rem
+  min-height: 2.5rem
+  padding: 0.55rem 0.65rem
+  overflow: hidden
+  border: 0.0625rem solid var(--tdm-guided-story-step-border)
+  border-radius: 0.72rem
+  background: var(--tdm-guided-story-step-bg)
+  color: var(--tdm-guided-story-step-fg)
+  text-align: left
+  cursor: pointer
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease
+
+  &::after
+    position: absolute
+    left: 0
+    right: 0
+    bottom: 0
+    height: 2px
+    background: var(--tdm-guided-story-step-fill)
+    transform: scaleX(var(--fill, 0))
+    transform-origin: left center
+    content: ""
+
+  &:hover
+    border-color: var(--tdm-guided-story-step-border-hover)
+    color: var(--tdm-guided-story-step-fg-hover)
+
+  &:focus-visible
+    outline: 0.125rem solid var(--tdm-guided-story-focus)
+    outline-offset: 0.2rem
+
+  &.active
+    border-color: var(--tdm-guided-story-step-border-hover)
+    background: var(--tdm-guided-story-step-bg-active)
+    color: var(--tdm-guided-story-step-fg-active)
+
+  span
+    font-size: 0.75rem
+    font-weight: 600
+    letter-spacing: 0.08em
+
+  b
+    overflow: hidden
+    font-size: 0.75rem
+    font-weight: 600
+    text-overflow: ellipsis
+    white-space: nowrap
+
+.reducedMotion
+  .scene,
+  .openingBrand,
+  .overviewCard,
+  .flowColumn,
+  .flowCard,
+  .relationBadge,
+  .relationNote,
+  .controlBtn,
+  .chapterStep
+    transition-duration: 0.01ms
+
+  .openingBrand
+    opacity: 1
+    transform: none
+
+@media (max-width: 72rem)
+  .storyHeader
+    grid-template-columns: 1fr
+
+  .storyControls
+    justify-content: flex-start
+
+  .footerMain
+    grid-template-columns: 3.65rem minmax(0, 1fr)
+
+  .footerStatus
+    grid-column: 2
+
+  .chapterNav
+    display: flex
+    overflow: auto
+    scrollbar-width: none
+
+    &::-webkit-scrollbar
+      display: none
+
+  .chapterStep
+    min-width: 8.8rem
+
+@media (max-width: 42rem)
+  .storyShell
+    border-radius: 1.05rem
+
+  .storyHeader
+    padding: 1.2rem 1rem 1.1rem
+
+  .storyCopy p
+    font-size: 0.84rem
+
+  .controlBtn
+    width: 2.55rem
+    height: 2.55rem
+
+  .storyFooter
+    padding: 1rem
+
+  .footerMain
+    grid-template-columns: var(--tdm-public-brand-mark-size) minmax(0, 1fr)
+    gap: 0.8rem
+
+  .footerCopy
+    h3
+      font-size: 0.88rem
+
+    p
+      font-size: 0.77rem
+
+  .footerStatus
+    font-size: 0.75rem

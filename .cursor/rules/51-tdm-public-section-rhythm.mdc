@@ -1,0 +1,16 @@
+---
+description: Regra canônica de alinhamento do intro secundário de Exemplos e ritmo entre seções públicas.
+globs:
+  - "src/features/theory-of-change/components/public-pages/**"
+  - "src/features/theory-of-change/components/resend-public/example-previews/**"
+  - "src/shared/ui/lusion-resend-ds/**"
+alwaysApply: false
+---
+
+# TDM Public Section Rhythm
+
+- Em `/exemplos`, o intro `Prévia das experiências` usa a mesma geometria editorial alinhada à esquerda do intro `O caminho antes da leitura final` em `/exemplos/visao-do-fluxo`.
+- Não centralizar label, título ou descrição desse intro.
+- Separar seções públicas irmãs com um único token semântico de espaço no eixo Y.
+- Não usar dividers, cards, backgrounds, spacers vazios ou números mágicos por rota.
+- Não alterar conteúdo, tipografia, cards, CTAs, Canvas, React Flow, stores ou domínio.

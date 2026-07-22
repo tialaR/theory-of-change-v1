@@ -97,6 +97,8 @@ export type TdmSidebarContext =
         targetLabel: string;
         markerText: string;
         markerType: 'risk' | 'hypothesis';
+        /** Persisted marker text on the edge — not the live draft. */
+        isEditingExisting: boolean;
       };
       onDraftChange: (nextValue: string) => void;
       onSubmit: () => void;
@@ -1144,6 +1146,7 @@ export function TdmSidebar({
                 sourceLabel={context.marker.sourceLabel}
                 targetLabel={context.marker.targetLabel}
                 markerText={context.marker.markerText}
+                isEditingExisting={context.marker.isEditingExisting}
                 onDraftChange={context.onDraftChange}
                 onSubmit={context.onSubmit}
                 onDelete={context.onDelete}

@@ -1,0 +1,18 @@
+---
+description: Regras de tokens, primitives e responsabilidade de componentes TDM.
+globs: ["src/shared/styles/**/*", "src/shared/ui/**/*", "src/features/**/*.module.sass"]
+alwaysApply: false
+---
+
+Tokens seguem três camadas:
+
+1. reference;
+2. system semantic;
+3. component.
+
+Use CSS custom properties escopadas por seletor quando a decisão pertence a uma feature.
+Não altere token global para corrigir uma única rota.
+Não repita valor concreto em consumidores.
+Não crie primitive novo quando já existir componente canônico.
+Não adicione override corretivo no fim do módulo.
+Sass Modules e `rem` são obrigatórios para dimensões de componente.

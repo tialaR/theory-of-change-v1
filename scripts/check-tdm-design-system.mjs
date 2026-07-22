@@ -48,6 +48,7 @@ const TOKEN_DEFINITION_FILES = new Set([
   'src/shared/styles/tdm/_tdm-shadow.sass',
   'src/shared/styles/tdm/_tdm-border.sass',
   'src/shared/styles/tdm/_tdm-cta.sass',
+  'src/shared/styles/tdm/_tdm-public-action.sass',
   'src/shared/styles/tdm/_tdm-focus.sass',
   'src/shared/styles/tdm/_tdm-radius.sass',
   'src/shared/styles/tdm/_tdm-motion.sass',

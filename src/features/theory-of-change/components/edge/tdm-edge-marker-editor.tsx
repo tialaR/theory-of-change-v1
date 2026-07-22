@@ -32,10 +32,7 @@ const CREATE_LABELS: Record<TdmMarkerType, string> = {
   hypothesis: 'Adicionar hipótese'
 };
 
-const SAVE_LABELS: Record<TdmMarkerType, string> = {
-  risk: 'Salvar risco',
-  hypothesis: 'Salvar hipótese'
-};
+const EDIT_SUBMIT_LABEL = 'Salvar alterações';
 
 const DELETE_LABELS: Record<TdmMarkerType, string> = {
   risk: 'Remover risco',
@@ -71,10 +68,11 @@ export function TdmEdgeMarkerEditor({
     setError(null);
   }
 
+  // Existence = persisted marker text on open, not the live draft.
   const isEditingExisting = Boolean(initialText.trim());
   const canDelete = isEditingExisting;
   const hasDraftText = Boolean(draft);
-  const submitLabel = isEditingExisting ? SAVE_LABELS[markerType] : CREATE_LABELS[markerType];
+  const submitLabel = isEditingExisting ? EDIT_SUBMIT_LABEL : CREATE_LABELS[markerType];
 
   const handleSave = () => {
     const trimmed = draft.trim();
@@ -178,11 +176,20 @@ export function TdmEdgeMarkerEditor({
         size="sm"
         fullWidth
         className={styles.submitAction}
+        leadingIcon={isEditingExisting ? undefined : <PlusIcon />}
         onClick={handleSave}
       >
         {submitLabel}
       </TdmButton>
     </TdmSurface>
+  );
+}
+
+function PlusIcon() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" strokeWidth="1.45" strokeLinecap="round" />
+    </svg>
   );
 }
 

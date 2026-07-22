@@ -1,26 +1,5 @@
-@use '../public-typography' as type
-
-.previewsSection
-  inline-size: min(100%, 96rem)
-  margin: 0 auto
-  padding: var(--tdm-space-12) var(--tdm-space-8)
-
-.sectionHeader
-  display: grid
-  gap: 0
-  max-inline-size: var(--tdm-measure-intro)
-  margin-inline: auto
-  margin-block-end: var(--tdm-space-10)
-  text-align: center
-
-.sectionTitle
-  @include type.public-section-title
-
-.sectionDescription
-  @include type.public-section-description
-  margin-block-start: var(--tdm-space-3)
-
 // Contrato A — hub experience cards (surface via TdmPublicFeatureCard size=choice)
+// Intro editorial reutiliza PublicSection (mesma régua de /exemplos/visao-do-fluxo).
 $card-gap-desktop: 1.25rem
 
 .previewGrid
@@ -64,78 +43,6 @@ $card-gap-desktop: 1.25rem
   stroke-linejoin: round
   pointer-events: none
   vector-effect: non-scaling-stroke
-
-.dedicatedPreviewFrame,
-.fullPreview
-  display: grid
-  place-items: center
-  min-block-size: 0
-  aspect-ratio: 1520 / 660
-  overflow: hidden
-  border: var(--tdm-border-width-hairline) solid var(--tdm-border-subtle)
-  border-radius: var(--tdm-radius-lg)
-  background: var(--tdm-surface-app)
-  box-shadow: var(--tdm-highlight-top), var(--tdm-shadow-medium)
-
-.dedicatedPreviewFrame
-  inline-size: 100%
-
-// Contrato D — flow preview viewport centering
-.previewViewport
-  position: relative
-  display: grid
-  place-items: center
-  inline-size: 100%
-  min-block-size: 100%
-  aspect-ratio: 1520 / 660
-  padding-block: 2rem
-  overflow: hidden
-
-.previewStage
-  position: absolute
-  inset: 2rem 0
-  display: grid
-  place-items: center
-  inline-size: 100%
-  min-inline-size: 0
-  min-block-size: 0
-  margin: 0
-  overflow: hidden
-  transform-origin: center
-
-.fullPreview
-  border-radius: var(--tdm-radius-xl)
-
-.fullPage
-  min-block-size: 100vh
-  padding: var(--tdm-space-16) var(--tdm-space-8)
-  background: var(--tdm-surface-app)
-
-.fullShell
-  display: grid
-  gap: var(--tdm-space-6)
-  inline-size: min(100%, 92rem)
-  margin-inline: auto
-
-.fullHeader
-  display: flex
-  align-items: center
-  justify-content: space-between
-  gap: var(--tdm-space-4)
-
-  a
-    color: var(--tdm-fg-secondary)
-    text-decoration: none
-    border: var(--tdm-border-width-hairline) solid var(--tdm-border-default)
-    border-radius: var(--tdm-radius-round)
-    padding: var(--tdm-space-3) var(--tdm-space-4)
-    background: var(--tdm-surface-hover)
-
-  h1
-    margin: 0
-    color: var(--tdm-fg-primary)
-    font-size: var(--tdm-font-page-title-size)
-    letter-spacing: var(--tdm-font-page-title-tracking)
 
 @media (max-width: 56rem)
   .previewGrid

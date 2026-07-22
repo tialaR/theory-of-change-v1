@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TDM · Prévias públicas v2 · motion existente preservado</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --page: #050506;
+      --panel: rgba(8, 8, 9, .92);
+      --frame: #0d0d0f;
+      --frame-inner: #0b0b0d;
+      --line: rgba(255, 255, 255, .11);
+      --line-hover: rgba(255, 255, 255, .19);
+      --line-soft: rgba(255, 255, 255, .06);
+      --text: rgba(250, 250, 252, .94);
+      --secondary: rgba(235, 235, 239, .66);
+      --muted: rgba(225, 225, 232, .44);
+      --violet: #8f7cf5;
+      --blue: #55a6df;
+      --amber: #d2974d;
+      --green: #48b995;
+      --ease: cubic-bezier(.2, .7, .2, 1);
+      --motion: 4.8s;
+      --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      min-height: 100%;
+      background: var(--page);
+      font-family: var(--font);
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 50% -18rem, rgba(255,255,255,.034), transparent 34rem),
+        radial-gradient(circle, rgba(255,255,255,.027) .035rem, transparent .05rem) 0 0 / 1.5rem 1.5rem,
+        var(--page);
+    }
+
+    button { font: inherit; }
+
+    .page {
+      width: min(82rem, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 2rem 0 5rem;
+    }
+
+    .contract-header {
+      position: sticky;
+      top: 1rem;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 1rem;
+      padding: .875rem 1rem;
+      border: .0625rem solid var(--line);
+      border-radius: .875rem;
+      background: rgba(7, 7, 8, .88);
+      backdrop-filter: blur(1rem);
+      -webkit-backdrop-filter: blur(1rem);
+    }
+
+    .contract-brand {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      min-width: 0;
+    }
+
+    .mark {
+      display: grid;
+      place-items: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      flex: 0 0 auto;
+      border: .0625rem solid var(--line);
+      border-radius: .625rem;
+      color: rgba(255,255,255,.76);
+    }
+
+    .mark svg { width: 1.2rem; height: 1.2rem; }
+
+    .contract-copy strong {
+      display: block;
+      font-size: .875rem;
+      font-weight: 500;
+      letter-spacing: -.015em;
+    }
+
+    .contract-copy span {
+      display: block;
+      margin-top: .1rem;
+      color: var(--muted);
+      font-size: .7rem;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: .35rem;
+    }
+
+    .control {
+      min-height: 2.25rem;
+      padding: 0 .72rem;
+      border: .0625rem solid var(--line);
+      border-radius: .5rem;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      transition: color .16s var(--ease), border-color .16s var(--ease), background-color .16s var(--ease);
+    }
+
+    .control:hover {
+      color: var(--secondary);
+      border-color: var(--line-hover);
+    }
+
+    .control[aria-pressed="true"] {
+      color: var(--text);
+      border-color: rgba(255,255,255,.28);
+      background: rgba(255,255,255,.042);
+    }
+
+    .intro {
+      max-width: 58rem;
+      padding: 4rem .25rem 2rem;
+    }
+
+    .kicker {
+      margin: 0 0 .8rem;
+      color: var(--muted);
+      font-size: .68rem;
+      font-weight: 560;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 51rem;
+      margin: 0;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      line-height: .98;
+      font-weight: 440;
+      letter-spacing: -.052em;
+    }
+
+    .intro > p:last-child {
+      max-width: 53rem;
+      margin: 1.1rem 0 0;
+      color: var(--secondary);
+      font-size: .96rem;
+      line-height: 1.65;
+    }
+
+    .diagnosis {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: .75rem;
+      margin-bottom: 1rem;
+    }
+
+    .diagnosis article {
+      padding: 1rem;
+      border: .0625rem solid var(--line);
+      border-radius: .875rem;
+      background: rgba(255,255,255,.012);
+    }
+
+    .diagnosis strong {
+      display: block;
+      font-size: .78rem;
+      font-weight: 520;
+    }
+
+    .diagnosis span {
+      display: block;
+      margin-top: .35rem;
+      color: var(--muted);
+      font-size: .72rem;
+      line-height: 1.5;
+    }
+
+    .stack {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .demo {
+      padding: 1.25rem;
+      border: .0625rem solid var(--line);
+      border-radius: 1rem;
+      background: var(--panel);
+    }
+
+    .demo-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .demo-head h2 {
+      margin: 0;
+      font-size: .95rem;
+      font-weight: 520;
+      letter-spacing: -.015em;
+    }
+
+    .demo-head p {
+      max-width: 50rem;
+      margin: .38rem 0 0;
+      color: var(--muted);
+      font-size: .78rem;
+      line-height: 1.5;
+    }
+
+    .route {
+      flex: 0 0 auto;
+      padding: .35rem .55rem;
+      border: .0625rem solid var(--line);
+      border-radius: .45rem;
+      color: var(--muted);
+      font-size: .66rem;
+      letter-spacing: .05em;
+    }
+
+    /* Contrato v2: mesma casca para as duas prévias. */
+    .shared-frame {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 100%;
+      aspect-ratio: 1520 / 660;
+      min-height: 0;
+      overflow: hidden;
+      padding: 1.25rem;
+      border: .0625rem solid var(--line);
+      border-radius: 1rem;
+      background: var(--frame);
+      transition: border-color .16s var(--ease);
+    }
+
+    .shared-frame:hover { border-color: var(--line-hover); }
+
+    .shared-frame::before {
+      content: "";
+      position: absolute;
+      inset: 1.25rem;
+      z-index: 0;
+      border-radius: .65rem;
+      background: var(--frame-inner);
+      opacity: 0;
+      transition: opacity .16s var(--ease);
+    }
+
+    body.show-inner .shared-frame::before { opacity: 1; }
+
+    .inner-viewport {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 100%;
+      height: 100%;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .inner-viewport svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-width: 0;
+      min-height: 0;
+      overflow: visible;
+    }
+
+    .grid-overlay {
+      position: absolute;
+      inset: 1.25rem;
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0;
+      background:
+        linear-gradient(90deg,
+          transparent calc(25% - .03125rem),
+          rgba(255,255,255,.045) calc(25% - .03125rem),
+          rgba(255,255,255,.045) calc(25% + .03125rem),
+          transparent calc(25% + .03125rem),
+          transparent calc(50% - .03125rem),
+          rgba(255,255,255,.045) calc(50% - .03125rem),
+          rgba(255,255,255,.045) calc(50% + .03125rem),
+          transparent calc(50% + .03125rem),
+          transparent calc(75% - .03125rem),
+          rgba(255,255,255,.045) calc(75% - .03125rem),
+          rgba(255,255,255,.045) calc(75% + .03125rem),
+          transparent calc(75% + .03125rem));
+      transition: opacity .16s var(--ease);
+    }
+
+    body.show-grid .grid-overlay { opacity: 1; }
+
+    .flow-node-surface,
+    .result-column,
+    .result-card {
+      fill: rgba(255,255,255,.034);
+      stroke: rgba(255,255,255,.09);
+      stroke-width: .75;
+    }
+
+    .result-card { fill: rgba(255,255,255,.024); }
+
+    .tile {
+      fill: rgba(255,255,255,.035);
+      stroke: rgba(255,255,255,.07);
+      stroke-width: .65;
+    }
+
+    .title-line { fill: rgba(238,238,242,.42); }
+    .copy-line { fill: rgba(225,225,232,.22); }
+    .copy-line-soft { fill: rgba(255,255,255,.075); }
+    .column-divider { stroke: rgba(255,255,255,.065); stroke-width: .65; }
+
+    .motion-line {
+      fill: none;
+      stroke-width: 1.05;
+      stroke-dasharray: 2 8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      pointer-events: none;
+      stroke-dashoffset: var(--from);
+    }
+
+    .is-active .motion-line {
+      animation: exact-existing-dash var(--motion) linear infinite;
+    }
+
+    .flow-line { stroke: color-mix(in srgb, var(--stage-color) 32%, rgba(225,225,232,.44)); }
+    .result-line { stroke: rgba(225,225,232,.44); }
+
+    @keyframes exact-existing-dash {
+      from { stroke-dashoffset: var(--from); }
+      to { stroke-dashoffset: var(--to); }
+    }
+
+    body.motion-paused .motion-line { animation-play-state: paused; }
+
+    .facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-top: 1rem;
+      color: var(--muted);
+      font-size: .72rem;
+    }
+
+    .facts span {
+      padding: .35rem .5rem;
+      border: .0625rem solid var(--line-soft);
+      border-radius: .45rem;
+    }
+
+    .files {
+      margin-top: 1rem;
+      padding: 1rem;
+      border: .0625rem solid var(--line);
+      border-radius: .875rem;
+      background: rgba(255,255,255,.012);
+    }
+
+    .files strong {
+      display: block;
+      margin-bottom: .55rem;
+      font-size: .78rem;
+      font-weight: 520;
+    }
+
+    .files code {
+      display: block;
+      overflow-wrap: anywhere;
+      color: var(--muted);
+      font-size: .7rem;
+      line-height: 1.65;
+    }
+
+    @media (max-width: 62rem) {
+      .shared-frame { overflow-x: auto; }
+      .inner-viewport { min-width: 52rem; }
+      .diagnosis { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 44rem) {
+      .contract-header { grid-template-columns: 1fr; }
+      .controls { justify-content: flex-start; }
+      .demo-head { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .motion-line { animation: none !important; }
+      * { scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="contract-header">
+      <div class="contract-brand">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35">
+            <path d="M12 2.7 20 7.3v9.4L12 21.3 4 16.7V7.3Z"/>
+            <path d="m12 5.8 5.3 3.1v6.2L12 18.2l-5.3-3.1V8.9Z"/>
+            <path d="m12 8.7 2.8 1.6v3.4L12 15.3l-2.8-1.6v-3.4Z"/>
+          </svg>
+        </span>
+        <span class="contract-copy">
+          <strong>Prévias públicas v2</strong>
+          <span>Motion existente preservado · casca e enquadramento unificados</span>
+        </span>
+      </div>
+      <div class="controls" aria-label="Controles do preview">
+        <button class="control" id="motionControl" type="button" aria-pressed="true">Motion 4.8s ativo</button>
+        <button class="control" id="gridControl" type="button" aria-pressed="false">Mostrar régua</button>
+        <button class="control" id="innerControl" type="button" aria-pressed="false">Mostrar viewport</button>
+      </div>
+    </header>
+
+    <section class="intro">
+      <p class="kicker">Código real do projeto</p>
+      <h1>Não redesenhar a animação.<br>Apenas enquadrá-la direito.</h1>
+      <p>
+        O preview anterior recriou o motion. Esta versão mantém o contrato real encontrado no ZIP:
+        <strong>stroke-dashoffset de 22 unidades, duração de 4.8s, repetição infinita e easing linear</strong>.
+        A mudança proposta fica somente na moldura externa, no padding e no viewport interno.
+      </p>
+    </section>
+
+    <section class="diagnosis" aria-label="Diagnóstico">
+      <article>
+        <strong>Causa 1 · wrappers diferentes</strong>
+        <span>Fluxo usa previewViewport + previewStage; Resultado usa dedicatedPreviewFrame direto.</span>
+      </article>
+      <article>
+        <strong>Causa 2 · aspect ratio divergente</strong>
+        <span>Fluxo renderiza viewBox 1520 × 800 dentro de uma moldura 1520 × 660, gerando folga vertical.</span>
+      </article>
+      <article>
+        <strong>Causa 3 · padding assimétrico</strong>
+        <span>Fluxo adiciona 2rem no eixo Y; Resultado não possui essa camada intermediária.</span>
+      </article>
+    </section>
+
+    <section class="stack">
+      <article class="demo">
+        <header class="demo-head">
+          <div>
+            <h2>Visão do fluxo · motion atual preservado</h2>
+            <p>Mesmos nodes, paths, fases e duração. O viewport passa a cortar apenas a folga estrutural, sem alterar coordenadas ou animação.</p>
+          </div>
+          <span class="route">/exemplos/visao-do-fluxo</span>
+        </header>
+
+        <div class="shared-frame observe-preview">
+          <div class="grid-overlay" aria-hidden="true"></div>
+          <div class="inner-viewport">
+            <svg viewBox="0 70 1520 660" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Prévia do fluxo com animação existente preservada">
+              <defs>
+                <marker id="flow-arrow" viewBox="0 0 5 5" markerWidth="4.5" markerHeight="4.5" refX="4.1" refY="2.5" orient="auto" markerUnits="userSpaceOnUse">
+                  <path d="M .75 .8 L 4 2.5 L .75 4.2" fill="none" stroke="rgba(218,221,226,.48)" stroke-width=".78" stroke-linecap="round" stroke-linejoin="round"/>
+                </marker>
+              </defs>
+              <g>
+                <path class="motion-line flow-line" style="--stage-color:var(--violet);--from:0;--to:-22" marker-end="url(#flow-arrow)" d="M 308 198 C 356 198, 402 198, 466 198"/>
+                <path class="motion-line flow-line" style="--stage-color:var(--violet);--from:-5;--to:-27" marker-end="url(#flow-arrow)" d="M 308 400 C 376 400, 392 252, 466 214"/>
+                <path class="motion-line flow-line" style="--stage-color:var(--violet);--from:-10;--to:-32" marker-end="url(#flow-arrow)" d="M 308 602 C 374 594, 408 602, 466 602"/>
+                <path class="motion-line flow-line" style="--stage-color:var(--blue);--from:-15;--to:-37" marker-end="url(#flow-arrow)" d="M 704 198 C 758 198, 804 198, 862 198"/>
+                <path class="motion-line flow-line" style="--stage-color:var(--blue);--from:-20;--to:-42" marker-end="url(#flow-arrow)" d="M 704 400 C 758 400, 804 400, 862 400"/>
+                <path class="motion-line flow-line" style="--stage-color:var(--blue);--from:-25;--to:-47" marker-end="url(#flow-arrow)" d="M 704 602 C 758 602, 804 602, 862 602"/>
+                <path class="motion-line flow-line" style="--stage-color:var(--amber);--from:-30;--to:-52" marker-end="url(#flow-arrow)" d="M 1100 198 C 1168 198, 1186 316, 1234 346"/>
+                <path class="motion-line flow-line" style="--stage-color:var(--amber);--from:-35;--to:-57" marker-end="url(#flow-arrow)" d="M 1100 400 C 1164 400, 1192 380, 1234 366"/>
+              </g>
+
+              <!-- Nodes copiados da geometria atual. -->
+              <g>
+                <g transform="translate(70 152)"><rect class="flow-node-surface" width="238" height="92" rx="9"/><line x1="1" y1="11" x2="1" y2="81" stroke="var(--violet)" opacity=".54"/><rect class="tile" x="18" y="18" width="24" height="24" rx="6"/><circle cx="30" cy="30" r="2.8" fill="var(--violet)" opacity=".76"/><rect class="title-line" x="54" y="28" width="74" height="3" rx="1.5"/><rect class="copy-line" x="54" y="46" width="116" height="2.5" rx="1.25"/><rect class="copy-line" x="54" y="60" width="94" height="2.5" rx="1.25"/><rect class="copy-line-soft" x="54" y="76" width="72" height="2.25" rx="1.125"/></g>
+                <g transform="translate(70 354)"><rect class="flow-node-surface" width="238" height="92" rx="9"/><line x1="1" y1="11" x2="1" y2="81" stroke="var(--violet)" opacity=".54"/><rect class="tile" x="18" y="18" width="24" height="24" rx="6"/><circle cx="30" cy="30" r="2.8" fill="var(--violet)" opacity=".76"/><rect class="title-line" x="54" y="28" width="74" height="3" rx="1.5"/><rect class="copy-line" x="54" y="46" width="116" height="2.5" rx="1.25"/><rect class="copy-line" x="54" y="60" width="94" height="2.5" rx="1.25"/><rect class="copy-line-soft" x="54" y="76" width="72" height="2.25" rx="1.125"/></g>
+                <g transform="translate(70 556)"><rect class="flow-node-surface" width="238" height="92" rx="9"/><line x1="1" y1="11" x2="1" y2="81" stroke="var(--violet)" opacity=".54"/><rect class="tile" x="18" y="18" width="24" height="24" rx="6"/><circle cx="30" cy="30" r="2.8" fill="var(--violet)" opacity=".76"/><rect class="title-line" x="54" y="28" width="74" height="3" rx="1.5"/><rect class="copy-line" x="54" y="46" width="116" height="2.5" rx="1.25"/><rect class="copy-line" x="54" y="60" width="94" height="2.5" rx="1.25"/><rect class="copy-line-soft" x="54" y="76" width="72" height="2.25" rx="1.125"/></g>
+                <g transform="translate(466 152)"><rect class="flow-node-surface" width="238" height="92" rx="9"/><line x1="1" y1="11" x2="1" y2="81" stroke="var(--blue)" opacity=".54"/><rect class="tile" x="18" y="18" width="24" height="24" rx="6"/><circle cx="30" cy="30" r="2.8" fill="var(--blue)" opacity=".76"/><rect class="title-line" x="54" y="28" width="74" height="3" rx="1.5"/><rect class="copy-line" x="54" y="46" width="116" height="2.5" rx="1.25"/><rect class="copy-line" x="54" y="60" width="94" height="2.5" rx="1.25"/><rect class="copy-line-soft" x="54" y="76" width="72" height="2.25" rx="1.125"/></g>
+                <g transform="translate(466 354)"><rect class="flow-node-surface" width="238" height="92" rx="9"/><line x1="1" y1="11" x2="1" y2="81" stroke="var(--blue)" opacity=".54"/><rect class="tile" x="18" y="18" width="24" height="24" rx="6"/><circle cx="30" cy="30" r="2.8" fill="var(--blue)" opacity=".76"/><rect class="title-line" x="54" y="28" width="74" height="3" rx="1.5"/><rect class="copy-line" x="54" y="46" width="116" height="2.5" rx="1.25"/><rect class="copy-line" x="54" y="60" width="94" height="2.5" rx="1.25"/><rect class="copy-line-soft" x="54" y="76" width="72" height="2.25" rx="1.125"/></g>
+                <g transform="translate(466 556)"><rect class="flow-node-surface" width="238" height="92" rx="9"/><line x1="1" y1="11" x2="1" y2="81" stroke="var(--blue)" opacity=".54"/><rect class="tile" x="18" y="18" width="24" height="24" rx="6"/><circle cx="30" cy="30" r="2.8" fill="var(--blue)" opacity=".76"/><rect class="title-line" x="54" y="28" width="74" height="3" rx="1.5"/><rect class="copy-line" x="54" y="46" width="116" height="2.5" rx="1.25"/><rect class="copy-line" x="54" y="60" width="94" height="2.5" rx="1.25"/><rect class="copy-line-soft" x="54" y="76" width="72" height="2.25" rx="1.125"/></g>
+                <g transform="translate(862 152)"><rect class="flow-node-surface" width="238" height="92" rx="9"/><line x1="1" y1="11" x2="1" y2="81" stroke="var(--amber)" opacity=".54"/><rect class="tile" x="18" y="18" width="24" height="24" rx="6"/><circle cx="30" cy="30" r="2.8" fill="var(--amber)" opacity=".76"/><rect class="title-line" x="54" y="28" width="74" height="3" rx="1.5"/><rect class="copy-line" x="54" y="46" width="116" height="2.5" rx="1.25"/><rect class="copy-line" x="54" y="60" width="94" height="2.5" rx="1.25"/><rect class="copy-line-soft" x="54" y="76" width="72" height="2.25" rx="1.125"/></g>
+                <g transform="translate(862 354)"><rect class="flow-node-surface" width="238" height="92" rx="9"/><line x1="1" y1="11" x2="1" y2="81" stroke="var(--amber)" opacity=".54"/><rect class="tile" x="18" y="18" width="24" height="24" rx="6"/><circle cx="30" cy="30" r="2.8" fill="var(--amber)" opacity=".76"/><rect class="title-line" x="54" y="28" width="74" height="3" rx="1.5"/><rect class="copy-line" x="54" y="46" width="116" height="2.5" rx="1.25"/><rect class="copy-line" x="54" y="60" width="94" height="2.5" rx="1.25"/><rect class="copy-line-soft" x="54" y="76" width="72" height="2.25" rx="1.125"/></g>
+                <g transform="translate(862 556)"><rect class="flow-node-surface" width="238" height="92" rx="9"/><line x1="1" y1="11" x2="1" y2="81" stroke="var(--amber)" opacity=".54"/><rect class="tile" x="18" y="18" width="24" height="24" rx="6"/><circle cx="30" cy="30" r="2.8" fill="var(--amber)" opacity=".76"/><rect class="title-line" x="54" y="28" width="74" height="3" rx="1.5"/><rect class="copy-line" x="54" y="46" width="116" height="2.5" rx="1.25"/><rect class="copy-line" x="54" y="60" width="94" height="2.5" rx="1.25"/><rect class="copy-line-soft" x="54" y="76" width="72" height="2.25" rx="1.125"/></g>
+                <g transform="translate(1234 320)"><rect class="flow-node-surface" width="218" height="92" rx="9"/><line x1="1" y1="11" x2="1" y2="81" stroke="var(--green)" opacity=".54"/><rect class="tile" x="18" y="18" width="24" height="24" rx="6"/><circle cx="30" cy="30" r="2.8" fill="var(--green)" opacity=".76"/><rect class="title-line" x="54" y="28" width="74" height="3" rx="1.5"/><rect class="copy-line" x="54" y="46" width="116" height="2.5" rx="1.25"/><rect class="copy-line" x="54" y="60" width="94" height="2.5" rx="1.25"/><rect class="copy-line-soft" x="54" y="76" width="72" height="2.25" rx="1.125"/></g>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <div class="facts">
+          <span>viewBox proposto: 0 70 1520 660</span>
+          <span>paths intactos</span>
+          <span>fases intactas</span>
+          <span>4.8s linear</span>
+        </div>
+      </article>
+
+      <article class="demo">
+        <header class="demo-head">
+          <div>
+            <h2>Leitura executiva · referência de enquadramento</h2>
+            <p>A animação real do Resultado permanece intacta. Esta prévia define a moldura, o padding e a ocupação interna comuns.</p>
+          </div>
+          <span class="route">/exemplos/resultado</span>
+        </header>
+
+        <div class="shared-frame observe-preview">
+          <div class="grid-overlay" aria-hidden="true"></div>
+          <div class="inner-viewport">
+            <svg viewBox="0 0 1320 560" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Prévia do resultado com animação existente preservada">
+              <defs>
+                <marker id="result-arrow" viewBox="0 0 5 5" markerWidth="4.25" markerHeight="4.25" refX="4.1" refY="2.5" orient="auto" markerUnits="userSpaceOnUse">
+                  <path d="M .75 .8 L 4 2.5 L .75 4.2" fill="none" stroke="rgba(206,210,216,.48)" stroke-width=".76" stroke-linecap="round" stroke-linejoin="round"/>
+                </marker>
+              </defs>
+
+              <g>
+                <path class="motion-line result-line" style="--from:0;--to:-22" marker-end="url(#result-arrow)" d="M 272 144 C 318 144, 346 144, 392 144"/>
+                <path class="motion-line result-line" style="--from:-4;--to:-26" marker-end="url(#result-arrow)" d="M 272 284 C 330 284, 336 172, 392 168"/>
+                <path class="motion-line result-line" style="--from:-8;--to:-30" marker-end="url(#result-arrow)" d="M 272 424 C 330 424, 344 398, 392 396"/>
+                <path class="motion-line result-line" style="--from:-12;--to:-34" marker-end="url(#result-arrow)" d="M 600 144 C 646 144, 674 144, 720 144"/>
+                <path class="motion-line result-line" style="--from:-16;--to:-38" marker-end="url(#result-arrow)" d="M 600 284 C 646 284, 674 284, 720 284"/>
+                <path class="motion-line result-line" style="--from:-20;--to:-42" marker-end="url(#result-arrow)" d="M 600 424 C 646 424, 674 424, 720 424"/>
+                <path class="motion-line result-line" style="--from:-24;--to:-46" marker-end="url(#result-arrow)" d="M 928 144 C 974 144, 1006 128, 1048 128"/>
+                <path class="motion-line result-line" style="--from:-28;--to:-50" marker-end="url(#result-arrow)" d="M 928 284 C 978 284, 1008 174, 1048 168"/>
+              </g>
+
+              <!-- Colunas e cards usando a geometria real atual. -->
+              <g>
+                <g data-stage="input"><rect class="result-column" x="48" y="36" width="240" height="476" rx="12"/><line x1="66" y1="58" x2="112" y2="58" stroke="var(--violet)" opacity=".55"/><line class="column-divider" x1="64" y1="78" x2="272" y2="78"/></g>
+                <g data-stage="activity"><rect class="result-column" x="376" y="36" width="240" height="476" rx="12"/><line x1="394" y1="58" x2="440" y2="58" stroke="var(--blue)" opacity=".55"/><line class="column-divider" x1="392" y1="78" x2="600" y2="78"/></g>
+                <g data-stage="output"><rect class="result-column" x="704" y="36" width="240" height="476" rx="12"/><line x1="722" y1="58" x2="768" y2="58" stroke="var(--amber)" opacity=".55"/><line class="column-divider" x1="720" y1="78" x2="928" y2="78"/></g>
+                <g data-stage="outcome"><rect class="result-column" x="1032" y="36" width="240" height="476" rx="12"/><line x1="1050" y1="58" x2="1096" y2="58" stroke="var(--green)" opacity=".55"/><line class="column-divider" x1="1048" y1="78" x2="1256" y2="78"/></g>
+              </g>
+
+              <g id="result-cards"></g>
+            </svg>
+          </div>
+        </div>
+        <div class="facts">
+          <span>viewBox atual: 1320 × 560</span>
+          <span>paths intactos</span>
+          <span>fases intactas</span>
+          <span>4.8s linear</span>
+        </div>
+      </article>
+    </section>
+
+    <aside class="files">
+      <strong>Componentes localizados no ZIP</strong>
+      <code>src/features/theory-of-change/components/public-pages/public-pages.tsx</code>
+      <code>src/features/theory-of-change/components/public-pages/public-pages.module.sass</code>
+      <code>src/features/theory-of-change/components/resend-public/example-previews/dedicated-example-preview.tsx</code>
+      <code>src/features/theory-of-change/components/resend-public/example-previews/example-previews.module.sass</code>
+      <code>src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.tsx</code>
+      <code>src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.module.sass</code>
+      <code>src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.tsx</code>
+      <code>src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.module.sass</code>
+    </aside>
+  </main>
+
+  <script>
+    const stageData = [
+      { x: 64, color: '#8f7cf5', count: 3 },
+      { x: 392, color: '#55a6df', count: 3 },
+      { x: 720, color: '#d2974d', count: 3 },
+      { x: 1048, color: '#48b995', count: 1 }
+    ];
+    const ys = [92, 232, 372];
+    const cardsRoot = document.querySelector('#result-cards');
+
+    function makeSvg(tag, attrs = {}) {
+      const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+      for (const [key, value] of Object.entries(attrs)) el.setAttribute(key, String(value));
+      return el;
+    }
+
+    stageData.forEach(stage => {
+      ys.slice(0, stage.count).forEach(y => {
+        const group = makeSvg('g');
+        group.append(
+          makeSvg('rect', { class: 'result-card', x: stage.x, y, width: 208, height: 104, rx: 9 }),
+          makeSvg('line', { x1: stage.x + 1, y1: y + 9, x2: stage.x + 1, y2: y + 95, stroke: stage.color, 'stroke-width': 1, opacity: .58 }),
+          makeSvg('rect', { class: 'tile', x: stage.x + 18, y: y + 18, width: 20, height: 20, rx: 5 }),
+          makeSvg('circle', { cx: stage.x + 28, cy: y + 28, r: 2.8, fill: stage.color, opacity: .8 }),
+          makeSvg('rect', { class: 'title-line', x: stage.x + 48, y: y + 27, width: 68, height: 3, rx: 1.5 }),
+          makeSvg('rect', { class: 'copy-line', x: stage.x + 48, y: y + 44, width: 112, height: 2.4, rx: 1.2 }),
+          makeSvg('rect', { class: 'copy-line', x: stage.x + 48, y: y + 58, width: 94, height: 2.4, rx: 1.2 }),
+          makeSvg('rect', { class: 'copy-line-soft', x: stage.x + 48, y: y + 75, width: 72, height: 2.2, rx: 1.1 })
+        );
+        cardsRoot.append(group);
+      });
+    });
+
+    const previews = [...document.querySelectorAll('.observe-preview')];
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio >= .45) {
+          entry.target.classList.add('is-active');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: [.45] });
+    previews.forEach(preview => observer.observe(preview));
+
+    const motionControl = document.querySelector('#motionControl');
+    const gridControl = document.querySelector('#gridControl');
+    const innerControl = document.querySelector('#innerControl');
+
+    motionControl.addEventListener('click', () => {
+      const active = motionControl.getAttribute('aria-pressed') === 'true';
+      motionControl.setAttribute('aria-pressed', String(!active));
+      motionControl.textContent = active ? 'Motion pausado' : 'Motion 4.8s ativo';
+      document.body.classList.toggle('motion-paused', active);
+    });
+
+    gridControl.addEventListener('click', () => {
+      const active = gridControl.getAttribute('aria-pressed') === 'true';
+      gridControl.setAttribute('aria-pressed', String(!active));
+      gridControl.textContent = active ? 'Mostrar régua' : 'Ocultar régua';
+      document.body.classList.toggle('show-grid', !active);
+    });
+
+    innerControl.addEventListener('click', () => {
+      const active = innerControl.getAttribute('aria-pressed') === 'true';
+      innerControl.setAttribute('aria-pressed', String(!active));
+      innerControl.textContent = active ? 'Mostrar viewport' : 'Ocultar viewport';
+      document.body.classList.toggle('show-inner', !active);
+    });
+  </script>
+</body>
+</html>

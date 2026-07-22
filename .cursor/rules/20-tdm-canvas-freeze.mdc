@@ -1,0 +1,23 @@
+---
+description: Protege o motor do canvas contra alterações fora de rodadas explicitamente dedicadas a ele.
+globs: ["src/features/theory-of-change/components/canvas/**/*", "src/features/theory-of-change/components/sidebar/**/*", "src/features/theory-of-change/components/node/**/*", "src/features/theory-of-change/components/edge/**/*", "src/app/canvas/**/*", "src/app/exemplos/canvas/**/*"]
+alwaysApply: false
+---
+
+O canvas está congelado durante rodadas de UI pública.
+
+Não alterar:
+
+- React Flow;
+- nodes;
+- edges;
+- handles;
+- drag-and-drop;
+- seleção;
+- stores;
+- progressão;
+- sidebar;
+- CTAs escopados do canvas;
+- resultado do canvas.
+
+Se uma tarefa pública exigir editar estes caminhos, pare e reporte a dependência. Não aplique a mudança.

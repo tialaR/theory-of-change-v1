@@ -1,0 +1,25 @@
+---
+description: Contrato de componentes, ações, header, cards e previews das rotas públicas TDM.
+globs: ["src/app/**/*.tsx", "src/features/theory-of-change/components/public-pages/**/*", "src/features/theory-of-change/components/resend-public/**/*", "src/shared/ui/**/*", "src/**/*.module.sass"]
+alwaysApply: false
+---
+
+Leia antes de editar:
+
+- `docs/design-system/TDM-DESIGN-SYSTEM-CONTRACT-V1.md`;
+- `docs/design-system/TDM-PUBLIC-HEADER-V2.md`;
+- `docs/design-system/previews/tdm-public-actions-header-v2.html`;
+- `docs/design-system/previews/tdm-public-example-previews-v2-existing-motion.html`.
+
+Regras:
+
+- uma ação principal por contexto;
+- ações complementares sem borda;
+- exportações e icon buttons podem usar hairline;
+- uma única instância de header público;
+- topo transparente e estado scrolled com superfície homologada;
+- remover legado do JSX, nunca esconder com CSS;
+- wrapper de preview não altera motion;
+- backgrounds, bordas e radius vivem no primitive canônico;
+- nenhuma página cria sua própria cópia do componente;
+- sem `!important`, valores `px`, shadows ornamentais ou gradients decorativos nos primitives públicos.

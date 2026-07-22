@@ -1,0 +1,192 @@
+.button
+  --public-action-height: var(--tdm-public-action-height)
+  --public-action-radius: var(--tdm-public-action-radius)
+  --public-action-padding-inline: var(--tdm-public-action-padding-inline)
+  --public-action-font-size: var(--tdm-public-action-font-size)
+  --public-action-font-weight: var(--tdm-public-action-font-weight)
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  min-height: var(--public-action-height)
+  padding: 0 var(--public-action-padding-inline)
+  border: var(--tdm-public-action-border-width) solid var(--tdm-public-action-line)
+  border-radius: var(--public-action-radius)
+  color: var(--tdm-public-action-text)
+  background: transparent
+  box-shadow: none
+  font-family: inherit
+  font-size: var(--public-action-font-size)
+  font-weight: var(--public-action-font-weight)
+  line-height: 1
+  letter-spacing: var(--tdm-public-action-letter-spacing)
+  text-decoration: none
+  cursor: pointer
+  -webkit-tap-highlight-color: transparent
+  transition: border-color var(--tdm-public-action-duration) var(--tdm-public-action-ease), color var(--tdm-public-action-duration) var(--tdm-public-action-ease), background-color var(--tdm-public-action-duration) var(--tdm-public-action-ease), opacity var(--tdm-public-action-duration) var(--tdm-public-action-ease)
+
+  &:hover
+    color: var(--tdm-public-action-text-hover)
+    border-color: var(--tdm-public-action-line-hover)
+    background: var(--tdm-public-action-hover-bg)
+
+  &:active
+    color: var(--tdm-public-action-text)
+    background: var(--tdm-public-action-pressed-bg)
+
+  &:focus-visible
+    outline: var(--tdm-public-action-focus-width) solid var(--tdm-public-action-focus)
+    outline-offset: var(--tdm-public-action-focus-offset)
+
+  &:disabled,
+  &[aria-disabled='true']
+    opacity: var(--tdm-public-action-disabled-opacity)
+    cursor: not-allowed
+    background: transparent
+
+.content
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  gap: var(--tdm-public-action-content-gap)
+
+.icon
+  display: inline-grid
+  place-items: center
+  flex: 0 0 auto
+  width: var(--tdm-public-action-icon-size)
+  height: var(--tdm-public-action-icon-size)
+  opacity: 0.78
+
+  svg
+    display: block
+    width: 100%
+    height: 100%
+    fill: none
+    stroke: currentColor
+    stroke-width: var(--tdm-public-action-icon-stroke)
+    stroke-linecap: round
+    stroke-linejoin: round
+
+.label
+  display: inline-flex
+  align-items: center
+
+.arrow
+  display: inline-block
+  transition: transform var(--tdm-public-action-duration) var(--tdm-public-action-ease)
+
+.spinner
+  display: inline-block
+  width: var(--tdm-public-action-icon-size)
+  height: var(--tdm-public-action-icon-size)
+  border: var(--tdm-public-action-border-width) solid currentColor
+  border-right-color: transparent
+  border-radius: 50%
+  opacity: 0.72
+
+.srOnly
+  position: absolute
+  width: 0.0625rem
+  height: 0.0625rem
+  padding: 0
+  margin: -0.0625rem
+  overflow: hidden
+  clip: rect(0, 0, 0, 0)
+  white-space: nowrap
+  border: 0
+
+.variantPrimary
+  color: var(--tdm-public-action-primary-fg)
+  border-color: var(--tdm-public-action-primary-border)
+  background: var(--tdm-public-action-primary-bg)
+  box-shadow: none
+
+  &:hover
+    color: var(--tdm-public-action-primary-fg-hover)
+    border-color: var(--tdm-public-action-primary-border-hover)
+    background: var(--tdm-public-action-primary-bg-hover)
+
+  &:active
+    color: var(--tdm-public-action-primary-fg-pressed)
+    border-color: var(--tdm-public-action-primary-border-pressed)
+    background: var(--tdm-public-action-primary-bg-pressed)
+
+  &:disabled,
+  &[aria-disabled='true']
+    color: var(--tdm-public-action-primary-fg-disabled)
+    border-color: var(--tdm-public-action-primary-border-disabled)
+    background: var(--tdm-public-action-primary-bg-disabled)
+
+.variantText,
+.variantTextCompact
+  border: 0
+  border-radius: var(--tdm-public-text-action-radius)
+  color: var(--tdm-public-action-text-muted)
+  background: transparent
+  box-shadow: none
+  min-height: var(--tdm-public-text-action-height)
+  padding: 0 var(--tdm-public-text-action-padding-inline)
+  font-size: var(--tdm-public-text-action-font-size)
+  font-weight: var(--tdm-public-text-action-font-weight)
+  letter-spacing: -0.01em
+
+  .content
+    gap: var(--tdm-public-text-action-gap)
+
+  &:hover
+    color: var(--tdm-public-action-text-muted-hover)
+    background: transparent
+    border-color: transparent
+
+    .arrow
+      transform: translateX(var(--tdm-public-text-action-arrow-shift))
+
+  &:active
+    color: var(--tdm-public-action-text-muted-pressed)
+    background: transparent
+
+  &:disabled,
+  &[aria-disabled='true']
+    opacity: 0.34
+    background: transparent
+
+.variantTextCompact
+  min-height: var(--tdm-public-header-action-height)
+  padding: 0 var(--tdm-public-header-action-padding-inline)
+  font-size: var(--tdm-public-header-action-font-size)
+  font-weight: var(--tdm-public-header-action-font-weight)
+
+.variantExportCompact
+  min-height: var(--tdm-public-action-compact-height)
+  padding: 0 var(--tdm-public-action-compact-padding-inline)
+  border-radius: var(--tdm-public-action-compact-radius)
+  font-size: var(--tdm-public-action-compact-font-size)
+  font-weight: var(--tdm-public-action-compact-font-weight)
+  color: var(--tdm-public-action-text)
+  border-color: var(--tdm-public-action-line)
+  background: transparent
+  box-shadow: none
+
+  &:hover
+    color: var(--tdm-public-action-text-hover)
+    border-color: var(--tdm-public-action-line-hover)
+    background: var(--tdm-public-action-hover-bg)
+
+  &:active
+    background: var(--tdm-public-action-pressed-bg)
+
+.sizeHero
+  --public-action-height: var(--tdm-public-action-hero-height)
+  --public-action-radius: var(--tdm-public-action-hero-radius)
+  --public-action-padding-inline: var(--tdm-public-action-hero-padding-inline)
+  --public-action-font-size: var(--tdm-public-action-hero-font-size)
+
+.isLoading
+  pointer-events: none
+
+@media (prefers-reduced-motion: reduce)
+  .button
+    transition-duration: 0.01ms
+
+  .arrow
+    transition: none

@@ -1,0 +1,88 @@
+{
+  "exemplos": {
+    "gapAttr": "true",
+    "padBlockStart": "89.6px",
+    "gapToken": "clamp(2.5rem, 4vw, 4rem)",
+    "h1": "Explore exemplos guiados.",
+    "h1Top": 227.59375,
+    "headerBottom": 90,
+    "distanceH1FromHeader": 137.59375,
+    "shellWidth": "1216px",
+    "shellPadInline": "0px|0px",
+    "headerCount": 1,
+    "opacityH1Parent": "0"
+  },
+  "guia": {
+    "gapAttr": "true",
+    "padBlockStart": "113.6px",
+    "gapToken": "clamp(2.5rem, 4vw, 4rem)",
+    "h1": "Construa a teoria etapa por etapa.",
+    "h1Top": 251.59375,
+    "headerBottom": 90,
+    "distanceH1FromHeader": 161.59375,
+    "shellWidth": "1216px",
+    "shellPadInline": "0px|0px",
+    "headerCount": 1,
+    "opacityH1Parent": "0"
+  },
+  "fluxo": {
+    "gapAttr": "true",
+    "padBlockStart": "89.6px",
+    "gapToken": "clamp(2.5rem, 4vw, 4rem)",
+    "h1": "Visão do fluxo com prévia viva.",
+    "h1Top": 227.59375,
+    "headerBottom": 90,
+    "distanceH1FromHeader": 137.59375,
+    "shellWidth": "1216px",
+    "shellPadInline": "0px|0px",
+    "headerCount": 1,
+    "opacityH1Parent": "0"
+  },
+  "resultado": {
+    "gapAttr": "true",
+    "padBlockStart": "89.6px",
+    "gapToken": "clamp(2.5rem, 4vw, 4rem)",
+    "h1": "Leitura executiva com prévia viva.",
+    "h1Top": 227.59375,
+    "headerBottom": 90,
+    "distanceH1FromHeader": 137.59375,
+    "shellWidth": "1216px",
+    "shellPadInline": "0px|0px",
+    "headerCount": 1,
+    "opacityH1Parent": "0"
+  },
+  "referencias": {
+    "gapAttr": "true",
+    "padBlockStart": "89.6px",
+    "gapToken": "clamp(2.5rem, 4vw, 4rem)",
+    "h1": "Base visual e técnica.",
+    "h1Top": 227.59375,
+    "headerBottom": 90,
+    "distanceH1FromHeader": 137.59375,
+    "shellWidth": "1216px",
+    "shellPadInline": "0px|0px",
+    "headerCount": 1,
+    "opacityH1Parent": "0"
+  },
+  "home": {
+    "gapAttr": null,
+    "padBlockStart": "48px",
+    "gapToken": "clamp(2.5rem, 4vw, 4rem)",
+    "h1": "Desenhe a mudança antes de explicá-la.",
+    "h1Top": 435.765625,
+    "headerBottom": 90,
+    "distanceH1FromHeader": 345.765625,
+    "shellWidth": "1216px",
+    "shellPadInline": "0px|0px",
+    "headerCount": 1,
+    "opacityH1Parent": "0"
+  },
+  "mobile-exemplos": {
+    "padBlockStart": "72px",
+    "gapAttr": "true"
+  },
+  "mobile-guia": {
+    "padBlockStart": "72px",
+    "gapAttr": "true"
+  }
+}

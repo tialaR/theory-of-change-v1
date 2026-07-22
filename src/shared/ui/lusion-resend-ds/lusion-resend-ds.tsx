@@ -3,11 +3,18 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { TDM_MOTION_TRANSITIONS } from '@/shared/motion/tdm-motion';
-import { TdmButton, type TdmButtonVariant } from '@/shared/ui/tdm-button/tdm-button';
+import { PublicButton } from '@/shared/ui/public-button';
 import styles from './lusion-resend-ds.module.sass';
+
+export { PublicButton } from '@/shared/ui/public-button';
+export type {
+  PublicButtonProps,
+  PublicButtonSize,
+  PublicButtonVariant
+} from '@/shared/ui/public-button';
 
 const NAV = [
   { href: '/guia-de-aprendizado', label: 'Guia' },
@@ -22,8 +29,6 @@ const HIDDEN_HEADER_ROUTES = [
   '/exemplos/visao-do-fluxo/interativo'
 ] as const;
 
-const SCROLL_THRESHOLD = 32;
-
 function isNavActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
@@ -33,87 +38,47 @@ function shouldHidePublicHeader(pathname: string) {
   return HIDDEN_HEADER_ROUTES.some((route) => pathname === route || pathname.startsWith(`${route}/`));
 }
 
-function resolveActionIcon(label: string): ReactNode | null {
-  const text = label
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
+function usePublicHeaderScrolled() {
+  const sentinelRef = useRef<HTMLDivElement>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  if (/criar|comece|abrir canvas|ir para o canvas/.test(text)) {
-    return (
-      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+
+    const scrollRoot = document.querySelector('[data-public-scroll="true"]');
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsScrolled(!entry.isIntersecting);
+      },
+      {
+        // Sticky header lives inside this scroller; root must match so backdrop-filter can sample it.
+        root: scrollRoot instanceof Element ? scrollRoot : null,
+        threshold: 0
+      }
     );
-  }
 
-  if (/experiencia interativa|abrir experiencia/.test(text)) {
-    return (
-      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <circle cx="3.5" cy="8" r="1.6" stroke="currentColor" strokeWidth="1.35" />
-        <circle cx="8" cy="3.75" r="1.6" stroke="currentColor" strokeWidth="1.35" />
-        <circle cx="12.5" cy="8" r="1.6" stroke="currentColor" strokeWidth="1.35" />
-        <circle cx="8" cy="12.25" r="1.6" stroke="currentColor" strokeWidth="1.35" />
-        <path
-          d="M4.9 7.1 6.6 4.85M9.4 4.85 11.1 7.1M11.1 8.9 9.4 11.15M6.6 11.15 4.9 8.9"
-          stroke="currentColor"
-          strokeWidth="1.35"
-          strokeLinecap="round"
-        />
-      </svg>
-    );
-  }
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, []);
 
-  if (/ver|explorar|abrir visualiza/.test(text)) {
-    return (
-      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path
-          d="M2.5 8s2.2-4 5.5-4 5.5 4 5.5 4-2.2 4-5.5 4-5.5-4-5.5-4Z"
-          stroke="currentColor"
-          strokeWidth="1.35"
-        />
-        <circle cx="8" cy="8" r="1.75" stroke="currentColor" strokeWidth="1.35" />
-      </svg>
-    );
-  }
-
-  if (/fechar/.test(text)) {
-    return (
-      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="M4.25 4.25 11.75 11.75M11.75 4.25 4.25 11.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    );
-  }
-
-  if (/voltar/.test(text)) {
-    return (
-      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="M9.5 3.5 4.5 8l5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M4.75 8h6.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    );
-  }
-
-  if (/guia/.test(text)) {
-    return (
-      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="M4 2.75h6.5L12.25 4.5V13H4V2.75Z" stroke="currentColor" strokeWidth="1.35" strokeLinejoin="round" />
-        <path d="M6.25 2.75V13" stroke="currentColor" strokeWidth="1.35" />
-      </svg>
-    );
-  }
-
-  return null;
+  return { sentinelRef, isScrolled };
 }
 
 export function PublicShell({
   children,
   className = '',
-  tone = 'default'
+  tone = 'default',
+  headerContentGap = false,
+  sectionRhythm = false
 }: {
   children: ReactNode;
   className?: string;
   tone?: 'default' | 'silver';
+  /** Respiro Y canônico entre header e primeiro conteúdo (rotas públicas secundárias). */
+  headerContentGap?: boolean;
+  /** Ritmo Y canônico entre seções públicas irmãs (TDM-PUBLIC-SECTION-RHYTHM-V1). */
+  sectionRhythm?: boolean;
 }) {
   useEffect(() => {
     document.body.classList.add('public-page-scroll');
@@ -123,7 +88,21 @@ export function PublicShell({
   return (
     <div data-public-page="true" data-public-tone={tone} className={`${styles.shell} ${className}`}>
       <PublicGridBackground />
-      <div className={styles.shellInner}>{children}</div>
+      <div data-public-scroll="true" className={styles.shellScroll}>
+        <div
+          className={[
+            styles.shellInner,
+            headerContentGap ? styles.shellInner_headerContentGap : '',
+            sectionRhythm ? styles.shellInner_sectionRhythm : ''
+          ]
+            .filter(Boolean)
+            .join(' ')}
+          data-header-content-gap={headerContentGap ? 'true' : undefined}
+          data-section-rhythm={sectionRhythm ? 'true' : undefined}
+        >
+          {children}
+        </div>
+      </div>
     </div>
   );
 }
@@ -140,76 +119,58 @@ export function PublicHeader({
   ctaLabel?: string;
 }) {
   const pathname = usePathname();
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      setIsScrolled(window.scrollY > SCROLL_THRESHOLD);
-    };
-
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  const { sentinelRef, isScrolled } = usePublicHeaderScrolled();
 
   if (shouldHidePublicHeader(pathname)) return null;
 
-  const ctaIcon = resolveActionIcon(ctaLabel);
-  const ctaLeadingIcon = ctaIcon ? (
-    <span className={styles.headerCtaIcon} aria-hidden="true">
-      {ctaIcon}
-    </span>
-  ) : null;
-
   return (
     <>
-      <header className={styles.header} data-scrolled={isScrolled ? 'true' : 'false'}>
-        <div className={styles.headerBar}>
-          <Link
-            href="/"
-            className={styles.brand}
-            aria-label="TMD Construtor — Página inicial"
-          >
-            <Image
-              src="/assets/brand/tmd-construtor-header-canonical.png"
-              alt="TMD Construtor"
-              width={1184}
-              height={247}
-              priority
-              quality={100}
-              className={styles.brandMark}
-            />
-          </Link>
-          <nav className={styles.nav} aria-label="Navegação principal">
-            {NAV.map((item) => {
-              const active = isNavActive(pathname, item.href);
-
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`${styles.navLink} ${active ? styles.navLink_active : ''}`}
-                  aria-current={active ? 'page' : undefined}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
-          <div className={styles.headerCtaWrap}>
-            <TdmButton
-              href={ctaHref}
-              variant="tertiary"
-              size="sm"
-              leadingIcon={ctaLeadingIcon}
-              className={styles.headerCta}
+      <div ref={sentinelRef} className={styles.scrollSentinel} aria-hidden="true" />
+      <header
+        className={styles.header}
+        data-scrolled={isScrolled ? 'true' : 'false'}
+      >
+        <div className={styles.headerShell}>
+          <div className={styles.headerBar}>
+            <Link
+              href="/"
+              className={styles.brand}
+              aria-label="TMD Construtor — Página inicial"
             >
-              {ctaLabel}
-            </TdmButton>
+              <Image
+                src="/assets/brand/tmd-construtor-header-canonical.png"
+                alt="TMD Construtor"
+                width={1184}
+                height={247}
+                priority
+                quality={100}
+                className={styles.brandMark}
+              />
+            </Link>
+            <nav className={styles.nav} aria-label="Navegação principal">
+              {NAV.map((item) => {
+                const active = isNavActive(pathname, item.href);
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`${styles.navLink} ${active ? styles.navLink_active : ''}`}
+                    aria-current={active ? 'page' : undefined}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </nav>
+            <div className={styles.headerCtaWrap}>
+              <PublicButton href={ctaHref} variant="textCompact" className={styles.headerCta}>
+                {ctaLabel}
+              </PublicButton>
+            </div>
           </div>
         </div>
       </header>
-      <div className={styles.headerOffset} aria-hidden="true" />
     </>
   );
 }
@@ -230,7 +191,10 @@ export function PublicHero({
   compact?: boolean;
 }) {
   return (
-    <section className={`${styles.hero} ${compact ? styles.hero_compact : ''}`}>
+    <section
+      data-public-chapter="true"
+      className={`${styles.hero} ${compact ? styles.hero_compact : ''}`}
+    >
       {visual ? <PublicReveal className={styles.heroVisual}>{visual}</PublicReveal> : null}
       <PublicReveal className={styles.heroCopy} delay={0.06}>
         {kicker ?? null}
@@ -239,50 +203,6 @@ export function PublicHero({
         {actions ? <div className={styles.heroActions}>{actions}</div> : null}
       </PublicReveal>
     </section>
-  );
-}
-
-function resolvePublicButtonVariant(
-  variant: 'primary' | 'secondary' | 'ghost' | 'tertiary'
-): TdmButtonVariant {
-  if (variant === 'ghost' || variant === 'tertiary') return 'tertiary';
-  return variant;
-}
-
-export function PublicButton({
-  href,
-  children,
-  variant = 'primary',
-  onClick,
-  type = 'button'
-}: {
-  href?: string;
-  children: ReactNode;
-  variant?: 'primary' | 'secondary' | 'ghost' | 'tertiary';
-  onClick?: () => void;
-  type?: 'button' | 'submit';
-}) {
-  const label = typeof children === 'string' ? children : '';
-  const icon = label ? resolveActionIcon(label) : null;
-  const leadingIcon = icon ? (
-    <span className={styles.buttonIcon} aria-hidden="true">
-      {icon}
-    </span>
-  ) : null;
-  const resolvedVariant = resolvePublicButtonVariant(variant);
-
-  if (href) {
-    return (
-      <TdmButton href={href} variant={resolvedVariant} leadingIcon={leadingIcon}>
-        {children}
-      </TdmButton>
-    );
-  }
-
-  return (
-    <TdmButton type={type} variant={resolvedVariant} leadingIcon={leadingIcon} onClick={onClick}>
-      {children}
-    </TdmButton>
   );
 }
 
@@ -302,7 +222,10 @@ export function PublicSection({
   className?: string;
 }) {
   return (
-    <section className={`${styles.section} ${compact ? styles.section_compact : ''} ${className}`}>
+    <section
+      data-public-chapter="true"
+      className={`${styles.section} ${compact ? styles.section_compact : ''} ${className}`}
+    >
       {(eyebrow || title || description) && (
         <PublicReveal className={styles.sectionHeader}>
           {eyebrow ?? null}
@@ -456,9 +379,18 @@ export function PublicReveal({
 }
 
 export function PublicFooter() {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className={styles.footer}>
-      <p>Teoria da Mudança — construtor visual de intervenções</p>
+    <footer data-public-chapter="true" className={styles.footer}>
+      <div className={styles.footerCopyright}>
+        <p className={styles.footerCopyrightPrimary}>
+          © {year} TMD Construtor. Todos os direitos reservados.
+        </p>
+        <p className={styles.footerCopyrightSecondary}>
+          Ferramenta visual para construir, revisar e comunicar teorias da mudança.
+        </p>
+      </div>
     </footer>
   );
 }
