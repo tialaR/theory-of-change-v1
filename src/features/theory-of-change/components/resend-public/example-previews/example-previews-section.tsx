@@ -1,6 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
+import { PublicSection } from '@/shared/ui/lusion-resend-ds';
 import { ContextLabelPanelsIcon } from '@/shared/ui/tdm-context-label';
 import { TdmKicker } from '@/shared/ui/tdm-kicker';
 import { TdmPublicFeatureCard } from '@/shared/ui/tdm-public-feature-card';
@@ -51,19 +52,16 @@ function ResultIcon() {
 
 export function ExamplePreviewsSection() {
   return (
-    <section className={styles.previewsSection} aria-labelledby="example-previews-title">
-      <div className={styles.sectionHeader}>
+    <PublicSection
+      compact
+      eyebrow={
         <TdmKicker icon={ContextLabelPanelsIcon}>
           PRÉVIA DAS EXPERIÊNCIAS
         </TdmKicker>
-        <h2 id="example-previews-title" className={styles.sectionTitle}>
-          Escolha como visualizar a teoria.
-        </h2>
-        <p className={styles.sectionDescription}>
-          Dois caminhos visuais, o mesmo sistema: primeiro entenda o fluxo, depois leia o resultado conectado.
-        </p>
-      </div>
-
+      }
+      title="Escolha como visualizar a teoria."
+      description="Dois caminhos visuais, o mesmo sistema: primeiro entenda o fluxo, depois leia o resultado conectado."
+    >
       <div className={styles.previewGrid}>
         <ExperienceCard
           href="/exemplos/visao-do-fluxo"
@@ -78,6 +76,6 @@ export function ExamplePreviewsSection() {
           icon={<ResultIcon />}
         />
       </div>
-    </section>
+    </PublicSection>
   );
 }

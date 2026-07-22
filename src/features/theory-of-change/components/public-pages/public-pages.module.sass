@@ -98,7 +98,7 @@
   transform: translate(-50%, -50%)
   padding: 0.75rem 0.875rem
   border-radius: 0.75rem
-  border: 1px solid rgba(255,255,255,0.1)
+  border: 0.0625rem solid rgba(255,255,255,0.1)
   background: rgba(12, 12, 13, 0.88)
   text-align: left
   cursor: pointer
@@ -161,7 +161,7 @@
   gap: 0.75rem
   padding: clamp(1.25rem, 2.5vw, 1.75rem)
   border-radius: 1.25rem
-  border: 1px solid rgba(255,255,255,0.1)
+  border: 0.0625rem solid rgba(255,255,255,0.1)
   background: rgba(255,255,255,0.025)
   transition: border-color 0.2s ease, transform 0.2s ease
   text-decoration: none
@@ -200,12 +200,16 @@
 .galleryPreview
   margin-top: 0.5rem
   border-radius: 0.75rem
-  border: 1px solid rgba(255,255,255,0.08)
+  border: 0.0625rem solid rgba(255,255,255,0.08)
   overflow: hidden
   min-height: 8rem
   background: rgba(0,0,0,0.35)
 
 // Result / flow example pages
+.resultChapter
+  display: grid
+  gap: var(--tdm-space-8)
+
 .resultLayout
   display: grid
   grid-template-columns: 1fr 1.4fr
@@ -247,20 +251,7 @@
   display: flex
   flex-wrap: wrap
   gap: var(--tdm-space-3)
-  margin: var(--tdm-space-8) 0
-
-.exportIcon
-  display: inline-flex
-  align-items: center
-  justify-content: center
-  flex-shrink: 0
-  inline-size: var(--tdm-icon-size-sm)
-  block-size: var(--tdm-icon-size-sm)
-  opacity: 0.88
-
-  svg
-    inline-size: 100%
-    block-size: 100%
+  margin: 0
 
 .relationGrid
   display: grid
@@ -285,8 +276,8 @@
   gap: 1rem
   height: 3.25rem
   padding: 0 clamp(1rem, 3vw, 2rem)
-  border-bottom: 1px solid rgba(255,255,255,0.09)
-  background: rgba(5,5,5,0.8)
+  border-bottom: 0.0625rem solid var(--tdm-public-action-line)
+  background: rgba(5, 5, 5, 0.8)
   backdrop-filter: blur(0.75rem)
 
 .interactiveBrand
@@ -302,55 +293,19 @@
   width: 1.5rem
   height: 1.5rem
   border-radius: 0.375rem
-  border: 1px solid rgba(255,255,255,0.12)
-  background: rgba(255,255,255,0.04)
+  border: 0.0625rem solid var(--tdm-public-action-line)
+  background: var(--tdm-public-action-hover-bg)
 
 .interactiveControls
   display: flex
   align-items: center
   gap: 0.5rem
 
-.toolBtn
-  min-width: 2rem
-  height: 2rem
-  padding: 0 0.5rem
-  border-radius: 0.5rem
-  border: 1px solid rgba(255,255,255,0.12)
-  background: rgba(255,255,255,0.04)
-  color: rgba(244,244,245,0.82)
-  font-size: 0.8125rem
-  cursor: pointer
-
-.toolBtn:hover
-  border-color: rgba(255,255,255,0.22)
-
 .zoomLabel
   font-size: 0.75rem
-  color: rgba(244,244,245,0.5)
+  color: var(--tdm-public-action-text-muted)
   min-width: 2.5rem
   text-align: center
-
-.closeLink
-  display: inline-flex
-  align-items: center
-  gap: 0.35rem
-  padding: 0.375rem 0.875rem
-  border-radius: 0.5rem
-  border: 1px solid rgba(255,255,255,0.12)
-  font-size: 0.8125rem
-  color: rgba(244,244,245,0.72)
-  text-decoration: none
-
-  &::before
-    content: ''
-    inline-size: 0.85rem
-    block-size: 0.85rem
-    background: currentColor
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4.25 4.25 11.75 11.75M11.75 4.25 4.25 11.75' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E")
-    mask-size: contain
-    mask-repeat: no-repeat
-    mask-position: center
-    opacity: 0.82
 
 .interactiveMain
   display: grid
@@ -365,7 +320,7 @@
 
 .inspector
   padding: clamp(1.25rem, 2.5vw, 1.75rem)
-  border-left: 1px solid rgba(255,255,255,0.09)
+  border-left: 0.0625rem solid rgba(255,255,255,0.09)
   background: rgba(12,12,13,0.5)
 
 .inspectorKicker
@@ -403,7 +358,7 @@
   height: 1.25rem
   margin-right: 0.375rem
   border-radius: 50%
-  border: 1px solid rgba(255,255,255,0.15)
+  border: 0.0625rem solid rgba(255,255,255,0.15)
   font-size: var(--tdm-font-label-size)
 
 // References — Contrato B grid
@@ -425,7 +380,7 @@
 
   .inspector
     border-left: none
-    border-top: 1px solid rgba(255,255,255,0.09)
+    border-top: 0.0625rem solid rgba(255,255,255,0.09)
 
 @media (max-width: 48rem)
   .diagramCards

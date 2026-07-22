@@ -169,7 +169,7 @@ function useActiveGuideStep(stepCount: number) {
 
 export function GuideExperiencePage() {
   return (
-    <PublicShell tone="silver" className={styles.guideShell}>
+    <PublicShell tone="silver" className={styles.guideShell} headerContentGap>
       <PublicHeader />
       <GuideHero />
       <GuideTimeline />

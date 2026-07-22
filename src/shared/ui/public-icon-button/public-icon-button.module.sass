@@ -1,0 +1,57 @@
+.button
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  width: var(--tdm-public-icon-button-size)
+  height: var(--tdm-public-icon-button-size)
+  min-width: var(--tdm-public-icon-button-size)
+  min-height: var(--tdm-public-icon-button-size)
+  padding: 0
+  border: var(--tdm-public-action-border-width) solid var(--tdm-public-action-line)
+  border-radius: var(--tdm-public-icon-button-radius)
+  color: var(--tdm-public-action-text)
+  background: transparent
+  box-shadow: none
+  font: inherit
+  text-decoration: none
+  cursor: pointer
+  -webkit-tap-highlight-color: transparent
+  transition: border-color var(--tdm-public-action-duration) var(--tdm-public-action-ease), color var(--tdm-public-action-duration) var(--tdm-public-action-ease), background-color var(--tdm-public-action-duration) var(--tdm-public-action-ease), opacity var(--tdm-public-action-duration) var(--tdm-public-action-ease)
+
+  &:hover
+    color: var(--tdm-public-action-text-hover)
+    border-color: var(--tdm-public-action-line-hover)
+    background: var(--tdm-public-action-hover-bg)
+
+  &:active
+    background: var(--tdm-public-action-pressed-bg)
+
+  &:focus-visible
+    outline: var(--tdm-public-action-focus-width) solid var(--tdm-public-action-focus)
+    outline-offset: var(--tdm-public-action-focus-offset)
+
+  &:disabled,
+  &[aria-disabled='true']
+    opacity: var(--tdm-public-action-disabled-opacity)
+    cursor: not-allowed
+    background: transparent
+
+.icon
+  display: inline-grid
+  place-items: center
+  width: var(--tdm-public-icon-button-icon-size)
+  height: var(--tdm-public-icon-button-icon-size)
+
+  svg
+    display: block
+    width: 100%
+    height: 100%
+    fill: none
+    stroke: currentColor
+    stroke-width: var(--tdm-public-action-icon-stroke)
+    stroke-linecap: round
+    stroke-linejoin: round
+
+@media (prefers-reduced-motion: reduce)
+  .button
+    transition-duration: 0.01ms

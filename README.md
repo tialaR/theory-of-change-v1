@@ -1,17 +1,37 @@
-# TDM Fix Example Preview Sass v12
+# TDM Design System Contract and Header Fix v1
 
-Corrige de forma definitiva o arquivo:
+Pacote de contrato para consolidar o Design System da aplicação TDM sem alterar domínio, stores, React Flow ou comportamento funcional.
 
-`src/features/theory-of-change/components/resend-public/example-previews/example-previews.module.sass`
+## Conteúdo
 
-O patch sobrescreve o Sass com uma versao valida para sintaxe indented `.sass`, mantendo os nomes de classes usados pelos componentes.
+- contrato mestre do Design System;
+- mapa conhecido do projeto;
+- matriz de QA visual e funcional;
+- contrato específico do header público;
+- previews HTML homologados;
+- regras versionadas para o Cursor;
+- gate executável inicial;
+- prompt de auditoria e correção cirúrgica do header.
 
-## Aplicar
+## Aplicação
+
+Na raiz do projeto:
 
 ```bash
 cd /Users/tialarocha/Documents/CHANGE-THEORY/theory-of-change-v1
-unzip -o ~/Downloads/tdm-fix-example-preview-sass-v12.zip -d .
-node scripts/fix-example-preview-sass-v12.cjs
-rm -rf .next
-npm run build
+unzip -o ~/Downloads/tdm-ds-contract-and-header-fix-v1.zip -d .
 ```
+
+Depois, leia o prompt:
+
+```bash
+cat PROMPT-CURSOR-AUDIT-CONTRACT-HEADER-V1.md
+```
+
+Execute o gate somente depois que o Cursor completar os caminhos canônicos reais em `scripts/tdm-ds-contract.config.mjs`:
+
+```bash
+node scripts/check-tdm-ds-contract.mjs
+```
+
+Não faça commit antes do QA humano por rota.

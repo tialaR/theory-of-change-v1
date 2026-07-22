@@ -1,0 +1,513 @@
+{
+  "desktop": {
+    "viewport": "desktop",
+    "width": 1440,
+    "height": 900,
+    "routes": {
+      "/": {
+        "topHeader": {
+          "scrolled": "false"
+        },
+        "scrolledHeader": {
+          "scrolled": "true",
+          "backgroundColor": "rgba(7, 8, 9, 0.76)",
+          "borderBottom": "1px solid rgba(255, 255, 255, 0.05)",
+          "backdropFilter": "blur(19.9914px) saturate(1.19991)",
+          "boxShadow": "none"
+        },
+        "copyright": {
+          "ok": false,
+          "footerCount": 2
+        },
+        "chapters": {
+          "token": "clamp(4.5rem, 7vw, 7rem)",
+          "gaps": [
+            {
+              "from": "Desenhe a mudança antes de explicá-la.",
+              "to": "Leia o caminho da intervenção.",
+              "gapPx": 101
+            },
+            {
+              "from": "Leia o caminho da intervenção.",
+              "to": "Veja a teoria ganhar forma.",
+              "gapPx": 101
+            },
+            {
+              "from": "Veja a teoria ganhar forma.",
+              "to": "FOOTER",
+              "gapPx": 101
+            }
+          ],
+          "chapterCount": 4,
+          "overflowX": false
+        },
+        "intro": null
+      },
+      "/guia-de-aprendizado": {
+        "topHeader": {
+          "scrolled": "false"
+        },
+        "scrolledHeader": {
+          "scrolled": "true",
+          "backgroundColor": "rgba(7, 8, 9, 0.76)",
+          "borderBottom": "1px solid rgba(255, 255, 255, 0.05)",
+          "backdropFilter": "blur(20px) saturate(1.2)",
+          "boxShadow": "none"
+        },
+        "copyright": {
+          "ok": true,
+          "footerCount": 1
+        },
+        "chapters": null,
+        "intro": null
+      },
+      "/exemplos": {
+        "topHeader": {
+          "scrolled": "false"
+        },
+        "scrolledHeader": {
+          "scrolled": "true",
+          "backgroundColor": "rgba(7, 8, 9, 0.76)",
+          "borderBottom": "1px solid rgba(255, 255, 255, 0.05)",
+          "backdropFilter": "blur(20px) saturate(1.2)",
+          "boxShadow": "none"
+        },
+        "copyright": {
+          "ok": true,
+          "footerCount": 1
+        },
+        "chapters": {
+          "token": "clamp(4.5rem, 7vw, 7rem)",
+          "gaps": [
+            {
+              "from": "Explore exemplos guiados.",
+              "to": "Escolha como visualizar a teoria.",
+              "gapPx": 101
+            },
+            {
+              "from": "Escolha como visualizar a teoria.",
+              "to": "FOOTER",
+              "gapPx": 101
+            }
+          ],
+          "chapterCount": 3,
+          "overflowX": false
+        },
+        "intro": {
+          "route": "/exemplos",
+          "containerLeft": 112,
+          "label": {
+            "leftAbs": 112,
+            "leftRel": 0,
+            "text": "PRÉVIA DAS EXPERIÊNCIAS"
+          },
+          "title": {
+            "leftAbs": 112,
+            "leftRel": 0,
+            "text": "Escolha como visualizar a teoria."
+          },
+          "description": {
+            "leftAbs": 112,
+            "leftRel": 0,
+            "text": "Dois caminhos visuais, o mesmo sistema: primeiro"
+          },
+          "textAlign": "start",
+          "maxWidth": "363.375px"
+        }
+      },
+      "/exemplos/visao-do-fluxo": {
+        "topHeader": {
+          "scrolled": "false"
+        },
+        "scrolledHeader": {
+          "scrolled": "true",
+          "backgroundColor": "rgba(7, 8, 9, 0.76)",
+          "borderBottom": "1px solid rgba(255, 255, 255, 0.05)",
+          "backdropFilter": "blur(20px) saturate(1.2)",
+          "boxShadow": "none"
+        },
+        "copyright": {
+          "ok": true,
+          "footerCount": 1
+        },
+        "chapters": {
+          "token": "clamp(4.5rem, 7vw, 7rem)",
+          "gaps": [
+            {
+              "from": "Visão do fluxo com prévia viva.",
+              "to": "DIV",
+              "gapPx": 101
+            },
+            {
+              "from": "DIV",
+              "to": "O caminho antes da leitura final.",
+              "gapPx": 101
+            },
+            {
+              "from": "O caminho antes da leitura final.",
+              "to": "FOOTER",
+              "gapPx": 101
+            }
+          ],
+          "chapterCount": 4,
+          "overflowX": false
+        },
+        "intro": {
+          "route": "/exemplos/visao-do-fluxo",
+          "containerLeft": 112,
+          "label": {
+            "leftAbs": 112,
+            "leftRel": 0,
+            "text": "Visão do fluxo"
+          },
+          "title": {
+            "leftAbs": 112,
+            "leftRel": 0,
+            "text": "O caminho antes da leitura final."
+          },
+          "description": {
+            "leftAbs": 112,
+            "leftRel": 0,
+            "text": "A prévia mostra como cada etapa alimenta a próxi"
+          },
+          "textAlign": "start",
+          "maxWidth": "363.375px"
+        }
+      },
+      "/exemplos/resultado": {
+        "topHeader": {
+          "scrolled": "false"
+        },
+        "scrolledHeader": {
+          "scrolled": "true",
+          "backgroundColor": "rgba(7, 8, 9, 0.76)",
+          "borderBottom": "1px solid rgba(255, 255, 255, 0.05)",
+          "backdropFilter": "blur(20px) saturate(1.2)",
+          "boxShadow": "none"
+        },
+        "copyright": {
+          "ok": true,
+          "footerCount": 1
+        },
+        "chapters": {
+          "token": "clamp(4.5rem, 7vw, 7rem)",
+          "gaps": [
+            {
+              "from": "Leitura executiva com prévia viva.",
+              "to": "DIV",
+              "gapPx": 101
+            },
+            {
+              "from": "DIV",
+              "to": "O que cada seta está dizendo.",
+              "gapPx": 101
+            },
+            {
+              "from": "O que cada seta está dizendo.",
+              "to": "FOOTER",
+              "gapPx": 101
+            }
+          ],
+          "chapterCount": 4,
+          "overflowX": false
+        },
+        "intro": null
+      },
+      "/referencias": {
+        "topHeader": {
+          "scrolled": "false"
+        },
+        "scrolledHeader": {
+          "scrolled": "true",
+          "backgroundColor": "rgba(7, 8, 9, 0.76)",
+          "borderBottom": "1px solid rgba(255, 255, 255, 0.05)",
+          "backdropFilter": "blur(20px) saturate(1.2)",
+          "boxShadow": "none"
+        },
+        "copyright": {
+          "ok": true,
+          "footerCount": 1
+        },
+        "chapters": {
+          "token": "clamp(4.5rem, 7vw, 7rem)",
+          "gaps": [
+            {
+              "from": "Base visual e técnica.",
+              "to": "Biblioteca",
+              "gapPx": 101
+            },
+            {
+              "from": "Biblioteca",
+              "to": "SECTION",
+              "gapPx": 101
+            },
+            {
+              "from": "SECTION",
+              "to": "FOOTER",
+              "gapPx": 101
+            }
+          ],
+          "chapterCount": 4,
+          "overflowX": false
+        },
+        "intro": null
+      }
+    }
+  },
+  "mobile": {
+    "viewport": "mobile",
+    "width": 390,
+    "height": 844,
+    "routes": {
+      "/": {
+        "topHeader": {
+          "scrolled": "false"
+        },
+        "scrolledHeader": {
+          "scrolled": "true",
+          "backgroundColor": "rgba(7, 8, 9, 0.76)",
+          "borderBottom": "1px solid rgba(255, 255, 255, 0.05)",
+          "backdropFilter": "blur(20px) saturate(1.2)",
+          "boxShadow": "none"
+        },
+        "copyright": {
+          "ok": false,
+          "footerCount": 2
+        },
+        "chapters": {
+          "token": "clamp(3.5rem, 12vw, 4.5rem)",
+          "gaps": [
+            {
+              "from": "Desenhe a mudança antes de explicá-la.",
+              "to": "Leia o caminho da intervenção.",
+              "gapPx": 56
+            },
+            {
+              "from": "Leia o caminho da intervenção.",
+              "to": "Veja a teoria ganhar forma.",
+              "gapPx": 56
+            },
+            {
+              "from": "Veja a teoria ganhar forma.",
+              "to": "FOOTER",
+              "gapPx": 56
+            }
+          ],
+          "chapterCount": 4,
+          "overflowX": false
+        },
+        "intro": null
+      },
+      "/guia-de-aprendizado": {
+        "topHeader": {
+          "scrolled": "false"
+        },
+        "scrolledHeader": {
+          "scrolled": "true",
+          "backgroundColor": "rgba(7, 8, 9, 0.76)",
+          "borderBottom": "1px solid rgba(255, 255, 255, 0.05)",
+          "backdropFilter": "blur(20px) saturate(1.2)",
+          "boxShadow": "none"
+        },
+        "copyright": {
+          "ok": true,
+          "footerCount": 1
+        },
+        "chapters": null,
+        "intro": null
+      },
+      "/exemplos": {
+        "topHeader": {
+          "scrolled": "false"
+        },
+        "scrolledHeader": {
+          "scrolled": "true",
+          "backgroundColor": "rgba(7, 8, 9, 0.76)",
+          "borderBottom": "1px solid rgba(255, 255, 255, 0.05)",
+          "backdropFilter": "blur(20px) saturate(1.2)",
+          "boxShadow": "none"
+        },
+        "copyright": {
+          "ok": true,
+          "footerCount": 1
+        },
+        "chapters": {
+          "token": "clamp(3.5rem, 12vw, 4.5rem)",
+          "gaps": [
+            {
+              "from": "Explore exemplos guiados.",
+              "to": "Escolha como visualizar a teoria.",
+              "gapPx": 56
+            },
+            {
+              "from": "Escolha como visualizar a teoria.",
+              "to": "FOOTER",
+              "gapPx": 56
+            }
+          ],
+          "chapterCount": 3,
+          "overflowX": false
+        },
+        "intro": {
+          "route": "/exemplos",
+          "containerLeft": 16,
+          "label": {
+            "leftAbs": 16,
+            "leftRel": 0,
+            "text": "PRÉVIA DAS EXPERIÊNCIAS"
+          },
+          "title": {
+            "leftAbs": 16,
+            "leftRel": 0,
+            "text": "Escolha como visualizar a teoria."
+          },
+          "description": {
+            "leftAbs": 16,
+            "leftRel": 0,
+            "text": "Dois caminhos visuais, o mesmo sistema: primeiro"
+          },
+          "textAlign": "start",
+          "maxWidth": "363.375px"
+        }
+      },
+      "/exemplos/visao-do-fluxo": {
+        "topHeader": {
+          "scrolled": "false"
+        },
+        "scrolledHeader": {
+          "scrolled": "true",
+          "backgroundColor": "rgba(7, 8, 9, 0.76)",
+          "borderBottom": "1px solid rgba(255, 255, 255, 0.05)",
+          "backdropFilter": "blur(20px) saturate(1.2)",
+          "boxShadow": "none"
+        },
+        "copyright": {
+          "ok": true,
+          "footerCount": 1
+        },
+        "chapters": {
+          "token": "clamp(3.5rem, 12vw, 4.5rem)",
+          "gaps": [
+            {
+              "from": "Visão do fluxo com prévia viva.",
+              "to": "DIV",
+              "gapPx": 56
+            },
+            {
+              "from": "DIV",
+              "to": "O caminho antes da leitura final.",
+              "gapPx": 56
+            },
+            {
+              "from": "O caminho antes da leitura final.",
+              "to": "FOOTER",
+              "gapPx": 56
+            }
+          ],
+          "chapterCount": 4,
+          "overflowX": false
+        },
+        "intro": {
+          "route": "/exemplos/visao-do-fluxo",
+          "containerLeft": 16,
+          "label": {
+            "leftAbs": 16,
+            "leftRel": 0,
+            "text": "Visão do fluxo"
+          },
+          "title": {
+            "leftAbs": 16,
+            "leftRel": 0,
+            "text": "O caminho antes da leitura final."
+          },
+          "description": {
+            "leftAbs": 16,
+            "leftRel": 0,
+            "text": "A prévia mostra como cada etapa alimenta a próxi"
+          },
+          "textAlign": "start",
+          "maxWidth": "363.375px"
+        }
+      },
+      "/exemplos/resultado": {
+        "topHeader": {
+          "scrolled": "false"
+        },
+        "scrolledHeader": {
+          "scrolled": "true",
+          "backgroundColor": "rgba(7, 8, 9, 0.76)",
+          "borderBottom": "1px solid rgba(255, 255, 255, 0.05)",
+          "backdropFilter": "blur(20px) saturate(1.2)",
+          "boxShadow": "none"
+        },
+        "copyright": {
+          "ok": true,
+          "footerCount": 1
+        },
+        "chapters": {
+          "token": "clamp(3.5rem, 12vw, 4.5rem)",
+          "gaps": [
+            {
+              "from": "Leitura executiva com prévia viva.",
+              "to": "DIV",
+              "gapPx": 56
+            },
+            {
+              "from": "DIV",
+              "to": "O que cada seta está dizendo.",
+              "gapPx": 56
+            },
+            {
+              "from": "O que cada seta está dizendo.",
+              "to": "FOOTER",
+              "gapPx": 56
+            }
+          ],
+          "chapterCount": 4,
+          "overflowX": false
+        },
+        "intro": null
+      },
+      "/referencias": {
+        "topHeader": {
+          "scrolled": "false"
+        },
+        "scrolledHeader": {
+          "scrolled": "true",
+          "backgroundColor": "rgba(7, 8, 9, 0.76)",
+          "borderBottom": "1px solid rgba(255, 255, 255, 0.05)",
+          "backdropFilter": "blur(20px) saturate(1.2)",
+          "boxShadow": "none"
+        },
+        "copyright": {
+          "ok": true,
+          "footerCount": 1
+        },
+        "chapters": {
+          "token": "clamp(3.5rem, 12vw, 4.5rem)",
+          "gaps": [
+            {
+              "from": "Base visual e técnica.",
+              "to": "Biblioteca",
+              "gapPx": 56
+            },
+            {
+              "from": "Biblioteca",
+              "to": "SECTION",
+              "gapPx": 56
+            },
+            {
+              "from": "SECTION",
+              "to": "FOOTER",
+              "gapPx": 56
+            }
+          ],
+          "chapterCount": 4,
+          "overflowX": false
+        },
+        "intro": null
+      }
+    }
+  },
+  "generatedAt": "2026-07-22T05:52:14.513Z"
+}

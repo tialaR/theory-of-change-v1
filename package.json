@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint .",
     "check:tdm-ds": "node scripts/check-tdm-design-system.mjs",
-    "check:tdm": "npm run check:tdm-ds && npx tsc --noEmit && npm run build"
+    "check:tdm-public-ui": "node scripts/check-tdm-public-ui-contract.mjs",
+    "check:tdm": "npm run check:tdm-ds && npm run check:tdm-public-ui && npx tsc --noEmit && npm run build"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.5.1",

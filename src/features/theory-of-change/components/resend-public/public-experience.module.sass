@@ -488,11 +488,12 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1)
   --glow: rgba(255, 255, 255, 0.08)
 
 .guideHero
+  --tdm-public-page-content-pad-block-start: clamp(2rem, 5vw, 3.5rem)
   display: flex
   flex-direction: column
   align-items: center
   text-align: center
-  padding: clamp(2rem, 5vw, 3.5rem) 0 clamp(1.5rem, 3.5vw, 2.5rem)
+  padding: var(--tdm-public-page-content-pad-block-start) 0 clamp(1.5rem, 3.5vw, 2.5rem)
 
 .guideHeroCopy
   max-width: 40rem

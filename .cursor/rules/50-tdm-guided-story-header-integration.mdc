@@ -1,0 +1,18 @@
+---
+description: Trava a Guided Story, o header público, o respiro das páginas públicas e o copyright homologado.
+globs:
+  - "src/**/*.{ts,tsx,sass,scss}"
+alwaysApply: true
+---
+
+- Não redesenhe a Guided Story homologada.
+- Não altere o comportamento do header: oculto no topo, visível após scroll.
+- No header visível, mude somente background, border-bottom, backdrop-filter e remoção de sombra conforme a V3.
+- Preserve geometria e filhos do header.
+- Nas rotas /guia-de-aprendizado, /exemplos, /exemplos/visao-do-fluxo, /exemplos/resultado e /referencias, altere somente o respiro externo no eixo Y entre header e primeiro conteúdo.
+- Use um único token/mixin/classe compartilhada; não use cinco números mágicos.
+- Preserve eixo X, width, max-width, padding-inline e componentes internos.
+- Copyright exato: © ANO_ATUAL TMD Construtor. Todos os direitos reservados. / Ferramenta visual para construir, revisar e comunicar teorias da mudança.
+- Ano dinâmico. Não crie links ou informações jurídicas inexistentes.
+- Não toque em Canvas, Sidebar, React Flow, stores ou domínio.
+- Não faça commit, push, PR, reset, checkout ou git clean.
