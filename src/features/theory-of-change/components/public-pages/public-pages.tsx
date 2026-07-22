@@ -98,12 +98,10 @@ const FLOW_CONTEXT_CARDS = [
   }
 ] as const;
 
-function ExportFormatIcon() {
+function CtaChevronIcon() {
   return (
     <svg viewBox="0 0 16 16" aria-hidden="true">
-      <path d="M4.25 2.75h5.5L12.25 5.25v8H4.25v-10.5Z" />
-      <path d="M9.5 2.75V5.5h2.75" />
-      <path d="M6.25 8.5h3.5M6.25 10.75h3.5" />
+      <path d="m6 3.5 4.5 4.5L6 12.5" />
     </svg>
   );
 }
@@ -111,15 +109,20 @@ function ExportFormatIcon() {
 export function HomePage() {
   return (
     <PublicShell sectionRhythm>
-      <PublicHeader />
+      <PublicHeader ctaLabel="Começar agora" ctaTrailingIcon={<CtaChevronIcon />} />
       <PublicHero
         visual={<HomeBrandLogo variant="hero" />}
         title="Desenhe a mudança antes de explicá-la."
         description="Um espaço visual para transformar problema, etapas, conexões, riscos e hipóteses em narrativa clara."
         actions={
           <>
-            <PublicButton href="/canvas" variant="primary" size="hero">
-              Criar teoria
+            <PublicButton
+              href="/canvas"
+              variant="primary"
+              size="hero"
+              trailingIcon={<CtaChevronIcon />}
+            >
+              Começar agora
             </PublicButton>
             <PublicButton href="/exemplos/resultado" variant="text">
               Ver exemplo
@@ -306,18 +309,6 @@ export function ResultPage() {
               <DedicatedExamplePreview type="result" />
             </TdmSurface>
           </PublicReveal>
-        </div>
-        <div className={styles.exportBar}>
-          {['PDF', 'PNG', 'SVG'].map((format) => (
-            <PublicButton
-              key={format}
-              type="button"
-              variant="exportCompact"
-              leadingIcon={<ExportFormatIcon />}
-            >
-              Exportar {format}
-            </PublicButton>
-          ))}
         </div>
       </div>
       <PublicSection

@@ -113,10 +113,12 @@ export function PublicGridBackground() {
 
 export function PublicHeader({
   ctaHref = '/canvas',
-  ctaLabel = 'Criar teoria'
+  ctaLabel = 'Criar teoria',
+  ctaTrailingIcon
 }: {
   ctaHref?: string;
   ctaLabel?: string;
+  ctaTrailingIcon?: ReactNode;
 }) {
   const pathname = usePathname();
   const { sentinelRef, isScrolled } = usePublicHeaderScrolled();
@@ -164,7 +166,12 @@ export function PublicHeader({
               })}
             </nav>
             <div className={styles.headerCtaWrap}>
-              <PublicButton href={ctaHref} variant="textCompact" className={styles.headerCta}>
+              <PublicButton
+                href={ctaHref}
+                variant="textCompact"
+                className={styles.headerCta}
+                trailingIcon={ctaTrailingIcon}
+              >
                 {ctaLabel}
               </PublicButton>
             </div>

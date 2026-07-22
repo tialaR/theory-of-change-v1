@@ -3,6 +3,7 @@
 import {
   type CSSProperties,
   type MutableRefObject,
+  type ReactNode,
   type RefCallback,
   useCallback,
   useEffect,
@@ -17,7 +18,6 @@ import {
   BRAND_MARK_SRC,
   EDGE_GAP,
   FINAL_START,
-  FINAL_SUMMARY_CHIPS,
   LOGICAL_HEIGHT,
   LOGICAL_WIDTH,
   MIN_READABLE_SCALE,
@@ -374,6 +374,24 @@ function RelationRail({
   );
 }
 
+function ChapterTextSwap({
+  swapKey,
+  className,
+  children,
+}: {
+  swapKey: string | number;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className={cx(styles.textSwapSlot, className)}>
+      <div key={swapKey} className={styles.textSwapItem}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export function HomeOnboardingPreview({
   density = 'default',
 }: {
@@ -591,9 +609,14 @@ export function HomeOnboardingPreview({
       <div className={styles.storyShell}>
         <div className={styles.storyHeader}>
           <div className={styles.storyCopy}>
-            <span className={styles.chapterKicker}>{chapter.label}</span>
-            <h2>{chapter.title}</h2>
-            <p>{chapter.description}</p>
+            <ChapterTextSwap swapKey={chapterIndex} className={styles.storyCopySwap}>
+              <span className={styles.chapterKicker}>{chapter.label}</span>
+              <h2>
+                <span key={chapterIndex} className={styles.chapterTitleReveal}>
+                  {chapter.title}
+                </span>
+              </h2>
+            </ChapterTextSwap>
           </div>
           <div className={styles.storyControls} aria-label="Controles da narrativa">
             <button
@@ -661,7 +684,6 @@ export function HomeOnboardingPreview({
                     />
                     <OverviewGrid idPrefix="overview" cardRefs={cardRefs} focus={overviewFlags} />
                   </div>
-                  <div className={styles.finalSummary}>{FINAL_SUMMARY_CHIPS.overview}</div>
                 </div>
               </section>
 
@@ -781,8 +803,10 @@ export function HomeOnboardingPreview({
           <div className={styles.footerMain}>
             <img className={styles.footerIcon} src={BRAND_MARK_SRC} alt="" width={252} height={262} />
             <div className={styles.footerCopy}>
-              <h3>{chapter.footerTitle}</h3>
-              <p>{chapter.footerDescription}</p>
+              <ChapterTextSwap swapKey={chapterIndex} className={styles.footerCopySwap}>
+                <h3>{chapter.footerTitle}</h3>
+                <p>{chapter.footerDescription}</p>
+              </ChapterTextSwap>
             </div>
             <span className={styles.footerStatus}>{footerStatus}</span>
           </div>
