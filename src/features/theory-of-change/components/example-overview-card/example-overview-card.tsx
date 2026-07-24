@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
-import { PublicButton } from '@/shared/ui/public-button';
+import { TdmButton } from '@/shared/ui/tdm-button';
+import { TdmArrowLeftIcon, TdmEyeIcon } from '@/shared/ui/tdm-icons';
 import styles from './example-overview-card.module.sass';
 
 export type ExampleOverviewCardProps = {
@@ -25,12 +26,22 @@ export function ExampleOverviewCard({
       <h3 className={styles.title}>{title}</h3>
       <div className={styles.description}>{description}</div>
       <div className={styles.actions}>
-        <PublicButton href={primaryHref} variant="primary">
+        <TdmButton
+          href={primaryHref}
+          recipe="public"
+          variant="primary"
+          leadingIcon={<TdmEyeIcon />}
+        >
           {primaryLabel}
-        </PublicButton>
-        <PublicButton href="/exemplos" variant="text">
+        </TdmButton>
+        <TdmButton
+          href="/exemplos"
+          recipe="public"
+          variant="tertiary"
+          leadingIcon={<TdmArrowLeftIcon />}
+        >
           Voltar para exemplos
-        </PublicButton>
+        </TdmButton>
       </div>
     </article>
   );

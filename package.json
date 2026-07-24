@@ -7,9 +7,19 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "check:tdm-ds": "node scripts/check-tdm-design-system.mjs",
-    "check:tdm-public-ui": "node scripts/check-tdm-public-ui-contract.mjs",
-    "check:tdm": "npm run check:tdm-ds && npm run check:tdm-public-ui && npx tsc --noEmit && npm run build"
+    "check:tdm": "npm run check:tdm:v2:all && npm run build",
+    "audit:tdm:v2": "node scripts/tdm-contract-v2/scan.mjs",
+    "audit:tdm:v2:baseline": "node scripts/tdm-contract-v2/gate.mjs --write-baseline",
+    "check:tdm:v2": "node scripts/tdm-contract-v2/gate.mjs",
+    "check:tdm:v2:protected": "node scripts/tdm-contract-v2/gate.mjs --check-protected",
+    "check:tdm:v2:changed-lint": "node scripts/tdm-contract-v2/check-changed-eslint.mjs",
+    "check:tdm:v2:all": "npm run check:tdm:v2 && npm run check:tdm:v2:architecture && npm run check:tdm:v2:consolidation && npm run check:tdm:v2:performance && npm run check:tdm:v2:boundaries && npm run check:tdm:v2:changed-lint && npx tsc --noEmit",
+    "check:tdm:v2:architecture": "node scripts/tdm-contract-v2/check-public-architecture.mjs",
+    "check:tdm:v2:consolidation": "node scripts/tdm-contract-v2/check-ui-consolidation.mjs",
+    "analyze:bundle": "next experimental-analyze",
+    "analyze:bundle:output": "next experimental-analyze --output",
+    "check:tdm:v2:performance": "node scripts/tdm-contract-v2/check-performance-boundaries.mjs",
+    "check:tdm:v2:boundaries": "node scripts/tdm-contract-v2/check-component-boundaries.mjs"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.5.1",
@@ -20,14 +30,12 @@
     "next": "^16.2.9",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "sass": "^1.101.0",
-    "three": "^0.180.0"
+    "sass": "^1.101.0"
   },
   "devDependencies": {
     "@types/node": "^26.0.1",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "@types/three": "^0.185.1",
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.9",
     "typescript": "^6.0.3"

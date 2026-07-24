@@ -1,0 +1,25 @@
+---
+description: TDM public architecture boundaries after Architecture Migration V1
+alwaysApply: true
+---
+
+# Public architecture contract
+
+Canonical public layout imports must come from:
+
+- `@/shared/ui/tdm-public-layout`
+
+Public route components live separately in:
+
+- `src/features/theory-of-change/components/public-pages/*-page.tsx`
+
+Rules:
+
+1. Do not recreate `public-pages.tsx` as a multi-route component.
+2. Do not recreate a single public DS file containing shell, header, content and motion.
+3. Public route components are Server Components by default.
+4. Client boundaries are limited to browser APIs, interaction state and motion.
+5. Do not change protected preview geometry, Guide timeline behavior or interactive diagrams in public architecture tasks.
+6. Shared layout components cannot import feature code.
+7. Keep route content, data and callbacks in the owning feature.
+8. Run `npm run check:tdm:v2:architecture` before completion.

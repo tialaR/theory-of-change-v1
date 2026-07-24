@@ -1,5 +1,5 @@
 import type { ReactNode, Ref } from 'react';
-import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
+import { TdmIconButton } from '@/shared/ui/tdm-icon-button';
 import { THEORY_TRANSLATOR_LABELS } from './result-theory-translator.constants';
 import styles from './result-theory-translator-pane.module.sass';
 

@@ -1,13 +1,12 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { exportTheoryPng, exportTheorySvg } from '@/features/theory-of-change/export';
 import { getTdmResultAvailabilityMessage } from '@/features/theory-of-change/utils/tdm-result';
 import { ResultDiagram } from './result-diagram/result-diagram';
 import { ResultEmptyState } from './result-empty-state/result-empty-state';
 import { ResultExperienceShell } from './result-experience-shell/result-experience-shell';
 import { ResultHeader } from './result-header/result-header';
-import { ResultToolbar, type ResultImageExportFormat } from './result-toolbar/result-toolbar';
+import { ResultToolbar } from './result-toolbar/result-toolbar';
 import { ResultWorkspace } from './result-workspace/result-workspace';
 import { ResultTheoryTranslatorPane } from './result-theory-translator/result-theory-translator-pane';
 import { buildTheoryTranslatorViewModel } from './result-theory-translator/result-theory-translator.mapper';
@@ -32,6 +31,7 @@ import {
 } from './result-view.constants';
 import type { ResultExperienceProps } from './result-view.types';
 import { getConnectedFlowFromNode, getLayoutRectRelativeTo, roundZoom } from './result-view.utils';
+import { useTheoryImageExport } from './use-theory-image-export';
 import styles from './result-experience.module.sass';
 
 function getOffsetWithin(element: HTMLElement, ancestor: HTMLElement): { left: number; top: number } {
@@ -234,12 +234,6 @@ export function ResultExperience({
   const pendingHighlightRef = useRef<string | null>(null);
   const fitRafRef = useRef<number | null>(null);
   const paneReadyRef = useRef(false);
-  const exportRootRef = useRef<HTMLElement | null>(null);
-  const [isExportingImage, setIsExportingImage] = useState(false);
-  const [exportingImageFormat, setExportingImageFormat] = useState<ResultImageExportFormat | null>(
-    null
-  );
-  const [exportImageError, setExportImageError] = useState<string | null>(null);
 
   const setCameraModeSafe = useCallback((next: ResultCameraMode) => {
     cameraModeRef.current = next;
@@ -259,6 +253,18 @@ export function ResultExperience({
   const resolvedBackHref = mode === 'example' ? (backHref ?? '/exemplos/resultado') : backHref;
   const resolvedCloseHref = mode === 'example' ? (closeHref ?? '/exemplos/resultado') : closeHref;
   const resolvedClose = onClose ?? onBack;
+  const {
+    exportRootRef,
+    handleExportImage,
+    isExportingImage,
+    exportingImageFormat,
+    exportImageError
+  } = useTheoryImageExport({
+    theoryTitle: viewModel.title,
+    nodes,
+    edgeCount: edges.length,
+    preferMountedReactFlow: mode === 'canvas-preview'
+  });
 
   const selectedNodeId = selection?.type === 'node' ? selection.id : null;
   const selectedEdgeId = selection?.type === 'edge' ? selection.id : null;
@@ -835,50 +841,6 @@ export function ResultExperience({
     };
   }, [isTranslatorExpanded, reclampManualCamera]);
 
-  const handleExportImage = useCallback(
-    async (format: ResultImageExportFormat) => {
-      const resultRoot = exportRootRef.current;
-      if (!resultRoot) {
-        setExportImageError('Área do diagrama indisponível para exportação.');
-        return;
-      }
-
-      setIsExportingImage(true);
-      setExportingImageFormat(format);
-      setExportImageError(null);
-
-      try {
-        // Canvas overlay: React Flow remains mounted under the result dialog — prefer full-flow RF capture.
-        const reactFlowHost =
-          mode === 'canvas-preview'
-            ? (document.querySelector('.react-flow') as HTMLElement | null)
-            : null;
-        const container = reactFlowHost ?? resultRoot;
-        const options = {
-          container,
-          theoryTitle: viewModel.title,
-          nodes: reactFlowHost ? nodes : undefined,
-          nodeCount: nodes.length,
-          edgeCount: edges.length
-        };
-        const result =
-          format === 'png' ? await exportTheoryPng(options) : await exportTheorySvg(options);
-
-        if (result.status === 'error') {
-          setExportImageError(result.message);
-          return;
-        }
-      } catch (error) {
-        setExportImageError(
-          error instanceof Error ? error.message : 'Falha inesperada ao exportar o diagrama.'
-        );
-      } finally {
-        setIsExportingImage(false);
-        setExportingImageFormat(null);
-      }
-    },
-    [edges.length, mode, nodes, viewModel.title]
-  );
 
   return (
     <main
@@ -913,6 +875,11 @@ export function ResultExperience({
               closeHref={resolvedCloseHref}
               onClose={resolvedClose}
               onExportImage={hasResult ? handleExportImage : undefined}
+              exportImageHeading={
+                selection
+                  ? 'EXPORTAR IMAGEM DO FLUXO SELECIONADO'
+                  : 'EXPORTAR IMAGEM DA TEORIA COMPLETA'
+              }
               isExportingImage={isExportingImage}
               exportingImageFormat={exportingImageFormat}
               exportImageError={exportImageError}

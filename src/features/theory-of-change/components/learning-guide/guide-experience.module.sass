@@ -1,0 +1,302 @@
+.guideShell
+  --glow: color-mix(in srgb, var(--tdm-fg-primary) 8%, transparent)
+
+.guideHero
+  --tdm-public-page-content-pad-block-start: clamp(2rem, 5vw, 3.5rem)
+  display: flex
+  flex-direction: column
+  align-items: center
+  padding: var(--tdm-public-page-content-pad-block-start) 0 clamp(1.5rem, 3.5vw, 2.5rem)
+  text-align: center
+
+.guideHeroCopy
+  max-width: 40rem
+
+.guideHero h1
+  margin: 0 auto
+  max-inline-size: 13em
+  color: transparent
+  background: linear-gradient(180deg, var(--tdm-fg-strong), var(--tdm-fg-primary) 38%, var(--tdm-fg-secondary))
+  background-clip: text
+  font-size: clamp(2rem, 4.8vw, 3.35rem)
+  font-weight: 500
+  line-height: 1.1
+  letter-spacing: -0.03em
+  text-wrap: balance
+  -webkit-background-clip: text
+
+.guideHeroDescription
+  max-width: 34rem
+  margin: clamp(1rem, 2.2vw, 1.35rem) auto 0
+  color: var(--tdm-fg-muted)
+  font-size: clamp(0.95rem, 1.7vw, 1.0625rem)
+  line-height: 1.65
+
+.guideTimeline
+  position: relative
+  padding-inline-start: clamp(1.75rem, 4vw, 3rem)
+  padding-block-end: clamp(2rem, 5vw, 3.5rem)
+
+.guideTimelineRail
+  position: absolute
+  inset-block: 0
+  inset-inline-start: clamp(0.45rem, 1.2vw, 0.75rem)
+  width: var(--tdm-border-width-hairline)
+  overflow: visible
+  background: linear-gradient(180deg, transparent, var(--tdm-border-default) 6%, var(--tdm-border-interactive) 50%, var(--tdm-border-default) 94%, transparent)
+  transform-origin: top
+
+.guideTimelineRailFill
+  position: absolute
+  inset: 0
+  background: linear-gradient(180deg, var(--tdm-fg-primary), var(--tdm-fg-muted) 58%, var(--tdm-fg-subtle))
+  box-shadow: 0 0 var(--tdm-space-5) color-mix(in srgb, var(--tdm-fg-primary) 20%, transparent)
+  transform-origin: top
+
+.guideTimelineRailShimmer
+  position: absolute
+  inset-block-start: 0
+  inset-inline-start: 50%
+  width: clamp(1.5rem, 3vw, 2.5rem)
+  height: clamp(4.5rem, 10vw, 7rem)
+  margin-inline-start: calc(clamp(1.5rem, 3vw, 2.5rem) / -2)
+  border-radius: var(--tdm-radius-round)
+  background: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--tdm-fg-primary) 55%, transparent), color-mix(in srgb, var(--tdm-fg-primary) 8%, transparent) 42%, transparent 72%)
+  filter: blur(0.7rem)
+  pointer-events: none
+  transform: translateY(-50%)
+
+.guideTimelineDot
+  --guide-accent: var(--tdm-guide-accent-neutral)
+  --guide-accent-soft: var(--tdm-guide-accent-neutral-soft)
+  --guide-accent-glow: var(--tdm-guide-accent-neutral-glow)
+  position: absolute
+  inset-inline-start: 50%
+  width: 0.625rem
+  height: 0.625rem
+  margin-block-start: -0.3125rem
+  margin-inline-start: -0.3125rem
+  border: var(--tdm-border-width-hairline) solid var(--tdm-border-interactive)
+  border-radius: var(--tdm-radius-round)
+  background: var(--guide-accent)
+  box-shadow: 0 0 0 0.14rem var(--guide-accent-soft)
+  transition: box-shadow var(--tdm-duration-layout) var(--tdm-ease-enter)
+
+.guideTimelineDot[data-active='true']
+  box-shadow: 0 0 1.1rem var(--guide-accent-glow), 0 0 0 0.22rem var(--guide-accent-soft)
+
+.guideTimelineDot:nth-of-type(1)
+  top: 6.25%
+
+.guideTimelineDot:nth-of-type(2)
+  top: 18.75%
+
+.guideTimelineDot:nth-of-type(3)
+  top: 31.25%
+
+.guideTimelineDot:nth-of-type(4)
+  top: 43.75%
+
+.guideTimelineDot:nth-of-type(5)
+  top: 56.25%
+
+.guideTimelineDot:nth-of-type(6)
+  top: 68.75%
+
+.guideTimelineDot:nth-of-type(7)
+  top: 81.25%
+
+.guideTimelineDot:nth-of-type(8)
+  top: 93.75%
+
+.guideTimelineDot[data-tone='input'],
+.guideTimelineRow[data-tone='input']
+  --guide-accent: var(--tdm-stage-input)
+  --guide-accent-soft: var(--tdm-stage-input-soft)
+  --guide-accent-glow: var(--tdm-stage-input-glow)
+
+.guideTimelineDot[data-tone='activity'],
+.guideTimelineRow[data-tone='activity']
+  --guide-accent: var(--tdm-stage-activity)
+  --guide-accent-soft: var(--tdm-stage-activity-soft)
+  --guide-accent-glow: var(--tdm-stage-activity-glow)
+
+.guideTimelineDot[data-tone='output'],
+.guideTimelineRow[data-tone='output']
+  --guide-accent: var(--tdm-stage-output)
+  --guide-accent-soft: var(--tdm-stage-output-soft)
+  --guide-accent-glow: var(--tdm-stage-output-glow)
+
+.guideTimelineDot[data-tone='outcome'],
+.guideTimelineRow[data-tone='outcome']
+  --guide-accent: var(--tdm-stage-outcome)
+  --guide-accent-soft: var(--tdm-stage-outcome-soft)
+  --guide-accent-glow: var(--tdm-stage-outcome-glow)
+
+.guideTimelineDot[data-tone='connection'],
+.guideTimelineRow[data-tone='connection']
+  --guide-accent: var(--tdm-guide-accent-connection)
+  --guide-accent-soft: var(--tdm-guide-accent-connection-soft)
+  --guide-accent-glow: var(--tdm-guide-accent-connection-glow)
+
+.guideTimelineSteps
+  display: grid
+  gap: clamp(3.25rem, 6.2vw, 6rem)
+
+.guideTimelineRow
+  --guide-accent: var(--tdm-guide-accent-neutral)
+  --guide-accent-soft: var(--tdm-guide-accent-neutral-soft)
+  --guide-accent-glow: var(--tdm-guide-accent-neutral-glow)
+  display: grid
+  grid-template-columns: minmax(0, 0.68fr) minmax(clamp(18rem, 40vw, 32rem), 1.32fr)
+  gap: clamp(2.25rem, 5vw, 4.25rem)
+  align-items: center
+  padding: clamp(1.55rem, 3.1vw, 2.65rem) 0
+  scroll-margin-top: clamp(5rem, 12vw, 8rem)
+
+.guideTimelineCopy
+  min-width: 0
+  max-width: clamp(16rem, 31vw, 25rem)
+  padding-inline-end: clamp(0.25rem, 1.5vw, 1rem)
+
+.guideStepNumber
+  display: inline-block
+  margin-block-end: var(--tdm-space-2)
+  color: var(--guide-accent)
+  font-size: 0.625rem
+  font-weight: 600
+  letter-spacing: 0.13em
+  text-transform: uppercase
+
+.guideTimelineCopy h2
+  margin: 0
+  color: var(--guide-accent)
+  font-size: clamp(1.25rem, 2.25vw, 1.75rem)
+  font-weight: 500
+  line-height: 1.2
+  letter-spacing: -0.022em
+  text-wrap: balance
+
+.guideTimelineCopy p
+  margin: 0.625rem 0 0
+  color: color-mix(in srgb, var(--guide-accent) 18%, var(--tdm-fg-muted))
+  font-size: clamp(0.8125rem, 1.35vw, 0.9rem)
+  line-height: 1.58
+  text-wrap: pretty
+
+.guideStepCardMotion
+  width: 100%
+  will-change: transform, opacity
+
+.guideStageCard
+  width: 100%
+  max-inline-size: clamp(20rem, 38vw, 32rem)
+
+.guideStageCardInner
+  h3
+    position: relative
+    z-index: 1
+    margin: 0
+    color: var(--tdm-fg-primary)
+    font-size: var(--tdm-guide-card-title-size)
+    font-weight: 560
+    line-height: 1.3
+    letter-spacing: -0.02em
+    text-wrap: balance
+
+.guideStepCardLead
+  position: relative
+  z-index: 1
+  max-inline-size: 100%
+  margin: clamp(0.65rem, 1.2vw, 0.85rem) 0 0
+  color: var(--tdm-fg-muted)
+  font-size: var(--tdm-guide-card-body-size)
+  line-height: 1.58
+  letter-spacing: -0.01em
+  text-wrap: pretty
+
+.guideStepCardMeta
+  position: relative
+  z-index: 1
+  display: grid
+  gap: clamp(0.75rem, 1.4vw, 1rem)
+  margin-block-start: clamp(0.95rem, 1.8vw, 1.2rem)
+  padding-block-start: clamp(0.85rem, 1.6vw, 1.05rem)
+  border-block-start: var(--tdm-border-width-hairline) solid var(--tdm-guide-card-divider)
+
+  > div
+    display: grid
+    gap: 0.32rem
+
+  span
+    color: color-mix(in srgb, var(--guide-accent) 58%, var(--tdm-fg-secondary))
+    font-size: 0.625rem
+    font-weight: 600
+    letter-spacing: 0.11em
+    line-height: 1.2
+    text-transform: uppercase
+
+  p
+    max-inline-size: 100%
+    margin: 0
+    color: var(--tdm-fg-muted)
+    font-size: var(--tdm-guide-card-meta-size)
+    line-height: 1.56
+    letter-spacing: -0.008em
+    text-wrap: pretty
+
+.guideStageAccents
+  position: relative
+  z-index: 1
+  display: flex
+  flex-wrap: wrap
+  gap: 0.4rem
+  margin-block-end: clamp(0.75rem, 1.4vw, 0.95rem)
+
+  span
+    display: inline-flex
+    align-items: center
+    min-height: 1.65rem
+    padding: 0.24rem 0.58rem
+    border: var(--tdm-border-width-hairline) solid color-mix(in srgb, var(--chip-color, var(--tdm-fg-secondary)) 16%, transparent)
+    border-radius: var(--tdm-radius-round)
+    background: color-mix(in srgb, var(--chip-color, var(--tdm-fg-secondary)) 4.5%, transparent)
+    color: color-mix(in srgb, var(--chip-color, var(--tdm-fg-secondary)) 80%, transparent)
+    font-size: 0.625rem
+    font-weight: 600
+    letter-spacing: 0.06em
+
+  span[data-tone='input']
+    --chip-color: var(--tdm-stage-input)
+
+  span[data-tone='activity']
+    --chip-color: var(--tdm-stage-activity)
+
+  span[data-tone='output']
+    --chip-color: var(--tdm-stage-output)
+
+  span[data-tone='outcome']
+    --chip-color: var(--tdm-stage-outcome)
+
+@media (max-width: 56rem)
+  .guideTimelineSteps
+    gap: clamp(2.4rem, 8vw, 3.5rem)
+
+  .guideTimelineRow
+    grid-template-columns: 1fr
+    gap: clamp(1.25rem, 3vw, 1.75rem)
+    padding: clamp(1.1rem, 4vw, 1.75rem) 0
+
+  .guideStageCard
+    max-inline-size: 100%
+
+@media (max-width: 40rem)
+  .guideTimeline
+    padding-inline-start: clamp(1.35rem, 5vw, 1.75rem)
+
+  .guideTimelineRail
+    inset-inline-start: 0.35rem
+
+@media (prefers-reduced-motion: reduce)
+  .guideTimelineDot
+    transition: none

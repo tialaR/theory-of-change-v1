@@ -1,6 +1,6 @@
 'use client';
 
-import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
+import { TdmButton } from '@/shared/ui/tdm-button';
 import styles from './result-empty-state.module.sass';
 
 type ResultEmptyStateProps = {

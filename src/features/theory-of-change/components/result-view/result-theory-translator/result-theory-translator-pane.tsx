@@ -1,23 +1,15 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { useEffect, useId, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
 import type { TdmEdge, TdmNode } from '@/features/theory-of-change/domain/tdm-types';
 import { TDM_MOTION_TRANSITIONS } from '@/shared/motion/tdm-motion';
-import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
+import { TdmIconButton } from '@/shared/ui/tdm-icon-button';
 import { TheoryNarrativeDocument } from '../result-theory-narrative/theory-narrative-document';
 import type { TheoryDocumentModel } from '../result-theory-narrative/theory-narrative.types';
-import { exportTheoryDocumentDocx } from './export/theory-document-export-docx';
-import { buildTheoryDocumentExportPayload } from './export/theory-document-export.mapper';
-import { exportTheoryDocumentPdf } from './export/theory-document-export-pdf';
-import type {
-  TheoryDocumentExportFormat,
-  TheoryDocumentExportScope
-} from './export/theory-document-export.types';
 import { ResultTheoryTranslatorExportMenu } from './result-theory-translator-export-menu';
 import { ResultTheoryTranslatorHeader } from './result-theory-translator-header';
 import { THEORY_TRANSLATOR_LABELS } from './result-theory-translator.constants';
-import { buildTheoryTranslatorViewModel } from './result-theory-translator.mapper';
+import { useResultTheoryTranslatorPane } from './use-result-theory-translator-pane';
 import styles from './result-theory-translator-pane.module.sass';
 
 function CloseIcon() {
@@ -46,11 +38,6 @@ type ResultTheoryTranslatorPaneProps = {
   onPaneAnimationComplete?: () => void;
 };
 
-type ExportStatus = {
-  tone: 'info' | 'error';
-  message: string;
-} | null;
-
 export function ResultTheoryTranslatorPane({
   viewModel,
   theoryTitle = 'Teoria da mudança',
@@ -62,178 +49,27 @@ export function ResultTheoryTranslatorPane({
   onCollapse,
   onPaneAnimationComplete
 }: ResultTheoryTranslatorPaneProps) {
-  const reduce = useReducedMotion();
-  const panelId = useId();
-  const closeRef = useRef<HTMLButtonElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const hasContent = Boolean(viewModel);
-  const [isExporting, setIsExporting] = useState(false);
-  const [exportStatus, setExportStatus] = useState<ExportStatus>(null);
-  const documentKey = viewModel
-    ? `${viewModel.scope}:${viewModel.selection ? `${viewModel.selection.type}-${viewModel.selection.id}` : 'all'}`
-    : 'empty';
-  const [statusDocumentKey, setStatusDocumentKey] = useState(documentKey);
-
-  if (statusDocumentKey !== documentKey) {
-    setStatusDocumentKey(documentKey);
-    setExportStatus(null);
-  }
-
-  useEffect(() => {
-    if (!isExpanded) {
-      return;
-    }
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape') {
-        return;
-      }
-
-      if (document.querySelector('[data-export-menu-open="true"]')) {
-        return;
-      }
-
-      event.preventDefault();
-      event.stopPropagation();
-      onCollapse();
-    };
-
-    window.addEventListener('keydown', onKeyDown, true);
-    return () => window.removeEventListener('keydown', onKeyDown, true);
-  }, [isExpanded, onCollapse]);
-
-  useEffect(() => {
-    if (isExpanded && hasContent) {
-      closeRef.current?.focus({ preventScroll: true });
-    }
-  }, [hasContent, isExpanded, viewModel?.scope, viewModel?.selection]);
-
-  useEffect(() => {
-    if (!isExpanded || !highlightMarkerId || !scrollRef.current) {
-      return;
-    }
-
-    const markerId = highlightMarkerId.includes('::')
-      ? highlightMarkerId.slice(0, highlightMarkerId.indexOf('::'))
-      : highlightMarkerId;
-    if (!markerId) {
-      return;
-    }
-    const target = scrollRef.current.querySelector<HTMLElement>(
-      `[data-marker-id="${CSS.escape(markerId)}"]`
-    );
-    if (!target) {
-      return;
-    }
-
-    target.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' });
-  }, [highlightMarkerId, isExpanded, reduce, viewModel?.selection]);
-
-  useEffect(() => {
-    const scroll = scrollRef.current;
-    if (!scroll || !isExpanded) {
-      return;
-    }
-
-    let hideTimer: number | null = null;
-
-    const onScroll = () => {
-      scroll.dataset.scrolling = 'true';
-      if (hideTimer) {
-        window.clearTimeout(hideTimer);
-      }
-      hideTimer = window.setTimeout(() => {
-        delete scroll.dataset.scrolling;
-      }, 900);
-    };
-
-    scroll.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      scroll.removeEventListener('scroll', onScroll);
-      if (hideTimer) {
-        window.clearTimeout(hideTimer);
-      }
-    };
-  }, [isExpanded, viewModel?.selection]);
-
+  const {
+    reduce,
+    panelId,
+    closeRef,
+    scrollRef,
+    documentKey,
+    isExporting,
+    exportStatus,
+    handleExport
+  } = useResultTheoryTranslatorPane({
+    viewModel,
+    theoryTitle,
+    nodes,
+    edges,
+    isExpanded,
+    highlightMarkerId,
+    onCollapse
+  });
   const duration = reduce ? 0.01 : TDM_MOTION_TRANSITIONS.panel.duration;
   const contentDuration = reduce ? 0.01 : TDM_MOTION_TRANSITIONS.opacity.duration;
-  const panelEase = TDM_MOTION_TRANSITIONS.panel.ease;
-  const contentEase = TDM_MOTION_TRANSITIONS.opacity.ease;
   const hasScopedSelection = viewModel?.scope === 'scoped';
-
-  const handleExport = async (
-    scope: TheoryDocumentExportScope,
-    format: TheoryDocumentExportFormat
-  ) => {
-    setIsExporting(true);
-    setExportStatus({ tone: 'info', message: THEORY_TRANSLATOR_LABELS.exporting });
-
-    try {
-      let documentForExport: TheoryDocumentModel | null = null;
-
-      if (scope === 'scoped') {
-        if (!viewModel || viewModel.scope !== 'scoped' || !viewModel.selection) {
-          setExportStatus({
-            tone: 'error',
-            message: 'Selecione um fluxo válido antes de exportar o recorte.'
-          });
-          return;
-        }
-        documentForExport = buildTheoryTranslatorViewModel(viewModel.selection, nodes, edges, {
-          includeReferencesPage: true
-        });
-      } else {
-        documentForExport = buildTheoryTranslatorViewModel(null, nodes, edges);
-      }
-
-      if (!documentForExport) {
-        setExportStatus({
-          tone: 'error',
-          message: 'Não há narrativa disponível para exportar.'
-        });
-        return;
-      }
-
-      const payload = buildTheoryDocumentExportPayload(
-        theoryTitle,
-        scope,
-        documentForExport,
-        format
-      );
-
-      const result =
-        format === 'pdf'
-          ? await exportTheoryDocumentPdf(payload)
-          : await exportTheoryDocumentDocx(payload);
-
-      if (result.status === 'success') {
-        const label = format === 'pdf' ? 'PDF' : 'DOCX';
-        setExportStatus({
-          tone: 'info',
-          message: `${label} gerado: ${result.filename}`
-        });
-        return;
-      }
-
-      if (result.status === 'unavailable') {
-        setExportStatus({ tone: 'error', message: result.reason });
-        return;
-      }
-
-      setExportStatus({ tone: 'error', message: result.message });
-    } catch (error) {
-      setExportStatus({
-        tone: 'error',
-        message:
-          error instanceof Error
-            ? error.message
-            : 'Falha inesperada ao exportar a narrativa.'
-      });
-    } finally {
-      setIsExporting(false);
-    }
-  };
 
   const exportControl = viewModel ? (
     <ResultTheoryTranslatorExportMenu
@@ -259,7 +95,7 @@ export function ResultTheoryTranslatorPane({
             initial={reduce ? false : { opacity: 0, x: 12 }}
             animate={{ opacity: 1, x: 0 }}
             exit={reduce ? undefined : { opacity: 0, x: 10 }}
-            transition={{ duration, ease: panelEase }}
+            transition={{ duration, ease: TDM_MOTION_TRANSITIONS.panel.ease }}
           >
             <button
               type="button"
@@ -271,9 +107,7 @@ export function ResultTheoryTranslatorPane({
               title={THEORY_TRANSLATOR_LABELS.open}
             >
               <span className={styles.railLabel}>{THEORY_TRANSLATOR_LABELS.kickerUpper}</span>
-              <span className={styles.railChevron} aria-hidden="true">
-                ›
-              </span>
+              <span className={styles.railChevron} aria-hidden="true">›</span>
             </button>
           </motion.div>
         ) : null}
@@ -290,7 +124,7 @@ export function ResultTheoryTranslatorPane({
             initial={reduce ? false : { opacity: 0, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
             exit={reduce ? undefined : { opacity: 0, x: 16 }}
-            transition={{ duration, ease: panelEase }}
+            transition={{ duration, ease: TDM_MOTION_TRANSITIONS.panel.ease }}
             onAnimationComplete={onPaneAnimationComplete}
           >
             {viewModel ? (
@@ -325,7 +159,10 @@ export function ResultTheoryTranslatorPane({
                   tabIndex={0}
                   initial={reduce ? false : { opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: contentDuration, ease: contentEase }}
+                  transition={{
+                    duration: contentDuration,
+                    ease: TDM_MOTION_TRANSITIONS.opacity.ease
+                  }}
                 >
                   <TheoryNarrativeDocument
                     document={viewModel}

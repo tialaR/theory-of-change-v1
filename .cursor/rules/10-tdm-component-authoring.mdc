@@ -1,0 +1,19 @@
+---
+description: TDM component authoring and feature boundaries
+alwaysApply: true
+---
+
+# Component authoring
+
+- One canonical component per function.
+- Variants are independent props such as `variant`, `size`, `tone`, `state` and `leadingIcon`.
+- Do not infer an icon, role or behavior from visible copy.
+- Presentation components receive data and callbacks.
+- Interaction state belongs in a colocated hook/controller when it exceeds a small local concern.
+- Shared components cannot import features.
+- Feature-to-feature access goes through the feature public API.
+- No new TSX file above 300 lines.
+- No new Sass Module above 500 lines.
+- Do not grow a legacy file already above those limits.
+- Avoid Effects for values derived from props/state or logic caused by user events.
+- Declare lazy imports at module scope and place Suspense around a meaningful user-visible unit.

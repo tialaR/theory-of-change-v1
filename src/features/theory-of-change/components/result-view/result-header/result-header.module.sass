@@ -1,94 +1,73 @@
 .topbar
   position: relative
-  display: flex
+  display: grid
+  grid-template-columns: minmax(var(--tdm-icon-container-md), 1fr) auto minmax(var(--tdm-icon-container-md), 1fr)
   align-items: center
-  justify-content: space-between
   gap: var(--tdm-space-4)
-  min-block-size: 3rem
-  padding: var(--tdm-space-1) var(--tdm-space-1) var(--tdm-space-2) var(--tdm-space-2)
-  z-index: 2
+  min-block-size: 4rem
+  padding: var(--tdm-space-2) var(--tdm-space-3)
+  border: var(--tdm-border-width-hairline) solid var(--tdm-public-header-shell-border)
+  border-radius: var(--tdm-radius-md)
+  background: var(--tdm-public-header-shell-bg)
+  backdrop-filter: var(--tdm-public-header-shell-backdrop)
+  -webkit-backdrop-filter: var(--tdm-public-header-shell-backdrop)
+  z-index: 20
 
 .start
   display: flex
   align-items: center
-  gap: var(--tdm-space-3)
+  justify-content: flex-start
   min-inline-size: var(--tdm-icon-container-md)
-  z-index: 2
 
-.backLink
-  flex-shrink: 0
-  inline-size: var(--tdm-icon-container-md)
-  block-size: var(--tdm-icon-container-md)
-  display: grid
-  place-items: center
-  border-radius: var(--tdm-radius-md)
-  border: var(--tdm-border-width-hairline) solid var(--tdm-border-subtle)
-  background: var(--tdm-surface-hover)
-  color: var(--tdm-fg-secondary)
-  text-decoration: none
-  transition: border-color var(--tdm-duration-ui) var(--tdm-ease-standard), background var(--tdm-duration-ui) var(--tdm-ease-standard)
-
-  &:hover
-    border-color: var(--tdm-border-interactive)
-    background: var(--tdm-surface-pressed)
-
-  &:focus-visible
-    outline: var(--tdm-focus-ring-width) solid var(--tdm-focus-ring-color)
-    outline-offset: var(--tdm-focus-ring-offset)
-
-.backIcon
+.identity
   display: inline-flex
-  inline-size: var(--tdm-icon-size-md)
-  block-size: var(--tdm-icon-size-md)
+  align-items: center
+  justify-content: center
+  gap: var(--tdm-space-2)
+  min-inline-size: 0
+  pointer-events: none
 
-  svg
-    inline-size: 100%
-    block-size: 100%
+.brandMark
+  inline-size: 1.5rem
+  block-size: 1.5rem
+  object-fit: contain
+  flex: 0 0 auto
 
 .heading
-  position: absolute
-  left: 50%
-  top: 50%
-  transform: translate(-50%, -50%)
   margin: 0
-  max-inline-size: min(28rem, calc(100% - 18rem))
+  max-inline-size: min(30rem, 52vw)
+  overflow: hidden
   color: var(--tdm-fg-primary)
   font-size: var(--tdm-font-label-size)
   font-weight: 600
   letter-spacing: var(--tdm-font-label-tracking)
+  line-height: 1.2
+  text-align: center
+  text-overflow: ellipsis
   text-transform: uppercase
   white-space: nowrap
-  overflow: hidden
-  text-overflow: ellipsis
-  line-height: 1.2
-  pointer-events: none
-  text-align: center
-  z-index: 1
 
 .actions
   display: flex
   align-items: center
+  justify-content: flex-end
   gap: var(--tdm-space-2)
-  flex-shrink: 0
-  z-index: 2
-
-@media (max-width: 70rem)
-  .heading
-    max-inline-size: min(20rem, calc(100% - 14rem))
+  min-inline-size: 0
 
 @media (max-width: 56rem)
   .topbar
-    flex-wrap: wrap
-    row-gap: var(--tdm-space-2)
+    grid-template-columns: auto minmax(0, 1fr) auto
+    gap: var(--tdm-space-2)
 
   .heading
-    position: static
-    transform: none
-    max-inline-size: 100%
-    order: 3
-    width: 100%
-    text-align: left
-    pointer-events: auto
+    max-inline-size: 42vw
 
-  .actions
-    margin-left: auto
+@media (max-width: 40rem)
+  .topbar
+    padding-inline: var(--tdm-space-2)
+
+  .brandMark
+    display: none
+
+  .heading
+    max-inline-size: 32vw

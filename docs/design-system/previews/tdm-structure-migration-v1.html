@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TDM DS • Estrutura V1</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --page: #050506;
+      --surface: #121214;
+      --surface-raised: #18181b;
+      --surface-back: #09090b;
+      --border: rgba(255,255,255,.1);
+      --border-strong: rgba(255,255,255,.18);
+      --fg: rgba(250,250,250,.96);
+      --fg-2: rgba(232,232,236,.72);
+      --fg-3: rgba(214,214,220,.52);
+      --input: #8b7cff;
+      --activity: #49b3ff;
+      --output: #f2a65a;
+      --outcome: #37c893;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,.045), transparent 32rem),
+        radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px),
+        var(--page);
+      background-size: auto, 24px 24px, auto;
+      color: var(--fg);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .page { width: min(calc(100% - 2rem), 76rem); margin: auto; padding: 3rem 0 7rem; }
+    header { display:flex; justify-content:space-between; align-items:center; gap:2rem; margin-bottom:4rem; }
+    .brand { width: 10.5rem; height:auto; opacity:.94; }
+    .tag { padding:.45rem .7rem; border:1px solid var(--border); border-radius:999px; color:var(--fg-2); font-size:.72rem; }
+    h1 { max-width:18ch; margin:0; font-size:clamp(2.5rem,6vw,5.5rem); line-height:.96; letter-spacing:-.06em; font-weight:520; }
+    .lede { max-width:46rem; margin:1.2rem 0 0; color:var(--fg-2); line-height:1.7; }
+    .section { margin-top:5.5rem; }
+    .section-head { display:flex; justify-content:space-between; gap:2rem; align-items:end; margin-bottom:2rem; }
+    h2 { margin:0; font-size:clamp(1.7rem,3vw,2.6rem); font-weight:520; letter-spacing:-.04em; }
+    .section-head p { max-width:34rem; margin:0; color:var(--fg-3); line-height:1.6; }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:2.5rem; }
+    .stage {
+      --accent: var(--fg-2);
+      position:relative;
+      padding:1.7rem 0 0 2rem;
+      isolation:isolate;
+    }
+    .stage::before {
+      content:""; position:absolute; z-index:-2; inset:0; border:1px solid var(--border);
+      border-radius:4rem; background:linear-gradient(180deg,var(--surface-raised),var(--surface-back));
+      box-shadow:0 2rem 4rem rgba(0,0,0,.36);
+    }
+    .stage.input { --accent:var(--input); }
+    .stage.activity { --accent:var(--activity); }
+    .stage.output { --accent:var(--output); }
+    .stage.outcome { --accent:var(--outcome); }
+    .card {
+      position:relative; overflow:hidden; min-height:22rem; padding:2rem 2.2rem;
+      border:1px solid color-mix(in srgb,var(--accent) 10%,var(--border-strong));
+      border-radius:3rem;
+      background:
+        radial-gradient(70% 70% at 100% 100%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 72%),
+        linear-gradient(180deg,#1f1f22,#121214 56%,#050506);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+      transition:transform .28s cubic-bezier(.16,1,.3,1),border-color .18s ease;
+    }
+    .stage:hover .card { transform:translateY(-.25rem); border-color:color-mix(in srgb,var(--accent) 20%,var(--border-strong)); }
+    .step { color:color-mix(in srgb,var(--accent) 66%,var(--fg-2)); font-size:.67rem; letter-spacing:.12em; text-transform:uppercase; font-weight:650; }
+    .card h3 { margin:.8rem 0 0; font-size:1.35rem; font-weight:560; letter-spacing:-.03em; }
+    .card > p { margin:.8rem 0 0; color:var(--fg-2); line-height:1.62; }
+    .details { display:grid; gap:1rem; margin-top:1.35rem; padding-top:1.25rem; border-top:1px solid var(--border); }
+    .details small { display:block; color:color-mix(in srgb,var(--accent) 50%,var(--fg-2)); font-weight:650; letter-spacing:.1em; text-transform:uppercase; }
+    .details p { margin:.35rem 0 0; color:var(--fg-3); line-height:1.55; font-size:.86rem; }
+    .states { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; }
+    .state { min-height:23rem; display:grid; place-items:center; padding:2rem; border:1px solid var(--border); border-radius:1.5rem; background:var(--surface-back); text-align:center; }
+    .state svg { width:2.6rem; height:2.6rem; stroke:var(--fg-2); fill:none; stroke-width:1.5; }
+    .state h3 { margin:1.1rem 0 0; font-size:1.35rem; font-weight:520; }
+    .state p { color:var(--fg-3); line-height:1.55; }
+    .button { display:inline-flex; min-height:2.75rem; align-items:center; padding:0 1rem; border:0; border-radius:.5rem; background:var(--fg); color:#09090b; font-weight:600; }
+    .audit { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1rem; }
+    .metric { padding:1.25rem; border:1px solid var(--border); border-radius:1rem; background:rgba(255,255,255,.025); }
+    .metric strong { display:block; font-size:1.65rem; font-weight:560; }
+    .metric span { color:var(--fg-3); font-size:.78rem; }
+    @media (max-width: 54rem) { .grid,.states,.audit { grid-template-columns:1fr; } header,.section-head { align-items:flex-start; flex-direction:column; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <img class="brand" src="assets/tmd-construtor-header-canonical.png" alt="TMD Construtor" />
+      <span class="tag">DS V2 • Estrutura V1</span>
+    </header>
+    <h1>Menos código concorrente. Mesma experiência aprovada.</h1>
+    <p class="lede">Esta onda troca somente a superfície dos cards do Guia, padroniza os estados de rota e converte geometria pública em tokens. Timeline, Canvas e diagramas internos permanecem congelados.</p>
+
+    <section class="section">
+      <div class="section-head"><h2>Cards do Guia</h2><p>Placa traseira graphite, card frontal deslocado, hairline e acento semântico discreto. Sem neon e sem bordas viajantes.</p></div>
+      <div class="grid">
+        <div class="stage input"><article class="card"><span class="step">Passo 1</span><h3>Insumos</h3><p>Liste recursos e capacidades necessários para viabilizar a política.</p><div class="details"><div><small>Recomendação</small><p>Escreva recursos ou capacidades em forma nominal.</p></div><div><small>Exemplo</small><p>Equipe técnica, orçamento e dados educacionais.</p></div></div></article></div>
+        <div class="stage activity"><article class="card"><span class="step">Passo 2</span><h3>Atividades</h3><p>Descreva o que a política faz com os insumos.</p><div class="details"><div><small>Recomendação</small><p>Comece com verbos de ação claros.</p></div><div><small>Exemplo</small><p>Formar professores e acompanhar escolas.</p></div></div></article></div>
+        <div class="stage output"><article class="card"><span class="step">Passo 3</span><h3>Produtos</h3><p>Registre as entregas diretas geradas pelas atividades.</p><div class="details"><div><small>Recomendação</small><p>Produtos devem ser observáveis ou quantificáveis.</p></div><div><small>Exemplo</small><p>Oficinas realizadas e relatórios emitidos.</p></div></div></article></div>
+        <div class="stage outcome"><article class="card"><span class="step">Passo 4</span><h3>Resultados</h3><p>Descreva mudanças de curto prazo nos públicos-alvo.</p><div class="details"><div><small>Recomendação</small><p>Indique mudança de comportamento, atitude ou condição.</p></div><div><small>Exemplo</small><p>Escolas passam a usar dados com regularidade.</p></div></div></article></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>Estados de rota</h2><p>A mesma anatomia para loading, erro e 404, com ação pública canônica e contraste previsível.</p></div>
+      <div class="states">
+        <article class="state"><div><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9"/></svg><h3>Preparando a experiência</h3><p>Organizando os elementos desta rota.</p></div></article>
+        <article class="state"><div><svg viewBox="0 0 24 24"><path d="M12 3 2.75 20h18.5L12 3Z"/><path d="M12 9v5M12 17.25h.01"/></svg><h3>A experiência não conseguiu continuar</h3><p>Tente novamente sem perder a referência da rota.</p><button class="button">Tentar novamente</button></div></article>
+        <article class="state"><div><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16.25 16.25 4 4"/></svg><h3>Esta rota não foi encontrada</h3><p>O endereço pode ter mudado.</p><button class="button">Voltar ao início</button></div></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>Resultado técnico</h2><p>O gate continua shrink-only. Esta onda não aumenta hardcodes, nested ternaries ou famílias duplicadas.</p></div>
+      <div class="audit">
+        <div class="metric"><strong>9/9</strong><span>rotas com loading</span></div>
+        <div class="metric"><strong>9/9</strong><span>rotas com error</span></div>
+        <div class="metric"><strong>−168</strong><span>linhas no componente do Guia</span></div>
+        <div class="metric"><strong>−981</strong><span>módulo Sass legado removido</span></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

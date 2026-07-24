@@ -26,7 +26,7 @@ export const RESULT_MOTION = {
 
 export const RESULT_EDGE_GAP = 10;
 
-export const RESULT_HEADER_TITLE_EXAMPLE = 'TDM · RESULTADO EXEMPLO';
+export const RESULT_HEADER_TITLE_EXAMPLE = 'EXEMPLO DO RESULTADO';
 export const RESULT_HEADER_TITLE_CANVAS = 'TDM · RESULTADO';
 
 export const STAGE_META: Record<TdmStage, StageMeta> = {

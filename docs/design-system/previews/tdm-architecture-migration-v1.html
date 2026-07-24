@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TDM Architecture Migration V1</title>
+  <style>
+    :root{color-scheme:dark;--bg:#050506;--surface:#111114;--raised:#18181b;--line:rgba(255,255,255,.1);--text:#fafafa;--muted:#a1a1aa;--ok:#37c893;--warn:#f2a65a;--violet:#8b7cff;--blue:#49b3ff}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -10%,rgba(139,124,255,.12),transparent 28rem),var(--bg);color:var(--text);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,sans-serif}
+    main{width:min(1180px,calc(100% - 2rem));margin:auto;padding:4rem 0 7rem}.kicker{text-transform:uppercase;letter-spacing:.16em;color:var(--muted);font-size:.72rem}.hero h1{font-size:clamp(2.4rem,7vw,5.8rem);line-height:.94;letter-spacing:-.065em;max-width:14ch;margin:.75rem 0 1.25rem}.hero p{max-width:62ch;color:var(--muted);font-size:1.05rem}
+    section{margin-top:5rem}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}.card{background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.018));border:1px solid var(--line);border-radius:1.25rem;padding:1.4rem}.card h3{margin:.15rem 0 .65rem}.card p,.card li{color:var(--muted)}.metric{font-size:2.2rem;font-weight:700;letter-spacing:-.05em}.ok{color:var(--ok)}.warn{color:var(--warn)}
+    .tree{background:#08080a;border:1px solid var(--line);border-radius:1.25rem;padding:1.4rem;overflow:auto;font:13px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;color:#d4d4d8}.split{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.pill{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:.35rem .65rem;color:var(--muted);margin:.25rem .25rem 0 0}.bar{height:.42rem;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:.8rem}.bar span{display:block;height:100%;background:linear-gradient(90deg,var(--violet),var(--blue),var(--ok))}
+    @media(max-width:720px){.split{grid-template-columns:1fr}main{padding-top:2rem}}
+  </style>
+</head>
+<body>
+<main>
+  <header class="hero">
+    <div class="kicker">TDM DS · Architecture Migration V1</div>
+    <h1>Mesmo produto. Menos labirinto.</h1>
+    <p>Esta rodada preserva a experiência aprovada e desmonta dois arquivos que concentravam páginas, motion, header, shell, cards e regras de navegação no mesmo lugar.</p>
+  </header>
+
+  <section>
+    <div class="grid">
+      <article class="card"><div class="metric">421 → 8</div><h3>DS público</h3><p>O antigo arquivo central foi dividido por responsabilidade.</p></article>
+      <article class="card"><div class="metric">525 → 7</div><h3>Páginas</h3><p>Cada rota agora possui seu próprio componente e dependências explícitas.</p></article>
+      <article class="card"><div class="metric ok">6 Server</div><h3>Boundary correto</h3><p>Rotas públicas estáticas deixam de hidratar como um único Client Component.</p></article>
+      <article class="card"><div class="metric ok">1 gate</div><h3>Porta fechada</h3><p>O monólito não pode voltar sem quebrar o workflow.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">Antes e depois</div>
+    <div class="split">
+      <article class="card">
+        <h3 class="warn">Antes</h3>
+        <div class="tree">public-pages.tsx
+├── Home
+├── Guia legado
+├── Exemplos
+├── Fluxo
+├── Resultado
+├── Interativo
+├── Referências
+├── dados
+├── ícones
+└── estado e effects</div>
+      </article>
+      <article class="card">
+        <h3 class="ok">Agora</h3>
+        <div class="tree">public-pages/
+├── home-page.tsx
+├── examples-page.tsx
+├── flow-page.tsx
+├── result-page.tsx
+├── references-page.tsx
+├── public-page-data.ts
+├── public-page-icons.tsx
+└── flow-relations.ts</div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">Zonas protegidas</div>
+    <div class="card">
+      <span class="pill">/canvas</span><span class="pill">timeline do Guia</span><span class="pill">motion das prévias</span><span class="pill">diagramas interativos</span><span class="pill">zoom e seleção</span><span class="pill">exportação interna</span>
+      <div class="bar"><span style="width:100%"></span></div>
+      <p>Nenhuma dessas zonas teve lógica ou geometria alterada nesta rodada.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">Contrato executável</div>
+    <div class="grid">
+      <article class="card"><h3>SRP</h3><p>Limite individual por componente e arquivo de rota.</p></article>
+      <article class="card"><h3>Server first</h3><p>Páginas estáticas não podem receber <code>use client</code>.</p></article>
+      <article class="card"><h3>Sem referências no produto</h3><p>O DS canônico usa nomes TDM e papéis de interface.</p></article>
+      <article class="card"><h3>Compatibilidade visível</h3><p>Exports sem rota ativa geram warning até remoção comprovada.</p></article>
+    </div>
+  </section>
+</main>
+</body>
+</html>

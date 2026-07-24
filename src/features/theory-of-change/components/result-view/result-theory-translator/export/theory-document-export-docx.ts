@@ -1,4 +1,4 @@
-import { exportTheoryDocx } from '@/features/theory-of-change/export';
+import { exportTheoryDocx } from '@/features/theory-of-change/export/docx/export-theory-docx';
 import type {
   TheoryDocumentExportPayload,
   TheoryDocumentExportResult

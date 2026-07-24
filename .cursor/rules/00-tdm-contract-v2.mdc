@@ -1,0 +1,29 @@
+---
+description: TDM Design System V2 canonical contract for all non-canvas work
+alwaysApply: true
+---
+
+# TDM Contract V2
+
+Before editing UI outside `/canvas`, read:
+
+- `docs/design-system/TDM-DESIGN-SYSTEM-CONTRACT-V2.md`
+- `docs/design-system/TDM-NON-CANVAS-SCOPE-V1.md`
+- `docs/design-system/TDM-COMPONENT-CONTRACT-V2.md`
+- `docs/design-system/TDM-TOKEN-CONTRACT-V2.md`
+- `docs/design-system/previews/tdm-ds-foundation-v2.html`
+
+Rules:
+
+1. Preserve approved runtime behavior.
+2. Reuse the canonical component family. Do not create an equivalent primitive.
+3. Do not add hardcoded colors, `!important`, nested JSX ternaries or static visual inline styles.
+4. Use TypeScript and `.module.sass` for component styling.
+5. Keep pages and layouts as Server Components by default.
+6. Keep client boundaries as small as possible.
+7. Do not add external reference names such as Resend, Apple, Material, Figma or Lusion to product code.
+8. Existing debt may shrink but must not grow.
+9. Do not modify protected visual files unless the task explicitly authorizes it.
+10. Run `npm run check:tdm:v2:all` before reporting completion.
+
+When runtime and contract conflict, stop and report the exact file and divergence. Do not invent a third implementation.

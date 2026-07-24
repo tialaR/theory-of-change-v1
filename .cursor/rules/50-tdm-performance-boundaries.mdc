@@ -1,0 +1,16 @@
+---
+description: TDM performance, bundle and client boundary contract
+alwaysApply: true
+---
+
+# Performance boundaries
+
+1. Keep pages, layouts and visual shells as Server Components unless they require state, effects, event handlers or browser APIs.
+2. Isolate browser-only behavior in the smallest possible Client Component.
+3. Do not import `@xyflow/react/dist/style.css` from the root layout. React Flow CSS belongs only to Canvas route boundaries.
+4. Do not import the general `@/features/theory-of-change/export` barrel from runtime components. Import or dynamically load the exact exporter.
+5. Load PNG, SVG, PDF and DOCX export code on demand from the user action that needs it.
+6. Do not add `three` or another heavy dependency without an active consumer and a bundle impact note.
+7. Use `next experimental-analyze --output` to compare module graphs before and after substantial client changes.
+8. Do not change protected preview geometry or timeline behavior in a performance-only patch.
+9. Run `npm run check:tdm:v2:performance` and `npm run check:tdm:v2:all` before completion.

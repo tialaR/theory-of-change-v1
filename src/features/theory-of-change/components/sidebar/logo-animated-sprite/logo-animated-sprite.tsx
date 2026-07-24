@@ -1,8 +1,19 @@
 'use client';
 
-import { CSSProperties, useEffect, useId, useMemo, useRef } from 'react';
+import { useEffect, useId, useMemo, useRef } from 'react';
 import styles from './logo-animated-sprite.module.sass';
 import spriteAsset from './logo-sprite-transparent-complete.png';
+import {
+  clamp01,
+  normalizeSpeed,
+  sanitizeId,
+  toCssSize,
+  type LogoAnimatedSpriteProps,
+  type LogoCssVars,
+  type Rgb
+} from './logo-animated-sprite.model';
+
+export type { LogoAnimatedSpriteProps } from './logo-animated-sprite.model';
 
 type SpriteAsset = string | { src: string };
 
@@ -23,76 +34,6 @@ const DEFAULT_TEXTURE_STRENGTH = 0.92;
 const DEFAULT_OPACITY = 1;
 /** Fraction of each color segment used for diamond/glass crossfade. */
 const DEFAULT_COLOR_BLEND = 0.34;
-
-type LogoDimension = number | string;
-type LogoBlendMode = CSSProperties['mixBlendMode'];
-type CssVars = CSSProperties & Record<`--${string}`, string | number | undefined>;
-
-type Rgb = { r: number; g: number; b: number };
-
-export type LogoAnimatedSpriteProps = {
-  className?: string;
-  style?: CSSProperties;
-  title?: string;
-  ariaHidden?: boolean;
-
-  /** Tamanho quadrado. Numero vira rem. Ex: 12 => 12rem. */
-  size?: LogoDimension;
-  width?: LogoDimension;
-  height?: LogoDimension;
-  widthRem?: number;
-  heightRem?: number;
-
-  /** 1 = velocidade original do video. 0.5 = metade. 2 = dobro. */
-  speed?: number;
-  /** Se definido, ignora speed. */
-  durationSeconds?: number;
-
-  /** Cor aplicada por cima do PNG transparente. */
-  color?: string;
-  primaryColor?: string;
-  /** Sequência visual (ex.: Apple Noir → cores das etapas). Cicla no mesmo loop do sprite. */
-  colors?: string[];
-  glowColor?: string;
-  glowColors?: string[];
-  glowSize?: LogoDimension;
-  glowEnabled?: boolean;
-  /** Janela de crossfade facetado entre cores (0–0.5). */
-  colorBlend?: number;
-
-  /** Forca da camada colorida. */
-  tintOpacity?: number;
-  /** Forca da textura original reconstruida do video. */
-  textureStrength?: number;
-  /** Alias de compatibilidade para textureStrength. */
-  sourceOpacity?: number;
-  /** Opacidade geral. */
-  opacity?: number;
-  tintBlendMode?: LogoBlendMode;
-
-  /** Para debug ou tela reduzida. Default: false. */
-  paused?: boolean;
-  /** Mostra fundo dark dentro do wrapper, apenas para preview. */
-  previewBackground?: boolean;
-};
-
-const clamp01 = (value: number, fallback: number) => {
-  if (!Number.isFinite(value)) return fallback;
-  return Math.min(1, Math.max(0, value));
-};
-
-const normalizeSpeed = (value: number) => {
-  if (!Number.isFinite(value) || value <= 0) return DEFAULT_SPEED;
-  return value;
-};
-
-const toCssSize = (value: LogoDimension | undefined, fallback: string) => {
-  if (typeof value === 'number') return `${value}rem`;
-  if (typeof value === 'string' && value.trim()) return value;
-  return fallback;
-};
-
-const sanitizeId = (id: string) => id.replace(/[^a-zA-Z0-9_-]/g, '');
 
 const parseColorToRgb = (input: string): Rgb | null => {
   const value = input.trim();
@@ -247,11 +188,11 @@ export function LogoAnimatedSprite({
   const resolvedGlowSize = toCssSize(glowSize, DEFAULT_GLOW_SIZE);
   const resolvedDuration = useMemo(() => {
     if (durationSeconds && durationSeconds > 0) return durationSeconds;
-    return BASE_DURATION_SECONDS / normalizeSpeed(speed);
+    return BASE_DURATION_SECONDS / normalizeSpeed(speed, DEFAULT_SPEED);
   }, [durationSeconds, speed]);
   const resolvedBlend = clamp01(colorBlend, DEFAULT_COLOR_BLEND);
 
-  const customProperties: CssVars = {
+  const customProperties: LogoCssVars = {
     '--logo-width': resolvedWidth,
     '--logo-height': resolvedHeight,
     '--logo-color': resolvedColor,

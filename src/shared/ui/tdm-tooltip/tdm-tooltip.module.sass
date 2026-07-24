@@ -1,71 +1,47 @@
-@use '../tooltip/tdm-anchored-tooltip-surface' as surface
+@use '../../styles/tdm/tdm-focus' as focus
 
 .root
-  position: relative
   display: inline-flex
-  max-width: 100%
+  min-inline-size: 0
 
 .tooltip
-  position: absolute
-  z-index: 1200
-  width: max-content
-  max-width: 16rem
+  position: fixed
+  top: 0
+  left: 0
+  visibility: hidden
+  z-index: 1600
+  max-inline-size: min(18rem, calc(100vw - var(--tdm-space-6)))
   padding: var(--tdm-space-2) var(--tdm-space-3)
-  border: var(--tdm-border-width-hairline) solid var(--tdm-border-default)
+  border: var(--tdm-border-width-hairline) solid var(--tdm-border-subtle)
   border-radius: var(--tdm-radius-sm)
-  background-color: var(--tdm-surface-overlay)
+  background: var(--tdm-surface-overlay)
+  box-shadow: var(--tdm-shadow-overlay)
   color: var(--tdm-fg-primary)
-  box-shadow: var(--tdm-highlight-top), var(--tdm-shadow-medium)
-  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
   font-size: var(--tdm-font-label-size)
   font-weight: 500
-  line-height: 1.4
-  text-align: center
-  pointer-events: none
+  line-height: 1.35
   opacity: 0
-  transition: opacity var(--tdm-duration-fast) var(--tdm-ease-standard)
+  pointer-events: none
+  transform: translateY(0.125rem)
+  transition: opacity var(--tdm-duration-fast) var(--tdm-ease-standard), transform var(--tdm-duration-fast) var(--tdm-ease-standard)
+  white-space: normal
+
+  &[data-placement='bottom']
+    transform: translateY(-0.125rem)
+
+  &[data-placement='left']
+    transform: translateX(0.125rem)
+
+  &[data-placement='right']
+    transform: translateX(-0.125rem)
 
 .visible
+  visibility: visible
   opacity: 1
+  transform: none
 
-.positionTop
-  bottom: calc(100% + var(--tdm-space-2))
-  left: 50%
-  transform: translateX(-50%)
-
-.positionBottom
-  top: calc(100% + var(--tdm-space-2))
-  left: 50%
-  transform: translateX(-50%)
-
-.positionLeft
-  right: calc(100% + var(--tdm-space-2))
-  top: 50%
-  transform: translateY(-50%)
-
-.positionRight
-  left: calc(100% + var(--tdm-space-2))
-  top: 50%
-  transform: translateY(-50%)
-
-// Canvas-only skin: same flat shell + arrow as TdmAnchoredTooltip.
 .tooltipCanvas
-  @include surface.tdm-anchored-tooltip-surface
-  @include surface.tdm-anchored-tooltip-size-default
-  font-family: inherit
-  @include surface.tdm-anchored-tooltip-arrow
-
-.tooltipCanvas.positionTop
-  @include surface.tdm-anchored-tooltip-arrow-top
-
-.tooltipCanvas.positionBottom
-  @include surface.tdm-anchored-tooltip-arrow-bottom
-
-.tooltipCanvas.positionLeft
-  @include surface.tdm-anchored-tooltip-arrow-left
-
-.tooltipCanvas.positionRight
-  @include surface.tdm-anchored-tooltip-arrow-right
+  background: var(--tdm-surface-overlay)
 
 @media (prefers-reduced-motion: reduce)
   .tooltip

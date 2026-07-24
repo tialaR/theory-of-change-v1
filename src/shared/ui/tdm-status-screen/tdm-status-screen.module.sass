@@ -1,0 +1,82 @@
+@keyframes tdmStatusSpin
+  to
+    transform: rotate(1turn)
+
+.root
+  display: grid
+  min-height: var(--tdm-status-min-height)
+  padding: var(--tdm-status-padding-block) var(--tdm-status-padding-inline)
+  place-items: center
+  background: var(--tdm-surface-app)
+  color: var(--tdm-fg-primary)
+
+.content
+  display: grid
+  width: min(100%, var(--tdm-route-state-content-max, var(--tdm-status-max-width)))
+  justify-items: center
+  gap: var(--tdm-status-gap)
+  text-align: center
+
+.icon
+  display: grid
+  width: var(--tdm-status-icon-size)
+  height: var(--tdm-status-icon-size)
+  place-items: center
+  color: var(--tdm-fg-secondary)
+
+  :global(svg)
+    width: 100%
+    height: 100%
+    fill: none
+    stroke: currentColor
+    stroke-width: var(--tdm-icon-stroke-default)
+    stroke-linecap: round
+    stroke-linejoin: round
+
+.root[data-busy='true'] .icon
+  animation: tdmStatusSpin 1s linear infinite
+
+.eyebrow
+  margin: 0
+  color: var(--tdm-fg-muted)
+  font-size: var(--tdm-font-label-size)
+  font-weight: 500
+  letter-spacing: 0.08em
+  text-transform: uppercase
+
+.title
+  max-width: 18ch
+  margin: 0
+  font-size: var(--tdm-status-title-size)
+  font-weight: 520
+  line-height: 1.05
+  letter-spacing: -0.035em
+  text-wrap: balance
+
+.description
+  max-width: 52ch
+  margin: 0
+  color: var(--tdm-fg-secondary)
+  font-size: var(--tdm-status-body-size)
+  line-height: 1.65
+  text-wrap: pretty
+
+.actions
+  display: flex
+  flex-wrap: wrap
+  justify-content: center
+  gap: var(--tdm-space-3)
+  padding-block-start: var(--tdm-space-2)
+
+.toneNeutral
+  --tdm-status-accent: var(--tdm-fg-secondary)
+
+.toneDanger
+  --tdm-status-accent: var(--tdm-fg-danger)
+
+  .icon
+    color: var(--tdm-status-accent)
+
+@media (prefers-reduced-motion: reduce)
+  .root[data-busy='true'] .icon
+    animation-duration: 2.5s
