@@ -1,0 +1,52 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "TDM: Contract V2",
+      "type": "shell",
+      "command": "npm run check:tdm:v2",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "TDM: Changed lint",
+      "type": "shell",
+      "command": "npm run check:tdm:v2:changed-lint",
+      "group": "test",
+      "problemMatcher": [
+        "$eslint-stylish"
+      ]
+    },
+    {
+      "label": "TDM: Full non-canvas gate",
+      "type": "shell",
+      "command": "npm run check:tdm:v2:all",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": [
+        "$tsc"
+      ]
+    },
+    {
+      "label": "TDM: Regenerate audit",
+      "type": "shell",
+      "command": "npm run audit:tdm:v2",
+      "problemMatcher": []
+    },
+    {
+      "label": "TDM: Performance boundaries",
+      "type": "shell",
+      "command": "npm run check:tdm:v2:performance",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "TDM: Bundle analysis output",
+      "type": "shell",
+      "command": "npm run analyze:bundle:output",
+      "problemMatcher": []
+    }
+  ]
+}

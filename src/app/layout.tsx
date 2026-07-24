@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { Inter } from 'next/font/google';
 import { TdmMotionProvider } from '@/shared/motion/tdm-motion';
-import '@xyflow/react/dist/style.css';
 import './globals.sass';
 
 const inter = Inter({

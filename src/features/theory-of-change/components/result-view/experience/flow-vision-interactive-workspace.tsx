@@ -26,10 +26,11 @@ import {
 import { RESULT_ZOOM } from '../result-view.constants';
 import { getConnectedFlowFromNode, getLayoutRectRelativeTo, roundZoom } from '../result-view.utils';
 import type { ResultExperienceProps } from './types';
+import { useTheoryImageExport } from '../use-theory-image-export';
 import { FlowVisionDiagram } from './flow-vision-diagram';
 import experienceStyles from '../result-experience.module.sass';
 
-const HEADER_TITLE = 'TMD - FLUXO EXEMPLO';
+const HEADER_TITLE = 'EXEMPLO DO FLUXO';
 const BACK_HREF = '/exemplos/visao-do-fluxo';
 const CLOSE_HREF = '/exemplos/visao-do-fluxo';
 
@@ -41,12 +42,10 @@ function getOffsetWithin(element: HTMLElement, ancestor: HTMLElement): { left: n
   while (current && current !== ancestor) {
     left += current.offsetLeft;
     top += current.offsetTop;
-
     const offsetParent = current.offsetParent as HTMLElement | null;
     if (!offsetParent || offsetParent === ancestor) {
       break;
     }
-
     if (!ancestor.contains(offsetParent)) {
       let walker: HTMLElement | null = current.parentElement;
       while (walker && walker !== ancestor) {
@@ -56,15 +55,12 @@ function getOffsetWithin(element: HTMLElement, ancestor: HTMLElement): { left: n
       }
       break;
     }
-
     left += offsetParent.clientLeft;
     top += offsetParent.clientTop;
     current = offsetParent;
   }
-
   return { left, top };
 }
-
 function expandBounds(bounds: FlowBounds, pad: number): FlowBounds {
   return {
     left: bounds.left - pad,
@@ -73,7 +69,6 @@ function expandBounds(bounds: FlowBounds, pad: number): FlowBounds {
     bottom: bounds.bottom + pad
   };
 }
-
 function measureNodesInScaler(nodeIds: Set<string>, board: HTMLElement, scaler: HTMLElement): FlowBounds | null {
   let left = Number.POSITIVE_INFINITY;
   let top = Number.POSITIVE_INFINITY;
@@ -81,18 +76,15 @@ function measureNodesInScaler(nodeIds: Set<string>, board: HTMLElement, scaler: 
   let bottom = Number.NEGATIVE_INFINITY;
   let found = false;
   const boardOffset = getOffsetWithin(board, scaler);
-
   nodeIds.forEach((nodeId) => {
     const element = board.querySelector<HTMLElement>(`[data-result-node-id="${CSS.escape(nodeId)}"]`);
     if (!element) {
       return;
     }
-
     const rect = getLayoutRectRelativeTo(element, board);
     if (rect.width < 1 || rect.height < 1) {
       return;
     }
-
     found = true;
     const nodeLeft = boardOffset.left + rect.x - rect.width / 2;
     const nodeTop = boardOffset.top + rect.y - rect.height / 2;
@@ -103,14 +95,11 @@ function measureNodesInScaler(nodeIds: Set<string>, board: HTMLElement, scaler: 
     right = Math.max(right, nodeRight);
     bottom = Math.max(bottom, nodeBottom);
   });
-
   if (!found) {
     return null;
   }
-
   return { left, top, right, bottom };
 }
-
 /** Overview for free-form board: union of all cards (+ padding). */
 function measureOverviewBounds(
   board: HTMLElement,
@@ -121,12 +110,10 @@ function measureOverviewBounds(
   if (nodeBounds) {
     return expandBounds(nodeBounds, 24);
   }
-
   const rect = getLayoutRectRelativeTo(board, scaler);
   if (rect.width < 1 || rect.height < 1) {
     return null;
   }
-
   return {
     left: rect.x - rect.width / 2,
     top: rect.y - rect.height / 2,
@@ -134,7 +121,6 @@ function measureOverviewBounds(
     bottom: rect.y + rect.height / 2
   };
 }
-
 function measureScopedBounds(
   nodeIds: Set<string>,
   board: HTMLElement,
@@ -146,12 +132,10 @@ function measureScopedBounds(
   }
   return expandBounds(rawBounds, 28);
 }
-
 function lockedFallbackWidth(scaler: HTMLElement): number {
   const locked = scaler.style.width ? Number.parseFloat(scaler.style.width) : NaN;
   return Number.isFinite(locked) ? locked : 0;
 }
-
 function readViewportMetrics(): {
   viewport: HTMLElement;
   board: HTMLElement;
@@ -167,12 +151,10 @@ function readViewportMetrics(): {
   if (!viewport || !board || !scaler) {
     return null;
   }
-
   const scalerWidth = scaler.offsetWidth || lockedFallbackWidth(scaler);
   if (scalerWidth <= 0 || viewport.clientWidth <= 0 || viewport.clientHeight <= 0) {
     return null;
   }
-
   return {
     viewport,
     board,
@@ -182,7 +164,6 @@ function readViewportMetrics(): {
     scalerWidth
   };
 }
-
 export function FlowVisionInteractiveWorkspace({ title, nodes, edges }: ResultExperienceProps) {
   const [selection, setSelection] = useState<TheoryTranslatorSelection | null>(null);
   const [isTranslatorExpanded, setIsTranslatorExpanded] = useState(false);
@@ -203,14 +184,11 @@ export function FlowVisionInteractiveWorkspace({ title, nodes, edges }: ResultEx
   const pendingHighlightRef = useRef<string | null>(null);
   const fitRafRef = useRef<number | null>(null);
   const paneReadyRef = useRef(false);
-
   const allNodeIds = useMemo(() => new Set(nodes.map((node) => node.id)), [nodes]);
-
   const setCameraModeSafe = useCallback((next: ResultCameraMode) => {
     cameraModeRef.current = next;
     setCameraMode(next);
   }, []);
-
   const clearHighlight = useCallback(() => {
     if (Date.now() < highlightProtectUntilRef.current) {
       return;
@@ -218,7 +196,6 @@ export function FlowVisionInteractiveWorkspace({ title, nodes, edges }: ResultEx
     pendingHighlightRef.current = null;
     setHighlightMarkerId(null);
   }, []);
-
   const selectedNodeId = selection?.type === 'node' ? selection.id : null;
   const selectedEdgeId = selection?.type === 'edge' ? selection.id : null;
 
@@ -245,6 +222,13 @@ export function FlowVisionInteractiveWorkspace({ title, nodes, edges }: ResultEx
 
   const hasResult = nodes.length > 0;
   const emptyMessage = getTdmResultAvailabilityMessage(nodes, edges);
+  const {
+    exportRootRef,
+    handleExportImage,
+    isExportingImage,
+    exportingImageFormat,
+    exportImageError
+  } = useTheoryImageExport({ theoryTitle: title, nodes, edgeCount: edges.length });
 
   useEffect(() => {
     document.body.classList.add('public-page-scroll');
@@ -760,8 +744,10 @@ export function FlowVisionInteractiveWorkspace({ title, nodes, edges }: ResultEx
     };
   }, [isTranslatorExpanded, reclampManualCamera]);
 
+
   return (
     <main
+      ref={exportRootRef}
       className={experienceStyles.page}
       data-result-mode="example"
       data-zooming={isZooming ? 'true' : 'false'}
@@ -790,6 +776,15 @@ export function FlowVisionInteractiveWorkspace({ title, nodes, edges }: ResultEx
               }}
               onReset={resetView}
               closeHref={CLOSE_HREF}
+              onExportImage={handleExportImage}
+              exportImageHeading={
+                selection
+                  ? 'EXPORTAR IMAGEM DO FLUXO SELECIONADO'
+                  : 'EXPORTAR IMAGEM DA TEORIA COMPLETA'
+              }
+              isExportingImage={isExportingImage}
+              exportingImageFormat={exportingImageFormat}
+              exportImageError={exportImageError}
             />
           }
         />

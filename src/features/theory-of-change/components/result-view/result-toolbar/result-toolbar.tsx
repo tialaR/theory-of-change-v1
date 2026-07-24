@@ -1,7 +1,17 @@
 'use client';
 
-import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
-import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
+import { useMemo } from 'react';
+import {
+  TdmCenterIcon,
+  TdmCloseIcon,
+  TdmDownloadIcon,
+  TdmImageIcon,
+  TdmResetIcon,
+  TdmZoomInIcon,
+  TdmZoomOutIcon
+} from '@/shared/ui/tdm-icons';
+import { TdmIconButton } from '@/shared/ui/tdm-icon-button';
+import { TdmMenu, type TdmMenuItem } from '@/shared/ui/tdm-menu';
 import styles from './result-toolbar.module.sass';
 
 export type ResultImageExportFormat = 'png' | 'svg';
@@ -15,11 +25,23 @@ type ResultToolbarProps = {
   closeHref?: string;
   onClose?: () => void;
   closeLabel?: string;
-  onExportImage?: (format: ResultImageExportFormat) => void;
+  onExportImage?: (format: ResultImageExportFormat) => void | Promise<void>;
+  exportImageHeading?: string;
   isExportingImage?: boolean;
   exportingImageFormat?: ResultImageExportFormat | null;
   exportImageError?: string | null;
 };
+
+function buildExportItems(
+  onExportImage: (format: ResultImageExportFormat) => void | Promise<void>
+): readonly TdmMenuItem[] {
+  return (['png', 'svg'] as const).map((format) => ({
+    id: format,
+    label: format.toUpperCase(),
+    icon: <TdmImageIcon />,
+    onSelect: () => onExportImage(format)
+  }));
+}
 
 export function ResultToolbar({
   zoom,
@@ -31,87 +53,90 @@ export function ResultToolbar({
   onClose,
   closeLabel = 'Fechar',
   onExportImage,
+  exportImageHeading = 'EXPORTAR IMAGEM DA TEORIA COMPLETA',
   isExportingImage = false,
-  exportingImageFormat = null,
   exportImageError = null
 }: ResultToolbarProps) {
+  const exportItems = useMemo(
+    () => (onExportImage ? buildExportItems(onExportImage) : []),
+    [onExportImage]
+  );
+
+  const closeControl = closeHref ? (
+    <TdmIconButton
+      href={closeHref}
+      aria-label={closeLabel}
+      tooltip={closeLabel}
+      variant="subtle"
+      size="md"
+    >
+      <TdmCloseIcon />
+    </TdmIconButton>
+  ) : (
+    <TdmIconButton
+      type="button"
+      aria-label={closeLabel}
+      tooltip={closeLabel}
+      variant="subtle"
+      size="md"
+      onClick={onClose}
+    >
+      <TdmCloseIcon />
+    </TdmIconButton>
+  );
+
   return (
     <div data-export-exclude="true" className={styles.toolbarRoot}>
       <div className={styles.cluster} role="group" aria-label="Controles de visualização">
-        <TdmIconButton aria-label="Aumentar zoom" tooltip="Aumentar zoom" variant="ghost" size="sm" onClick={onZoomIn}>
-          +
+        <TdmIconButton aria-label="Aumentar zoom" tooltip="Aumentar zoom" variant="ghost" size="md" onClick={onZoomIn}>
+          <TdmZoomInIcon />
         </TdmIconButton>
         <span className={styles.zoomLabel}>{Math.round(zoom * 100)}%</span>
-        <TdmIconButton aria-label="Diminuir zoom" tooltip="Diminuir zoom" variant="ghost" size="sm" onClick={onZoomOut}>
-          −
+        <TdmIconButton aria-label="Diminuir zoom" tooltip="Diminuir zoom" variant="ghost" size="md" onClick={onZoomOut}>
+          <TdmZoomOutIcon />
         </TdmIconButton>
         <span className={styles.divider} aria-hidden="true" />
         <TdmIconButton
           aria-label="Centralizar visualização"
-          tooltip="Centralizar"
+          tooltip="Centralizar visualização"
           variant="ghost"
-          size="sm"
+          size="md"
           onClick={onCenter}
         >
-          ⌖
+          <TdmCenterIcon />
         </TdmIconButton>
         <TdmIconButton
           aria-label="Reiniciar visualização"
-          tooltip="Reiniciar"
+          tooltip="Reiniciar visualização"
           variant="ghost"
-          size="sm"
+          size="md"
           onClick={onReset}
         >
-          ↺
+          <TdmResetIcon />
         </TdmIconButton>
       </div>
 
       {onExportImage ? (
-        <div
-          className={styles.exportCluster}
-          role="group"
-          aria-label="Exportar diagrama"
-          aria-busy={isExportingImage || undefined}
-        >
-          <TdmButton
-            type="button"
-            variant="secondary"
-            tone="neutral"
-            size="sm"
-            disabled={isExportingImage}
-            isLoading={isExportingImage && exportingImageFormat === 'png'}
-            onClick={() => onExportImage('png')}
-          >
-            PNG
-          </TdmButton>
-          <TdmButton
-            type="button"
-            variant="secondary"
-            tone="neutral"
-            size="sm"
-            disabled={isExportingImage}
-            isLoading={isExportingImage && exportingImageFormat === 'svg'}
-            onClick={() => onExportImage('svg')}
-          >
-            SVG
-          </TdmButton>
-          {exportImageError ? (
-            <span className={styles.exportError} role="status" aria-live="polite">
-              {exportImageError}
-            </span>
-          ) : null}
-        </div>
+        <TdmMenu
+          triggerLabel="Exportar imagem"
+          triggerIcon={<TdmDownloadIcon />}
+          tooltip="Exportar imagem"
+          heading={exportImageHeading}
+          items={exportItems}
+          busy={isExportingImage}
+          align="end"
+          triggerVariant="subtle"
+          triggerSize="md"
+        />
       ) : null}
 
-      {closeHref ? (
-        <TdmButton href={closeHref} variant="primary" tone="neutral" size="sm">
-          {closeLabel}
-        </TdmButton>
-      ) : (
-        <TdmButton type="button" variant="primary" tone="neutral" size="sm" onClick={onClose}>
-          {closeLabel}
-        </TdmButton>
-      )}
+      {closeControl}
+
+      {exportImageError ? (
+        <span className={styles.exportError} role="status" aria-live="polite">
+          {exportImageError}
+        </span>
+      ) : null}
     </div>
   );
 }

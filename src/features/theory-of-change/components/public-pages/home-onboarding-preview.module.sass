@@ -13,13 +13,34 @@
   color: var(--story-text)
 
 .storyShell
+  position: relative
   overflow: hidden
   border: 0.0625rem solid var(--story-line)
   border-radius: 1.45rem
   background: var(--tdm-guided-story-shell-bg)
   box-shadow: 0 1.8rem 5rem var(--tdm-guided-story-shell-shadow)
 
+  &::before
+    position: absolute
+    top: 0
+    inset-inline: clamp(2.5rem, 9vw, 9rem)
+    z-index: 2
+    height: 0.0625rem
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--tdm-fg-subtle),
+      var(--tdm-fg-primary),
+      var(--tdm-fg-subtle),
+      transparent
+    )
+    opacity: 0.48
+    box-shadow: 0 0 0.28rem rgba(255, 255, 255, 0.1)
+    pointer-events: none
+    content: ""
+
 .storyHeader
+  position: relative
   display: grid
   grid-template-columns: minmax(0, 1fr) auto
   align-items: start
@@ -27,6 +48,26 @@
   padding: 1.45rem 1.55rem 1.35rem
   border-bottom: 0.0625rem solid var(--story-line-soft)
   background: var(--tdm-guided-story-header-bg)
+
+  &::before
+    position: absolute
+    top: 0
+    right: 0
+    left: 0
+    height: 0.0625rem
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.08) 14%,
+      rgba(255, 255, 255, 0.26) 38%,
+      rgba(255, 255, 255, 0.12) 52%,
+      rgba(255, 255, 255, 0.22) 68%,
+      rgba(255, 255, 255, 0.06) 86%,
+      rgba(255, 255, 255, 0) 100%
+    )
+    opacity: 0.58
+    pointer-events: none
+    content: ""
 
 .chapterKicker
   display: inline-flex
@@ -46,29 +87,71 @@
     content: ""
 
 .storyCopy
+  min-width: 0
+
   h2
     max-width: 48rem
     margin: 0.48rem 0 0
-    font-size: clamp(1.55rem, 2.6vw, 2.55rem)
+    font-size: clamp(1.42rem, 2.35vw, 2.3rem)
     font-weight: 570
     letter-spacing: -0.045em
     line-height: 1.05
     text-wrap: balance
 
-  p
-    max-width: 55rem
-    margin: 0.62rem 0 0
-    color: var(--story-muted)
-    font-size: 0.9rem
-    line-height: 1.62
+.chapterTitleReveal
+  display: inline-block
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 42%, rgba(0, 0, 0, 0.72) 50%, transparent 62%, transparent 100%)
+  mask-image: linear-gradient(90deg, #000 0%, #000 42%, rgba(0, 0, 0, 0.72) 50%, transparent 62%, transparent 100%)
+  -webkit-mask-size: 250% 100%
+  mask-size: 250% 100%
+  animation: guidedStoryTitleReveal 560ms var(--story-ease) both
+
+.textSwapSlot
+  display: grid
+  align-content: start
+
+.textSwapItem
+  grid-area: 1 / 1
+  min-width: 0
+  animation: storyTextIn 180ms var(--story-ease) both
+
+.storyCopySwap
+  min-height: 4.1rem
+
+.footerCopySwap
+  min-height: 3.35rem
+
+@keyframes storyTextIn
+  from
+    opacity: 0
+    transform: translateY(0.18rem)
+
+  to
+    opacity: 1
+    transform: translateY(0)
+
+@keyframes guidedStoryTitleReveal
+  from
+    opacity: 0.22
+    transform: translateX(-0.3rem)
+    filter: blur(0.16rem)
+    -webkit-mask-position: 100% 0
+    mask-position: 100% 0
+
+  to
+    opacity: 1
+    transform: translateX(0)
+    filter: blur(0)
+    -webkit-mask-position: 0% 0
+    mask-position: 0% 0
 
 .densityEmbedded
   .storyCopy
     h2
-      font-size: var(--tdm-guided-story-embedded-title-size)
+      font-size: calc(var(--tdm-guided-story-embedded-title-size) * 0.93)
 
-    p
-      font-size: var(--tdm-guided-story-embedded-description-size)
+  .storyCopySwap
+    min-height: 3.55rem
 
 .storyControls
   display: flex
@@ -564,29 +647,6 @@
     border-color: var(--tdm-guided-story-active-border)
     background: var(--tdm-guided-story-active-note-bg)
 
-.finalSummary
-  position: absolute
-  right: 52px
-  bottom: 34px
-  z-index: 7
-  display: flex
-  align-items: center
-  gap: 10px
-  padding: 9px 13px
-  border: 0.8px solid var(--tdm-guided-story-summary-border)
-  border-radius: 999rem
-  background: var(--tdm-guided-story-summary-bg)
-  color: var(--tdm-guided-story-summary-fg)
-  font-size: 0.75rem
-  letter-spacing: 0.02em
-
-  &::before
-    width: 5px
-    aspect-ratio: 1
-    border-radius: 50%
-    background: var(--tdm-guided-story-summary-dot)
-    content: ""
-
 .storyFooter
   padding: 1.2rem 1.45rem 1.35rem
   border-top: 0.0625rem solid var(--story-line-soft)
@@ -594,20 +654,22 @@
 
 .footerMain
   display: grid
-  grid-template-columns: var(--tdm-public-brand-mark-size) minmax(0, 1fr) auto
+  grid-template-columns: var(--tdm-guided-story-footer-mark-size) minmax(0, 1fr) auto
   align-items: center
   gap: 1rem
 
 .footerIcon
   display: block
-  width: var(--tdm-public-brand-mark-size)
+  width: var(--tdm-guided-story-footer-mark-size)
   height: auto
   opacity: 0.94
 
 .footerCopy
+  min-width: 0
+
   h3
     margin: 0
-    font-size: 1rem
+    font-size: 0.84rem
     font-weight: 600
     letter-spacing: 0.035em
     text-transform: uppercase
@@ -693,8 +755,20 @@
   .relationBadge,
   .relationNote,
   .controlBtn,
-  .chapterStep
+  .chapterStep,
+  .textSwapItem
     transition-duration: 0.01ms
+
+  .textSwapItem
+    animation: none
+
+  .chapterTitleReveal
+    -webkit-mask-image: none
+    mask-image: none
+    filter: none
+    opacity: 1
+    transform: none
+    animation: none
 
   .openingBrand
     opacity: 1
@@ -708,7 +782,7 @@
     justify-content: flex-start
 
   .footerMain
-    grid-template-columns: 3.65rem minmax(0, 1fr)
+    grid-template-columns: var(--tdm-guided-story-footer-mark-size) minmax(0, 1fr)
 
   .footerStatus
     grid-column: 2
@@ -731,8 +805,8 @@
   .storyHeader
     padding: 1.2rem 1rem 1.1rem
 
-  .storyCopy p
-    font-size: 0.84rem
+  .storyCopySwap
+    min-height: 3.8rem
 
   .controlBtn
     width: 2.55rem
@@ -742,15 +816,18 @@
     padding: 1rem
 
   .footerMain
-    grid-template-columns: var(--tdm-public-brand-mark-size) minmax(0, 1fr)
+    grid-template-columns: var(--tdm-guided-story-footer-mark-size) minmax(0, 1fr)
     gap: 0.8rem
 
   .footerCopy
     h3
-      font-size: 0.88rem
+      font-size: 0.78rem
 
     p
       font-size: 0.77rem
+
+  .footerCopySwap
+    min-height: 3.1rem
 
   .footerStatus
     font-size: 0.75rem

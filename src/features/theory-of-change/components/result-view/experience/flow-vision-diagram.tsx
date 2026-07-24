@@ -149,6 +149,7 @@ export function FlowVisionDiagram({
         className={styles.flowVisionBoard}
         ref={boardRef}
         data-result-board="true"
+        data-theory-export-diagram="true"
         style={{ width: boardSize.width, height: boardSize.height }}
       >
         <ResultConnectionsLayer

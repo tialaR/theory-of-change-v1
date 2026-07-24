@@ -1,0 +1,24 @@
+---
+description: Freeze sensitive visual engines while consolidating non-canvas DS
+alwaysApply: true
+---
+
+# Protected visual zones
+
+Do not alter in this phase:
+
+- `/canvas` and derivatives;
+- Guide timeline and guided-story scheduler;
+- internal animated preview geometry and motion;
+- React Flow nodes, edges, connections, selection, zoom and viewport in interactive examples;
+- internal image/document export behavior.
+
+Allowed around protected engines:
+
+- route/workspace header;
+- canonical icon buttons, tooltips and menus;
+- external sidebar shell;
+- external background;
+- route spacing and status states.
+
+Treat protected engines as black boxes. Never recreate their motion or geometry while changing a wrapper.

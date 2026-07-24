@@ -40,3 +40,6 @@ tdm-backups/
 # Local QA / Playwright artifacts
 output/
 .playwright-cli/
+
+# TDM local patch backups
+.tdm-backup/

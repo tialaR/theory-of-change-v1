@@ -123,7 +123,7 @@ export const chapters: Chapter[] = [
       'O fluxo completo permanece visível e estático. A narrativa termina em repouso, pronta para revisão, explicação ou auditoria.',
     footerTitle: 'O TMD Construtor',
     footerDescription:
-      'A experiência torna visível o caminho que conecta recursos, ações, entregas e mudanças esperadas.',
+      'Proporciona a experiência de tornar visível o caminho que conecta recursos, ações, entregas e mudanças esperadas.',
   },
 ];
 
@@ -297,10 +297,6 @@ export const flowColumns: FlowColumn[] = [
 
 export const OPENING_BRAND_COPY =
   'Transforme recursos, ações, entregas e resultados em uma narrativa causal coerente.';
-
-export const FINAL_SUMMARY_CHIPS = {
-  overview: 'Quatro funções, uma leitura contínua',
-} as const;
 
 export const RELATION_NOTES = {
   relations: {

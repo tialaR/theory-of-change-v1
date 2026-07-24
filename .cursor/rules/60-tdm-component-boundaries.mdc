@@ -1,0 +1,15 @@
+---
+description: Impede novos God Components e crescimento da dívida registrada.
+globs: src/**/*.{ts,tsx}
+alwaysApply: true
+---
+
+# TDM Component Boundaries
+
+- Mantenha componentes TSX com até 400 linhas.
+- Mantenha módulos TS com até 600 linhas.
+- Extraia estado e efeitos para hooks da própria feature.
+- Extraia renderização apenas quando houver responsabilidade clara.
+- Não mova lógica de uma feature para `shared` apenas para reduzir linhas.
+- Não altere canvas, timeline guiada, geometria ou motion protegidos sem escopo explícito.
+- Execute `npm run check:tdm:v2:boundaries` antes de concluir.

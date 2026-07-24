@@ -33,9 +33,8 @@ import {
   V1BlockFormsPanel,
   V1CanvasOrganizationAccordion,
   V1FinalResultCard,
-  V1StageActionSection,
-  V1TheoryProgressHeader
 } from './v1-preserved-sidebar-sections';
+import { V1StageActionSection, V1TheoryProgressHeader } from './v1-progress-and-stage-action';
 import styles from './tdm-sidebar.module.sass';
 
 export { SidebarToggleIcon };

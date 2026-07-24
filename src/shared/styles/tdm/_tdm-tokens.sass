@@ -12,6 +12,11 @@
 @use 'tdm-measure' as measure
 @use 'tdm-cta' as cta
 @use 'tdm-public-action' as publicAction
+@use 'tdm-route' as route
+@use 'tdm-guide' as guide
+@use 'tdm-status' as status
+@use 'tdm-menu' as menu
+@use 'tdm-stage' as stage
 
 // Agregador canônico TDM — publica --tdm-* em :root.
 :root
@@ -43,8 +48,13 @@
   +cta.tokens
   // CTAs / icon buttons / header públicos
   +publicAction.tokens
+  +route.tokens
+  +guide.tokens
+  +status.tokens
+  +menu.tokens
+  +stage.tokens
 
 // Mobile — ritmo entre seções (TDM-PUBLIC-SECTION-RHYTHM-V1)
 @media (max-width: 48rem)
   :root
-    --tdm-public-section-gap: clamp(3.5rem, 12vw, 4.5rem)
+    --tdm-public-section-gap: clamp(4.5rem, 14vw, 5.5rem)

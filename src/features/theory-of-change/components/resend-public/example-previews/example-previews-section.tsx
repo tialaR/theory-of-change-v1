@@ -1,7 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { PublicSection } from '@/shared/ui/lusion-resend-ds';
+import { PublicSection } from '@/shared/ui/tdm-public-layout';
 import { ContextLabelPanelsIcon } from '@/shared/ui/tdm-context-label';
 import { TdmKicker } from '@/shared/ui/tdm-kicker';
 import { TdmPublicFeatureCard } from '@/shared/ui/tdm-public-feature-card';

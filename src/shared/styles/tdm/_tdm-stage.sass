@@ -1,0 +1,23 @@
+// TDM stage roles. These four accents are the only canonical stage colors.
+// Component-specific alpha variants must map to these roles.
+
+@mixin tokens
+  --tdm-stage-input: #8b7cff
+  --tdm-stage-activity: #49b3ff
+  --tdm-stage-output: #f2a65a
+  --tdm-stage-outcome: #37c893
+
+  --tdm-stage-input-soft: color-mix(in srgb, var(--tdm-stage-input) 18%, transparent)
+  --tdm-stage-activity-soft: color-mix(in srgb, var(--tdm-stage-activity) 16%, transparent)
+  --tdm-stage-output-soft: color-mix(in srgb, var(--tdm-stage-output) 16%, transparent)
+  --tdm-stage-outcome-soft: color-mix(in srgb, var(--tdm-stage-outcome) 16%, transparent)
+
+  --tdm-stage-input-border: color-mix(in srgb, var(--tdm-stage-input) 38%, transparent)
+  --tdm-stage-activity-border: color-mix(in srgb, var(--tdm-stage-activity) 34%, transparent)
+  --tdm-stage-output-border: color-mix(in srgb, var(--tdm-stage-output) 34%, transparent)
+  --tdm-stage-outcome-border: color-mix(in srgb, var(--tdm-stage-outcome) 34%, transparent)
+
+  --tdm-stage-input-glow: color-mix(in srgb, var(--tdm-stage-input) 24%, transparent)
+  --tdm-stage-activity-glow: color-mix(in srgb, var(--tdm-stage-activity) 22%, transparent)
+  --tdm-stage-output-glow: color-mix(in srgb, var(--tdm-stage-output) 22%, transparent)
+  --tdm-stage-outcome-glow: color-mix(in srgb, var(--tdm-stage-outcome) 22%, transparent)

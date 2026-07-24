@@ -16,6 +16,8 @@ export type TdmButtonLegacyVariant = 'ghost' | 'danger';
 
 export type TdmButtonSize = 'sm' | 'md' | 'lg';
 
+export type TdmButtonRecipe = 'system' | 'public';
+
 export type TdmButtonTone =
   | 'neutral'
   | 'danger'
@@ -62,6 +64,7 @@ function resolveTone(variant: TdmButtonVariant, tone?: TdmButtonTone): TdmButton
 
 export function tdmButtonClassName({
   variant = 'primary',
+  recipe = 'system',
   tone,
   size = 'md',
   fullWidth = false,
@@ -69,6 +72,7 @@ export function tdmButtonClassName({
   className = ''
 }: {
   variant?: TdmButtonAcceptedVariant;
+  recipe?: TdmButtonRecipe;
   tone?: TdmButtonTone;
   size?: TdmButtonSize;
   fullWidth?: boolean;
@@ -78,9 +82,11 @@ export function tdmButtonClassName({
   const resolvedVariant = resolveVariant(variant);
   const resolvedTone = resolveTone(resolvedVariant, tone);
   const isBordered = resolvedVariant !== 'tertiary';
+  const recipeClass = recipe === 'public' ? styles.recipePublic : styles.recipeSystem;
 
   return [
     styles.button,
+    recipeClass,
     isBordered ? styles.bordered : '',
     VARIANT_CLASS[resolvedVariant],
     isBordered ? TONE_CLASS[resolvedTone] : '',
@@ -95,6 +101,7 @@ export function tdmButtonClassName({
 
 type TdmButtonSharedProps = {
   variant?: TdmButtonAcceptedVariant;
+  recipe?: TdmButtonRecipe;
   tone?: TdmButtonTone;
   size?: TdmButtonSize;
   fullWidth?: boolean;
@@ -153,9 +160,54 @@ function resolveTrailingIcon({
   return null;
 }
 
+
+function renderLeadingContent({
+  isLoading,
+  resolvedLeading
+}: {
+  isLoading: boolean;
+  resolvedLeading: ReactNode;
+}) {
+  if (isLoading) return <span className={styles.spinner} aria-hidden="true" />;
+  if (!resolvedLeading) return null;
+
+  return (
+    <span className={styles.icon} aria-hidden="true">
+      {resolvedLeading}
+    </span>
+  );
+}
+
+function renderTrailingContent({
+  isLoading,
+  resolvedTrailing
+}: {
+  isLoading: boolean;
+  resolvedTrailing: ReactNode;
+}) {
+  if (isLoading || !resolvedTrailing) return null;
+
+  return (
+    <span className={styles.icon} aria-hidden="true">
+      {resolvedTrailing}
+    </span>
+  );
+}
+
+function renderLabel(children: ReactNode) {
+  if (!children) return null;
+  return <span className={styles.label}>{children}</span>;
+}
+
+function renderLoadingLabel(isLoading: boolean) {
+  if (!isLoading) return null;
+  return <span className={styles.srOnly}>Carregando</span>;
+}
+
 export function TdmButton(props: TdmButtonProps) {
   const {
     variant = 'primary',
+    recipe = 'system',
     tone,
     size = 'md',
     fullWidth = false,
@@ -184,24 +236,19 @@ export function TdmButton(props: TdmButtonProps) {
     iconPosition,
     showPlus
   });
-  const classNames = tdmButtonClassName({ variant, tone, size, fullWidth, isLoading, className });
+  const classNames = tdmButtonClassName({ variant, recipe, tone, size, fullWidth, isLoading, className });
+
+  const leadingContent = renderLeadingContent({ isLoading, resolvedLeading });
+  const trailingContent = renderTrailingContent({ isLoading, resolvedTrailing });
+  const labelContent = renderLabel(children);
+  const loadingLabel = renderLoadingLabel(isLoading);
 
   const content = (
     <span className={styles.content}>
-      {isLoading ? (
-        <span className={styles.spinner} aria-hidden="true" />
-      ) : resolvedLeading ? (
-        <span className={styles.icon} aria-hidden="true">
-          {resolvedLeading}
-        </span>
-      ) : null}
-      {children ? <span className={styles.label}>{children}</span> : null}
-      {!isLoading && resolvedTrailing ? (
-        <span className={styles.icon} aria-hidden="true">
-          {resolvedTrailing}
-        </span>
-      ) : null}
-      {isLoading ? <span className={styles.srOnly}>Carregando</span> : null}
+      {leadingContent}
+      {labelContent}
+      {trailingContent}
+      {loadingLabel}
     </span>
   );
 
@@ -222,6 +269,7 @@ export function TdmButton(props: TdmButtonProps) {
         href={href}
         className={classNames}
         data-tdm-button-variant={resolvedVariant}
+        data-tdm-button-recipe={recipe}
         data-tdm-button-tone={resolvedTone}
         aria-busy={isLoading || undefined}
         aria-disabled={isDisabled || undefined}
@@ -245,6 +293,7 @@ export function TdmButton(props: TdmButtonProps) {
       type={type}
       className={classNames}
       data-tdm-button-variant={resolvedVariant}
+      data-tdm-button-recipe={recipe}
       data-tdm-button-tone={resolvedTone}
       disabled={isDisabled}
       aria-busy={isLoading || undefined}

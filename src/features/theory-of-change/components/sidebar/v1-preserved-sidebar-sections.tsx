@@ -1,20 +1,17 @@
 'use client';
 
-import { useId, useMemo, useState, type CSSProperties, type DragEvent, type ReactNode } from 'react';
+import { useId, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
-import buttonStyles from '@/shared/ui/tdm-button/tdm-button.module.sass';
 import { TdmSectionIcon } from '../tdm-section-icon/tdm-section-icon';
 import { FinalResultDecorLayer, FinalResultGlassSculpture } from './final-result-glass-sculpture';
 import { TDM_STAGE_ORDER, type TdmStage } from '../../domain/tdm-stages';
-import type { StageCreation } from '../../utils/stage-creation';
 import styles from './tdm-sidebar.module.sass';
+import { AccordionChevron, ColumnsAlignIcon, FinalResultCtaArrowIcon, FinalResultHelperIcon } from './v1-preserved-sidebar-icons';
 
 const PREVIEW_MAX_BLOCKS = 5;
-const PREMIUM_EASE = [0.22, 1, 0.36, 1] as const;
-
-/** Local visual stage accents for canvas inspector (DS V1 — not domain theme). */
-const CANVAS_DS_STAGE: Record<
+/** Local visual stage accents for canvas inspector (DS V1, not domain theme). */
+export const CANVAS_DS_STAGE: Record<
   TdmStage,
   { accent: string; soft: string; border: string; fieldRgb: string }
 > = {
@@ -44,42 +41,14 @@ const CANVAS_DS_STAGE: Record<
   }
 };
 
+const PREMIUM_EASE = [0.22, 1, 0.36, 1] as const;
+
 const STAGE_PREVIEW_CLASS: Record<TdmStage, string> = {
   input: styles.previewInput,
   activity: styles.previewActivity,
   output: styles.previewOutput,
   outcome: styles.previewOutcome
 };
-
-function AccordionChevron({ isOpen, className }: { isOpen: boolean; className?: string }) {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 24 24"
-      className={[
-        styles.sidebarAccordionChevron,
-        isOpen ? styles.sidebarAccordionChevronOpen : '',
-        className
-      ]
-        .filter(Boolean)
-        .join(' ')}
-      fill="none"
-    >
-      <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function ColumnsAlignIcon() {
-  return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" className={buttonStyles.icon} fill="none">
-      <rect x="6" y="5" width="20" height="22" rx="6" stroke="currentColor" strokeWidth="2.2" />
-      <path d="M12 10V22" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-      <path d="M16 10V22" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-      <path d="M20 10V22" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-    </svg>
-  );
-}
 
 function CanvasAlignmentPreview({ stageCounts }: { stageCounts: Record<TdmStage, number> }) {
   const shouldReduceMotion = useReducedMotion();
@@ -336,31 +305,6 @@ function FinalResultLiquidGlassMaterial() {
   );
 }
 
-function FinalResultCtaArrowIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 16 16" className={buttonStyles.icon}>
-      <path
-        d="M4.5 11.5 11.5 4.5M11.5 4.5H6.25M11.5 4.5V9.75"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.45"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function FinalResultHelperIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 16 16" className={styles.finalResultHelperIcon}>
-      <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" strokeWidth="1.2" />
-      <path d="M8 7.1v3.4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-      <circle cx="8" cy="5.15" r="0.55" fill="currentColor" />
-    </svg>
-  );
-}
-
 export function V1FinalResultCard({
   canViewTdmResult,
   resultAvailabilityMessage,
@@ -441,102 +385,6 @@ export function V1FinalResultCard({
           </p>
         ) : null}
       </div>
-    </section>
-  );
-}
-
-export function V1TheoryProgressHeader({
-  percent,
-  accent
-}: {
-  percent: number;
-  accent: string;
-  stageTitle: string;
-  stageInstruction: string;
-}) {
-  return (
-    <div
-      className={styles.progressHeader}
-      style={
-        {
-          '--stage-accent': accent,
-          '--theory-progress': `${percent}%`
-        } as CSSProperties
-      }
-    >
-      <div className={[styles.progressHeaderTitleRow, styles.blockFormGroupHeader].filter(Boolean).join(' ')}>
-        <TdmSectionIcon variant="organization" />
-        <p className={[styles.progressHeaderKicker, styles.blockFormGroupTitle].filter(Boolean).join(' ')}>
-          ETAPAS DA TEORIA
-        </p>
-      </div>
-      <p className={styles.progressCompactLine}>
-        <span className={styles.progressCompactPercent}>{percent}% completo</span>
-      </p>
-      <div className={styles.theoryProgressTrack} aria-hidden="true">
-        <span className={styles.theoryProgressFill} />
-      </div>
-    </div>
-  );
-}
-
-const STAGE_ACTION_PROMPTS: Record<StageCreation, string> = {
-  input: 'Crie insumos.',
-  activity: 'Crie atividades.',
-  output: 'Crie produtos.',
-  outcome: 'Crie resultados.',
-  'ready-to-connect': 'Crie as conexões entre as etapas.'
-};
-
-export function V1StageActionSection({
-  stageCreation,
-  actionLabel,
-  onStageDragStart
-}: {
-  stageCreation: StageCreation;
-  actionLabel?: string;
-  onStageDragStart?: (event: DragEvent<HTMLElement>, stage: TdmStage) => void;
-}) {
-  const selectedStageTheme = stageCreation === 'ready-to-connect' ? null : CANVAS_DS_STAGE[stageCreation];
-  const canUseStageActions = stageCreation !== 'ready-to-connect';
-  const dragStage = stageCreation === 'ready-to-connect' ? undefined : stageCreation;
-  const actionPrompt = STAGE_ACTION_PROMPTS[stageCreation];
-
-  return (
-    <section
-      className={[styles.card, styles.stageActionCard].join(' ')}
-      style={
-        selectedStageTheme
-          ? ({
-              '--stage-accent': selectedStageTheme.accent,
-              '--stage-border': selectedStageTheme.border,
-              '--stage-soft': selectedStageTheme.soft
-            } as CSSProperties)
-          : undefined
-      }
-    >
-      <p className={styles.sectionKicker}>AGORA</p>
-      <p className={styles.sectionText}>{actionPrompt}</p>
-      {canUseStageActions && dragStage ? (
-        <div className={styles.stageActionInnerPanel}>
-          <button
-            type="button"
-            className={styles.dragCard}
-            draggable
-            aria-label={actionLabel ?? 'Adicionar bloco'}
-            onDragStart={(event) => onStageDragStart?.(event, dragStage)}
-          >
-            <span className={styles.dragSheet} aria-hidden="true">
-              <span className={styles.dragSheetShine} />
-              <span className={styles.dragSheetLine} data-len="title" />
-              <span className={styles.dragSheetLine} data-len="lg" />
-              <span className={styles.dragSheetLine} data-len="md" />
-              <span className={styles.dragSheetLine} data-len="sm" />
-            </span>
-          </button>
-          <p className={styles.dragSheetLegend}>Clique, arraste e solte.</p>
-        </div>
-      ) : null}
     </section>
   );
 }
