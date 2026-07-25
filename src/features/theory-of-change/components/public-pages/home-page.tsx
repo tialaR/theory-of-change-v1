@@ -7,6 +7,7 @@ import {
   PublicShell
 } from '@/shared/ui/tdm-public-layout';
 import { ContextLabelEyeIcon, ContextLabelSparklesIcon } from '@/shared/ui/tdm-context-label';
+import { TdmEyeIcon } from '@/shared/ui/tdm-icons';
 import { TdmButton } from '@/shared/ui/tdm-button';
 import { TdmKicker } from '@/shared/ui/tdm-kicker';
 import { TdmPublicFeatureCard } from '@/shared/ui/tdm-public-feature-card';
@@ -19,7 +20,7 @@ import styles from './public-pages.module.sass';
 export function HomePage() {
   return (
     <PublicShell sectionRhythm>
-      <PublicHeader ctaLabel="Começar agora" ctaTrailingIcon={<CtaChevronIcon />} />
+      <PublicHeader ctaLabel="Comece agora" ctaTrailingIcon={<CtaChevronIcon />} />
       <PublicHero
         visual={<HomeBrandLogo variant="hero" />}
         title="Desenhe a mudança antes de explicá-la."
@@ -27,15 +28,20 @@ export function HomePage() {
         actions={
           <>
             <TdmButton
-              href="/canvas"
+              href="/canvas-v4"
               recipe="public"
               variant="primary"
               size="lg"
               trailingIcon={<CtaChevronIcon />}
             >
-              Começar agora
+              Comece agora
             </TdmButton>
-            <TdmButton href="/exemplos/resultado" recipe="public" variant="tertiary">
+            <TdmButton
+              href="/exemplos/resultado"
+              recipe="public"
+              variant="tertiary"
+              leadingIcon={<TdmEyeIcon />}
+            >
               Ver exemplo
             </TdmButton>
           </>

@@ -1,14 +1,16 @@
+import Image from 'next/image';
 import { TdmButton } from '@/shared/ui/tdm-button';
-import { TdmSearchIcon } from '@/shared/ui/tdm-icons';
 import { TdmStatusScreen } from './tdm-status-screen';
+
+const BRAND_MARK_SRC = '/assets/brand/tmd-construtor-guided-story-mark.png';
 
 export function TdmRouteNotFound() {
   return (
     <TdmStatusScreen
-      eyebrow="404"
-      title="Esta rota não foi encontrada"
-      description="O endereço pode ter mudado ou não fazer parte da experiência publicada."
-      icon={<TdmSearchIcon />}
+      eyebrow="Caminho não encontrado"
+      title="Esta página saiu do mapa."
+      description="O endereço pode ter mudado. Volte ao início e siga por um caminho disponível."
+      icon={<Image src={BRAND_MARK_SRC} alt="" width={72} height={72} priority />}
       actions={<TdmButton recipe="public" href="/">Voltar ao início</TdmButton>}
     />
   );
