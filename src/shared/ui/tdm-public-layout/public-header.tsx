@@ -21,6 +21,15 @@ const HIDDEN_HEADER_ROUTES = [
   '/exemplos/visao-do-fluxo/interativo'
 ] as const;
 
+
+function HeaderCtaChevronIcon() {
+  return (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path d="m6 3.5 4.5 4.5L6 12.5" />
+    </svg>
+  );
+}
+
 function isNavActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
@@ -58,8 +67,8 @@ function usePublicHeaderScrolled() {
 
 export function PublicHeader({
   ctaHref = '/canvas',
-  ctaLabel = 'Criar teoria',
-  ctaTrailingIcon
+  ctaLabel = 'Comece agora',
+  ctaTrailingIcon = <HeaderCtaChevronIcon />
 }: PublicHeaderProps) {
   const pathname = usePathname();
   const { sentinelRef, isScrolled } = usePublicHeaderScrolled();

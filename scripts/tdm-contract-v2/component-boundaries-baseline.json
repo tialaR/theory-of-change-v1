@@ -5,10 +5,6 @@
     "ts": 600
   },
   "files": {
-    "src/app/canvas/resend-command-preview/page.tsx": {
-      "lines": 1088,
-      "kind": "tsx"
-    },
     "src/features/theory-of-change/components/canvas/tdm-canvas-inner.tsx": {
       "lines": 1564,
       "kind": "tsx"
@@ -23,10 +19,6 @@
     },
     "src/features/theory-of-change/components/result-view/result-theory-narrative/theory-narrative.mapper.ts": {
       "lines": 1122,
-      "kind": "ts"
-    },
-    "src/features/theory-of-change/components/result-view/result-view-utils.ts": {
-      "lines": 1229,
       "kind": "ts"
     },
     "src/features/theory-of-change/components/result-view/result-view.tsx": {

@@ -4,8 +4,9 @@
 
 .root
   display: grid
-  min-height: var(--tdm-status-min-height)
-  padding: var(--tdm-status-padding-block) var(--tdm-status-padding-inline)
+  box-sizing: border-box
+  min-height: 100dvh
+  padding: clamp(3rem, 8vw, 7rem) var(--tdm-status-padding-inline)
   place-items: center
   background: var(--tdm-surface-app)
   color: var(--tdm-fg-primary)
@@ -19,14 +20,16 @@
 
 .icon
   display: grid
-  width: var(--tdm-status-icon-size)
-  height: var(--tdm-status-icon-size)
+  width: clamp(4.5rem, 8vw, 6rem)
+  height: clamp(4.5rem, 8vw, 6rem)
   place-items: center
-  color: var(--tdm-fg-secondary)
 
-  :global(svg)
+  :global(img), :global(svg)
     width: 100%
     height: 100%
+    object-fit: contain
+
+  :global(svg)
     fill: none
     stroke: currentColor
     stroke-width: var(--tdm-icon-stroke-default)
@@ -54,7 +57,7 @@
   text-wrap: balance
 
 .description
-  max-width: 52ch
+  max-width: 46ch
   margin: 0
   color: var(--tdm-fg-secondary)
   font-size: var(--tdm-status-body-size)
