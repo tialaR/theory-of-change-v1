@@ -6,6 +6,7 @@ export type CanvasNode = {
   stage: StageId;
   title: string;
   description: string;
+  advancedDetails: string;
   x: number;
   y: number;
 };
@@ -15,7 +16,9 @@ export type CanvasEdge = {
   source: string;
   target: string;
   relationKind?: RelationKind;
+  relationTitle?: string;
   relationText?: string;
+  relationAdvancedDetails?: string;
 };
 
 export type CanvasSnapshot = {

@@ -25,5 +25,9 @@ export const previewIcons = {
   collapse: <Icon><path d="m8 10 4 4 4-4" /></Icon>,
   expand: <Icon><path d="m8 14 4-4 4 4" /></Icon>,
   cursor: <Icon><path d="m5 3 14 8-6 2-2 6Z" /></Icon>,
-  lock: <Icon><rect x="5" y="10" width="14" height="10" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></Icon>
+  lock: <Icon><rect x="5" y="10" width="14" height="10" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></Icon>,
+  edit: <Icon><path d="M12 20h9" /><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" /></Icon>,
+  duplicate: <Icon><rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" /></Icon>,
+  trash: <Icon><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5" /></Icon>,
+  cancel: <Icon><circle cx="12" cy="12" r="9" /><path d="m9 9 6 6M15 9l-6 6" /></Icon>
 };

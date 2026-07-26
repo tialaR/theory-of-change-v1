@@ -1,17 +1,26 @@
 'use client';
 
-import { useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
+import {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  type DragEvent as ReactDragEvent,
+  type PointerEvent as ReactPointerEvent
+} from 'react';
+import { TdmIconButton } from '../../shared/ui/tdm-icon-button/tdm-icon-button';
 import styles from './resend-command-preview-v2.module.sass';
 import { previewIcons as icons } from './resend-command-preview-v2.icons';
 import {
   INITIAL_EDGES,
   INITIAL_NODES,
   STAGES,
+  allowedRelation,
   canConnect,
   stageMeta,
   type CanvasEdge,
   type CanvasNode,
-  allowedRelation,
   type CanvasSnapshot,
   type RelationKind,
   type StageId
@@ -21,12 +30,56 @@ const NODE_WIDTH = 238;
 const NODE_HEIGHT = 126;
 const CANVAS_WIDTH = 1480;
 const CANVAS_HEIGHT = 820;
+const NODE_EDGE_GAP = 24;
+const NODE_DROP_OFFSET_X = NODE_WIDTH / 2;
+const NODE_DROP_OFFSET_Y = 40;
+const DUPLICATE_OFFSET = 34;
+const HISTORY_LIMIT = 24;
+const SAVE_DELAY_MS = 680;
+const DRAG_STAGE_MIME = 'application/x-tdm-stage';
+const EDGE_POPOVER_GAP = 14;
+const EDGE_TOOLBAR_WIDTH = 176;
+const EDGE_TOOLBAR_HEIGHT = 44;
+const EDGE_FORM_WIDTH = 224;
+const EDGE_FORM_HEIGHT = 196;
+const COLUMN_X: Record<StageId, number> = { input: 120, activity: 430, product: 740, outcome: 1050 };
+const COLUMN_GAP_Y = 172;
+const COLUMN_START_Y = 120;
 
-type DragState = {
-  id: string;
-  offsetX: number;
-  offsetY: number;
-};
+const TOOLTIP_LABELS = {
+  undo: 'Desfazer última alteração', redo: 'Refazer alteração', history: 'Abrir histórico', save: 'Salvar teoria',
+  select: 'Selecionar blocos', zoomIn: 'Aproximar visualização', zoomOut: 'Afastar visualização', fit: 'Centralizar visualização',
+  more: 'Abrir ações do card', closeToolbar: 'Fechar toolbar', edit: 'Editar card', duplicate: 'Duplicar card',
+  delete: 'Excluir card', closeInspector: 'Fechar inspector', source: 'Definir como origem da conexão',
+  target: 'Definir como destino da conexão', closeRelation: 'Fechar ações da conexão', deleteConnection: 'Excluir conexão',
+  addRisk: 'Adicionar risco', editRisk: 'Editar risco', removeRisk: 'Excluir risco',
+  addHypothesis: 'Adicionar hipótese', editHypothesis: 'Editar hipótese', removeHypothesis: 'Excluir hipótese',
+  back: 'Voltar para o início', result: 'Visualizar resultado', columns: 'Centralizar em colunas',
+  frame: 'Enquadrar visualização', guide: 'Visualizar guia da teoria', examples: 'Visualizar exemplos', flow: 'Organizar fluxo'
+} as const;
+
+type DragState = { id: string; offsetX: number; offsetY: number };
+type ConnectionDragState = { sourceId: string; x: number; y: number; pointerId: number };
+type NodeDraft = Pick<CanvasNode, 'title' | 'description' | 'advancedDetails'>;
+type RelationDraft = { title: string; description: string; advancedDetails: string };
+type RelationPanelMode = 'menu' | 'form';
+type NodeMetric = { left: number; right: number; centerY: number };
+
+function createNodeDraft(node: CanvasNode): NodeDraft {
+  return { title: node.title, description: node.description, advancedDetails: node.advancedDetails };
+}
+
+function createRelationDraft(edge: CanvasEdge, kind: RelationKind): RelationDraft {
+  return {
+    title: edge.relationTitle ?? (kind === 'risk' ? 'Risco da conexão' : 'Hipótese da conexão'),
+    description: edge.relationText ?? '',
+    advancedDetails: edge.relationAdvancedDetails ?? ''
+  };
+}
+
+function isStageId(value: string): value is StageId {
+  return STAGES.some((stage) => stage.id === value);
+}
 
 export function ResendCommandPreviewV2() {
   const [nodes, setNodes] = useState<CanvasNode[]>(INITIAL_NODES);
@@ -35,74 +88,223 @@ export function ResendCommandPreviewV2() {
   const [future, setFuture] = useState<CanvasSnapshot[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedEdgeId, setSelectedEdgeId] = useState<string | null>(null);
-  const [relationText, setRelationText] = useState('');
   const [creatorOpen, setCreatorOpen] = useState(false);
   const [inspectorOpen, setInspectorOpen] = useState(true);
   const [historyOpen, setHistoryOpen] = useState(false);
-  const [connectSource, setConnectSource] = useState<string | null>(null);
-  const [notice, setNotice] = useState('Canvas vazio. Adicione qualquer etapa para começar.');
+  const [connectionSourceId, setConnectionSourceId] = useState<string | null>(null);
+  const [connectionDrag, setConnectionDrag] = useState<ConnectionDragState | null>(null);
+  const [activeToolbarId, setActiveToolbarId] = useState<string | null>(null);
+  const [editingNodeId, setEditingNodeId] = useState<string | null>(null);
+  const [editDraft, setEditDraft] = useState<NodeDraft | null>(null);
+  const [relationPanelMode, setRelationPanelMode] = useState<RelationPanelMode>('menu');
+  const [relationPopoverOpen, setRelationPopoverOpen] = useState(false);
+  const [relationDraft, setRelationDraft] = useState<RelationDraft | null>(null);
+  const [cardAdvancedOpenId, setCardAdvancedOpenId] = useState<string | null>(null);
+  const [inspectorAdvancedOpenKey, setInspectorAdvancedOpenKey] = useState<string | null>(null);
+  const [notice, setNotice] = useState('Canvas vazio. Arraste qualquer etapa para começar.');
+  const [noticeTone, setNoticeTone] = useState<'info' | 'warning'>('info');
   const [saveState, setSaveState] = useState<'saved' | 'dirty' | 'saving'>('saved');
+  const [projectTitle, setProjectTitle] = useState('Minha teoria da mudança');
+  const [fullCanvasMode, setFullCanvasMode] = useState(false);
+  const [nodeMetrics, setNodeMetrics] = useState<Record<string, NodeMetric>>({});
   const dragRef = useRef<DragState | null>(null);
   const canvasRef = useRef<HTMLDivElement | null>(null);
+  const viewportRef = useRef<HTMLDivElement | null>(null);
   const idCounterRef = useRef(10);
 
   const selectedNode = nodes.find((node) => node.id === selectedId) ?? null;
   const selectedEdge = edges.find((edge) => edge.id === selectedEdgeId) ?? null;
   const selectedEdgeSource = selectedEdge ? nodes.find((node) => node.id === selectedEdge.source) ?? null : null;
   const selectedEdgeTarget = selectedEdge ? nodes.find((node) => node.id === selectedEdge.target) ?? null : null;
-  const selectedRelationKind = selectedEdgeSource && selectedEdgeTarget ? allowedRelation(selectedEdgeSource.stage, selectedEdgeTarget.stage) : null;
+  const selectedRelationKind = selectedEdgeSource && selectedEdgeTarget
+    ? allowedRelation(selectedEdgeSource.stage, selectedEdgeTarget.stage)
+    : null;
 
-  const counts = useMemo(() => {
-    return STAGES.reduce<Record<StageId, number>>((result, stage) => {
-      result[stage.id] = nodes.filter((node) => node.stage === stage.id).length;
-      return result;
-    }, { input: 0, activity: 0, product: 0, outcome: 0 });
-  }, [nodes]);
+  useEffect(() => {
+    setInspectorAdvancedOpenKey(null);
+  }, [selectedId, selectedEdgeId]);
+
+
+  useEffect(() => {
+    if (!relationPopoverOpen || !selectedEdgeId) return undefined;
+    function closeRelationToolbarOnOutsidePointer(event: PointerEvent) {
+      const target = event.target as HTMLElement | null;
+      if (!target) return;
+      const popover = target.closest('[data-edge-popover]');
+      const edgeAction = target.closest(`[data-edge-action-id="${selectedEdgeId}"]`);
+      if (!popover && !edgeAction) setRelationPopoverOpen(false);
+    }
+    document.addEventListener('pointerdown', closeRelationToolbarOnOutsidePointer, true);
+    return () => document.removeEventListener('pointerdown', closeRelationToolbarOnOutsidePointer, true);
+  }, [relationPopoverOpen, selectedEdgeId]);
+
+  useEffect(() => {
+    if (!activeToolbarId) return undefined;
+    function closeToolbarOnOutsidePointer(event: PointerEvent) {
+      const target = event.target as HTMLElement | null;
+      if (!target) return;
+      const card = target.closest(`[data-node-card-id="${activeToolbarId}"]`);
+      const toolbar = target.closest(`[data-node-toolbar-id="${activeToolbarId}"]`);
+      if (!card && !toolbar) setActiveToolbarId(null);
+    }
+    document.addEventListener('pointerdown', closeToolbarOnOutsidePointer, true);
+    return () => document.removeEventListener('pointerdown', closeToolbarOnOutsidePointer, true);
+  }, [activeToolbarId]);
+
+  useLayoutEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return undefined;
+    let animationFrame = 0;
+    function measureNodes() {
+      const canvasRect = canvas.getBoundingClientRect();
+      const next: Record<string, NodeMetric> = {};
+      canvas.querySelectorAll<HTMLElement>('[data-canvas-node]').forEach((element) => {
+        const nodeId = element.dataset.nodeCardId;
+        if (!nodeId) return;
+        const rect = element.getBoundingClientRect();
+        next[nodeId] = {
+          left: rect.left - canvasRect.left,
+          right: rect.right - canvasRect.left,
+          centerY: rect.top - canvasRect.top + rect.height / 2
+        };
+      });
+      setNodeMetrics(next);
+    }
+    animationFrame = window.requestAnimationFrame(measureNodes);
+    window.addEventListener('resize', measureNodes);
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      window.removeEventListener('resize', measureNodes);
+    };
+  }, [nodes, editingNodeId, cardAdvancedOpenId]);
+
+  const counts = useMemo(() => STAGES.reduce<Record<StageId, number>>((result, stage) => {
+    result[stage.id] = nodes.filter((node) => node.stage === stage.id).length;
+    return result;
+  }, { input: 0, activity: 0, product: 0, outcome: 0 }), [nodes]);
 
   function capture() {
-    setHistory((items) => [...items, { nodes, edges }].slice(-24));
+    setHistory((items) => [...items, { nodes, edges }].slice(-HISTORY_LIMIT));
     setFuture([]);
     setSaveState('dirty');
   }
 
-  function addNode(stage: StageId) {
-    capture();
+  function clearSelection() {
+    setSelectedId(null);
+    setSelectedEdgeId(null);
+    setRelationDraft(null);
+    setRelationPanelMode('menu');
+    setRelationPopoverOpen(false);
+  }
+
+  function createNode(stage: StageId, x: number, y: number) {
     const meta = stageMeta(stage);
     const count = counts[stage] + 1;
     idCounterRef.current += 1;
     const next: CanvasNode = {
-      id: `node-${stage}-${idCounterRef.current}`,
-      stage,
-      title: `${meta.singular} ${count}`,
-      description: meta.hint,
-      x: 220 + count * 46,
-      y: 190 + (STAGES.findIndex((item) => item.id === stage) % 2) * 190
+      id: `node-${stage}-${idCounterRef.current}`, stage, title: `${meta.singular} ${count}`,
+      description: meta.hint, advancedDetails: '', x, y
     };
+    capture();
     setNodes((items) => [...items, next]);
     setSelectedId(next.id);
     setSelectedEdgeId(null);
     setInspectorOpen(true);
     setCreatorOpen(false);
-    setNotice(`${meta.singular} adicionado. Agora você pode posicioná-lo livremente.`);
+    setNotice(`${meta.singular} adicionado. Você pode posicioná-lo livremente.`);
   }
 
-  function updateSelected(field: 'title' | 'description', value: string) {
+  function startStageDrag(event: ReactDragEvent<HTMLButtonElement>, stage: StageId) {
+    event.dataTransfer.effectAllowed = 'copy';
+    event.dataTransfer.setData(DRAG_STAGE_MIME, stage);
+    setNotice(`Arraste ${stageMeta(stage).singular.toLowerCase()} para a posição desejada no canvas.`);
+  }
+
+  function allowStageDrop(event: ReactDragEvent<HTMLDivElement>) {
+    if (!event.dataTransfer.types.includes(DRAG_STAGE_MIME)) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'copy';
+  }
+
+  function dropStage(event: ReactDragEvent<HTMLDivElement>) {
+    const stageValue = event.dataTransfer.getData(DRAG_STAGE_MIME);
+    if (!isStageId(stageValue)) return;
+    event.preventDefault();
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const maxX = CANVAS_WIDTH - NODE_WIDTH - NODE_EDGE_GAP;
+    const maxY = CANVAS_HEIGHT - NODE_HEIGHT - NODE_EDGE_GAP;
+    createNode(
+      stageValue,
+      Math.max(NODE_EDGE_GAP, Math.min(maxX, event.clientX - rect.left - NODE_DROP_OFFSET_X)),
+      Math.max(NODE_EDGE_GAP, Math.min(maxY, event.clientY - rect.top - NODE_DROP_OFFSET_Y))
+    );
+  }
+
+  function updateSelected(field: keyof NodeDraft, value: string) {
     if (!selectedId) return;
     setNodes((items) => items.map((node) => node.id === selectedId ? { ...node, [field]: value } : node));
     setSaveState('dirty');
   }
 
+  function duplicateNode(nodeId: string) {
+    const source = nodes.find((node) => node.id === nodeId);
+    if (!source) return;
+    idCounterRef.current += 1;
+    const duplicate: CanvasNode = {
+      ...source, id: `node-${source.stage}-${idCounterRef.current}`, title: `${source.title} cópia`,
+      x: Math.min(CANVAS_WIDTH - NODE_WIDTH - NODE_EDGE_GAP, source.x + DUPLICATE_OFFSET),
+      y: Math.min(CANVAS_HEIGHT - NODE_HEIGHT - NODE_EDGE_GAP, source.y + DUPLICATE_OFFSET)
+    };
+    capture();
+    setNodes((items) => [...items, duplicate]);
+    setSelectedId(duplicate.id);
+    setSelectedEdgeId(null);
+    setActiveToolbarId(duplicate.id);
+    setNotice('Card duplicado sem alterar o original.');
+  }
+
+  function deleteNode(nodeId: string) {
+    const node = nodes.find((item) => item.id === nodeId);
+    if (!node) return;
+    capture();
+    setNodes((items) => items.filter((item) => item.id !== nodeId));
+    setEdges((items) => items.filter((edge) => edge.source !== nodeId && edge.target !== nodeId));
+    clearSelection();
+    setActiveToolbarId(null);
+    setEditingNodeId(null);
+    setEditDraft(null);
+    setNotice(`${stageMeta(node.stage).singular} excluído.`);
+  }
+
+  function openCardEditor(node: CanvasNode) {
+    setSelectedId(node.id);
+    setSelectedEdgeId(null);
+    setEditingNodeId(node.id);
+    setEditDraft(createNodeDraft(node));
+    setActiveToolbarId(node.id);
+    setInspectorOpen(true);
+    setCardAdvancedOpenId(null);
+  }
+
+  function saveCardEditor(nodeId: string) {
+    if (!editDraft) return;
+    capture();
+    setNodes((items) => items.map((node) => node.id === nodeId ? { ...node, ...editDraft } : node));
+    setEditingNodeId(null);
+    setEditDraft(null);
+    setCardAdvancedOpenId(null);
+    setNotice('Card atualizado no próprio canvas.');
+  }
+
   function startDrag(event: ReactPointerEvent<HTMLElement>, node: CanvasNode) {
     const target = event.target as HTMLElement;
-    if (target.closest('button, input, textarea')) return;
+    if (target.closest('button, input, textarea, summary, details')) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
-    dragRef.current = {
-      id: node.id,
-      offsetX: event.clientX - rect.left - node.x,
-      offsetY: event.clientY - rect.top - node.y
-    };
+    dragRef.current = { id: node.id, offsetX: event.clientX - rect.left - node.x, offsetY: event.clientY - rect.top - node.y };
     event.currentTarget.setPointerCapture(event.pointerId);
     setSelectedId(node.id);
   }
@@ -112,80 +314,164 @@ export function ResendCommandPreviewV2() {
     const canvas = canvasRef.current;
     if (!drag || !canvas) return;
     const rect = canvas.getBoundingClientRect();
-    const x = Math.max(24, Math.min(CANVAS_WIDTH - NODE_WIDTH - 24, event.clientX - rect.left - drag.offsetX));
-    const y = Math.max(72, Math.min(CANVAS_HEIGHT - NODE_HEIGHT - 24, event.clientY - rect.top - drag.offsetY));
+    const maxX = CANVAS_WIDTH - NODE_WIDTH - NODE_EDGE_GAP;
+    const maxY = CANVAS_HEIGHT - NODE_HEIGHT - NODE_EDGE_GAP;
+    const x = Math.max(NODE_EDGE_GAP, Math.min(maxX, event.clientX - rect.left - drag.offsetX));
+    const y = Math.max(72, Math.min(maxY, event.clientY - rect.top - drag.offsetY));
     setNodes((items) => items.map((node) => node.id === drag.id ? { ...node, x, y } : node));
     setSaveState('dirty');
   }
 
-  function endDrag() {
-    if (dragRef.current) {
-      setNotice('Posição atualizada.');
-      dragRef.current = null;
-    }
+  function getCanvasPoint(clientX: number, clientY: number) {
+    const canvas = canvasRef.current;
+    if (!canvas) return null;
+    const rect = canvas.getBoundingClientRect();
+    return { x: clientX - rect.left, y: clientY - rect.top };
   }
 
-  function beginConnection(nodeId: string) {
-    if (!connectSource) {
-      setConnectSource(nodeId);
-      setNotice('Selecione o próximo bloco da cadeia lógica.');
+  function beginConnectionDrag(event: ReactPointerEvent<HTMLButtonElement>, sourceId: string) {
+    const point = getCanvasPoint(event.clientX, event.clientY);
+    if (!point) return;
+    event.stopPropagation();
+    event.preventDefault();
+    event.currentTarget.setPointerCapture(event.pointerId);
+    setConnectionSourceId(sourceId);
+    setConnectionDrag({ sourceId, x: point.x, y: point.y, pointerId: event.pointerId });
+    clearSelection();
+    setNoticeTone('info');
+    setNotice('Conexão iniciada. Arraste até um dot da etapa causal seguinte.');
+  }
+
+  function moveConnectionDrag(event: ReactPointerEvent<HTMLDivElement>) {
+    if (!connectionDrag) return;
+    const point = getCanvasPoint(event.clientX, event.clientY);
+    if (!point) return;
+    setConnectionDrag((current) => current ? { ...current, x: point.x, y: point.y } : current);
+  }
+
+  function finishConnectionDrag(event: ReactPointerEvent<HTMLDivElement>) {
+    if (!connectionDrag) return;
+    const targetElement = document.elementFromPoint(event.clientX, event.clientY)?.closest<HTMLElement>('[data-connection-target]');
+    const targetId = targetElement?.dataset.connectionTarget ?? null;
+    setConnectionDrag(null);
+    if (!targetId) {
+      setConnectionSourceId(null);
+      setNoticeTone('warning');
+      setNotice('Conexão não concluída. Solte a linha em um dot de um card compatível à direita.');
       return;
     }
-    if (connectSource === nodeId) {
-      setConnectSource(null);
-      setNotice('Conexão cancelada.');
+    completeManualConnection(targetId);
+  }
+
+  function completeManualConnection(targetId: string) {
+    const sourceId = connectionSourceId;
+    if (!sourceId) {
+      setNoticeTone('warning');
+      setNotice('Escolha primeiro um dot de origem.');
       return;
     }
-    const source = nodes.find((node) => node.id === connectSource);
-    const target = nodes.find((node) => node.id === nodeId);
+    if (sourceId === targetId) {
+      setConnectionSourceId(null);
+      setNoticeTone('warning');
+      setNotice('Escolha outro card como destino da conexão.');
+      return;
+    }
+    const source = nodes.find((node) => node.id === sourceId);
+    const target = nodes.find((node) => node.id === targetId);
     if (!source || !target) return;
     if (!canConnect(source.stage, target.stage)) {
-      setNotice(`Conexão bloqueada: ${stageMeta(source.stage).label} só conecta à etapa seguinte.`);
-      setConnectSource(null);
+      setConnectionSourceId(null);
+      setNoticeTone('warning');
+      if (source.stage === target.stage) {
+        setNotice(`Escolha uma etapa diferente. ${stageMeta(source.stage).label} não se conectam entre si.`);
+        return;
+      }
+      if (source.stage === 'outcome') {
+        setNotice('Resultados encerram esta cadeia causal. Para continuar, inicie a conexão em uma etapa anterior.');
+        return;
+      }
+      const nextStage = source.stage === 'input' ? 'activity' : source.stage === 'activity' ? 'product' : 'outcome';
+      setNotice(`${stageMeta(source.stage).label} se conectam a ${stageMeta(nextStage).label}. Escolha um card dessa próxima etapa para continuar.`);
       return;
     }
     if (edges.some((edge) => edge.source === source.id && edge.target === target.id)) {
-      setNotice('Essa conexão já existe.');
-      setConnectSource(null);
+      setConnectionSourceId(null);
+      setNoticeTone('warning');
+      setNotice('Essa conexão já existe no canvas.');
       return;
     }
     capture();
     idCounterRef.current += 1;
     setEdges((items) => [...items, { id: `edge-${idCounterRef.current}`, source: source.id, target: target.id }]);
-    setConnectSource(null);
-    setNotice('Conexão criada e validada pela regra causal.');
+    setConnectionSourceId(null);
+    setNoticeTone('info');
+    setNotice('Conexão criada. Clique na seta para qualificar ou excluir.');
   }
 
-
-  function openRelationEditor(edge: CanvasEdge) {
+  function selectConnection(edge: CanvasEdge) {
     const source = nodes.find((node) => node.id === edge.source);
     const target = nodes.find((node) => node.id === edge.target);
-    if (!source || !target || !allowedRelation(source.stage, target.stage)) return;
-    setSelectedEdgeId(edge.id);
+    if (!source || !target) return;
+    const kind = allowedRelation(source.stage, target.stage);
+    if (!kind) return;
     setSelectedId(null);
-    setRelationText(edge.relationText ?? '');
+    setSelectedEdgeId(edge.id);
+    setRelationDraft(createRelationDraft(edge, kind));
+    setRelationPanelMode('menu');
+    setRelationPopoverOpen(true);
     setInspectorOpen(true);
-    setNotice('Qualifique esta conexão sem alterar a estrutura do canvas.');
+    setNotice('Conexão selecionada. As ações disponíveis respeitam a regra causal.');
   }
 
-  function saveRelation(kind: RelationKind) {
-    if (!selectedEdge || !selectedRelationKind || selectedRelationKind !== kind) return;
-    const text = relationText.trim();
-    if (!text) {
-      setNotice(kind === 'risk' ? 'Descreva o risco antes de salvar.' : 'Descreva a hipótese antes de salvar.');
+  function openRelationForm() {
+    if (!selectedEdge || !selectedRelationKind) return;
+    setRelationDraft(createRelationDraft(selectedEdge, selectedRelationKind));
+    setRelationPanelMode('form');
+  }
+
+  function updateRelationDraft(field: keyof RelationDraft, value: string) {
+    setRelationDraft((current) => current ? { ...current, [field]: value } : current);
+  }
+
+  function saveRelation() {
+    if (!selectedEdge || !selectedRelationKind || !relationDraft) return;
+    if (!relationDraft.description.trim()) {
+      setNotice(selectedRelationKind === 'risk' ? 'Descreva o risco antes de salvar.' : 'Descreva a hipótese antes de salvar.');
       return;
     }
     capture();
-    setEdges((items) => items.map((edge) => edge.id === selectedEdge.id ? { ...edge, relationKind: kind, relationText: text } : edge));
-    setNotice(kind === 'risk' ? 'Risco adicionado à conexão.' : 'Hipótese adicionada à conexão.');
+    setEdges((items) => items.map((edge) => edge.id === selectedEdge.id ? {
+      ...edge,
+      relationKind: selectedRelationKind,
+      relationTitle: relationDraft.title.trim(),
+      relationText: relationDraft.description.trim(),
+      relationAdvancedDetails: relationDraft.advancedDetails.trim()
+    } : edge));
+    setRelationPanelMode('menu');
+    setNotice(selectedRelationKind === 'risk' ? 'Risco salvo na conexão.' : 'Hipótese salva na conexão.');
   }
 
-  function removeRelation() {
+  function removeRelationMarker() {
+    if (!selectedEdge || !selectedEdge.relationKind) return;
+    capture();
+    setEdges((items) => items.map((edge) => edge.id === selectedEdge.id ? {
+      ...edge,
+      relationKind: undefined,
+      relationTitle: undefined,
+      relationText: undefined,
+      relationAdvancedDetails: undefined
+    } : edge));
+    setRelationDraft(selectedRelationKind ? createRelationDraft({ ...selectedEdge, relationKind: undefined, relationTitle: undefined, relationText: undefined, relationAdvancedDetails: undefined }, selectedRelationKind) : null);
+    setRelationPanelMode('menu');
+    setNotice('Marcador removido. A conexão causal foi preservada.');
+  }
+
+  function deleteConnection() {
     if (!selectedEdge) return;
     capture();
-    setEdges((items) => items.map((edge) => edge.id === selectedEdge.id ? { ...edge, relationKind: undefined, relationText: undefined } : edge));
-    setRelationText('');
-    setNotice('Qualificação removida. A conexão foi preservada.');
+    setEdges((items) => items.filter((edge) => edge.id !== selectedEdge.id));
+    clearSelection();
+    setNotice('Conexão excluída sem alterar os blocos.');
   }
 
   function undo() {
@@ -213,190 +499,260 @@ export function ResendCommandPreviewV2() {
   function save() {
     setSaveState('saving');
     setNotice('Salvando versão local…');
-    window.setTimeout(() => {
-      setSaveState('saved');
-      setNotice('Tudo salvo.');
-    }, 680);
+    window.setTimeout(() => { setSaveState('saved'); setNotice('Tudo salvo.'); }, SAVE_DELAY_MS);
   }
 
+  function nodeAnchor(node: CanvasNode, side: 'left' | 'right') {
+    const metric = nodeMetrics[node.id];
+    if (metric) return { x: side === 'left' ? metric.left : metric.right, y: metric.centerY };
+    return { x: side === 'left' ? node.x : node.x + NODE_WIDTH, y: node.y + NODE_HEIGHT / 2 };
+  }
+
+  function relationOverlayPosition(midX: number, midY: number) {
+    const isForm = relationPanelMode === 'form';
+    const width = isForm ? EDGE_FORM_WIDTH : EDGE_TOOLBAR_WIDTH;
+    const height = isForm ? EDGE_FORM_HEIGHT : EDGE_TOOLBAR_HEIGHT;
+    const unclampedLeft = midX - width / 2;
+    const left = Math.max(EDGE_POPOVER_GAP, Math.min(CANVAS_WIDTH - width - EDGE_POPOVER_GAP, unclampedLeft));
+    const preferredTop = midY - height - EDGE_POPOVER_GAP;
+    const top = preferredTop >= EDGE_POPOVER_GAP
+      ? preferredTop
+      : Math.min(CANVAS_HEIGHT - height - EDGE_POPOVER_GAP, midY + EDGE_POPOVER_GAP);
+    return { left, top };
+  }
+
+  function updateNodeLayout(nextNodes: CanvasNode[], message: string) {
+    capture();
+    setNodes(nextNodes);
+    setNoticeTone('info');
+    setNotice(message);
+  }
+
+  function centralizeColumns() {
+    const nextNodes = nodes.map((node) => {
+      const stageNodes = nodes
+        .filter((candidate) => candidate.stage === node.stage)
+        .sort((first, second) => first.y - second.y || first.id.localeCompare(second.id));
+      const index = stageNodes.findIndex((candidate) => candidate.id === node.id);
+      return { ...node, x: COLUMN_X[node.stage], y: COLUMN_START_Y + Math.max(index, 0) * COLUMN_GAP_Y };
+    });
+    updateNodeLayout(nextNodes, 'As etapas foram centralizadas em colunas.');
+  }
+
+  function organizeFlow() {
+    const connectionCount = (nodeId: string) => edges.filter((edge) => edge.source === nodeId || edge.target === nodeId).length;
+    const nextNodes = nodes.map((node) => {
+      const stageNodes = nodes
+        .filter((candidate) => candidate.stage === node.stage)
+        .sort((first, second) => connectionCount(second.id) - connectionCount(first.id) || first.y - second.y);
+      const index = stageNodes.findIndex((candidate) => candidate.id === node.id);
+      return { ...node, x: COLUMN_X[node.stage], y: COLUMN_START_Y + Math.max(index, 0) * COLUMN_GAP_Y };
+    });
+    updateNodeLayout(nextNodes, 'O fluxo foi organizado para facilitar a leitura das conexões.');
+  }
+
+  function frameVisualization() {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+    if (!nodes.length) {
+      viewport.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
+      setNotice('A visualização foi centralizada.');
+      return;
+    }
+    const minX = Math.min(...nodes.map((node) => node.x));
+    const minY = Math.min(...nodes.map((node) => node.y));
+    const maxX = Math.max(...nodes.map((node) => node.x + NODE_WIDTH));
+    const maxY = Math.max(...nodes.map((node) => node.y + NODE_HEIGHT));
+    const contentCenterX = (minX + maxX) / 2;
+    const contentCenterY = (minY + maxY) / 2;
+    viewport.scrollTo({
+      left: Math.max(0, contentCenterX - viewport.clientWidth / 2),
+      top: Math.max(0, contentCenterY - viewport.clientHeight / 2),
+      behavior: 'smooth'
+    });
+    setNotice('A teoria foi enquadrada na área de trabalho.');
+  }
+
+  function openGuide() {
+    window.location.assign('/guia-de-aprendizado');
+  }
+
+  function openExamples() {
+    window.location.assign('/exemplos');
+  }
+
+  function openResult() {
+    window.sessionStorage.setItem('tdm-canvas-v4-result', JSON.stringify({ nodes, edges }));
+    window.location.assign('/canvas/resultado');
+  }
+
+
   return (
-    <main className={styles.page}>
-      <header className={styles.topbar}>
-        <div className={styles.brandGroup}>
-          <div className={styles.brandMark} aria-hidden="true"><span /><span /><span /></div>
-          <div>
-            <strong>TMD Construtor</strong>
-            <span>Canvas de Teoria da Mudança · V2</span>
-          </div>
-        </div>
-
-        <div className={styles.documentState} data-state={saveState}>
-          <span className={styles.stateDot} />
-          {saveState === 'saved' ? 'Salvo' : saveState === 'saving' ? 'Salvando…' : 'Alterações não salvas'}
-        </div>
-
+    <main className={styles.page} data-full-canvas={fullCanvasMode}>
+      {!fullCanvasMode && <header className={styles.topbar}>
+        <div className={styles.brandNavigation}><TdmIconButton href="/" aria-label={TOOLTIP_LABELS.back} tooltip={TOOLTIP_LABELS.back} tooltipPosition="right" variant="ghost" size="sm" className={styles.backButton}><span aria-hidden="true">{icons.chevron}</span></TdmIconButton><div className={styles.brandGroup}><img className={styles.brandLogo} src="/brand/tmd-construtor-header-canonical.webp" alt="TMD Construtor" /></div></div>
+        <input className={styles.projectTitle} aria-label="Título da teoria" value={projectTitle} onChange={(event) => setProjectTitle(event.target.value)} maxLength={96} />
         <div className={styles.topActions}>
-          <button type="button" onClick={undo} disabled={!history.length} title="Desfazer">{icons.undo}</button>
-          <button type="button" onClick={redo} disabled={!future.length} title="Refazer">{icons.redo}</button>
-          <button type="button" onClick={() => setHistoryOpen((value) => !value)} data-active={historyOpen}>{icons.history}<span>Histórico</span></button>
-          <button type="button" className={styles.saveButton} onClick={save}>{icons.save}<span>Salvar</span></button>
+          <button type="button" className={styles.headerIconButton} onClick={undo} disabled={!history.length} data-tooltip={TOOLTIP_LABELS.undo}>{icons.undo}</button>
+          <button type="button" className={styles.headerIconButton} onClick={redo} disabled={!future.length} data-tooltip={TOOLTIP_LABELS.redo}>{icons.redo}</button>
+          <button type="button" className={styles.headerActionButton} onClick={() => setHistoryOpen((value) => !value)} data-active={historyOpen} data-tooltip={TOOLTIP_LABELS.history}>{icons.history}<span>Histórico</span></button>
+          <button type="button" className={`${styles.headerActionButton} ${styles.resultButton}`} onClick={openResult} data-tooltip={TOOLTIP_LABELS.result}><span className={styles.eyeIcon} aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.8 12s3.3-5.4 9.2-5.4S21.2 12 21.2 12 17.9 17.4 12 17.4 2.8 12 2.8 12Z"/><circle cx="12" cy="12" r="2.4"/></svg></span><span>Resultado</span></button>
+          <button type="button" className={`${styles.headerActionButton} ${styles.saveButton}`} onClick={save} data-tooltip={TOOLTIP_LABELS.save}>{icons.save}<span>Salvar</span></button>
         </div>
-      </header>
+      </header>}
 
-      <section className={styles.workspace}>
+      <section className={styles.workspace} data-full-canvas={fullCanvasMode}>
         <aside className={styles.rail} aria-label="Ferramentas do canvas">
-          <button type="button" data-active="true" title="Selecionar">{icons.cursor}</button>
-          <button type="button" data-active={Boolean(connectSource)} onClick={() => setConnectSource(selectedId)} title="Conectar">{icons.connect}</button>
+          <button type="button" data-active="true" data-tooltip={TOOLTIP_LABELS.select}>{icons.cursor}</button>
           <span className={styles.railDivider} />
-          <button type="button" title="Aproximar">{icons.zoomIn}</button>
-          <button type="button" title="Afastar">{icons.zoomOut}</button>
-          <button type="button" title="Centralizar">{icons.fit}</button>
+          <button type="button" data-tooltip={TOOLTIP_LABELS.zoomIn}>{icons.zoomIn}</button>
+          <button type="button" data-tooltip={TOOLTIP_LABELS.zoomOut}>{icons.zoomOut}</button>
+          <button type="button" data-tooltip={TOOLTIP_LABELS.fit} onClick={frameVisualization}>{icons.fit}</button>
+          <button type="button" data-tooltip={TOOLTIP_LABELS.fullCanvas} onClick={() => { setFullCanvasMode(true); setInspectorOpen(false); setHistoryOpen(false); }} aria-label={TOOLTIP_LABELS.fullCanvas}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg></button>
         </aside>
 
-        <div className={styles.canvasViewport}>
-          <div
-            ref={canvasRef}
-            className={styles.canvas}
-            style={{ width: CANVAS_WIDTH, height: CANVAS_HEIGHT }}
-            onPointerMove={moveDrag}
-            onPointerUp={endDrag}
-            onPointerCancel={endDrag}
-          >
+        {fullCanvasMode && <div className={styles.fullCanvasActions} role="toolbar" aria-label="Ações do canvas completo">
+          <button type="button" onClick={undo} disabled={!history.length} data-tooltip={TOOLTIP_LABELS.undo}>{icons.undo}</button>
+          <button type="button" onClick={redo} disabled={!future.length} data-tooltip={TOOLTIP_LABELS.redo}>{icons.redo}</button>
+          <button type="button" onClick={save} data-tooltip={TOOLTIP_LABELS.save}>{icons.save}</button>
+          <button type="button" onClick={() => setFullCanvasMode(false)} data-tooltip={TOOLTIP_LABELS.closeFullCanvas} aria-label={TOOLTIP_LABELS.closeFullCanvas}>{icons.close}</button>
+        </div>}
+
+        <div ref={viewportRef} className={styles.canvasViewport}>
+          <div ref={canvasRef} className={styles.canvas} style={{ width: CANVAS_WIDTH, height: CANVAS_HEIGHT }}
+            onPointerMove={(event) => { moveDrag(event); moveConnectionDrag(event); }}
+            onPointerUp={(event) => {
+              if (connectionDrag) finishConnectionDrag(event);
+              if (dragRef.current) setNotice('Posição atualizada.');
+              dragRef.current = null;
+            }}
+            onPointerCancel={() => { dragRef.current = null; setConnectionDrag(null); setConnectionSourceId(null); }} onDragOver={allowStageDrop} onDrop={dropStage}>
             <svg className={styles.connections} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} aria-hidden="true">
               {edges.map((edge) => {
                 const source = nodes.find((node) => node.id === edge.source);
                 const target = nodes.find((node) => node.id === edge.target);
                 if (!source || !target) return null;
-                const x1 = source.x + NODE_WIDTH;
-                const y1 = source.y + NODE_HEIGHT / 2;
-                const x2 = target.x;
-                const y2 = target.y + NODE_HEIGHT / 2;
+                const sourceAnchor = nodeAnchor(source, 'right');
+                const targetAnchor = nodeAnchor(target, 'left');
+                const x1 = sourceAnchor.x; const y1 = sourceAnchor.y;
+                const x2 = targetAnchor.x; const y2 = targetAnchor.y;
                 const bend = Math.max(54, Math.abs(x2 - x1) * 0.45);
-                const midX = (x1 + x2) / 2;
-                const midY = (y1 + y2) / 2;
-                return (
-                  <g key={edge.id} className={styles.connectionGroup} data-selected={selectedEdgeId === edge.id}>
-                    <path d={`M ${x1} ${y1} C ${x1 + bend} ${y1}, ${x2 - bend} ${y2}, ${x2} ${y2}`} />
-                    <foreignObject x={midX - 18} y={midY - 18} width="36" height="36">
-                      <button
-                        type="button"
-                        className={styles.edgeAction}
-                        data-kind={edge.relationKind ?? 'empty'}
-                        onClick={() => openRelationEditor(edge)}
-                        aria-label="Qualificar conexão"
-                      >
-                        {edge.relationKind === 'risk' ? 'R' : edge.relationKind === 'hypothesis' ? 'H' : '›'}
-                      </button>
-                    </foreignObject>
-                  </g>
-                );
+                const midX = (x1 + x2) / 2; const midY = (y1 + y2) / 2;
+                return <g key={edge.id} className={styles.connectionGroup} data-selected={selectedEdgeId === edge.id}>
+                  <path d={`M ${x1} ${y1} C ${x1 + bend} ${y1}, ${x2 - bend} ${y2}, ${x2} ${y2}`} />
+                  <foreignObject x={midX - 18} y={midY - 18} width="36" height="36">
+                    <button type="button" data-edge-action-id={edge.id} className={styles.edgeAction} data-kind={edge.relationKind ?? 'empty'} onClick={() => selectConnection(edge)} aria-label="Selecionar conexão">
+                      {edge.relationKind === 'risk' ? 'R' : edge.relationKind === 'hypothesis' ? 'H' : '›'}
+                    </button>
+                  </foreignObject>
+                </g>;
               })}
+              {connectionDrag && (() => {
+                const source = nodes.find((node) => node.id === connectionDrag.sourceId);
+                if (!source) return null;
+                const sourceAnchor = nodeAnchor(source, 'right');
+                const x1 = sourceAnchor.x;
+                const y1 = sourceAnchor.y;
+                const x2 = connectionDrag.x;
+                const y2 = connectionDrag.y;
+                const bend = Math.max(48, Math.abs(x2 - x1) * 0.42);
+                return <path className={styles.connectionPreview} d={`M ${x1} ${y1} C ${x1 + bend} ${y1}, ${x2 - bend} ${y2}, ${x2} ${y2}`} />;
+              })()}
             </svg>
 
-            <div className={styles.stageGuide}>
-              {STAGES.map((stage) => <span key={stage.id} data-stage={stage.id}>{stage.label}</span>)}
-            </div>
-
-            {nodes.map((node) => (
-              <article
-                key={node.id}
-                className={styles.node}
-                data-stage={node.stage}
-                data-selected={selectedId === node.id}
-                data-connecting={connectSource === node.id}
-                style={{ transform: `translate3d(${node.x}px, ${node.y}px, 0)` }}
-                onPointerDown={(event) => startDrag(event, node)}
-                onClick={() => { setSelectedId(node.id); setSelectedEdgeId(null); setInspectorOpen(true); }}
-              >
-                <button type="button" className={styles.nodeHandle} aria-label={`Conectar ${node.title}`} onClick={(event) => { event.stopPropagation(); beginConnection(node.id); }} />
-                <div className={styles.nodeMeta}><span>{stageMeta(node.stage).singular}</span><button type="button" aria-label="Mais opções">{icons.more}</button></div>
-                <h2>{node.title}</h2>
-                <p>{node.description}</p>
-                <div className={styles.nodeFooter}><span>{icons.connect} Conectar</span><small>Arraste para mover</small></div>
-              </article>
-            ))}
-
-            <section className={styles.creator} data-open={creatorOpen} data-stage={selectedNode?.stage ?? 'input'}>
-              <button type="button" className={styles.creatorToggle} onClick={() => setCreatorOpen((value) => !value)} aria-expanded={creatorOpen}>
-                <span className={styles.creatorIcon}><i /><i /><i /></span>
-                {creatorOpen && <span className={styles.creatorHeading}><strong>Adicionar ao canvas</strong><small>Escolha qualquer etapa</small></span>}
-                <span className={styles.creatorChevron}>{creatorOpen ? icons.collapse : icons.expand}</span>
-              </button>
-              {creatorOpen && (
-                <div className={styles.creatorBody}>
-                  {STAGES.map((stage) => (
-                    <button type="button" key={stage.id} data-stage={stage.id} onClick={() => addNode(stage.id)}>
-                      <span className={styles.stageGlyph}>{icons.add}</span>
-                      <span><strong>{stage.singular}</strong><small>{stage.hint}</small></span>
-                      <em>{counts[stage.id]}</em>
+            {nodes.map((node) => {
+              const isEditing = editingNodeId === node.id && editDraft;
+              const toolbarOpen = activeToolbarId === node.id;
+              return <article key={node.id} className={styles.node} data-canvas-node data-node-card-id={node.id} data-stage={node.stage} data-selected={selectedId === node.id}
+                data-connecting={connectionSourceId === node.id} data-editing={Boolean(isEditing)} style={{ transform: `translate3d(${node.x}px, ${node.y}px, 0)` }}
+                onPointerDown={(event) => startDrag(event, node)} onClick={() => { setSelectedId(node.id); setSelectedEdgeId(null); setInspectorOpen(true); }}>
+                {toolbarOpen && <div className={styles.nodeToolbar} data-node-toolbar-id={node.id} role="toolbar" aria-label={`Ações de ${node.title}`}>
+                  <button type="button" onClick={(event) => { event.stopPropagation(); setActiveToolbarId(null); }} data-tooltip={TOOLTIP_LABELS.closeToolbar}>{icons.close}</button>
+                  <button type="button" onClick={(event) => { event.stopPropagation(); openCardEditor(node); }} data-tooltip={TOOLTIP_LABELS.edit}>{icons.edit}</button>
+                  <button type="button" onClick={(event) => { event.stopPropagation(); duplicateNode(node.id); }} data-tooltip={TOOLTIP_LABELS.duplicate}>{icons.duplicate}</button>
+                  <button type="button" onClick={(event) => { event.stopPropagation(); deleteNode(node.id); }} data-tooltip={TOOLTIP_LABELS.delete}>{icons.trash}</button>
+                </div>}
+                <button type="button" className={`${styles.nodeHandle} ${styles.nodeHandleTarget}`} aria-label={`Conectar a partir de ${node.title}`} data-tooltip={TOOLTIP_LABELS.target} data-connection-target={node.id} onPointerDown={(event) => beginConnectionDrag(event, node.id)} />
+                <button type="button" className={`${styles.nodeHandle} ${styles.nodeHandleSource}`} aria-label={`Conectar a partir de ${node.title}`} data-tooltip={TOOLTIP_LABELS.source} data-connection-target={node.id} onPointerDown={(event) => beginConnectionDrag(event, node.id)} />
+                <div className={styles.nodeMeta}><span>{stageMeta(node.stage).singular}</span><button type="button" aria-label="Mais opções" data-tooltip={TOOLTIP_LABELS.more} onClick={(event) => { event.stopPropagation(); setActiveToolbarId((current) => current === node.id ? null : node.id); }}>{icons.more}</button></div>
+                {isEditing ? <div className={styles.nodeEditor} onClick={(event) => event.stopPropagation()}>
+                  <label><span>Título</span><input value={editDraft.title} onChange={(event) => setEditDraft({ ...editDraft, title: event.target.value })} /></label>
+                  <label><span>Descrição</span><textarea value={editDraft.description} onChange={(event) => setEditDraft({ ...editDraft, description: event.target.value })} /></label>
+                  <div className={styles.nodeAdvanced} data-open={cardAdvancedOpenId === node.id}>
+                    <button type="button" className={styles.advancedToggle} aria-expanded={cardAdvancedOpenId === node.id} onClick={(event) => { event.stopPropagation(); setCardAdvancedOpenId((current) => current === node.id ? null : node.id); }}>
+                      <span className={styles.advancedChevron} aria-hidden="true">{icons.chevron}</span>
+                      <span>Detalhes avançados</span>
                     </button>
-                  ))}
-                  <p>{icons.lock}<span>Riscos e hipóteses permanecem disponíveis somente entre relações válidas.</span></p>
-                </div>
-              )}
-            </section>
+                    {cardAdvancedOpenId === node.id && <textarea className={styles.advancedField} value={editDraft.advancedDetails} onChange={(event) => setEditDraft({ ...editDraft, advancedDetails: event.target.value })} placeholder="Inclua contexto adicional" />}
+                  </div>
+                  <div className={styles.nodeEditorActions}><button type="button" onClick={() => { setEditingNodeId(null); setEditDraft(null); }}><span>Cancelar</span></button><button type="button" onClick={() => saveCardEditor(node.id)}><span>Salvar</span></button></div>
+                </div> : <><h2>{node.title}</h2><p>{node.description}</p><div className={styles.nodeFooter}><span>Conectar</span><small>Arraste para mover</small></div></>}
+              </article>;
+            })}
 
-            <div className={styles.notice} role="status"><span />{notice}</div>
+            {selectedEdge && relationPopoverOpen && selectedEdgeSource && selectedEdgeTarget && selectedRelationKind && (() => {
+              const sourceAnchor = nodeAnchor(selectedEdgeSource, 'right');
+              const targetAnchor = nodeAnchor(selectedEdgeTarget, 'left');
+              const midX = (sourceAnchor.x + targetAnchor.x) / 2;
+              const midY = (sourceAnchor.y + targetAnchor.y) / 2;
+              const position = relationOverlayPosition(midX, midY);
+              const hasRelation = Boolean(selectedEdge.relationKind);
+              const relationLabel = selectedRelationKind === 'risk' ? 'R' : 'H';
+              const addLabel = selectedRelationKind === 'risk' ? TOOLTIP_LABELS.addRisk : TOOLTIP_LABELS.addHypothesis;
+              const editLabel = selectedRelationKind === 'risk' ? TOOLTIP_LABELS.editRisk : TOOLTIP_LABELS.editHypothesis;
+              const removeLabel = selectedRelationKind === 'risk' ? TOOLTIP_LABELS.removeRisk : TOOLTIP_LABELS.removeHypothesis;
+              return <section data-edge-popover className={styles.edgePopover} data-mode={relationPanelMode} data-kind="neutral" style={position} onPointerDown={(event) => event.stopPropagation()}>
+                {relationPanelMode === 'menu' ? <div className={styles.edgeToolbar} role="toolbar" aria-label="Ações da conexão">
+                  <button type="button" data-tooltip={TOOLTIP_LABELS.closeRelation} onClick={clearSelection}>{icons.close}</button>
+                  <button type="button" className={styles.relationKindButton} data-tooltip={hasRelation ? editLabel : addLabel} onClick={openRelationForm}><span>{relationLabel}</span></button>
+                  {hasRelation && <button type="button" className={styles.relationRemoveButton} data-tooltip={removeLabel} onClick={removeRelationMarker}><span data-remove="true">{relationLabel}</span></button>}
+                  <button type="button" data-tooltip={TOOLTIP_LABELS.deleteConnection} onClick={deleteConnection}>{icons.trash}</button>
+                </div> : <>
+                  <div className={styles.compactRelationHeader}><span className={styles.relationBadge}>{relationLabel}</span><strong>{selectedRelationKind === 'risk' ? 'Risco' : 'Hipótese'}</strong></div>
+                  <label className={styles.compactRelationField}><span>Descrição</span><textarea autoFocus value={relationDraft?.description ?? ''} onChange={(event) => updateRelationDraft('description', event.target.value)} placeholder={selectedRelationKind === 'risk' ? 'Descreva o risco desta relação' : 'Descreva a hipótese desta relação'} /></label>
+                  <div className={styles.edgeFormActions}><button type="button" onClick={() => setRelationPanelMode('menu')}>Cancelar</button><button type="button" onClick={saveRelation}>Salvar</button></div>
+                </>}
+              </section>;
+            })()}
+
+            <section className={styles.creator} data-open={creatorOpen}>
+              <button type="button" className={styles.creatorToggle} onClick={() => setCreatorOpen((value) => !value)} aria-expanded={creatorOpen}><span className={styles.creatorIcon}><i /><i /><i /></span>{creatorOpen && <span className={styles.creatorHeading}><strong>Adicionar ao canvas</strong><small>Arraste qualquer etapa</small></span>}<span className={styles.creatorChevron}>{creatorOpen ? icons.collapse : icons.expand}</span></button>
+              {creatorOpen && <div className={styles.creatorBody}>{STAGES.map((stage) => <button type="button" key={stage.id} data-stage={stage.id} draggable onDragStart={(event) => startStageDrag(event, stage.id)} aria-label={`Arrastar ${stage.singular} para o canvas`}><span className={styles.stageGlyph}>{icons.add}</span><span><strong>{stage.singular}</strong><small>{stage.hint}</small></span><em>{counts[stage.id]}</em></button>)}<div className={styles.creatorActions} role="toolbar" aria-label="Organização e apoio do canvas"><button type="button" onClick={centralizeColumns} data-tooltip={TOOLTIP_LABELS.columns} aria-label={TOOLTIP_LABELS.columns}><svg viewBox="0 0 24 24"><rect x="3" y="5" width="4" height="14" rx="1"/><rect x="10" y="5" width="4" height="14" rx="1"/><rect x="17" y="5" width="4" height="14" rx="1"/></svg></button><button type="button" onClick={frameVisualization} data-tooltip={TOOLTIP_LABELS.frame} aria-label={TOOLTIP_LABELS.frame}>{icons.fit}</button><button type="button" onClick={openGuide} data-tooltip={TOOLTIP_LABELS.guide} aria-label={TOOLTIP_LABELS.guide}><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5Z"/><path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5Z"/></svg></button><button type="button" onClick={openExamples} data-tooltip={TOOLTIP_LABELS.examples} aria-label={TOOLTIP_LABELS.examples}><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 15 3-3 2.5 2.5L16 10l2 2.5"/><circle cx="8" cy="8" r="1"/></svg></button><button type="button" onClick={organizeFlow} data-tooltip={TOOLTIP_LABELS.flow} aria-label={TOOLTIP_LABELS.flow}><svg viewBox="0 0 24 24"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="5" cy="18" r="2"/><path d="M7 6h4a3 3 0 0 1 3 3v0a3 3 0 0 0 3 3"/><path d="M7 18h4a3 3 0 0 0 3-3v0a3 3 0 0 1 3-3"/></svg></button></div><p>{icons.lock}<span>Riscos e hipóteses permanecem disponíveis somente entre relações válidas.</span></p></div>}
+            </section>
+            <div className={styles.notice} data-tone={noticeTone} role="status"><span />{notice}</div>
           </div>
         </div>
 
-        <aside className={styles.inspector} data-open={inspectorOpen}>
-          <div className={styles.inspectorHeader}>
-            <div><span>Inspector</span><strong>{selectedNode ? stageMeta(selectedNode.stage).singular : 'Canvas'}</strong></div>
-            <button type="button" onClick={() => setInspectorOpen(false)} aria-label="Fechar inspector">{icons.close}</button>
-          </div>
-
-          {selectedNode ? (
-            <div className={styles.inspectorContent} data-stage={selectedNode.stage}>
-              <div className={styles.inspectorSummary}><span className={styles.inspectorStageDot} /><div><strong>{stageMeta(selectedNode.stage).label}</strong><small>Bloco selecionado</small></div></div>
-              <label>Título<input value={selectedNode.title} onChange={(event) => updateSelected('title', event.target.value)} /></label>
-              <label>Descrição<textarea value={selectedNode.description} onChange={(event) => updateSelected('description', event.target.value)} /></label>
-              <div className={styles.logicCard}>
-                <span>Lógica causal</span>
-                <strong>{edges.filter((edge) => edge.source === selectedNode.id || edge.target === selectedNode.id).length} conexões válidas</strong>
-                <p>Conecte somente à etapa seguinte. Tentativas incoerentes são bloqueadas antes de alterar o mapa.</p>
-              </div>
-              <button type="button" className={styles.inspectorAction} onClick={() => beginConnection(selectedNode.id)}>{icons.connect}<span>{connectSource ? 'Concluir conexão' : 'Criar conexão'}</span></button>
-            </div>
-          ) : selectedEdge && selectedRelationKind ? (
-            <div className={styles.inspectorContent} data-stage={selectedRelationKind === 'hypothesis' ? 'neutral' : selectedEdgeSource?.stage}>
-              <div className={styles.inspectorSummary}>
-                <span className={styles.inspectorStageDot} />
-                <div>
-                  <strong>{selectedRelationKind === 'risk' ? 'Risco da conexão' : 'Hipótese da conexão'}</strong>
-                  <small>{selectedEdgeSource ? stageMeta(selectedEdgeSource.stage).singular : ''} → {selectedEdgeTarget ? stageMeta(selectedEdgeTarget.stage).singular : ''}</small>
-                </div>
-              </div>
-              <label>Descrição<textarea value={relationText} onChange={(event) => setRelationText(event.target.value)} placeholder={selectedRelationKind === 'risk' ? 'O que pode comprometer esta passagem?' : 'O que precisa ser verdadeiro para esta passagem acontecer?'} /></label>
-              <div className={styles.logicCard}>
-                <span>Conexão existente</span>
-                <strong>{selectedRelationKind === 'risk' ? 'Risco permitido nesta passagem' : 'Hipótese neutra permitida nesta passagem'}</strong>
-                <p>O formulário só aparece porque a conexão já existe. Salvar adiciona um marcador circular na linha.</p>
-              </div>
-              <button type="button" className={styles.inspectorAction} onClick={() => saveRelation(selectedRelationKind)}>
-                <span>Salvar {selectedRelationKind === 'risk' ? 'risco' : 'hipótese'}</span>
+        {!fullCanvasMode && <aside className={styles.inspector} data-open={inspectorOpen}>
+          <div className={styles.inspectorHeader}><div><span>Inspector</span><strong>{selectedNode ? stageMeta(selectedNode.stage).singular : selectedEdge ? 'Conexão' : 'Canvas'}</strong></div><button type="button" onClick={() => setInspectorOpen(false)} aria-label="Fechar inspector" data-tooltip={TOOLTIP_LABELS.closeInspector}>{icons.close}</button></div>
+          {selectedNode ? <div className={styles.inspectorContent} data-stage={selectedNode.stage}>
+            <div className={styles.inspectorSummary}><span className={styles.inspectorStageDot} /><div><strong>{stageMeta(selectedNode.stage).label}</strong><small>Bloco selecionado</small></div></div>
+            <label>Título<input value={selectedNode.title} onChange={(event) => updateSelected('title', event.target.value)} /></label>
+            <label>Descrição<textarea value={selectedNode.description} onChange={(event) => updateSelected('description', event.target.value)} /></label>
+            <div key={`node-advanced-${selectedNode.id}`} className={styles.inspectorAdvanced} data-open={inspectorAdvancedOpenKey === `node:${selectedNode.id}`}>
+              <button type="button" className={styles.advancedToggle} aria-expanded={inspectorAdvancedOpenKey === `node:${selectedNode.id}`} onClick={() => setInspectorAdvancedOpenKey((current) => current === `node:${selectedNode.id}` ? null : `node:${selectedNode.id}`)}>
+                <span className={styles.advancedChevron} aria-hidden="true">{icons.chevron}</span>
+                <span>Detalhes avançados</span>
               </button>
-              {selectedEdge.relationKind && <button type="button" className={styles.relationRemove} onClick={removeRelation}>Remover qualificação</button>}
+              {inspectorAdvancedOpenKey === `node:${selectedNode.id}` && <textarea className={styles.advancedField} value={selectedNode.advancedDetails} onChange={(event) => updateSelected('advancedDetails', event.target.value)} placeholder="Inclua contexto, evidências ou observações" />}
             </div>
-          ) : <div className={styles.emptyInspector}>Selecione um bloco ou clique na seta de uma conexão.</div>}
+            <div className={styles.logicCard}><span>Lógica causal</span><strong>{edges.filter((edge) => edge.source === selectedNode.id || edge.target === selectedNode.id).length} conexões válidas</strong><p>Use o dot direito como origem e o dot esquerdo como destino. Ações incoerentes são bloqueadas sem alterar o mapa.</p></div>
+            <button type="button" className={styles.inspectorAction} onClick={() => { setSaveState('dirty'); setNotice(`${stageMeta(selectedNode.stage).singular} atualizado.`); }}>{icons.save}<span>Salvar</span></button>
+            <div className={styles.inspectorSecondaryActions}><button type="button" onClick={() => duplicateNode(selectedNode.id)}>{icons.duplicate}<span>Duplicar</span></button><button type="button" onClick={() => deleteNode(selectedNode.id)}>{icons.trash}<span>Excluir</span></button></div>
+          </div> : selectedEdge && selectedRelationKind && relationDraft ? <div className={styles.inspectorContent} data-stage="neutral">
+            <div className={styles.inspectorSummary}><span className={styles.inspectorStageDot} /><div><strong>{selectedRelationKind === 'risk' ? 'Risco' : 'Hipótese'}</strong><small>{selectedEdgeSource ? stageMeta(selectedEdgeSource.stage).singular : ''} → {selectedEdgeTarget ? stageMeta(selectedEdgeTarget.stage).singular : ''}</small></div></div>
+            <label>Descrição<textarea value={relationDraft.description} onChange={(event) => updateRelationDraft('description', event.target.value)} /></label>
+            <button type="button" className={styles.inspectorAction} onClick={saveRelation}>{icons.save}<span>Salvar</span></button>
+            <div className={styles.inspectorSecondaryActions}>
+              {selectedEdge.relationKind && <button type="button" onClick={removeRelationMarker}>{icons.trash}<span>Excluir {selectedRelationKind === 'risk' ? 'risco' : 'hipótese'}</span></button>}
+              <button type="button" onClick={deleteConnection}>{icons.trash}<span>Excluir conexão</span></button>
+            </div>
+          </div> : <div className={styles.emptyInspector}>Selecione um bloco ou uma conexão.</div>}
+          <div className={styles.progressPanel}><div><span>Estrutura da teoria</span><small>{nodes.length} blocos · {edges.length} conexões</small></div>{STAGES.map((stage) => <div className={styles.progressRow} key={stage.id} data-stage={stage.id}><span /><strong>{stage.label}</strong><em>{counts[stage.id]}</em></div>)}</div>
+        </aside>}
 
-          <div className={styles.progressPanel}>
-            <div><span>Estrutura da teoria</span><small>{nodes.length} blocos · {edges.length} conexões</small></div>
-            {STAGES.map((stage) => <div className={styles.progressRow} key={stage.id} data-stage={stage.id}><span /><strong>{stage.label}</strong><em>{counts[stage.id]}</em></div>)}
-          </div>
-        </aside>
-
-        {!inspectorOpen && <button type="button" className={styles.inspectorReopen} onClick={() => setInspectorOpen(true)}>{icons.chevron}<span>Abrir inspector</span></button>}
-
-        {historyOpen && (
-          <aside className={styles.historyPanel}>
-            <div className={styles.historyHeader}><div><span>Histórico</span><strong>Esta sessão</strong></div><button type="button" onClick={() => setHistoryOpen(false)}>{icons.close}</button></div>
-            <ol>
-              <li><span>{icons.check}</span><div><strong>Estado atual</strong><small>{nodes.length} blocos no canvas</small></div></li>
-              {history.slice().reverse().map((_, index) => <li key={index}><span>{index + 1}</span><div><strong>Alteração registrada</strong><small>Versão {history.length - index}</small></div></li>)}
-            </ol>
-          </aside>
-        )}
+        {!fullCanvasMode && !inspectorOpen && <button type="button" className={styles.inspectorReopen} onClick={() => setInspectorOpen(true)} aria-label={TOOLTIP_LABELS.openInspector} data-tooltip={TOOLTIP_LABELS.openInspector}>{icons.chevron}</button>}
+        {!fullCanvasMode && historyOpen && <aside className={styles.historyPanel}><div className={styles.historyHeader}><div><span>Histórico</span><strong>Esta sessão</strong></div><button type="button" onClick={() => setHistoryOpen(false)} data-tooltip="Fechar histórico">{icons.close}</button></div><ol><li><span>{icons.check}</span><div><strong>Estado atual</strong><small>{nodes.length} blocos no canvas</small></div></li>{history.slice().reverse().map((_, index) => <li key={index}><span>{index + 1}</span><div><strong>Alteração registrada</strong><small>Versão {history.length - index}</small></div></li>)}</ol></aside>}
       </section>
     </main>
   );
