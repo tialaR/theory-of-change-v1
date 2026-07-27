@@ -48,37 +48,6 @@ const COLUMN_X: Record<StageId, number> = { input: 120, activity: 430, product: 
 const COLUMN_GAP_Y = 172;
 const COLUMN_START_Y = 120;
 
-
-const FIELD_PLACEHOLDERS = {
-  projectTitle: 'ex: Programa de desenvolvimento territorial',
-  stage: {
-    input: {
-      title: 'ex: Equipe técnica disponível',
-      description: 'ex: Profissionais, orçamento e estrutura necessários',
-      advancedDetails: 'ex: Fontes, evidências ou observações sobre os recursos'
-    },
-    activity: {
-      title: 'ex: Realizar oficinas de formação',
-      description: 'ex: Encontros práticos com as pessoas participantes',
-      advancedDetails: 'ex: Metodologia, responsáveis ou frequência das ações'
-    },
-    product: {
-      title: 'ex: Material formativo produzido',
-      description: 'ex: Entrega concreta gerada pelas atividades',
-      advancedDetails: 'ex: Critérios de qualidade, quantidade ou prazo de entrega'
-    },
-    outcome: {
-      title: 'ex: Maior adesão ao programa',
-      description: 'ex: Mudança esperada após a entrega dos produtos',
-      advancedDetails: 'ex: Indicadores, evidências ou prazo esperado para a mudança'
-    }
-  },
-  relation: {
-    risk: 'ex: Baixa participação pode reduzir o alcance da atividade',
-    hypothesis: 'ex: O material será utilizado pelo público como planejado'
-  }
-} as const;
-
 const TOOLTIP_LABELS = {
   undo: 'Desfazer última alteração', redo: 'Refazer alteração', history: 'Abrir histórico', save: 'Salvar teoria',
   select: 'Selecionar blocos', zoomIn: 'Aproximar visualização', zoomOut: 'Afastar visualização', fit: 'Centralizar visualização',
@@ -727,7 +696,7 @@ export function ResendCommandPreviewV2() {
       {!fullCanvasMode && <header className={styles.topbar}>
         <div className={styles.brandNavigation}><TdmIconButton href="/" aria-label={TOOLTIP_LABELS.back} tooltip={TOOLTIP_LABELS.back} tooltipPosition="right" variant="ghost" size="sm" className={styles.backButton}><span aria-hidden="true">{icons.chevron}</span></TdmIconButton><div className={styles.brandGroup}><img className={styles.brandLogo} src="/brand/tmd-construtor-header-canonical.webp" alt="TMD Construtor" /></div></div>
         <ClearableField value={projectTitle} onClear={() => setProjectTitle('')} label="Apagar título da teoria" showEditWhenIdle>
-          <input className={styles.projectTitle} aria-label="Título da teoria" value={projectTitle} onChange={(event) => setProjectTitle(event.target.value)} maxLength={96} placeholder={FIELD_PLACEHOLDERS.projectTitle} />
+          <input className={styles.projectTitle} aria-label="Título da teoria" value={projectTitle} onChange={(event) => setProjectTitle(event.target.value)} maxLength={96} />
         </ClearableField>
         <div className={styles.topActions}>
           <button type="button" className={styles.headerIconButton} onClick={undo} disabled={!history.length} data-tooltip={TOOLTIP_LABELS.undo}>{icons.undo}</button>
@@ -813,14 +782,14 @@ export function ResendCommandPreviewV2() {
                 <button type="button" className={`${styles.nodeHandle} ${styles.nodeHandleSource}`} aria-label={`Conectar a partir de ${node.title}`} data-tooltip={TOOLTIP_LABELS.source} data-connection-target={node.id} onPointerDown={(event) => beginConnectionDrag(event, node.id)} />
                 <div className={styles.nodeMeta}><span>{stageMeta(node.stage).singular}</span><button type="button" aria-label="Mais opções" data-tooltip={TOOLTIP_LABELS.more} onClick={(event) => { event.stopPropagation(); setActiveToolbarId((current) => current === node.id ? null : node.id); }}>{icons.more}</button></div>
                 {isEditing ? <div className={styles.nodeEditor} onClick={(event) => event.stopPropagation()}>
-                  <label><span>Título</span><ClearableField value={editDraft.title} onClear={() => setEditDraft({ ...editDraft, title: '' })} label="Apagar título" size="sm"><input value={editDraft.title} onChange={(event) => setEditDraft({ ...editDraft, title: event.target.value })} placeholder={FIELD_PLACEHOLDERS.stage[node.stage].title} /></ClearableField></label>
-                  <label><span>Descrição</span><ClearableField value={editDraft.description} onClear={() => setEditDraft({ ...editDraft, description: '' })} label="Apagar descrição" multiline size="sm"><textarea value={editDraft.description} onChange={(event) => setEditDraft({ ...editDraft, description: event.target.value })} placeholder={FIELD_PLACEHOLDERS.stage[node.stage].description} /></ClearableField></label>
+                  <label><span>Título</span><ClearableField value={editDraft.title} onClear={() => setEditDraft({ ...editDraft, title: '' })} label="Apagar título" size="sm"><input value={editDraft.title} onChange={(event) => setEditDraft({ ...editDraft, title: event.target.value })} /></ClearableField></label>
+                  <label><span>Descrição</span><ClearableField value={editDraft.description} onClear={() => setEditDraft({ ...editDraft, description: '' })} label="Apagar descrição" multiline size="sm"><textarea value={editDraft.description} onChange={(event) => setEditDraft({ ...editDraft, description: event.target.value })} /></ClearableField></label>
                   <div className={styles.nodeAdvanced} data-open={cardAdvancedOpenId === node.id}>
                     <button type="button" className={styles.advancedToggle} aria-expanded={cardAdvancedOpenId === node.id} onClick={(event) => { event.stopPropagation(); setCardAdvancedOpenId((current) => current === node.id ? null : node.id); }}>
                       <span className={styles.advancedChevron} aria-hidden="true">{icons.chevron}</span>
                       <span>Detalhes avançados</span>
                     </button>
-                    {cardAdvancedOpenId === node.id && <ClearableField value={editDraft.advancedDetails} onClear={() => setEditDraft({ ...editDraft, advancedDetails: '' })} label="Apagar detalhes avançados" multiline size="sm"><textarea className={styles.advancedField} value={editDraft.advancedDetails} onChange={(event) => setEditDraft({ ...editDraft, advancedDetails: event.target.value })} placeholder={FIELD_PLACEHOLDERS.stage[node.stage].advancedDetails} /></ClearableField>}
+                    {cardAdvancedOpenId === node.id && <ClearableField value={editDraft.advancedDetails} onClear={() => setEditDraft({ ...editDraft, advancedDetails: '' })} label="Apagar detalhes avançados" multiline size="sm"><textarea className={styles.advancedField} value={editDraft.advancedDetails} onChange={(event) => setEditDraft({ ...editDraft, advancedDetails: event.target.value })} placeholder="Inclua contexto adicional" /></ClearableField>}
                   </div>
                   <div className={styles.nodeEditorActions}><button type="button" onClick={() => { setEditingNodeId(null); setEditDraft(null); }}><span>Cancelar</span></button><button type="button" onClick={() => saveCardEditor(node.id)}><span>Salvar</span></button></div>
                 </div> : <><h2>{node.title}</h2><p>{node.description}</p><div className={styles.nodeFooter}><span>Conectar</span><small>Arraste para mover</small></div></>}
@@ -846,7 +815,7 @@ export function ResendCommandPreviewV2() {
                   <button type="button" data-tooltip={TOOLTIP_LABELS.deleteConnection} onClick={deleteConnection}>{icons.trash}</button>
                 </div> : <>
                   <div className={styles.compactRelationHeader}><span className={styles.relationBadge}>{relationLabel}</span><strong>{selectedRelationKind === 'risk' ? 'Risco' : 'Hipótese'}</strong></div>
-                  <label className={styles.compactRelationField}><span>Descrição</span><ClearableField value={relationDraft?.description ?? ''} onClear={() => updateRelationDraft('description', '')} label="Apagar descrição" multiline size="sm"><textarea autoFocus value={relationDraft?.description ?? ''} onChange={(event) => updateRelationDraft('description', event.target.value)} placeholder={selectedRelationKind === 'risk' ? FIELD_PLACEHOLDERS.relation.risk : FIELD_PLACEHOLDERS.relation.hypothesis} /></ClearableField></label>
+                  <label className={styles.compactRelationField}><span>Descrição</span><ClearableField value={relationDraft?.description ?? ''} onClear={() => updateRelationDraft('description', '')} label="Apagar descrição" multiline size="sm"><textarea autoFocus value={relationDraft?.description ?? ''} onChange={(event) => updateRelationDraft('description', event.target.value)} placeholder={selectedRelationKind === 'risk' ? 'Descreva o risco desta relação' : 'Descreva a hipótese desta relação'} /></ClearableField></label>
                   <div className={styles.edgeFormActions}><button type="button" onClick={() => setRelationPanelMode('menu')}>Cancelar</button><button type="button" onClick={saveRelation}>Salvar</button></div>
                 </>}
               </section>;
@@ -864,21 +833,21 @@ export function ResendCommandPreviewV2() {
           <div className={styles.inspectorHeader}><div><span>Inspector</span><strong>{selectedNode ? stageMeta(selectedNode.stage).singular : selectedEdge ? 'Conexão' : 'Canvas'}</strong></div><button type="button" onClick={() => setInspectorOpen(false)} aria-label="Fechar inspector" title={TOOLTIP_LABELS.closeInspector} data-tooltip={TOOLTIP_LABELS.closeInspector}>{icons.close}</button></div>
           {selectedNode ? <div className={styles.inspectorContent} data-stage={selectedNode.stage}>
             <div className={styles.inspectorSummary}><span className={styles.inspectorStageDot} /><div><strong>{stageMeta(selectedNode.stage).label}</strong><small>Bloco selecionado</small></div></div>
-            <label>Título<ClearableField value={selectedNode.title} onClear={() => updateSelected('title', '')} label="Apagar título"><input value={selectedNode.title} onChange={(event) => updateSelected('title', event.target.value)} placeholder={FIELD_PLACEHOLDERS.stage[selectedNode.stage].title} /></ClearableField></label>
-            <label>Descrição<ClearableField value={selectedNode.description} onClear={() => updateSelected('description', '')} label="Apagar descrição" multiline><textarea value={selectedNode.description} onChange={(event) => updateSelected('description', event.target.value)} placeholder={FIELD_PLACEHOLDERS.stage[selectedNode.stage].description} /></ClearableField></label>
+            <label>Título<ClearableField value={selectedNode.title} onClear={() => updateSelected('title', '')} label="Apagar título"><input value={selectedNode.title} onChange={(event) => updateSelected('title', event.target.value)} /></ClearableField></label>
+            <label>Descrição<ClearableField value={selectedNode.description} onClear={() => updateSelected('description', '')} label="Apagar descrição" multiline><textarea value={selectedNode.description} onChange={(event) => updateSelected('description', event.target.value)} /></ClearableField></label>
             <div key={`node-advanced-${selectedNode.id}`} className={styles.inspectorAdvanced} data-open={inspectorAdvancedOpenKey === `node:${selectedNode.id}`}>
               <button type="button" className={styles.advancedToggle} aria-expanded={inspectorAdvancedOpenKey === `node:${selectedNode.id}`} onClick={() => setInspectorAdvancedOpenKey((current) => current === `node:${selectedNode.id}` ? null : `node:${selectedNode.id}`)}>
                 <span className={styles.advancedChevron} aria-hidden="true">{icons.chevron}</span>
                 <span>Detalhes avançados</span>
               </button>
-              {inspectorAdvancedOpenKey === `node:${selectedNode.id}` && <ClearableField value={selectedNode.advancedDetails} onClear={() => updateSelected('advancedDetails', '')} label="Apagar detalhes avançados" multiline><textarea className={styles.advancedField} value={selectedNode.advancedDetails} onChange={(event) => updateSelected('advancedDetails', event.target.value)} placeholder={FIELD_PLACEHOLDERS.stage[selectedNode.stage].advancedDetails} /></ClearableField>}
+              {inspectorAdvancedOpenKey === `node:${selectedNode.id}` && <ClearableField value={selectedNode.advancedDetails} onClear={() => updateSelected('advancedDetails', '')} label="Apagar detalhes avançados" multiline><textarea className={styles.advancedField} value={selectedNode.advancedDetails} onChange={(event) => updateSelected('advancedDetails', event.target.value)} placeholder="Inclua contexto, evidências ou observações" /></ClearableField>}
             </div>
             <div className={styles.logicCard}><span>Lógica causal</span><strong>{edges.filter((edge) => edge.source === selectedNode.id || edge.target === selectedNode.id).length} conexões válidas</strong><p>Use o dot direito como origem e o dot esquerdo como destino. Ações incoerentes são bloqueadas sem alterar o mapa.</p></div>
             <button type="button" className={styles.inspectorAction} onClick={() => { setSaveState('dirty'); setNotice(`${stageMeta(selectedNode.stage).singular} atualizado.`); }}>{icons.save}<span>Salvar</span></button>
             <div className={styles.inspectorSecondaryActions}><button type="button" onClick={() => duplicateNode(selectedNode.id)}>{icons.duplicate}<span>Duplicar</span></button><button type="button" onClick={() => deleteNode(selectedNode.id)}>{icons.trash}<span>Excluir</span></button></div>
           </div> : selectedEdge && selectedRelationKind && relationDraft ? <div className={styles.inspectorContent} data-stage="neutral">
             <div className={styles.inspectorSummary}><span className={styles.inspectorStageDot} /><div><strong>{selectedRelationKind === 'risk' ? 'Risco' : 'Hipótese'}</strong><small>{selectedEdgeSource ? stageMeta(selectedEdgeSource.stage).singular : ''} → {selectedEdgeTarget ? stageMeta(selectedEdgeTarget.stage).singular : ''}</small></div></div>
-            <label>Descrição<ClearableField value={relationDraft.description} onClear={() => updateRelationDraft('description', '')} label="Apagar descrição" multiline><textarea value={relationDraft.description} onChange={(event) => updateRelationDraft('description', event.target.value)} placeholder={selectedRelationKind === 'risk' ? FIELD_PLACEHOLDERS.relation.risk : FIELD_PLACEHOLDERS.relation.hypothesis} /></ClearableField></label>
+            <label>Descrição<ClearableField value={relationDraft.description} onClear={() => updateRelationDraft('description', '')} label="Apagar descrição" multiline><textarea value={relationDraft.description} onChange={(event) => updateRelationDraft('description', event.target.value)} /></ClearableField></label>
             <button type="button" className={styles.inspectorAction} onClick={saveRelation}>{icons.save}<span>Salvar</span></button>
             <div className={styles.inspectorSecondaryActions}>
               {selectedEdge.relationKind && <button type="button" onClick={removeRelationMarker}>{icons.trash}<span>Excluir {selectedRelationKind === 'risk' ? 'risco' : 'hipótese'}</span></button>}
@@ -888,7 +857,7 @@ export function ResendCommandPreviewV2() {
           <div className={styles.progressPanel}><div><span>Estrutura da teoria</span><small>{nodes.length} blocos · {edges.length} conexões</small></div>{STAGES.map((stage) => <div className={styles.progressRow} key={stage.id} data-stage={stage.id}><span /><strong>{stage.label}</strong><em>{counts[stage.id]}</em></div>)}</div>
         </aside>}
 
-        {!fullCanvasMode && !inspectorOpen && <div className={styles.workspaceTopRightControls}><button type="button" className={styles.inspectorReopen} onClick={() => setInspectorOpen(true)} aria-label={TOOLTIP_LABELS.openInspector} data-tooltip={TOOLTIP_LABELS.openInspector} title={TOOLTIP_LABELS.openInspector}><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16M18 9l3 3-3 3"/></svg></button></div>}
+        {!fullCanvasMode && !inspectorOpen && <button type="button" className={styles.inspectorReopen} onClick={() => setInspectorOpen(true)} aria-label={TOOLTIP_LABELS.openInspector} data-tooltip={TOOLTIP_LABELS.openInspector} title={TOOLTIP_LABELS.openInspector}><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16M18 9l3 3-3 3"/></svg></button>}
         {!fullCanvasMode && historyOpen && <aside className={styles.historyPanel}><div className={styles.historyHeader}><div><span>Histórico</span><strong>Esta sessão</strong></div><button type="button" onClick={() => setHistoryOpen(false)} data-tooltip="Fechar histórico">{icons.close}</button></div><ol><li><span>{icons.check}</span><div><strong>Estado atual</strong><small>{nodes.length} blocos no canvas</small></div></li>{history.slice().reverse().map((_, index) => <li key={index}><span>{index + 1}</span><div><strong>Alteração registrada</strong><small>Versão {history.length - index}</small></div></li>)}</ol></aside>}
       </section>
     </main>

@@ -2662,35 +2662,3 @@
   .topbar > .clearableField
     width: min(27rem, 38vw)
     min-width: 14rem
-
-
-// Inspector reopen anchor and contextual placeholders v3.2.
-// The overlay container is anchored to the visible workspace, not to the scrollable canvas.
-.workspaceTopRightControls
-  position: absolute
-  z-index: 40
-  top: 1.25rem
-  right: 1.25rem
-  display: flex
-  align-items: center
-  justify-content: flex-end
-  pointer-events: none
-
-  > *
-    pointer-events: auto
-
-.workspaceTopRightControls .inspectorReopen
-  position: relative
-  inset: auto
-  margin: 0
-  flex: 0 0 auto
-
-// Keep contextual examples readable but visually subordinate to entered content.
-.clearableField input::placeholder,
-.clearableField textarea::placeholder
-  color: var(--v2-subtle)
-  opacity: 0.72
-
-.projectTitle::placeholder
-  color: var(--v2-subtle)
-  opacity: 0.72
