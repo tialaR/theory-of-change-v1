@@ -1,0 +1,19 @@
+{
+  "Canvas": {
+    "project": {
+      "defaultTitle": "Nova teoria da mudança",
+      "saveSuccess": "Projeto salvo.",
+      "saveError": "Não foi possível salvar o projeto agora."
+    },
+    "stages": {
+      "input": "Insumo",
+      "activity": "Atividade",
+      "product": "Produto",
+      "outcome": "Resultado"
+    },
+    "relations": {
+      "risk": "Risco",
+      "hypothesis": "Hipótese"
+    }
+  }
+}

@@ -13,5 +13,14 @@
     "previewV2Sass": "0351dba60130cc8bdd644e7cd1a38b6f5df8ca2179ab96a2a1bc75e2ce23619e",
     "canvasV4TsxBeforeTypeFix": "576eafe766f39cdaf0258221bd14be5eb2d73541fbf673280c6c933aa2e25512",
     "canvasV4Sass": "885b6b9272cadbd6fc109e3b24eec045f3c0e3adbc013f32767a92a713b3aacc"
+  },
+  "wave2": {
+    "state": "validated-open",
+    "validatedAt": "2026-07-27T23:07:55.243Z",
+    "unitTests": "pass",
+    "build": "pass",
+    "e2e": "pass",
+    "visualHashes": "preserved",
+    "engine": "parallel-not-connected"
   }
 }

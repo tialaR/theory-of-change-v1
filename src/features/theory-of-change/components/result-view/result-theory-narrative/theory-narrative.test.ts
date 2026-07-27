@@ -1,9 +1,10 @@
 /**
  * Deterministic narrative motor tests — V2.3.
- * Run with: npx --yes tsx src/features/theory-of-change/components/result-view/result-theory-narrative/theory-narrative.test.ts
+ * Executado pelo Vitest junto ao módulo proprietário.
  */
 
 import assert from 'node:assert/strict';
+import { describe, it } from 'vitest';
 import { exampleTheory } from '@/features/theory-of-change/data/example-theory';
 import { createEdge } from '@/features/theory-of-change/utils/create-edge';
 import { createNode } from '@/features/theory-of-change/utils/create-node';
@@ -38,7 +39,8 @@ function collectSourceRefs(document: NonNullable<ReturnType<typeof buildTheoryNa
   return refs;
 }
 
-function run() {
+describe('theory-narrative deterministic contract V2.3', () => {
+  it('preserva narrativa, referências, escopo e linguagem causal', () => {
   // 1. Macro has at least 4 pages; references last and exclusive
   const macro = buildTheoryNarrativeDocument(null, exampleTheory.nodes, exampleTheory.edges);
   assert.ok(macro);
@@ -165,7 +167,5 @@ function run() {
   assert.ok(figures.some((figure) => figure?.kind === 'resources-map'));
   assert.ok(figures.some((figure) => figure?.kind === 'convergence-map'));
 
-  console.log('theory-narrative.test.ts: all assertions passed');
-}
-
-run();
+  });
+});
