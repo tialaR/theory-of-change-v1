@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eu
+if [ -f .tdm/migration-window.json ]; then
+  npm run check:tdm:migration-window
+  npm run typecheck
+  echo 'PASS: commit permitido na janela de migração; gate definitivo ainda aberto.'
+  exit 0
+fi
+npm run check:tdm:v3:quick

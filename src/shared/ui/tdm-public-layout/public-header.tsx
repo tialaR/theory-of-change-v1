@@ -12,7 +12,7 @@ const PUBLIC_NAV_ITEMS = [
   { href: '/guia-de-aprendizado', label: 'Guia' },
   { href: '/exemplos', label: 'Exemplos' },
   { href: '/referencias', label: 'Referências' },
-  { href: '/canvas-v4', label: 'Canvas' }
+  { href: '/canvas', label: 'Canvas' }
 ] as const;
 
 const HIDDEN_HEADER_ROUTES = [
@@ -66,7 +66,7 @@ function usePublicHeaderScrolled() {
 }
 
 export function PublicHeader({
-  ctaHref = '/canvas-v4',
+  ctaHref = '/canvas',
   ctaLabel = 'Comece agora',
   ctaTrailingIcon = <HeaderCtaChevronIcon />
 }: PublicHeaderProps) {

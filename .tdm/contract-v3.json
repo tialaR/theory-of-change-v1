@@ -1,0 +1,104 @@
+{
+  "version": "3.0.0",
+  "name": "TDM Executable Contract",
+  "activePhase": "shark-cleanup",
+  "phases": [
+    "foundation",
+    "shark-cleanup",
+    "canvas-engine",
+    "validation-release"
+  ],
+  "strictThresholds": {
+    "tsxLines": 240,
+    "tsLines": 400,
+    "sassLines": 480,
+    "pageOrLayoutLines": 120,
+    "hooks": 12,
+    "states": 6,
+    "callbacks": 10,
+    "nestedTernaries": 0,
+    "important": 0,
+    "hardcodedColors": 0,
+    "hardcodedStrings": 0,
+    "staticInlineStyles": 0,
+    "legacyNameCount": 0
+  },
+  "protectedVisualPatterns": [
+    "src/app/canvas-v4/**",
+    "src/app/canvas/resend-command-preview-v2/**",
+    "src/app/canvas-v3/**",
+    "src/features/theory-of-change/components/public-pages/guided-story.tsx",
+    "src/features/theory-of-change/components/public-pages/guided-story-scheduler.ts",
+    "src/features/theory-of-change/components/resend-public/example-previews/**",
+    "src/features/theory-of-change/components/result-view/experience/**",
+    "src/features/theory-of-change/components/result-view/result-connections-layer/**",
+    "src/features/theory-of-change/components/result-view/result-node-card/**",
+    "src/features/theory-of-change/components/result-view/result-stage-column/**"
+  ],
+  "contractPatterns": [
+    ".tdm/contract-v3.json",
+    ".tdm/debt/**",
+    ".github/workflows/tdm-contract-v3.yml",
+    ".githooks/**",
+    ".cursor/rules/tdm-contract-v3.mdc",
+    "scripts/tdm-contract-v3/**",
+    "docs/governance/**"
+  ],
+  "forbiddenTrackedPatterns": [
+    "node_modules/**",
+    ".next/**",
+    "coverage/**",
+    "output/**",
+    "__MACOSX/**",
+    "**/.DS_Store",
+    "*.tsbuildinfo",
+    "**/*.tsbuildinfo",
+    "*.zip",
+    "**/*.zip"
+  ],
+  "forbiddenNewCode": [
+    "localStorage",
+    "sessionStorage",
+    "window.location",
+    "!important"
+  ],
+  "requiredPackageScripts": [
+    "check:tdm:v3",
+    "check:tdm:v3:quick",
+    "check:tdm:v3:full",
+    "check:tdm:v3:ci"
+  ],
+  "canvasTarget": {
+    "route": "/canvas",
+    "homologatedSource": "/canvas-v4",
+    "legacyRoute": "/canvas-legado",
+    "requiredEngine": "@xyflow/react",
+    "persistence": "MSW-backed repository through explicit server contracts",
+    "forbiddenPersistence": [
+      "localStorage",
+      "sessionStorage"
+    ]
+  },
+  "artifactDebtPatterns": [
+    ".playwright-cli/**",
+    ".tdm-backups/**",
+    ".tdm-patch-backups/**",
+    ".tdm-patches/**",
+    ".validation-screenshots/**",
+    ".canvas-surgery-backup/**",
+    ".tmp-*/**",
+    "tdm-cleanup-before-canvas-v1/**",
+    "**/*.before-hotfix-*",
+    "**/*.hero-backup"
+  ],
+  "operationalIgnoredPatterns": [
+    ".tdm-backup/**",
+    ".tdm-integration/**",
+    ".next/**",
+    "node_modules/**",
+    "coverage/**"
+  ],
+  "gateState": "open",
+  "migrationBranch": "refactor/shark-cleanup-and-canvas-v1",
+  "migrationCloseTarget": "canvas-release-lock"
+}

@@ -259,7 +259,6 @@ export function ResendCommandPreviewV2() {
     setInspectorAdvancedOpenKey(null);
   }, [selectedId, selectedEdgeId]);
 
-
   useEffect(() => {
     if (!relationPopoverOpen || !selectedEdgeId) return undefined;
     function closeRelationToolbarOnOutsidePointer(event: PointerEvent) {
@@ -289,11 +288,12 @@ export function ResendCommandPreviewV2() {
   useLayoutEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return undefined;
+    const canvasElement = canvas;
     let animationFrame = 0;
     function measureNodes() {
-      const canvasRect = canvas.getBoundingClientRect();
+      const canvasRect = canvasElement.getBoundingClientRect();
       const next: Record<string, NodeMetric> = {};
-      canvas.querySelectorAll<HTMLElement>('[data-canvas-node]').forEach((element) => {
+      canvasElement.querySelectorAll<HTMLElement>('[data-canvas-node]').forEach((element) => {
         const nodeId = element.dataset.nodeCardId;
         if (!nodeId) return;
         const rect = element.getBoundingClientRect();

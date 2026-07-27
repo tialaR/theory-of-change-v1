@@ -1,5 +1,5 @@
-import { TdmCanvas } from '@/features/theory-of-change/components/canvas/tdm-canvas';
+import { redirect } from 'next/navigation';
 
 export default function CanvasPage() {
-  return <TdmCanvas />;
+  redirect('/canvas-v4');
 }

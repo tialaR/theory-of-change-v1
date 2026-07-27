@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "state": "open",
+  "patchId": "2026-07-27-shark-project-wave-01-v1.1",
+  "branch": "refactor/shark-cleanup-and-canvas-v1",
+  "openedAt": "2026-07-27T22:09:02.266Z",
+  "gitHeadBefore": "f4617c34d308a1b562d3cb2e050666683f8eeaa6",
+  "reason": "Ataque de Tubarao e troca do motor do Canvas em tres ondas",
+  "closeAfterPatch": "canvas-wave-03-lockdown",
+  "mergeAllowed": false,
+  "protectedVisualHashes": {
+    "previewV2Tsx": "ce8c6ecd56224bdd117a27b8e6329b197351b420d49cccff66481c4914422ff2",
+    "previewV2Sass": "0351dba60130cc8bdd644e7cd1a38b6f5df8ca2179ab96a2a1bc75e2ce23619e",
+    "canvasV4TsxBeforeTypeFix": "576eafe766f39cdaf0258221bd14be5eb2d73541fbf673280c6c933aa2e25512",
+    "canvasV4Sass": "885b6b9272cadbd6fc109e3b24eec045f3c0e3adbc013f32767a92a713b3aacc"
+  }
+}

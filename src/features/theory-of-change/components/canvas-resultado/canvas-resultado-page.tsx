@@ -37,7 +37,7 @@ export function CanvasResultadoPage() {
           </div>
 
           <div className={styles.actions}>
-            <TdmButton href="/canvas-v4" variant="tertiary" size="md">
+            <TdmButton href="/canvas" variant="tertiary" size="md">
               Voltar ao canvas
             </TdmButton>
             <div className={styles.exportGroup} aria-label="Exportações">
