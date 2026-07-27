@@ -725,7 +725,7 @@ export function ResendCommandPreviewV2() {
         </div>}
 
         <div ref={viewportRef} className={styles.canvasViewport}>
-          <div ref={canvasRef} className={styles.canvas}
+          <div ref={canvasRef} className={styles.canvas} style={{ minWidth: `${CANVAS_WIDTH}px`, minHeight: `${CANVAS_HEIGHT}px` }}
             onPointerMove={(event) => { moveDrag(event); moveConnectionDrag(event); }}
             onPointerUp={(event) => {
               if (connectionDrag) finishConnectionDrag(event);

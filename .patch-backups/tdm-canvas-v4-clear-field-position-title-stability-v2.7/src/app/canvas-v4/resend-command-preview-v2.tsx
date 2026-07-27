@@ -725,7 +725,7 @@ export function ResendCommandPreviewV2() {
         </div>}
 
         <div ref={viewportRef} className={styles.canvasViewport}>
-          <div ref={canvasRef} className={styles.canvas}
+          <div ref={canvasRef} className={styles.canvas} style={{ width: `max(100%, ${CANVAS_WIDTH}px)`, height: `max(100%, ${CANVAS_HEIGHT}px)` }}
             onPointerMove={(event) => { moveDrag(event); moveConnectionDrag(event); }}
             onPointerUp={(event) => {
               if (connectionDrag) finishConnectionDrag(event);
@@ -829,7 +829,7 @@ export function ResendCommandPreviewV2() {
           </div>
         </div>
 
-        {!fullCanvasMode && inspectorOpen && <aside className={styles.inspector}>
+        {!fullCanvasMode && <aside className={styles.inspector} data-open={inspectorOpen}>
           <div className={styles.inspectorHeader}><div><span>Inspector</span><strong>{selectedNode ? stageMeta(selectedNode.stage).singular : selectedEdge ? 'Conexão' : 'Canvas'}</strong></div><button type="button" onClick={() => setInspectorOpen(false)} aria-label="Fechar inspector" title={TOOLTIP_LABELS.closeInspector} data-tooltip={TOOLTIP_LABELS.closeInspector}>{icons.close}</button></div>
           {selectedNode ? <div className={styles.inspectorContent} data-stage={selectedNode.stage}>
             <div className={styles.inspectorSummary}><span className={styles.inspectorStageDot} /><div><strong>{stageMeta(selectedNode.stage).label}</strong><small>Bloco selecionado</small></div></div>
