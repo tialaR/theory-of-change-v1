@@ -10,6 +10,7 @@ import { createCanvasStageCopy, type CanvasTranslator } from '../canvas-copy';
 import { useCanvasFlowController, type CanvasConnectFailureCode } from './use-canvas-flow-controller';
 import { useCanvasWorkspaceEffects } from './use-canvas-workspace-effects';
 import { useCanvasStageDragAndDrop } from './use-canvas-stage-drag-and-drop';
+import { useCanvasNodeActions } from './use-canvas-node-actions';
 import { createRelationDraft, useCanvasUiState } from './use-canvas-ui-state';
 import { useCanvasSaveController } from './use-canvas-save-controller';
 
@@ -119,40 +120,28 @@ export function useCanvasWorkspaceController(initialProject: CanvasProject, user
     stageCopy
   });
 
-  const updateSelectedNode = useCallback((field: keyof CanvasStageNode['data'], value: string) => {
-    if (!ui.selectedNodeId) return;
-    flow.updateNode(ui.selectedNodeId, { [field]: value });
-    markDirty();
-  }, [flow, markDirty, ui.selectedNodeId]);
-
-  const duplicateNode = useCallback((nodeId: string) => {
-    const duplicate = flow.duplicateNode(nodeId);
-    if (!duplicate) return;
-    ui.selectNode(duplicate.id);
-    ui.setActiveToolbarNodeId(duplicate.id);
-    markDirty();
-    ui.notify(t('notices.duplicated'));
-  }, [flow, markDirty, t, ui]);
-
-  const deleteNode = useCallback((nodeId: string) => {
-    const node = flow.deleteNode(nodeId);
-    if (!node) return;
-    ui.clearSelection();
-    ui.setActiveToolbarNodeId(null);
-    ui.closeNodeEditor();
-    markDirty();
-    ui.notify(t('notices.deleted', { stage: stageCopy(node.data.stage).singular }));
-  }, [flow, markDirty, stageCopy, t, ui]);
-
-  const saveNodeEditor = useCallback((nodeId: string) => {
-    if (!ui.nodeDraft) return;
-    const node = flow.nodes.find((item) => item.id === nodeId);
-    if (!node) return;
-    flow.saveNodeDraft(nodeId, { ...node.data, ...ui.nodeDraft });
-    ui.closeNodeEditor();
-    markDirty();
-    ui.notify(t('notices.nodeUpdated'));
-  }, [flow, markDirty, t, ui]);
+  const {
+    updateSelectedNode,
+    duplicateNode,
+    deleteNode,
+    saveNodeEditor
+  } = useCanvasNodeActions({
+    nodes: flow.nodes,
+    selectedNodeId: ui.selectedNodeId,
+    nodeDraft: ui.nodeDraft,
+    updateNode: flow.updateNode,
+    duplicateFlowNode: flow.duplicateNode,
+    deleteFlowNode: flow.deleteNode,
+    saveNodeDraft: flow.saveNodeDraft,
+    selectNode: ui.selectNode,
+    clearSelection: ui.clearSelection,
+    setActiveToolbarNodeId: ui.setActiveToolbarNodeId,
+    closeNodeEditor: ui.closeNodeEditor,
+    notify: ui.notify,
+    markDirty,
+    t,
+    stageCopy
+  });
 
   const selectEdge = useCallback((edge: CanvasCausalEdge) => {
     const relationKind = flow.getRelationKind(edge);
