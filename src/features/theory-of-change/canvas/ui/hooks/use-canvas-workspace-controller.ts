@@ -1,16 +1,15 @@
 'use client';
 
-import { useCallback, type DragEvent as ReactDragEvent } from 'react';
+import { useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { useReactFlow, type Connection, type NodeMouseHandler } from '@xyflow/react';
-import { CANVAS_DRAG_STAGE_MIME, CANVAS_DIMENSIONS } from '../../domain/canvas-ui.constants';
-import { isCanvasStageId } from '../../domain/canvas-stage.constants';
 import type { CanvasProject, CanvasRelationKind } from '../../domain/canvas-project';
 import { toCanvasFlowGraph } from '../../react-flow/canvas-react-flow.adapter';
 import type { CanvasCausalEdge, CanvasStageNode } from '../../react-flow/canvas-flow.types';
 import { createCanvasStageCopy, type CanvasTranslator } from '../canvas-copy';
 import { useCanvasFlowController, type CanvasConnectFailureCode } from './use-canvas-flow-controller';
 import { useCanvasWorkspaceEffects } from './use-canvas-workspace-effects';
+import { useCanvasStageDragAndDrop } from './use-canvas-stage-drag-and-drop';
 import { createRelationDraft, useCanvasUiState } from './use-canvas-ui-state';
 import { useCanvasSaveController } from './use-canvas-save-controller';
 
@@ -105,45 +104,20 @@ export function useCanvasWorkspaceController(initialProject: CanvasProject, user
     ui.notify(t('notices.positionUpdated'));
   }, [flow, markDirty, t, ui]);
 
-  const startStageDrag = useCallback((event: ReactDragEvent<HTMLButtonElement>, stage: CanvasStageNode['data']['stage']) => {
-    event.dataTransfer.effectAllowed = 'copy';
-    event.dataTransfer.setData(CANVAS_DRAG_STAGE_MIME, stage);
-    ui.notify(t('notices.dragStage', { stage: stageCopy(stage).singular.toLowerCase() }));
-  }, [stageCopy, t, ui]);
-
-  const allowStageDrop = useCallback((event: ReactDragEvent<HTMLDivElement>) => {
-    if (!event.dataTransfer.types.includes(CANVAS_DRAG_STAGE_MIME)) return;
-    event.preventDefault();
-    event.dataTransfer.dropEffect = 'copy';
-  }, []);
-
-  const dropStage = useCallback((event: ReactDragEvent<HTMLDivElement>) => {
-    const stageValue = event.dataTransfer.getData(CANVAS_DRAG_STAGE_MIME);
-    if (!isCanvasStageId(stageValue)) return;
-    event.preventDefault();
-    const rawPosition = reactFlow.screenToFlowPosition({ x: event.clientX, y: event.clientY });
-    const position = {
-      x: Math.max(
-        CANVAS_DIMENSIONS.nodeEdgeGap,
-        Math.min(
-          CANVAS_DIMENSIONS.width - CANVAS_DIMENSIONS.nodeWidth - CANVAS_DIMENSIONS.nodeEdgeGap,
-          rawPosition.x - CANVAS_DIMENSIONS.nodeWidth / 2
-        )
-      ),
-      y: Math.max(
-        72,
-        Math.min(
-          CANVAS_DIMENSIONS.height - CANVAS_DIMENSIONS.nodeHeight - CANVAS_DIMENSIONS.nodeEdgeGap,
-          rawPosition.y - 40
-        )
-      )
-    };
-    const node = flow.createNode(stageValue, position);
-    ui.selectNode(node.id);
-    ui.setCreatorOpen(false);
-    markDirty();
-    ui.notify(t('notices.stageAdded', { stage: stageCopy(stageValue).singular }));
-  }, [flow, markDirty, reactFlow, stageCopy, t, ui]);
+  const {
+    startStageDrag,
+    allowStageDrop,
+    dropStage
+  } = useCanvasStageDragAndDrop({
+    reactFlow,
+    createNode: flow.createNode,
+    selectNode: ui.selectNode,
+    setCreatorOpen: ui.setCreatorOpen,
+    notify: ui.notify,
+    markDirty,
+    t,
+    stageCopy
+  });
 
   const updateSelectedNode = useCallback((field: keyof CanvasStageNode['data'], value: string) => {
     if (!ui.selectedNodeId) return;
