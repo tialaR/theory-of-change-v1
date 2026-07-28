@@ -1,5 +1,5 @@
 import type { CanvasProject } from '@/features/theory-of-change/canvas-workspace';
-import type { CanvasEdge, CanvasNode } from './resend-command-preview-v2.model';
+import type { CanvasEdge, CanvasNode } from './canvas-workspace.model';
 
 export type CanvasProjectSnapshot = {
   title: string;

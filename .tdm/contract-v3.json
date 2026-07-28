@@ -1,12 +1,13 @@
 {
-  "version": "3.2.0",
+  "version": "3.3.0",
   "name": "TDM Executable Contract",
-  "activePhase": "validation-release",
+  "activePhase": "hardening-release",
   "phases": [
     "foundation",
     "shark-cleanup",
     "canvas-engine",
-    "validation-release"
+    "validation-release",
+    "hardening-release"
   ],
   "gateState": "closed",
   "migrationBranch": "refactor/shark-cleanup-and-canvas-v1",
@@ -15,11 +16,11 @@
   "strictThresholds": {
     "nestedTernaries": 0,
     "important": 0,
-    "forbiddenBrowserPersistence": 0
+    "forbiddenBrowserPersistence": 0,
+    "legacyCanvasNames": 0
   },
   "protectedVisualPatterns": [
-    "src/app/canvas/resend-command-preview-v2.module.sass",
-    "src/app/canvas/resend-command-preview-v2/**",
+    "src/app/canvas/canvas-workspace.module.sass",
     "src/app/canvas-legado/**"
   ],
   "forbiddenTrackedPatterns": [
@@ -36,11 +37,15 @@
     "localStorage",
     "sessionStorage",
     "window.location",
-    "!important"
+    "!important",
+    "resend-command-preview-v2",
+    "canvas-v4"
   ],
   "canvasTarget": {
     "route": "/canvas",
+    "component": "CanvasWorkspace",
     "removedRoute": "/canvas-v4",
+    "removedPreviewRoute": "/canvas/resend-command-preview-v2",
     "legacyRoute": "/canvas-legado",
     "stateEngine": "@xyflow/react useNodesState/useEdgesState",
     "persistence": "MSW-backed typed HTTP repository",
@@ -48,5 +53,6 @@
     "locale": "pt-BR"
   },
   "ownershipRule": "Tests, hooks, fixtures, adapters and mocks remain colocated with their owning component, page or feature until proven shared.",
-  "lockedAt": "2026-07-28T00:00:05.195Z"
+  "lockedAt": "2026-07-28T00:10:49.422Z",
+  "hardenedAt": "2026-07-28T00:10:49.422Z"
 }

@@ -12,8 +12,8 @@ import {
   type ReactNode
 } from 'react';
 import { TdmIconButton } from '../../shared/ui/tdm-icon-button/tdm-icon-button';
-import styles from './resend-command-preview-v2.module.sass';
-import { previewIcons as icons } from './resend-command-preview-v2.icons';
+import styles from './canvas-workspace.module.sass';
+import { canvasIcons as icons } from './canvas-workspace.icons';
 import {
   INITIAL_EDGES,
   INITIAL_NODES,
@@ -26,7 +26,7 @@ import {
   type CanvasSnapshot,
   type RelationKind,
   type StageId
-} from './resend-command-preview-v2.model';
+} from './canvas-workspace.model';
 import { useCanvasFlowState } from './use-canvas-flow-state';
 import { useCanvasProjectPersistence } from './use-canvas-project-persistence';
 import { useRouter } from 'next/navigation';
@@ -218,7 +218,7 @@ function isStageId(value: string): value is StageId {
   return STAGES.some((stage) => stage.id === value);
 }
 
-export function ResendCommandPreviewV2() {
+export function CanvasWorkspace() {
   const { nodes, edges, setNodes, setEdges } = useCanvasFlowState(INITIAL_NODES, INITIAL_EDGES);
   const [history, setHistory] = useState<CanvasSnapshot[]>([]);
   const [future, setFuture] = useState<CanvasSnapshot[]>([]);

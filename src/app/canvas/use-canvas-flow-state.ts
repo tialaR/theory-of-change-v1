@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, type SetStateAction } from 'react';
 import { useEdgesState, useNodesState, type Edge, type Node } from '@xyflow/react';
-import type { CanvasEdge, CanvasNode } from './resend-command-preview-v2.model';
+import type { CanvasEdge, CanvasNode } from './canvas-workspace.model';
 
 type CanvasFlowNodeData = {
   stage: CanvasNode['stage'];

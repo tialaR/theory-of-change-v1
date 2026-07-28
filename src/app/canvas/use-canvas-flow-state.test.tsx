@@ -1,7 +1,7 @@
 /** @vitest-environment jsdom */
 import { act, renderHook } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import type { CanvasNode } from './resend-command-preview-v2.model';
+import type { CanvasNode } from './canvas-workspace.model';
 import { useCanvasFlowState } from './use-canvas-flow-state';
 
 const initialNode: CanvasNode = {

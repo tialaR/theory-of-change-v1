@@ -9,7 +9,6 @@
     "lint": "eslint .",
     "typegen": "next typegen",
     "typecheck": "tsc --noEmit --pretty false --incremental false",
-    "validate:migration": "npm run typegen && npm run typecheck && npm run build",
     "check:tdm:v3": "npm run check:tdm:v3:full",
     "check:tdm:v3:quick": "node scripts/tdm-contract-v3/check.mjs --mode=quick",
     "check:tdm:v3:full": "node scripts/tdm-contract-v3/check.mjs --mode=full",
@@ -21,7 +20,8 @@
     "test:e2e": "playwright test",
     "test:e2e:install": "playwright install chromium",
     "test:e2e:system-chrome": "TDM_PLAYWRIGHT_BROWSER=system-chrome playwright test",
-    "validate:canvas:release": "npm run typegen && npm run typecheck && npm run test:unit && npm run build && npm run test:e2e && npm run check:tdm:v3:full"
+    "validate:canvas:release": "npm run typegen && npm run typecheck && npm run test:unit && npm run build && npm run test:e2e && npm run check:tdm:ownership && npm run check:tdm:v3:full",
+    "check:tdm:ownership": "node scripts/tdm-contract-v3/check-ownership.mjs"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.5.1",

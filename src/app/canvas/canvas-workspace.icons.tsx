@@ -8,7 +8,7 @@ function Icon({ children, size = 18 }: { children: ReactNode; size?: number }) {
   );
 }
 
-export const previewIcons = {
+export const canvasIcons = {
   add: <Icon><path d="M12 5v14M5 12h14" /></Icon>,
   undo: <Icon><path d="M9 7 4 12l5 5" /><path d="M4 12h9a7 7 0 0 1 7 7" /></Icon>,
   redo: <Icon><path d="m15 7 5 5-5 5" /><path d="M20 12h-9a7 7 0 0 0-7 7" /></Icon>,

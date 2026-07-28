@@ -5,6 +5,14 @@ async function enableReducedMotion(page: Page): Promise<void> {
 }
 
 test.describe('canvas oficial homologado', () => {
+  test('não mantém rotas temporárias ou versionadas', async ({ request }) => {
+    const versionedRoute = await request.get('/canvas-v4');
+    const previewRoute = await request.get('/canvas/resend-command-preview-v2');
+
+    expect(versionedRoute.status()).toBe(404);
+    expect(previewRoute.status()).toBe(404);
+  });
+
   test('mantém a estrutura visual, salva pelo contrato e abre o resultado', async ({ page }: { page: Page }) => {
     await enableReducedMotion(page);
     await page.goto('/canvas');

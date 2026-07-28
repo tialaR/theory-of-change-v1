@@ -1,5 +1,5 @@
-import { ResendCommandPreviewV2 } from './resend-command-preview-v2';
+import { CanvasWorkspace } from './canvas-workspace';
 
 export default function CanvasPage() {
-  return <ResendCommandPreviewV2 />;
+  return <CanvasWorkspace />;
 }

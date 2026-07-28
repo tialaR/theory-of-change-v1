@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "patchId": "canvas-wave-04-hardening",
+  "state": "closed",
+  "branch": "refactor/shark-cleanup-and-canvas-v1",
+  "appliedAt": "2026-07-28T00:10:49.422Z",
+  "officialRoute": "/canvas",
+  "removedRoutes": [
+    "/canvas-v4",
+    "/canvas/resend-command-preview-v2"
+  ],
+  "renamedImplementation": {
+    "from": "resend-command-preview-v2",
+    "to": "canvas-workspace"
+  },
+  "validation": [
+    "typegen",
+    "typecheck",
+    "vitest",
+    "next-build",
+    "playwright-blocking",
+    "ownership-contract",
+    "contract-v3-full"
+  ],
+  "visualContract": {
+    "canvasSassSha256": "885b6b9272cadbd6fc109e3b24eec045f3c0e3adbc013f32767a92a713b3aacc",
+    "status": "preserved-after-semantic-rename"
+  }
+}

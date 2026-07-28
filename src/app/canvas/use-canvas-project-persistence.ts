@@ -10,7 +10,7 @@ import {
 } from '@/features/theory-of-change/canvas-workspace';
 import { createHttpCanvasProjectRepository } from '@/features/theory-of-change/canvas-workspace/infrastructure/http/http-canvas-project.repository';
 import { ensureCanvasProjectWorkerStarted } from '@/features/theory-of-change/canvas-workspace/infrastructure/msw/ensure-canvas-project-worker';
-import type { CanvasEdge, CanvasNode } from './resend-command-preview-v2.model';
+import type { CanvasEdge, CanvasNode } from './canvas-workspace.model';
 import { mapCanvasSnapshotToProject } from './canvas-project.mapper';
 
 type CanvasPersistenceInput = {
