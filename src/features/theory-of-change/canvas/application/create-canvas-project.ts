@@ -1,9 +1,9 @@
 import type { CanvasProject } from '../domain/canvas-project';
-import { CANVAS_PROJECT_DEFAULT_TITLE } from '../domain/canvas-project.constants';
 
 export type CreateCanvasProjectInput = {
   id: string;
-  title?: string;
+  ownerId: string;
+  title: string;
   now?: Date;
 };
 
@@ -11,9 +11,10 @@ export function createCanvasProject(input: CreateCanvasProjectInput): CanvasProj
   const timestamp = (input.now ?? new Date()).toISOString();
 
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     id: input.id,
-    title: input.title?.trim() || CANVAS_PROJECT_DEFAULT_TITLE,
+    ownerId: input.ownerId,
+    title: input.title.trim(),
     locale: 'pt-BR',
     revision: 0,
     nodes: [],

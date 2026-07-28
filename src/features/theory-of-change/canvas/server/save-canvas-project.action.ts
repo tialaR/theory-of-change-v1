@@ -1,32 +1,23 @@
 'use server';
 
-import { saveCanvasProject } from '../application/save-canvas-project';
+import { requireAuthenticatedSession } from '@/features/auth';
 import type { CanvasProject } from '../domain/canvas-project';
-import { createHttpCanvasProjectRepository } from '../infrastructure/http/http-canvas-project.repository';
+import { saveCanvasProject } from '../application/save-canvas-project';
+import { createServerCanvasProjectRepository } from './canvas-server.repository';
 
-export type SaveCanvasProjectActionResult =
-  | { ok: true; project: CanvasProject; savedAt: string }
-  | { ok: false; message: string };
+const SAVE_DELAY_MS = 420;
 
-const SAVE_SIMULATION_DELAY_MS = 280;
-
-function waitForSaveSimulation() {
-  return new Promise<void>((resolve) => {
-    setTimeout(resolve, SAVE_SIMULATION_DELAY_MS);
-  });
+function wait(duration: number) {
+  return new Promise((resolve) => setTimeout(resolve, duration));
 }
 
-export async function saveCanvasProjectAction(
-  project: CanvasProject
-): Promise<SaveCanvasProjectActionResult> {
-  try {
-    await waitForSaveSimulation();
-    const repository = createHttpCanvasProjectRepository({
-      baseUrl: process.env.TDM_CANVAS_API_BASE_URL ?? 'http://127.0.0.1:3000'
-    });
-    const result = await saveCanvasProject(repository, project);
-    return { ok: true, project: result.project, savedAt: result.savedAt };
-  } catch {
-    return { ok: false, message: 'Não foi possível salvar o projeto agora.' };
+export async function saveCanvasProjectAction(project: CanvasProject) {
+  const authenticated = await requireAuthenticatedSession('/canvas');
+  if (project.ownerId !== authenticated.user.id) {
+    throw new Error('Projeto não pertence ao usuário autenticado.');
   }
+
+  await wait(SAVE_DELAY_MS);
+  const repository = createServerCanvasProjectRepository();
+  return saveCanvasProject(repository, project);
 }

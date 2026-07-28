@@ -1,19 +1,20 @@
 {
-  "version": "3.4.0",
+  "version": "3.5.0",
   "name": "TDM Executable Contract",
-  "activePhase": "react-flow-release",
+  "activePhase": "auth-msw-release",
   "phases": [
     "foundation",
     "shark-cleanup",
     "canvas-engine",
     "validation-release",
     "hardening-release",
-    "react-flow-release"
+    "react-flow-release",
+    "auth-msw-release"
   ],
   "gateState": "closed",
   "migrationBranch": "refactor/shark-cleanup-and-canvas-v1",
-  "migrationCloseTarget": "canvas-wave-03-lockdown",
   "mergeAllowed": true,
+  "mockPersistenceScope": "single-next-server-process",
   "strictThresholds": {
     "nestedTernaries": 0,
     "important": 0,
@@ -21,7 +22,7 @@
     "legacyCanvasNames": 0,
     "maxCanvasComponentLines": 260,
     "maxCanvasHookLines": 360,
-    "maxRoutePageLines": 8
+    "maxRoutePageLines": 10
   },
   "protectedVisualPatterns": [
     "src/features/theory-of-change/canvas/ui/canvas-workspace/canvas-workspace.module.sass",
@@ -52,19 +53,27 @@
   ],
   "canvasTarget": {
     "route": "/canvas",
+    "resultRoute": "/canvas/resultado",
+    "legacyRoute": "/canvas-legado",
     "serverComposition": "src/features/theory-of-change/canvas/canvas-page.tsx",
     "clientBoundary": "src/features/theory-of-change/canvas/ui/canvas-workspace/canvas-client-entry.tsx",
-    "component": "CanvasWorkspace",
-    "legacyRoute": "/canvas-legado",
-    "stateEngine": "@xyflow/react ReactFlow/useNodesState/useEdgesState",
     "renderer": "@xyflow/react ReactFlow with custom nodes, handles and custom edges",
     "domainPolicy": "evaluateCanvasConnection",
-    "persistence": "MSW-backed typed HTTP repository",
-    "resultRoute": "/canvas/resultado",
+    "persistence": "Server Action -> typed HTTP repository -> MSW Node module store partitioned by ownerId/projectId",
     "locale": "pt-BR"
   },
-  "ownershipRule": "Each Canvas test, hook, component, adapter, fixture and mock remains inside the owning feature scope; app only routes and composes.",
-  "lockedAt": "2026-07-27T21:00:00-03:00",
-  "hardenedAt": "2026-07-27T21:30:00-03:00",
-  "reactFlowReleasedAt": "2026-07-28T01:20:17.604088+00:00"
+  "authTarget": {
+    "route": "/login",
+    "protectedRoutes": ["/canvas", "/canvas/resultado"],
+    "publicRoutesRemainPublic": true,
+    "session": "httpOnly cookie backed by MSW Node module store",
+    "personas": ["user-tiala-rocha", "user-rodger-rocha"]
+  },
+  "routeStates": {
+    "notFoundCode": "404",
+    "genericErrorUses404": false,
+    "sharedComposition": "src/shared/ui/tdm-status-screen"
+  },
+  "ownershipRule": "Each test, hook, component, adapter, fixture and mock remains inside the owning feature scope; app only routes and composes.",
+  "releasedAt": "2026-07-28T00:00:00-03:00"
 }

@@ -1,13 +1,14 @@
 import type { CanvasRelationKind, CanvasStageId } from './canvas-project';
-import { CANVAS_CONNECTION_MESSAGES } from './canvas-connection.messages';
+
+export type CanvasConnectionRejectionCode =
+  | 'same-stage'
+  | 'backward'
+  | 'skip-stage'
+  | 'outcome-source';
 
 export type CanvasConnectionDecision =
   | { allowed: true; relationKind: CanvasRelationKind }
-  | {
-      allowed: false;
-      code: 'same-stage' | 'backward' | 'skip-stage' | 'outcome-source';
-      message: string;
-    };
+  | { allowed: false; code: CanvasConnectionRejectionCode };
 
 const ORDER: Record<CanvasStageId, number> = {
   input: 0,
@@ -20,39 +21,12 @@ export function evaluateCanvasConnection(
   source: CanvasStageId,
   target: CanvasStageId
 ): CanvasConnectionDecision {
-  if (source === 'outcome') {
-    return {
-      allowed: false,
-      code: 'outcome-source',
-      message: CANVAS_CONNECTION_MESSAGES.outcomeSource
-    };
-  }
+  if (source === 'outcome') return { allowed: false, code: 'outcome-source' };
 
   const distance = ORDER[target] - ORDER[source];
-
-  if (distance === 0) {
-    return {
-      allowed: false,
-      code: 'same-stage',
-      message: CANVAS_CONNECTION_MESSAGES.sameStage
-    };
-  }
-
-  if (distance < 0) {
-    return {
-      allowed: false,
-      code: 'backward',
-      message: CANVAS_CONNECTION_MESSAGES.backward
-    };
-  }
-
-  if (distance > 1) {
-    return {
-      allowed: false,
-      code: 'skip-stage',
-      message: CANVAS_CONNECTION_MESSAGES.skipStage
-    };
-  }
+  if (distance === 0) return { allowed: false, code: 'same-stage' };
+  if (distance < 0) return { allowed: false, code: 'backward' };
+  if (distance > 1) return { allowed: false, code: 'skip-stage' };
 
   return {
     allowed: true,

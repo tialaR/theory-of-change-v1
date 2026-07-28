@@ -1,5 +1,3 @@
 #!/bin/sh
 set -eu
-npm run check:tdm:v3:full
-npm run typecheck
-npm run test:unit
+npm run validate:release

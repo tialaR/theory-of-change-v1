@@ -2,8 +2,8 @@
 
 import { useCallback, useState } from 'react';
 import type { CanvasRelationKind } from '../../domain/canvas-project';
-import { CANVAS_PROJECT_DEFAULT_TITLE } from '../../domain/canvas-project.constants';
 import type { CanvasCausalEdge, CanvasStageNode } from '../../react-flow/canvas-flow.types';
+import type { CanvasTranslator } from '../canvas-copy';
 
 export type CanvasNoticeTone = 'info' | 'warning';
 export type CanvasSaveState = 'saved' | 'dirty' | 'saving';
@@ -25,16 +25,17 @@ function createNodeDraft(node: CanvasStageNode): CanvasNodeDraft {
 
 export function createRelationDraft(
   edge: CanvasCausalEdge,
-  kind: CanvasRelationKind
+  kind: CanvasRelationKind,
+  t: CanvasTranslator
 ): CanvasRelationDraft {
   return {
-    title: edge.data?.relationTitle ?? (kind === 'risk' ? 'Risco da conexão' : 'Hipótese da conexão'),
+    title: edge.data?.relationTitle ?? (kind === 'risk' ? t('relations.riskConnectionTitle') : t('relations.hypothesisConnectionTitle')),
     description: edge.data?.relationText ?? '',
     advancedDetails: edge.data?.relationAdvancedDetails ?? ''
   };
 }
 
-export function useCanvasUiState() {
+export function useCanvasUiState(t: CanvasTranslator, initialProjectTitle: string) {
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [selectedEdgeId, setSelectedEdgeId] = useState<string | null>(null);
   const [creatorOpen, setCreatorOpen] = useState(false);
@@ -48,10 +49,10 @@ export function useCanvasUiState() {
   const [relationDraft, setRelationDraft] = useState<CanvasRelationDraft | null>(null);
   const [cardAdvancedOpenId, setCardAdvancedOpenId] = useState<string | null>(null);
   const [inspectorAdvancedOpenKey, setInspectorAdvancedOpenKey] = useState<string | null>(null);
-  const [notice, setNotice] = useState('Canvas vazio. Arraste qualquer etapa para começar.');
+  const [notice, setNotice] = useState(t('notices.empty'));
   const [noticeTone, setNoticeTone] = useState<CanvasNoticeTone>('info');
   const [saveState, setSaveState] = useState<CanvasSaveState>('saved');
-  const [projectTitle, setProjectTitle] = useState(CANVAS_PROJECT_DEFAULT_TITLE);
+  const [projectTitle, setProjectTitle] = useState(initialProjectTitle);
   const [fullCanvasMode, setFullCanvasMode] = useState(false);
 
   const notify = useCallback((message: string, tone: CanvasNoticeTone = 'info') => {
@@ -78,11 +79,11 @@ export function useCanvasUiState() {
   const selectEdge = useCallback((edge: CanvasCausalEdge, relationKind: CanvasRelationKind) => {
     setSelectedNodeId(null);
     setSelectedEdgeId(edge.id);
-    setRelationDraft(createRelationDraft(edge, relationKind));
+    setRelationDraft(createRelationDraft(edge, relationKind, t));
     setRelationPanelMode('menu');
     setRelationPopoverOpen(true);
     setInspectorOpen(true);
-  }, []);
+  }, [t]);
 
   const openNodeEditor = useCallback((node: CanvasStageNode) => {
     selectNode(node.id);

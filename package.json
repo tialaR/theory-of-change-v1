@@ -20,10 +20,13 @@
     "test:e2e": "playwright test",
     "test:e2e:install": "playwright install chromium",
     "test:e2e:system-chrome": "TDM_PLAYWRIGHT_BROWSER=system-chrome playwright test",
-    "validate:canvas:release": "npm run typegen && npm run typecheck && npm run lint:canvas && npm run test:unit && npm run build && npm run test:e2e && npm run check:tdm:react-flow && npm run check:tdm:ownership && npm run check:tdm:v3:full",
     "check:tdm:ownership": "node scripts/tdm-contract-v3/check-ownership.mjs",
     "check:tdm:react-flow": "node scripts/tdm-contract-v3/check-react-flow.mjs",
-    "lint:canvas": "eslint src/app/canvas src/features/theory-of-change/canvas"
+    "lint:canvas": "eslint src/app/canvas src/features/theory-of-change/canvas",
+    "lint:auth": "eslint src/app/login src/features/auth src/mocks src/instrumentation.ts src/shared/ui/tdm-status-screen",
+    "check:tdm:auth-msw": "node scripts/tdm-contract-v3/check-auth-msw.mjs",
+    "check:tdm:i18n-routes": "node scripts/tdm-contract-v3/check-i18n-routes.mjs",
+    "validate:release": "npm run typegen && npm run typecheck && npm run lint:canvas && npm run lint:auth && npm run test:unit && npm run build && npm run test:e2e && npm run check:tdm:react-flow && npm run check:tdm:ownership && npm run check:tdm:auth-msw && npm run check:tdm:i18n-routes && npm run check:tdm:v3:full"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.5.1",

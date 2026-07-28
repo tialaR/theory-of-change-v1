@@ -16,6 +16,7 @@ type ClearableFieldProps = {
   onClear: () => void;
   children: ReactNode;
   label: string;
+  editLabel?: string;
   multiline?: boolean;
   size?: ClearableFieldSize;
   showEditWhenIdle?: boolean;
@@ -26,6 +27,7 @@ export function ClearableField({
   onClear,
   children,
   label,
+  editLabel = label,
   multiline = false,
   size = 'md',
   showEditWhenIdle = false
@@ -97,8 +99,8 @@ export function ClearableField({
         <button
           type="button"
           className={`${styles.clearFieldButton} ${styles.editFieldButton}`}
-          aria-label="Editar título da teoria"
-          data-tooltip="Editar título da teoria"
+          aria-label={editLabel}
+          data-tooltip={editLabel}
           onPointerDown={stopPointerPropagation}
           onClick={handleEdit}
         >

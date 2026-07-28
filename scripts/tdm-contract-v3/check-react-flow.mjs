@@ -33,7 +33,9 @@ const requiredFiles = [
   `${featureRoot}/ui/components/canvas-stage-node.tsx`,
   `${featureRoot}/ui/components/canvas-causal-edge.tsx`,
   `${featureRoot}/ui/hooks/use-canvas-flow-controller.ts`,
-  `${featureRoot}/domain/canvas-connection-policy.ts`
+  `${featureRoot}/domain/canvas-connection-policy.ts`,
+  `${featureRoot}/server/save-canvas-project.action.ts`,
+  `${featureRoot}/ui/canvas-result/canvas-result-view.tsx`
 ];
 requiredFiles.forEach((file) => requireCondition(exists(file), `arquivo React Flow obrigatório ausente: ${file}`));
 
@@ -45,6 +47,7 @@ const forbiddenPaths = [
   'src/app/canvas/use-canvas-flow-state.ts',
   'src/app/canvas/use-canvas-project-persistence.ts',
   'src/features/theory-of-change/canvas-workspace',
+  'src/features/theory-of-change/components/canvas-resultado',
   'src/app/canvas-v4'
 ];
 for (const relativePath of forbiddenPaths) {

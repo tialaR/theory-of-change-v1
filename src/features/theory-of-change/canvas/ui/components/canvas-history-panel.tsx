@@ -11,31 +11,13 @@ export function CanvasHistoryPanel() {
   return (
     <aside className={styles.historyPanel}>
       <div className={styles.historyHeader}>
-        <div><span>Histórico</span><strong>Esta sessão</strong></div>
-        <button
-          type="button"
-          onClick={() => runtime.ui.setHistoryOpen(false)}
-          data-tooltip="Fechar histórico"
-        >
-          {icons.close}
-        </button>
+        <div><span>{runtime.t('history.title')}</span><strong>{runtime.t('history.session')}</strong></div>
+        <button type="button" onClick={() => runtime.ui.setHistoryOpen(false)} data-tooltip={runtime.t('history.close')}>{icons.close}</button>
       </div>
       <ol>
-        <li>
-          <span>{icons.check}</span>
-          <div>
-            <strong>Estado atual</strong>
-            <small>{runtime.flow.nodes.length} blocos no canvas</small>
-          </div>
-        </li>
+        <li><span>{icons.check}</span><div><strong>{runtime.t('history.current')}</strong><small>{runtime.t('result.blocks', { count: runtime.flow.nodes.length })}</small></div></li>
         {runtime.flow.history.slice().reverse().map((_, index) => (
-          <li key={`history-${index}`}>
-            <span>{index + 1}</span>
-            <div>
-              <strong>Alteração registrada</strong>
-              <small>Versão {runtime.flow.history.length - index}</small>
-            </div>
-          </li>
+          <li key={`history-${index}`}><span>{index + 1}</span><div><strong>{runtime.t('history.change')}</strong><small>{runtime.t('history.version', { version: runtime.flow.history.length - index })}</small></div></li>
         ))}
       </ol>
     </aside>

@@ -1,7 +1,6 @@
 'use client';
 
 import { CANVAS_STAGES } from '../../domain/canvas-stage.constants';
-import { CANVAS_TOOLTIP_LABELS } from '../../domain/canvas-ui.constants';
 import { canvasIcons as icons } from '../canvas-icons';
 import styles from '../canvas-workspace/canvas-workspace.module.sass';
 import { useCanvasRuntime } from '../runtime/canvas-runtime-context';
@@ -17,15 +16,15 @@ export function CanvasCreatorPanel() {
         className={styles.creatorToggle}
         onClick={() => runtime.ui.setCreatorOpen((value) => !value)}
         aria-expanded={open}
-        aria-label={open ? CANVAS_TOOLTIP_LABELS.closeCreator : CANVAS_TOOLTIP_LABELS.openCreator}
-        title={open ? CANVAS_TOOLTIP_LABELS.closeCreator : CANVAS_TOOLTIP_LABELS.openCreator}
-        data-tooltip={open ? CANVAS_TOOLTIP_LABELS.closeCreator : CANVAS_TOOLTIP_LABELS.openCreator}
+        aria-label={open ? runtime.t('tooltips.closeCreator') : runtime.t('tooltips.openCreator')}
+        title={open ? runtime.t('tooltips.closeCreator') : runtime.t('tooltips.openCreator')}
+        data-tooltip={open ? runtime.t('tooltips.closeCreator') : runtime.t('tooltips.openCreator')}
       >
         <span className={styles.creatorIcon}><i /><i /><i /></span>
         {open ? (
           <span className={styles.creatorHeading}>
-            <strong>Adicionar ao canvas</strong>
-            <small>Arraste qualquer etapa</small>
+            <strong>{runtime.t('creator.title')}</strong>
+            <small>{runtime.t('creator.subtitle')}</small>
           </span>
         ) : null}
         <span className={styles.creatorChevron}>{open ? icons.collapse : icons.expand}</span>
@@ -33,28 +32,31 @@ export function CanvasCreatorPanel() {
 
       {open ? (
         <div className={styles.creatorBody}>
-          {CANVAS_STAGES.map((stage) => (
-            <button
-              type="button"
-              key={stage.id}
-              data-stage={stage.id}
-              draggable
-              onDragStart={(event) => runtime.startStageDrag(event, stage.id)}
-              aria-label={`Arrastar ${stage.singular} para o canvas`}
-            >
-              <span className={styles.stageGlyph}>{icons.add}</span>
-              <span><strong>{stage.singular}</strong><small>{stage.hint}</small></span>
-              <em>{runtime.flow.counts[stage.id]}</em>
-            </button>
-          ))}
+          {CANVAS_STAGES.map((stage) => {
+            const copy = runtime.stageCopy(stage);
+            return (
+              <button
+                type="button"
+                key={stage}
+                data-stage={stage}
+                draggable
+                onDragStart={(event) => runtime.startStageDrag(event, stage)}
+                aria-label={runtime.t('creator.dragAria', { stage: copy.singular })}
+              >
+                <span className={styles.stageGlyph}>{icons.add}</span>
+                <span><strong>{copy.singular}</strong><small>{copy.hint}</small></span>
+                <em>{runtime.flow.counts[stage]}</em>
+              </button>
+            );
+          })}
 
-          <div className={styles.creatorActions} role="toolbar" aria-label="Organização e apoio do canvas">
+          <div className={styles.creatorActions} role="toolbar" aria-label={runtime.t('creator.toolbarLabel')}>
             <button
               type="button"
               onClick={runtime.centralizeColumns}
-              data-tooltip={CANVAS_TOOLTIP_LABELS.columns}
-              title={CANVAS_TOOLTIP_LABELS.columns}
-              aria-label={CANVAS_TOOLTIP_LABELS.columns}
+              data-tooltip={runtime.t('tooltips.columns')}
+              title={runtime.t('tooltips.columns')}
+              aria-label={runtime.t('tooltips.columns')}
             >
               <svg viewBox="0 0 24 24">
                 <rect x="3" y="5" width="4" height="14" rx="1" />
@@ -65,18 +67,18 @@ export function CanvasCreatorPanel() {
             <button
               type="button"
               onClick={runtime.frameVisualization}
-              data-tooltip={CANVAS_TOOLTIP_LABELS.frame}
-              title={CANVAS_TOOLTIP_LABELS.frame}
-              aria-label={CANVAS_TOOLTIP_LABELS.frame}
+              data-tooltip={runtime.t('tooltips.frame')}
+              title={runtime.t('tooltips.frame')}
+              aria-label={runtime.t('tooltips.frame')}
             >
               {icons.fit}
             </button>
             <button
               type="button"
               onClick={runtime.openGuide}
-              data-tooltip={CANVAS_TOOLTIP_LABELS.guide}
-              title={CANVAS_TOOLTIP_LABELS.guide}
-              aria-label={CANVAS_TOOLTIP_LABELS.guide}
+              data-tooltip={runtime.t('tooltips.guide')}
+              title={runtime.t('tooltips.guide')}
+              aria-label={runtime.t('tooltips.guide')}
             >
               <svg viewBox="0 0 24 24">
                 <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5Z" />
@@ -86,9 +88,9 @@ export function CanvasCreatorPanel() {
             <button
               type="button"
               onClick={runtime.openExamples}
-              data-tooltip={CANVAS_TOOLTIP_LABELS.examples}
-              title={CANVAS_TOOLTIP_LABELS.examples}
-              aria-label={CANVAS_TOOLTIP_LABELS.examples}
+              data-tooltip={runtime.t('tooltips.examples')}
+              title={runtime.t('tooltips.examples')}
+              aria-label={runtime.t('tooltips.examples')}
             >
               <svg viewBox="0 0 24 24">
                 <rect x="3" y="4" width="18" height="16" rx="2" />
@@ -99,9 +101,9 @@ export function CanvasCreatorPanel() {
             <button
               type="button"
               onClick={runtime.organizeFlow}
-              data-tooltip={CANVAS_TOOLTIP_LABELS.flow}
-              title={CANVAS_TOOLTIP_LABELS.flow}
-              aria-label={CANVAS_TOOLTIP_LABELS.flow}
+              data-tooltip={runtime.t('tooltips.flow')}
+              title={runtime.t('tooltips.flow')}
+              aria-label={runtime.t('tooltips.flow')}
             >
               <svg viewBox="0 0 24 24">
                 <circle cx="5" cy="6" r="2" />
@@ -112,7 +114,7 @@ export function CanvasCreatorPanel() {
               </svg>
             </button>
           </div>
-          <p>{icons.lock}<span>Riscos e hipóteses permanecem disponíveis somente entre relações válidas.</span></p>
+          <p>{icons.lock}<span>{runtime.t('creator.rule')}</span></p>
         </div>
       ) : null}
     </section>

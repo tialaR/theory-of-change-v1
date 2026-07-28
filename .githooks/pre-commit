@@ -2,3 +2,5 @@
 set -eu
 npm run check:tdm:v3:quick
 npm run typecheck
+npm run lint:canvas
+npm run lint:auth

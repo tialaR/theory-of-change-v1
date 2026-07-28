@@ -1,0 +1,25 @@
+---
+description: TMD Auth, MSW server authority, user-owned Canvas and route-state lockdown
+globs:
+  - "src/features/auth/**"
+  - "src/features/theory-of-change/canvas/**"
+  - "src/mocks/**"
+  - "src/instrumentation.ts"
+  - "src/app/login/**"
+  - "src/app/canvas/**"
+  - "src/shared/ui/tdm-status-screen/**"
+alwaysApply: true
+---
+
+# Mandatory architecture
+
+- `/canvas` and `/canvas/resultado` require a server-resolved session. Other product routes remain public.
+- Auth owns login UI, validation, session contract, repository and handlers.
+- The authoritative mock database is the MSW Node module store started by `instrumentation.ts`.
+- Browser MSW is a development boundary, never the source of truth for Canvas persistence.
+- Canvas projects are partitioned by `ownerId` and `projectId` and accessed through the typed repository.
+- Official mutations cross a Server Action before reaching the repository.
+- No localStorage, sessionStorage, route-owned business logic, duplicated causal policy or God Component.
+- Canvas, Auth and route-state user copy must come from next-intl.
+- A 404 screen must expose `404`; generic errors must use the same composition without pretending to be 404.
+- Every approved rule must have an executable gate. Any architectural curve must be reported before implementation.

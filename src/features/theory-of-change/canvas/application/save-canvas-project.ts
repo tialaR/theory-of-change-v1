@@ -15,7 +15,7 @@ export async function saveCanvasProject(
     revision: project.revision + 1,
     updatedAt: now.toISOString()
   };
-  const savedProject = await repository.save(nextProject);
+  const savedProject = await repository.replace(project.ownerId, nextProject);
 
   return { project: savedProject, savedAt: savedProject.updatedAt };
 }

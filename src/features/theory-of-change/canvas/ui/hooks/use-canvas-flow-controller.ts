@@ -10,10 +10,10 @@ import {
   type XYPosition
 } from '@xyflow/react';
 import { centralizeCanvasColumns, organizeCanvasFlow } from '../../application/canvas-layout';
-import { evaluateCanvasConnection } from '../../domain/canvas-connection-policy';
+import { evaluateCanvasConnection, type CanvasConnectionRejectionCode } from '../../domain/canvas-connection-policy';
 import type { CanvasRelationKind, CanvasStageId } from '../../domain/canvas-project';
 import { CANVAS_DIMENSIONS } from '../../domain/canvas-ui.constants';
-import { getCanvasStageMeta } from '../../domain/canvas-stage.constants';
+import type { CanvasStageCopy } from '../canvas-copy';
 import type {
   CanvasCausalEdge,
   CanvasFlowSnapshot,
@@ -26,9 +26,15 @@ export type CanvasRelationDraftInput = {
   advancedDetails: string;
 };
 
+export type CanvasConnectFailureCode =
+  | CanvasConnectionRejectionCode
+  | 'invalid-target'
+  | 'missing-cards'
+  | 'duplicate-connection';
+
 export type CanvasConnectResult =
   | { ok: true; edge: CanvasCausalEdge; relationKind: CanvasRelationKind }
-  | { ok: false; message: string };
+  | { ok: false; code: CanvasConnectFailureCode };
 
 function cloneSnapshot(nodes: CanvasStageNode[], edges: CanvasCausalEdge[]): CanvasFlowSnapshot {
   return {
@@ -37,8 +43,13 @@ function cloneSnapshot(nodes: CanvasStageNode[], edges: CanvasCausalEdge[]): Can
   };
 }
 
-function createInitialNode(stage: CanvasStageId, id: string, count: number, position: XYPosition): CanvasStageNode {
-  const meta = getCanvasStageMeta(stage);
+function createInitialNode(
+  stage: CanvasStageId,
+  id: string,
+  count: number,
+  position: XYPosition,
+  copy: CanvasStageCopy
+): CanvasStageNode {
 
   return {
     id,
@@ -46,8 +57,8 @@ function createInitialNode(stage: CanvasStageId, id: string, count: number, posi
     position,
     data: {
       stage,
-      title: `${meta.singular} ${count}`,
-      description: meta.hint,
+      title: `${copy.singular} ${count}`,
+      description: copy.hint,
       advancedDetails: ''
     }
   };
@@ -55,7 +66,9 @@ function createInitialNode(stage: CanvasStageId, id: string, count: number, posi
 
 export function useCanvasFlowController(
   initialNodes: CanvasStageNode[] = [],
-  initialEdges: CanvasCausalEdge[] = []
+  initialEdges: CanvasCausalEdge[] = [],
+  getStageCopy: (stage: CanvasStageId) => CanvasStageCopy,
+  createDuplicateTitle: (title: string) => string
 ) {
   const [nodes, setNodes, onNodesChangeBase] = useNodesState<CanvasStageNode>(initialNodes);
   const [edges, setEdges, onEdgesChangeBase] = useEdgesState<CanvasCausalEdge>(initialEdges);
@@ -84,11 +97,12 @@ export function useCanvasFlowController(
       stage,
       `node-${stage}-${idCounterRef.current}`,
       counts[stage] + 1,
-      position
+      position,
+      getStageCopy(stage)
     );
     setNodes((items) => [...items, node]);
     return node;
-  }, [capture, counts, setNodes]);
+  }, [capture, counts, getStageCopy, setNodes]);
 
   const updateNode = useCallback((nodeId: string, patch: Partial<CanvasStageNode['data']>) => {
     setNodes((items) => items.map((node) => (
@@ -121,12 +135,12 @@ export function useCanvasFlowController(
           source.position.y + CANVAS_DIMENSIONS.duplicateOffset
         )
       },
-      data: { ...source.data, title: `${source.data.title} cópia` },
+      data: { ...source.data, title: createDuplicateTitle(source.data.title) },
       selected: false
     };
     setNodes((items) => [...items, duplicate]);
     return duplicate;
-  }, [capture, nodes, setNodes]);
+  }, [capture, createDuplicateTitle, nodes, setNodes]);
 
   const deleteNode = useCallback((nodeId: string) => {
     const node = nodes.find((item) => item.id === nodeId);
@@ -139,17 +153,17 @@ export function useCanvasFlowController(
 
   const connectNodes = useCallback((connection: Connection): CanvasConnectResult => {
     if (!connection.source || !connection.target || connection.source === connection.target) {
-      return { ok: false, message: 'Escolha outro card como destino da conexão.' };
+      return { ok: false, code: 'invalid-target' };
     }
     const source = nodes.find((node) => node.id === connection.source);
     const target = nodes.find((node) => node.id === connection.target);
     if (!source || !target) {
-      return { ok: false, message: 'Não foi possível localizar os cards dessa conexão.' };
+      return { ok: false, code: 'missing-cards' };
     }
     const decision = evaluateCanvasConnection(source.data.stage, target.data.stage);
-    if (!decision.allowed) return { ok: false, message: decision.message };
+    if (!decision.allowed) return { ok: false, code: decision.code };
     if (edges.some((edge) => edge.source === source.id && edge.target === target.id)) {
-      return { ok: false, message: 'Essa conexão já existe no canvas.' };
+      return { ok: false, code: 'duplicate-connection' };
     }
 
     capture();

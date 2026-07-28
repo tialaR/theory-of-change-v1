@@ -47,11 +47,11 @@ export function CanvasFlowSurface() {
           onNodeDragStop={runtime.onNodeDragStop}
           onPaneClick={runtime.onPaneClick}
           onConnect={runtime.onConnect}
-          onConnectStart={() => runtime.ui.notify('Conexão iniciada. Arraste até o dot esquerdo da próxima etapa causal.')}
+          onConnectStart={() => runtime.ui.notify(runtime.t('notices.connectionStarted'))}
           onConnectEnd={(_event, state) => {
             if (state.isValid) return;
             runtime.ui.notify(
-              'Conexão não concluída. Solte a linha no dot esquerdo de um card compatível.',
+              runtime.t('notices.connectionCancelled'),
               'warning'
             );
           }}

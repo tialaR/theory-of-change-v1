@@ -2,21 +2,40 @@
 
 import { useCallback, useEffect, type DragEvent as ReactDragEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useReactFlow, type Connection, type NodeMouseHandler } from '@xyflow/react';
 import { CANVAS_DRAG_STAGE_MIME, CANVAS_DIMENSIONS } from '../../domain/canvas-ui.constants';
-import { getCanvasStageMeta, isCanvasStageId } from '../../domain/canvas-stage.constants';
-import type { CanvasRelationKind } from '../../domain/canvas-project';
+import { isCanvasStageId } from '../../domain/canvas-stage.constants';
+import type { CanvasProject, CanvasRelationKind } from '../../domain/canvas-project';
+import { toCanvasFlowGraph } from '../../react-flow/canvas-react-flow.adapter';
 import type { CanvasCausalEdge, CanvasStageNode } from '../../react-flow/canvas-flow.types';
-import { useCanvasFlowController } from './use-canvas-flow-controller';
+import { createCanvasStageCopy, type CanvasTranslator } from '../canvas-copy';
+import { useCanvasFlowController, type CanvasConnectFailureCode } from './use-canvas-flow-controller';
 import { createRelationDraft, useCanvasUiState } from './use-canvas-ui-state';
 import { useCanvasProjectPersistence } from './use-canvas-project-persistence';
 
-export function useCanvasWorkspaceController() {
-  const flow = useCanvasFlowController();
-  const ui = useCanvasUiState();
+const CONNECT_NOTICE_KEYS: Record<CanvasConnectFailureCode, string> = {
+  'invalid-target': 'notices.invalidTarget',
+  'missing-cards': 'notices.missingCards',
+  'duplicate-connection': 'notices.duplicateConnection',
+  'same-stage': 'notices.sameStage',
+  backward: 'notices.backward',
+  'skip-stage': 'notices.skipStage',
+  'outcome-source': 'notices.outcomeSource'
+};
+
+export function useCanvasWorkspaceController(initialProject: CanvasProject, userName: string) {
+  const translate = useTranslations('Canvas');
+  const t: CanvasTranslator = useCallback((key, values) => translate(key, values), [translate]);
+  const stageCopy = useCallback((stage: CanvasStageNode['data']['stage']) => createCanvasStageCopy(t, stage), [t]);
+  const duplicateTitle = useCallback((title: string) => t('node.duplicateTitle', { title }), [t]);
+  const initialGraph = toCanvasFlowGraph(initialProject);
+  const flow = useCanvasFlowController(initialGraph.nodes, initialGraph.edges, stageCopy, duplicateTitle);
+  const ui = useCanvasUiState(t, initialProject.title);
   const reactFlow = useReactFlow<CanvasStageNode, CanvasCausalEdge>();
   const router = useRouter();
   const persistence = useCanvasProjectPersistence({
+    initialProject,
     title: ui.projectTitle,
     nodes: flow.nodes,
     edges: flow.edges
@@ -89,12 +108,12 @@ export function useCanvasWorkspaceController() {
   const onConnect = useCallback((connection: Connection) => {
     const result = flow.connectNodes(connection);
     if (!result.ok) {
-      ui.notify(result.message, 'warning');
+      ui.notify(t(CONNECT_NOTICE_KEYS[result.code]), 'warning');
       return;
     }
     markDirty();
-    ui.notify('Conexão criada. Clique na seta para qualificar ou excluir.');
-  }, [flow, markDirty, ui]);
+    ui.notify(t('notices.connectionCreated'));
+  }, [flow, markDirty, t, ui]);
 
   const onNodeDragStart = useCallback(() => {
     flow.beginNodeDrag();
@@ -103,14 +122,14 @@ export function useCanvasWorkspaceController() {
   const onNodeDragStop = useCallback(() => {
     flow.finishNodeDrag();
     markDirty();
-    ui.notify('Posição atualizada.');
-  }, [flow, markDirty, ui]);
+    ui.notify(t('notices.positionUpdated'));
+  }, [flow, markDirty, t, ui]);
 
   const startStageDrag = useCallback((event: ReactDragEvent<HTMLButtonElement>, stage: CanvasStageNode['data']['stage']) => {
     event.dataTransfer.effectAllowed = 'copy';
     event.dataTransfer.setData(CANVAS_DRAG_STAGE_MIME, stage);
-    ui.notify(`Arraste ${getCanvasStageMeta(stage).singular.toLowerCase()} para a posição desejada no canvas.`);
-  }, [ui]);
+    ui.notify(t('notices.dragStage', { stage: stageCopy(stage).singular.toLowerCase() }));
+  }, [stageCopy, t, ui]);
 
   const allowStageDrop = useCallback((event: ReactDragEvent<HTMLDivElement>) => {
     if (!event.dataTransfer.types.includes(CANVAS_DRAG_STAGE_MIME)) return;
@@ -143,8 +162,8 @@ export function useCanvasWorkspaceController() {
     ui.selectNode(node.id);
     ui.setCreatorOpen(false);
     markDirty();
-    ui.notify(`${getCanvasStageMeta(stageValue).singular} adicionado. Você pode posicioná-lo livremente.`);
-  }, [flow, markDirty, reactFlow, ui]);
+    ui.notify(t('notices.stageAdded', { stage: stageCopy(stageValue).singular }));
+  }, [flow, markDirty, reactFlow, stageCopy, t, ui]);
 
   const updateSelectedNode = useCallback((field: keyof CanvasStageNode['data'], value: string) => {
     if (!ui.selectedNodeId) return;
@@ -158,8 +177,8 @@ export function useCanvasWorkspaceController() {
     ui.selectNode(duplicate.id);
     ui.setActiveToolbarNodeId(duplicate.id);
     markDirty();
-    ui.notify('Card duplicado sem alterar o original.');
-  }, [flow, markDirty, ui]);
+    ui.notify(t('notices.duplicated'));
+  }, [flow, markDirty, t, ui]);
 
   const deleteNode = useCallback((nodeId: string) => {
     const node = flow.deleteNode(nodeId);
@@ -168,8 +187,8 @@ export function useCanvasWorkspaceController() {
     ui.setActiveToolbarNodeId(null);
     ui.closeNodeEditor();
     markDirty();
-    ui.notify(`${getCanvasStageMeta(node.data.stage).singular} excluído.`);
-  }, [flow, markDirty, ui]);
+    ui.notify(t('notices.deleted', { stage: stageCopy(node.data.stage).singular }));
+  }, [flow, markDirty, stageCopy, t, ui]);
 
   const saveNodeEditor = useCallback((nodeId: string) => {
     if (!ui.nodeDraft) return;
@@ -178,21 +197,21 @@ export function useCanvasWorkspaceController() {
     flow.saveNodeDraft(nodeId, { ...node.data, ...ui.nodeDraft });
     ui.closeNodeEditor();
     markDirty();
-    ui.notify('Card atualizado no próprio canvas.');
-  }, [flow, markDirty, ui]);
+    ui.notify(t('notices.nodeUpdated'));
+  }, [flow, markDirty, t, ui]);
 
   const selectEdge = useCallback((edge: CanvasCausalEdge) => {
     const relationKind = flow.getRelationKind(edge);
     if (!relationKind) return;
     ui.selectEdge(edge, relationKind);
-    ui.notify('Conexão selecionada. As ações disponíveis respeitam a regra causal.');
-  }, [flow, ui]);
+    ui.notify(t('notices.connectionSelected'));
+  }, [flow, t, ui]);
 
   const openRelationForm = useCallback(() => {
     if (!selectedEdge || !selectedRelationKind) return;
-    ui.setRelationDraft(createRelationDraft(selectedEdge, selectedRelationKind));
+    ui.setRelationDraft(createRelationDraft(selectedEdge, selectedRelationKind, t));
     ui.setRelationPanelMode('form');
-  }, [selectedEdge, selectedRelationKind, ui]);
+  }, [selectedEdge, selectedRelationKind, t, ui]);
 
   const updateRelationDraft = useCallback((field: 'title' | 'description' | 'advancedDetails', value: string) => {
     ui.setRelationDraft((current) => current ? { ...current, [field]: value } : current);
@@ -203,8 +222,8 @@ export function useCanvasWorkspaceController() {
     if (!ui.relationDraft.description.trim()) {
       ui.notify(
         selectedRelationKind === 'risk'
-          ? 'Descreva o risco antes de salvar.'
-          : 'Descreva a hipótese antes de salvar.',
+          ? t('notices.riskRequired')
+          : t('notices.hypothesisRequired'),
         'warning'
       );
       return;
@@ -212,87 +231,86 @@ export function useCanvasWorkspaceController() {
     flow.saveRelation(selectedEdge.id, selectedRelationKind, ui.relationDraft);
     ui.setRelationPanelMode('menu');
     markDirty();
-    ui.notify(selectedRelationKind === 'risk' ? 'Risco salvo na conexão.' : 'Hipótese salva na conexão.');
-  }, [flow, markDirty, selectedEdge, selectedRelationKind, ui]);
+    ui.notify(selectedRelationKind === 'risk' ? t('notices.riskSaved') : t('notices.hypothesisSaved'));
+  }, [flow, markDirty, selectedEdge, selectedRelationKind, t, ui]);
 
   const removeRelation = useCallback(() => {
     if (!selectedEdge || !selectedRelationKind || !selectedEdge.data?.relationKind) return;
     flow.removeRelation(selectedEdge.id);
-    ui.setRelationDraft(createRelationDraft({ ...selectedEdge, data: {} }, selectedRelationKind));
+    ui.setRelationDraft(createRelationDraft({ ...selectedEdge, data: {} }, selectedRelationKind, t));
     ui.setRelationPanelMode('menu');
     markDirty();
-    ui.notify('Marcador removido. A conexão causal foi preservada.');
-  }, [flow, markDirty, selectedEdge, selectedRelationKind, ui]);
+    ui.notify(t('notices.markerRemoved'));
+  }, [flow, markDirty, selectedEdge, selectedRelationKind, t, ui]);
 
   const deleteConnection = useCallback(() => {
     if (!selectedEdge) return;
     flow.deleteEdge(selectedEdge.id);
     ui.clearSelection();
     markDirty();
-    ui.notify('Conexão excluída sem alterar os blocos.');
-  }, [flow, markDirty, selectedEdge, ui]);
+    ui.notify(t('notices.connectionDeleted'));
+  }, [flow, markDirty, selectedEdge, t, ui]);
 
   const undo = useCallback(() => {
     if (!flow.undo()) return;
     markDirty();
-    ui.notify('Última alteração desfeita.');
-  }, [flow, markDirty, ui]);
+    ui.notify(t('notices.undo'));
+  }, [flow, markDirty, t, ui]);
 
   const redo = useCallback(() => {
     if (!flow.redo()) return;
     markDirty();
-    ui.notify('Alteração refeita.');
-  }, [flow, markDirty, ui]);
+    ui.notify(t('notices.redo'));
+  }, [flow, markDirty, t, ui]);
 
   const centralizeColumns = useCallback(() => {
     flow.centralizeColumns();
     markDirty();
-    ui.notify('As etapas foram centralizadas em colunas.');
+    ui.notify(t('notices.columns'));
     requestAnimationFrame(() => reactFlow.fitView({ padding: 0.18, duration: 260 }));
-  }, [flow, markDirty, reactFlow, ui]);
+  }, [flow, markDirty, reactFlow, t, ui]);
 
   const organizeFlow = useCallback(() => {
     flow.organizeFlow();
     markDirty();
-    ui.notify('O fluxo foi organizado para facilitar a leitura das conexões.');
+    ui.notify(t('notices.organized'));
     requestAnimationFrame(() => reactFlow.fitView({ padding: 0.18, duration: 260 }));
-  }, [flow, markDirty, reactFlow, ui]);
+  }, [flow, markDirty, reactFlow, t, ui]);
 
   const frameVisualization = useCallback(() => {
     if (!flow.nodes.length) {
       reactFlow.setViewport({ x: 0, y: 0, zoom: 1 }, { duration: 260 });
-      ui.notify('A visualização foi centralizada.');
+      ui.notify(t('notices.viewCentered'));
       return;
     }
     reactFlow.fitView({ padding: 0.18, duration: 260 });
-    ui.notify('A teoria foi enquadrada na área de trabalho.');
-  }, [flow.nodes.length, reactFlow, ui]);
+    ui.notify(t('notices.viewFramed'));
+  }, [flow.nodes.length, reactFlow, t, ui]);
 
   const save = useCallback(async () => {
     ui.setSaveState('saving');
-    ui.notify('Salvando teoria…');
+    ui.notify(t('notices.saving'));
     try {
       await persistence.saveProject();
       ui.setSaveState('saved');
-      ui.notify('Tudo salvo.');
+      ui.notify(t('notices.saved'));
     } catch {
       ui.setSaveState('dirty');
-      ui.notify('Não foi possível salvar agora. Tente novamente.', 'warning');
+      ui.notify(t('notices.saveError'), 'warning');
     }
-  }, [persistence, ui]);
+  }, [persistence, t, ui]);
 
   const openResult = useCallback(async () => {
     ui.setSaveState('saving');
-    ui.notify('Preparando resultado…');
+    ui.notify(t('notices.preparingResult'));
     try {
       await persistence.saveAndOpenResult();
       ui.setSaveState('saved');
     } catch {
       ui.setSaveState('dirty');
-      ui.notify('Não foi possível abrir o resultado agora. Tente novamente.', 'warning');
+      ui.notify(t('notices.resultError'), 'warning');
     }
-  }, [persistence, ui]);
-
+  }, [persistence, t, ui]);
 
   return {
     flow,
@@ -331,7 +349,10 @@ export function useCanvasWorkspaceController() {
     openGuide: () => router.push('/guia-de-aprendizado'),
     openExamples: () => router.push('/exemplos'),
     save,
-    openResult
+    openResult,
+    t,
+    stageCopy,
+    userName
   };
 }
 

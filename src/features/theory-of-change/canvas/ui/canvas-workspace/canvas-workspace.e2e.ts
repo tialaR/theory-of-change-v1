@@ -15,6 +15,12 @@ test.describe('canvas oficial com React Flow real', () => {
   test('cria, conecta, salva e abre o resultado sem renderer manual', async ({ page }: { page: Page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/canvas');
+    await expect(page).toHaveURL(/\/login\?returnTo=%2Fcanvas$/);
+    await page.getByLabel('Nome').fill('Tiala Rocha');
+    await page.getByLabel('E-mail').fill('tialarocha@tdmconstrutor.com.br');
+    await page.getByLabel('Senha').fill('tdm123456');
+    await page.getByRole('button', { name: 'Entrar' }).click();
+    await expect(page).toHaveURL(/\/canvas$/);
 
     await expect(page.locator('.react-flow')).toBeVisible();
     await expect(page.getByTestId('canvas-react-flow-surface')).toBeVisible();

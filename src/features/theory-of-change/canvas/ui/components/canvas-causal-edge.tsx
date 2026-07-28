@@ -49,7 +49,7 @@ export function CanvasCausalEdgeComponent(props: EdgeProps<CanvasCausalEdge>) {
               const edge = runtime.flow.edges.find((item) => item.id === props.id);
               if (edge) runtime.selectEdge(edge);
             }}
-            aria-label="Selecionar conexão"
+            aria-label={runtime.t('relation.select')}
           >
             {label}
           </button>

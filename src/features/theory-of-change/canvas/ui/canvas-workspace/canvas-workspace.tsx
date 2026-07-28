@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactFlowProvider } from '@xyflow/react';
+import type { CanvasProject } from '../../domain/canvas-project';
 import styles from './canvas-workspace.module.sass';
 import { CanvasCreatorPanel } from '../components/canvas-creator-panel';
 import { CanvasFlowSurface } from '../components/canvas-flow-surface';
@@ -12,8 +13,13 @@ import { CanvasToolbar } from '../components/canvas-toolbar';
 import { useCanvasWorkspaceController } from '../hooks/use-canvas-workspace-controller';
 import { CanvasRuntimeProvider } from '../runtime/canvas-runtime-context';
 
-function CanvasWorkspaceContent() {
-  const controller = useCanvasWorkspaceController();
+export type CanvasWorkspaceProps = {
+  initialProject: CanvasProject;
+  userName: string;
+};
+
+function CanvasWorkspaceContent({ initialProject, userName }: CanvasWorkspaceProps) {
+  const controller = useCanvasWorkspaceController(initialProject, userName);
 
   return (
     <CanvasRuntimeProvider controller={controller}>
@@ -33,10 +39,10 @@ function CanvasWorkspaceContent() {
   );
 }
 
-export function CanvasWorkspace() {
+export function CanvasWorkspace(props: CanvasWorkspaceProps) {
   return (
     <ReactFlowProvider>
-      <CanvasWorkspaceContent />
+      <CanvasWorkspaceContent {...props} />
     </ReactFlowProvider>
   );
 }

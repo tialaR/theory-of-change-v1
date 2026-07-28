@@ -4,7 +4,7 @@ import { createCanvasResultStageSummary } from './canvas-result-summary';
 
 describe('createCanvasResultStageSummary', () => {
   it('resume somente os nós do projeto proprietário', () => {
-    const project = createCanvasProject({ id: 'result-summary' });
+    const project = createCanvasProject({ id: 'result-summary', ownerId: 'user-tiala-rocha', title: 'Minha teoria da mudança' });
     project.nodes = [
       { id: 'i1', stage: 'input', title: 'Equipe', description: '', advancedDetails: '', position: { x: 0, y: 0 } },
       { id: 'a1', stage: 'activity', title: 'Oficina', description: '', advancedDetails: '', position: { x: 0, y: 0 } }

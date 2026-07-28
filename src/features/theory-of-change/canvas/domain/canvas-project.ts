@@ -23,8 +23,9 @@ export type CanvasProjectConnection = {
 };
 
 export type CanvasProject = {
-  schemaVersion: 1;
+  schemaVersion: 2;
   id: string;
+  ownerId: string;
   title: string;
   locale: 'pt-BR';
   revision: number;
@@ -34,9 +35,15 @@ export type CanvasProject = {
   updatedAt: string;
 };
 
+export type CanvasProjectPatch = Partial<Pick<CanvasProject, 'title' | 'nodes' | 'connections'>>;
+
 export type CanvasProjectRepository = {
-  findById(projectId: string): Promise<CanvasProject | null>;
-  save(project: CanvasProject): Promise<CanvasProject>;
+  listByOwner(ownerId: string): Promise<CanvasProject[]>;
+  findById(ownerId: string, projectId: string): Promise<CanvasProject | null>;
+  create(ownerId: string, project: CanvasProject): Promise<CanvasProject>;
+  replace(ownerId: string, project: CanvasProject): Promise<CanvasProject>;
+  patch(ownerId: string, projectId: string, patch: CanvasProjectPatch): Promise<CanvasProject>;
+  delete(ownerId: string, projectId: string): Promise<void>;
 };
 
 export function cloneCanvasProject(project: CanvasProject): CanvasProject {

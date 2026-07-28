@@ -3,7 +3,7 @@ import { createCanvasProject } from '../application/create-canvas-project';
 import { applyCanvasFlowGraph, toCanvasFlowGraph } from './canvas-react-flow.adapter';
 
 function createProject() {
-  const project = createCanvasProject({ id: 'project-flow' });
+  const project = createCanvasProject({ id: 'project-flow', ownerId: 'user-tiala-rocha', title: 'Minha teoria da mudança' });
   project.nodes.push({
     id: 'input-1',
     stage: 'input',
