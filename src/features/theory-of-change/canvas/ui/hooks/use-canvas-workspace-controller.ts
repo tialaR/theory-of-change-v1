@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, type DragEvent as ReactDragEvent } from 'react';
+import { useCallback, type DragEvent as ReactDragEvent } from 'react';
 import { useTranslations } from 'next-intl';
 import { useReactFlow, type Connection, type NodeMouseHandler } from '@xyflow/react';
 import { CANVAS_DRAG_STAGE_MIME, CANVAS_DIMENSIONS } from '../../domain/canvas-ui.constants';
@@ -10,6 +10,7 @@ import { toCanvasFlowGraph } from '../../react-flow/canvas-react-flow.adapter';
 import type { CanvasCausalEdge, CanvasStageNode } from '../../react-flow/canvas-flow.types';
 import { createCanvasStageCopy, type CanvasTranslator } from '../canvas-copy';
 import { useCanvasFlowController, type CanvasConnectFailureCode } from './use-canvas-flow-controller';
+import { useCanvasWorkspaceEffects } from './use-canvas-workspace-effects';
 import { createRelationDraft, useCanvasUiState } from './use-canvas-ui-state';
 import { useCanvasSaveController } from './use-canvas-save-controller';
 
@@ -63,39 +64,15 @@ export function useCanvasWorkspaceController(initialProject: CanvasProject, user
     : null;
   const selectedRelationKind = selectedEdge ? flow.getRelationKind(selectedEdge) : null;
 
-  useEffect(() => {
-    setInspectorAdvancedOpenKey(null);
-  }, [selectedEdgeId, selectedNodeId, setInspectorAdvancedOpenKey]);
-
-  useEffect(() => {
-    if (!relationPopoverOpen || !selectedEdgeId) return undefined;
-
-    function closeRelationToolbarOnOutsidePointer(event: PointerEvent) {
-      const target = event.target as HTMLElement | null;
-      if (!target) return;
-      const popover = target.closest('[data-edge-popover]');
-      const edgeAction = target.closest(`[data-edge-action-id="${selectedEdgeId}"]`);
-      if (!popover && !edgeAction) setRelationPopoverOpen(false);
-    }
-
-    document.addEventListener('pointerdown', closeRelationToolbarOnOutsidePointer, true);
-    return () => document.removeEventListener('pointerdown', closeRelationToolbarOnOutsidePointer, true);
-  }, [relationPopoverOpen, selectedEdgeId, setRelationPopoverOpen]);
-
-  useEffect(() => {
-    if (!activeToolbarNodeId) return undefined;
-
-    function closeToolbarOnOutsidePointer(event: PointerEvent) {
-      const target = event.target as HTMLElement | null;
-      if (!target) return;
-      const card = target.closest(`[data-node-card-id="${activeToolbarNodeId}"]`);
-      const toolbar = target.closest(`[data-node-toolbar-id="${activeToolbarNodeId}"]`);
-      if (!card && !toolbar) setActiveToolbarNodeId(null);
-    }
-
-    document.addEventListener('pointerdown', closeToolbarOnOutsidePointer, true);
-    return () => document.removeEventListener('pointerdown', closeToolbarOnOutsidePointer, true);
-  }, [activeToolbarNodeId, setActiveToolbarNodeId]);
+  useCanvasWorkspaceEffects({
+    activeToolbarNodeId,
+    relationPopoverOpen,
+    selectedEdgeId,
+    selectedNodeId,
+    setActiveToolbarNodeId,
+    setInspectorAdvancedOpenKey,
+    setRelationPopoverOpen
+  });
 
   const markDirty = ui.markDirty;
 
