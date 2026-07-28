@@ -14,7 +14,6 @@
     "check:tdm:v3:quick": "node scripts/tdm-contract-v3/check.mjs --mode=quick",
     "check:tdm:v3:full": "node scripts/tdm-contract-v3/check.mjs --mode=full",
     "check:tdm:v3:ci": "node scripts/tdm-contract-v3/check.mjs --mode=ci",
-    "check:tdm:migration-window": "node scripts/tdm-contract-v3/check-migration-window.mjs",
     "analyze:bundle": "next experimental-analyze",
     "analyze:bundle:output": "next experimental-analyze --output",
     "test:unit": "vitest run",
@@ -22,7 +21,7 @@
     "test:e2e": "playwright test",
     "test:e2e:install": "playwright install chromium",
     "test:e2e:system-chrome": "TDM_PLAYWRIGHT_BROWSER=system-chrome playwright test",
-    "validate:canvas:wave2": "npm run typegen && npm run typecheck && npm run test:unit && npm run build && npm run test:e2e"
+    "validate:canvas:release": "npm run typegen && npm run typecheck && npm run test:unit && npm run build && npm run test:e2e && npm run check:tdm:v3:full"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.5.1",
@@ -30,25 +29,25 @@
     "docx": "^9.7.1",
     "html-to-image": "^1.11.11",
     "motion": "^12.42.0",
-    "msw": "2.15.0",
     "next": "^16.2.9",
-    "next-intl": "4.13.4",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "sass": "^1.101.0"
+    "sass": "^1.101.0",
+    "next-intl": "4.13.4",
+    "msw": "2.15.0"
   },
   "devDependencies": {
-    "@playwright/test": "1.62.0",
-    "@testing-library/dom": "10.4.1",
-    "@testing-library/jest-dom": "6.9.1",
-    "@testing-library/react": "16.3.2",
     "@types/node": "^26.0.1",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.9",
-    "jsdom": "27.4.0",
     "typescript": "^6.0.3",
+    "@playwright/test": "1.62.0",
+    "@testing-library/dom": "10.4.1",
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "16.3.2",
+    "jsdom": "27.4.0",
     "vitest": "4.1.10"
   },
   "msw": {

@@ -1,5 +1,5 @@
-import { redirect } from 'next/navigation';
+import { ResendCommandPreviewV2 } from './resend-command-preview-v2';
 
 export default function CanvasPage() {
-  redirect('/canvas-v4');
+  return <ResendCommandPreviewV2 />;
 }

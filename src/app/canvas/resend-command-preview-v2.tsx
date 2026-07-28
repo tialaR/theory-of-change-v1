@@ -27,6 +27,9 @@ import {
   type RelationKind,
   type StageId
 } from './resend-command-preview-v2.model';
+import { useCanvasFlowState } from './use-canvas-flow-state';
+import { useCanvasProjectPersistence } from './use-canvas-project-persistence';
+import { useRouter } from 'next/navigation';
 
 const NODE_WIDTH = 238;
 const NODE_HEIGHT = 126;
@@ -37,7 +40,6 @@ const NODE_DROP_OFFSET_X = NODE_WIDTH / 2;
 const NODE_DROP_OFFSET_Y = 40;
 const DUPLICATE_OFFSET = 34;
 const HISTORY_LIMIT = 24;
-const SAVE_DELAY_MS = 680;
 const DRAG_STAGE_MIME = 'application/x-tdm-stage';
 const EDGE_POPOVER_GAP = 14;
 const EDGE_TOOLBAR_WIDTH = 176;
@@ -217,8 +219,7 @@ function isStageId(value: string): value is StageId {
 }
 
 export function ResendCommandPreviewV2() {
-  const [nodes, setNodes] = useState<CanvasNode[]>(INITIAL_NODES);
-  const [edges, setEdges] = useState<CanvasEdge[]>(INITIAL_EDGES);
+  const { nodes, edges, setNodes, setEdges } = useCanvasFlowState(INITIAL_NODES, INITIAL_EDGES);
   const [history, setHistory] = useState<CanvasSnapshot[]>([]);
   const [future, setFuture] = useState<CanvasSnapshot[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -240,6 +241,12 @@ export function ResendCommandPreviewV2() {
   const [noticeTone, setNoticeTone] = useState<'info' | 'warning'>('info');
   const [saveState, setSaveState] = useState<'saved' | 'dirty' | 'saving'>('saved');
   const [projectTitle, setProjectTitle] = useState('Minha teoria da mudança');
+  const router = useRouter();
+  const { saveProject, saveAndOpenResult } = useCanvasProjectPersistence({
+    title: projectTitle,
+    nodes,
+    edges
+  });
   const [fullCanvasMode, setFullCanvasMode] = useState(false);
   const [nodeMetrics, setNodeMetrics] = useState<Record<string, NodeMetric>>({});
   const dragRef = useRef<DragState | null>(null);
@@ -631,10 +638,19 @@ export function ResendCommandPreviewV2() {
     setSaveState('dirty');
   }
 
-  function save() {
+  async function save() {
     setSaveState('saving');
-    setNotice('Salvando versão local…');
-    window.setTimeout(() => { setSaveState('saved'); setNotice('Tudo salvo.'); }, SAVE_DELAY_MS);
+    setNoticeTone('info');
+    setNotice('Salvando teoria…');
+    try {
+      await saveProject();
+      setSaveState('saved');
+      setNotice('Tudo salvo.');
+    } catch {
+      setSaveState('dirty');
+      setNoticeTone('warning');
+      setNotice('Não foi possível salvar agora. Tente novamente.');
+    }
   }
 
   function nodeAnchor(node: CanvasNode, side: 'left' | 'right') {
@@ -709,16 +725,25 @@ export function ResendCommandPreviewV2() {
   }
 
   function openGuide() {
-    window.location.assign('/guia-de-aprendizado');
+    router.push('/guia-de-aprendizado');
   }
 
   function openExamples() {
-    window.location.assign('/exemplos');
+    router.push('/exemplos');
   }
 
-  function openResult() {
-    window.sessionStorage.setItem('tdm-canvas-v4-result', JSON.stringify({ nodes, edges }));
-    window.location.assign('/canvas/resultado');
+  async function openResult() {
+    setSaveState('saving');
+    setNoticeTone('info');
+    setNotice('Preparando resultado…');
+    try {
+      await saveAndOpenResult();
+      setSaveState('saved');
+    } catch {
+      setSaveState('dirty');
+      setNoticeTone('warning');
+      setNotice('Não foi possível abrir o resultado agora. Tente novamente.');
+    }
   }
 
 
@@ -727,14 +752,14 @@ export function ResendCommandPreviewV2() {
       {!fullCanvasMode && <header className={styles.topbar}>
         <div className={styles.brandNavigation}><TdmIconButton href="/" aria-label={TOOLTIP_LABELS.back} tooltip={TOOLTIP_LABELS.back} tooltipPosition="right" variant="ghost" size="sm" className={styles.backButton}><span aria-hidden="true">{icons.chevron}</span></TdmIconButton><div className={styles.brandGroup}><img className={styles.brandLogo} src="/brand/tmd-construtor-header-canonical.webp" alt="TMD Construtor" /></div></div>
         <ClearableField value={projectTitle} onClear={() => setProjectTitle('')} label="Apagar título da teoria" showEditWhenIdle>
-          <input className={styles.projectTitle} aria-label="Título da teoria" value={projectTitle} onChange={(event) => setProjectTitle(event.target.value)} maxLength={96} placeholder={FIELD_PLACEHOLDERS.projectTitle} />
+          <input className={styles.projectTitle} aria-label="Título da teoria" value={projectTitle} onChange={(event) => { setProjectTitle(event.target.value); setSaveState('dirty'); }} maxLength={96} placeholder={FIELD_PLACEHOLDERS.projectTitle} />
         </ClearableField>
         <div className={styles.topActions}>
           <button type="button" className={styles.headerIconButton} onClick={undo} disabled={!history.length} data-tooltip={TOOLTIP_LABELS.undo}>{icons.undo}</button>
           <button type="button" className={styles.headerIconButton} onClick={redo} disabled={!future.length} data-tooltip={TOOLTIP_LABELS.redo}>{icons.redo}</button>
           <button type="button" className={styles.headerActionButton} onClick={() => setHistoryOpen((value) => !value)} data-active={historyOpen} data-tooltip={TOOLTIP_LABELS.history}>{icons.history}<span>Histórico</span></button>
-          <button type="button" className={`${styles.headerActionButton} ${styles.resultButton}`} onClick={openResult} data-tooltip={TOOLTIP_LABELS.result}><span className={styles.eyeIcon} aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.8 12s3.3-5.4 9.2-5.4S21.2 12 21.2 12 17.9 17.4 12 17.4 2.8 12 2.8 12Z"/><circle cx="12" cy="12" r="2.4"/></svg></span><span>Resultado</span></button>
-          <button type="button" className={`${styles.headerActionButton} ${styles.saveButton}`} onClick={save} data-tooltip={TOOLTIP_LABELS.save}>{icons.save}<span>Salvar</span></button>
+          <button type="button" className={`${styles.headerActionButton} ${styles.resultButton}`} onClick={openResult} aria-label={TOOLTIP_LABELS.result} data-tooltip={TOOLTIP_LABELS.result}><span className={styles.eyeIcon} aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.8 12s3.3-5.4 9.2-5.4S21.2 12 21.2 12 17.9 17.4 12 17.4 2.8 12 2.8 12Z"/><circle cx="12" cy="12" r="2.4"/></svg></span><span>Resultado</span></button>
+          <button type="button" className={`${styles.headerActionButton} ${styles.saveButton}`} onClick={save} aria-label={TOOLTIP_LABELS.save} data-tooltip={TOOLTIP_LABELS.save}>{icons.save}<span>Salvar</span></button>
         </div>
       </header>}
 

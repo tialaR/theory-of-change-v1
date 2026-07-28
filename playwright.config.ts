@@ -26,7 +26,7 @@ export default defineConfig({
   ],
   webServer: {
     command: 'npm run dev',
-    url: 'http://localhost:3000/canvas-v4',
+    url: 'http://localhost:3000/canvas',
     reuseExistingServer: !process.env.CI,
     timeout: 120000
   }

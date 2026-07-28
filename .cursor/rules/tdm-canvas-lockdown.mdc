@@ -1,0 +1,20 @@
+---
+description: TDM Canvas release lockdown
+globs:
+  - "src/app/canvas/**"
+  - "src/features/theory-of-change/canvas-workspace/**"
+alwaysApply: false
+---
+
+# Canvas lockdown
+
+- `/canvas` is the only official current Canvas route.
+- `/canvas-v4` was removed, not redirected.
+- `/canvas-legado` must remain available.
+- The homologated Canvas Sass is protected.
+- State belongs to the React Flow adapter/state owner.
+- Persistence must cross the typed repository contract and MSW handlers.
+- Browser-only MSW code must be loaded dynamically after confirming `window` exists.
+- Do not add localStorage, sessionStorage or window.location.
+- Tests, hooks, fixtures, adapters and mocks stay colocated with their owner until genuinely shared.
+- Run `npm run validate:canvas:release` before proposing a merge.

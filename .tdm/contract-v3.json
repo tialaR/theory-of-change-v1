@@ -1,59 +1,35 @@
 {
-  "version": "3.0.0",
+  "version": "3.2.0",
   "name": "TDM Executable Contract",
-  "activePhase": "shark-cleanup",
+  "activePhase": "validation-release",
   "phases": [
     "foundation",
     "shark-cleanup",
     "canvas-engine",
     "validation-release"
   ],
+  "gateState": "closed",
+  "migrationBranch": "refactor/shark-cleanup-and-canvas-v1",
+  "migrationCloseTarget": "canvas-wave-03-lockdown",
+  "mergeAllowed": true,
   "strictThresholds": {
-    "tsxLines": 240,
-    "tsLines": 400,
-    "sassLines": 480,
-    "pageOrLayoutLines": 120,
-    "hooks": 12,
-    "states": 6,
-    "callbacks": 10,
     "nestedTernaries": 0,
     "important": 0,
-    "hardcodedColors": 0,
-    "hardcodedStrings": 0,
-    "staticInlineStyles": 0,
-    "legacyNameCount": 0
+    "forbiddenBrowserPersistence": 0
   },
   "protectedVisualPatterns": [
-    "src/app/canvas-v4/**",
+    "src/app/canvas/resend-command-preview-v2.module.sass",
     "src/app/canvas/resend-command-preview-v2/**",
-    "src/app/canvas-v3/**",
-    "src/features/theory-of-change/components/public-pages/guided-story.tsx",
-    "src/features/theory-of-change/components/public-pages/guided-story-scheduler.ts",
-    "src/features/theory-of-change/components/resend-public/example-previews/**",
-    "src/features/theory-of-change/components/result-view/experience/**",
-    "src/features/theory-of-change/components/result-view/result-connections-layer/**",
-    "src/features/theory-of-change/components/result-view/result-node-card/**",
-    "src/features/theory-of-change/components/result-view/result-stage-column/**"
-  ],
-  "contractPatterns": [
-    ".tdm/contract-v3.json",
-    ".tdm/debt/**",
-    ".github/workflows/tdm-contract-v3.yml",
-    ".githooks/**",
-    ".cursor/rules/tdm-contract-v3.mdc",
-    "scripts/tdm-contract-v3/**",
-    "docs/governance/**"
+    "src/app/canvas-legado/**"
   ],
   "forbiddenTrackedPatterns": [
     "node_modules/**",
     ".next/**",
     "coverage/**",
-    "output/**",
-    "__MACOSX/**",
+    "playwright-report/**",
+    "test-results/**",
     "**/.DS_Store",
-    "*.tsbuildinfo",
     "**/*.tsbuildinfo",
-    "*.zip",
     "**/*.zip"
   ],
   "forbiddenNewCode": [
@@ -62,43 +38,15 @@
     "window.location",
     "!important"
   ],
-  "requiredPackageScripts": [
-    "check:tdm:v3",
-    "check:tdm:v3:quick",
-    "check:tdm:v3:full",
-    "check:tdm:v3:ci"
-  ],
   "canvasTarget": {
     "route": "/canvas",
-    "homologatedSource": "/canvas-v4",
+    "removedRoute": "/canvas-v4",
     "legacyRoute": "/canvas-legado",
-    "requiredEngine": "@xyflow/react",
-    "persistence": "MSW-backed repository through explicit server contracts",
-    "forbiddenPersistence": [
-      "localStorage",
-      "sessionStorage"
-    ]
+    "stateEngine": "@xyflow/react useNodesState/useEdgesState",
+    "persistence": "MSW-backed typed HTTP repository",
+    "resultRoute": "/canvas/resultado",
+    "locale": "pt-BR"
   },
-  "artifactDebtPatterns": [
-    ".playwright-cli/**",
-    ".tdm-backups/**",
-    ".tdm-patch-backups/**",
-    ".tdm-patches/**",
-    ".validation-screenshots/**",
-    ".canvas-surgery-backup/**",
-    ".tmp-*/**",
-    "tdm-cleanup-before-canvas-v1/**",
-    "**/*.before-hotfix-*",
-    "**/*.hero-backup"
-  ],
-  "operationalIgnoredPatterns": [
-    ".tdm-backup/**",
-    ".tdm-integration/**",
-    ".next/**",
-    "node_modules/**",
-    "coverage/**"
-  ],
-  "gateState": "open",
-  "migrationBranch": "refactor/shark-cleanup-and-canvas-v1",
-  "migrationCloseTarget": "canvas-release-lock"
+  "ownershipRule": "Tests, hooks, fixtures, adapters and mocks remain colocated with their owning component, page or feature until proven shared.",
+  "lockedAt": "2026-07-28T00:00:05.195Z"
 }

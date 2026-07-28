@@ -4,10 +4,10 @@ async function enableReducedMotion(page: Page): Promise<void> {
   await page.emulateMedia({ reducedMotion: 'reduce' });
 }
 
-test.describe('canvas-v4 homologado', () => {
-  test('mantém a estrutura visual e as ações essenciais', async ({ page }: { page: Page }) => {
+test.describe('canvas oficial homologado', () => {
+  test('mantém a estrutura visual, salva pelo contrato e abre o resultado', async ({ page }: { page: Page }) => {
     await enableReducedMotion(page);
-    await page.goto('/canvas-v4');
+    await page.goto('/canvas');
 
     await expect(page.getByAltText('TMD Construtor')).toBeVisible();
     await expect(page.getByRole('textbox', { name: 'Título da teoria', exact: true })).toBeVisible();
@@ -19,5 +19,13 @@ test.describe('canvas-v4 homologado', () => {
       document.documentElement.scrollWidth > document.documentElement.clientWidth
     );
     expect(overflow).toBe(false);
+
+    await page.getByRole('button', { name: 'Salvar teoria', exact: true }).click();
+    await expect(page.getByText('Tudo salvo.', { exact: true })).toBeVisible();
+
+    await page.getByRole('button', { name: 'Visualizar resultado', exact: true }).click();
+    await expect(page).toHaveURL(/\/canvas\/resultado$/);
+    await expect(page.getByRole('heading', { name: 'Minha teoria da mudança', exact: true })).toBeVisible();
+    await expect(page.getByText('0 blocos', { exact: true })).toBeVisible();
   });
 });

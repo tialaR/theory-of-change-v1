@@ -1,9 +1,5 @@
 #!/bin/sh
 set -eu
-if [ -f .tdm/migration-window.json ]; then
-  npm run check:tdm:migration-window
-  npm run typecheck
-  echo 'PASS: push permitido na branch de migração; merge segue proibido até o lockdown.'
-  exit 0
-fi
 npm run check:tdm:v3:full
+npm run typecheck
+npm run test:unit
