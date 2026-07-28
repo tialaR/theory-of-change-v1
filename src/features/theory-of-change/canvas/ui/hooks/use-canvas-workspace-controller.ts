@@ -12,6 +12,7 @@ import { useCanvasWorkspaceEffects } from './use-canvas-workspace-effects';
 import { useCanvasStageDragAndDrop } from './use-canvas-stage-drag-and-drop';
 import { useCanvasNodeActions } from './use-canvas-node-actions';
 import { useCanvasRelationActions } from './use-canvas-relation-actions';
+import { useCanvasHistoryActions } from './use-canvas-history-actions';
 import { useCanvasUiState } from './use-canvas-ui-state';
 import { useCanvasSaveController } from './use-canvas-save-controller';
 
@@ -168,17 +169,16 @@ export function useCanvasWorkspaceController(initialProject: CanvasProject, user
     t
   });
 
-  const undo = useCallback(() => {
-    if (!flow.undo()) return;
-    markDirty();
-    ui.notify(t('notices.undo'));
-  }, [flow, markDirty, t, ui]);
-
-  const redo = useCallback(() => {
-    if (!flow.redo()) return;
-    markDirty();
-    ui.notify(t('notices.redo'));
-  }, [flow, markDirty, t, ui]);
+  const {
+    undo,
+    redo
+  } = useCanvasHistoryActions({
+    undoFlow: flow.undo,
+    redoFlow: flow.redo,
+    markDirty,
+    notify: ui.notify,
+    t
+  });
 
   const centralizeColumns = useCallback(() => {
     flow.centralizeColumns();
