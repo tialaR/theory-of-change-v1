@@ -2,24 +2,24 @@
 
 ## Objetivo
 
-Unificar a moldura visual das prévias animadas nas rotas públicas do TDM — superfície Resend-first simples — sem alterar a animação já aprovada.
+Unificar a moldura visual das prévias animadas nas rotas públicas do TDM — superfície TMD-first simples — sem alterar a animação já aprovada.
 
 ## Componentes cobertos
 
 - Visão do fluxo (`FlowDraftPreview`)
-- Leitura executiva / Resultado conectado (`ResultDraftPreview` → `ResendDraftPreview`)
+- Leitura executiva / Resultado conectado (`ResultDraftPreview` → `TheoryDraftPreview`)
 - Orquestrador de página (`DedicatedExamplePreview`)
 - Moldura compartilhada (`ExamplePreviewFrame`)
 
 ## Arquivos canônicos
 
-- `src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.tsx`
-- `src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.module.sass`
-- `src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.types.ts`
-- `src/features/theory-of-change/components/resend-public/example-previews/dedicated-example-preview.tsx`
-- `src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.tsx`
-- `src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.tsx`
-- `src/features/theory-of-change/components/resend-public/example-previews/result-draft-preview.tsx`
+- `src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.tsx`
+- `src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.module.sass`
+- `src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.types.ts`
+- `src/features/theory-of-change/components/public-experience/example-previews/dedicated-example-preview.tsx`
+- `src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.tsx`
+- `src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.tsx`
+- `src/features/theory-of-change/components/public-experience/example-previews/result-draft-preview.tsx`
 
 ## Motion preservado
 
@@ -57,7 +57,7 @@ O wrapper controla somente:
 
 Não coloca lógica de animação. Os componentes filhos permanecem responsáveis pelo motion.
 
-## Superfície Resend-first
+## Superfície TMD-first
 
 - uma única superfície
 - uma única borda

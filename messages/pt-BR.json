@@ -189,7 +189,8 @@
       "saveError": "Não foi possível salvar agora. Tente novamente.",
       "preparingResult": "Preparando resultado…",
       "resultError": "Não foi possível abrir o resultado agora. Tente novamente.",
-      "stageUpdated": "{stage} atualizado."
+      "stageUpdated": "{stage} atualizado.",
+      "autoSaved": "Alterações salvas automaticamente."
     },
     "result": {
       "kicker": "Revisão final",
@@ -207,7 +208,10 @@
       "exportPNG": "Exportar PNG",
       "exportSVG": "Exportar SVG"
     },
-    "loading": "Carregando canvas"
+    "loading": "Carregando canvas",
+    "brand": {
+      "alt": "TMD Construtor"
+    }
   },
   "Auth": {
     "login": {

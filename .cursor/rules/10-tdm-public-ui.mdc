@@ -1,6 +1,6 @@
 ---
 description: Contrato de componentes, ações, header, cards e previews das rotas públicas TDM.
-globs: ["src/app/**/*.tsx", "src/features/theory-of-change/components/public-pages/**/*", "src/features/theory-of-change/components/resend-public/**/*", "src/shared/ui/**/*", "src/**/*.module.sass"]
+globs: ["src/app/**/*.tsx", "src/features/theory-of-change/components/public-pages/**/*", "src/features/theory-of-change/components/public-experience/**/*", "src/shared/ui/**/*", "src/**/*.module.sass"]
 alwaysApply: false
 ---
 

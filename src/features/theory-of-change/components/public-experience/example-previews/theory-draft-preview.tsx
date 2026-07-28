@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from 'motion/react';
 import { useId, type CSSProperties } from 'react';
-import styles from './resend-draft-preview.module.sass';
+import styles from './theory-draft-preview.module.sass';
 
 type PreviewVariant = 'result';
 
@@ -28,7 +28,7 @@ type ConnectionDefinition = {
   phase: number;
 };
 
-export type ResendDraftPreviewProps = {
+export type TheoryDraftPreviewProps = {
   variant: PreviewVariant;
   active?: boolean;
   className?: string;
@@ -208,12 +208,12 @@ function ResultConnections({ animate }: { animate: boolean }) {
   );
 }
 
-export function ResendDraftPreview({
+export function TheoryDraftPreview({
   active = true,
   className = '',
   style,
   ariaLabel = 'Prévia editorial do resultado conectado da teoria da mudança',
-}: ResendDraftPreviewProps) {
+}: TheoryDraftPreviewProps) {
   const shouldReduceMotion = useReducedMotion();
   const shouldAnimate = active && !shouldReduceMotion;
 

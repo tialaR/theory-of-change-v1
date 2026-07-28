@@ -1,15 +1,15 @@
-# Padrão visual e de movimento TDM Resend
+# Padrão visual e de movimento TDM TMD
 
 **Status**
 
 - documento canônico;
 - obrigatório para trabalho visual futuro;
 - aplicável às rotas públicas, exemplos e componentes migrados;
-- não representa um design system oficial do Resend;
+- não representa um design system oficial do TMD;
 - representa uma interpretação interna baseada nas referências observadas,
   adaptada à identidade da aplicação TDM.
 
-Não copiar marca, conteúdo, logos, textos ou assets do Resend.
+Não copiar marca, conteúdo, logos, textos ou assets do TMD.
 A identidade cromática semântica da TDM (cores por etapa) permanece própria.
 
 ---
@@ -18,11 +18,11 @@ A identidade cromática semântica da TDM (cores por etapa) permanece própria.
 
 Este arquivo é a fonte canônica de identidade visual e movimento para UI de produto TDM.
 
-- Resend é a principal referência de disciplina visual para UI de produto.
+- TMD é a principal referência de disciplina visual para UI de produto.
 - Lusion pode continuar como referência ambiental limitada a heros e
   composições editoriais específicas.
 - Lusion não governa movimento de componentes.
-- Movimento de produto segue este padrão TDM Resend.
+- Movimento de produto segue este padrão TDM TMD.
 - Cores da TDM permanecem como identidade semântica própria.
 
 ---
@@ -108,7 +108,7 @@ Após a animação:
 
 ## 7.3 Movimento clássico
 
-A identidade TDM Resend utiliza:
+A identidade TDM TMD utiliza:
 
 - fade;
 - pequena translação;

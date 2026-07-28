@@ -1,7 +1,6 @@
 'use client';
 
 import { useCallback, useEffect, type DragEvent as ReactDragEvent } from 'react';
-import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useReactFlow, type Connection, type NodeMouseHandler } from '@xyflow/react';
 import { CANVAS_DRAG_STAGE_MIME, CANVAS_DIMENSIONS } from '../../domain/canvas-ui.constants';
@@ -12,7 +11,7 @@ import type { CanvasCausalEdge, CanvasStageNode } from '../../react-flow/canvas-
 import { createCanvasStageCopy, type CanvasTranslator } from '../canvas-copy';
 import { useCanvasFlowController, type CanvasConnectFailureCode } from './use-canvas-flow-controller';
 import { createRelationDraft, useCanvasUiState } from './use-canvas-ui-state';
-import { useCanvasProjectPersistence } from './use-canvas-project-persistence';
+import { useCanvasSaveController } from './use-canvas-save-controller';
 
 const CONNECT_NOTICE_KEYS: Record<CanvasConnectFailureCode, string> = {
   'invalid-target': 'notices.invalidTarget',
@@ -33,12 +32,16 @@ export function useCanvasWorkspaceController(initialProject: CanvasProject, user
   const flow = useCanvasFlowController(initialGraph.nodes, initialGraph.edges, stageCopy, duplicateTitle);
   const ui = useCanvasUiState(t, initialProject.title);
   const reactFlow = useReactFlow<CanvasStageNode, CanvasCausalEdge>();
-  const router = useRouter();
-  const persistence = useCanvasProjectPersistence({
+  const saveController = useCanvasSaveController({
     initialProject,
     title: ui.projectTitle,
     nodes: flow.nodes,
-    edges: flow.edges
+    edges: flow.edges,
+    saveState: ui.saveState,
+    changeRevision: ui.changeRevision,
+    setSaveState: ui.setSaveState,
+    notify: ui.notify,
+    t
   });
   const {
     activeToolbarNodeId,
@@ -94,7 +97,7 @@ export function useCanvasWorkspaceController(initialProject: CanvasProject, user
     return () => document.removeEventListener('pointerdown', closeToolbarOnOutsidePointer, true);
   }, [activeToolbarNodeId, setActiveToolbarNodeId]);
 
-  const markDirty = useCallback(() => ui.setSaveState('dirty'), [ui]);
+  const markDirty = ui.markDirty;
 
   const onPaneClick = useCallback(() => {
     ui.clearSelection();
@@ -287,30 +290,7 @@ export function useCanvasWorkspaceController(initialProject: CanvasProject, user
     ui.notify(t('notices.viewFramed'));
   }, [flow.nodes.length, reactFlow, t, ui]);
 
-  const save = useCallback(async () => {
-    ui.setSaveState('saving');
-    ui.notify(t('notices.saving'));
-    try {
-      await persistence.saveProject();
-      ui.setSaveState('saved');
-      ui.notify(t('notices.saved'));
-    } catch {
-      ui.setSaveState('dirty');
-      ui.notify(t('notices.saveError'), 'warning');
-    }
-  }, [persistence, t, ui]);
 
-  const openResult = useCallback(async () => {
-    ui.setSaveState('saving');
-    ui.notify(t('notices.preparingResult'));
-    try {
-      await persistence.saveAndOpenResult();
-      ui.setSaveState('saved');
-    } catch {
-      ui.setSaveState('dirty');
-      ui.notify(t('notices.resultError'), 'warning');
-    }
-  }, [persistence, t, ui]);
 
   return {
     flow,
@@ -346,10 +326,11 @@ export function useCanvasWorkspaceController(initialProject: CanvasProject, user
     frameVisualization,
     zoomIn: () => reactFlow.zoomIn({ duration: 180 }),
     zoomOut: () => reactFlow.zoomOut({ duration: 180 }),
-    openGuide: () => router.push('/guia-de-aprendizado'),
-    openExamples: () => router.push('/exemplos'),
-    save,
-    openResult,
+    openHome: () => saveController.navigateAfterSave('/'),
+    openGuide: () => saveController.navigateAfterSave('/guia-de-aprendizado'),
+    openExamples: () => saveController.navigateAfterSave('/exemplos'),
+    save: saveController.save,
+    openResult: saveController.openResult,
     t,
     stageCopy,
     userName

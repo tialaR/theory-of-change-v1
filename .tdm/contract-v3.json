@@ -1,7 +1,7 @@
 {
-  "version": "3.5.0",
+  "version": "3.6.0",
   "name": "TDM Executable Contract",
-  "activePhase": "auth-msw-release",
+  "activePhase": "canvas-continuity-release",
   "phases": [
     "foundation",
     "shark-cleanup",
@@ -46,7 +46,7 @@
     "sessionStorage",
     "window.location",
     "!important",
-    "resend-command-preview-v2",
+    "tdm-command-preview-v2",
     "canvas-v4",
     "allowedRelation",
     "canConnect"
@@ -64,10 +64,16 @@
   },
   "authTarget": {
     "route": "/login",
-    "protectedRoutes": ["/canvas", "/canvas/resultado"],
+    "protectedRoutes": [
+      "/canvas",
+      "/canvas/resultado"
+    ],
     "publicRoutesRemainPublic": true,
     "session": "httpOnly cookie backed by MSW Node module store",
-    "personas": ["user-tiala-rocha", "user-rodger-rocha"]
+    "personas": [
+      "user-tiala-rocha",
+      "user-rodger-rocha"
+    ]
   },
   "routeStates": {
     "notFoundCode": "404",
@@ -75,5 +81,18 @@
     "sharedComposition": "src/shared/ui/tdm-status-screen"
   },
   "ownershipRule": "Each test, hook, component, adapter, fixture and mock remains inside the owning feature scope; app only routes and composes.",
-  "releasedAt": "2026-07-28T00:00:00-03:00"
+  "releasedAt": "2026-07-28T00:00:00-03:00",
+  "canvasAutosaveDebounceMs": 1200,
+  "canvasIdStrategy": "collision-safe-random-uuid",
+  "canvasSaveOrdering": "serialized",
+  "manualCanvasSavePreserved": true,
+  "canvasNavigationFlush": true,
+  "userFacingCopyPolicy": "next-intl-json",
+  "namingPolicy": {
+    "filesAndFolders": "kebab-case",
+    "reactComponents": "PascalCase",
+    "functionsVariablesHooks": "camelCase",
+    "sassPartials": "no-leading-underscore"
+  },
+  "updatedAt": "2026-07-28T06:31:42.401Z"
 }

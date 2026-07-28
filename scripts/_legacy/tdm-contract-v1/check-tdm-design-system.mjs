@@ -70,19 +70,19 @@ const CANONICAL_UI_DIRS = new Set([
 /** Legacy shared UI families removed/deprecated in Phase 4A. */
 const LEGACY_IMPORT_PATTERNS = [
   {
-    id: 'resend-ds',
-    re: /(?:from|import)\s+['"][^'"]*shared\/ui\/resend-ds(?:\/|['"])/,
-    hint: 'Use lusion-resend-ds or tdm-* primitives.'
+    id: 'tdm-ds',
+    re: /(?:from|import)\s+['"][^'"]*shared\/ui\/tdm-ds(?:\/|['"])/,
+    hint: 'Use tdm-public-design-system or tdm-* primitives.'
   },
   {
-    id: 'resend-experience',
-    re: /(?:from|import)\s+['"][^'"]*shared\/ui\/resend-experience(?:\/|['"])/,
-    hint: 'Use lusion-resend-ds or feature public-pages.'
+    id: 'tdm-experience',
+    re: /(?:from|import)\s+['"][^'"]*shared\/ui\/tdm-experience(?:\/|['"])/,
+    hint: 'Use tdm-public-design-system or feature public-pages.'
   },
   {
     id: 'experience',
     re: /(?:from|import)\s+['"][^'"]*shared\/ui\/experience(?:\/|['"])/,
-    hint: 'Use lusion-resend-ds or tdm-* primitives.'
+    hint: 'Use tdm-public-design-system or tdm-* primitives.'
   },
   {
     id: 'icon-button',
@@ -156,7 +156,7 @@ const RULE_MESSAGES = {
   },
   'TDM-DS-009': {
     title: 'Import de Design System legado.',
-    fix: 'Importe primitivos canônicos tdm-* ou lusion-resend-ds.'
+    fix: 'Importe primitivos canônicos tdm-* ou tdm-public-design-system.'
   },
   'TDM-DS-010': {
     title: 'Primitivo paralelo ao Design System canônico.',
@@ -525,7 +525,7 @@ function scanFile(absPath) {
       PARALLEL_EXPORT_RE.test(content) &&
       pkg &&
       !pkg.startsWith('tdm-') &&
-      pkg !== 'lusion-resend-ds'
+      pkg !== 'tdm-public-design-system'
     ) {
       const lineNo = content.split(/\r?\n/).findIndex((l) => PARALLEL_EXPORT_RE.test(l)) + 1;
       push('TDM-DS-010', lineNo || 1, 'exported parallel primitive name');
@@ -698,7 +698,7 @@ function buildBaselineFromViolations(violations) {
     'TDM-DS-006': 'Texto < 0.75rem legado; elevar para escala tipográfica TDM.',
     'TDM-DS-007': 'Peso > 600 legado; reduzir para ≤ 600.',
     'TDM-DS-008': 'Arquivo .scss legado ainda referenciado; converter para .sass.',
-    'TDM-DS-009': 'Import legado ainda ancorado; migrar consumidores para tdm-* / lusion-resend-ds.',
+    'TDM-DS-009': 'Import legado ainda ancorado; migrar consumidores para tdm-* / tdm-public-design-system.',
     'TDM-DS-010': 'Primitivo paralelo ainda ativo; consolidar no pacote canônico.',
     'TDM-DS-011': 'Loop decorativo pré-autorizado (escultura/logo/backdrop); remover ou justificar na fase motion.',
     'TDM-DS-012': 'Alias/token local pré-existente; apontar só para --tdm-* e remover escala paralela.',
@@ -769,7 +769,7 @@ function runSelfTest() {
     },
     {
       file: 'src/features/theory-of-change/components/demo/bad-import.tsx',
-      body: `import { X } from '@/shared/ui/resend-ds'\nexport function Demo(){ return <div style={{ color: '#fff', padding: 8 }} /> }\n`,
+      body: `import { X } from '@/shared/ui/tdm-ds'\nexport function Demo(){ return <div style={{ color: '#fff', padding: 8 }} /> }\n`,
       expect: ['TDM-DS-009', 'TDM-DS-015']
     },
     {

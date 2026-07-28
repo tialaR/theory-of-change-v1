@@ -15,13 +15,13 @@ export function CanvasHeader() {
     <header className={styles.topbar}>
       <div className={styles.brandNavigation}>
         <TdmIconButton
-          href="/"
           aria-label={runtime.t('tooltips.back')}
           tooltip={runtime.t('tooltips.back')}
           tooltipPosition="right"
           variant="ghost"
           size="sm"
           className={styles.backButton}
+          onClick={() => void runtime.openHome()}
         >
           <span aria-hidden="true">{icons.chevron}</span>
         </TdmIconButton>
@@ -29,7 +29,7 @@ export function CanvasHeader() {
           <Image
             className={styles.brandLogo}
             src="/brand/tmd-construtor-header-canonical.webp"
-            alt="TMD Construtor"
+            alt={runtime.t('brand.alt')}
             width={200}
             height={43}
             priority
@@ -50,7 +50,7 @@ export function CanvasHeader() {
           value={runtime.ui.projectTitle}
           onChange={(event) => {
             runtime.ui.setProjectTitle(event.target.value);
-            runtime.ui.setSaveState('dirty');
+            runtime.ui.markDirty();
           }}
           maxLength={96}
           placeholder={runtime.t('project.titlePlaceholder')}
@@ -73,7 +73,7 @@ export function CanvasHeader() {
           </span>
           <span>{runtime.t('header.result')}</span>
         </button>
-        <button type="button" className={`${styles.headerActionButton} ${styles.saveButton}`} onClick={runtime.save} aria-label={runtime.t('tooltips.save')} data-tooltip={runtime.t('tooltips.save')}>
+        <button type="button" className={`${styles.headerActionButton} ${styles.saveButton}`} onClick={() => void runtime.save()} aria-label={runtime.t('tooltips.save')} data-tooltip={runtime.t('tooltips.save')} data-save-state={runtime.ui.saveState} aria-busy={runtime.ui.saveState === 'saving'} disabled={runtime.ui.saveState === 'saving'}>
           {icons.save}<span>{runtime.t('header.save')}</span>
         </button>
       </div>

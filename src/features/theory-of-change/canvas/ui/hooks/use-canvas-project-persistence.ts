@@ -1,10 +1,13 @@
 'use client';
 
-import { useCallback, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useCallback, useState } from 'react';
 import type { CanvasProject } from '../../domain/canvas-project';
 import { applyCanvasFlowGraph } from '../../react-flow/canvas-react-flow.adapter';
 import type { CanvasCausalEdge, CanvasStageNode } from '../../react-flow/canvas-flow.types';
+import {
+  createCanvasSaveQueue,
+  type CanvasProjectSaveExecutor
+} from '../../application/canvas-save-queue';
 import { saveCanvasProjectAction } from '../../server/save-canvas-project.action';
 
 type CanvasPersistenceInput = {
@@ -12,26 +15,27 @@ type CanvasPersistenceInput = {
   title: string;
   nodes: CanvasStageNode[];
   edges: CanvasCausalEdge[];
+  executeSave?: CanvasProjectSaveExecutor;
 };
 
 export function useCanvasProjectPersistence(input: CanvasPersistenceInput) {
-  const router = useRouter();
-  const projectRef = useRef<CanvasProject>(input.initialProject);
+  const [queue] = useState(() => createCanvasSaveQueue({
+    initialProject: input.initialProject,
+    executeSave: input.executeSave ?? saveCanvasProjectAction
+  }));
 
-  const saveProject = useCallback(async () => {
+  const saveProject = useCallback(() => {
     const draft = applyCanvasFlowGraph(
-      { ...projectRef.current, title: input.title },
+      { ...input.initialProject, title: input.title },
       { nodes: input.nodes, edges: input.edges }
     );
-    const result = await saveCanvasProjectAction(draft);
-    projectRef.current = result.project;
-    return result.project;
-  }, [input.edges, input.nodes, input.title]);
 
-  const saveAndOpenResult = useCallback(async () => {
-    await saveProject();
-    router.push('/canvas/resultado');
-  }, [router, saveProject]);
+    return queue.saveLatest({
+      title: draft.title,
+      nodes: draft.nodes,
+      connections: draft.connections
+    });
+  }, [input.edges, input.initialProject, input.nodes, input.title, queue]);
 
-  return { saveProject, saveAndOpenResult };
+  return { saveProject };
 }

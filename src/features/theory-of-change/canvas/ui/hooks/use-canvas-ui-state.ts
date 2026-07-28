@@ -6,7 +6,7 @@ import type { CanvasCausalEdge, CanvasStageNode } from '../../react-flow/canvas-
 import type { CanvasTranslator } from '../canvas-copy';
 
 export type CanvasNoticeTone = 'info' | 'warning';
-export type CanvasSaveState = 'saved' | 'dirty' | 'saving';
+export type CanvasSaveState = 'saved' | 'dirty' | 'saving' | 'error';
 export type CanvasRelationPanelMode = 'menu' | 'form';
 export type CanvasNodeDraft = Pick<CanvasStageNode['data'], 'title' | 'description' | 'advancedDetails'>;
 export type CanvasRelationDraft = {
@@ -52,12 +52,19 @@ export function useCanvasUiState(t: CanvasTranslator, initialProjectTitle: strin
   const [notice, setNotice] = useState(t('notices.empty'));
   const [noticeTone, setNoticeTone] = useState<CanvasNoticeTone>('info');
   const [saveState, setSaveState] = useState<CanvasSaveState>('saved');
+  const [changeRevision, setChangeRevision] = useState(0);
   const [projectTitle, setProjectTitle] = useState(initialProjectTitle);
   const [fullCanvasMode, setFullCanvasMode] = useState(false);
 
   const notify = useCallback((message: string, tone: CanvasNoticeTone = 'info') => {
     setNotice(message);
     setNoticeTone(tone);
+  }, []);
+
+
+  const markDirty = useCallback(() => {
+    setSaveState('dirty');
+    setChangeRevision((revision) => revision + 1);
   }, []);
 
   const clearSelection = useCallback(() => {
@@ -130,6 +137,8 @@ export function useCanvasUiState(t: CanvasTranslator, initialProjectTitle: strin
     notify,
     saveState,
     setSaveState,
+    changeRevision,
+    markDirty,
     projectTitle,
     setProjectTitle,
     fullCanvasMode,

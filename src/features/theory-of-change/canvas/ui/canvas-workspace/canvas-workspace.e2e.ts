@@ -11,25 +11,34 @@ async function dragStageToCanvas(page: Page, stageName: string, x: number, y: nu
   });
 }
 
+async function openStageCreator(page: Page) {
+  await page.getByRole('button', { name: 'Arrastar etapas para o canvas' }).click();
+}
+
+async function loginAsTiala(page: Page) {
+  await page.goto('/canvas');
+  await expect(page).toHaveURL(/\/login\?returnTo=%2Fcanvas$/);
+  await page.getByLabel('Nome').fill('Tiala Rocha');
+  await page.getByLabel('E-mail').fill('tialarocha@tdmconstrutor.com.br');
+  await page.getByLabel('Senha').fill('tdm123456');
+  await page.getByRole('button', { name: 'Entrar' }).click();
+  await expect(page).toHaveURL(/\/canvas$/);
+}
+
 test.describe('canvas oficial com React Flow real', () => {
-  test('cria, conecta, salva e abre o resultado sem renderer manual', async ({ page }: { page: Page }) => {
+  test('preserva o projeto, salva automaticamente e cria novos blocos sem substituir ids hidratados', async ({ page }: { page: Page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.goto('/canvas');
-    await expect(page).toHaveURL(/\/login\?returnTo=%2Fcanvas$/);
-    await page.getByLabel('Nome').fill('Tiala Rocha');
-    await page.getByLabel('E-mail').fill('tialarocha@tdmconstrutor.com.br');
-    await page.getByLabel('Senha').fill('tdm123456');
-    await page.getByRole('button', { name: 'Entrar' }).click();
-    await expect(page).toHaveURL(/\/canvas$/);
+    await loginAsTiala(page);
 
     await expect(page.locator('.react-flow')).toBeVisible();
     await expect(page.getByTestId('canvas-react-flow-surface')).toBeVisible();
     await expect(page.getByLabel('Ferramentas do canvas')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Salvar teoria' })).toBeVisible();
 
-    await page.getByRole('button', { name: 'Arrastar etapas para o canvas' }).click();
+    await openStageCreator(page);
     await dragStageToCanvas(page, 'Insumo', 0.28, 0.35);
 
-    await page.getByRole('button', { name: 'Arrastar etapas para o canvas' }).click();
+    await openStageCreator(page);
     await dragStageToCanvas(page, 'Atividade', 0.55, 0.35);
 
     await expect(page.locator('article[data-canvas-node]')).toHaveCount(2);
@@ -46,9 +55,33 @@ test.describe('canvas oficial com React Flow real', () => {
     await page.mouse.up();
 
     await expect(page.getByRole('button', { name: 'Selecionar conexão' })).toBeVisible();
+    await expect(page.getByText('Alterações salvas automaticamente.', { exact: true })).toBeVisible();
+
+    await page.getByRole('button', { name: 'Voltar para o início' }).click();
+    await expect(page).toHaveURL(/\/$/);
+
+    await page.goto('/canvas');
+    await expect(page).toHaveURL(/\/canvas$/);
+    await expect(page.locator('article[data-canvas-node]')).toHaveCount(2);
+    await expect(page.getByLabel('Conectar a partir de Insumo 1')).toBeVisible();
+    await expect(page.getByLabel('Conectar a Atividade 1')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Selecionar conexão' })).toBeVisible();
+
+    await openStageCreator(page);
+    await dragStageToCanvas(page, 'Insumo', 0.32, 0.62);
+
+    await expect(page.locator('article[data-canvas-node]')).toHaveCount(3);
+    await expect(page.getByRole('heading', { name: 'Insumo 1', exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Insumo 2', exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Atividade 1', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Selecionar conexão' })).toBeVisible();
 
     await page.getByRole('button', { name: 'Salvar teoria' }).click();
     await expect(page.getByText('Tudo salvo.', { exact: true })).toBeVisible();
+
+    await page.reload();
+    await expect(page.locator('article[data-canvas-node]')).toHaveCount(3);
+    await expect(page.getByRole('button', { name: 'Selecionar conexão' })).toBeVisible();
 
     await page.getByRole('button', { name: 'Visualizar resultado' }).click();
     await expect(page).toHaveURL(/\/canvas\/resultado$/);

@@ -34,7 +34,7 @@ Inventário gerado na auditoria do contrato de header público (PROMPT-CURSOR-AU
 | Rota | Status | Nota |
 | --- | --- | --- |
 | `/canvas`, `/exemplos/canvas`, `/canvas/resultado` | DENYLIST | Sem diff nesta rodada |
-| `/canvas/resend-command-preview` | LABORATÓRIO | Fora do DS público |
+| `/canvas/tdm-command-preview` | LABORATÓRIO | Fora do DS público |
 
 ---
 
@@ -42,11 +42,11 @@ Inventário gerado na auditoria do contrato de header público (PROMPT-CURSOR-AU
 
 | Família | Componente | Path | Status | Consumidores ativos | Dívida |
 | --- | --- | --- | --- | --- | --- |
-| Header público full-bleed | `PublicHeader` | `src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx` + `.module.sass` | CANÔNICO | `public-pages.tsx`, `public-experience.tsx` | Sticky + scroller `[data-public-scroll]`; shell externo = superfície V4 full-bleed; container interno = `.headerShell`/`.headerBar` (medida preservada); scroll behavior inalterado; legado de superfície no interno removido (2026-07-22) |
+| Header público full-bleed | `PublicHeader` | `src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx` + `.module.sass` | CANÔNICO | `public-pages.tsx`, `public-experience.tsx` | Sticky + scroller `[data-public-scroll]`; shell externo = superfície V4 full-bleed; container interno = `.headerShell`/`.headerBar` (medida preservada); scroll behavior inalterado; legado de superfície no interno removido (2026-07-22) |
 | Footer público | `PublicFooter` | mesmo módulo + copyright V1 | CANÔNICO | todas as rotas com `PublicShell` editorial | Faixa copyright 2026-07-22; ano dinâmico |
 | Gap header→conteúdo | `PublicShell headerContentGap` + `--tdm-public-header-content-gap` | `_tdm-public-action.sass` + `.shellInner_headerContentGap` | CANÔNICO | 5 rotas secundárias (não Home) | Homologado 2026-07-22; contrato `TDM-PUBLIC-PAGE-HEADER-GAP-V1` |
 | Ritmo entre seções | `PublicShell sectionRhythm` + `--tdm-public-section-gap` + `data-public-chapter` | `_tdm-public-action.sass` + `.shellInner_sectionRhythm` | CANÔNICO | `/`, `/exemplos`, fluxo, resultado, `/referencias` | Homologado 2026-07-22; contrato `TDM-PUBLIC-SECTION-RHYTHM-V1`; guia fora |
-| Intro secundário Exemplos | `ExamplePreviewsSection` → `PublicSection` | `example-previews-section.tsx` + `lusion-resend-ds` | CANÔNICO | `/exemplos` | Left-aligned; mesma régua de fluxo; `TDM-EXAMPLES-SECONDARY-INTRO-V1` |
+| Intro secundário Exemplos | `ExamplePreviewsSection` → `PublicSection` | `example-previews-section.tsx` + `tdm-public-design-system` | CANÔNICO | `/exemplos` | Left-aligned; mesma régua de fluxo; `TDM-EXAMPLES-SECONDARY-INTRO-V1` |
 | Guided Story | `HomeOnboardingPreview` → `guided-story.tsx` | `public-pages/guided-story.tsx` + `guided-story-data.ts` + `guided-story-scheduler.ts` + `home-onboarding-preview.module.sass` | CANÔNICO | `HomePage` seção PRÉVIA GUIADA | Homologada 2026-07-22; preview `tdm-guided-story-v7-validated.html` |
 | Header legado | `FloatingHeader` | `…/floating-header/floating-header.tsx` | LEGADO SEM CONSUMIDOR | nenhum | Remover em higiene |
 | Header interactive órfão | `InteractivePage` topbar | `public-pages.tsx` | LEGADO SEM CONSUMIDOR | sem `page.tsx` | Remover export morto |
@@ -58,7 +58,7 @@ Inventário gerado na auditoria do contrato de header público (PROMPT-CURSOR-AU
 | Card público | `TdmPublicFeatureCard` | `tdm-public-feature-card/**` | CANÔNICO | home, exemplos, refs | — |
 | Overview | `ExampleOverviewCard` | `example-overview-card/**` | CANÔNICO LOCAL | fluxo/resultado | Gradiente local |
 | Preview frame | `ExamplePreviewFrame` | `example-previews/example-preview-frame.*` | CANÔNICO | `DedicatedExamplePreview` | — |
-| Preview motion | `FlowDraftPreview` / `ResultDraftPreview` / `ResendDraftPreview` | `example-previews/*` | CANÔNICO | dedicated sections | Não alterar motion |
+| Preview motion | `FlowDraftPreview` / `ResultDraftPreview` / `TheoryDraftPreview` | `example-previews/*` | CANÔNICO | dedicated sections | Não alterar motion |
 | Canvas button | `TdmButton` / `TdmIconButton` | `shared/ui/tdm-*` | LEGADO ATIVO | canvas denylist | Não migrar nesta rodada |
 
 ---

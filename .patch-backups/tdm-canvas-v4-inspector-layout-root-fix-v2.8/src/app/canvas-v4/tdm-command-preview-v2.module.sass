@@ -1553,7 +1553,7 @@
   button
     gap: 0
 
-// Consolidated interaction patch: creator/rail swap, drag connection preview and Resend-first hierarchy.
+// Consolidated interaction patch: creator/rail swap, drag connection preview and TMD-first hierarchy.
 .rail
   top: auto
   bottom: 1.25rem
@@ -1704,7 +1704,7 @@
     background: color-mix(in srgb, var(--stage-color) 6%, var(--v2-raised))
     color: var(--v2-text)
 
-// Relation interaction refinement v1.6: Resend-first hierarchy, centered anchors and compact neutral relation tools.
+// Relation interaction refinement v1.6: TMD-first hierarchy, centered anchors and compact neutral relation tools.
 .nodeEditor .nodeAdvanced .advancedToggle,
 .inspectorContent .inspectorAdvanced .advancedToggle
   min-height: 2.2rem
@@ -2475,3 +2475,79 @@
     stroke-width: 1.5
     stroke-linecap: round
     stroke-linejoin: round
+
+// Clear-field containment and project-title stability v2.7.
+// Grid overlay keeps the action inside the field in every form density.
+.clearableField
+  display: grid
+  grid-template-columns: minmax(0, 1fr)
+  width: 100%
+  min-width: 0
+  isolation: isolate
+
+  > input,
+  > textarea,
+  > .clearFieldButton
+    grid-column: 1
+    grid-row: 1
+
+  > input,
+  > textarea
+    position: relative
+    z-index: 1
+    min-width: 0
+
+  > .clearFieldButton
+    position: relative
+    z-index: 3
+    top: auto
+    right: auto
+    inset: auto
+    align-self: center
+    justify-self: end
+    margin: 0 0.48rem 0 0
+    transform: none
+
+.clearableFieldMultiline
+  > .clearFieldButton
+    align-self: start
+    margin-top: 0.5rem
+
+.clearableFieldSmall
+  > .clearFieldButton
+    margin-right: 0.42rem
+
+// The title owns a stable central column. Icon state changes never resize it.
+.topbar > .clearableField
+  width: min(31rem, 42vw)
+  min-width: 18rem
+  justify-self: center
+
+  > input
+    width: 100%
+
+.projectTitle
+  width: 100%
+  padding-inline: 2.35rem
+  border-color: color-mix(in srgb, white 12%, transparent)
+  background: color-mix(in srgb, var(--v2-raised) 18%, transparent)
+
+.clearableFieldEditable
+  > .clearFieldButton
+    opacity: 0.58
+
+  &[data-field-focus='true'] > .clearFieldButton
+    opacity: 1
+
+  > input
+    border-color: color-mix(in srgb, white 12%, transparent)
+    background: color-mix(in srgb, var(--v2-raised) 18%, transparent)
+
+  &[data-field-focus='true'] > input
+    border-color: color-mix(in srgb, white 30%, transparent)
+    background: color-mix(in srgb, var(--v2-raised) 64%, transparent)
+
+@media (max-width: 72rem)
+  .topbar > .clearableField
+    width: min(27rem, 38vw)
+    min-width: 14rem

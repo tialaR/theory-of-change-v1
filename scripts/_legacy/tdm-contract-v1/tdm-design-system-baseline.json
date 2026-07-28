@@ -5,7 +5,7 @@
   "entries": [
     {
       "rule": "TDM-DS-001",
-      "path": "src/app/canvas/resend-command-preview/resend-command-preview.module.sass",
+      "path": "src/app/canvas/tdm-command-preview/tdm-command-preview.module.sass",
       "allowCount": 2,
       "reason": "Débito pré-existente de especificidade; limpeza em fase de hardening visual.",
       "removeIn": "Fase 5B — hardening CSS"
@@ -47,7 +47,7 @@
     },
     {
       "rule": "TDM-DS-001",
-      "path": "src/features/theory-of-change/components/resend-public/public-experience.module.sass",
+      "path": "src/features/theory-of-change/components/public-experience/public-experience.module.sass",
       "allowCount": 3,
       "reason": "Débito pré-existente de especificidade; limpeza em fase de hardening visual.",
       "removeIn": "Fase 5B — hardening CSS"
@@ -124,14 +124,14 @@
     },
     {
       "rule": "TDM-DS-003",
-      "path": "src/app/canvas/resend-command-preview/page.tsx",
+      "path": "src/app/canvas/tdm-command-preview/page.tsx",
       "allowCount": 6,
       "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
       "removeIn": "Fase 5B — tokens de produto"
     },
     {
       "rule": "TDM-DS-003",
-      "path": "src/app/canvas/resend-command-preview/resend-command-preview.module.sass",
+      "path": "src/app/canvas/tdm-command-preview/tdm-command-preview.module.sass",
       "allowCount": 104,
       "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
       "removeIn": "Fase 5B — tokens de produto"
@@ -320,63 +320,63 @@
     },
     {
       "rule": "TDM-DS-003",
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/editorial-preview-primitives.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/editorial-preview-primitives.tsx",
       "allowCount": 1,
       "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
       "removeIn": "Fase 5B — tokens de produto"
     },
     {
       "rule": "TDM-DS-003",
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.module.sass",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.module.sass",
       "allowCount": 1,
       "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
       "removeIn": "Fase 5B — tokens de produto"
     },
     {
       "rule": "TDM-DS-003",
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.tsx",
       "allowCount": 5,
       "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
       "removeIn": "Fase 5B — tokens de produto"
     },
     {
       "rule": "TDM-DS-003",
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.tsx",
       "allowCount": 5,
       "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
       "removeIn": "Fase 5B — tokens de produto"
     },
     {
       "rule": "TDM-DS-003",
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/stage-colors.ts",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/stage-colors.ts",
       "allowCount": 5,
       "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
       "removeIn": "Fase 5B — tokens de produto"
     },
     {
       "rule": "TDM-DS-003",
-      "path": "src/features/theory-of-change/components/resend-public/guide-stage-card/guide-stage-card.module.sass",
+      "path": "src/features/theory-of-change/components/public-experience/guide-stage-card/guide-stage-card.module.sass",
       "allowCount": 7,
       "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
       "removeIn": "Fase 5B — tokens de produto"
     },
     {
       "rule": "TDM-DS-003",
-      "path": "src/features/theory-of-change/components/resend-public/guide-stage-card/guide-stage-card.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/guide-stage-card/guide-stage-card.tsx",
       "allowCount": 1,
       "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
       "removeIn": "Fase 5B — tokens de produto"
     },
     {
       "rule": "TDM-DS-003",
-      "path": "src/features/theory-of-change/components/resend-public/public-experience.module.sass",
+      "path": "src/features/theory-of-change/components/public-experience/public-experience.module.sass",
       "allowCount": 120,
       "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
       "removeIn": "Fase 5B — tokens de produto"
     },
     {
       "rule": "TDM-DS-003",
-      "path": "src/features/theory-of-change/components/resend-public/public-experience.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/public-experience.tsx",
       "allowCount": 18,
       "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
       "removeIn": "Fase 5B — tokens de produto"
@@ -761,7 +761,7 @@
     },
     {
       "rule": "TDM-DS-003",
-      "path": "src/shared/ui/lusion-resend-ds/lusion-resend-ds.module.sass",
+      "path": "src/shared/ui/tdm-public-design-system/tdm-public-design-system.module.sass",
       "allowCount": 10,
       "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
       "removeIn": "Fase 5B — tokens de produto"
@@ -803,7 +803,7 @@
     },
     {
       "rule": "TDM-DS-006",
-      "path": "src/app/canvas/resend-command-preview/resend-command-preview.module.sass",
+      "path": "src/app/canvas/tdm-command-preview/tdm-command-preview.module.sass",
       "allowCount": 13,
       "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
       "removeIn": "Fase 5B — tipografia"
@@ -894,7 +894,7 @@
     },
     {
       "rule": "TDM-DS-006",
-      "path": "src/features/theory-of-change/components/resend-public/public-experience.module.sass",
+      "path": "src/features/theory-of-change/components/public-experience/public-experience.module.sass",
       "allowCount": 12,
       "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
       "removeIn": "Fase 5B — tipografia"
@@ -964,7 +964,7 @@
     },
     {
       "rule": "TDM-DS-006",
-      "path": "src/shared/ui/lusion-resend-ds/lusion-resend-ds.module.sass",
+      "path": "src/shared/ui/tdm-public-design-system/tdm-public-design-system.module.sass",
       "allowCount": 1,
       "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
       "removeIn": "Fase 5B — tipografia"
@@ -1013,7 +1013,7 @@
     },
     {
       "rule": "TDM-DS-007",
-      "path": "src/features/theory-of-change/components/resend-public/public-experience.module.sass",
+      "path": "src/features/theory-of-change/components/public-experience/public-experience.module.sass",
       "allowCount": 11,
       "reason": "Peso > 600 legado; reduzir para ≤ 600.",
       "removeIn": "Fase 5B — tipografia"
@@ -1181,7 +1181,7 @@
     },
     {
       "rule": "TDM-DS-012",
-      "path": "src/app/canvas/resend-command-preview/resend-command-preview.module.sass",
+      "path": "src/app/canvas/tdm-command-preview/tdm-command-preview.module.sass",
       "allowCount": 7,
       "reason": "Alias/token local pré-existente; apontar só para --tdm-* e remover escala paralela.",
       "removeIn": "Fase 5B — aliases públicos"

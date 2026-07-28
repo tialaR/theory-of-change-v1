@@ -12,8 +12,8 @@ import {
   type ReactNode
 } from 'react';
 import { TdmIconButton } from '../../shared/ui/tdm-icon-button/tdm-icon-button';
-import styles from './resend-command-preview-v2.module.sass';
-import { previewIcons as icons } from './resend-command-preview-v2.icons';
+import styles from './tdm-command-preview-v2.module.sass';
+import { previewIcons as icons } from './tdm-command-preview-v2.icons';
 import {
   INITIAL_EDGES,
   INITIAL_NODES,
@@ -26,7 +26,7 @@ import {
   type CanvasSnapshot,
   type RelationKind,
   type StageId
-} from './resend-command-preview-v2.model';
+} from './tdm-command-preview-v2.model';
 
 const NODE_WIDTH = 238;
 const NODE_HEIGHT = 126;
@@ -185,7 +185,7 @@ function isStageId(value: string): value is StageId {
   return STAGES.some((stage) => stage.id === value);
 }
 
-export function ResendCommandPreviewV2() {
+export function TMDCommandPreviewV2() {
   const [nodes, setNodes] = useState<CanvasNode[]>(INITIAL_NODES);
   const [edges, setEdges] = useState<CanvasEdge[]>(INITIAL_EDGES);
   const [history, setHistory] = useState<CanvasSnapshot[]>([]);

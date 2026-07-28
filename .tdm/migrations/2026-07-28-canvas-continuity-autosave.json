@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "wave": "07",
+  "name": "canvas-continuity-autosave",
+  "date": "2026-07-28",
+  "status": "closed",
+  "visualChange": false,
+  "autosaveDebounceMs": 1200,
+  "idStrategy": "collision-safe-random-uuid",
+  "saveOrdering": "serialized",
+  "manualSavePreserved": true,
+  "navigationFlush": true,
+  "persistenceScope": "single-next-server-process",
+  "copyPolicy": "next-intl-json",
+  "naming": {
+    "filesAndFolders": "kebab-case",
+    "reactComponents": "PascalCase",
+    "functionsVariablesHooks": "camelCase"
+  }
+}

@@ -99,7 +99,7 @@ Causas prováveis a confirmar no DevTools:
 - hero com z-index superior;
 - dois wrappers de header ativos;
 - sentinel dentro do sticky header;
-- regra antiga em `lusion-resend-ds.module.sass` competindo com o novo módulo.
+- regra antiga em `tdm-public-design-system.module.sass` competindo com o novo módulo.
 
 ## Checklist de correção
 

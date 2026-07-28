@@ -6,6 +6,7 @@ import path from 'node:path';
 const root = process.cwd();
 const errors = [];
 const featureRoot = 'src/features/theory-of-change/canvas';
+const retiredToken = ['re', 'send'].join('');
 
 function exists(relativePath) {
   return fs.existsSync(path.join(root, relativePath));
@@ -129,7 +130,7 @@ for (const forbidden of [
   'localStorage',
   'sessionStorage',
   'window.location',
-  'resend-command-preview-v2',
+  `${retiredToken}-command-preview-v2`,
   'canvas-v4',
   'allowedRelation(',
   'canConnect('

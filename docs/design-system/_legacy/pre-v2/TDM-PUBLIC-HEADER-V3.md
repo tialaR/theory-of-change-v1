@@ -14,8 +14,8 @@ Esta rodada não recria o comportamento. Ela troca somente a superfície visual 
 
 Mapeamento histórico a confirmar no repositório atual:
 
-- `src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx`
-- `src/shared/ui/lusion-resend-ds/lusion-resend-ds.module.sass`
+- `src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx`
+- `src/shared/ui/tdm-public-design-system/tdm-public-design-system.module.sass`
 
 O agente deve confirmar o consumidor ativo antes de editar.
 

@@ -7,7 +7,8 @@ export const CANVAS_DIMENSIONS = {
   duplicateOffset: 34,
   columnGapY: 172,
   columnStartY: 120,
-  historyLimit: 24
+  historyLimit: 24,
+  autoSaveDebounceMs: 1200
 } as const;
 
 export const CANVAS_COLUMN_X = {

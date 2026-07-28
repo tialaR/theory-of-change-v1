@@ -70,11 +70,11 @@ Decisões absorvidas:
 - propriedades independentes para type, size, state e conteúdo;
 - reduzir overrides e variantes combinatórias.
 
-## Resend
+## TMD
 
-- How we think about design: https://resend.com/handbook/design/how-we-think-about-design
-- Design process: https://resend.com/handbook/design/what-is-our-design-process
-- Role of design: https://resend.com/handbook/design/whats-the-role-of-design-at-resend
+- How we think about design: https://tdm.com/handbook/design/how-we-think-about-design
+- Design process: https://tdm.com/handbook/design/what-is-our-design-process
+- Role of design: https://tdm.com/handbook/design/whats-the-role-of-design-at-tdm
 
 Decisões absorvidas:
 

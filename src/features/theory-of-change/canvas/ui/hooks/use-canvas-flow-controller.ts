@@ -11,6 +11,11 @@ import {
 } from '@xyflow/react';
 import { centralizeCanvasColumns, organizeCanvasFlow } from '../../application/canvas-layout';
 import { evaluateCanvasConnection, type CanvasConnectionRejectionCode } from '../../domain/canvas-connection-policy';
+import {
+  createCanvasEdgeId,
+  createCanvasNodeId,
+  type CanvasIdTokenFactory
+} from '../../domain/canvas-element-id';
 import type { CanvasRelationKind, CanvasStageId } from '../../domain/canvas-project';
 import { CANVAS_DIMENSIONS } from '../../domain/canvas-ui.constants';
 import type { CanvasStageCopy } from '../canvas-copy';
@@ -64,17 +69,21 @@ function createInitialNode(
   };
 }
 
+function createRandomIdToken() {
+  return crypto.randomUUID();
+}
+
 export function useCanvasFlowController(
   initialNodes: CanvasStageNode[] = [],
   initialEdges: CanvasCausalEdge[] = [],
   getStageCopy: (stage: CanvasStageId) => CanvasStageCopy,
-  createDuplicateTitle: (title: string) => string
+  createDuplicateTitle: (title: string) => string,
+  createIdToken: CanvasIdTokenFactory = createRandomIdToken
 ) {
   const [nodes, setNodes, onNodesChangeBase] = useNodesState<CanvasStageNode>(initialNodes);
   const [edges, setEdges, onEdgesChangeBase] = useEdgesState<CanvasCausalEdge>(initialEdges);
   const [history, setHistory] = useState<CanvasFlowSnapshot[]>([]);
   const [future, setFuture] = useState<CanvasFlowSnapshot[]>([]);
-  const idCounterRef = useRef(10);
   const dragSnapshotCapturedRef = useRef(false);
 
   const counts = useMemo(() => ({
@@ -92,17 +101,20 @@ export function useCanvasFlowController(
 
   const createNode = useCallback((stage: CanvasStageId, position: XYPosition) => {
     capture();
-    idCounterRef.current += 1;
+    const occupiedIds = new Set([
+      ...nodes.map((node) => node.id),
+      ...edges.map((edge) => edge.id)
+    ]);
     const node = createInitialNode(
       stage,
-      `node-${stage}-${idCounterRef.current}`,
+      createCanvasNodeId(stage, occupiedIds, createIdToken),
       counts[stage] + 1,
       position,
       getStageCopy(stage)
     );
     setNodes((items) => [...items, node]);
     return node;
-  }, [capture, counts, getStageCopy, setNodes]);
+  }, [capture, counts, createIdToken, edges, getStageCopy, nodes, setNodes]);
 
   const updateNode = useCallback((nodeId: string, patch: Partial<CanvasStageNode['data']>) => {
     setNodes((items) => items.map((node) => (
@@ -121,10 +133,13 @@ export function useCanvasFlowController(
     const source = nodes.find((node) => node.id === nodeId);
     if (!source) return null;
     capture();
-    idCounterRef.current += 1;
+    const occupiedIds = new Set([
+      ...nodes.map((node) => node.id),
+      ...edges.map((edge) => edge.id)
+    ]);
     const duplicate: CanvasStageNode = {
       ...structuredClone(source),
-      id: `node-${source.data.stage}-${idCounterRef.current}`,
+      id: createCanvasNodeId(source.data.stage, occupiedIds, createIdToken),
       position: {
         x: Math.min(
           CANVAS_DIMENSIONS.width - CANVAS_DIMENSIONS.nodeWidth - CANVAS_DIMENSIONS.nodeEdgeGap,
@@ -140,7 +155,7 @@ export function useCanvasFlowController(
     };
     setNodes((items) => [...items, duplicate]);
     return duplicate;
-  }, [capture, createDuplicateTitle, nodes, setNodes]);
+  }, [capture, createDuplicateTitle, createIdToken, edges, nodes, setNodes]);
 
   const deleteNode = useCallback((nodeId: string) => {
     const node = nodes.find((item) => item.id === nodeId);
@@ -167,9 +182,12 @@ export function useCanvasFlowController(
     }
 
     capture();
-    idCounterRef.current += 1;
+    const occupiedIds = new Set([
+      ...nodes.map((node) => node.id),
+      ...edges.map((edge) => edge.id)
+    ]);
     const edge: CanvasCausalEdge = {
-      id: `edge-${idCounterRef.current}`,
+      id: createCanvasEdgeId(occupiedIds, createIdToken),
       type: 'canvas-causal',
       source: source.id,
       target: target.id,
@@ -177,7 +195,7 @@ export function useCanvasFlowController(
     };
     setEdges((items) => [...items, edge]);
     return { ok: true, edge, relationKind: decision.relationKind };
-  }, [capture, edges, nodes, setEdges]);
+  }, [capture, createIdToken, edges, nodes, setEdges]);
 
   const getRelationKind = useCallback((edge: CanvasCausalEdge): CanvasRelationKind | null => {
     const source = nodes.find((node) => node.id === edge.source);

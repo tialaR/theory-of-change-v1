@@ -152,8 +152,8 @@ Famílias principais:
 
 - Somente um `PublicHeader` pode ser renderizado por página pública.
 - Header legado deve ser removido do JSX — esconder com CSS é proibido (`display: none`, `opacity: 0`, `visibility: hidden`, `z-index` negativo, media query ou pathname para “ocultar” um segundo header).
-- No topo: carcaça transparente; após scroll: carcaça Resend-first flutuante.
-- Nenhum header público pode ser criado diretamente por páginas — use `PublicHeader` de `@/shared/ui/lusion-resend-ds`.
+- No topo: carcaça transparente; após scroll: carcaça TMD-first flutuante.
+- Nenhum header público pode ser criado diretamente por páginas — use `PublicHeader` de `@/shared/ui/tdm-public-design-system`.
 - Não reintroduzir blocos Sass legados que pintem `.header` com fundo opaco, `border-bottom` full-bleed ou sombra ornamental em paralelo à `.headerShell`.
 
 ## Mapa de migração por rota
@@ -162,7 +162,7 @@ Famílias principais:
 | --- | --- | --- | --- | --- | --- |
 | `/` | Criar teoria | `public-pages.tsx` | `PublicButton` → `TdmButton` | `primary` + `hero` | `/canvas` |
 | `/` | Ver exemplo | `public-pages.tsx` | `PublicButton` ghost | `text` | `/exemplos/resultado` |
-| Header | Criar teoria | `lusion-resend-ds.tsx` | `TdmButton` tertiary | `textCompact` | `/canvas` |
+| Header | Criar teoria | `tdm-public-design-system.tsx` | `TdmButton` tertiary | `textCompact` | `/canvas` |
 | `/exemplos` | Ver exemplos | `public-pages.tsx` | `PublicButton` primary | `primary` | `#examples-experiences` |
 | `/exemplos/visao-do-fluxo` | Abrir experiência interativa | `example-overview-card.tsx` | `TdmButton` primary | `primary` | `/exemplos/visao-do-fluxo/interativo` |
 | `/exemplos/visao-do-fluxo` | Voltar para exemplos | `example-overview-card.tsx` | `TdmButton` tertiary | `text` | `/exemplos` |

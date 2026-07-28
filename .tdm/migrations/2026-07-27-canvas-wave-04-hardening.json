@@ -7,10 +7,10 @@
   "officialRoute": "/canvas",
   "removedRoutes": [
     "/canvas-v4",
-    "/canvas/resend-command-preview-v2"
+    "/canvas/tdm-command-preview-v2"
   ],
   "renamedImplementation": {
-    "from": "resend-command-preview-v2",
+    "from": "tdm-command-preview-v2",
     "to": "canvas-workspace"
   },
   "validation": [

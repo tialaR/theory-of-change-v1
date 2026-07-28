@@ -1,7 +1,7 @@
 'use client';
 
 import type { CSSProperties } from 'react';
-import { ResendDraftPreview } from './resend-draft-preview';
+import { TheoryDraftPreview } from './theory-draft-preview';
 
 export type ResultDraftPreviewProps = {
   active?: boolean;
@@ -18,7 +18,7 @@ export function ResultDraftPreview({
   ariaLabel,
 }: ResultDraftPreviewProps) {
   return (
-    <ResendDraftPreview
+    <TheoryDraftPreview
       variant="result"
       active={active}
       className={className}

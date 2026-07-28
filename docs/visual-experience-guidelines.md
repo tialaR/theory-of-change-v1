@@ -4,36 +4,36 @@
 
 O padrão obrigatório está em:
 
-`docs/resend-visual-motion-standard.md`
+`docs/tdm-visual-motion-standard.md`
 
-- Resend é a principal referência de disciplina visual para UI de produto.
+- TMD é a principal referência de disciplina visual para UI de produto.
 - Lusion pode continuar como referência ambiental limitada a heros e
   composições editoriais específicas.
 - Lusion não governa movimento de componentes.
-- Movimento de produto segue o padrão TDM Resend.
+- Movimento de produto segue o padrão TDM TMD.
 - Cores da TDM permanecem como identidade semântica própria.
-- Não copiar marca, conteúdo ou assets do Resend.
+- Não copiar marca, conteúdo ou assets do TMD.
 
-## DS público: `lusion-resend-ds`
+## DS público: `tdm-public-design-system`
 
-Rotas públicas usam exclusivamente o design system em `src/shared/ui/lusion-resend-ds/`. Não reutilizar componentes visuais do DS antigo (`resend-ds`, `experience`, `resend-experience`) nas páginas públicas.
+Rotas públicas usam exclusivamente o design system em `src/shared/ui/tdm-public-design-system/`. Não reutilizar componentes visuais do DS antigo (`tdm-ds`, `experience`, `tdm-experience`) nas páginas públicas.
 
 ### Referências visuais
 
 | Área | Referência | Lógica replicada |
 |------|-----------|------------------|
-| Home `/` | [Lusion Labs About](https://labs.lusion.co/about) | Hero dark imersivo, composição central, tipografia editorial (referência ambiental; motion de produto segue TDM Resend) |
+| Home `/` | [Lusion Labs About](https://labs.lusion.co/about) | Hero dark imersivo, composição central, tipografia editorial (referência ambiental; motion de produto segue TDM TMD) |
 | Rotas internas | Páginas de produto estilo SaaS dark | Header fino, grid/dots, seções amplas, cards com borda fina, CTAs pill, scroll narrativo |
 
 Não copiar marcas, logos, textos ou assets proprietários.
 
 ### Tipografia pública
 
-Seções públicas devem seguir o padrão tipográfico: kicker uppercase com tracking, título prata/cinza premium, descrição cinza suave, hierarquia controlada e cards com título forte + descrição secundária. Mixins reutilizáveis em `src/features/theory-of-change/components/resend-public/_public-typography.sass`.
+Seções públicas devem seguir o padrão tipográfico: kicker uppercase com tracking, título prata/cinza premium, descrição cinza suave, hierarquia controlada e cards com título forte + descrição secundária. Mixins reutilizáveis em `src/features/theory-of-change/components/public-experience/_public-typography.sass`.
 
 ### Tokens obrigatórios
 
-Definidos em `lusion-resend-ds.module.sass`:
+Definidos em `tdm-public-design-system.module.sass`:
 
 - `noir`, `graphite`, `smoke`, `ash` — fundos
 - `white`, `muted`, `body-muted` — texto
@@ -79,7 +79,7 @@ Paleta: fundo quase preto, texto branco/cinza, verde só como acento. Sem roxo/a
 - Sem loops decorativos; sem `linear`; sem pulsação; sem glow animado
 - Usar `useReducedMotion` — com preferência ativa, mostrar o estado final imediatamente
 - Toda animação de `opacity` deve ter `initial={{ opacity: 0 }}` (ou valor numérico explícito) — nunca `undefined`
-- Consultar o documento canônico: `docs/resend-visual-motion-standard.md`
+- Consultar o documento canônico: `docs/tdm-visual-motion-standard.md`
 
 ### Quando usar cada componente
 

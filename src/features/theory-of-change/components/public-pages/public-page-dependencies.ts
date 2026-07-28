@@ -5,4 +5,4 @@
 export {
   DedicatedExamplePreview,
   ExamplePreviewsSection
-} from '@/features/theory-of-change/components/resend-public/example-previews';
+} from '@/features/theory-of-change/components/public-experience/example-previews';

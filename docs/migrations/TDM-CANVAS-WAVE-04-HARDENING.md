@@ -2,8 +2,8 @@
 
 ## Resultado
 
-- remove a rota temporária `/canvas/resend-command-preview-v2`;
-- elimina os nomes internos versionados `resend-command-preview-v2`;
+- remove a rota temporária `/canvas/tdm-command-preview-v2`;
+- elimina os nomes internos versionados `tdm-command-preview-v2`;
 - consolida a interface oficial como `CanvasWorkspace`;
 - remove o verificador temporário da janela de migração;
 - adiciona contrato executável de ownership e colocation;

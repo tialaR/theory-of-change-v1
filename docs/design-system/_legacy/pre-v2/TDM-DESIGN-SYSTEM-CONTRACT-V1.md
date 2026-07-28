@@ -6,7 +6,7 @@ Estabelecer uma fonte de verdade executável para UI, motion e arquitetura visua
 
 A direção visual combina:
 
-- Resend-first: simplicidade, precisão, superfícies silenciosas e hierarquia direta;
+- TMD-first: simplicidade, precisão, superfícies silenciosas e hierarquia direta;
 - Apple HIG: clareza, legibilidade, alinhamento, área de interação e preservação de proporção;
 - Material Design: papéis explícitos de ação, estados previsíveis e tokens em camadas;
 - Figma: componente principal como fonte das instâncias, variantes controladas e redução de overrides locais.
@@ -43,16 +43,16 @@ Rotas do motor do canvas, congeladas fora de rodadas específicas:
 - `/canvas`;
 - `/exemplos/canvas`;
 - `/canvas/resultado`;
-- `/canvas/resend-command-preview`.
+- `/canvas/tdm-command-preview`.
 
 Componentes públicos conhecidos:
 
 - `src/features/theory-of-change/components/public-pages/public-pages.tsx`;
 - `src/features/theory-of-change/components/public-pages/public-pages.module.sass`;
-- `src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx`;
-- `src/shared/ui/lusion-resend-ds/lusion-resend-ds.module.sass`;
+- `src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx`;
+- `src/shared/ui/tdm-public-design-system/tdm-public-design-system.module.sass`;
 - `src/shared/ui/tdm-context-label/tdm-context-label.tsx`;
-- `src/features/theory-of-change/components/resend-public/example-previews/*`;
+- `src/features/theory-of-change/components/public-experience/example-previews/*`;
 - `src/features/theory-of-change/components/public-pages/home-brand-logo/*`.
 
 Prévias públicas conhecidas:
@@ -60,8 +60,8 @@ Prévias públicas conhecidas:
 - `flow-draft-preview.tsx`;
 - `flow-draft-preview.module.sass`;
 - `result-draft-preview.tsx`;
-- `resend-draft-preview.tsx`;
-- `resend-draft-preview.module.sass`;
+- `theory-draft-preview.tsx`;
+- `theory-draft-preview.module.sass`;
 - `dedicated-example-preview.tsx`;
 - `example-previews.module.sass`.
 
@@ -255,5 +255,5 @@ Regras:
 - Material Web Buttons: https://material-web.dev/components/button/
 - Material Web Theming: https://material-web.dev/theming/material-theming/
 - Figma Guide to Components: https://help.figma.com/hc/en-us/articles/360038662654-Guide-to-components-in-Figma
-- Resend: https://resend.com/
-- Resend About and Philosophy: https://resend.com/about
+- TMD: https://tdm.com/
+- TMD About and Philosophy: https://tdm.com/about
