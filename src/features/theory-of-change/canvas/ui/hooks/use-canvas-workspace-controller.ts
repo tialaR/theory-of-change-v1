@@ -3,7 +3,7 @@
 import { useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { useReactFlow, type Connection, type NodeMouseHandler } from '@xyflow/react';
-import type { CanvasProject, CanvasRelationKind } from '../../domain/canvas-project';
+import type { CanvasProject } from '../../domain/canvas-project';
 import { toCanvasFlowGraph } from '../../react-flow/canvas-react-flow.adapter';
 import type { CanvasCausalEdge, CanvasStageNode } from '../../react-flow/canvas-flow.types';
 import { createCanvasStageCopy, type CanvasTranslator } from '../canvas-copy';
@@ -11,7 +11,8 @@ import { useCanvasFlowController, type CanvasConnectFailureCode } from './use-ca
 import { useCanvasWorkspaceEffects } from './use-canvas-workspace-effects';
 import { useCanvasStageDragAndDrop } from './use-canvas-stage-drag-and-drop';
 import { useCanvasNodeActions } from './use-canvas-node-actions';
-import { createRelationDraft, useCanvasUiState } from './use-canvas-ui-state';
+import { useCanvasRelationActions } from './use-canvas-relation-actions';
+import { useCanvasUiState } from './use-canvas-ui-state';
 import { useCanvasSaveController } from './use-canvas-save-controller';
 
 const CONNECT_NOTICE_KEYS: Record<CanvasConnectFailureCode, string> = {
@@ -143,56 +144,29 @@ export function useCanvasWorkspaceController(initialProject: CanvasProject, user
     stageCopy
   });
 
-  const selectEdge = useCallback((edge: CanvasCausalEdge) => {
-    const relationKind = flow.getRelationKind(edge);
-    if (!relationKind) return;
-    ui.selectEdge(edge, relationKind);
-    ui.notify(t('notices.connectionSelected'));
-  }, [flow, t, ui]);
-
-  const openRelationForm = useCallback(() => {
-    if (!selectedEdge || !selectedRelationKind) return;
-    ui.setRelationDraft(createRelationDraft(selectedEdge, selectedRelationKind, t));
-    ui.setRelationPanelMode('form');
-  }, [selectedEdge, selectedRelationKind, t, ui]);
-
-  const updateRelationDraft = useCallback((field: 'title' | 'description' | 'advancedDetails', value: string) => {
-    ui.setRelationDraft((current) => current ? { ...current, [field]: value } : current);
-  }, [ui]);
-
-  const saveRelation = useCallback(() => {
-    if (!selectedEdge || !selectedRelationKind || !ui.relationDraft) return;
-    if (!ui.relationDraft.description.trim()) {
-      ui.notify(
-        selectedRelationKind === 'risk'
-          ? t('notices.riskRequired')
-          : t('notices.hypothesisRequired'),
-        'warning'
-      );
-      return;
-    }
-    flow.saveRelation(selectedEdge.id, selectedRelationKind, ui.relationDraft);
-    ui.setRelationPanelMode('menu');
-    markDirty();
-    ui.notify(selectedRelationKind === 'risk' ? t('notices.riskSaved') : t('notices.hypothesisSaved'));
-  }, [flow, markDirty, selectedEdge, selectedRelationKind, t, ui]);
-
-  const removeRelation = useCallback(() => {
-    if (!selectedEdge || !selectedRelationKind || !selectedEdge.data?.relationKind) return;
-    flow.removeRelation(selectedEdge.id);
-    ui.setRelationDraft(createRelationDraft({ ...selectedEdge, data: {} }, selectedRelationKind, t));
-    ui.setRelationPanelMode('menu');
-    markDirty();
-    ui.notify(t('notices.markerRemoved'));
-  }, [flow, markDirty, selectedEdge, selectedRelationKind, t, ui]);
-
-  const deleteConnection = useCallback(() => {
-    if (!selectedEdge) return;
-    flow.deleteEdge(selectedEdge.id);
-    ui.clearSelection();
-    markDirty();
-    ui.notify(t('notices.connectionDeleted'));
-  }, [flow, markDirty, selectedEdge, t, ui]);
+  const {
+    selectEdge,
+    openRelationForm,
+    updateRelationDraft,
+    saveRelation,
+    removeRelation,
+    deleteConnection
+  } = useCanvasRelationActions({
+    selectedEdge,
+    selectedRelationKind,
+    relationDraft: ui.relationDraft,
+    getRelationKind: flow.getRelationKind,
+    selectFlowEdge: ui.selectEdge,
+    setRelationDraft: ui.setRelationDraft,
+    setRelationPanelMode: ui.setRelationPanelMode,
+    saveFlowRelation: flow.saveRelation,
+    removeFlowRelation: flow.removeRelation,
+    deleteFlowEdge: flow.deleteEdge,
+    clearSelection: ui.clearSelection,
+    notify: ui.notify,
+    markDirty,
+    t
+  });
 
   const undo = useCallback(() => {
     if (!flow.undo()) return;
