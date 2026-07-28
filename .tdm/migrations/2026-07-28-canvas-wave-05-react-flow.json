@@ -1,0 +1,24 @@
+{
+  "id": "canvas-wave-05-react-flow",
+  "date": "2026-07-28",
+  "status": "locked",
+  "route": "/canvas",
+  "visualContract": "homologated-shell-preserved-with-external-screenshot-comparison",
+  "changes": [
+    "physical ReactFlow renderer",
+    "custom stage nodes with source and target handles",
+    "custom causal edges with anchored relation controls",
+    "single causal domain policy",
+    "thin App Router route",
+    "feature-owned client island loaded dynamically",
+    "God Component decomposition",
+    "anti-God and ownership executable gates"
+  ],
+  "deferredToWave06": [
+    "server-side MSW runtime through instrumentation",
+    "two fictitious authenticated personas",
+    "server-authoritative persistence via Server Actions",
+    "full next-intl migration",
+    "final bundle and Core Web Vitals budgets"
+  ]
+}

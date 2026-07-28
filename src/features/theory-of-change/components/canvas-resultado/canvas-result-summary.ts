@@ -1,4 +1,4 @@
-import type { CanvasProject, CanvasStageId } from '@/features/theory-of-change/canvas-workspace';
+import type { CanvasProject, CanvasStageId } from '@/features/theory-of-change/canvas';
 
 const STAGE_ORDER: CanvasStageId[] = ['input', 'activity', 'product', 'outcome'];
 

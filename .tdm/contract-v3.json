@@ -1,13 +1,14 @@
 {
-  "version": "3.3.0",
+  "version": "3.4.0",
   "name": "TDM Executable Contract",
-  "activePhase": "hardening-release",
+  "activePhase": "react-flow-release",
   "phases": [
     "foundation",
     "shark-cleanup",
     "canvas-engine",
     "validation-release",
-    "hardening-release"
+    "hardening-release",
+    "react-flow-release"
   ],
   "gateState": "closed",
   "migrationBranch": "refactor/shark-cleanup-and-canvas-v1",
@@ -17,12 +18,18 @@
     "nestedTernaries": 0,
     "important": 0,
     "forbiddenBrowserPersistence": 0,
-    "legacyCanvasNames": 0
+    "legacyCanvasNames": 0,
+    "maxCanvasComponentLines": 260,
+    "maxCanvasHookLines": 360,
+    "maxRoutePageLines": 8
   },
   "protectedVisualPatterns": [
-    "src/app/canvas/canvas-workspace.module.sass",
+    "src/features/theory-of-change/canvas/ui/canvas-workspace/canvas-workspace.module.sass",
     "src/app/canvas-legado/**"
   ],
+  "protectedVisualHashes": {
+    "canvasWorkspaceSass": "92ca880af2f6cb4dec78b87f61e028234d370a8a937423c834d97f207e299a46"
+  },
   "forbiddenTrackedPatterns": [
     "node_modules/**",
     ".next/**",
@@ -39,20 +46,25 @@
     "window.location",
     "!important",
     "resend-command-preview-v2",
-    "canvas-v4"
+    "canvas-v4",
+    "allowedRelation",
+    "canConnect"
   ],
   "canvasTarget": {
     "route": "/canvas",
+    "serverComposition": "src/features/theory-of-change/canvas/canvas-page.tsx",
+    "clientBoundary": "src/features/theory-of-change/canvas/ui/canvas-workspace/canvas-client-entry.tsx",
     "component": "CanvasWorkspace",
-    "removedRoute": "/canvas-v4",
-    "removedPreviewRoute": "/canvas/resend-command-preview-v2",
     "legacyRoute": "/canvas-legado",
-    "stateEngine": "@xyflow/react useNodesState/useEdgesState",
+    "stateEngine": "@xyflow/react ReactFlow/useNodesState/useEdgesState",
+    "renderer": "@xyflow/react ReactFlow with custom nodes, handles and custom edges",
+    "domainPolicy": "evaluateCanvasConnection",
     "persistence": "MSW-backed typed HTTP repository",
     "resultRoute": "/canvas/resultado",
     "locale": "pt-BR"
   },
-  "ownershipRule": "Tests, hooks, fixtures, adapters and mocks remain colocated with their owning component, page or feature until proven shared.",
-  "lockedAt": "2026-07-28T00:10:49.422Z",
-  "hardenedAt": "2026-07-28T00:10:49.422Z"
+  "ownershipRule": "Each Canvas test, hook, component, adapter, fixture and mock remains inside the owning feature scope; app only routes and composes.",
+  "lockedAt": "2026-07-27T21:00:00-03:00",
+  "hardenedAt": "2026-07-27T21:30:00-03:00",
+  "reactFlowReleasedAt": "2026-07-28T01:20:17.604088+00:00"
 }

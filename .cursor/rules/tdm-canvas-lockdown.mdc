@@ -1,22 +1,23 @@
 ---
-description: TDM Canvas hardening lockdown
+description: TDM Canvas executable architecture lockdown
 globs:
   - "src/app/canvas/**"
-  - "src/features/theory-of-change/canvas-workspace/**"
-alwaysApply: false
+  - "src/features/theory-of-change/canvas/**"
+  - "src/features/theory-of-change/components/canvas-resultado/**"
+alwaysApply: true
 ---
 
-# Canvas hardening lockdown
+# Canvas executable lockdown
 
-- `/canvas` is the only official current Canvas route.
-- `/canvas-v4` and `/canvas/resend-command-preview-v2` must remain absent.
-- `/canvas-legado` must remain available.
-- The official route component is `CanvasWorkspace`; versioned preview names are forbidden.
-- The homologated Canvas Sass hash is protected even when files are renamed.
-- State belongs to the React Flow state owner.
-- Persistence crosses the typed repository contract and MSW handlers.
-- Browser-only MSW code loads dynamically after confirming `window` exists.
-- Never add localStorage, sessionStorage or window.location.
-- Tests, hooks, fixtures, adapters and mocks stay colocated with their owner until genuinely shared.
-- `shared` must not depend on private Canvas implementation details.
-- Run `npm run validate:canvas:release` before merge.
+- `/canvas` is the only official current Canvas route; `/canvas-v4` and preview routes must remain absent.
+- `/canvas-legado` remains available until an explicit deletion patch.
+- `src/app/canvas` only routes, lays out and composes Server Components.
+- The interactive Canvas is a dynamically loaded Client island inside the Canvas feature.
+- `<ReactFlow />` is the only Canvas renderer. Custom cards are React Flow nodes with real `<Handle />` ports; causal relations are custom React Flow edges.
+- Manual SVG connection layers, route-owned state engines and duplicate causal rules are forbidden.
+- `evaluateCanvasConnection` is the single causal policy and invalid actions must not mutate state.
+- Each component, hook, test, adapter and mock remains with its owner. `shared` cannot import private Canvas implementation.
+- Component files may not exceed 260 lines; controller hooks may not exceed 360 lines without an approved contract migration.
+- Persistence crosses explicit application and repository contracts. Browser storage and `window.location` are forbidden.
+- The Canvas visual skin is protected by hash and by the external before/after Playwright screenshot in patch validation.
+- Run `npm run validate:canvas:release` before commit or merge.

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createCanvasProject } from '@/features/theory-of-change/canvas-workspace';
+import { createCanvasProject } from '@/features/theory-of-change/canvas';
 import { createCanvasResultStageSummary } from './canvas-result-summary';
 
 describe('createCanvasResultStageSummary', () => {

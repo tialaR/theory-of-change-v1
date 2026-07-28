@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import {
   ACTIVE_CANVAS_PROJECT_ID,
   type CanvasProject
-} from '@/features/theory-of-change/canvas-workspace';
-import { createHttpCanvasProjectRepository } from '@/features/theory-of-change/canvas-workspace/infrastructure/http/http-canvas-project.repository';
-import { ensureCanvasProjectWorkerStarted } from '@/features/theory-of-change/canvas-workspace/infrastructure/msw/ensure-canvas-project-worker';
+} from '@/features/theory-of-change/canvas';
+import { createHttpCanvasProjectRepository } from '@/features/theory-of-change/canvas/infrastructure/http/http-canvas-project.repository';
+import { ensureCanvasProjectWorkerStarted } from '@/features/theory-of-change/canvas/infrastructure/msw/ensure-canvas-project-worker';
 
 type CanvasResultProjectState =
   | { status: 'loading'; project: null }

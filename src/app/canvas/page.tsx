@@ -1,5 +1,5 @@
-import { CanvasWorkspace } from './canvas-workspace';
+import { CanvasPage } from '@/features/theory-of-change/canvas';
 
-export default function CanvasPage() {
-  return <CanvasWorkspace />;
+export default function Page() {
+  return <CanvasPage />;
 }
