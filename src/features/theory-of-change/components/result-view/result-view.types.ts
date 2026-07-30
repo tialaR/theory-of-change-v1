@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import type { TdmEdge, TdmNode } from '@/features/theory-of-change/domain/tdm-types';
 import type { TdmStage } from '@/features/theory-of-change/domain/tdm-stages';
 
@@ -20,6 +20,7 @@ export type ResultExperienceProps = {
   backLabel?: string;
   onBack?: () => void;
   onClose?: () => void;
+  headerAccessory?: ReactNode;
 };
 
 export type StageMeta = {
