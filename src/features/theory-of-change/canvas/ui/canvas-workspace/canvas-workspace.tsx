@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactFlowProvider } from '@xyflow/react';
+import type { AuthUser } from '@/features/auth';
 import type { CanvasProject } from '../../domain/canvas-project';
 import styles from './canvas-workspace.module.sass';
 import { CanvasCreatorPanel } from '../components/canvas-creator-panel';
@@ -15,16 +16,16 @@ import { CanvasRuntimeProvider } from '../runtime/canvas-runtime-context';
 
 export type CanvasWorkspaceProps = {
   initialProject: CanvasProject;
-  userName: string;
+  user: AuthUser;
 };
 
-function CanvasWorkspaceContent({ initialProject, userName }: CanvasWorkspaceProps) {
-  const controller = useCanvasWorkspaceController(initialProject, userName);
+function CanvasWorkspaceContent({ initialProject, user }: CanvasWorkspaceProps) {
+  const controller = useCanvasWorkspaceController(initialProject, user.name);
 
   return (
     <CanvasRuntimeProvider controller={controller}>
       <main className={styles.page} data-full-canvas={controller.ui.fullCanvasMode}>
-        <CanvasHeader />
+        <CanvasHeader user={user} />
         <section className={styles.workspace} data-full-canvas={controller.ui.fullCanvasMode}>
           <CanvasToolbar />
           <CanvasFlowSurface />

@@ -5,7 +5,7 @@ import { CanvasWorkspaceLoading } from './ui/canvas-workspace/canvas-workspace.l
 
 async function AuthenticatedCanvas() {
   const { project, user } = await getCurrentCanvasProject('/canvas');
-  return <CanvasClientEntry initialProject={project} userName={user.name} />;
+  return <CanvasClientEntry initialProject={project} user={user} />;
 }
 
 export function CanvasPage() {

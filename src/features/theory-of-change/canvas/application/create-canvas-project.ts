@@ -11,7 +11,7 @@ export function createCanvasProject(input: CreateCanvasProjectInput): CanvasProj
   const timestamp = (input.now ?? new Date()).toISOString();
 
   return {
-    schemaVersion: 2,
+    schemaVersion: 3,
     id: input.id,
     ownerId: input.ownerId,
     title: input.title.trim(),

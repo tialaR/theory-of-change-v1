@@ -1,0 +1,276 @@
+.root
+  position: relative
+  display: inline-flex
+
+.trigger
+  width: 2.25rem
+  height: 2.25rem
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  flex: 0 0 auto
+  overflow: hidden
+  border: 0.0625rem solid var(--v2-stroke, rgba(255, 255, 255, 0.14))
+  border-radius: 999rem
+  background: var(--v2-raised, rgba(255, 255, 255, 0.04))
+  color: var(--v2-text, #f4f4f5)
+  font: inherit
+  font-size: 0.72rem
+  font-weight: 650
+  letter-spacing: 0.02em
+  cursor: pointer
+  transition: border-color 160ms ease, background 160ms ease
+
+  &:hover,
+  &:focus-visible
+    border-color: var(--v2-stroke-strong, rgba(255, 255, 255, 0.28))
+    background: color-mix(in srgb, var(--v2-raised, #17181b) 88%, white 12%)
+    outline: none
+
+.avatarImage,
+.profileImage
+  width: 100%
+  height: 100%
+  object-fit: cover
+  object-position: center
+
+.menu
+  position: fixed
+  z-index: 400
+  width: min(18rem, calc(100vw - 1.5rem))
+  padding: 0.85rem
+  border: 0.0625rem solid var(--v2-stroke, rgba(255, 255, 255, 0.14))
+  border-radius: 0.95rem
+  background: color-mix(in srgb, var(--v2-shell, #101114) 97%, black 3%)
+  color: var(--v2-text, #f4f4f5)
+  box-shadow: 0 1rem 2.6rem rgba(0, 0, 0, 0.42)
+
+.profile
+  display: grid
+  justify-items: center
+  gap: 0.65rem
+  padding: 0.15rem 0.2rem 0.8rem
+  text-align: center
+
+.avatarWrap
+  width: 3.5rem
+  height: 3.5rem
+  display: grid
+  place-items: center
+  overflow: hidden
+  border: 0.0625rem solid var(--v2-stroke-strong, rgba(255, 255, 255, 0.24))
+  border-radius: 999rem
+  background: var(--v2-raised, rgba(255, 255, 255, 0.04))
+  font-size: 0.86rem
+  font-weight: 650
+
+.identity
+  min-width: 0
+  max-width: 100%
+  display: grid
+  justify-items: center
+  gap: 0.2rem
+
+  > span
+    max-width: 100%
+    overflow: hidden
+    color: var(--v2-muted, #96989f)
+    font-size: 0.7rem
+    text-overflow: ellipsis
+    white-space: nowrap
+
+.nameRow
+  display: inline-grid
+  grid-template-columns: 1.8rem minmax(0, auto) 1.8rem
+  align-items: center
+  justify-content: center
+  column-gap: 0.25rem
+  max-width: 100%
+
+  strong
+    grid-column: 2
+    overflow: hidden
+    color: var(--v2-text, #f4f4f5)
+    font-size: 0.88rem
+    font-weight: 590
+    text-overflow: ellipsis
+    white-space: nowrap
+
+.photoButton,
+.logoutButton
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  border: 0.0625rem solid transparent
+  background: transparent
+  color: var(--v2-muted, #a1a1aa)
+  cursor: pointer
+
+.photoButton
+  grid-column: 3
+  width: 1.8rem
+  height: 1.8rem
+  border-radius: 0.58rem
+
+.logoutButton
+  width: 100%
+  min-height: 2.45rem
+  justify-content: flex-start
+  gap: 0.55rem
+  padding: 0 0.65rem
+  border-radius: 0.7rem
+  font: inherit
+  font-size: 0.76rem
+
+.photoButton:hover,
+.photoButton:focus-visible,
+.logoutButton:hover,
+.logoutButton:focus-visible
+  border-color: var(--v2-stroke-strong, rgba(255, 255, 255, 0.28))
+  background: color-mix(in srgb, var(--v2-raised, #17181b) 76%, transparent)
+  color: var(--v2-text, #f4f4f5)
+  outline: none
+
+.photoButton:disabled
+  opacity: 0.5
+  cursor: wait
+
+.photoButton svg,
+.logoutButton svg
+  width: 1rem
+  height: 1rem
+  fill: none
+  stroke: currentColor
+  stroke-width: 1.65
+  stroke-linecap: round
+  stroke-linejoin: round
+
+.divider
+  height: 0.0625rem
+  margin: 0 0 0.55rem
+  background: var(--v2-stroke, rgba(255, 255, 255, 0.12))
+
+.hiddenInput
+  position: absolute
+  width: 0.0625rem
+  height: 0.0625rem
+  overflow: hidden
+  clip: rect(0 0 0 0)
+  clip-path: inset(50%)
+
+.feedback
+  margin: 0 0 0.55rem
+  color: var(--v2-muted, #a1a1aa)
+  font-size: 0.66rem
+  line-height: 1.35
+  text-align: center
+
+
+// Surgical wave 02: circular avatar trigger and photo action hierarchy.
+.trigger
+  aspect-ratio: 1
+  min-width: 2.25rem
+  border-radius: 50%
+
+.avatarImage
+  border-radius: 50%
+
+.menu
+  z-index: 900
+
+.avatarButton
+  position: relative
+  width: 4rem
+  height: 4rem
+  display: grid
+  place-items: center
+  padding: 0
+  border: 0
+  border-radius: 50%
+  background: transparent
+  color: var(--v2-text, #f4f4f5)
+  cursor: pointer
+
+  &:focus-visible
+    outline: 0.125rem solid var(--v2-stroke-strong, rgba(255, 255, 255, 0.28))
+    outline-offset: 0.2rem
+
+  &:disabled
+    cursor: wait
+    opacity: 0.62
+
+.avatarWrap
+  width: 3.75rem
+  height: 3.75rem
+  border-radius: 50%
+
+.profileImage
+  border-radius: 50%
+
+.cameraBadge
+  position: absolute
+  right: -0.05rem
+  bottom: 0.05rem
+  width: 1.3rem
+  height: 1.3rem
+  display: grid
+  place-items: center
+  border: 0.125rem solid var(--v2-shell, #101114)
+  border-radius: 50%
+  background: var(--v2-raised, #17181b)
+  color: var(--v2-text, #f4f4f5)
+
+  svg
+    width: 0.72rem
+    height: 0.72rem
+    fill: none
+    stroke: currentColor
+    stroke-width: 1.7
+    stroke-linecap: round
+    stroke-linejoin: round
+
+.nameRow
+  display: flex
+  justify-content: center
+  max-width: 100%
+
+  strong
+    grid-column: auto
+
+
+// Canvas stability wave 03: preserve circular geometry inside compact header actions.
+.trigger
+  width: 2.25rem !important
+  min-width: 2.25rem !important
+  height: 2.25rem !important
+  min-height: 2.25rem !important
+  padding: 0 !important
+  aspect-ratio: 1 / 1
+  border-radius: 50% !important
+  flex: 0 0 2.25rem
+
+.avatarImage,
+.profileImage
+  display: block
+  aspect-ratio: 1 / 1
+  border-radius: 50%
+
+.avatarButton
+  width: 4rem !important
+  min-width: 4rem !important
+  height: 4rem !important
+  min-height: 4rem !important
+  padding: 0 !important
+  border-radius: 50% !important
+
+.avatarWrap
+  width: 3.75rem !important
+  height: 3.75rem !important
+  min-width: 3.75rem
+  min-height: 3.75rem
+  aspect-ratio: 1 / 1
+  border-radius: 50% !important
+
+// Canvas convergence wave 05: portal-based dropdown always wins the overlay stack.
+.menu
+  z-index: 2000

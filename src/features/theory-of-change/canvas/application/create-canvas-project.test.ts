@@ -11,7 +11,7 @@ describe('createCanvasProject', () => {
     });
 
     expect(project).toMatchObject({
-      schemaVersion: 2,
+      schemaVersion: 3,
       id: 'project-1',
       ownerId: 'user-tiala-rocha',
       locale: 'pt-BR',

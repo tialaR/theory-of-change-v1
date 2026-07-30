@@ -3,6 +3,7 @@ import type { CanvasRelationKind, CanvasStageId } from '../domain/canvas-project
 
 export type CanvasStageNodeData = {
   stage: CanvasStageId;
+  order?: number;
   title: string;
   description: string;
   advancedDetails: string;

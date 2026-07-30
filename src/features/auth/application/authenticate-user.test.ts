@@ -3,7 +3,7 @@ import { authenticateUser } from './authenticate-user';
 import type { AuthRepository } from '../domain/auth.types';
 
 const authenticatedSession = {
-  user: { id: 'user-tiala', name: 'Tiala Rocha', email: 'tialarocha@tdmconstrutor.com.br' },
+  user: { id: 'user-tiala', name: 'Tiala Rocha', email: 'tialarocha@tdmconstrutor.com.br', avatarUrl: null },
   session: {
     id: 'session-1',
     userId: 'user-tiala',
@@ -17,6 +17,7 @@ describe('authenticateUser', () => {
     const repository: AuthRepository = {
       createSession: async () => authenticatedSession,
       findSession: async () => null,
+      updateUserAvatar: async () => null,
       deleteSession: async () => undefined
     };
 

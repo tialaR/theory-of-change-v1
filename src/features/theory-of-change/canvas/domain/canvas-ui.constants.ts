@@ -6,7 +6,7 @@ export const CANVAS_DIMENSIONS = {
   nodeEdgeGap: 24,
   duplicateOffset: 34,
   columnGapY: 172,
-  columnStartY: 120,
+  columnStartY: 156,
   historyLimit: 24,
   autoSaveDebounceMs: 1200
 } as const;

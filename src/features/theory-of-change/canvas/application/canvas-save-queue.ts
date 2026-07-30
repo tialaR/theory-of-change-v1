@@ -25,7 +25,8 @@ export function createCanvasSaveQueue(input: {
     return {
       title: content.title,
       nodes: structuredClone(content.nodes),
-      connections: structuredClone(content.connections)
+      connections: structuredClone(content.connections),
+      viewport: content.viewport ? { ...content.viewport } : undefined
     };
   }
 

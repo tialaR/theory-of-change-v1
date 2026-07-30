@@ -1,5 +1,7 @@
 'use client';
 
+import { motion } from 'motion/react';
+
 import { CANVAS_STAGES } from '../../domain/canvas-stage.constants';
 import { canvasIcons as icons } from '../canvas-icons';
 import styles from '../canvas-workspace/canvas-workspace.module.sass';
@@ -86,7 +88,9 @@ function EdgeInspector() {
           <textarea value={draft.description} onChange={(event) => runtime.updateRelationDraft('description', event.target.value)} placeholder={runtime.t(`relations.${relationKind}Placeholder`)} />
         </ClearableField>
       </label>
-      <button type="button" className={styles.inspectorAction} onClick={runtime.saveRelation}>{icons.save}<span>{runtime.t('inspector.save')}</span></button>
+      <div className={styles.inspectorRelationActions}>
+        <button type="button" className={styles.inspectorAction} onClick={runtime.saveRelation}>{icons.save}<span>{runtime.t('inspector.save')}</span></button>
+      </div>
       <div className={styles.inspectorSecondaryActions}>
         {edge.data?.relationKind ? <button type="button" onClick={runtime.removeRelation}>{icons.trash}<span>{runtime.t('inspector.deleteRelation', { relation: relationLabel.toLowerCase() })}</span></button> : null}
         <button type="button" onClick={runtime.deleteConnection}>{icons.trash}<span>{runtime.t('inspector.deleteConnection')}</span></button>
@@ -111,32 +115,55 @@ function CanvasProgress() {
 
 export function CanvasInspector() {
   const runtime = useCanvasRuntime();
-  if (runtime.ui.fullCanvasMode || !runtime.ui.inspectorOpen) return null;
+  const visible = runtime.ui.inspectorOpen && !runtime.ui.fullCanvasMode;
   const title = runtime.selectedNode
     ? runtime.stageCopy(runtime.selectedNode.data.stage).singular
     : runtime.selectedEdge ? runtime.t('inspector.connection') : runtime.t('inspector.canvas');
 
   return (
-    <aside className={styles.inspector}>
+    <motion.aside
+      className={styles.inspector}
+      data-open={visible}
+      data-canvas-inspector
+      initial={false}
+      animate={{
+        x: visible ? 0 : 'calc(100% + 1.5rem)',
+        opacity: visible ? 1 : 0
+      }}
+      transition={{ duration: 0.46, ease: [0.22, 1, 0.36, 1] }}
+      aria-hidden={!visible}
+    >
       <div className={styles.inspectorHeader}>
         <div><span>{runtime.t('inspector.title')}</span><strong>{title}</strong></div>
-        <button type="button" onClick={() => runtime.ui.setInspectorOpen(false)} aria-label={runtime.t('inspector.close')} title={runtime.t('tooltips.closeInspector')} data-tooltip={runtime.t('tooltips.closeInspector')}>{icons.close}</button>
+        <button type="button" onClick={runtime.closeInspector} aria-label={runtime.t('inspector.close')} title={runtime.t('tooltips.closeInspector')} data-tooltip={runtime.t('tooltips.closeInspector')}>{icons.close}</button>
       </div>
       {runtime.selectedNode ? <NodeInspector /> : null}
       {!runtime.selectedNode && runtime.selectedEdge ? <EdgeInspector /> : null}
       {!runtime.selectedNode && !runtime.selectedEdge ? <div className={styles.emptyInspector}>{runtime.t('inspector.empty')}</div> : null}
       <CanvasProgress />
-    </aside>
+    </motion.aside>
   );
 }
 
 export function CanvasInspectorReopen() {
   const runtime = useCanvasRuntime();
-  if (runtime.ui.fullCanvasMode || runtime.ui.inspectorOpen) return null;
+  if (runtime.ui.inspectorOpen || runtime.ui.fullCanvasMode) return null;
 
   return (
     <div className={styles.workspaceTopRightControls}>
-      <button type="button" className={styles.inspectorReopen} onClick={() => runtime.ui.setInspectorOpen(true)} aria-label={runtime.t('tooltips.openInspector')} data-tooltip={runtime.t('tooltips.openInspector')} title={runtime.t('tooltips.openInspector')}>
+      <button
+        type="button"
+        className={styles.inspectorReopen}
+        data-inspector-toggle
+        onPointerDown={(event) => event.stopPropagation()}
+        onClick={(event) => {
+          event.stopPropagation();
+          runtime.openInspector();
+        }}
+        aria-label={runtime.t('tooltips.openInspector')}
+        data-tooltip={runtime.t('tooltips.openInspector')}
+        title={runtime.t('tooltips.openInspector')}
+      >
         <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M15 4v16M18 9l3 3-3 3" /></svg>
       </button>
     </div>

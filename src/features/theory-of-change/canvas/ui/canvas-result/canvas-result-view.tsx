@@ -2,6 +2,8 @@
 
 import { useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import type { AuthUser } from '@/features/auth/domain/auth.types';
+import { UserMenu } from '@/features/auth/ui/user-menu/user-menu';
 import type { CanvasProject } from '../../domain/canvas-project';
 import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
 import { TdmSurface } from '@/shared/ui/tdm-surface/tdm-surface';
@@ -10,7 +12,7 @@ import styles from './canvas-result.module.sass';
 
 const EXPORT_ACTION_IDS = ['docx', 'pdf', 'png', 'svg'] as const;
 
-export function CanvasResultView({ project }: { project: CanvasProject }) {
+export function CanvasResultView({ project, user }: { project: CanvasProject; user: AuthUser }) {
   const t = useTranslations('Canvas');
   const [exportMessage, setExportMessage] = useState<string | null>(null);
   const stageSummary = useMemo(() => createCanvasResultStageSummary(project), [project]);
@@ -34,6 +36,7 @@ export function CanvasResultView({ project }: { project: CanvasProject }) {
                 </TdmButton>
               ))}
             </div>
+            <UserMenu initialUser={user} />
           </div>
         </header>
 

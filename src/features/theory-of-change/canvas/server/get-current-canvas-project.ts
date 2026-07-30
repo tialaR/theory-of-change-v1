@@ -1,5 +1,5 @@
 import { getTranslations } from 'next-intl/server';
-import { requireAuthenticatedSession } from '@/features/auth';
+import { requireAuthenticatedSession } from '@/features/auth/server/auth-session';
 import { getOrCreateCanvasProject } from '../application/get-or-create-canvas-project';
 import { createServerCanvasProjectRepository } from './canvas-server.repository';
 

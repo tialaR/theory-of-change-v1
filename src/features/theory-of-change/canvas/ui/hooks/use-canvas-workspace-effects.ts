@@ -33,11 +33,13 @@ export function useCanvasWorkspaceEffects({
       if (!target) return;
 
       const popover = target.closest('[data-edge-popover]');
+      const inspector = target.closest('[data-canvas-inspector]');
+      const inspectorToggle = target.closest('[data-inspector-toggle]');
       const edgeAction = target.closest(
         `[data-edge-action-id="${selectedEdgeId}"]`
       );
 
-      if (!popover && !edgeAction) {
+      if (!popover && !edgeAction && !inspector && !inspectorToggle) {
         setRelationPopoverOpen(false);
       }
     }

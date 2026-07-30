@@ -36,7 +36,7 @@ export function CanvasRelationPopover() {
               <textarea autoFocus value={draft?.description ?? ''} onChange={(event) => runtime.updateRelationDraft('description', event.target.value)} placeholder={runtime.t(`relations.${relationKind}Placeholder`)} />
             </ClearableField>
           </label>
-          <div className={styles.edgeFormActions}><button type="button" onClick={() => runtime.ui.setRelationPanelMode('menu')}>{runtime.t('relation.cancel')}</button><button type="button" onClick={runtime.saveRelation}>{runtime.t('relation.save')}</button></div>
+          <div className={styles.edgeFormActions}><button type="button" onClick={runtime.cancelRelation}>{runtime.t('relation.cancel')}</button><button type="button" onClick={runtime.saveRelation}>{runtime.t('relation.save')}</button></div>
         </>
       )}
     </section>

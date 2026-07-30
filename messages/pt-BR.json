@@ -131,8 +131,8 @@
     "inspector": {
       "selectedBlock": "Bloco selecionado",
       "causalLogic": "Lógica causal",
-      "validConnections": "{count} conexões válidas",
-      "causalHelp": "Use o dot direito como origem e o dot esquerdo como destino. Ações incoerentes são bloqueadas sem alterar o mapa.",
+      "validConnections": "{count} conexões construídas",
+      "causalHelp": "Use o dot direito como origem e o dot esquerdo como destino. Quando uma ligação não segue o encadeamento causal, o canvas orienta o próximo caminho sem alterar o mapa.",
       "save": "Salvar",
       "duplicate": "Duplicar",
       "delete": "Excluir",
@@ -155,29 +155,28 @@
     },
     "notices": {
       "empty": "Canvas vazio. Arraste qualquer etapa para começar.",
-      "connectionStarted": "Conexão iniciada. Arraste até o dot esquerdo da próxima etapa causal.",
-      "connectionCancelled": "Conexão não concluída. Solte a linha no dot esquerdo de um card compatível.",
-      "connectionCreated": "Conexão criada. Clique na seta para qualificar ou excluir.",
-      "invalidTarget": "Escolha outro card como destino da conexão.",
-      "missingCards": "Não foi possível localizar os cards dessa conexão.",
-      "duplicateConnection": "Essa conexão já existe no canvas.",
-      "sameStage": "Conecte etapas diferentes para representar uma relação causal.",
-      "backward": "A conexão precisa seguir o fluxo causal da esquerda para a direita.",
-      "skipStage": "A conexão deve passar pela próxima etapa causal antes de avançar.",
-      "outcomeSource": "Resultado encerra esta cadeia causal e não pode iniciar outra conexão.",
-      "positionUpdated": "Posição atualizada.",
+      "connectionStarted": "Ligação iniciada. Leve a linha até o dot esquerdo de um card da próxima etapa causal.",
+      "connectionCancelled": "A ligação ainda não foi concluída. Tente soltar a linha no dot esquerdo de um card da próxima etapa.",
+      "connectionCreated": "“{source}” agora contribui para “{target}”. Esse elo mostra como uma etapa sustenta a próxima.",
+      "invalidTarget": "A ligação iniciada em “{source}” precisa terminar em outro bloco da etapa seguinte.",
+      "missingCards": "Não foi possível reconhecer um dos blocos dessa ligação. Tente iniciar o elo novamente.",
+      "duplicateConnection": "“{source}” e “{target}” já estão ligados. Selecione a conexão para revisar o risco ou a hipótese registrada.",
+      "sameStage": "“{source}” e “{target}” pertencem à mesma etapa. Para manter o caminho causal claro, conecte o primeiro bloco à etapa seguinte.",
+      "backward": "“{source}” não pode contribuir para “{target}” nessa direção. O caminho causal parte das condições disponíveis e avança até as mudanças esperadas.",
+      "skipStage": "A ligação entre “{source}” e “{target}” pula uma etapa necessária. Conecte primeiro o bloco à etapa seguinte para deixar claro como a mudança será produzida.",
+      "outcomeSource": "“{source}” já representa uma mudança esperada. Neste mapa, resultados recebem contribuições das etapas anteriores e encerram esse caminho causal.",
       "dragStage": "Arraste {stage} para a posição desejada no canvas.",
       "stageAdded": "{stage} adicionado. Você pode posicioná-lo livremente.",
       "duplicated": "Card duplicado sem alterar o original.",
       "deleted": "{stage} excluído.",
       "nodeUpdated": "Card atualizado no próprio canvas.",
-      "connectionSelected": "Conexão selecionada. As ações disponíveis respeitam a regra causal.",
-      "riskRequired": "Descreva o risco antes de salvar.",
-      "hypothesisRequired": "Descreva a hipótese antes de salvar.",
-      "riskSaved": "Risco salvo na conexão.",
-      "hypothesisSaved": "Hipótese salva na conexão.",
-      "markerRemoved": "Marcador removido. A conexão causal foi preservada.",
-      "connectionDeleted": "Conexão excluída sem alterar os blocos.",
+      "connectionSelected": "Ligação entre “{source}” e “{target}” selecionada. Registre o que pode dificultar esse elo ou a condição necessária para ele funcionar.",
+      "riskRequired": "Descreva o que pode dificultar a contribuição de “{source}” para “{target}”.",
+      "hypothesisRequired": "Descreva o que precisa ser verdadeiro para que “{source}” contribua para “{target}”.",
+      "riskSaved": "Risco “{relation}” registrado entre “{source}” e “{target}”.",
+      "hypothesisSaved": "Hipótese “{relation}” registrada entre “{source}” e “{target}”.",
+      "markerRemoved": "O registro entre “{source}” e “{target}” foi removido, e a ligação causal foi preservada.",
+      "connectionDeleted": "A ligação entre “{source}” e “{target}” foi removida. Os blocos continuam no mapa.",
       "undo": "Última alteração desfeita.",
       "redo": "Alteração refeita.",
       "columns": "As etapas foram centralizadas em colunas.",
@@ -190,7 +189,7 @@
       "preparingResult": "Preparando resultado…",
       "resultError": "Não foi possível abrir o resultado agora. Tente novamente.",
       "stageUpdated": "{stage} atualizado.",
-      "autoSaved": "Alterações salvas automaticamente."
+      "unknownBlock": "este bloco"
     },
     "result": {
       "kicker": "Revisão final",
@@ -236,6 +235,17 @@
       "feedback": {
         "reviewFields": "Revise os campos indicados.",
         "invalidCredentials": "Nome, e-mail ou senha não correspondem a um usuário existente."
+      }
+    },
+    "userMenu": {
+      "open": "Abrir menu do usuário",
+      "changePhoto": "Trocar foto",
+      "logout": "Sair",
+      "photoUpdated": "Foto atualizada.",
+      "errors": {
+        "invalid-file": "Escolha uma imagem PNG, JPEG ou WebP.",
+        "file-too-large": "A imagem deve ter no máximo 1,5 MB.",
+        "session-expired": "Sua sessão expirou. Entre novamente."
       }
     }
   },

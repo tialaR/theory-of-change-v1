@@ -3,7 +3,7 @@ import { createHttpAuthRepository } from './http-auth.repository';
 
 const envelope = {
   data: {
-    user: { id: 'user-tiala', name: 'Tiala Rocha', email: 'tialarocha@tdmconstrutor.com.br' },
+    user: { id: 'user-tiala', name: 'Tiala Rocha', email: 'tialarocha@tdmconstrutor.com.br', avatarUrl: null },
     session: {
       id: 'session-1',
       userId: 'user-tiala',
@@ -15,7 +15,7 @@ const envelope = {
 };
 
 describe('createHttpAuthRepository', () => {
-  it('usa POST para criar sessão e GET para recuperá-la', async () => {
+  it('usa endpoints versionados para criar, recuperar e atualizar a sessão', async () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () =>
       new Response(JSON.stringify(envelope), {
         status: 200,
@@ -30,8 +30,11 @@ describe('createHttpAuthRepository', () => {
       password: 'tdm123456'
     });
     await repository.findSession('session-1');
+    await repository.updateUserAvatar('session-1', 'data:image/png;base64,abc');
 
     expect(fetcher.mock.calls[0]?.[1]?.method).toBe('POST');
     expect(fetcher.mock.calls[1]?.[1]?.method).toBe('GET');
+    expect(fetcher.mock.calls[2]?.[1]?.method).toBe('PATCH');
+    expect(fetcher.mock.calls[2]?.[0]).toBe('http://tdm.mock.local/api/v1/auth/sessions/session-1/profile');
   });
 });

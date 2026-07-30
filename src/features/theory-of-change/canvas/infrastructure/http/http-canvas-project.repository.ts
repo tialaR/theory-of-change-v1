@@ -3,6 +3,7 @@ import type {
   CanvasProjectPatch,
   CanvasProjectRepository
 } from '../../domain/canvas-project';
+import { migrateCanvasProject } from '../../domain/canvas-project-migration';
 import {
   canvasProjectCollectionPath,
   canvasProjectItemPath,
@@ -38,13 +39,16 @@ export function createHttpCanvasProjectRepository(
   }
 
   async function requestItem(method: string, ownerId: string, projectId: string, body?: unknown) {
-    const response = await fetcher(`${baseUrl}${canvasProjectItemPath(ownerId, projectId)}`, {
+    return fetcher(`${baseUrl}${canvasProjectItemPath(ownerId, projectId)}`, {
       method,
       headers: { 'content-type': 'application/json', accept: 'application/json' },
       body: body === undefined ? undefined : JSON.stringify(body),
       cache: 'no-store'
     });
-    return response;
+  }
+
+  async function readCanonicalProject(response: Response): Promise<CanvasProject> {
+    return migrateCanvasProject((await readItem(response)).data);
   }
 
   return {
@@ -54,13 +58,13 @@ export function createHttpCanvasProjectRepository(
         headers: { accept: 'application/json' },
         cache: 'no-store'
       });
-      return (await readList(response)).data;
+      return (await readList(response)).data.map(migrateCanvasProject);
     },
 
     async findById(ownerId, projectId) {
       const response = await requestItem('GET', ownerId, projectId);
       if (response.status === 404) return null;
-      return (await readItem(response)).data;
+      return readCanonicalProject(response);
     },
 
     async create(ownerId, project) {
@@ -70,15 +74,15 @@ export function createHttpCanvasProjectRepository(
         body: JSON.stringify(project),
         cache: 'no-store'
       });
-      return (await readItem(response)).data;
+      return readCanonicalProject(response);
     },
 
     async replace(ownerId, project) {
-      return (await readItem(await requestItem('PUT', ownerId, project.id, project))).data;
+      return readCanonicalProject(await requestItem('PUT', ownerId, project.id, project));
     },
 
     async patch(ownerId, projectId, patch: CanvasProjectPatch) {
-      return (await readItem(await requestItem('PATCH', ownerId, projectId, patch))).data;
+      return readCanonicalProject(await requestItem('PATCH', ownerId, projectId, patch));
     },
 
     async delete(ownerId, projectId) {

@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
 import { ensureBrowserMocksStarted } from '@/mocks/ensure-browser-mocks';
+import type { AuthUser } from '@/features/auth';
 import type { CanvasProject } from '../../domain/canvas-project';
 import { CanvasWorkspaceLoading } from './canvas-workspace.loading';
 
@@ -13,13 +14,13 @@ const CanvasWorkspace = dynamic(
 
 export type CanvasClientEntryProps = {
   initialProject: CanvasProject;
-  userName: string;
+  user: AuthUser;
 };
 
-export function CanvasClientEntry({ initialProject, userName }: CanvasClientEntryProps) {
+export function CanvasClientEntry({ initialProject, user }: CanvasClientEntryProps) {
   useEffect(() => {
     void ensureBrowserMocksStarted();
   }, []);
 
-  return <CanvasWorkspace initialProject={initialProject} userName={userName} />;
+  return <CanvasWorkspace initialProject={initialProject} user={user} />;
 }

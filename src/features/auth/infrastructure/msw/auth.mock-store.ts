@@ -3,19 +3,25 @@ import type { AuthCredentials, AuthSession, AuthUser, AuthenticatedSession } fro
 
 type MockAuthUser = AuthUser & { password: string };
 
-const users: MockAuthUser[] = [
-  { id: 'user-tiala-rocha', name: 'Tiala Rocha', email: 'tialarocha@tdmconstrutor.com.br', password: 'tdm123456' },
-  { id: 'user-rodger-rocha', name: 'Rodger Rocha', email: 'rodgerrocha@tdmconstrutor.com.br', password: 'tdm123456' }
-];
-
+const AUTH_USERS_KEY = Symbol.for('tdm.mock.auth.users');
 const AUTH_SESSIONS_KEY = Symbol.for('tdm.mock.auth.sessions');
-type AuthMockGlobal = typeof globalThis & { [AUTH_SESSIONS_KEY]?: Map<string, AuthSession> };
+
+type AuthMockGlobal = typeof globalThis & {
+  [AUTH_USERS_KEY]?: MockAuthUser[];
+  [AUTH_SESSIONS_KEY]?: Map<string, AuthSession>;
+};
+
 const authGlobal = globalThis as AuthMockGlobal;
+const users = authGlobal[AUTH_USERS_KEY] ?? [
+  { id: 'user-tiala-rocha', name: 'Tiala Rocha', email: 'tialarocha@tdmconstrutor.com.br', password: 'tdm123456', avatarUrl: null },
+  { id: 'user-rodger-rocha', name: 'Rodger Rocha', email: 'rodgerrocha@tdmconstrutor.com.br', password: 'tdm123456', avatarUrl: null }
+];
 const sessions = authGlobal[AUTH_SESSIONS_KEY] ?? new Map<string, AuthSession>();
+authGlobal[AUTH_USERS_KEY] = users;
 authGlobal[AUTH_SESSIONS_KEY] = sessions;
 
 function publicUser(user: MockAuthUser): AuthUser {
-  return { id: user.id, name: user.name, email: user.email };
+  return { id: user.id, name: user.name, email: user.email, avatarUrl: user.avatarUrl };
 }
 
 function findUser(credentials: AuthCredentials) {
@@ -55,5 +61,13 @@ export const authMockStore = {
     return { session: structuredClone(session), user: publicUser(user) };
   },
   readSession(sessionId: string) { return resolveSession(sessionId); },
+  updateUserAvatar(sessionId: string, avatarUrl: string) {
+    const authenticated = resolveSession(sessionId);
+    if (!authenticated) return null;
+    const user = users.find((candidate) => candidate.id === authenticated.user.id);
+    if (!user) return null;
+    user.avatarUrl = avatarUrl;
+    return resolveSession(sessionId);
+  },
   deleteSession(sessionId: string) { sessions.delete(sessionId); }
 };

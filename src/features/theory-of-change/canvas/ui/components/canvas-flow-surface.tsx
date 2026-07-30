@@ -2,10 +2,10 @@
 
 import {
   ReactFlow,
+  SelectionMode,
   type EdgeTypes,
   type NodeTypes
 } from '@xyflow/react';
-import { CANVAS_DIMENSIONS } from '../../domain/canvas-ui.constants';
 import styles from '../canvas-workspace/canvas-workspace.module.sass';
 import { useCanvasRuntime } from '../runtime/canvas-runtime-context';
 import { CanvasCausalEdgeComponent } from './canvas-causal-edge';
@@ -32,12 +32,12 @@ export function CanvasFlowSurface() {
       <div
         className={styles.canvas}
         data-testid="canvas-react-flow-surface"
-        style={{ minWidth: `${CANVAS_DIMENSIONS.width}px`, minHeight: `${CANVAS_DIMENSIONS.height}px` }}
       >
         <ReactFlow
           className={styles.reactFlow}
           nodes={runtime.flow.nodes}
           edges={runtime.flow.edges}
+          defaultViewport={runtime.viewport}
           nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
           onNodesChange={runtime.flow.onNodesChange}
@@ -46,29 +46,23 @@ export function CanvasFlowSurface() {
           onNodeDragStart={runtime.onNodeDragStart}
           onNodeDragStop={runtime.onNodeDragStop}
           onPaneClick={runtime.onPaneClick}
+          onMoveEnd={(_event, viewport) => runtime.onViewportChange(viewport)}
           onConnect={runtime.onConnect}
-          onConnectStart={() => runtime.ui.notify(runtime.t('notices.connectionStarted'))}
-          onConnectEnd={(_event, state) => {
-            if (state.isValid) return;
-            runtime.ui.notify(
-              runtime.t('notices.connectionCancelled'),
-              'warning'
-            );
-          }}
           connectionLineComponent={CanvasConnectionLine}
           connectionRadius={28}
-          nodeExtent={[[0, 0], [CANVAS_DIMENSIONS.width, CANVAS_DIMENSIONS.height]]}
-          translateExtent={[[0, 0], [CANVAS_DIMENSIONS.width, CANVAS_DIMENSIONS.height]]}
-          minZoom={0.55}
-          maxZoom={1.8}
-          panOnDrag={false}
-          zoomOnScroll={false}
+          minZoom={0.32}
+          maxZoom={2}
+          panOnDrag={[0, 1, 2]}
+          panOnScroll={false}
+          zoomOnScroll
           zoomOnDoubleClick={false}
           zoomOnPinch
-          preventScrolling={false}
+          preventScrolling
+          selectionOnDrag
+          selectionMode={SelectionMode.Partial}
+          selectionKeyCode="Shift"
+          multiSelectionKeyCode="Shift"
           deleteKeyCode={null}
-          selectionKeyCode={null}
-          multiSelectionKeyCode={null}
           nodesFocusable
           edgesFocusable
           proOptions={{ hideAttribution: true }}

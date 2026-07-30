@@ -114,7 +114,6 @@ export function CanvasCreatorPanel() {
               </svg>
             </button>
           </div>
-          <p>{icons.lock}<span>{runtime.t('creator.rule')}</span></p>
         </div>
       ) : null}
     </section>

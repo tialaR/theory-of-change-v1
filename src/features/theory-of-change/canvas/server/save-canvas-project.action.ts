@@ -1,6 +1,7 @@
 'use server';
 
-import { requireAuthenticatedSession } from '@/features/auth';
+import { revalidatePath } from 'next/cache';
+import { requireAuthenticatedSession } from '@/features/auth/server/auth-session';
 import type { CanvasProject } from '../domain/canvas-project';
 import { saveCanvasProject } from '../application/save-canvas-project';
 import { createServerCanvasProjectRepository } from './canvas-server.repository';
@@ -19,5 +20,10 @@ export async function saveCanvasProjectAction(project: CanvasProject) {
 
   await wait(SAVE_DELAY_MS);
   const repository = createServerCanvasProjectRepository();
-  return saveCanvasProject(repository, project);
+  const savedProject = await saveCanvasProject(repository, project);
+
+  revalidatePath('/canvas');
+  revalidatePath('/canvas/resultado');
+
+  return savedProject;
 }

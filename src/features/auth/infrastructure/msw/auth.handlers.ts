@@ -5,6 +5,7 @@ import { authMockStore } from './auth.mock-store';
 
 const collectionEndpoint = `*${AUTH_API_PATH}`;
 const sessionEndpoint = `*${AUTH_API_PATH}/:sessionId`;
+const profileEndpoint = `*${AUTH_API_PATH}/:sessionId/profile`;
 
 function envelope(data: NonNullable<ReturnType<typeof authMockStore.readSession>>) {
   return { data, meta: { requestId: crypto.randomUUID(), schemaVersion: 1 as const } };
@@ -22,6 +23,17 @@ export const authHandlers = [
       );
     }
     return HttpResponse.json(envelope(authenticated), { status: 201 });
+  }),
+  http.patch(profileEndpoint, async ({ params, request }) => {
+    const body = (await request.json()) as { avatarUrl?: string };
+    if (!body.avatarUrl) {
+      return HttpResponse.json({ error: { code: 'avatar-required', message: 'Imagem obrigatória.' } }, { status: 400 });
+    }
+    const authenticated = authMockStore.updateUserAvatar(String(params.sessionId), body.avatarUrl);
+    if (!authenticated) {
+      return HttpResponse.json({ error: { code: 'session-not-found', message: 'Sessão não encontrada.' } }, { status: 404 });
+    }
+    return HttpResponse.json(envelope(authenticated));
   }),
   http.get(sessionEndpoint, ({ params }) => {
     const authenticated = authMockStore.readSession(String(params.sessionId));

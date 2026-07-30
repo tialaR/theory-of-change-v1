@@ -40,6 +40,17 @@ export function createHttpAuthRepository(options: HttpAuthRepositoryOptions): Au
       return (await readEnvelope(response)).data;
     },
 
+    async updateUserAvatar(sessionId: string, avatarUrl: string) {
+      const response = await fetcher(`${baseUrl}${AUTH_API_PATH}/${sessionId}/profile`, {
+        method: 'PATCH',
+        headers: { 'content-type': 'application/json', accept: 'application/json' },
+        body: JSON.stringify({ avatarUrl }),
+        cache: 'no-store'
+      });
+      if (response.status === 404 || response.status === 401) return null;
+      return (await readEnvelope(response)).data;
+    },
+
     async deleteSession(sessionId: string) {
       const response = await fetcher(`${baseUrl}${AUTH_API_PATH}/${sessionId}`, {
         method: 'DELETE',

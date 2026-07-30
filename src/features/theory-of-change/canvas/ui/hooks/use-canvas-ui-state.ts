@@ -35,11 +35,11 @@ export function createRelationDraft(
   };
 }
 
-export function useCanvasUiState(t: CanvasTranslator, initialProjectTitle: string) {
+export function useCanvasUiState(t: CanvasTranslator, initialProjectTitle: string, initialNodeCount: number) {
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [selectedEdgeId, setSelectedEdgeId] = useState<string | null>(null);
   const [creatorOpen, setCreatorOpen] = useState(false);
-  const [inspectorOpen, setInspectorOpen] = useState(true);
+  const [inspectorOpen, setInspectorOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [activeToolbarNodeId, setActiveToolbarNodeId] = useState<string | null>(null);
   const [editingNodeId, setEditingNodeId] = useState<string | null>(null);
@@ -49,8 +49,9 @@ export function useCanvasUiState(t: CanvasTranslator, initialProjectTitle: strin
   const [relationDraft, setRelationDraft] = useState<CanvasRelationDraft | null>(null);
   const [cardAdvancedOpenId, setCardAdvancedOpenId] = useState<string | null>(null);
   const [inspectorAdvancedOpenKey, setInspectorAdvancedOpenKey] = useState<string | null>(null);
-  const [notice, setNotice] = useState(t('notices.empty'));
+  const [notice, setNotice] = useState(initialNodeCount > 0 ? '' : t('notices.empty'));
   const [noticeTone, setNoticeTone] = useState<CanvasNoticeTone>('info');
+  const [noticeRevision, setNoticeRevision] = useState(0);
   const [saveState, setSaveState] = useState<CanvasSaveState>('saved');
   const [changeRevision, setChangeRevision] = useState(0);
   const [projectTitle, setProjectTitle] = useState(initialProjectTitle);
@@ -59,6 +60,7 @@ export function useCanvasUiState(t: CanvasTranslator, initialProjectTitle: strin
   const notify = useCallback((message: string, tone: CanvasNoticeTone = 'info') => {
     setNotice(message);
     setNoticeTone(tone);
+    setNoticeRevision((revision) => revision + 1);
   }, []);
 
 
@@ -80,7 +82,6 @@ export function useCanvasUiState(t: CanvasTranslator, initialProjectTitle: strin
     setSelectedEdgeId(null);
     setRelationDraft(null);
     setRelationPopoverOpen(false);
-    setInspectorOpen(true);
   }, []);
 
   const selectEdge = useCallback((edge: CanvasCausalEdge, relationKind: CanvasRelationKind) => {
@@ -89,7 +90,6 @@ export function useCanvasUiState(t: CanvasTranslator, initialProjectTitle: strin
     setRelationDraft(createRelationDraft(edge, relationKind, t));
     setRelationPanelMode('menu');
     setRelationPopoverOpen(true);
-    setInspectorOpen(true);
   }, [t]);
 
   const openNodeEditor = useCallback((node: CanvasStageNode) => {
@@ -134,6 +134,7 @@ export function useCanvasUiState(t: CanvasTranslator, initialProjectTitle: strin
     setInspectorAdvancedOpenKey,
     notice,
     noticeTone,
+    noticeRevision,
     notify,
     saveState,
     setSaveState,

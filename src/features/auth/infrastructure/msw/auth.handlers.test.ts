@@ -19,6 +19,10 @@ describe('authHandlers', () => {
 
     expect(authenticated?.user.id).toBe('user-tiala-rocha');
     await expect(repository.findSession(authenticated?.session.id ?? '')).resolves.toEqual(authenticated);
+
+    const updated = await repository.updateUserAvatar(authenticated?.session.id ?? '', 'data:image/png;base64,abc');
+    expect(updated?.user.avatarUrl).toBe('data:image/png;base64,abc');
+    await expect(repository.findSession(authenticated?.session.id ?? '')).resolves.toEqual(updated);
     await expect(repository.createSession({
       name: 'Tiala Rocha',
       email: 'tialarocha@tdmconstrutor.com.br',

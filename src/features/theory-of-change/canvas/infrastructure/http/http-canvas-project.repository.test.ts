@@ -10,6 +10,27 @@ function itemResponse() {
   }), { status: 200, headers: { 'content-type': 'application/json' } });
 }
 
+function legacyItemResponse() {
+  return new Response(JSON.stringify({
+    data: {
+      schemaVersion: 2,
+      id: 'project-1',
+      ownerId: 'user-tiala-rocha',
+      title: 'Legado',
+      locale: 'pt-BR',
+      revision: 0,
+      nodes: [
+        { id: 'input-2', stage: 'input', title: 'B', description: '', advancedDetails: '', position: { x: 0, y: 200 } },
+        { id: 'input-1', stage: 'input', title: 'A', description: '', advancedDetails: '', position: { x: 0, y: 100 } }
+      ],
+      connections: [],
+      createdAt: '2026-07-01T10:00:00.000Z',
+      updatedAt: '2026-07-01T10:00:00.000Z'
+    },
+    meta: { requestId: 'request-legacy', schemaVersion: 2 }
+  }), { status: 200, headers: { 'content-type': 'application/json' } });
+}
+
 describe('createHttpCanvasProjectRepository', () => {
   it('expõe CRUD HTTP completo com owner na rota', async () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async (_input: RequestInfo | URL, init?: RequestInit) => {
@@ -36,5 +57,18 @@ describe('createHttpCanvasProjectRepository', () => {
       'GET', 'GET', 'POST', 'PUT', 'PATCH', 'DELETE'
     ]);
     expect(String(fetcher.mock.calls[0]?.[0])).toContain('/users/user-tiala-rocha/canvas-projects');
+  });
+
+  it('migra documento schema 2 recebido pela API para schema 3', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(legacyItemResponse());
+    const repository = createHttpCanvasProjectRepository({ baseUrl: 'http://tdm.mock.local', fetcher });
+
+    const project = await repository.findById('user-tiala-rocha', 'project-1');
+
+    expect(project?.schemaVersion).toBe(3);
+    expect(project?.nodes).toEqual([
+      expect.objectContaining({ id: 'input-2', order: 1 }),
+      expect.objectContaining({ id: 'input-1', order: 0 })
+    ]);
   });
 });

@@ -1,15 +1,37 @@
 'use client';
 
+import { useLayoutEffect, useState, type CSSProperties } from 'react';
+
 import { canvasIcons as icons } from '../canvas-icons';
 import styles from '../canvas-workspace/canvas-workspace.module.sass';
 import { useCanvasRuntime } from '../runtime/canvas-runtime-context';
 
 export function CanvasHistoryPanel() {
   const runtime = useCanvasRuntime();
+  const [position, setPosition] = useState<CSSProperties>({});
+
+  useLayoutEffect(() => {
+    if (!runtime.ui.historyOpen) return;
+
+    const updatePosition = () => {
+      const trigger = document.querySelector<HTMLElement>('[data-history-trigger]');
+      if (!trigger) return;
+      const rect = trigger.getBoundingClientRect();
+      const panelWidth = 280;
+      setPosition({
+        top: `${rect.bottom + 10}px`,
+        left: `${Math.max(16, rect.right - panelWidth)}px`
+      });
+    };
+
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    return () => window.removeEventListener('resize', updatePosition);
+  }, [runtime.ui.historyOpen]);
   if (runtime.ui.fullCanvasMode || !runtime.ui.historyOpen) return null;
 
   return (
-    <aside className={styles.historyPanel}>
+    <aside className={styles.historyPanel} style={position}>
       <div className={styles.historyHeader}>
         <div><span>{runtime.t('history.title')}</span><strong>{runtime.t('history.session')}</strong></div>
         <button type="button" onClick={() => runtime.ui.setHistoryOpen(false)} data-tooltip={runtime.t('history.close')}>{icons.close}</button>

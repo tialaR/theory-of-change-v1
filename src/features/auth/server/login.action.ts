@@ -2,13 +2,12 @@
 
 import { getTranslations } from 'next-intl/server';
 import { redirect } from 'next/navigation';
-import { TDM_MOCK_API_ORIGIN } from '@/mocks/mock-api.constants';
 import { authenticateUser } from '../application/authenticate-user';
 import { AUTH_LOGIN_DELAY_MS, AUTH_PASSWORD_MIN_LENGTH } from '../domain/auth.constants';
 import type { AuthFieldErrors } from '../domain/auth.validation';
 import type { LoginActionState } from '../application/login-action-state';
 import { validateAuthCredentials } from '../domain/auth.validation';
-import { createHttpAuthRepository } from '../infrastructure/http/http-auth.repository';
+import { createServerAuthRepository } from './auth-server.repository';
 import { sanitizeReturnTo, writeAuthSessionCookie } from './auth-session';
 
 function wait(duration: number) { return new Promise((resolve) => setTimeout(resolve, duration)); }
@@ -43,8 +42,7 @@ export async function loginAction(_previousState: LoginActionState, formData: Fo
     };
   }
 
-  const repository = createHttpAuthRepository({ baseUrl: TDM_MOCK_API_ORIGIN });
-  const authenticated = await authenticateUser(repository, validation.credentials);
+  const authenticated = await authenticateUser(createServerAuthRepository(), validation.credentials);
   if (!authenticated) {
     return { status: 'error', message: t('feedback.invalidCredentials'), fieldErrors: {} };
   }

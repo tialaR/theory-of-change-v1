@@ -31,19 +31,23 @@ export function CanvasCausalEdgeComponent(props: EdgeProps<CanvasCausalEdge>) {
       <BaseEdge
         id={props.id}
         path={edgePath}
-        className={styles.reactFlowConnectionPath}
+        className={`${styles.reactFlowConnectionPath} ${selected ? styles.reactFlowConnectionPathSelected : ''}`}
         style={{ opacity: selected ? 1 : 0.72 }}
       />
       <EdgeLabelRenderer>
         <div
           className={styles.reactFlowEdgeLabel}
-          style={{ transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)` }}
+          style={{
+            transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
+            zIndex: selected ? 5000 : 1
+          }}
         >
           <button
             type="button"
             data-edge-action-id={props.id}
             className={`${styles.edgeAction} nodrag nopan`}
             data-kind={relationKind ?? 'empty'}
+            data-selected={selected}
             onClick={(event) => {
               event.stopPropagation();
               const edge = runtime.flow.edges.find((item) => item.id === props.id);

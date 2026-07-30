@@ -1,9 +1,16 @@
 export type CanvasStageId = 'input' | 'activity' | 'product' | 'outcome';
 export type CanvasRelationKind = 'risk' | 'hypothesis';
 
+export type CanvasViewport = {
+  x: number;
+  y: number;
+  zoom: number;
+};
+
 export type CanvasProjectNode = {
   id: string;
   stage: CanvasStageId;
+  order: number;
   title: string;
   description: string;
   advancedDetails: string;
@@ -23,7 +30,7 @@ export type CanvasProjectConnection = {
 };
 
 export type CanvasProject = {
-  schemaVersion: 2;
+  schemaVersion: 3;
   id: string;
   ownerId: string;
   title: string;
@@ -31,11 +38,12 @@ export type CanvasProject = {
   revision: number;
   nodes: CanvasProjectNode[];
   connections: CanvasProjectConnection[];
+  viewport?: CanvasViewport;
   createdAt: string;
   updatedAt: string;
 };
 
-export type CanvasProjectPatch = Partial<Pick<CanvasProject, 'title' | 'nodes' | 'connections'>>;
+export type CanvasProjectPatch = Partial<Pick<CanvasProject, 'title' | 'nodes' | 'connections' | 'viewport'>>;
 
 export type CanvasProjectRepository = {
   listByOwner(ownerId: string): Promise<CanvasProject[]>;

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import type { CanvasProject } from '../../domain/canvas-project';
+import type { CanvasProject, CanvasViewport } from '../../domain/canvas-project';
 import { CANVAS_DIMENSIONS } from '../../domain/canvas-ui.constants';
 import type { CanvasCausalEdge, CanvasStageNode } from '../../react-flow/canvas-flow.types';
 import type { CanvasTranslator } from '../canvas-copy';
@@ -15,6 +15,7 @@ type CanvasSaveControllerInput = {
   title: string;
   nodes: CanvasStageNode[];
   edges: CanvasCausalEdge[];
+  viewport: CanvasViewport;
   saveState: CanvasSaveState;
   changeRevision: number;
   setSaveState: (state: CanvasSaveState) => void;
@@ -29,6 +30,7 @@ export function useCanvasSaveController({
   title,
   nodes,
   edges,
+  viewport,
   saveState,
   changeRevision,
   setSaveState,
@@ -46,7 +48,8 @@ export function useCanvasSaveController({
     initialProject,
     title,
     nodes,
-    edges
+    edges,
+    viewport
   });
 
   const executeSave = useCallback(async (feedback: SaveFeedback) => {
@@ -55,14 +58,11 @@ export function useCanvasSaveController({
     if (feedback === 'manual') notify(t('notices.saving'));
 
     try {
-      const result = await saveProject();
+      await saveProject();
       const changedWhileSaving = revisionRef.current !== revisionAtStart;
       setSaveState(changedWhileSaving ? 'dirty' : 'saved');
 
       if (feedback === 'manual') notify(t('notices.saved'));
-      if (feedback === 'automatic' && result.saved && !changedWhileSaving) {
-        notify(t('notices.autoSaved'));
-      }
       return { ok: true as const, clean: !changedWhileSaving };
     } catch {
       setSaveState('error');

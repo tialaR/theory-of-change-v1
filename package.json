@@ -30,7 +30,8 @@
     "check:tdm:canvas-continuity": "node scripts/tdm-contract-v3/check-canvas-continuity.mjs",
     "check:tdm:architecture-naming": "node scripts/tdm-contract-v3/check-architecture-naming.mjs",
     "check:tdm:i18n-copy": "node scripts/tdm-contract-v3/check-i18n-copy.mjs",
-    "generate:tdm:i18n-baseline": "node scripts/tdm-contract-v3/generate-i18n-copy-baseline.mjs"
+    "generate:tdm:i18n-baseline": "node scripts/tdm-contract-v3/generate-i18n-copy-baseline.mjs",
+    "check:tdm:canvas-stability": "node scripts/tdm-contract-v3/check-canvas-stability-wave03.mjs"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.5.1",

@@ -1,8 +1,8 @@
 'use client';
 
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import type { CanvasRelationKind } from '../../domain/canvas-project';
-import type { CanvasCausalEdge } from '../../react-flow/canvas-flow.types';
+import type { CanvasCausalEdge, CanvasStageNode } from '../../react-flow/canvas-flow.types';
 import type { CanvasTranslator } from '../canvas-copy';
 import { createRelationDraft } from './use-canvas-ui-state';
 
@@ -21,6 +21,8 @@ type RelationDraftField =
 
 type UseCanvasRelationActionsOptions = {
   selectedEdge: CanvasCausalEdge | null;
+  selectedEdgeSource: CanvasStageNode | null;
+  selectedEdgeTarget: CanvasStageNode | null;
   selectedRelationKind: CanvasRelationKind | null;
   relationDraft: CanvasUiState['relationDraft'];
   getRelationKind: CanvasFlowController['getRelationKind'];
@@ -38,6 +40,8 @@ type UseCanvasRelationActionsOptions = {
 
 export function useCanvasRelationActions({
   selectedEdge,
+  selectedEdgeSource,
+  selectedEdgeTarget,
   selectedRelationKind,
   relationDraft,
   getRelationKind,
@@ -52,6 +56,11 @@ export function useCanvasRelationActions({
   markDirty,
   t
 }: UseCanvasRelationActionsOptions) {
+  const relationNoticeValues = useMemo(() => ({
+    source: selectedEdgeSource?.data.title ?? t('notices.unknownBlock'),
+    target: selectedEdgeTarget?.data.title ?? t('notices.unknownBlock')
+  }), [selectedEdgeSource, selectedEdgeTarget, t]);
+
   const selectEdge = useCallback((edge: CanvasCausalEdge) => {
     const relationKind = getRelationKind(edge);
 
@@ -60,12 +69,9 @@ export function useCanvasRelationActions({
     }
 
     selectFlowEdge(edge, relationKind);
-    notify(t('notices.connectionSelected'));
   }, [
     getRelationKind,
-    notify,
-    selectFlowEdge,
-    t
+    selectFlowEdge
   ]);
 
   const openRelationForm = useCallback(() => {
@@ -106,6 +112,29 @@ export function useCanvasRelationActions({
     });
   }, [setRelationDraft]);
 
+
+  const cancelRelation = useCallback(() => {
+    if (!selectedEdge || !selectedRelationKind) {
+      return;
+    }
+
+    setRelationDraft(
+      createRelationDraft(
+        selectedEdge,
+        selectedRelationKind,
+        t
+      )
+    );
+
+    setRelationPanelMode('menu');
+  }, [
+    selectedEdge,
+    selectedRelationKind,
+    setRelationDraft,
+    setRelationPanelMode,
+    t
+  ]);
+
   const saveRelation = useCallback(() => {
     if (
       !selectedEdge
@@ -118,8 +147,8 @@ export function useCanvasRelationActions({
     if (!relationDraft.description.trim()) {
       notify(
         selectedRelationKind === 'risk'
-          ? t('notices.riskRequired')
-          : t('notices.hypothesisRequired'),
+          ? t('notices.riskRequired', relationNoticeValues)
+          : t('notices.hypothesisRequired', relationNoticeValues),
         'warning'
       );
 
@@ -137,8 +166,8 @@ export function useCanvasRelationActions({
 
     notify(
       selectedRelationKind === 'risk'
-        ? t('notices.riskSaved')
-        : t('notices.hypothesisSaved')
+        ? t('notices.riskSaved', { ...relationNoticeValues, relation: relationDraft.description.trim() })
+        : t('notices.hypothesisSaved', { ...relationNoticeValues, relation: relationDraft.description.trim() })
     );
   }, [
     markDirty,
@@ -146,6 +175,8 @@ export function useCanvasRelationActions({
     relationDraft,
     saveFlowRelation,
     selectedEdge,
+    selectedEdgeSource,
+    selectedEdgeTarget,
     selectedRelationKind,
     setRelationPanelMode,
     t
@@ -175,12 +206,14 @@ export function useCanvasRelationActions({
 
     setRelationPanelMode('menu');
     markDirty();
-    notify(t('notices.markerRemoved'));
+    notify(t('notices.markerRemoved', relationNoticeValues));
   }, [
     markDirty,
     notify,
     removeFlowRelation,
     selectedEdge,
+    selectedEdgeSource,
+    selectedEdgeTarget,
     selectedRelationKind,
     setRelationDraft,
     setRelationPanelMode,
@@ -195,13 +228,15 @@ export function useCanvasRelationActions({
     deleteFlowEdge(selectedEdge.id);
     clearSelection();
     markDirty();
-    notify(t('notices.connectionDeleted'));
+    notify(t('notices.connectionDeleted', relationNoticeValues));
   }, [
     clearSelection,
     deleteFlowEdge,
     markDirty,
     notify,
     selectedEdge,
+    selectedEdgeSource,
+    selectedEdgeTarget,
     t
   ]);
 
@@ -209,6 +244,7 @@ export function useCanvasRelationActions({
     selectEdge,
     openRelationForm,
     updateRelationDraft,
+    cancelRelation,
     saveRelation,
     removeRelation,
     deleteConnection
