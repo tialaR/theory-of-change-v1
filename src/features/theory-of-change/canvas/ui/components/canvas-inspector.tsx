@@ -12,10 +12,11 @@ function NodeInspector() {
   const runtime = useCanvasRuntime();
   const node = runtime.selectedNode;
   if (!node) return null;
+  const nodeId = node.id;
   const copy = runtime.stageCopy(node.data.stage);
   const advancedKey = `node:${node.id}`;
   const connections = runtime.flow.edges.filter((edge) => edge.source === node.id || edge.target === node.id).length;
-  const sharedDraft = runtime.ui.editingNodeId === node.id ? runtime.ui.nodeDraft : null;
+  const sharedDraft = node !== null && runtime.ui.editingNodeId === node.id ? runtime.ui.nodeDraft : null;
   const formValue = sharedDraft ?? node.data;
 
   function updateFormField(field: 'title' | 'description' | 'advancedDetails', value: string) {
@@ -32,7 +33,7 @@ function NodeInspector() {
 
   function saveForm() {
     if (sharedDraft) {
-      runtime.saveNodeEditor(node.id);
+      runtime.saveNodeEditor(nodeId);
       return;
     }
 
