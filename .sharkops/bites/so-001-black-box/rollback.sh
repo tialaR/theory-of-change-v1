@@ -1,4 +1,6 @@
-#!/usr/bin/env bash
-set -euo pipefail
-echo "BREACH: rollback.sh is not implemented for SO-001." >&2
-exit 1
+#!/bin/sh
+set -eu
+
+rm -f .sharkops/runtime/so-001-proof.json
+
+echo "PASS: SO-001 rolled back."

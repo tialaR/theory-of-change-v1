@@ -39,7 +39,10 @@
     "shark:new": "node tools/sharkops/new-bite.mjs",
     "shark:gate": "node tools/sharkops/gate.mjs",
     "shark:gate:commit": "node tools/sharkops/gate.mjs --stage=pre-commit",
-    "shark:gate:push": "node tools/sharkops/gate.mjs --stage=pre-push"
+    "shark:gate:push": "node tools/sharkops/gate.mjs --stage=pre-push",
+    "shark:principles": "node tools/sharkops/principles.mjs",
+    "shark:scan": "node tools/sharkops/scan.mjs",
+    "shark:so-001:cycle": "node tools/sharkops/so-001-cycle.mjs"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.5.1",

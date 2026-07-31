@@ -61,3 +61,5 @@ output/
 # SharkOps local recovery artifacts
 .sharkops/bootstrap-backup/
 .sharkops/installer-backup/
+
+.sharkops/runtime/

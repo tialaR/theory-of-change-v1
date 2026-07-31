@@ -1,1 +1,54 @@
-{"schemaVersion":1,"debts":[{"id":"SO-DEBT-001","status":"open","summary":"Architecture contract is documented but not yet executable."}]}
+{
+  "schemaVersion": 1,
+  "debts": [
+    {
+      "id": "SO-DEBT-001",
+      "status": "open",
+      "summary": "Architecture contract is documented but not yet executable."
+    }
+  ],
+  "updatedAt": "2026-07-31T02:38:47.471Z",
+  "source": "sharkops-repository-scan",
+  "items": [
+    {
+      "id": "CLIENT-GATE-CHECK-TDM-V3-QUICK",
+      "title": "TDM Contract V3",
+      "source": "check:tdm:v3:quick",
+      "classification": "LEGACY_ADVISORY",
+      "status": "OPEN",
+      "blocking": false
+    },
+    {
+      "id": "CLIENT-GATE-CHECK-TDM-REACT-FLOW",
+      "title": "React Flow",
+      "source": "check:tdm:react-flow",
+      "classification": "LEGACY_ADVISORY",
+      "status": "OPEN",
+      "blocking": false
+    },
+    {
+      "id": "CLIENT-GATE-CHECK-TDM-OWNERSHIP",
+      "title": "Ownership",
+      "source": "check:tdm:ownership",
+      "classification": "LEGACY_ADVISORY",
+      "status": "OPEN",
+      "blocking": false
+    },
+    {
+      "id": "CLIENT-GATE-CHECK-TDM-I18N-ROUTES",
+      "title": "i18n and routes",
+      "source": "check:tdm:i18n-routes",
+      "classification": "LEGACY_ADVISORY",
+      "status": "OPEN",
+      "blocking": false
+    },
+    {
+      "id": "CLIENT-GATE-CHECK-TDM-CANVAS-CONTINUITY",
+      "title": "Canvas continuity",
+      "source": "check:tdm:canvas-continuity",
+      "classification": "LEGACY_ADVISORY",
+      "status": "OPEN",
+      "blocking": false
+    }
+  ]
+}

@@ -6,10 +6,12 @@
       "description": "SharkOps assumes repository governance while legacy contracts are classified and repaired.",
       "mandatory": {
         "pre-commit": [
-          "shark:verify"
+          "shark:verify",
+          "shark:principles"
         ],
         "pre-push": [
-          "shark:verify"
+          "shark:verify",
+          "shark:principles"
         ]
       },
       "advisory": {
@@ -25,7 +27,8 @@
   "classifications": {
     "shark:verify": "MANDATORY",
     "check:tdm:v3:quick": "LEGACY_ADVISORY",
-    "validate:release": "LEGACY_ADVISORY"
+    "validate:release": "LEGACY_ADVISORY",
+    "shark:principles": "MANDATORY"
   },
   "policy": {
     "sharkOpsIsSovereign": true,
