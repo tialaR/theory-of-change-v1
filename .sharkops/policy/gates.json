@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "activeProfile": "bootstrap-recovery",
+  "profiles": {
+    "bootstrap-recovery": {
+      "description": "SharkOps assumes repository governance while legacy contracts are classified and repaired.",
+      "mandatory": {
+        "pre-commit": [
+          "shark:verify"
+        ],
+        "pre-push": [
+          "shark:verify"
+        ]
+      },
+      "advisory": {
+        "pre-commit": [
+          "check:tdm:v3:quick"
+        ],
+        "pre-push": [
+          "validate:release"
+        ]
+      }
+    }
+  },
+  "classifications": {
+    "shark:verify": "MANDATORY",
+    "check:tdm:v3:quick": "LEGACY_ADVISORY",
+    "validate:release": "LEGACY_ADVISORY"
+  },
+  "policy": {
+    "sharkOpsIsSovereign": true,
+    "legacyFailureBlocks": false,
+    "rollbackRequired": true,
+    "silentDeviationAllowed": false
+  }
+}

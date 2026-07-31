@@ -57,3 +57,7 @@ output/
 __MACOSX/
 output/
 # <<< TDM SHARK MIGRATION GENERATED ARTIFACTS <<<
+
+# SharkOps local recovery artifacts
+.sharkops/bootstrap-backup/
+.sharkops/installer-backup/

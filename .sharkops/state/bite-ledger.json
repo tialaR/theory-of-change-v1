@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "bites": [
+    {
+      "id": "SO-001",
+      "codename": "Black Box",
+      "purpose": "Knowledge as Code",
+      "status": "DRAFT",
+      "revision": 1,
+      "path": ".sharkops/bites/so-001-black-box",
+      "createdAt": "2026-07-31T01:56:33.757Z"
+    }
+  ]
+}

@@ -31,7 +31,15 @@
     "check:tdm:architecture-naming": "node scripts/tdm-contract-v3/check-architecture-naming.mjs",
     "check:tdm:i18n-copy": "node scripts/tdm-contract-v3/check-i18n-copy.mjs",
     "generate:tdm:i18n-baseline": "node scripts/tdm-contract-v3/generate-i18n-copy-baseline.mjs",
-    "check:tdm:canvas-stability": "node scripts/tdm-contract-v3/check-canvas-stability-wave03.mjs"
+    "check:tdm:canvas-stability": "node scripts/tdm-contract-v3/check-canvas-stability-wave03.mjs",
+    "shark": "node tools/sharkops/cli.mjs",
+    "shark:status": "node tools/sharkops/status.mjs",
+    "shark:doctor": "node tools/sharkops/doctor.mjs",
+    "shark:verify": "node tools/sharkops/verify.mjs",
+    "shark:new": "node tools/sharkops/new-bite.mjs",
+    "shark:gate": "node tools/sharkops/gate.mjs",
+    "shark:gate:commit": "node tools/sharkops/gate.mjs --stage=pre-commit",
+    "shark:gate:push": "node tools/sharkops/gate.mjs --stage=pre-push"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.5.1",
