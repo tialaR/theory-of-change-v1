@@ -212,7 +212,8 @@ export function ResultExperience({
   closeHref,
   backLabel = 'Voltar',
   onBack,
-  onClose
+  onClose,
+  headerAccessory
 }: ResultExperienceProps) {
   const { nodes, edges } = viewModel;
   const [selection, setSelection] = useState<TheoryTranslatorSelection | null>(null);
@@ -857,8 +858,9 @@ export function ResultExperience({
           backLabel={backLabel}
           onBack={onBack ?? resolvedClose}
           actions={
-            <ResultToolbar
-              zoom={camera.zoom}
+            <>
+              <ResultToolbar
+                zoom={camera.zoom}
               onZoomIn={() => setZoomSafely((value) => value + RESULT_ZOOM.step)}
               onZoomOut={() => setZoomSafely((value) => value - RESULT_ZOOM.step)}
               onCenter={() => {
@@ -881,9 +883,11 @@ export function ResultExperience({
                   : 'EXPORTAR IMAGEM DA TEORIA COMPLETA'
               }
               isExportingImage={isExportingImage}
-              exportingImageFormat={exportingImageFormat}
-              exportImageError={exportImageError}
-            />
+                exportingImageFormat={exportingImageFormat}
+                exportImageError={exportImageError}
+              />
+              {headerAccessory}
+            </>
           }
         />
 

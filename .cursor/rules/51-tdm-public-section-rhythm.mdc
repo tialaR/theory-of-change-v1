@@ -2,8 +2,8 @@
 description: Regra canônica de alinhamento do intro secundário de Exemplos e ritmo entre seções públicas.
 globs:
   - "src/features/theory-of-change/components/public-pages/**"
-  - "src/features/theory-of-change/components/resend-public/example-previews/**"
-  - "src/shared/ui/lusion-resend-ds/**"
+  - "src/features/theory-of-change/components/public-experience/example-previews/**"
+  - "src/shared/ui/tdm-public-design-system/**"
 alwaysApply: false
 ---
 

@@ -1,6 +1,6 @@
 # Canvas V4 — baseline e direção arquitetural
 
-A rota `/canvas-v4` nasce como cópia integral e isolada de `/canvas/resend-command-preview-v2`.
+A rota `/canvas-v4` nasce como cópia integral e isolada de `/canvas/tdm-command-preview-v2`.
 A preview original e `/canvas-v3` permanecem intactas.
 
 ## Decisão de produto

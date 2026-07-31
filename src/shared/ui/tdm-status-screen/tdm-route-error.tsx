@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { TdmButton } from '@/shared/ui/tdm-button';
 import { TdmAlertIcon } from '@/shared/ui/tdm-icons';
 import { TdmStatusScreen } from './tdm-status-screen';
@@ -13,28 +14,21 @@ export type TdmRouteErrorProps = {
   description?: string;
 };
 
-export function TdmRouteError({
-  error,
-  reset,
-  eyebrow = 'Erro inesperado',
-  title = 'A experiência não conseguiu continuar',
-  description = 'Tente novamente. Se o problema persistir, volte ao início sem perder a referência da rota.'
-}: TdmRouteErrorProps) {
-  useEffect(() => {
-    console.error(error);
-  }, [error]);
+export function TdmRouteError({ error, reset, eyebrow, title, description }: TdmRouteErrorProps) {
+  const t = useTranslations('RouteState.error');
+  useEffect(() => console.error(error), [error]);
 
   return (
     <TdmStatusScreen
-      eyebrow={eyebrow}
-      title={title}
-      description={description}
+      eyebrow={eyebrow ?? t('eyebrow')}
+      title={title ?? t('title')}
+      description={description ?? t('description')}
       icon={<TdmAlertIcon />}
       tone="danger"
       actions={
         <>
-          <TdmButton recipe="public" onClick={reset}>Tentar novamente</TdmButton>
-          <TdmButton recipe="public" href="/" variant="tertiary">Voltar ao início</TdmButton>
+          <TdmButton recipe="public" onClick={reset}>{t('retry')}</TdmButton>
+          <TdmButton recipe="public" href="/" variant="tertiary">{t('home')}</TdmButton>
         </>
       }
     />

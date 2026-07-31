@@ -4,6 +4,8 @@ import styles from './tdm-status-screen.module.sass';
 export type TdmStatusScreenTone = 'neutral' | 'danger';
 
 export type TdmStatusScreenProps = {
+  code?: string;
+  codeAriaLabel?: string;
   eyebrow?: string;
   title: string;
   description: string;
@@ -18,22 +20,9 @@ function resolveToneClassName(tone: TdmStatusScreenTone) {
   return styles.toneNeutral;
 }
 
-function renderIcon(icon: ReactNode) {
-  if (!icon) return null;
-  return <div className={styles.icon}>{icon}</div>;
-}
-
-function renderEyebrow(eyebrow?: string) {
-  if (!eyebrow) return null;
-  return <p className={styles.eyebrow}>{eyebrow}</p>;
-}
-
-function renderActions(actions: ReactNode) {
-  if (!actions) return null;
-  return <div className={styles.actions}>{actions}</div>;
-}
-
 export function TdmStatusScreen({
+  code,
+  codeAriaLabel,
   eyebrow,
   title,
   description,
@@ -43,20 +32,18 @@ export function TdmStatusScreen({
   busy = false
 }: TdmStatusScreenProps) {
   const className = [styles.root, resolveToneClassName(tone)].join(' ');
-  const busyState = busy || undefined;
-  const busyDataValue = busy ? 'true' : 'false';
-  const iconContent = renderIcon(icon);
-  const eyebrowContent = renderEyebrow(eyebrow);
-  const actionsContent = renderActions(actions);
 
   return (
-    <main className={className} data-busy={busyDataValue} aria-busy={busyState}>
+    <main className={className} data-busy={busy ? 'true' : 'false'} aria-busy={busy || undefined}>
+      <span className={styles.decorativeLeft} aria-hidden="true" />
+      <span className={styles.decorativeRight} aria-hidden="true" />
       <section className={styles.content} aria-live="polite">
-        {iconContent}
-        {eyebrowContent}
+        {code ? <p className={styles.code} aria-label={codeAriaLabel}>{code}</p> : null}
+        {icon ? <div className={styles.icon}>{icon}</div> : null}
+        {eyebrow ? <p className={styles.eyebrow}>{eyebrow}</p> : null}
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.description}>{description}</p>
-        {actionsContent}
+        {actions ? <div className={styles.actions}>{actions}</div> : null}
       </section>
     </main>
   );

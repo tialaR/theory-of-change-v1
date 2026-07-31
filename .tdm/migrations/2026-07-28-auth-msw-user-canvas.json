@@ -1,0 +1,21 @@
+{
+  "id": "2026-07-28-auth-msw-user-canvas",
+  "status": "locked",
+  "route": "/login",
+  "protectedRoutes": ["/canvas", "/canvas/resultado"],
+  "personas": [
+    { "id": "user-tiala-rocha", "name": "Tiala Rocha", "email": "tialarocha@tdmconstrutor.com.br" },
+    { "id": "user-rodger-rocha", "name": "Rodger Rocha", "email": "rodgerrocha@tdmconstrutor.com.br" }
+  ],
+  "persistence": {
+    "authority": "MSW Node started by Next instrumentation",
+    "scope": "single-next-server-process",
+    "partition": "ownerId/projectId",
+    "methods": ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    "browserStorage": false
+  },
+  "routeStates": {
+    "notFound": "explicit 404",
+    "genericError": "same composition without 404"
+  }
+}

@@ -32,5 +32,5 @@ Reutilizar a mesma geometria editorial do bloco ativo em `/exemplos/visao-do-flu
 ## Implementação ativa (2026-07-22)
 
 - Consumidor: `ExamplePreviewsSection` → `PublicSection` compact (mesmo primitive de `/exemplos/visao-do-fluxo`).
-- Classes canônicas: `.sectionHeader`, `.sectionDescription` em `lusion-resend-ds.module.sass`.
+- Classes canônicas: `.sectionHeader`, `.sectionDescription` em `tdm-public-design-system.module.sass`.
 - Removido o header local centrado (`.sectionHeader` com `text-align: center` / `margin-inline: auto`) de `example-previews.module.sass`.

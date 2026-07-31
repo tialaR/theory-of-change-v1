@@ -1,0 +1,260 @@
+---
+description: TMD architecture, naming, ownership, design-system, hooks, and route-boundary contract
+globs:
+  - "src/**/*.{ts,tsx,sass,css,json}"
+alwaysApply: true
+---
+
+# TMD Architecture and Naming Contract
+
+## 1. Core structure
+
+The application MUST preserve these top-level boundaries:
+
+```text
+src/
+├── app/
+├── domain/
+├── features/
+└── shared/
+```
+
+- `app/` owns only Next.js routing, layouts, loading, error boundaries, metadata, and route composition.
+- `domain/` owns framework-agnostic Theory of Change business rules.
+- `features/` owns user-facing product capabilities and their application logic.
+- `shared/` owns code with two or more real consumers and no feature-specific business meaning.
+
+## 2. App Router
+
+Use route groups to communicate intent without changing URLs:
+
+```text
+src/app/
+├── layout.tsx
+├── not-found.tsx
+├── global-error.tsx
+├── (public)/
+├── (auth)/
+└── (protected)/
+```
+
+Rules:
+
+- Route files MUST be thin Server Components by default.
+- Client Components MUST be narrow interactive islands.
+- Route groups MUST use semantic English names such as `(public)`, `(auth)`, and `(protected)`.
+- Existing public URLs MUST NOT be renamed silently.
+- New route segments SHOULD use English. Migrating an existing Portuguese URL requires explicit approval and redirect planning.
+- `app/` MUST NOT contain domain rules, repositories, controllers, feature hooks, MSW handlers, or large visual components.
+
+## 3. Domain
+
+```text
+src/domain/theory-of-change/
+├── project/
+├── stage/
+├── connection/
+└── index.ts
+```
+
+- Domain code MUST NOT import React, Next.js, MSW, CSS, browser APIs, cookies, translations, or feature code.
+- Domain operations MUST return typed values or error codes, never translated UI messages.
+- `project/` owns the aggregate and repository contracts.
+- `stage/` owns stage entities, types, creation, editing, removal, and ordering rules.
+- `connection/` owns causal policy, duplicate detection, risk policy, hypothesis policy, and connection error codes.
+- Features may import the domain. The domain MUST NOT import features.
+
+## 4. Feature structure
+
+Each product capability MUST own its world:
+
+```text
+src/features/<feature-name>/
+├── application/
+├── domain/              # only when the feature has its own non-global domain
+├── infrastructure/
+│   ├── http/
+│   └── msw/
+├── server/
+├── ui/
+│   ├── components/
+│   ├── hooks/
+│   ├── providers/
+│   └── copy/
+├── tests/
+└── index.ts
+```
+
+Rules:
+
+- Do not create a generic feature-level `components/` warehouse.
+- Components, hooks, tests, fixtures, mocks, styles, and types MUST be colocated with their owner.
+- Feature internals MUST be imported through the feature public API when consumed externally.
+- Cross-feature deep imports are forbidden.
+- A feature MUST NOT import another feature's private UI, hooks, tests, or infrastructure.
+- Shared business rules belong in `domain/`, not duplicated across features.
+
+## 5. Shared and design system
+
+```text
+src/shared/
+├── design-system/
+│   ├── tokens/
+│   │   ├── foundations/
+│   │   ├── semantic/
+│   │   ├── styles/
+│   │   └── index.ts
+│   └── components/
+├── infrastructure/
+├── lib/
+├── config/
+└── types/
+```
+
+### Token ownership
+
+- Foundation tokens describe raw scales: color, spacing, radius, typography, motion, elevation, and z-index.
+- Semantic tokens describe intent: surface, content, border, action, feedback, and Theory of Change stage colors.
+- CSS custom properties are the canonical runtime styling API.
+- Token styles MUST be imported once by the root layout.
+- TypeScript token exports are allowed only when runtime JavaScript genuinely needs the value.
+- Components MUST consume semantic tokens before foundation tokens.
+- Features MUST NOT redefine shared design-system tokens.
+
+### Public exports
+
+- Every shared component or token package MUST expose a local `index.ts` public API.
+- Export only intentional runtime symbols and public types.
+- Avoid a single root barrel that exports the entire application.
+- Deep imports into private files are forbidden.
+
+Example:
+
+```ts
+export { TdmButton } from './tdm-button';
+export type { TdmButtonProps } from './tdm-button.types';
+```
+
+## 6. Naming
+
+- Folders and files: `kebab-case`.
+- React component identifiers: `PascalCase`.
+- Functions, variables, and hooks: `camelCase`.
+- Hooks MUST start with `use`.
+- Types and interfaces: `PascalCase`.
+- Constants: `UPPER_SNAKE_CASE` only for true module constants.
+- Test files: `<owner>.test.ts`, `<owner>.test.tsx`, or `<owner>.e2e.ts`.
+- CSS Modules: `<owner>.module.sass` while the current Sass contract remains active.
+- Names inherited from external visual references MUST NOT survive in product routes, features, components, tokens, scripts, or documentation. The retired provider name previously used in previews is forbidden everywhere in the repository.
+
+## 7. Components and hooks
+
+- Components MUST be presentation-focused and receive typed props.
+- Components MUST NOT contain repositories, domain policy, persistence, routing policy, or large orchestration flows.
+- Business and orchestration logic MUST live in application services, controllers, or narrowly scoped hooks.
+- One hook MUST have one clear responsibility.
+- God hooks and God controllers are forbidden.
+- A hook that coordinates unrelated concerns MUST be split.
+- Render logic MUST remain pure.
+- Side effects MUST be isolated in event handlers, effects, Server Actions, or infrastructure adapters.
+
+## 8. Sass readability
+
+- Underscore-prefixed Sass partials are forbidden in feature and design-system code.
+- Do not introduce new global Sass mixin or variable warehouses.
+- Prefer CSS custom properties for shared tokens.
+- Keep selector nesting shallow: maximum two nested levels unless a documented exception exists.
+- Separate logical blocks with blank lines.
+- Avoid compressed one-line declarations.
+- `!important` is forbidden.
+- A future migration from `.module.sass` to `.module.scss` requires an explicit migration plan and must not happen silently.
+
+## 9. Import direction
+
+Allowed direction:
+
+```text
+app -> features -> domain
+app -> shared
+features -> domain
+features -> shared
+domain -> nothing framework-specific
+shared -> no feature or domain-specific implementation
+```
+
+Forbidden:
+
+```text
+domain -> features
+shared -> features
+shared -> app
+feature-a/private -> feature-b
+app -> feature internal file
+```
+
+## 10. Gates
+
+Executable gates MUST reject:
+
+- domain logic inside `app/`;
+- cross-feature deep imports;
+- new files in generic component warehouses;
+- React or Next.js imports inside `src/domain/`;
+- duplicate Theory of Change policies;
+- files or folders outside naming conventions;
+- React components not using PascalCase;
+- retired external-provider naming anywhere in tracked files;
+- underscore-prefixed Sass partials;
+- hardcoded shared visual values that should be tokens;
+- hooks or controllers above the agreed complexity and line budgets;
+- deleted asset references;
+- Client Components broader than the required interactive boundary.
+
+## 11. Decision rule
+
+When ownership is unclear:
+
+1. Keep code inside the feature that currently owns the behavior.
+2. Move it to `shared/` only after a second real consumer exists.
+3. Move a rule to `domain/` only when it expresses product truth independent of UI and delivery technology.
+4. Signal architectural curves before implementation.
+5. Convert approved decisions into executable gates.
+
+
+## 12. Internationalization
+
+- Every user-facing string MUST live in the locale catalog owned by `next-intl`.
+- JSX text, labels, placeholders, alternative text, tooltips, notices, validation messages, empty states, loading copy, and accessible names MUST use translated catalog keys.
+- Shared copy belongs in a shared locale namespace. Feature copy belongs in the feature namespace.
+- Domain error codes, test descriptions, logs, technical exceptions, IDs, and protocol values are not UI copy and MUST remain framework-independent.
+- A new hardcoded user-facing string is a contract violation.
+- Existing legacy copy debt MUST be recorded by baseline and may only decrease.
+
+## 13. Canvas continuity and persistence
+
+- Canvas nodes and edges MUST use collision-safe identifiers that remain unique after hydration, route exit, route re-entry, duplication, undo, and redo.
+- Sequential in-memory counters that reset on component mount are forbidden for persisted entity IDs.
+- Every persisted Canvas mutation MUST mark the project dirty through one canonical API.
+- Automatic persistence MUST use a documented debounce after the last mutation. The current product decision is 1200 ms.
+- Saves MUST be serialized so an older response cannot overwrite a newer Canvas state.
+- The manual Save CTA MUST remain available and use the same persistence queue as autosave.
+- Product navigation away from Canvas MUST flush pending changes before changing routes.
+- Unmount, page visibility, and browser-exit handling MUST protect pending changes without using browser storage.
+- Persisted state MUST remain isolated by authenticated owner and project ID.
+- Continuity E2E MUST leave Canvas, return, create a new stage, and prove existing nodes and edges were not replaced.
+
+## 14. File and symbol examples
+
+```text
+canvas-stage-node/
+├── canvas-stage-node.tsx
+├── canvas-stage-node.types.ts
+├── canvas-stage-node.module.sass
+└── canvas-stage-node.test.tsx
+```
+
+```ts
+export function CanvasStageNode() {}
+export function useCanvasStageNode() {}
+const canvasStageNodeId = 'example';
+```

@@ -13,7 +13,7 @@
 /referencias
 ```
 
-Implementadas em `src/features/theory-of-change/components/public-pages/`, consumindo `src/shared/ui/lusion-resend-ds/`.
+Implementadas em `src/features/theory-of-change/components/public-pages/`, consumindo `src/shared/ui/tdm-public-design-system/`.
 
 Cada rota em `src/app/*/page.tsx` importa apenas o componente de página correspondente — sem lógica de negócio na camada de rota.
 
@@ -30,7 +30,7 @@ Não alterar: React Flow principal, nodes/edges, sidebar, drag/drop, lógica de 
 ```
 src/
   app/                          # Rotas Next.js (thin pages)
-  shared/ui/lusion-resend-ds/   # DS público independente
+  shared/ui/tdm-public-design-system/   # DS público independente
   features/theory-of-change/
     components/public-pages/    # Páginas públicas + TheoryFlowBoard
     data/example-theory.ts      # Dados do exemplo (lógica preservada)
@@ -41,10 +41,10 @@ src/
 
 Estes módulos pertencem ao canvas/result-view legado:
 
-- `src/shared/ui/resend-ds/`
-- `src/shared/ui/resend-experience/`
+- `src/shared/ui/tdm-ds/`
+- `src/shared/ui/tdm-experience/`
 - `src/shared/ui/experience/`
-- `src/features/theory-of-change/components/resend-public/`
+- `src/features/theory-of-change/components/public-experience/`
 - `src/features/theory-of-change/components/public-experience/`
 
 ## Scroll global

@@ -52,7 +52,7 @@ Exclui: `node_modules`, `.next`, `dist`, `build`, `coverage`, `public`, `generat
 | `TDM-DS-006` | texto `< 0.75rem` | mínimo tipográfico TDM |
 | `TDM-DS-007` | `font-weight` > 600 | 400–600 |
 | `TDM-DS-008` | novos `.scss` | usar `.sass` / `.module.sass` |
-| `TDM-DS-009` | imports de DS legado | `tdm-*` ou `lusion-resend-ds` |
+| `TDM-DS-009` | imports de DS legado | `tdm-*` ou `tdm-public-design-system` |
 | `TDM-DS-010` | primitivos paralelos em `shared/ui` | reutilizar pacotes canônicos |
 | `TDM-DS-011` | loops decorativos infinitos | só loading/spinner/logo autorizados |
 | `TDM-DS-012` | tokens locais paralelos | alias `var(--tdm-*)` ou token canônico |

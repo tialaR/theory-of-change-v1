@@ -1,5 +1,5 @@
-import { TdmCanvas } from '@/features/theory-of-change/components/canvas/tdm-canvas';
+import { CanvasPage } from '@/features/theory-of-change/canvas';
 
-export default function CanvasPage() {
-  return <TdmCanvas />;
+export default function Page() {
+  return <CanvasPage />;
 }

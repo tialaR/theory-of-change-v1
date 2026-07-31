@@ -25,9 +25,9 @@ const REQUIRED_FILES = [
   'src/shared/ui/public-icon-button/public-icon-button.tsx',
   'src/shared/ui/public-icon-button/public-icon-button.module.sass',
   'src/shared/styles/tdm/_tdm-public-action.sass',
-  'src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.tsx',
-  'src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.module.sass',
-  'src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.types.ts'
+  'src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.tsx',
+  'src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.module.sass',
+  'src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.types.ts'
 ];
 
 const ALLOWED_VARIANTS = new Set(['primary', 'text', 'textCompact', 'exportCompact']);
@@ -45,23 +45,23 @@ const CANVAS_DENY_GLOBS = [
 const PUBLIC_SASS_MODULES = [
   'src/shared/ui/public-button/public-button.module.sass',
   'src/shared/ui/public-icon-button/public-icon-button.module.sass',
-  'src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.module.sass'
+  'src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.module.sass'
 ];
 
 const PREVIEW_CONSUMERS = [
-  'src/features/theory-of-change/components/resend-public/example-previews/dedicated-example-preview.tsx'
+  'src/features/theory-of-change/components/public-experience/example-previews/dedicated-example-preview.tsx'
 ];
 
 const PREVIEW_CHILD_SASS = [
-  'src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.module.sass',
-  'src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.module.sass',
-  'src/features/theory-of-change/components/resend-public/example-previews/example-previews.module.sass'
+  'src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.module.sass',
+  'src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.module.sass',
+  'src/features/theory-of-change/components/public-experience/example-previews/example-previews.module.sass'
 ];
 
 const PUBLIC_PAGE_HEADER_FILES = [
   'src/features/theory-of-change/components/public-pages/public-pages.tsx',
-  'src/features/theory-of-change/components/resend-public/public-experience.tsx',
-  'src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx'
+  'src/features/theory-of-change/components/public-experience/public-experience.tsx',
+  'src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx'
 ];
 
 const LEGACY_CLASS_PATTERNS = [
@@ -184,8 +184,8 @@ const consumerRoots = [
   path.join(ROOT, 'src/app'),
   path.join(ROOT, 'src/features/theory-of-change/components/public-pages'),
   path.join(ROOT, 'src/features/theory-of-change/components/example-overview-card'),
-  path.join(ROOT, 'src/features/theory-of-change/components/resend-public'),
-  path.join(ROOT, 'src/shared/ui/lusion-resend-ds'),
+  path.join(ROOT, 'src/features/theory-of-change/components/public-experience'),
+  path.join(ROOT, 'src/shared/ui/tdm-public-design-system'),
   path.join(ROOT, 'src/shared/ui/public-button'),
   path.join(ROOT, 'src/shared/ui/public-icon-button')
 ];
@@ -202,7 +202,7 @@ for (const root of consumerRoots) {
     }
 
     for (const legacy of LEGACY_CLASS_PATTERNS) {
-      if (legacy.re.test(text) && /public-pages|lusion-resend-ds|example-overview/.test(rel(file))) {
+      if (legacy.re.test(text) && /public-pages|tdm-public-design-system|example-overview/.test(rel(file))) {
         push(`${rel(file)}: classe legacy "${legacy.id}" ainda presente`);
       }
     }
@@ -317,7 +317,7 @@ for (const file of PREVIEW_CHILD_SASS) {
 
 const frameSass = path.join(
   ROOT,
-  'src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.module.sass'
+  'src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.module.sass'
 );
 if (fs.existsSync(frameSass)) {
   const text = read(frameSass);
@@ -354,21 +354,21 @@ if (fs.existsSync(previewTokens)) {
 }
 
 // Header: only PublicHeader definition; no legacy opaque glass block
-const headerSass = path.join(ROOT, 'src/shared/ui/lusion-resend-ds/lusion-resend-ds.module.sass');
+const headerSass = path.join(ROOT, 'src/shared/ui/tdm-public-design-system/tdm-public-design-system.module.sass');
 if (fs.existsSync(headerSass)) {
   const text = read(headerSass);
   if (/header-opaque-glass-final/.test(text)) {
-    push('lusion-resend-ds.module.sass: bloco legado header-opaque-glass-final ainda presente');
+    push('tdm-public-design-system.module.sass: bloco legado header-opaque-glass-final ainda presente');
   }
   if (/\.headerGlassLayer|\.headerGlassSurface/.test(text)) {
-    push('lusion-resend-ds.module.sass: camadas glass legadas ainda presentes');
+    push('tdm-public-design-system.module.sass: camadas glass legadas ainda presentes');
   }
   if (!/\.headerShell\[data-scrolled/.test(text)) {
-    push('lusion-resend-ds.module.sass: carcaça scrolled (.headerShell[data-scrolled]) ausente');
+    push('tdm-public-design-system.module.sass: carcaça scrolled (.headerShell[data-scrolled]) ausente');
   }
 }
 
-const headerTsx = path.join(ROOT, 'src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx');
+const headerTsx = path.join(ROOT, 'src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx');
 if (fs.existsSync(headerTsx)) {
   const text = read(headerTsx);
   const headerFnCount = [...text.matchAll(/export function PublicHeader\b/g)].length;
@@ -376,7 +376,7 @@ if (fs.existsSync(headerTsx)) {
     push(`PublicHeader deve ter exatamente uma definição exportada (encontradas: ${headerFnCount})`);
   }
   if (/LegacyHeader|SiteHeader|headerGlassLayer/.test(text)) {
-    push('lusion-resend-ds.tsx: header legado ainda referenciado');
+    push('tdm-public-design-system.tsx: header legado ainda referenciado');
   }
   if (!/IntersectionObserver/.test(text)) {
     push('PublicHeader deve usar IntersectionObserver');
@@ -391,7 +391,7 @@ for (const file of PUBLIC_PAGE_HEADER_FILES) {
   const abs = path.join(ROOT, file);
   if (!fs.existsSync(abs)) continue;
   const text = read(abs);
-  if (/LegacyHeader|SiteHeader|FloatingHeader/.test(text) && /public-pages|public-experience|lusion-resend/.test(file)) {
+  if (/LegacyHeader|SiteHeader|FloatingHeader/.test(text) && /public-pages|public-experience|lusion-tdm/.test(file)) {
     if (/LegacyHeader|SiteHeader/.test(text)) {
       push(`${file}: header legado importado/referenciado`);
     }
@@ -414,7 +414,7 @@ for (const file of PUBLIC_PAGE_HEADER_FILES) {
 }
 
 {
-  const abs = path.join(ROOT, 'src/features/theory-of-change/components/resend-public/public-experience.tsx');
+  const abs = path.join(ROOT, 'src/features/theory-of-change/components/public-experience/public-experience.tsx');
   if (fs.existsSync(abs)) {
     const text = read(abs);
     const count = (text.match(/<PublicHeader\b/g) || []).length;

@@ -13,14 +13,14 @@ export const contractConfig = {
   ],
 
   // O Cursor deve preencher estes caminhos após a auditoria do repositório atual.
-  canonicalPublicHeaderModule: 'src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx',
-  canonicalPublicHeaderStyleModule: 'src/shared/ui/lusion-resend-ds/lusion-resend-ds.module.sass',
+  canonicalPublicHeaderModule: 'src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx',
+  canonicalPublicHeaderStyleModule: 'src/shared/ui/tdm-public-design-system/tdm-public-design-system.module.sass',
   legacyPublicHeaderModules: [
     'src/features/theory-of-change/components/floating-header/floating-header.tsx',
   ],
   canonicalPublicButtonModule: 'src/shared/ui/public-button/public-button.tsx',
   canonicalPublicIconButtonModule: 'src/shared/ui/public-icon-button/public-icon-button.tsx',
-  canonicalExamplePreviewFrameModule: 'src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.tsx',
+  canonicalExamplePreviewFrameModule: 'src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.tsx',
 
   canvasDenylistRoots: [
     'src/features/theory-of-change/components/canvas',
@@ -34,6 +34,6 @@ export const contractConfig = {
   publicUiRoots: [
     'src/shared/ui',
     'src/features/theory-of-change/components/public-pages',
-    'src/features/theory-of-change/components/resend-public',
+    'src/features/theory-of-change/components/public-experience',
   ],
 };

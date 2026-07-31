@@ -1,4 +1,4 @@
-import { GuideExperiencePage } from '@/features/theory-of-change/components/resend-public/public-experience';
+import { GuideExperiencePage } from '@/features/theory-of-change/components/public-experience/public-experience';
 import { simulatePublicRouteDelay } from '@/features/theory-of-change/components/public-pages/simulate-public-route-delay';
 
 export const dynamic = 'force-dynamic';

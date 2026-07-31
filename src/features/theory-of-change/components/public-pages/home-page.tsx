@@ -28,7 +28,7 @@ export function HomePage() {
         actions={
           <>
             <TdmButton
-              href="/canvas-v4"
+              href="/canvas"
               recipe="public"
               variant="primary"
               size="lg"

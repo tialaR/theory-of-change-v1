@@ -34,9 +34,9 @@
         "src/features/theory-of-change/data/example-theory.ts",
         "src/features/theory-of-change/domain/tdm-stages.ts",
         "src/features/theory-of-change/components/result-view/experience/result-experience-data.ts",
-        "src/shared/ui/lusion-resend-ds/index.ts",
+        "src/shared/ui/tdm-public-design-system/index.ts",
         "src/features/theory-of-change/components/example-overview-card/index.ts",
-        "src/features/theory-of-change/components/resend-public/example-previews/index.ts",
+        "src/features/theory-of-change/components/public-experience/example-previews/index.ts",
         "src/shared/ui/public-icon-button/index.ts",
         "src/shared/ui/tdm-context-label/index.ts",
         "src/shared/ui/tdm-kicker/index.ts",
@@ -51,14 +51,14 @@
         "src/features/theory-of-change/utils/create-node.ts",
         "src/features/theory-of-change/domain/tdm-connection-rules.ts",
         "src/features/theory-of-change/components/result-view/experience/types.ts",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx",
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx",
         "src/shared/ui/public-button/index.ts",
         "src/features/theory-of-change/components/example-overview-card/example-overview-card.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews-section.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/dedicated-example-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/result-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/dedicated-example-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/result-draft-preview.tsx",
         "src/shared/ui/public-icon-button/public-icon-button.tsx",
         "src/shared/ui/tdm-context-label/tdm-context-label.tsx",
         "src/shared/ui/tdm-context-label/tdm-context-label-icons.tsx",
@@ -69,13 +69,13 @@
         "src/features/theory-of-change/components/public-pages/home-brand-logo/home-brand-logo.tsx",
         "src/features/theory-of-change/domain/tdm-connection-theme.ts",
         "src/shared/motion/tdm-motion/index.ts",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.module.sass",
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.module.sass",
         "src/shared/ui/public-button/public-button.tsx",
         "src/features/theory-of-change/components/example-overview-card/example-overview-card.module.sass",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews.module.sass",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.module.sass",
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.module.sass",
-        "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews.module.sass",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.module.sass",
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.module.sass",
+        "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.tsx",
         "src/shared/ui/tdm-icon-button/tdm-icon-button.tsx",
         "src/shared/ui/tdm-context-label/tdm-context-label.module.sass",
         "src/shared/ui/tdm-kicker/tdm-kicker.module.sass",
@@ -88,7 +88,7 @@
         "src/shared/motion/tdm-motion/tdm-motion-transitions.ts",
         "src/shared/ui/tdm-button/tdm-button.tsx",
         "src/shared/ui/tdm-icons/index.ts",
-        "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.module.sass",
+        "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.module.sass",
         "src/shared/ui/tdm-tooltip/tdm-tooltip.tsx",
         "src/shared/ui/tdm-icon-button/tdm-icon-button.module.sass",
         "src/shared/ui/tdm-button/tdm-button.module.sass",
@@ -100,16 +100,16 @@
       "clientFiles": [
         "src/features/theory-of-change/components/public-pages/public-pages.tsx",
         "src/features/theory-of-change/components/public-pages/theory-flow-board.tsx",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews-section.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/dedicated-example-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/result-draft-preview.tsx",
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/dedicated-example-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/result-draft-preview.tsx",
         "src/shared/ui/public-icon-button/public-icon-button.tsx",
         "src/features/theory-of-change/components/public-pages/guided-story.tsx",
         "src/shared/ui/public-button/public-button.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.tsx",
         "src/shared/ui/tdm-icon-button/tdm-icon-button.tsx",
         "src/shared/motion/tdm-motion/tdm-motion-provider.tsx",
         "src/shared/ui/tdm-button/tdm-button.tsx",
@@ -130,13 +130,13 @@
       "exists": true,
       "files": [
         "src/app/guia-de-aprendizado/page.tsx",
-        "src/features/theory-of-change/components/resend-public/public-experience.tsx",
-        "src/shared/ui/lusion-resend-ds/index.ts",
+        "src/features/theory-of-change/components/public-experience/public-experience.tsx",
+        "src/shared/ui/tdm-public-design-system/index.ts",
         "src/shared/ui/tdm-context-label/index.ts",
         "src/shared/ui/tdm-kicker/index.ts",
         "src/features/theory-of-change/components/learning-guide/index.ts",
         "src/features/theory-of-change/components/learning-guide/guide-experience.module.sass",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx",
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx",
         "src/shared/ui/public-button/index.ts",
         "src/shared/ui/tdm-context-label/tdm-context-label.tsx",
         "src/shared/ui/tdm-context-label/tdm-context-label-icons.tsx",
@@ -145,7 +145,7 @@
         "src/features/theory-of-change/components/learning-guide/guide-data.ts",
         "src/features/theory-of-change/components/learning-guide/use-active-guide-step.ts",
         "src/shared/motion/tdm-motion/index.ts",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.module.sass",
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.module.sass",
         "src/shared/ui/public-button/public-button.tsx",
         "src/shared/ui/tdm-context-label/tdm-context-label.module.sass",
         "src/shared/ui/tdm-kicker/tdm-kicker.module.sass",
@@ -160,8 +160,8 @@
       "componentCount": 11,
       "clientFileCount": 5,
       "clientFiles": [
-        "src/features/theory-of-change/components/resend-public/public-experience.tsx",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx",
+        "src/features/theory-of-change/components/public-experience/public-experience.tsx",
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx",
         "src/shared/ui/public-button/public-button.tsx",
         "src/shared/motion/tdm-motion/tdm-motion-provider.tsx",
         "src/shared/ui/tdm-button/tdm-button.tsx"
@@ -186,9 +186,9 @@
         "src/features/theory-of-change/data/example-theory.ts",
         "src/features/theory-of-change/domain/tdm-stages.ts",
         "src/features/theory-of-change/components/result-view/experience/result-experience-data.ts",
-        "src/shared/ui/lusion-resend-ds/index.ts",
+        "src/shared/ui/tdm-public-design-system/index.ts",
         "src/features/theory-of-change/components/example-overview-card/index.ts",
-        "src/features/theory-of-change/components/resend-public/example-previews/index.ts",
+        "src/features/theory-of-change/components/public-experience/example-previews/index.ts",
         "src/shared/ui/public-icon-button/index.ts",
         "src/shared/ui/tdm-context-label/index.ts",
         "src/shared/ui/tdm-kicker/index.ts",
@@ -203,14 +203,14 @@
         "src/features/theory-of-change/utils/create-node.ts",
         "src/features/theory-of-change/domain/tdm-connection-rules.ts",
         "src/features/theory-of-change/components/result-view/experience/types.ts",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx",
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx",
         "src/shared/ui/public-button/index.ts",
         "src/features/theory-of-change/components/example-overview-card/example-overview-card.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews-section.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/dedicated-example-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/result-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/dedicated-example-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/result-draft-preview.tsx",
         "src/shared/ui/public-icon-button/public-icon-button.tsx",
         "src/shared/ui/tdm-context-label/tdm-context-label.tsx",
         "src/shared/ui/tdm-context-label/tdm-context-label-icons.tsx",
@@ -221,13 +221,13 @@
         "src/features/theory-of-change/components/public-pages/home-brand-logo/home-brand-logo.tsx",
         "src/features/theory-of-change/domain/tdm-connection-theme.ts",
         "src/shared/motion/tdm-motion/index.ts",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.module.sass",
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.module.sass",
         "src/shared/ui/public-button/public-button.tsx",
         "src/features/theory-of-change/components/example-overview-card/example-overview-card.module.sass",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews.module.sass",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.module.sass",
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.module.sass",
-        "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews.module.sass",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.module.sass",
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.module.sass",
+        "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.tsx",
         "src/shared/ui/tdm-icon-button/tdm-icon-button.tsx",
         "src/shared/ui/tdm-context-label/tdm-context-label.module.sass",
         "src/shared/ui/tdm-kicker/tdm-kicker.module.sass",
@@ -240,7 +240,7 @@
         "src/shared/motion/tdm-motion/tdm-motion-transitions.ts",
         "src/shared/ui/tdm-button/tdm-button.tsx",
         "src/shared/ui/tdm-icons/index.ts",
-        "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.module.sass",
+        "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.module.sass",
         "src/shared/ui/tdm-tooltip/tdm-tooltip.tsx",
         "src/shared/ui/tdm-icon-button/tdm-icon-button.module.sass",
         "src/shared/ui/tdm-button/tdm-button.module.sass",
@@ -252,16 +252,16 @@
       "clientFiles": [
         "src/features/theory-of-change/components/public-pages/public-pages.tsx",
         "src/features/theory-of-change/components/public-pages/theory-flow-board.tsx",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews-section.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/dedicated-example-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/result-draft-preview.tsx",
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/dedicated-example-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/result-draft-preview.tsx",
         "src/shared/ui/public-icon-button/public-icon-button.tsx",
         "src/features/theory-of-change/components/public-pages/guided-story.tsx",
         "src/shared/ui/public-button/public-button.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.tsx",
         "src/shared/ui/tdm-icon-button/tdm-icon-button.tsx",
         "src/shared/motion/tdm-motion/tdm-motion-provider.tsx",
         "src/shared/ui/tdm-button/tdm-button.tsx",
@@ -304,9 +304,9 @@
         "src/features/theory-of-change/data/example-theory.ts",
         "src/features/theory-of-change/domain/tdm-stages.ts",
         "src/features/theory-of-change/components/result-view/experience/result-experience-data.ts",
-        "src/shared/ui/lusion-resend-ds/index.ts",
+        "src/shared/ui/tdm-public-design-system/index.ts",
         "src/features/theory-of-change/components/example-overview-card/index.ts",
-        "src/features/theory-of-change/components/resend-public/example-previews/index.ts",
+        "src/features/theory-of-change/components/public-experience/example-previews/index.ts",
         "src/shared/ui/public-icon-button/index.ts",
         "src/shared/ui/tdm-context-label/index.ts",
         "src/shared/ui/tdm-kicker/index.ts",
@@ -321,14 +321,14 @@
         "src/features/theory-of-change/utils/create-node.ts",
         "src/features/theory-of-change/domain/tdm-connection-rules.ts",
         "src/features/theory-of-change/components/result-view/experience/types.ts",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx",
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx",
         "src/shared/ui/public-button/index.ts",
         "src/features/theory-of-change/components/example-overview-card/example-overview-card.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews-section.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/dedicated-example-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/result-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/dedicated-example-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/result-draft-preview.tsx",
         "src/shared/ui/public-icon-button/public-icon-button.tsx",
         "src/shared/ui/tdm-context-label/tdm-context-label.tsx",
         "src/shared/ui/tdm-context-label/tdm-context-label-icons.tsx",
@@ -339,13 +339,13 @@
         "src/features/theory-of-change/components/public-pages/home-brand-logo/home-brand-logo.tsx",
         "src/features/theory-of-change/domain/tdm-connection-theme.ts",
         "src/shared/motion/tdm-motion/index.ts",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.module.sass",
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.module.sass",
         "src/shared/ui/public-button/public-button.tsx",
         "src/features/theory-of-change/components/example-overview-card/example-overview-card.module.sass",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews.module.sass",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.module.sass",
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.module.sass",
-        "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews.module.sass",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.module.sass",
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.module.sass",
+        "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.tsx",
         "src/shared/ui/tdm-icon-button/tdm-icon-button.tsx",
         "src/shared/ui/tdm-context-label/tdm-context-label.module.sass",
         "src/shared/ui/tdm-kicker/tdm-kicker.module.sass",
@@ -358,7 +358,7 @@
         "src/shared/motion/tdm-motion/tdm-motion-transitions.ts",
         "src/shared/ui/tdm-button/tdm-button.tsx",
         "src/shared/ui/tdm-icons/index.ts",
-        "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.module.sass",
+        "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.module.sass",
         "src/shared/ui/tdm-tooltip/tdm-tooltip.tsx",
         "src/shared/ui/tdm-icon-button/tdm-icon-button.module.sass",
         "src/shared/ui/tdm-button/tdm-button.module.sass",
@@ -370,16 +370,16 @@
       "clientFiles": [
         "src/features/theory-of-change/components/public-pages/public-pages.tsx",
         "src/features/theory-of-change/components/public-pages/theory-flow-board.tsx",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews-section.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/dedicated-example-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/result-draft-preview.tsx",
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/dedicated-example-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/result-draft-preview.tsx",
         "src/shared/ui/public-icon-button/public-icon-button.tsx",
         "src/features/theory-of-change/components/public-pages/guided-story.tsx",
         "src/shared/ui/public-button/public-button.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.tsx",
         "src/shared/ui/tdm-icon-button/tdm-icon-button.tsx",
         "src/shared/motion/tdm-motion/tdm-motion-provider.tsx",
         "src/shared/ui/tdm-button/tdm-button.tsx",
@@ -518,9 +518,9 @@
         "src/features/theory-of-change/data/example-theory.ts",
         "src/features/theory-of-change/domain/tdm-stages.ts",
         "src/features/theory-of-change/components/result-view/experience/result-experience-data.ts",
-        "src/shared/ui/lusion-resend-ds/index.ts",
+        "src/shared/ui/tdm-public-design-system/index.ts",
         "src/features/theory-of-change/components/example-overview-card/index.ts",
-        "src/features/theory-of-change/components/resend-public/example-previews/index.ts",
+        "src/features/theory-of-change/components/public-experience/example-previews/index.ts",
         "src/shared/ui/public-icon-button/index.ts",
         "src/shared/ui/tdm-context-label/index.ts",
         "src/shared/ui/tdm-kicker/index.ts",
@@ -535,14 +535,14 @@
         "src/features/theory-of-change/utils/create-node.ts",
         "src/features/theory-of-change/domain/tdm-connection-rules.ts",
         "src/features/theory-of-change/components/result-view/experience/types.ts",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx",
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx",
         "src/shared/ui/public-button/index.ts",
         "src/features/theory-of-change/components/example-overview-card/example-overview-card.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews-section.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/dedicated-example-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/result-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/dedicated-example-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/result-draft-preview.tsx",
         "src/shared/ui/public-icon-button/public-icon-button.tsx",
         "src/shared/ui/tdm-context-label/tdm-context-label.tsx",
         "src/shared/ui/tdm-context-label/tdm-context-label-icons.tsx",
@@ -553,13 +553,13 @@
         "src/features/theory-of-change/components/public-pages/home-brand-logo/home-brand-logo.tsx",
         "src/features/theory-of-change/domain/tdm-connection-theme.ts",
         "src/shared/motion/tdm-motion/index.ts",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.module.sass",
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.module.sass",
         "src/shared/ui/public-button/public-button.tsx",
         "src/features/theory-of-change/components/example-overview-card/example-overview-card.module.sass",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews.module.sass",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.module.sass",
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.module.sass",
-        "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews.module.sass",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.module.sass",
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.module.sass",
+        "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.tsx",
         "src/shared/ui/tdm-icon-button/tdm-icon-button.tsx",
         "src/shared/ui/tdm-context-label/tdm-context-label.module.sass",
         "src/shared/ui/tdm-kicker/tdm-kicker.module.sass",
@@ -572,7 +572,7 @@
         "src/shared/motion/tdm-motion/tdm-motion-transitions.ts",
         "src/shared/ui/tdm-button/tdm-button.tsx",
         "src/shared/ui/tdm-icons/index.ts",
-        "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.module.sass",
+        "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.module.sass",
         "src/shared/ui/tdm-tooltip/tdm-tooltip.tsx",
         "src/shared/ui/tdm-icon-button/tdm-icon-button.module.sass",
         "src/shared/ui/tdm-button/tdm-button.module.sass",
@@ -584,16 +584,16 @@
       "clientFiles": [
         "src/features/theory-of-change/components/public-pages/public-pages.tsx",
         "src/features/theory-of-change/components/public-pages/theory-flow-board.tsx",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews-section.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/dedicated-example-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/result-draft-preview.tsx",
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/dedicated-example-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/result-draft-preview.tsx",
         "src/shared/ui/public-icon-button/public-icon-button.tsx",
         "src/features/theory-of-change/components/public-pages/guided-story.tsx",
         "src/shared/ui/public-button/public-button.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.tsx",
         "src/shared/ui/tdm-icon-button/tdm-icon-button.tsx",
         "src/shared/motion/tdm-motion/tdm-motion-provider.tsx",
         "src/shared/ui/tdm-button/tdm-button.tsx",
@@ -733,9 +733,9 @@
         "src/features/theory-of-change/data/example-theory.ts",
         "src/features/theory-of-change/domain/tdm-stages.ts",
         "src/features/theory-of-change/components/result-view/experience/result-experience-data.ts",
-        "src/shared/ui/lusion-resend-ds/index.ts",
+        "src/shared/ui/tdm-public-design-system/index.ts",
         "src/features/theory-of-change/components/example-overview-card/index.ts",
-        "src/features/theory-of-change/components/resend-public/example-previews/index.ts",
+        "src/features/theory-of-change/components/public-experience/example-previews/index.ts",
         "src/shared/ui/public-icon-button/index.ts",
         "src/shared/ui/tdm-context-label/index.ts",
         "src/shared/ui/tdm-kicker/index.ts",
@@ -750,14 +750,14 @@
         "src/features/theory-of-change/utils/create-node.ts",
         "src/features/theory-of-change/domain/tdm-connection-rules.ts",
         "src/features/theory-of-change/components/result-view/experience/types.ts",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx",
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx",
         "src/shared/ui/public-button/index.ts",
         "src/features/theory-of-change/components/example-overview-card/example-overview-card.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews-section.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/dedicated-example-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/result-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/dedicated-example-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/result-draft-preview.tsx",
         "src/shared/ui/public-icon-button/public-icon-button.tsx",
         "src/shared/ui/tdm-context-label/tdm-context-label.tsx",
         "src/shared/ui/tdm-context-label/tdm-context-label-icons.tsx",
@@ -768,13 +768,13 @@
         "src/features/theory-of-change/components/public-pages/home-brand-logo/home-brand-logo.tsx",
         "src/features/theory-of-change/domain/tdm-connection-theme.ts",
         "src/shared/motion/tdm-motion/index.ts",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.module.sass",
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.module.sass",
         "src/shared/ui/public-button/public-button.tsx",
         "src/features/theory-of-change/components/example-overview-card/example-overview-card.module.sass",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews.module.sass",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.module.sass",
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.module.sass",
-        "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews.module.sass",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.module.sass",
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.module.sass",
+        "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.tsx",
         "src/shared/ui/tdm-icon-button/tdm-icon-button.tsx",
         "src/shared/ui/tdm-context-label/tdm-context-label.module.sass",
         "src/shared/ui/tdm-kicker/tdm-kicker.module.sass",
@@ -787,7 +787,7 @@
         "src/shared/motion/tdm-motion/tdm-motion-transitions.ts",
         "src/shared/ui/tdm-button/tdm-button.tsx",
         "src/shared/ui/tdm-icons/index.ts",
-        "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.module.sass",
+        "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.module.sass",
         "src/shared/ui/tdm-tooltip/tdm-tooltip.tsx",
         "src/shared/ui/tdm-icon-button/tdm-icon-button.module.sass",
         "src/shared/ui/tdm-button/tdm-button.module.sass",
@@ -799,16 +799,16 @@
       "clientFiles": [
         "src/features/theory-of-change/components/public-pages/public-pages.tsx",
         "src/features/theory-of-change/components/public-pages/theory-flow-board.tsx",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews-section.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/dedicated-example-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/result-draft-preview.tsx",
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/dedicated-example-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/result-draft-preview.tsx",
         "src/shared/ui/public-icon-button/public-icon-button.tsx",
         "src/features/theory-of-change/components/public-pages/guided-story.tsx",
         "src/shared/ui/public-button/public-button.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.tsx",
         "src/shared/ui/tdm-icon-button/tdm-icon-button.tsx",
         "src/shared/motion/tdm-motion/tdm-motion-provider.tsx",
         "src/shared/ui/tdm-button/tdm-button.tsx",
@@ -1884,10 +1884,10 @@
       "useClient": false,
       "useServer": false,
       "imports": [
-        "@/features/theory-of-change/components/resend-public/public-experience"
+        "@/features/theory-of-change/components/public-experience/public-experience"
       ],
       "resolvedImports": [
-        "src/features/theory-of-change/components/resend-public/public-experience.tsx"
+        "src/features/theory-of-change/components/public-experience/public-experience.tsx"
       ],
       "exports": [
         "GuiaDeAprendizadoPage"
@@ -2825,9 +2825,9 @@
         "../../data/example-theory",
         "../../domain/tdm-stages",
         "../result-view/experience/result-experience-data",
-        "@/shared/ui/lusion-resend-ds",
+        "@/shared/ui/tdm-public-design-system",
         "@/features/theory-of-change/components/example-overview-card",
-        "@/features/theory-of-change/components/resend-public/example-previews",
+        "@/features/theory-of-change/components/public-experience/example-previews",
         "@/shared/ui/public-icon-button",
         "@/shared/ui/tdm-context-label",
         "@/shared/ui/tdm-kicker",
@@ -2842,9 +2842,9 @@
         "src/features/theory-of-change/data/example-theory.ts",
         "src/features/theory-of-change/domain/tdm-stages.ts",
         "src/features/theory-of-change/components/result-view/experience/result-experience-data.ts",
-        "src/shared/ui/lusion-resend-ds/index.ts",
+        "src/shared/ui/tdm-public-design-system/index.ts",
         "src/features/theory-of-change/components/example-overview-card/index.ts",
-        "src/features/theory-of-change/components/resend-public/example-previews/index.ts",
+        "src/features/theory-of-change/components/public-experience/example-previews/index.ts",
         "src/shared/ui/public-icon-button/index.ts",
         "src/shared/ui/tdm-context-label/index.ts",
         "src/shared/ui/tdm-kicker/index.ts",
@@ -2960,7 +2960,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/dedicated-example-preview.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/dedicated-example-preview.tsx",
       "contentHash": "948a729dc7169227cb0119c60381aa155beb211d2806a764e27c063f3d411e27",
       "extension": ".tsx",
       "lines": 34,
@@ -2978,9 +2978,9 @@
         "./result-draft-preview"
       ],
       "resolvedImports": [
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/result-draft-preview.tsx"
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/result-draft-preview.tsx"
       ],
       "exports": [
         "DedicatedExamplePreview"
@@ -3015,7 +3015,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/editorial-preview-primitives.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/editorial-preview-primitives.tsx",
       "contentHash": "a2db5b16aeb11528ae3903fe33294a7547afe914522708900f9ff14326d1c386",
       "extension": ".tsx",
       "lines": 146,
@@ -3031,8 +3031,8 @@
         "./example-previews.module.sass"
       ],
       "resolvedImports": [
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-motion.ts",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews.module.sass"
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-motion.ts",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews.module.sass"
       ],
       "exports": [
         "EditorialArrowMarker",
@@ -3073,7 +3073,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.tsx",
       "contentHash": "c901c2d7bad45b71c665cade0d2b1930c6fa1e8a0022b8cb31afada3deef7adf",
       "extension": ".tsx",
       "lines": 26,
@@ -3089,7 +3089,7 @@
         "./example-preview-frame.types"
       ],
       "resolvedImports": [
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.module.sass"
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.module.sass"
       ],
       "exports": [
         "ExamplePreviewFrame"
@@ -3124,7 +3124,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/example-previews-section.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx",
       "contentHash": "84bb466dd18ef27819d251efc706cf0d57641556b2c3c35445e2299cb36553db",
       "extension": ".tsx",
       "lines": 82,
@@ -3136,18 +3136,18 @@
       "useServer": false,
       "imports": [
         "react",
-        "@/shared/ui/lusion-resend-ds",
+        "@/shared/ui/tdm-public-design-system",
         "@/shared/ui/tdm-context-label",
         "@/shared/ui/tdm-kicker",
         "@/shared/ui/tdm-public-feature-card",
         "./example-previews.module.sass"
       ],
       "resolvedImports": [
-        "src/shared/ui/lusion-resend-ds/index.ts",
+        "src/shared/ui/tdm-public-design-system/index.ts",
         "src/shared/ui/tdm-context-label/index.ts",
         "src/shared/ui/tdm-kicker/index.ts",
         "src/shared/ui/tdm-public-feature-card/index.ts",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews.module.sass"
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews.module.sass"
       ],
       "exports": [
         "ExamplePreviewsSection"
@@ -3182,7 +3182,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.tsx",
       "contentHash": "efe332742e83909ec49f3ef0769f9ba51bea14ec7abf2d13baa8b402226df44d",
       "extension": ".tsx",
       "lines": 210,
@@ -3198,7 +3198,7 @@
         "./flow-draft-preview.module.sass"
       ],
       "resolvedImports": [
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.module.sass"
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.module.sass"
       ],
       "exports": [
         "FlowDraftPreview"
@@ -3238,7 +3238,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.tsx",
       "contentHash": "c8a46d18f6bc242d66579007fb6881b748c15f18b5d34bea3f5b27f01d9ed0ea",
       "extension": ".tsx",
       "lines": 241,
@@ -3251,13 +3251,13 @@
       "imports": [
         "motion/react",
         "react",
-        "./resend-draft-preview.module.sass"
+        "./theory-draft-preview.module.sass"
       ],
       "resolvedImports": [
-        "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.module.sass"
+        "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.module.sass"
       ],
       "exports": [
-        "ResendDraftPreview"
+        "TheoryDraftPreview"
       ],
       "states": 0,
       "effects": 0,
@@ -3275,7 +3275,7 @@
       "hardcodedStrings": 0,
       "staticInlineStyles": 1,
       "sassModuleImports": [
-        "./resend-draft-preview.module.sass"
+        "./theory-draft-preview.module.sass"
       ],
       "nonModuleStyleImports": [],
       "legacyNameCount": 3,
@@ -3294,7 +3294,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/result-draft-preview.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/result-draft-preview.tsx",
       "contentHash": "e71d3d5be819d5777238954d6a251348356aaf1e8b4c017be4480864cd374ae2",
       "extension": ".tsx",
       "lines": 32,
@@ -3306,10 +3306,10 @@
       "useServer": false,
       "imports": [
         "react",
-        "./resend-draft-preview"
+        "./theory-draft-preview"
       ],
       "resolvedImports": [
-        "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.tsx"
+        "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.tsx"
       ],
       "exports": [
         "ResultDraftPreview"
@@ -3344,7 +3344,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/public-experience.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/public-experience.tsx",
       "contentHash": "241ba17a6de09179dc35e62a46d28d121505283af66c79a7c2f4a7c9941eb327",
       "extension": ".tsx",
       "lines": 206,
@@ -3357,14 +3357,14 @@
       "imports": [
         "react",
         "motion/react",
-        "@/shared/ui/lusion-resend-ds",
+        "@/shared/ui/tdm-public-design-system",
         "@/shared/ui/tdm-context-label",
         "@/shared/ui/tdm-kicker",
         "../learning-guide",
         "../learning-guide/guide-experience.module.sass"
       ],
       "resolvedImports": [
-        "src/shared/ui/lusion-resend-ds/index.ts",
+        "src/shared/ui/tdm-public-design-system/index.ts",
         "src/shared/ui/tdm-context-label/index.ts",
         "src/shared/ui/tdm-kicker/index.ts",
         "src/features/theory-of-change/components/learning-guide/index.ts",
@@ -6236,7 +6236,7 @@
       "health": "good"
     },
     {
-      "path": "src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx",
+      "path": "src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx",
       "contentHash": "3f12fa30ff7feda1b1ac40891c147ba95212278337b9845e18e4abc9e880dd9c",
       "extension": ".tsx",
       "lines": 422,
@@ -6254,12 +6254,12 @@
         "motion/react",
         "@/shared/motion/tdm-motion",
         "@/shared/ui/public-button",
-        "./lusion-resend-ds.module.sass"
+        "./tdm-public-design-system.module.sass"
       ],
       "resolvedImports": [
         "src/shared/motion/tdm-motion/index.ts",
         "src/shared/ui/public-button/index.ts",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.module.sass"
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.module.sass"
       ],
       "exports": [
         "PublicShell",
@@ -6291,7 +6291,7 @@
       "hardcodedStrings": 4,
       "staticInlineStyles": 0,
       "sassModuleImports": [
-        "./lusion-resend-ds.module.sass"
+        "./tdm-public-design-system.module.sass"
       ],
       "nonModuleStyleImports": [],
       "legacyNameCount": 6,
@@ -7822,7 +7822,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/_public-typography.sass",
+      "path": "src/features/theory-of-change/components/public-experience/_public-typography.sass",
       "contentHash": "2cabff71dd1ea41bfe7981a1111fe3fc853fbc355cf1d081d075f7ac64404be6",
       "extension": ".sass",
       "lines": 57,
@@ -7863,7 +7863,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.module.sass",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.module.sass",
       "contentHash": "6606208926bb465e200fe9fcdf1305f6e3907e564d633c295ce3ee119bcbb2ca",
       "extension": ".sass",
       "lines": 48,
@@ -7904,7 +7904,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/example-previews.module.sass",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/example-previews.module.sass",
       "contentHash": "924cdb9ca7d7182ee775c4d169f6a157b6daf50251838e8b8c6372e58f023a29",
       "extension": ".sass",
       "lines": 51,
@@ -7945,7 +7945,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.module.sass",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.module.sass",
       "contentHash": "8e479132f3301569593af8dfc993c393ec6397aecfaec0f07d49eb0dd69b1dc9",
       "extension": ".sass",
       "lines": 57,
@@ -7988,7 +7988,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.module.sass",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.module.sass",
       "contentHash": "89facb5360fcd33feadd59aca522f34018702a341aecd2120d84496e3a617d8f",
       "extension": ".sass",
       "lines": 58,
@@ -10197,7 +10197,7 @@
       "health": "good"
     },
     {
-      "path": "src/shared/ui/lusion-resend-ds/lusion-resend-ds.module.sass",
+      "path": "src/shared/ui/tdm-public-design-system/tdm-public-design-system.module.sass",
       "contentHash": "34d19c94b3c395f94515af1dfb07c683e6a1d24e0c1d02300ee8b823862e5508",
       "extension": ".sass",
       "lines": 601,
@@ -10807,7 +10807,7 @@
         "node:fs",
         "node:path",
         "node:url",
-        "@/shared/ui/resend-ds"
+        "@/shared/ui/tdm-ds"
       ],
       "resolvedImports": [],
       "exports": [
@@ -12309,10 +12309,10 @@
       "useClient": false,
       "useServer": false,
       "imports": [
-        "@/features/theory-of-change/components/resend-public/public-experience"
+        "@/features/theory-of-change/components/public-experience/public-experience"
       ],
       "resolvedImports": [
-        "src/features/theory-of-change/components/resend-public/public-experience.tsx"
+        "src/features/theory-of-change/components/public-experience/public-experience.tsx"
       ],
       "exports": [
         "GuiaDeAprendizadoPage"
@@ -14150,9 +14150,9 @@
         "../../data/example-theory",
         "../../domain/tdm-stages",
         "../result-view/experience/result-experience-data",
-        "@/shared/ui/lusion-resend-ds",
+        "@/shared/ui/tdm-public-design-system",
         "@/features/theory-of-change/components/example-overview-card",
-        "@/features/theory-of-change/components/resend-public/example-previews",
+        "@/features/theory-of-change/components/public-experience/example-previews",
         "@/shared/ui/public-icon-button",
         "@/shared/ui/tdm-context-label",
         "@/shared/ui/tdm-kicker",
@@ -14167,9 +14167,9 @@
         "src/features/theory-of-change/data/example-theory.ts",
         "src/features/theory-of-change/domain/tdm-stages.ts",
         "src/features/theory-of-change/components/result-view/experience/result-experience-data.ts",
-        "src/shared/ui/lusion-resend-ds/index.ts",
+        "src/shared/ui/tdm-public-design-system/index.ts",
         "src/features/theory-of-change/components/example-overview-card/index.ts",
-        "src/features/theory-of-change/components/resend-public/example-previews/index.ts",
+        "src/features/theory-of-change/components/public-experience/example-previews/index.ts",
         "src/shared/ui/public-icon-button/index.ts",
         "src/shared/ui/tdm-context-label/index.ts",
         "src/shared/ui/tdm-kicker/index.ts",
@@ -14285,7 +14285,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/_public-typography.sass",
+      "path": "src/features/theory-of-change/components/public-experience/_public-typography.sass",
       "contentHash": "2cabff71dd1ea41bfe7981a1111fe3fc853fbc355cf1d081d075f7ac64404be6",
       "extension": ".sass",
       "lines": 57,
@@ -14326,7 +14326,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/dedicated-example-preview.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/dedicated-example-preview.tsx",
       "contentHash": "948a729dc7169227cb0119c60381aa155beb211d2806a764e27c063f3d411e27",
       "extension": ".tsx",
       "lines": 34,
@@ -14344,9 +14344,9 @@
         "./result-draft-preview"
       ],
       "resolvedImports": [
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/result-draft-preview.tsx"
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/result-draft-preview.tsx"
       ],
       "exports": [
         "DedicatedExamplePreview"
@@ -14381,7 +14381,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/editorial-preview-primitives.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/editorial-preview-primitives.tsx",
       "contentHash": "a2db5b16aeb11528ae3903fe33294a7547afe914522708900f9ff14326d1c386",
       "extension": ".tsx",
       "lines": 146,
@@ -14397,8 +14397,8 @@
         "./example-previews.module.sass"
       ],
       "resolvedImports": [
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-motion.ts",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews.module.sass"
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-motion.ts",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews.module.sass"
       ],
       "exports": [
         "EditorialArrowMarker",
@@ -14439,7 +14439,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.module.sass",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.module.sass",
       "contentHash": "6606208926bb465e200fe9fcdf1305f6e3907e564d633c295ce3ee119bcbb2ca",
       "extension": ".sass",
       "lines": 48,
@@ -14480,7 +14480,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.tsx",
       "contentHash": "c901c2d7bad45b71c665cade0d2b1930c6fa1e8a0022b8cb31afada3deef7adf",
       "extension": ".tsx",
       "lines": 26,
@@ -14496,7 +14496,7 @@
         "./example-preview-frame.types"
       ],
       "resolvedImports": [
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.module.sass"
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.module.sass"
       ],
       "exports": [
         "ExamplePreviewFrame"
@@ -14531,7 +14531,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.types.ts",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.types.ts",
       "contentHash": "173f90023e5d2777e1706c54637b9d3952bb4ef7a0712ec8c0d0504b617bbc38",
       "extension": ".ts",
       "lines": 11,
@@ -14574,7 +14574,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/example-preview-motion.ts",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/example-preview-motion.ts",
       "contentHash": "63a8907b55f8483081693076d5c47e10b6b02132673ec11fa268c6fe4ec05093",
       "extension": ".ts",
       "lines": 35,
@@ -14619,7 +14619,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/example-previews-section.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx",
       "contentHash": "84bb466dd18ef27819d251efc706cf0d57641556b2c3c35445e2299cb36553db",
       "extension": ".tsx",
       "lines": 82,
@@ -14631,18 +14631,18 @@
       "useServer": false,
       "imports": [
         "react",
-        "@/shared/ui/lusion-resend-ds",
+        "@/shared/ui/tdm-public-design-system",
         "@/shared/ui/tdm-context-label",
         "@/shared/ui/tdm-kicker",
         "@/shared/ui/tdm-public-feature-card",
         "./example-previews.module.sass"
       ],
       "resolvedImports": [
-        "src/shared/ui/lusion-resend-ds/index.ts",
+        "src/shared/ui/tdm-public-design-system/index.ts",
         "src/shared/ui/tdm-context-label/index.ts",
         "src/shared/ui/tdm-kicker/index.ts",
         "src/shared/ui/tdm-public-feature-card/index.ts",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews.module.sass"
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews.module.sass"
       ],
       "exports": [
         "ExamplePreviewsSection"
@@ -14677,7 +14677,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/example-previews.module.sass",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/example-previews.module.sass",
       "contentHash": "924cdb9ca7d7182ee775c4d169f6a157b6daf50251838e8b8c6372e58f023a29",
       "extension": ".sass",
       "lines": 51,
@@ -14718,7 +14718,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.module.sass",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.module.sass",
       "contentHash": "8e479132f3301569593af8dfc993c393ec6397aecfaec0f07d49eb0dd69b1dc9",
       "extension": ".sass",
       "lines": 57,
@@ -14761,7 +14761,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.tsx",
       "contentHash": "efe332742e83909ec49f3ef0769f9ba51bea14ec7abf2d13baa8b402226df44d",
       "extension": ".tsx",
       "lines": 210,
@@ -14777,7 +14777,7 @@
         "./flow-draft-preview.module.sass"
       ],
       "resolvedImports": [
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.module.sass"
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.module.sass"
       ],
       "exports": [
         "FlowDraftPreview"
@@ -14817,7 +14817,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/index.ts",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/index.ts",
       "contentHash": "08238e286ea0bf7c563648d411e2ea97f061b214b4df1cbca7d5e0453d182212",
       "extension": ".ts",
       "lines": 10,
@@ -14836,11 +14836,11 @@
         "./result-draft-preview"
       ],
       "resolvedImports": [
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews-section.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/dedicated-example-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/result-draft-preview.tsx"
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/dedicated-example-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/result-draft-preview.tsx"
       ],
       "exports": [],
       "states": 0,
@@ -14871,7 +14871,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.module.sass",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.module.sass",
       "contentHash": "89facb5360fcd33feadd59aca522f34018702a341aecd2120d84496e3a617d8f",
       "extension": ".sass",
       "lines": 58,
@@ -14913,7 +14913,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.tsx",
       "contentHash": "c8a46d18f6bc242d66579007fb6881b748c15f18b5d34bea3f5b27f01d9ed0ea",
       "extension": ".tsx",
       "lines": 241,
@@ -14926,13 +14926,13 @@
       "imports": [
         "motion/react",
         "react",
-        "./resend-draft-preview.module.sass"
+        "./theory-draft-preview.module.sass"
       ],
       "resolvedImports": [
-        "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.module.sass"
+        "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.module.sass"
       ],
       "exports": [
-        "ResendDraftPreview"
+        "TheoryDraftPreview"
       ],
       "states": 0,
       "effects": 0,
@@ -14950,7 +14950,7 @@
       "hardcodedStrings": 0,
       "staticInlineStyles": 1,
       "sassModuleImports": [
-        "./resend-draft-preview.module.sass"
+        "./theory-draft-preview.module.sass"
       ],
       "nonModuleStyleImports": [],
       "legacyNameCount": 3,
@@ -14969,7 +14969,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/result-draft-preview.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/result-draft-preview.tsx",
       "contentHash": "e71d3d5be819d5777238954d6a251348356aaf1e8b4c017be4480864cd374ae2",
       "extension": ".tsx",
       "lines": 32,
@@ -14981,10 +14981,10 @@
       "useServer": false,
       "imports": [
         "react",
-        "./resend-draft-preview"
+        "./theory-draft-preview"
       ],
       "resolvedImports": [
-        "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.tsx"
+        "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.tsx"
       ],
       "exports": [
         "ResultDraftPreview"
@@ -15019,7 +15019,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/example-previews/stage-colors.ts",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/stage-colors.ts",
       "contentHash": "b343d635048ede6c4b1334d1546662fcd59e6182862494063ea868497f30938b",
       "extension": ".ts",
       "lines": 8,
@@ -15063,7 +15063,7 @@
       "health": "attention"
     },
     {
-      "path": "src/features/theory-of-change/components/resend-public/public-experience.tsx",
+      "path": "src/features/theory-of-change/components/public-experience/public-experience.tsx",
       "contentHash": "241ba17a6de09179dc35e62a46d28d121505283af66c79a7c2f4a7c9941eb327",
       "extension": ".tsx",
       "lines": 206,
@@ -15076,14 +15076,14 @@
       "imports": [
         "react",
         "motion/react",
-        "@/shared/ui/lusion-resend-ds",
+        "@/shared/ui/tdm-public-design-system",
         "@/shared/ui/tdm-context-label",
         "@/shared/ui/tdm-kicker",
         "../learning-guide",
         "../learning-guide/guide-experience.module.sass"
       ],
       "resolvedImports": [
-        "src/shared/ui/lusion-resend-ds/index.ts",
+        "src/shared/ui/tdm-public-design-system/index.ts",
         "src/shared/ui/tdm-context-label/index.ts",
         "src/shared/ui/tdm-kicker/index.ts",
         "src/features/theory-of-change/components/learning-guide/index.ts",
@@ -23170,7 +23170,7 @@
       "health": "good"
     },
     {
-      "path": "src/shared/ui/lusion-resend-ds/index.ts",
+      "path": "src/shared/ui/tdm-public-design-system/index.ts",
       "contentHash": "0107d0c72bdc7d9eddb2de6c160e5d0fb12aab54ab0a26b20a61a52f296ee0f6",
       "extension": ".ts",
       "lines": 22,
@@ -23181,11 +23181,11 @@
       "useClient": false,
       "useServer": false,
       "imports": [
-        "./lusion-resend-ds",
+        "./tdm-public-design-system",
         "@/shared/ui/public-button"
       ],
       "resolvedImports": [
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx",
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx",
         "src/shared/ui/public-button/index.ts"
       ],
       "exports": [],
@@ -23217,7 +23217,7 @@
       "health": "attention"
     },
     {
-      "path": "src/shared/ui/lusion-resend-ds/lusion-resend-ds.module.sass",
+      "path": "src/shared/ui/tdm-public-design-system/tdm-public-design-system.module.sass",
       "contentHash": "34d19c94b3c395f94515af1dfb07c683e6a1d24e0c1d02300ee8b823862e5508",
       "extension": ".sass",
       "lines": 601,
@@ -23260,7 +23260,7 @@
       "health": "critical"
     },
     {
-      "path": "src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx",
+      "path": "src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx",
       "contentHash": "3f12fa30ff7feda1b1ac40891c147ba95212278337b9845e18e4abc9e880dd9c",
       "extension": ".tsx",
       "lines": 422,
@@ -23278,12 +23278,12 @@
         "motion/react",
         "@/shared/motion/tdm-motion",
         "@/shared/ui/public-button",
-        "./lusion-resend-ds.module.sass"
+        "./tdm-public-design-system.module.sass"
       ],
       "resolvedImports": [
         "src/shared/motion/tdm-motion/index.ts",
         "src/shared/ui/public-button/index.ts",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.module.sass"
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.module.sass"
       ],
       "exports": [
         "PublicShell",
@@ -23315,7 +23315,7 @@
       "hardcodedStrings": 4,
       "staticInlineStyles": 0,
       "sassModuleImports": [
-        "./lusion-resend-ds.module.sass"
+        "./tdm-public-design-system.module.sass"
       ],
       "nonModuleStyleImports": [],
       "legacyNameCount": 6,
@@ -25262,7 +25262,7 @@
         "src/features/theory-of-change/components/learning-guide/guide-stage-card.tsx",
         "src/features/theory-of-change/components/public-pages/guided-story.tsx",
         "src/features/theory-of-change/components/public-pages/theory-flow-board.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-previews-section.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx",
         "src/features/theory-of-change/components/result-view/experience/flow-vision-diagram.tsx",
         "src/features/theory-of-change/components/result-view/experience/result-diagram.tsx",
         "src/features/theory-of-change/components/result-view/experience/result-report-section.tsx",
@@ -25300,7 +25300,7 @@
       "family": "header",
       "files": [
         "src/features/theory-of-change/components/public-pages/home-brand-logo/home-brand-logo.tsx",
-        "src/features/theory-of-change/components/resend-public/public-experience.tsx",
+        "src/features/theory-of-change/components/public-experience/public-experience.tsx",
         "src/features/theory-of-change/components/result-view/experience/flow-vision-interactive-workspace.tsx",
         "src/features/theory-of-change/components/result-view/experience/flow-vision-node-card.tsx",
         "src/features/theory-of-change/components/result-view/experience/interactive-experience-shell.tsx",
@@ -25308,7 +25308,7 @@
         "src/features/theory-of-change/components/result-view/result-node-card/result-node-card.tsx",
         "src/features/theory-of-change/components/result-view/result-stage-column/result-stage-column.tsx",
         "src/features/theory-of-change/components/result-view/result-theory-narrative/theory-narrative-document.tsx",
-        "src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx"
+        "src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx"
       ],
       "canonical": [],
       "legacy": [],
@@ -25317,7 +25317,7 @@
     {
       "family": "surface",
       "files": [
-        "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.tsx",
         "src/features/theory-of-change/components/result-view/liquid-glass/glass-surface.tsx",
         "src/features/theory-of-change/components/result-view/liquid-glass/resource-card.tsx",
         "src/features/theory-of-change/components/result-view/liquid-glass/resources-panel.tsx",
@@ -25341,10 +25341,10 @@
       "family": "preview",
       "files": [
         "src/features/theory-of-change/components/public-pages/home-onboarding-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/dedicated-example-preview.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/editorial-preview-primitives.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/example-preview-frame.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/result-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/dedicated-example-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/editorial-preview-primitives.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/example-preview-frame.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/result-draft-preview.tsx",
         "src/features/theory-of-change/components/result-preview/tdm-result-preview.tsx",
         "src/features/theory-of-change/components/result-view/experience/result-interactive-preview.tsx",
         "src/features/theory-of-change/components/result-view/experience/result-stage-board.tsx"
@@ -25357,7 +25357,7 @@
       "family": "field",
       "files": [
         "src/app/exemplos/exemplos-client.tsx",
-        "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.tsx",
+        "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.tsx",
         "src/features/theory-of-change/components/result-view/experience/result-experience-header.tsx",
         "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-flow-overview-figure.tsx",
         "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-resources-map-figure.tsx",
@@ -28391,12 +28391,12 @@
     "protectedVisualFiles": [
       "src/features/theory-of-change/components/public-pages/guided-story.tsx",
       "src/features/theory-of-change/components/public-pages/guided-story-scheduler.ts",
-      "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.tsx",
-      "src/features/theory-of-change/components/resend-public/example-previews/flow-draft-preview.module.sass",
-      "src/features/theory-of-change/components/resend-public/example-previews/result-draft-preview.tsx",
-      "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.tsx",
-      "src/features/theory-of-change/components/resend-public/example-previews/resend-draft-preview.module.sass",
-      "src/features/theory-of-change/components/resend-public/example-previews/example-preview-motion.ts",
+      "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.tsx",
+      "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.module.sass",
+      "src/features/theory-of-change/components/public-experience/example-previews/result-draft-preview.tsx",
+      "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.tsx",
+      "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.module.sass",
+      "src/features/theory-of-change/components/public-experience/example-previews/example-preview-motion.ts",
       "src/features/theory-of-change/components/result-view/experience/flow-vision-diagram.tsx",
       "src/features/theory-of-change/components/result-view/experience/flow-vision-node-card.tsx",
       "src/features/theory-of-change/components/result-view/experience/flow-vision-node-card.module.sass",

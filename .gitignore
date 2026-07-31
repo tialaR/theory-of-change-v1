@@ -43,3 +43,17 @@ output/
 
 # TDM local patch backups
 .tdm-backup/
+
+# >>> TDM SHARK MIGRATION GENERATED ARTIFACTS >>>
+.next/
+*.tsbuildinfo
+.playwright-cli/
+.validation-screenshots/
+.canvas-surgery-backup/
+.tdm-backup/
+.tdm-backups/
+.tdm-patch-backups/
+.tdm-patches/
+__MACOSX/
+output/
+# <<< TDM SHARK MIGRATION GENERATED ARTIFACTS <<<

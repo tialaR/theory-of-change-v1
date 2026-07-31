@@ -3,13 +3,38 @@
     transform: rotate(1turn)
 
 .root
+  position: relative
+  isolation: isolate
   display: grid
   box-sizing: border-box
   min-height: 100dvh
+  overflow: hidden
   padding: clamp(3rem, 8vw, 7rem) var(--tdm-status-padding-inline)
   place-items: center
-  background: var(--tdm-surface-app)
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.035), transparent 34%), var(--tdm-surface-app)
   color: var(--tdm-fg-primary)
+
+.decorativeLeft,
+.decorativeRight
+  position: absolute
+  z-index: -1
+  width: clamp(18rem, 36vw, 34rem)
+  aspect-ratio: 1
+  border: var(--tdm-border-width-hairline) solid rgba(255, 255, 255, 0.075)
+  background: repeating-radial-gradient(circle at center, transparent 0 10%, rgba(255, 255, 255, 0.018) 10.4% 10.8%, transparent 11.2% 18%)
+  clip-path: polygon(50% 0, 91% 24%, 100% 70%, 66% 100%, 22% 91%, 0 52%, 16% 12%)
+  opacity: 0.7
+  pointer-events: none
+
+.decorativeLeft
+  inset-inline-start: clamp(-18rem, -18vw, -9rem)
+  inset-block-end: clamp(-18rem, -18vw, -8rem)
+  transform: rotate(18deg)
+
+.decorativeRight
+  inset-inline-end: clamp(-18rem, -18vw, -9rem)
+  inset-block-start: clamp(-18rem, -18vw, -8rem)
+  transform: rotate(198deg)
 
 .content
   display: grid
@@ -17,6 +42,18 @@
   justify-items: center
   gap: var(--tdm-status-gap)
   text-align: center
+
+.code
+  margin: 0 0 calc(var(--tdm-space-4) * -1)
+  color: transparent
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.18))
+  background-clip: text
+  -webkit-background-clip: text
+  font-size: clamp(5rem, 18vw, 11rem)
+  font-weight: 620
+  line-height: 0.8
+  letter-spacing: -0.08em
+  opacity: 0.92
 
 .icon
   display: grid

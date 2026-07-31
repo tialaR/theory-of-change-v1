@@ -6,5 +6,5 @@
 - Material Web Buttons: https://material-web.dev/components/button/
 - Material Web Theming: https://material-web.dev/theming/material-theming/
 - Figma Guide to Components: https://help.figma.com/hc/en-us/articles/360038662654-Guide-to-components-in-Figma
-- Resend: https://resend.com/
-- Resend About: https://resend.com/about
+- TMD: https://tdm.com/
+- TMD About: https://tdm.com/about

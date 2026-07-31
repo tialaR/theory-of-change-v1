@@ -18,4 +18,4 @@ Homologação: 2026-07-22
 - `docs/design-system/TDM-PUBLIC-PAGE-HEADER-GAP-V1.md`
 - `docs/design-system/TDM-PUBLIC-FOOTER-COPYRIGHT-V1.md`
 - `src/shared/styles/tdm/_tdm-public-action.sass` (`--tdm-public-header-content-gap`)
-- `src/shared/ui/lusion-resend-ds/lusion-resend-ds.tsx` / `.module.sass`
+- `src/shared/ui/tdm-public-design-system/tdm-public-design-system.tsx` / `.module.sass`
