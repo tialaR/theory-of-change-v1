@@ -17,4 +17,14 @@ describe('canvas element ids', () => {
     expect(createCanvasNodeId('product', occupied, createToken)).toBe('node-product-shared-token');
     expect(createCanvasEdgeId(occupied, createToken)).toBe('edge-shared-token');
   });
+
+  it('esgota tentativas e falha sem substituir um id hidratado', () => {
+    const occupied = new Set(Array.from({ length: 16 }, (_, index) => `node-input-token-${index}`));
+    let index = 0;
+    const createToken = () => `token-${index++}`;
+
+    expect(() => createCanvasNodeId('input', occupied, createToken))
+      .toThrow('Não foi possível gerar um identificador único para o canvas.');
+  });
+
 });

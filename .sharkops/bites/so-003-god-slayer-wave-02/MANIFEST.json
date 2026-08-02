@@ -1,0 +1,12 @@
+{
+  "id": "SO-003",
+  "codename": "God Slayer Wave 02",
+  "revision": 2,
+  "status": "ACTIVE",
+  "files": [
+    "src/features/theory-of-change/canvas/ui/hooks/use-canvas-workspace-controller.ts",
+    "src/features/theory-of-change/canvas/ui/hooks/use-canvas-workspace-flow-actions.ts",
+    "src/features/theory-of-change/canvas/ui/hooks/use-canvas-relation-actions.ts",
+    "scripts/tdm-contract-v3/check-god-slayer-wave02.mjs"
+  ]
+}

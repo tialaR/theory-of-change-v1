@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { centralizeCanvasColumns } from './canvas-layout';
+import { CANVAS_COLUMN_X, CANVAS_DIMENSIONS } from '../domain/canvas-ui.constants';
 import type { CanvasStageNode } from '../react-flow/canvas-flow.types';
 
 const nodes: CanvasStageNode[] = [
@@ -20,8 +21,15 @@ const nodes: CanvasStageNode[] = [
 describe('centralizeCanvasColumns', () => {
   it('mantém a ordem vertical e posiciona cada etapa na própria coluna', () => {
     const result = centralizeCanvasColumns(nodes);
+    const expectedGap = CANVAS_DIMENSIONS.nodeHeight + 42;
 
-    expect(result.find((node) => node.id === 'input-1')?.position).toEqual({ x: 120, y: 120 });
-    expect(result.find((node) => node.id === 'input-2')?.position).toEqual({ x: 120, y: 292 });
+    expect(result.find((node) => node.id === 'input-1')?.position).toEqual({
+      x: CANVAS_COLUMN_X.input,
+      y: CANVAS_DIMENSIONS.columnStartY
+    });
+    expect(result.find((node) => node.id === 'input-2')?.position).toEqual({
+      x: CANVAS_COLUMN_X.input,
+      y: CANVAS_DIMENSIONS.columnStartY + expectedGap
+    });
   });
 });

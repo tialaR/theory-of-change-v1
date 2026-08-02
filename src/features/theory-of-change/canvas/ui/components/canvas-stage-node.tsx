@@ -31,8 +31,8 @@ export function CanvasStageNodeComponent({ id, data }: NodeProps<CanvasStageNode
         </div>
       ) : null}
 
-      <Handle id="target" type="target" position={Position.Left} className={`${styles.nodeHandle} ${styles.nodeHandleTarget}`} aria-label={runtime.t('node.targetAria', { title: data.title })} data-tooltip={runtime.t('tooltips.target')} />
-      <Handle id="source" type="source" position={Position.Right} className={`${styles.nodeHandle} ${styles.nodeHandleSource}`} aria-label={runtime.t('node.sourceAria', { title: data.title })} data-tooltip={runtime.t('tooltips.source')} />
+      <Handle id="target" type="target" position={Position.Left} className={`${styles.nodeHandle} ${styles.nodeHandleTarget}`} aria-label={runtime.t('node.targetAria', { title: data.title })} data-tooltip={runtime.t('tooltips.target')} data-canvas-handle="target" data-canvas-node-id={id} />
+      <Handle id="source" type="source" position={Position.Right} className={`${styles.nodeHandle} ${styles.nodeHandleSource}`} aria-label={runtime.t('node.sourceAria', { title: data.title })} data-tooltip={runtime.t('tooltips.source')} data-canvas-handle="source" data-canvas-node-id={id} />
 
       <div className={styles.nodeMeta}>
         <span>{copy.singular}</span>

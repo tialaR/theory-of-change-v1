@@ -63,3 +63,6 @@ output/
 .sharkops/installer-backup/
 
 .sharkops/runtime/
+
+# Local patch rollback snapshots
+.patch-backups/

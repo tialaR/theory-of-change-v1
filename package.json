@@ -42,7 +42,13 @@
     "shark:gate:push": "node tools/sharkops/gate.mjs --stage=pre-push",
     "shark:principles": "node tools/sharkops/principles.mjs",
     "shark:scan": "node tools/sharkops/scan.mjs",
-    "shark:so-001:cycle": "node tools/sharkops/so-001-cycle.mjs"
+    "shark:so-001:cycle": "node tools/sharkops/so-001-cycle.mjs",
+    "test:e2e:canvas": "node scripts/playwright/run-canvas-e2e.mjs",
+    "check:tdm:canvas-armor": "node scripts/tdm-contract-v3/check-canvas-armor.mjs",
+    "check:tdm:god-slayer:wave01": "node scripts/tdm-contract-v3/check-god-slayer-wave01.mjs",
+    "check:tdm:god-slayer:wave02": "node scripts/tdm-contract-v3/check-god-slayer-wave02.mjs",
+    "check:tdm:god-slayer:wave03": "node scripts/tdm-contract-v3/check-god-slayer-wave03.mjs",
+    "check:tdm:god-slayer:wave04": "node scripts/tdm-contract-v3/check-god-slayer-wave04.mjs"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.5.1",

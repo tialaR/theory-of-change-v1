@@ -1,0 +1,15 @@
+NEW	docs/architecture/adr/ADR-006-route-characterization-and-visual-contract.md
+NEW	docs/architecture/adr/ADR-007-regression-baselines-and-automatic-rollback.md
+NEW	docs/shark/MORDIDA-01-CONTRACT.md
+NEW	docs/shark/baselines/runtime-errors.json
+NEW	docs/shark/baselines/unit-failures.json
+EXISTING	package.json
+EXISTING	playwright.config.ts
+NEW	scripts/shark/check-route-contract.mjs
+NEW	scripts/shark/extract-vitest-failures.mjs
+NEW	scripts/shark/prepare-playwright-browser.mjs
+NEW	scripts/shark/run-unit-regression-guard.mjs
+NEW	scripts/shark/vitest-failure-baseline.mjs
+NEW	src/test/e2e/application-routes.e2e.ts
+NEW	src/test/e2e/application-routes.ts
+NEW	src/test/e2e/authentication.ts

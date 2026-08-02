@@ -7,11 +7,14 @@
       "mandatory": {
         "pre-commit": [
           "shark:verify",
-          "shark:principles"
+          "shark:principles",
+          "check:tdm:canvas-armor"
         ],
         "pre-push": [
           "shark:verify",
-          "shark:principles"
+          "shark:principles",
+          "check:tdm:canvas-armor",
+          "test:e2e:canvas"
         ]
       },
       "advisory": {
@@ -28,7 +31,9 @@
     "shark:verify": "MANDATORY",
     "check:tdm:v3:quick": "LEGACY_ADVISORY",
     "validate:release": "LEGACY_ADVISORY",
-    "shark:principles": "MANDATORY"
+    "shark:principles": "MANDATORY",
+    "check:tdm:canvas-armor": "MANDATORY",
+    "test:e2e:canvas": "MANDATORY_PRE_PUSH"
   },
   "policy": {
     "sharkOpsIsSovereign": true,

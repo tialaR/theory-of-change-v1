@@ -175,8 +175,7 @@ export function useCanvasRelationActions({
     relationDraft,
     saveFlowRelation,
     selectedEdge,
-    selectedEdgeSource,
-    selectedEdgeTarget,
+    relationNoticeValues,
     selectedRelationKind,
     setRelationPanelMode,
     t
@@ -212,8 +211,7 @@ export function useCanvasRelationActions({
     notify,
     removeFlowRelation,
     selectedEdge,
-    selectedEdgeSource,
-    selectedEdgeTarget,
+    relationNoticeValues,
     selectedRelationKind,
     setRelationDraft,
     setRelationPanelMode,
@@ -235,8 +233,7 @@ export function useCanvasRelationActions({
     markDirty,
     notify,
     selectedEdge,
-    selectedEdgeSource,
-    selectedEdgeTarget,
+    relationNoticeValues,
     t
   ]);
 
