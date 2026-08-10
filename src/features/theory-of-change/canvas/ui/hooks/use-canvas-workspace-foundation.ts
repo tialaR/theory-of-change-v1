@@ -1,9 +1,9 @@
 'use client';
 
-import { useReactFlow } from '@xyflow/react';
 import type { CanvasProject } from '../../domain/canvas-project';
 import { toCanvasFlowGraph } from '../../react-flow/canvas-react-flow.adapter';
-import type { CanvasCausalEdge, CanvasStageNode } from '../../react-flow/canvas-flow.types';
+import type { CanvasStageNode } from '../../react-flow/canvas-flow.types';
+import { useCanvasFlowRuntime } from '../../react-flow/use-canvas-flow-state';
 import type { CanvasStageCopy, CanvasTranslator } from '../canvas-copy';
 import { useCanvasFlowController } from './use-canvas-flow-controller';
 import { useCanvasSaveController } from './use-canvas-save-controller';
@@ -28,7 +28,7 @@ export function useCanvasWorkspaceFoundation({
   const initialGraph = toCanvasFlowGraph(initialProject);
   const flow = useCanvasFlowController(initialGraph.nodes, initialGraph.edges, stageCopy, duplicateTitle);
   const ui = useCanvasUiState(t, initialProject.title, initialProject.nodes.length);
-  const reactFlow = useReactFlow<CanvasStageNode, CanvasCausalEdge>();
+  const { stageDropRuntime, viewportRuntime } = useCanvasFlowRuntime();
 
   const selection = useCanvasSelection({
     nodes: flow.nodes,
@@ -41,7 +41,7 @@ export function useCanvasWorkspaceFoundation({
   const viewportActions = useCanvasViewportActions({
     initialViewport: initialProject.viewport,
     nodes: flow.nodes,
-    reactFlow,
+    viewportRuntime,
     inspectorOpen: ui.inspectorOpen,
     fullCanvasMode: ui.fullCanvasMode,
     setInspectorOpen: ui.setInspectorOpen,
@@ -78,7 +78,7 @@ export function useCanvasWorkspaceFoundation({
   return {
     flow,
     ui,
-    reactFlow,
+    stageDropRuntime,
     selection,
     viewportActions,
     saveController

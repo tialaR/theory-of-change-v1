@@ -78,8 +78,15 @@ if (state.activeBite) {
     }
   }
 } else if (bites.length > 0) {
-  fail('ledger contains bites but current state has no active bite');
-  breached = true;
+  const activeBites = bites.filter((bite) => bite.status === 'ACTIVE');
+  const allComplete = bites.every((bite) => bite.status === 'COMPLETE');
+
+  if (activeBites.length === 0 && allComplete) {
+    pass('terminal state: no active bite and all ledger bites COMPLETE');
+  } else {
+    fail('ledger contains non-terminal bites but current state has no active bite');
+    breached = true;
+  }
 } else {
   pass('no active bite');
 }

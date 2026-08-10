@@ -17,13 +17,13 @@ Implementadas em `src/features/theory-of-change/components/public-pages/`, consu
 
 Cada rota em `src/app/*/page.tsx` importa apenas o componente de página correspondente — sem lógica de negócio na camada de rota.
 
-### Rota preservada (DS antigo)
+### Canvas arquiteturalmente protegido
 
 ```
 /canvas
 ```
 
-Não alterar: React Flow principal, nodes/edges, sidebar, drag/drop, lógica de criação/edição.
+O Canvas atual é uma arquitetura modular protegida por contratos e gates. Mudanças devem respeitar ADR-008, ADR-006, ADR-007 e os closeouts SharkOps. React Flow é adapter/rendering boundary; Domain, Application, Engine, Infrastructure, Server e UI possuem ownership explícito. Não realizar refactor amplo nem mover regras para componentes/hooks sem uma decisão arquitetural e gate correspondente.
 
 ## Estrutura de pastas
 
@@ -37,7 +37,7 @@ src/
     domain/                     # Tipos e estágios TDM
 ```
 
-## DS antigo — não usar em rotas públicas
+## Superfícies de Canvas — não reutilizar automaticamente em rotas públicas
 
 Estes módulos pertencem ao canvas/result-view legado:
 

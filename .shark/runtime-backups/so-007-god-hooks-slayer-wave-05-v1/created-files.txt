@@ -1,0 +1,10 @@
+.sharkops/bites/so-007-god-hooks-slayer-wave-05/verify.sh
+.sharkops/bites/so-007-god-hooks-slayer-wave-05/apply.sh
+.sharkops/bites/so-007-god-hooks-slayer-wave-05/README.md
+.sharkops/bites/so-007-god-hooks-slayer-wave-05/MANIFEST.json
+.sharkops/bites/so-007-god-hooks-slayer-wave-05/rollback.sh
+scripts/tdm-contract-v3/check-god-hooks-slayer-wave05.mjs
+src/features/theory-of-change/components/canvas/tdm-canvas-controllers/marker/use-canvas-marker-mutation-controller.ts
+src/features/theory-of-change/components/canvas/tdm-canvas-controllers/marker/types.ts
+src/features/theory-of-change/components/canvas/tdm-canvas-controllers/marker/use-canvas-selected-edge-marker-controller.ts
+src/features/theory-of-change/components/canvas/tdm-canvas-controllers/marker/use-canvas-marker-editor-controller.ts

@@ -1,5 +1,5 @@
 import { RESULT_ZOOM } from './result-view.constants';
-import { roundZoom } from './result-view.utils';
+import { roundZoom } from './result-view-utils';
 
 /** Translator camera policy — overview / scoped / manual. */
 export type ResultCameraMode = 'overview' | 'scoped' | 'manual';

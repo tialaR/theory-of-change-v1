@@ -1,0 +1,8 @@
+{
+  "id": "SO-005",
+  "codename": "Sass God Split",
+  "wave": "01",
+  "status": "ACTIVE",
+  "purpose": "Split Canvas and Sidebar Sass Gods by ownership while preserving visual output",
+  "verify": "npm run check:tdm:sass-god-split:wave01"
+}

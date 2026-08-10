@@ -24,7 +24,8 @@ import {
   type ResultCameraState
 } from '../result-view.camera';
 import { RESULT_ZOOM } from '../result-view.constants';
-import { getConnectedFlowFromNode, getLayoutRectRelativeTo, roundZoom } from '../result-view.utils';
+import { getLayoutRectRelativeTo, roundZoom } from '../result-view-utils';
+import { getConnectedFlowFromNode } from './result-experience-data';
 import type { ResultExperienceProps } from './types';
 import { useTheoryImageExport } from '../use-theory-image-export';
 import { FlowVisionDiagram } from './flow-vision-diagram';

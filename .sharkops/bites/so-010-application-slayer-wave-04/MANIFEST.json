@@ -1,0 +1,9 @@
+{
+  "id": "SO-010",
+  "codename": "Application Slayer",
+  "wave": 4,
+  "title": "Persistence Draft Assembly",
+  "status": "ACTIVE",
+  "purpose": "Move bounded persistence content assembly from the React hook into framework-neutral Application without changing save behavior.",
+  "createdAt": "2026-08-05T23:55:00.000Z"
+}

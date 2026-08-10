@@ -1,0 +1,10 @@
+{
+  "id": "SO-014",
+  "codename": "Final Architecture Closeout",
+  "wave": "03",
+  "title": "Dependency Direction Verification",
+  "status": "ACTIVE",
+  "runtimeChanges": false,
+  "gate": "npm run check:tdm:final-architecture:wave03",
+  "next": "SO-014 Wave 04 | Public API & Contract Verification"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "SO-012",
+  "codename": "Canvas Engine",
+  "wave": "06-persistence-boundary",
+  "status": "ACTIVE",
+  "revision": 7,
+  "purpose": "Move isolated persistence snapshots and deterministic content signatures into the framework-neutral Canvas Engine while transport and schema migration remain outside",
+  "updatedAt": "2026-08-06T16:45:00.000Z"
+}

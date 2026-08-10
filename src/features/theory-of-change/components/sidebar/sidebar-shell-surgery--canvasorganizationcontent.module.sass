@@ -1,0 +1,188 @@
+.canvasOrganizationContent
+  display: grid
+  gap: 0.5rem
+
+.quickShortcutsContent
+  display: grid
+  gap: 0
+
+.quickShortcutsGrid
+  display: flex !important
+  flex-direction: column
+  gap: 0
+  width: 100%
+  margin-top: 0.125rem
+
+.quickShortcutBtn
+  display: inline-flex !important
+  flex-direction: row
+  align-items: center
+  justify-content: flex-start
+  width: 100%
+  min-height: 2rem
+  padding: 0.25rem 0
+  gap: 0.5rem
+  border: 0
+  border-bottom: 0.0625rem solid rgba(161, 164, 165, 0.18)
+  border-radius: 0 !important
+  background: transparent !important
+  box-shadow: none !important
+  color: rgba(161, 164, 165, 0.54)
+  opacity: 0.78
+  transform: none
+  text-decoration: none
+  transition: color 180ms ease, opacity 180ms ease, border-color 180ms ease
+
+  &::before
+    display: none !important
+
+  &::after
+    content: '↗'
+    display: grid
+    place-items: center
+    width: 1.25rem
+    height: 1.25rem
+    margin-left: auto
+    color: currentColor
+    font-size: 1rem
+    font-weight: 400
+    line-height: 1
+    opacity: 0.72
+    transform: translate(-0.0625rem, 0.0625rem)
+
+  &:hover,
+  &:focus-visible
+    background: transparent !important
+    border-color: rgba(224, 226, 232, 0.36)
+    box-shadow: none !important
+    color: rgba(224, 226, 232, 0.9)
+    opacity: 1
+    outline: none
+    transform: none
+
+    &::after
+      opacity: 1
+
+    .quickShortcutBtnIcon,
+    .quickShortcutBtnLabel
+      color: inherit
+      opacity: 1
+
+.quickShortcutBtnIcon
+  width: 0.875rem
+  height: 0.875rem
+  flex: 0 0 0.875rem
+  background: transparent !important
+  box-shadow: none !important
+  color: inherit
+  opacity: 0.78
+
+  svg
+    width: 0.75rem
+    height: 0.75rem
+
+.quickShortcutBtnLabel
+  color: inherit
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.75rem
+  font-weight: 500
+  line-height: 1.125rem
+
+// Breathing room between Organization / Atalhos / Resultado without stacked dividers fighting.
+.canvasOrganizationCard
+  margin-bottom: 0.25rem
+
+.quickShortcutsCard
+  margin-top: 0.25rem
+  margin-bottom: 0.75rem
+
+.canvasOrganizationCard:has(.canvasOrganizationContent)
+  padding-bottom: 0.25rem
+
+.quickShortcutsCard:has(.quickShortcutsContent)
+  padding-bottom: 0.25rem
+  margin-bottom: 0.875rem
+
+// 5) Resultado — header editorial: ícone + bloco textual (título/subtítulo no mesmo eixo).
+// Título reutiliza tokens visuais de “Editar bloco” (.blockFormGroupTitle / SURGERY 03).
+.resultCard .finalResultEditorial
+  display: block
+  width: 100%
+  max-width: 100%
+  min-width: 0
+  text-align: left
+
+.resultCard .finalResultHeadline.blockFormGroupHeader,
+.resultCard .blockFormGroupHeader
+  display: flex
+  align-items: flex-start
+  justify-content: flex-start
+  gap: 0.5rem
+  margin: 0
+  padding: 0
+  padding-left: 0
+  min-height: 0
+  width: 100%
+  max-width: 100%
+  white-space: normal
+  overflow: visible
+  text-overflow: clip
+
+.resultCard .finalResultCopy
+  display: grid
+  gap: 0.3125rem
+  min-width: 0
+  flex: 1 1 auto
+  text-align: left
+
+.resultCard .blockFormGroupTitle
+  display: block
+  width: auto !important
+  height: auto !important
+  min-width: 0
+  margin: 0
+  padding: 0
+  white-space: normal
+  overflow: visible
+  text-overflow: clip
+  text-align: left
+  // Tokens de .blockFormGroupTitle / SURGERY 03 (“Editar bloco”)
+  color: transparent !important
+  background: linear-gradient(90deg, rgba(240, 240, 240, 0.94) 0%, rgba(161, 164, 165, 0.76) 100%) !important
+  background-clip: text !important
+  -webkit-background-clip: text !important
+  -webkit-text-fill-color: transparent !important
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.78125rem
+  font-weight: 400
+  line-height: 1.1rem
+  letter-spacing: 0.04em
+  text-transform: uppercase
+
+.resultCard .blockFormGroupHeader > :first-child
+  align-self: flex-start
+  margin-top: 0
+
+.resultCard .finalResultLead
+  margin: 0
+  padding: 0
+  padding-left: 0
+  max-width: 36ch
+  text-align: left
+  text-transform: none
+  color: rgba(148, 150, 156, 0.94) !important
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.71875rem !important
+  font-weight: 400
+  line-height: 1.45
+
+.finalResultFooter
+  background: transparent !important
+  box-shadow: none !important
+  backdrop-filter: none !important
+  -webkit-backdrop-filter: none !important
+
+  &::before
+    opacity: 0.9
+// END CANVAS SIDEBAR SURGERY MICROFIX 18
+

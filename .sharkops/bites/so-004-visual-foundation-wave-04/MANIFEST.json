@@ -1,0 +1,7 @@
+{
+  "id": "SO-004",
+  "codename": "Visual Foundation",
+  "revision": 4,
+  "status": "ACTIVE",
+  "purpose": "Finalize Canvas visual surfaces and enforce Sass Module-only styling"
+}

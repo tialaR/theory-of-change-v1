@@ -8,7 +8,8 @@ import { ResultConnectionsLayer } from '../result-connections-layer/result-conne
 import { ResultNodeCard } from '../result-node-card/result-node-card';
 import { ResultStageColumn } from '../result-stage-column/result-stage-column';
 import type { CardRect, ConnectedFlow } from '../result-view.types';
-import { areCardRectsEqual, getConnectedFlowFromNode, getLayoutRectRelativeTo } from '../result-view.utils';
+import { areCardRectsEqual, getLayoutRectRelativeTo } from '../result-view-utils';
+import { getConnectedFlowFromNode } from '../experience/result-experience-data';
 import styles from './result-diagram.module.sass';
 
 type ResultDiagramProps = {

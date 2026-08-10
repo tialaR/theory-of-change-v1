@@ -1,0 +1,16 @@
+{
+  "id": "SO-013",
+  "codename": "Infrastructure Cleanup",
+  "wave": "04",
+  "status": "ACTIVE",
+  "revision": 5,
+  "title": "Contracts Deduplication",
+  "changes": [
+    "Remove duplicate ResultExperienceData type alias",
+    "Migrate live consumers to canonical ResultExperienceProps",
+    "Evolve Wave 03 gate for cumulative SO-013 progression",
+    "Add executable Wave 04 regression gate"
+  ],
+  "gate": "npm run check:tdm:infrastructure-cleanup:wave04",
+  "next": "SO-013 Infrastructure Cleanup Wave 05 Audit"
+}

@@ -24,7 +24,7 @@ import type {
   TdmCanvasNodeVisualMode
 } from './tdm-canvas-node.types';
 
-type TdmNodeInteractionContextValue = {
+export type TdmNodeInteractionContextValue = {
   editingNodeId: string | null;
   onBeginEditNode: (nodeId: string) => void;
   onCancelNodeEdit: () => void;

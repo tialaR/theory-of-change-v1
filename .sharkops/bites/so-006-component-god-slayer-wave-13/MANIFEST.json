@@ -1,0 +1,8 @@
+{
+  "id": "SO-006",
+  "codename": "Component God Slayer",
+  "wave": 13,
+  "status": "ACTIVE",
+  "revision": 14,
+  "purpose": "Move Canvas presentation assembly to a dedicated owner while preserving behavior"
+}

@@ -1,0 +1,9 @@
+.cursor/rules/05-tdm-sass-module-only.mdc
+docs/architecture/tdm-sass-module-standard.md
+scripts/tdm-contract-v3/check-sass-module-policy.mjs
+scripts/tdm-contract-v3/check-visual-foundation-wave04.mjs
+.sharkops/bites/so-004-visual-foundation-wave-04/README.md
+.sharkops/bites/so-004-visual-foundation-wave-04/MANIFEST.json
+.sharkops/bites/so-004-visual-foundation-wave-04/apply.sh
+.sharkops/bites/so-004-visual-foundation-wave-04/rollback.sh
+.sharkops/bites/so-004-visual-foundation-wave-04/verify.sh

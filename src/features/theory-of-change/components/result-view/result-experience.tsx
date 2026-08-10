@@ -30,7 +30,8 @@ import {
   RESULT_ZOOM
 } from './result-view.constants';
 import type { ResultExperienceProps } from './result-view.types';
-import { getConnectedFlowFromNode, getLayoutRectRelativeTo, roundZoom } from './result-view.utils';
+import { getLayoutRectRelativeTo, roundZoom } from './result-view-utils';
+import { getConnectedFlowFromNode } from './experience/result-experience-data';
 import { useTheoryImageExport } from './use-theory-image-export';
 import styles from './result-experience.module.sass';
 

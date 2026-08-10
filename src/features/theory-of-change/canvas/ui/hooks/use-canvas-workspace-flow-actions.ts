@@ -1,8 +1,8 @@
 'use client';
 
-import { useCallback } from 'react';
-import type { Connection, NodeMouseHandler } from '@xyflow/react';
+import { useCallback, type MouseEvent } from 'react';
 import type { CanvasStageNode } from '../../react-flow/canvas-flow.types';
+import type { CanvasConnectionCandidate } from '../../react-flow/canvas-flow.contracts';
 import type { CanvasTranslator } from '../canvas-copy';
 import { CANVAS_CONNECT_NOTICE_KEYS } from './canvas-connect-notices';
 
@@ -39,11 +39,11 @@ export function useCanvasWorkspaceFlowActions({
     ui.setCreatorOpen(false);
   }, [ui]);
 
-  const onNodeClick: NodeMouseHandler<CanvasStageNode> = useCallback((_event, node) => {
+  const onNodeClick = useCallback((_event: MouseEvent, node: Pick<CanvasStageNode, 'id'>) => {
     ui.selectNode(node.id);
   }, [ui]);
 
-  const onConnect = useCallback((connection: Connection) => {
+  const onConnect = useCallback((connection: CanvasConnectionCandidate) => {
     const sourceNode = connection.source
       ? flow.nodes.find((node) => node.id === connection.source) ?? null
       : null;

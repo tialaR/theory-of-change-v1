@@ -1,0 +1,5 @@
+.sharkops/bites/so-009-narrative-god-slayer-wave-07-hotfix/verify.sh
+.sharkops/bites/so-009-narrative-god-slayer-wave-07-hotfix/apply.sh
+.sharkops/bites/so-009-narrative-god-slayer-wave-07-hotfix/README.md
+.sharkops/bites/so-009-narrative-god-slayer-wave-07-hotfix/MANIFEST.json
+.sharkops/bites/so-009-narrative-god-slayer-wave-07-hotfix/rollback.sh

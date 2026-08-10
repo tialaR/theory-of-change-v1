@@ -1,0 +1,361 @@
+// Create/edit block fields use TdmField — keep controls transparent; shell owns chrome.
+.blockFormsPanel
+  // Hairline from inherited --stage-accent (set on the accordion for the selected card).
+  --tdm-field-use-mask-border: 0
+  --tdm-field-accent: var(--stage-accent)
+  --tdm-field-accent-rest: color-mix(in srgb, var(--stage-accent) calc(var(--canvas-field-border-rest-opacity) * 100%), transparent)
+
+  :global([class*='controlShell'])
+    --canvas-field-border-rest: color-mix(in srgb, var(--stage-accent) calc(var(--canvas-field-border-rest-opacity) * 100%), transparent)
+    --canvas-field-border-hover: color-mix(in srgb, var(--stage-accent) calc(var(--canvas-field-border-hover-opacity) * 100%), transparent)
+    --canvas-field-border-focus: color-mix(in srgb, var(--stage-accent) calc(var(--canvas-field-border-focus-opacity) * 100%), transparent)
+    border-width: var(--canvas-field-border-width)
+    border-color: var(--canvas-field-border-rest)
+
+    &:hover
+      border-width: var(--canvas-field-border-width)
+      border-color: var(--canvas-field-border-hover)
+
+    &:focus,
+    &:focus-visible,
+    &:focus-within
+      border-width: var(--canvas-field-border-width)
+      border-color: var(--canvas-field-border-focus)
+
+.blockFormsPanel :global(.formInput),
+.blockFormsPanel :global(.formTextarea),
+.blockFormsPanel :global(input),
+.blockFormsPanel :global(textarea)
+  min-height: 0
+  padding-inline: 0
+  font-size: 0.875rem
+  background: transparent
+  border: 0
+  border-radius: 0
+  box-shadow: none
+  color: var(--tdm-fg-primary)
+
+  &::placeholder
+    color: var(--tdm-fg-subtle)
+    font-size: 0.875rem
+
+  &:focus,
+  &:focus-visible
+    border: 0
+    box-shadow: none
+    outline: none
+    background: transparent
+
+.blockFormsPanel :global(.formTextarea),
+.blockFormsPanel :global(textarea)
+  min-height: 3.5rem
+  max-height: 5.5rem
+  resize: none
+
+// Target real <label> only — never [class*='label'], which steals TdmButton .label color.
+.blockFormsPanel :global(label),
+.blockFormsPanel :global([class*='fieldLabel'])
+  font-size: 0.75rem
+  letter-spacing: 0.02em
+  color: var(--tdm-fg-secondary)
+
+// Quick shortcuts — two discrete rows, Exemplos + Guia only
+.quickShortcutsCard
+  padding: 0.55rem 0
+  opacity: 1
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.05)
+  gap: 0.4rem
+
+  &::before
+    content: none
+    display: none
+
+.quickShortcutsHeader
+  margin-bottom: 0
+
+.quickShortcutsTitleRow
+  gap: 0.28rem
+
+  > span
+    width: 1rem
+    height: 1rem
+    opacity: 0.55
+    border-color: transparent
+    background: transparent
+    box-shadow: none
+
+    svg
+      width: 0.62rem
+      height: 0.62rem
+
+.quickShortcutsTitle
+  margin: 0
+  color: $text-faint
+  font-size: 0.48rem
+  font-weight: 600
+  letter-spacing: 0.08em
+  text-transform: uppercase
+
+.quickShortcutsGrid
+  display: flex
+  flex-direction: column
+  flex-wrap: nowrap
+  gap: 0.2rem
+  width: 100%
+  grid-template-columns: none
+
+.quickShortcutBtn
+  appearance: none
+  position: relative
+  isolation: isolate
+  display: inline-flex
+  flex-direction: row
+  align-items: center
+  justify-content: flex-start
+  width: 100%
+  min-width: 0
+  gap: 0.45rem
+  min-height: 1.85rem
+  padding: 0.28rem 0.55rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.07)
+  border-radius: 0.75rem
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
+  color: $text-muted
+  font-size: 0.68rem
+  font-weight: 520
+  letter-spacing: 0.01em
+  line-height: 1.2
+  text-decoration: none
+  text-transform: none
+  white-space: nowrap
+  overflow: hidden
+  cursor: pointer
+  transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease
+
+  &::before
+    display: none
+
+  > *
+    position: relative
+    z-index: 1
+
+  &:hover:not(:disabled),
+  &:focus-visible:not(:disabled)
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03))
+    border-color: rgba(255, 255, 255, 0.12)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1)
+    color: $text
+    outline: none
+    transform: translateY(-0.0625rem)
+
+    .quickShortcutBtnIcon
+      color: $text
+      opacity: 0.92
+      border-color: transparent
+      background: transparent
+
+    .quickShortcutBtnLabel
+      color: $text
+
+.quickShortcutBtnIcon
+  display: inline-grid
+  place-items: center
+  width: 0.95rem
+  height: 0.95rem
+  flex: 0 0 auto
+  border: 0
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+  color: $text-faint
+  opacity: 0.78
+
+  svg
+    width: 0.72rem
+    height: 0.72rem
+    display: block
+
+.quickShortcutBtnLabel
+  display: block
+  flex: 1
+  min-width: 0
+  text-align: left
+  color: inherit
+  font-weight: 520
+  letter-spacing: 0.01em
+  overflow: hidden
+  text-overflow: ellipsis
+
+.resultCard
+  padding: 0.55rem 0 0
+  opacity: 1
+  border-bottom: 0
+  background: transparent
+  box-shadow: none
+  gap: 0.35rem
+
+.finalResultAccent,
+.finalResultGlassVeil,
+.finalResultGlassHighlight,
+.finalResultGlassSpecular,
+.finalResultGlassEdge,
+.finalResultGlassNoise,
+.finalResultGlassHaze,
+.finalResultHazeCore,
+.finalResultHazeBand,
+.finalResultHazeSpread,
+.finalResultSculptureZone,
+.finalResultAtmosphere,
+.finalResultPanelGlassSvg,
+.finalResultPanelGlassBackdrop,
+.finalResultPanelGlassGrain,
+.finalResultPanelGlassRefraction,
+.finalResultPanelGlassDepth,
+.finalResultPanelGlassRimLeft,
+.finalResultPanelGlassRimTop,
+.finalResultPanelVeil,
+.finalResultPanelSpecular,
+.finalResultPanelEdge,
+.finalResultHairline,
+.finalResultKicker
+  display: none !important
+
+.finalResultScene
+  min-height: 0
+  padding: 0
+
+.finalResultComposition
+  gap: 0.2rem
+
+.finalResultGlassPanel
+  padding: 0
+  border: 0
+  background: transparent
+  box-shadow: none
+
+.finalResultEditorial
+  gap: 0.2rem
+
+.finalResultHeadline
+  margin: 0
+  font-size: 0.78rem
+  line-height: 1.25
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+
+.finalResultHeadlineLead,
+.finalResultHeadlineAccent
+  color: $text
+  font-weight: 600
+  font-size: 0.78rem
+  letter-spacing: -0.01em
+
+.finalResultLead
+  margin: 0.2rem 0 0
+  font-size: 0.62rem
+  line-height: 1.35
+  color: $text-muted
+  max-width: 32ch
+
+.finalResultFooter
+  margin-top: 0.45rem
+  gap: 0.3rem
+
+.finalResultHelper
+  font-size: 0.58rem
+  line-height: 1.35
+
+.heroFormShell
+  // Hero theory fields — generic white solid hairline (border tokens from .sidebar).
+  --tdm-field-use-mask-border: 0
+  --tdm-field-accent: initial
+  --tdm-field-accent-rest: initial
+
+  :global(.formInput),
+  :global(.formTextarea),
+  :global(input),
+  :global(textarea)
+    min-height: 0
+    padding-inline: 0
+    font-size: 0.875rem
+    background: transparent
+    border: 0
+    border-radius: 0
+    box-shadow: none
+    color: var(--tdm-fg-primary)
+
+    &::placeholder
+      color: var(--tdm-fg-subtle)
+
+    &:focus,
+    &:focus-visible
+      border: 0
+      box-shadow: none
+      outline: none
+      background: transparent
+
+  :global([class*='fieldLabel']),
+  :global(label)
+    font-size: 0.75rem
+    letter-spacing: 0.02em
+    color: var(--tdm-fg-secondary)
+
+.contextActions
+  gap: 0.4rem
+
+.markerBlock
+  // Connection marker fields — generic white solid hairline (border tokens from .sidebar).
+  --tdm-field-use-mask-border: 0
+  display: grid
+  gap: var(--tdm-space-4)
+  padding: 0.55rem 0
+  border-color: transparent
+  background: transparent
+  box-shadow: none
+
+  :global(.formInput),
+  :global(input),
+  :global(textarea)
+    min-height: 0
+    border: 0
+    border-radius: 0
+    background: transparent
+    box-shadow: none
+    color: var(--tdm-fg-primary)
+    padding-inline: 0
+
+    &:focus,
+    &:focus-visible
+      border: 0
+      box-shadow: none
+      outline: none
+
+.stagecurrent
+  border-color: rgba(255, 255, 255, 0.08)
+  background: rgba(255, 255, 255, 0.02)
+  box-shadow: inset 0.12rem 0 0 color-mix(in srgb, var(--stage-accent) 55%, transparent)
+
+  .stageDot
+    box-shadow: none
+
+  &:hover
+    border-color: rgba(255, 255, 255, 0.1)
+    background: rgba(255, 255, 255, 0.03)
+
+.stageProgressSegment
+  border-radius: 0.05rem
+
+.stageProgressSegmentLit
+  box-shadow: none
+
+.stageDot
+  box-shadow: none !important
+  filter: none
+
+.dragCard
+  &:hover
+    transform: translateY(-0.0625rem) !important
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12) !important
+

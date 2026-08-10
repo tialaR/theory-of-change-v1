@@ -1,0 +1,7 @@
+{
+  "id": "SO-006",
+  "codename": "Component God Slayer",
+  "wave": 4,
+  "status": "ACTIVE",
+  "purpose": "Turn TdmSidebar into a pure visibility shell and move feature contracts to a dedicated adapter"
+}

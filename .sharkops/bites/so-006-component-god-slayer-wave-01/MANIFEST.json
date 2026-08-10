@@ -1,0 +1,7 @@
+{
+  "id": "SO-006",
+  "codename": "Component God Slayer",
+  "wave": 1,
+  "status": "ACTIVE",
+  "purpose": "Extract sidebar contracts, primitives and quick shortcuts from the React God Component without changing behavior."
+}

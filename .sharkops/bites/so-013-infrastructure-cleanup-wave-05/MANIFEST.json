@@ -1,0 +1,17 @@
+{
+  "id": "SO-013",
+  "codename": "Infrastructure Cleanup",
+  "wave": "05",
+  "status": "ACTIVE",
+  "revision": 6,
+  "title": "Infrastructure Boundaries Cleanup",
+  "changes": [
+    "Move shared Canvas project mock store from infrastructure/msw to infrastructure/memory",
+    "Remove server-to-MSW infrastructure dependency",
+    "Keep MSW handlers and server repository on the same neutral in-memory store",
+    "Evolve Wave 04 gate for cumulative SO-013 progression",
+    "Add executable Wave 05 boundary regression gate"
+  ],
+  "gate": "npm run check:tdm:infrastructure-cleanup:wave05",
+  "next": "SO-013 Infrastructure Cleanup Wave 06 Audit"
+}

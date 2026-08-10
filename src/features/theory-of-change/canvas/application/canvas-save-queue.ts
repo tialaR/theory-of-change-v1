@@ -3,6 +3,7 @@ import {
   createCanvasProjectContentSignature,
   type CanvasProjectContent
 } from './canvas-project-content';
+import { createCanvasEnginePersistenceSnapshot } from '../engine/canvas-engine';
 
 export type CanvasSaveExecutionResult = {
   project: CanvasProject;
@@ -21,19 +22,11 @@ export function createCanvasSaveQueue(input: {
   let persistedSignature = createCanvasProjectContentSignature(input.initialProject);
   let queue: Promise<void> = Promise.resolve();
 
-  function snapshotContent(content: CanvasProjectContent): CanvasProjectContent {
-    return {
-      title: content.title,
-      nodes: structuredClone(content.nodes),
-      connections: structuredClone(content.connections),
-      viewport: content.viewport ? { ...content.viewport } : undefined
-    };
-  }
 
   async function persist(content: CanvasProjectContent): Promise<CanvasSaveExecutionResult> {
     const draft: CanvasProject = {
       ...currentProject,
-      ...snapshotContent(content)
+      ...createCanvasEnginePersistenceSnapshot(content)
     };
     const draftSignature = createCanvasProjectContentSignature(draft);
 
@@ -50,7 +43,7 @@ export function createCanvasSaveQueue(input: {
 
   return {
     saveLatest(content: CanvasProjectContent) {
-      const snapshot = snapshotContent(content);
+      const snapshot = createCanvasEnginePersistenceSnapshot(content);
       const operation = queue.then(() => persist(snapshot));
       queue = operation.then(
         () => undefined,

@@ -1,0 +1,9 @@
+{
+  "id": "SO-013",
+  "codename": "Infrastructure Cleanup",
+  "wave": "03",
+  "status": "ACTIVE",
+  "revision": 4,
+  "purpose": "Remove proven legacy alias surfaces and route live consumers to canonical modules without changing runtime behavior",
+  "updatedAt": "2026-08-07T04:00:00.000Z"
+}

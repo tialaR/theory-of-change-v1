@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "owner": "SO-014 Final Architecture Closeout",
+  "purpose": "Canonical executable gate registry for final architecture closeout",
+  "groups": [
+    {
+      "id": "architecture-closeouts",
+      "required": true,
+      "gates": [
+        {
+          "id": "SO-007",
+          "script": "check:tdm:god-hooks-slayer:closeout"
+        },
+        {
+          "id": "SO-008",
+          "script": "check:tdm:result-view-god-slayer:closeout"
+        },
+        {
+          "id": "SO-009",
+          "script": "check:tdm:narrative-god-slayer:closeout"
+        },
+        {
+          "id": "SO-010",
+          "script": "check:tdm:application-slayer:closeout-hotfix"
+        },
+        {
+          "id": "SO-011",
+          "script": "check:tdm:react-flow-isolation:closeout"
+        },
+        {
+          "id": "SO-012",
+          "script": "check:tdm:canvas-engine:closeout"
+        },
+        {
+          "id": "SO-013",
+          "script": "check:tdm:infrastructure-cleanup:closeout"
+        }
+      ]
+    },
+    {
+      "id": "so014-sealing-waves",
+      "required": true,
+      "gates": [
+        {
+          "id": "wave01",
+          "script": "check:tdm:final-architecture:wave01"
+        },
+        {
+          "id": "wave02",
+          "script": "check:tdm:final-architecture:wave02"
+        },
+        {
+          "id": "wave03",
+          "script": "check:tdm:final-architecture:wave03"
+        },
+        {
+          "id": "wave04",
+          "script": "check:tdm:final-architecture:wave04"
+        },
+        {
+          "id": "wave05",
+          "script": "check:tdm:final-architecture:wave05"
+        },
+        {
+          "id": "wave06",
+          "script": "check:tdm:final-architecture:wave06"
+        },
+        {
+          "id": "wave07",
+          "script": "check:tdm:final-architecture:wave07"
+        },
+        {
+          "id": "wave08",
+          "script": "check:tdm:final-architecture:wave08"
+        },
+        {
+          "id": "wave09",
+          "script": "check:tdm:final-architecture:wave09"
+        },
+        {
+          "id": "wave10",
+          "script": "check:tdm:final-architecture:wave10"
+        },
+        {
+          "id": "wave11",
+          "script": "check:tdm:final-architecture:wave11"
+        }
+      ]
+    },
+    {
+      "id": "repository-regression",
+      "required": true,
+      "gates": [
+        {
+          "id": "typecheck",
+          "script": "typecheck"
+        },
+        {
+          "id": "canvas-lint",
+          "script": "lint:canvas"
+        },
+        {
+          "id": "unit-tests",
+          "script": "test:unit"
+        },
+        {
+          "id": "canvas-e2e",
+          "script": "test:e2e:canvas"
+        },
+        {
+          "id": "sharkops",
+          "script": "shark:verify"
+        }
+      ]
+    }
+  ]
+}

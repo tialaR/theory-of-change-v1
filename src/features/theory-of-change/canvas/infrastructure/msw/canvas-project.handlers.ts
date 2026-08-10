@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import type { CanvasProject, CanvasProjectPatch } from '../../domain/canvas-project';
-import { canvasProjectMockStore } from './canvas-project.mock-store';
+import { canvasProjectMockStore } from '../memory/canvas-project.mock-store';
 
 const collectionEndpoint = '*/api/v1/users/:ownerId/canvas-projects';
 const itemEndpoint = '*/api/v1/users/:ownerId/canvas-projects/:projectId';

@@ -1,15 +1,9 @@
 import type { CanvasStageId } from '../domain/canvas-project';
+import type { CanvasStageCopy } from '../engine/canvas-engine';
+
+export type { CanvasStageCopy } from '../engine/canvas-engine';
 
 export type CanvasTranslator = (key: string, values?: Record<string, string | number>) => string;
-
-export type CanvasStageCopy = {
-  label: string;
-  singular: string;
-  hint: string;
-  titlePlaceholder: string;
-  descriptionPlaceholder: string;
-  advancedPlaceholder: string;
-};
 
 export function createCanvasStageCopy(t: CanvasTranslator, stage: CanvasStageId): CanvasStageCopy {
   return {

@@ -1,0 +1,18 @@
+{
+  "id": "SO-013",
+  "codename": "Infrastructure Cleanup",
+  "wave": "06",
+  "status": "ACTIVE",
+  "revision": 7,
+  "title": "Empty Files & Dead Assets Cleanup",
+  "changes": [
+    "Audit source/public trees for zero-byte files and static asset consumers",
+    "Confirm no zero-byte source/public/script/tool files exist",
+    "Remove only public/tdm-construtor-header-canonical.webp after proving it is an unreferenced byte-identical duplicate of the live canonical public/brand copy",
+    "Preserve public/brand/tmd-construtor-header-canonical.webp and its live Canvas header consumer",
+    "Evolve Wave 05 gate for cumulative SO-013 progression",
+    "Add executable Wave 06 dead-asset regression gate"
+  ],
+  "gate": "npm run check:tdm:infrastructure-cleanup:wave06",
+  "next": "SO-013 Infrastructure Cleanup Wave 07 Closeout"
+}

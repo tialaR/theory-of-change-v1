@@ -1,9 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { centralizeCanvasColumns } from './canvas-layout';
 import { CANVAS_COLUMN_X, CANVAS_DIMENSIONS } from '../domain/canvas-ui.constants';
-import type { CanvasStageNode } from '../react-flow/canvas-flow.types';
+import type { CanvasLayoutNode } from './canvas-layout';
 
-const nodes: CanvasStageNode[] = [
+type TestLayoutNode = CanvasLayoutNode & { type: 'canvas-stage'; data: CanvasLayoutNode['data'] & { title: string; description: string; advancedDetails: string } };
+
+const nodes: TestLayoutNode[] = [
   {
     id: 'input-2',
     type: 'canvas-stage',

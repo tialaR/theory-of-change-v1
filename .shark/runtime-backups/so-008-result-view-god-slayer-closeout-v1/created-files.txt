@@ -1,0 +1,6 @@
+.sharkops/bites/so-008-result-view-god-slayer-closeout/verify.sh
+.sharkops/bites/so-008-result-view-god-slayer-closeout/apply.sh
+.sharkops/bites/so-008-result-view-god-slayer-closeout/README.md
+.sharkops/bites/so-008-result-view-god-slayer-closeout/MANIFEST.json
+.sharkops/bites/so-008-result-view-god-slayer-closeout/rollback.sh
+scripts/tdm-contract-v3/check-result-view-god-slayer-closeout.mjs

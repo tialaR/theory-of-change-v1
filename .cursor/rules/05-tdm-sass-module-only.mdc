@@ -1,0 +1,16 @@
+---
+description: Enforce the official TDM Sass Module policy in all generated and edited UI styles.
+globs:
+  - "src/**/*.{ts,tsx,sass,scss,css}"
+alwaysApply: true
+---
+
+# TDM Sass Module only
+
+- Never create `.scss` or `.module.scss` files.
+- Never migrate existing `.module.sass` files to SCSS.
+- Component styles must use `.module.sass` with indented Sass syntax.
+- Keep styles colocated with the owning component.
+- Do not bypass this rule with broad global CSS.
+- Complex CSS functions must compile under Dart Sass in indented syntax.
+- Run `npm run check:tdm:sass-module-policy` before declaring work complete.

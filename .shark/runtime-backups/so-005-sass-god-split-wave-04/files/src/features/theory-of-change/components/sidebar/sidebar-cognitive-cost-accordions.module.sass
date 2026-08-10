@@ -1,0 +1,80 @@
+// Criar / Editar bloco — collapsed only (aria-expanded=false). Expanded untouched.
+.blockFormsPanel .blockSidebarAccordion:has(> .blockAccordionHeader[aria-expanded='false'])
+  box-sizing: border-box
+  border: var(--tdm-button-border-width, 0.0625rem) solid color-mix(in srgb, var(--stage-accent) calc(var(--canvas-cta-border-rest-opacity, 0.24) * 100%), transparent)
+  border-radius: 0.5rem
+  background: transparent
+  box-shadow: none
+  opacity: 1
+
+  &::before,
+  &::after
+    display: none
+    content: none
+    opacity: 0
+
+  &:has(.blockAccordionHeader:hover),
+  &:has(.blockAccordionHeader:focus-visible)
+    background: transparent
+    box-shadow: none
+    transform: none
+    border-color: color-mix(in srgb, var(--stage-accent) calc(var(--canvas-cta-border-hover-opacity, 0.30) * 100%), transparent)
+
+.blockFormsPanel .blockAccordionHeader[aria-expanded='false']
+  box-sizing: border-box
+  min-height: 2.5rem
+  padding: 0.625rem 0.5rem
+  border-radius: 0.5rem
+  background: transparent
+  color: color-mix(in srgb, var(--stage-accent) calc(var(--canvas-cta-content-rest-opacity, 0.52) * 100%), transparent)
+  font-size: var(--tdm-button-md-font-size, 0.875rem)
+  font-weight: var(--tdm-button-font-weight, 320)
+  line-height: var(--tdm-button-line-height, 1.25rem)
+  letter-spacing: var(--tdm-button-letter-spacing, -0.01em)
+  text-transform: uppercase
+  opacity: 1
+
+  .sidebarAccordionTitle
+    color: inherit
+    font-size: inherit
+    font-weight: inherit
+    line-height: inherit
+    letter-spacing: inherit
+    text-transform: uppercase
+
+  .sidebarAccordionChevron
+    color: inherit
+    opacity: 1
+
+  &:hover,
+  &:focus-visible
+    background: transparent
+    box-shadow: none
+    color: color-mix(in srgb, var(--stage-accent) calc(var(--canvas-cta-content-hover-opacity, 0.60) * 100%), transparent)
+
+    .sidebarAccordionTitle
+      color: inherit
+
+    .sidebarAccordionChevron
+      color: inherit
+      opacity: 1
+
+.blockFormsPanel .blockSidebarAccordion.sidebarAccordionOpen
+  opacity: 1
+  border-color: color-mix(in srgb, var(--stage-accent, rgba(255, 255, 255, 0.5)) 28%, rgba(255, 255, 255, 0.1))
+
+  .blockAccordionHeader
+    color: color-mix(in srgb, var(--stage-accent, var(--tdm-fg-primary)) 22%, var(--tdm-fg-primary))
+
+    .sidebarAccordionChevron
+      color: inherit
+      opacity: 1
+
+    &:hover,
+    &:focus-visible
+      background: transparent
+
+      .sidebarAccordionChevron
+        color: inherit
+// END CANVAS SIDEBAR COGNITIVE COST SURGERY — AGORA + ETAPAS + ACCORDIONS
+

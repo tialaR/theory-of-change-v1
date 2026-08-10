@@ -1,0 +1,1 @@
+{"id":"SO-014","codename":"Final Architecture Closeout","wave":"04","title":"Public API & Contract Verification","status":"ACTIVE","runtimeChanges":false,"gate":"npm run check:tdm:final-architecture:wave04","next":"SO-014 Wave 05 | Runtime / Infrastructure Separation Verification"}

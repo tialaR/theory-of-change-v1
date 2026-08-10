@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import type { CanvasRelationKind } from '../../domain/canvas-project';
+import { resolveCanvasEngineSelection } from '../../engine/canvas-engine';
 import type { CanvasCausalEdge, CanvasStageNode } from '../../react-flow/canvas-flow.types';
 
 type UseCanvasSelectionInput = {
@@ -18,22 +19,20 @@ export function useCanvasSelection({
   getRelationKind
 }: UseCanvasSelectionInput) {
   return useMemo(() => {
-    const selectedNode = nodes.find((node) => node.id === selectedNodeId) ?? null;
-    const selectedEdge = edges.find((edge) => edge.id === selectedEdgeId) ?? null;
-    const selectedEdgeSource = selectedEdge
-      ? nodes.find((node) => node.id === selectedEdge.source) ?? null
-      : null;
-    const selectedEdgeTarget = selectedEdge
-      ? nodes.find((node) => node.id === selectedEdge.target) ?? null
-      : null;
-    const selectedRelationKind = selectedEdge ? getRelationKind(selectedEdge) : null;
+    const selection = resolveCanvasEngineSelection({
+      nodes,
+      edges,
+      selectedNodeId,
+      selectedEdgeId,
+      resolveEdgeMetadata: getRelationKind
+    });
 
     return {
-      selectedNode,
-      selectedEdge,
-      selectedEdgeSource,
-      selectedEdgeTarget,
-      selectedRelationKind
+      selectedNode: selection.selectedNode,
+      selectedEdge: selection.selectedEdge,
+      selectedEdgeSource: selection.selectedEdgeSource,
+      selectedEdgeTarget: selection.selectedEdgeTarget,
+      selectedRelationKind: selection.selectedEdgeMetadata
     };
   }, [edges, getRelationKind, nodes, selectedEdgeId, selectedNodeId]);
 }

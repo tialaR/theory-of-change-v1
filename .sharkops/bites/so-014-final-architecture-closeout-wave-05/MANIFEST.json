@@ -1,0 +1,1 @@
+{"id":"SO-014","codename":"Final Architecture Closeout","wave":"05","title":"Runtime / Infrastructure Separation Verification","status":"ACTIVE","runtimeChanges":false,"gate":"npm run check:tdm:final-architecture:wave05","next":"SO-014 Wave 06 | Dead Path & Legacy Residue Verification"}

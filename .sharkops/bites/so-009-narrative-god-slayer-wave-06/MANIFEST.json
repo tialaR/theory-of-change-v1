@@ -1,0 +1,13 @@
+{
+  "id": "SO-009",
+  "codename": "Narrative God Slayer",
+  "wave": 6,
+  "status": "ACTIVE",
+  "ownership": [
+    "macro page assembly",
+    "scoped page assembly",
+    "disconnected narrative sections",
+    "references page assembly"
+  ],
+  "gate": "check:tdm:narrative-god-slayer:wave06"
+}

@@ -1,9 +1,8 @@
 'use client';
 
 import { useCallback, useRef, useState } from 'react';
-import type { ReactFlowInstance } from '@xyflow/react';
 import type { CanvasViewport } from '../../domain/canvas-project';
-import type { CanvasCausalEdge, CanvasStageNode } from '../../react-flow/canvas-flow.types';
+import type { CanvasViewportNode, CanvasViewportRuntime } from '../../react-flow/canvas-flow.contracts';
 import type { CanvasTranslator } from '../canvas-copy';
 
 type FramingContext = {
@@ -13,8 +12,8 @@ type FramingContext = {
 
 type UseCanvasViewportActionsInput = {
   initialViewport?: CanvasViewport;
-  nodes: CanvasStageNode[];
-  reactFlow: ReactFlowInstance<CanvasStageNode, CanvasCausalEdge>;
+  nodes: CanvasViewportNode[];
+  viewportRuntime: CanvasViewportRuntime;
   inspectorOpen: boolean;
   fullCanvasMode: boolean;
   setInspectorOpen: (open: boolean) => void;
@@ -28,7 +27,7 @@ type UseCanvasViewportActionsInput = {
 export function useCanvasViewportActions({
   initialViewport,
   nodes,
-  reactFlow,
+  viewportRuntime,
   inspectorOpen,
   fullCanvasMode,
   setInspectorOpen,
@@ -48,7 +47,7 @@ export function useCanvasViewportActions({
     if (!surface) return;
 
     const rect = surface.getBoundingClientRect();
-    const bounds = reactFlow.getNodesBounds(nodes);
+    const bounds = viewportRuntime.getNodesBounds(nodes);
     const safeLeft = 104;
     const nextInspectorOpen = context.inspectorOpen ?? inspectorOpen;
     const nextFullCanvasMode = context.fullCanvasMode ?? fullCanvasMode;
@@ -66,8 +65,8 @@ export function useCanvasViewportActions({
       ? safeTop + ((availableHeight - renderedHeight) / 2) - (bounds.y * zoom)
       : safeTop - (bounds.y * zoom);
 
-    void reactFlow.setViewport({ x, y, zoom }, { duration });
-  }, [fullCanvasMode, inspectorOpen, nodes, reactFlow]);
+    void viewportRuntime.setViewport({ x, y, zoom }, { duration });
+  }, [fullCanvasMode, inspectorOpen, nodes, viewportRuntime]);
 
   const onViewportChange = useCallback((nextViewport: CanvasViewport) => {
     setViewport((current) => {
@@ -81,26 +80,26 @@ export function useCanvasViewportActions({
 
   const frameVisualization = useCallback(() => {
     if (!nodes.length) {
-      void reactFlow.setViewport({ x: 0, y: 0, zoom: 1 }, { duration: 260 });
+      void viewportRuntime.setViewport({ x: 0, y: 0, zoom: 1 }, { duration: 260 });
       notify(t('notices.viewCentered'));
       return;
     }
     fitCurrentGraph(560);
     notify(t('notices.viewFramed'));
-  }, [fitCurrentGraph, nodes.length, notify, reactFlow, t]);
+  }, [fitCurrentGraph, nodes.length, notify, viewportRuntime, t]);
 
   const openInspector = useCallback(() => {
-    if (!inspectorOpen) viewportBeforeInspectorRef.current = { ...reactFlow.getViewport() };
+    if (!inspectorOpen) viewportBeforeInspectorRef.current = { ...viewportRuntime.getViewport() };
     setInspectorOpen(true);
     window.setTimeout(() => fitCurrentGraph(520, { inspectorOpen: true, fullCanvasMode: false }), 500);
-  }, [fitCurrentGraph, inspectorOpen, reactFlow, setInspectorOpen]);
+  }, [fitCurrentGraph, inspectorOpen, viewportRuntime, setInspectorOpen]);
 
   const closeInspector = useCallback(() => {
     setInspectorOpen(false);
     const previousViewport = viewportBeforeInspectorRef.current;
     viewportBeforeInspectorRef.current = null;
-    if (previousViewport) void reactFlow.setViewport(previousViewport, { duration: 460 });
-  }, [reactFlow, setInspectorOpen]);
+    if (previousViewport) void viewportRuntime.setViewport(previousViewport, { duration: 460 });
+  }, [viewportRuntime, setInspectorOpen]);
 
   const setCanvasMode = useCallback((nextFullCanvasMode: boolean) => {
     setFullCanvasMode(nextFullCanvasMode);
@@ -120,7 +119,7 @@ export function useCanvasViewportActions({
     closeInspector,
     enterFullCanvas: () => setCanvasMode(true),
     exitFullCanvas: () => setCanvasMode(false),
-    zoomIn: () => reactFlow.zoomIn({ duration: 180 }),
-    zoomOut: () => reactFlow.zoomOut({ duration: 180 })
+    zoomIn: () => viewportRuntime.zoomIn({ duration: 180 }),
+    zoomOut: () => viewportRuntime.zoomOut({ duration: 180 })
   };
 }

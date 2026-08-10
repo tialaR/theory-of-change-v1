@@ -18,7 +18,7 @@ type CanvasWorkspaceActionsOptions = CanvasWorkspaceFoundation & {
 export function useCanvasWorkspaceActions({
   flow,
   ui,
-  reactFlow,
+  stageDropRuntime,
   selection,
   viewportActions,
   saveController,
@@ -26,7 +26,7 @@ export function useCanvasWorkspaceActions({
   stageCopy
 }: CanvasWorkspaceActionsOptions) {
   const stageDragAndDrop = useCanvasStageDragAndDrop({
-    reactFlow,
+    stageDropRuntime,
     createNode: flow.createNode,
     selectNode: ui.selectNode,
     setCreatorOpen: ui.setCreatorOpen,

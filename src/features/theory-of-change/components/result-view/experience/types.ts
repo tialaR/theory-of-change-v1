@@ -10,11 +10,10 @@ export interface ResultExperienceProps {
   edges: TdmEdge[];
 }
 
-export type ResultExperienceData = ResultExperienceProps;
 
 export const resultStageOrder = TDM_STAGE_ORDER;
 
-export function getStageNodes(data: ResultExperienceData, stage: TdmStage) {
+export function getStageNodes(data: ResultExperienceProps, stage: TdmStage) {
   return data.nodes.filter((node) => node.stage === stage);
 }
 

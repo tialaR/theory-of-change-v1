@@ -1,0 +1,7 @@
+{
+  "id": "SO-011",
+  "codename": "React Flow Isolation",
+  "wave": "08-hotfix-2",
+  "purpose": "Update the Wave 04 executable contract to recognize the explicit drop runtime adapter introduced by Wave 08 without moving XYFlow back into UI foundation",
+  "status": "ACTIVE"
+}

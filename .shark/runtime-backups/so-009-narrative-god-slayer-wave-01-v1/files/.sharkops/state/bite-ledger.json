@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "bites": [
+    {
+      "id": "SO-001",
+      "codename": "Black Box",
+      "purpose": "Knowledge as Code",
+      "status": "COMPLETE",
+      "revision": 1,
+      "path": ".sharkops/bites/so-001-black-box",
+      "createdAt": "2026-07-31T01:56:33.757Z",
+      "completedAt": "2026-07-31T02:46:18.595Z",
+      "updatedAt": "2026-07-31T02:46:18.595Z"
+    },
+    {
+      "id": "SO-002",
+      "codename": "Canvas Armor",
+      "purpose": "Protect canvas behavior before structural refactoring",
+      "status": "COMPLETE",
+      "revision": 2,
+      "path": ".sharkops/bites/so-002-canvas-armor",
+      "createdAt": "2026-08-01T04:37:00.000Z",
+      "updatedAt": "2026-08-02T20:55:00.000Z",
+      "completedAt": "2026-08-02T20:55:00.000Z"
+    },
+    {
+      "id": "SO-003",
+      "codename": "God Slayer",
+      "purpose": "Reduce the Canvas workspace controller to a thin orchestration facade without changing behavior",
+      "status": "COMPLETE",
+      "revision": 4,
+      "path": ".sharkops/bites/so-003-god-slayer-wave-04",
+      "createdAt": "2026-08-02T20:55:00.000Z",
+      "updatedAt": "2026-08-02T21:20:00.000Z",
+      "completedAt": "2026-08-02T21:20:00.000Z"
+    },
+    {
+      "id": "SO-004",
+      "codename": "Visual Foundation",
+      "purpose": "Create a calmer, layered and stage-aware Canvas visual foundation without changing behavior",
+      "status": "COMPLETE",
+      "revision": 4,
+      "path": ".sharkops/bites/so-004-visual-foundation-wave-04",
+      "createdAt": "2026-08-02T21:30:00.000Z",
+      "updatedAt": "2026-08-03T01:00:00.000Z",
+      "completedAt": "2026-08-03T01:00:00.000Z"
+    },
+    {
+      "id": "SO-005",
+      "codename": "Sass God Split",
+      "purpose": "Split Canvas and Sidebar Sass Gods by ownership while preserving the homologated visual output",
+      "status": "COMPLETE",
+      "revision": 4,
+      "path": ".sharkops/bites/so-005-sass-god-split-wave-04",
+      "createdAt": "2026-08-03T01:00:00.000Z",
+      "updatedAt": "2026-08-03T02:05:00.000Z",
+      "completedAt": "2026-08-03T02:05:00.000Z"
+    },
+    {
+      "id": "SO-006",
+      "codename": "Component God Slayer",
+      "purpose": "Split React God Components by business responsibility without changing behavior",
+      "status": "COMPLETE",
+      "revision": 15,
+      "path": ".sharkops/bites/so-006-component-god-slayer-wave-14",
+      "createdAt": "2026-08-03T02:30:00.000Z",
+      "updatedAt": "2026-08-04T05:15:00.000Z",
+      "completedAt": "2026-08-04T05:15:00.000Z"
+    },
+    {
+      "id": "SO-007",
+      "codename": "God Hooks Slayer",
+      "purpose": "Split hooks and controllers by lifecycle, contract and ownership without changing behavior",
+      "status": "COMPLETE",
+      "revision": 8,
+      "path": ".sharkops/bites/so-007-god-hooks-slayer-closeout",
+      "createdAt": "2026-08-04T05:20:00.000Z",
+      "updatedAt": "2026-08-04T17:40:00.000Z",
+      "completedAt": "2026-08-04T17:40:00.000Z"
+    },
+    {
+      "id": "SO-008",
+      "codename": "Result View God Slayer",
+      "purpose": "Split the ResultView God Component by presentation and lifecycle ownership without changing behavior",
+      "status": "COMPLETE",
+      "revision": 8,
+      "path": ".sharkops/bites/so-008-result-view-god-slayer-closeout",
+      "createdAt": "2026-08-04T18:00:00.000Z",
+      "updatedAt": "2026-08-05T01:20:00.000Z",
+      "completedAt": "2026-08-05T01:20:00.000Z"
+    }
+  ]
+}

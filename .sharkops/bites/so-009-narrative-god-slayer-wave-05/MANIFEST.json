@@ -1,0 +1,11 @@
+{
+  "id": "SO-009",
+  "wave": "05",
+  "codename": "Narrative God Slayer",
+  "status": "ACTIVE",
+  "files": [
+    "theory-narrative.mapper.ts",
+    "theory-delivery-result-builders.ts"
+  ],
+  "gate": "check:tdm:narrative-god-slayer:wave05"
+}

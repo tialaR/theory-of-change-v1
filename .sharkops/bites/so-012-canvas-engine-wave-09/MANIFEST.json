@@ -1,0 +1,12 @@
+{
+  "id": "SO-012",
+  "codename": "Canvas Engine",
+  "wave": "09",
+  "name": "Engine Facade",
+  "status": "ACTIVE",
+  "revision": 10,
+  "purpose": "Expose the Canvas Engine through one framework-neutral public entrypoint and forbid external deep imports.",
+  "previous": "SO-012 Canvas Engine Wave 08 Interaction Boundary",
+  "next": "SO-012 Canvas Engine Wave 10 Canvas Engine Closeout",
+  "updatedAt": "2026-08-06T21:20:00.000Z"
+}

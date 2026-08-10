@@ -1,0 +1,90 @@
+.advancedField
+  width: calc(100% - 1rem)
+  min-height: 4.1rem
+  margin: 0 0.5rem 0.5rem
+  padding: 0.58rem
+  border: 0.0625rem solid var(--v2-stroke)
+  border-radius: 0.62rem
+  background: color-mix(in srgb, var(--v2-raised) 78%, transparent)
+  color: var(--v2-text)
+  font: inherit
+  font-size: 0.66rem
+  line-height: 1.45
+  resize: vertical
+
+  &:focus
+    border-color: color-mix(in srgb, var(--stage-color, var(--v2-text)) 52%, var(--v2-stroke))
+    outline: none
+
+.inspectorAdvanced
+  margin-top: 0.05rem
+
+  .advancedField
+    min-height: 5.5rem
+
+
+// Interaction refinement v1.2: semantic accordion, lateral handles and toolbar spacing.
+.nodeToolbar
+  top: -3.55rem
+
+.nodeHandle
+  top: 50%
+  bottom: auto
+  width: 0.72rem
+  height: 0.72rem
+  transform: translateY(-50%)
+
+.nodeHandleTarget
+  left: -0.38rem
+  right: auto
+
+.nodeHandleSource
+  right: -0.38rem
+  left: auto
+
+.nodeAdvanced,
+.inspectorAdvanced
+  display: block
+  border: 0
+  border-radius: 0
+  background: transparent
+  overflow: visible
+
+.advancedToggle
+  min-height: 2.45rem
+  padding: 0
+  border-top: 0.0625rem solid var(--v2-stroke)
+  border-bottom: 0.0625rem solid var(--v2-stroke)
+  border-radius: 0
+  background: transparent
+  color: var(--v2-muted)
+
+  &:hover
+    background: transparent
+
+.advancedChevron
+  margin-left: 0.08rem
+
+.advancedField
+  width: 100%
+  min-height: 4.6rem
+  margin: 0.55rem 0 0
+  padding: 0.62rem
+  border: 0.0625rem solid var(--v2-stroke)
+  border-radius: 0.62rem
+  background: color-mix(in srgb, var(--v2-card) 94%, black 6%)
+
+.inspectorAdvanced
+  margin-top: 0.15rem
+
+  .advancedToggle
+    min-height: 2.65rem
+
+  .advancedField
+    min-height: 5.5rem
+    margin-top: 0.65rem
+
+.nodeEditorActions
+  button
+    gap: 0
+

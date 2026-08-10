@@ -29,7 +29,6 @@ export function useCanvasWorkspaceController(initialProject: CanvasProject, user
   return {
     flow: foundation.flow,
     ui: foundation.ui,
-    reactFlow: foundation.reactFlow,
     viewport: foundation.viewportActions.viewport,
     onViewportChange: foundation.viewportActions.onViewportChange,
     ...foundation.selection,

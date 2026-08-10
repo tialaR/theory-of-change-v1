@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { CanvasProject, CanvasViewport } from '../../domain/canvas-project';
+import { assembleCanvasProjectContent } from '../../application/canvas-project-content';
 import { applyCanvasFlowGraph } from '../../react-flow/canvas-react-flow.adapter';
 import type { CanvasCausalEdge, CanvasStageNode } from '../../react-flow/canvas-flow.types';
 import {
@@ -37,12 +38,10 @@ export function useCanvasProjectPersistence(input: CanvasPersistenceInput) {
       { nodes: latest.nodes, edges: latest.edges }
     );
 
-    return queue.saveLatest({
-      title: draft.title,
-      nodes: draft.nodes,
-      connections: draft.connections,
-      viewport: { ...latest.viewport }
-    });
+    return queue.saveLatest(assembleCanvasProjectContent({
+      project: draft,
+      viewport: latest.viewport
+    }));
   }, [queue]);
 
   return { saveProject };

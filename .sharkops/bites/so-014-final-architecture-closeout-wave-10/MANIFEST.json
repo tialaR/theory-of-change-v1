@@ -1,0 +1,13 @@
+{
+  "id": "SO-014",
+  "codename": "Final Architecture Closeout",
+  "wave": "10",
+  "title": "Final Regression Armor",
+  "status": "ACTIVE",
+  "runtimeChanges": false,
+  "gate": "npm run check:tdm:final-architecture:wave10",
+  "regression": "npm run check:tdm:final-regression:armor",
+  "next": "SO-014 Wave 11 | Final Architecture Closeout",
+  "patchVersion": "v1.1",
+  "hotfix": "Evolve Wave 09 gate for authorized cumulative SO-014 progression before Wave 10 regression armor"
+}

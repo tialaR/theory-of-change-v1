@@ -1,0 +1,513 @@
+@use '../../../../shared/styles/tokens' as *
+// ─── Final result card — premium Apple Noir Glass editorial ───────────────────
+
+.resultCard
+  position: relative
+  isolation: isolate
+  gap: 0
+  padding: 0
+  overflow: hidden
+  border-color: rgba(255, 255, 255, 0.1)
+  background: radial-gradient(ellipse 140% 96% at 50% -16%, rgba(228, 230, 236, 0.12), transparent 56%), radial-gradient(ellipse 82% 58% at 6% 38%, rgba(168, 170, 176, 0.06), transparent 58%), radial-gradient(ellipse 100% 68% at 94% 92%, rgba(148, 150, 156, 0.07), transparent 58%), linear-gradient(162deg, rgba(36, 37, 41, 0.88) 0%, rgba(20, 21, 25, 0.94) 48%, rgba(12, 13, 16, 0.98) 100%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12), inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.035), inset 0 0 3.5rem rgba(255, 255, 255, 0.02), inset 0 1.5rem 3rem rgba(0, 0, 0, 0.14), 0 0.75rem 1.75rem rgba(0, 0, 0, 0.32)
+  backdrop-filter: blur(1.5rem) saturate(1.12)
+  -webkit-backdrop-filter: blur(1.5rem) saturate(1.12)
+
+  &::before
+    background: linear-gradient(128deg, rgba(255, 255, 255, 0.09) 0%, transparent 20%, transparent 74%, rgba(255, 255, 255, 0.035) 100%)
+    opacity: 0.92
+
+  &::after
+    opacity: 0.55
+
+.finalResultAccent
+  position: absolute
+  top: 0
+  left: 0.875rem
+  right: 0.875rem
+  height: 0.0625rem
+  z-index: 4
+  pointer-events: none
+  background: linear-gradient(90deg, transparent, rgba(168, 170, 176, 0.22) 14%, rgba(236, 238, 244, 0.48) 50%, rgba(168, 170, 176, 0.22) 86%, transparent)
+  opacity: 0.72
+
+.finalResultGlassVeil
+  position: absolute
+  inset: 0
+  z-index: 0
+  pointer-events: none
+  background: linear-gradient(162deg, rgba(252, 252, 255, 0.05) 0%, transparent 30%, transparent 64%, rgba(18, 19, 22, 0.08) 100%)
+  opacity: 0.92
+
+.finalResultGlassHighlight
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  height: 48%
+  z-index: 0
+  pointer-events: none
+  background: radial-gradient(ellipse 92% 78% at 32% 0%, rgba(255, 255, 255, 0.1), transparent 68%)
+  opacity: 0.78
+
+.finalResultGlassSpecular
+  position: absolute
+  inset: 0
+  z-index: 0
+  pointer-events: none
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.08) 0%, transparent 18%, transparent 82%, rgba(255, 255, 255, 0.025) 100%)
+  opacity: 0.68
+
+.finalResultGlassEdge
+  position: absolute
+  inset: 0
+  z-index: 0
+  pointer-events: none
+  border-radius: inherit
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.02)
+
+.finalResultGlassNoise
+  position: absolute
+  inset: 0
+  z-index: 0
+  pointer-events: none
+  opacity: 0.035
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
+  background-size: 12rem 12rem
+  mix-blend-mode: overlay
+
+.finalResultGlassHaze
+  position: absolute
+  top: 14%
+  right: -10%
+  width: 58%
+  height: 52%
+  z-index: 0
+  pointer-events: none
+  border-radius: 50%
+  background: radial-gradient(ellipse 72% 66% at 50% 50%, rgba(228, 230, 236, 0.18), rgba(120, 122, 128, 0.06) 42%, transparent 72%)
+  filter: blur(1.25rem)
+  opacity: 0.92
+  animation: finalResultHazePulse 18s ease-in-out infinite
+
+.finalResultHazeCore
+  position: absolute
+  left: -6%
+  top: 6%
+  width: 56%
+  height: 72%
+  z-index: 0
+  pointer-events: none
+  border-radius: 50%
+  background: radial-gradient(ellipse 74% 68% at 42% 48%, rgba(236, 238, 244, 0.28), rgba(168, 170, 176, 0.1) 38%, rgba(88, 90, 96, 0.04) 58%, transparent 76%)
+  filter: blur(1.375rem)
+  opacity: 0.96
+  animation: finalResultHazePulse 14s ease-in-out infinite
+
+.finalResultHazeBand
+  position: absolute
+  left: -4%
+  top: 22%
+  width: 108%
+  height: 42%
+  z-index: 0
+  pointer-events: none
+  border-radius: 50%
+  background: linear-gradient(96deg, rgba(214, 216, 222, 0.14) 0%, rgba(252, 252, 255, 0.22) 28%, rgba(196, 198, 204, 0.12) 52%, rgba(214, 216, 222, 0.08) 76%, transparent 88%)
+  filter: blur(1.25rem)
+  opacity: 0.9
+  animation: finalResultHazeBand 22s ease-in-out infinite
+
+.finalResultHazeSpread
+  position: absolute
+  right: -2%
+  bottom: 22%
+  width: 54%
+  height: 48%
+  z-index: 0
+  pointer-events: none
+  border-radius: 50%
+  background: radial-gradient(ellipse 78% 64% at 58% 42%, rgba(214, 216, 222, 0.14), rgba(148, 150, 156, 0.05) 48%, transparent 72%)
+  filter: blur(1.125rem)
+  opacity: 0.82
+  animation: finalResultHazePulse 20s ease-in-out infinite reverse
+
+@keyframes finalResultHazePulse
+  0%, 100%
+    opacity: 0.82
+    transform: scale(1)
+  50%
+    opacity: 1
+    transform: scale(1.03)
+
+@keyframes finalResultHazeBand
+  0%, 100%
+    opacity: 0.78
+    transform: translateX(0)
+  50%
+    opacity: 0.96
+    transform: translateX(0.5rem)
+
+.resultCardReady
+  border-color: rgba(214, 216, 222, 0.18)
+  background: radial-gradient(ellipse 128% 92% at 18% 28%, rgba(236, 238, 244, 0.2), transparent 54%), radial-gradient(ellipse 96% 68% at 72% 58%, rgba(196, 198, 204, 0.12), transparent 56%), radial-gradient(ellipse 142% 98% at 50% -18%, rgba(236, 238, 244, 0.16), transparent 58%), radial-gradient(ellipse 80% 54% at 8% 36%, rgba(196, 198, 204, 0.1), transparent 58%), radial-gradient(ellipse 98% 66% at 92% 94%, rgba(168, 170, 176, 0.1), transparent 58%), linear-gradient(162deg, rgba(36, 37, 41, 0.94) 0%, rgba(20, 21, 25, 0.97) 48%, rgba(10, 11, 14, 1) 100%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.16), inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.05), inset 0 0 4.5rem rgba(255, 255, 255, 0.032), inset 0 1.5rem 3rem rgba(0, 0, 0, 0.12), 0 0.8125rem 1.875rem rgba(0, 0, 0, 0.36)
+
+  .finalResultAccent
+    opacity: 1
+
+  .finalResultKicker
+    color: rgba(196, 198, 204, 1)
+
+  .finalResultHeadlineLead
+    color: rgba(244, 245, 248, 0.98)
+
+  .finalResultHeadlineAccent
+    color: rgba(228, 230, 236, 0.92)
+
+  .finalResultLead
+    color: rgba(176, 178, 184, 0.92)
+
+  .finalResultSculptureZone
+    opacity: 1
+
+.resultCardBlocked
+  .finalResultSculptureZone
+    opacity: 0.52
+
+  .finalResultAtmosphere
+    opacity: 0.62
+
+  .finalResultGlassHaze,
+  .finalResultHazeCore,
+  .finalResultHazeBand
+    opacity: 0.48
+
+  .finalResultGlassPanel
+    opacity: 0.88
+
+.finalResultScene
+  position: relative
+  z-index: 1
+  width: 100%
+  min-width: 0
+  padding: 0.375rem 0 0.125rem
+  overflow: visible
+
+.finalResultAtmosphere
+  position: absolute
+  inset: -0.125rem 0 0
+  z-index: 0
+  pointer-events: none
+  height: calc(100% + 0.5rem)
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.92) 58%, rgba(0, 0, 0, 0.48) 82%, rgba(0, 0, 0, 0.18) 94%, transparent 100%)
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.92) 58%, rgba(0, 0, 0, 0.48) 82%, rgba(0, 0, 0, 0.18) 94%, transparent 100%)
+
+.finalResultComposition
+  position: relative
+  z-index: 1
+  display: grid
+  grid-template-columns: minmax(6.75rem, 40%) minmax(0, 1fr)
+  align-items: center
+  gap: 0
+  width: 100%
+  min-width: 0
+  padding: 0.25rem clamp(0.625rem, 1vw, 0.75rem) 0.625rem
+
+.finalResultSculptureZone
+  position: relative
+  z-index: 2
+  display: grid
+  place-items: center
+  align-self: center
+  margin-left: -0.5rem
+  margin-right: -0.75rem
+  opacity: 0.96
+  overflow: visible
+
+.finalResultGlassPanel
+  position: relative
+  z-index: 3
+  display: grid
+  min-width: 0
+  margin-left: -0.375rem
+  padding: clamp(0.625rem, 1.1vw, 0.75rem) clamp(0.625rem, 1vw, 0.6875rem)
+  border: 0.03125rem solid rgba(255, 255, 255, 0.22)
+  border-radius: $noir-radius-panel
+  background: rgba(8, 9, 12, 0.04)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.26), inset 0.0625rem 0 0 rgba(255, 255, 255, 0.12), inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.06), inset 0 -1.5rem 2.25rem rgba(0, 0, 0, 0.16), inset 0 0 2.75rem rgba(255, 255, 255, 0.04), 0 0.625rem 1.5rem rgba(0, 0, 0, 0.22)
+  backdrop-filter: blur(2.375rem) saturate(1.52) brightness(1.08)
+  -webkit-backdrop-filter: blur(2.375rem) saturate(1.52) brightness(1.08)
+  overflow: hidden
+  isolation: isolate
+
+.finalResultPanelGlassSvg
+  position: absolute
+  inset: 0
+  z-index: 1
+  width: 100%
+  height: 100%
+  pointer-events: none
+  opacity: 0.88
+  mix-blend-mode: screen
+
+.finalResultPanelGlassBackdrop
+  position: absolute
+  inset: 0
+  z-index: 0
+  border-radius: inherit
+  pointer-events: none
+  background: linear-gradient(152deg, rgba(255, 255, 255, 0.03) 0%, rgba(18, 19, 22, 0.04) 52%, rgba(8, 9, 12, 0.06) 100%)
+  backdrop-filter: blur(2.75rem) saturate(1.55)
+  -webkit-backdrop-filter: blur(2.75rem) saturate(1.55)
+
+.finalResultPanelGlassGrain
+  position: absolute
+  inset: 0
+  z-index: 4
+  pointer-events: none
+  opacity: 0.045
+  border-radius: inherit
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
+  background-size: 9rem 9rem
+  mix-blend-mode: overlay
+
+.finalResultPanelGlassRefraction
+  position: absolute
+  inset: 0
+  z-index: 2
+  pointer-events: none
+  border-radius: inherit
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.1) 0%, transparent 22%, transparent 68%, rgba(255, 255, 255, 0.04) 100%)
+  opacity: 0.78
+
+.finalResultPanelGlassDepth
+  position: absolute
+  inset: 0
+  z-index: 3
+  pointer-events: none
+  border-radius: inherit
+  box-shadow: inset 0 0.125rem 0.75rem rgba(255, 255, 255, 0.04), inset 0 -1.75rem 2.5rem rgba(0, 0, 0, 0.14)
+
+.finalResultPanelGlassRimLeft
+  position: absolute
+  top: 0.375rem
+  bottom: 0.375rem
+  left: 0
+  width: 0.0625rem
+  z-index: 5
+  pointer-events: none
+  border-radius: 0.75rem
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.32) 18%, rgba(255, 255, 255, 0.14) 72%, rgba(255, 255, 255, 0.03))
+  opacity: 0.88
+
+.finalResultPanelGlassRimTop
+  position: absolute
+  top: 0
+  left: 0.375rem
+  right: 0.375rem
+  height: 0.0625rem
+  z-index: 5
+  pointer-events: none
+  border-radius: 0.75rem
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.34) 22%, rgba(255, 255, 255, 0.42) 50%, rgba(255, 255, 255, 0.34) 78%, rgba(255, 255, 255, 0.04))
+  opacity: 0.92
+
+.finalResultPanelVeil
+  position: absolute
+  inset: 0
+  z-index: 2
+  pointer-events: none
+  background: linear-gradient(168deg, rgba(252, 252, 255, 0.08) 0%, transparent 28%, transparent 62%, rgba(18, 19, 22, 0.08) 100%)
+  opacity: 0.92
+
+.finalResultPanelSpecular
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  height: 52%
+  z-index: 3
+  pointer-events: none
+  background: radial-gradient(ellipse 96% 84% at 38% 0%, rgba(255, 255, 255, 0.16), transparent 66%)
+  opacity: 0.82
+
+.finalResultPanelEdge
+  position: absolute
+  top: 0
+  left: 0.5rem
+  right: 0.5rem
+  height: 0.0625rem
+  z-index: 6
+  pointer-events: none
+  border-radius: 0 0 0.0625rem 0.0625rem
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.32) 50%, rgba(255, 255, 255, 0.2) 80%, transparent)
+  opacity: 0.78
+
+.finalResultEditorial
+  position: relative
+  z-index: 7
+  display: grid
+  gap: 0.25rem
+  min-width: 0
+
+.finalResultKicker
+  margin: 0
+  color: rgba(168, 170, 176, 0.96)
+  font-size: 0.5625rem
+  font-weight: 800
+  letter-spacing: 0.2em
+  text-transform: uppercase
+  line-height: 1.2
+
+.finalResultHeadline
+  display: grid
+  gap: 0
+  margin: 0
+  text-transform: uppercase
+  text-wrap: balance
+  line-height: 0.98
+
+.finalResultHeadlineLead
+  color: rgba(236, 238, 244, 0.98)
+  font-size: clamp(1rem, 2.8vw, 1.1875rem)
+  font-weight: 900
+  letter-spacing: 0.02em
+  line-height: 1.02
+
+.finalResultHeadlineAccent
+  color: rgba(196, 198, 204, 0.88)
+  font-size: clamp(0.875rem, 2.2vw, 1rem)
+  font-weight: 700
+  letter-spacing: 0.06em
+  line-height: 1.08
+
+.finalResultHairline
+  display: block
+  width: clamp(2rem, 32%, 3.25rem)
+  height: 0.0625rem
+  margin-top: 0.1875rem
+  border-radius: 0.75rem
+  background: linear-gradient(90deg, rgba(236, 238, 244, 0.48), rgba(168, 170, 176, 0.14))
+  opacity: 0.82
+
+.finalResultLead
+  margin: 0.1875rem 0 0
+  color: rgba(148, 150, 156, 0.92)
+  font-size: clamp(0.625rem, 0.75vw, 0.6875rem)
+  font-weight: 450
+  line-height: 1.48
+  max-width: 26ch
+
+.finalResultFooter
+  position: relative
+  z-index: 2
+  display: grid
+  gap: 0.4375rem
+  min-width: 0
+  padding: 0.5625rem clamp(0.875rem, 1.15vw, 1rem) clamp(0.8125rem, 1.1vw, 0.9375rem)
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.08)
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.025) 0%, rgba(0, 0, 0, 0.08) 100%)
+  backdrop-filter: blur(0.75rem)
+  -webkit-backdrop-filter: blur(0.75rem)
+
+  &::before
+    content: ''
+    position: absolute
+    top: 0
+    left: clamp(0.875rem, 1.15vw, 1rem)
+    right: clamp(0.875rem, 1.15vw, 1rem)
+    height: 0.0625rem
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08) 18%, rgba(255, 255, 255, 0.14) 50%, rgba(255, 255, 255, 0.08) 82%, transparent)
+    pointer-events: none
+
+.finalResultCta
+  width: 100%
+
+  &:disabled,
+  &[aria-disabled="true"]
+    cursor: not-allowed
+    pointer-events: auto
+
+.finalResultHelper
+  display: flex
+  align-items: flex-start
+  gap: 0.375rem
+  margin: 0
+  padding: 0.125rem 0 0
+  color: rgba(128, 130, 136, 0.94)
+  font-size: 0.625rem
+  line-height: 1.5
+  font-weight: 450
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.05)
+  padding-top: 0.4375rem
+
+.finalResultHelperIconWrap
+  flex: 0 0 auto
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  margin-top: 0.0625rem
+  color: rgba(148, 150, 156, 0.72)
+
+.finalResultHelperIcon
+  width: 0.75rem
+  height: 0.75rem
+  display: block
+
+@media (max-width: 30rem)
+  .finalResultComposition
+    grid-template-columns: minmax(5.25rem, 36%) minmax(0, 1fr)
+    padding: 0.1875rem 0.5625rem 0.5rem
+
+  .finalResultSculptureZone
+    margin-left: -0.375rem
+    margin-right: -0.5rem
+
+  .finalResultGlassPanel
+    margin-left: -0.25rem
+    padding: 0.5625rem 0.5625rem
+
+  .finalResultHeadlineLead
+    font-size: clamp(0.9375rem, 4.4vw, 1.0625rem)
+
+  .finalResultHeadlineAccent
+    font-size: clamp(0.8125rem, 3.6vw, 0.9375rem)
+
+  .finalResultLead
+    max-width: none
+    font-size: 0.625rem
+
+@media (max-width: 24.375rem)
+  .resultCard
+    .finalResultScene
+      padding-top: 0.25rem
+
+    .finalResultFooter
+      padding: 0.5rem 0.8125rem 0.75rem
+
+  .finalResultComposition
+    grid-template-columns: minmax(4.5rem, 34%) minmax(0, 1fr)
+    gap: 0
+    padding: 0.125rem 0.5rem 0.4375rem
+
+  .finalResultSculptureZone
+    margin-left: -0.25rem
+    margin-right: -0.375rem
+
+  .finalResultGlassPanel
+    padding: 0.5rem 0.5rem
+
+  .finalResultHeadlineLead
+    font-size: clamp(0.875rem, 4.8vw, 0.9375rem)
+    letter-spacing: 0.01em
+
+  .finalResultHeadlineAccent
+    font-size: clamp(0.75rem, 3.8vw, 0.875rem)
+
+  .finalResultHairline
+    width: clamp(1.75rem, 28%, 2.5rem)
+
+  .finalResultFooter
+    gap: 0.375rem
+

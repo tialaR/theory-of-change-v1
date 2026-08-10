@@ -1,0 +1,13 @@
+{
+  "id": "SO-004",
+  "revision": 1,
+  "files": [
+    "src/features/theory-of-change/canvas/ui/canvas-workspace/canvas-workspace.module.sass",
+    "scripts/tdm-contract-v3/check-visual-foundation-wave01.mjs",
+    "package.json",
+    ".sharkops/state/current-state.json",
+    ".sharkops/state/bite-ledger.json"
+  ],
+  "codename": "Visual Foundation",
+  "status": "ACTIVE"
+}

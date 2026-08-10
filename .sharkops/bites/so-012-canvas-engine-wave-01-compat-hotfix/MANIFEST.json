@@ -1,0 +1,9 @@
+{
+  "id": "SO-012",
+  "codename": "Canvas Engine",
+  "wave": "01-legacy-closeout-progression-hotfix",
+  "status": "ACTIVE",
+  "revision": 2,
+  "purpose": "Make completed SO-010 and SO-011 closeout gates validate registered downstream progression through the Bite Ledger instead of frozen Current State snapshots",
+  "updatedAt": "2026-08-06T15:45:00.000Z"
+}

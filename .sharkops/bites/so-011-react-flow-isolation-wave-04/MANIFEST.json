@@ -1,0 +1,9 @@
+{
+  "id": "SO-011",
+  "codename": "React Flow Isolation",
+  "wave": "04",
+  "status": "ACTIVE",
+  "purpose": "Move stage drag-and-drop coordinate conversion behind a framework-neutral runtime port without changing behavior",
+  "createdAt": "2026-08-06T02:58:00.000Z",
+  "gate": "check:tdm:react-flow-isolation:wave04"
+}

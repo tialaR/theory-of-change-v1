@@ -5,7 +5,8 @@ import type { PointerEvent as ReactPointerEvent } from 'react';
 import type { TdmEdge } from '@/features/theory-of-change/domain/tdm-types';
 import { RESULT_MOTION } from '../result-view.constants';
 import type { CardRect, ConnectedFlow } from '../result-view.types';
-import { buildMeasuredEdgePath, getEdgeBadges, isValidCardRect, isValidMarkerPoint } from '../result-view.utils';
+import { buildMeasuredEdgePath, isValidCardRect, isValidMarkerPoint } from '../result-view-utils';
+import { getEdgeBadges } from '../experience/result-experience-data';
 import styles from './result-connections-layer.module.sass';
 
 type ResultConnectionsLayerProps = {
