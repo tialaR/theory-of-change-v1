@@ -1,0 +1,7 @@
+{
+  "id": "SO-011",
+  "codename": "React Flow Isolation",
+  "wave": "06",
+  "purpose": "Confine XYFlow node and edge state hooks to an explicit React Flow adapter without changing behavior",
+  "status": "ACTIVE"
+}

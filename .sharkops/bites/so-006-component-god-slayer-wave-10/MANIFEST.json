@@ -1,0 +1,7 @@
+{
+  "id": "SO-006",
+  "codename": "Component God Slayer",
+  "wave": 10,
+  "status": "ACTIVE",
+  "purpose": "Move Canvas navigation and snapshot lifecycle out of TdmCanvasInner"
+}

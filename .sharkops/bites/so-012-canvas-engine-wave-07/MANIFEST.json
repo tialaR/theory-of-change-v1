@@ -1,0 +1,9 @@
+{
+  "id": "SO-012",
+  "codename": "Canvas Engine",
+  "wave": "07-selection-boundary",
+  "status": "ACTIVE",
+  "revision": 8,
+  "purpose": "Move pure graph selection resolution into the framework-neutral Canvas Engine while UI interaction state remains outside",
+  "updatedAt": "2026-08-06T17:20:00.000Z"
+}

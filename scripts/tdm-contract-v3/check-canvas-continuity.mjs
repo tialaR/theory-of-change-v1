@@ -19,7 +19,11 @@ const files = {
   queue: 'src/features/theory-of-change/canvas/application/canvas-save-queue.ts',
   constants: 'src/features/theory-of-change/canvas/domain/canvas-ui.constants.ts',
   header: 'src/features/theory-of-change/canvas/ui/components/canvas-header.tsx',
-  e2e: 'src/features/theory-of-change/canvas/ui/canvas-workspace/canvas-workspace.e2e.ts'
+  e2e: 'src/features/theory-of-change/canvas/ui/canvas-workspace/canvas-workspace.e2e.ts',
+  workspaceController: 'src/features/theory-of-change/canvas/ui/hooks/use-canvas-workspace-controller.ts',
+  workspaceFoundation: 'src/features/theory-of-change/canvas/ui/hooks/use-canvas-workspace-foundation.ts',
+  workspaceActions: 'src/features/theory-of-change/canvas/ui/hooks/use-canvas-workspace-actions.ts',
+  viewportActions: 'src/features/theory-of-change/canvas/ui/hooks/use-canvas-viewport-actions.ts'
 };
 
 Object.values(files).forEach((file) => requireCondition(exists(file), `arquivo de continuidade ausente: ${file}`));
@@ -76,19 +80,53 @@ if (exists(files.header)) {
 if (exists(files.e2e)) {
   const source = read(files.e2e);
   for (const proof of [
-    'Alterações salvas automaticamente.',
+    "toHaveAttribute('data-save-state', 'dirty')",
+    "toHaveAttribute('data-save-state', 'saved'",
     "toHaveCount(2)",
     "toHaveCount(3)",
-    "Insumo 1",
-    "Insumo 2",
+    'hydratedInputId',
+    'hydratedActivityId',
+    'inputIdsAfterCreate',
+    'inputIdsAfterReload',
     "Selecionar conexão",
     "page.reload()"
   ]) requireCondition(source.includes(proof), `E2E de continuidade não prova: ${proof}`);
+  requireCondition(!source.includes("'Insumo 1'"), 'E2E de continuidade voltou a depender de título sequencial de insumo');
+  requireCondition(!source.includes("'Atividade 1'"), 'E2E de continuidade voltou a depender de título sequencial de atividade');
 }
+
+
+if (exists(files.workspaceController) && exists(files.workspaceFoundation)) {
+  const controllerSource = read(files.workspaceController);
+  const foundationSource = read(files.workspaceFoundation);
+  requireCondition(
+    controllerSource.includes('useCanvasWorkspaceFoundation') && foundationSource.includes('useCanvasViewportActions'),
+    'workspace composition não delega viewport e framing'
+  );
+  requireCondition(!controllerSource.includes('getNodesBounds'), 'workspace controller voltou a calcular enquadramento do grafo');
+  requireCondition(!controllerSource.includes('viewportBeforeInspectorRef'), 'workspace controller voltou a guardar viewport do inspector');
+}
+
+if (exists(files.viewportActions)) {
+  const source = read(files.viewportActions);
+  for (const contract of [
+    'fitCurrentGraph',
+    'onViewportChange',
+    'frameVisualization',
+    'openInspector',
+    'closeInspector',
+    'enterFullCanvas',
+    'exitFullCanvas'
+  ]) requireCondition(source.includes(contract), `viewport actions não preserva contrato: ${contract}`);
+}
+
 
 for (const [file, budget] of [
   [files.flow, 340],
-  ['src/features/theory-of-change/canvas/ui/hooks/use-canvas-workspace-controller.ts', 360],
+  [files.workspaceController, 80],
+  [files.workspaceFoundation, 120],
+  [files.workspaceActions, 140],
+  [files.viewportActions, 180],
   [files.saveController, 180],
   [files.autosave, 100],
   [files.persistence, 100]

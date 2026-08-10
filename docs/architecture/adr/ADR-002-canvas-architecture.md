@@ -1,11 +1,11 @@
 # ADR-002: Canvas Architecture Boundaries
 
-- **Status:** Draft
+- **Status:** Superseded
 - **Version:** 0.1.0
 - **Date:** 2026-07-28
 - **Authors:** Tiala Rocha, Architecture Copilot
 - **Supersedes:** None
-- **Superseded by:** None
+- **Superseded by:** ADR-008
 
 ## Proposed decision
 

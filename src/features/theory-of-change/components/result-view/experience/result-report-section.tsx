@@ -2,10 +2,10 @@
 
 import type { CSSProperties } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { getStageNodes, resultStageMeta, resultStageOrder, type ResultExperienceData } from './types';
+import { getStageNodes, resultStageMeta, resultStageOrder, type ResultExperienceProps } from './types';
 import styles from './result-experience.module.sass';
 
-export function ResultReportSection({ data }: { data: ResultExperienceData }) {
+export function ResultReportSection({ data }: { data: ResultExperienceProps }) {
   const reducedMotion = useReducedMotion();
   const insights = [
     {

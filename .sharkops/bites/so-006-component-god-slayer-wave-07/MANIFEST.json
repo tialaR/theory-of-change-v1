@@ -1,0 +1,7 @@
+{
+  "id": "SO-006",
+  "codename": "Component God Slayer",
+  "wave": 7,
+  "status": "ACTIVE",
+  "purpose": "Give viewport, selection, keyboard and drag interactions explicit ownership outside TdmCanvasInner"
+}

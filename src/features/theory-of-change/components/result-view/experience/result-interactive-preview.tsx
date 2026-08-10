@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import type { CSSProperties } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { resultStageMeta, resultStageOrder, getStageNodes, type ResultExperienceData } from './types';
+import { resultStageMeta, resultStageOrder, getStageNodes, type ResultExperienceProps } from './types';
 import styles from './result-experience.module.sass';
 
-export function ResultInteractivePreview({ data }: { data: ResultExperienceData }) {
+export function ResultInteractivePreview({ data }: { data: ResultExperienceProps }) {
   const reducedMotion = useReducedMotion();
 
   return (

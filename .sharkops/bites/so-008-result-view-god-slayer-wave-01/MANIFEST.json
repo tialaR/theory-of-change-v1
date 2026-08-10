@@ -1,0 +1,7 @@
+{
+  "id": "SO-008",
+  "codename": "Result View God Slayer",
+  "wave": 1,
+  "status": "ACTIVE",
+  "purpose": "Split the result export surface from the ResultView God Component without changing behavior"
+}

@@ -1,0 +1,83 @@
+@use '../../../../shared/styles/tokens' as *
+.finalResultHelper
+  display: flex
+  align-items: flex-start
+  gap: 0.375rem
+  margin: 0
+  padding: 0.125rem 0 0
+  color: rgba(128, 130, 136, 0.94)
+  font-size: 0.625rem
+  line-height: 1.5
+  font-weight: 450
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.05)
+  padding-top: 0.4375rem
+
+.finalResultHelperIconWrap
+  flex: 0 0 auto
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  margin-top: 0.0625rem
+  color: rgba(148, 150, 156, 0.72)
+
+.finalResultHelperIcon
+  width: 0.75rem
+  height: 0.75rem
+  display: block
+
+@media (max-width: 30rem)
+  .finalResultComposition
+    grid-template-columns: minmax(5.25rem, 36%) minmax(0, 1fr)
+    padding: 0.1875rem 0.5625rem 0.5rem
+
+  .finalResultSculptureZone
+    margin-left: -0.375rem
+    margin-right: -0.5rem
+
+  .finalResultGlassPanel
+    margin-left: -0.25rem
+    padding: 0.5625rem 0.5625rem
+
+  .finalResultHeadlineLead
+    font-size: clamp(0.9375rem, 4.4vw, 1.0625rem)
+
+  .finalResultHeadlineAccent
+    font-size: clamp(0.8125rem, 3.6vw, 0.9375rem)
+
+  .finalResultLead
+    max-width: none
+    font-size: 0.625rem
+
+@media (max-width: 24.375rem)
+  .resultCard
+    .finalResultScene
+      padding-top: 0.25rem
+
+    .finalResultFooter
+      padding: 0.5rem 0.8125rem 0.75rem
+
+  .finalResultComposition
+    grid-template-columns: minmax(4.5rem, 34%) minmax(0, 1fr)
+    gap: 0
+    padding: 0.125rem 0.5rem 0.4375rem
+
+  .finalResultSculptureZone
+    margin-left: -0.25rem
+    margin-right: -0.375rem
+
+  .finalResultGlassPanel
+    padding: 0.5rem 0.5rem
+
+  .finalResultHeadlineLead
+    font-size: clamp(0.875rem, 4.8vw, 0.9375rem)
+    letter-spacing: 0.01em
+
+  .finalResultHeadlineAccent
+    font-size: clamp(0.75rem, 3.8vw, 0.875rem)
+
+  .finalResultHairline
+    width: clamp(1.75rem, 28%, 2.5rem)
+
+  .finalResultFooter
+    gap: 0.375rem
+

@@ -1,0 +1,106 @@
+$skin-gray-11: rgb(161, 164, 165)
+$skin-gray-12: rgb(240, 240, 240)
+$skin-panel: rgba(9, 10, 13, 0.82)
+$skin-border: rgba(255, 255, 255, 0.1)
+
+.sidebarAccordionTitle
+  display: block
+  padding-top: 0.0625rem
+  color: inherit
+  line-height: 1.25rem
+  overflow: visible
+
+.blockSidebarAccordion.sidebarAccordionOpen .blockAccordionHeader .sidebarAccordionTitle
+  color: rgba(240, 240, 240, 0.96)
+  font-size: 0.875rem
+  font-weight: 500
+  line-height: 1.25rem
+
+.sidebarAccordionPanel,
+.sidebarAccordionContent
+  border-radius: 0 0 calc(1rem - 0.0625rem) calc(1rem - 0.0625rem)
+
+.sidebarAccordionContent
+  overflow: hidden
+
+.blockFormsPanel .sidebarAccordionContent > *
+  padding: 0.25rem 1rem 1rem
+
+// Form wrappers are <label class=field> with display:grid + gap for label→control breath.
+// Never force display:block on the wrapper — that kills the shared field gap.
+// Hero TdmField labels keep inline-flex so the required asterisk stays on the same line.
+.blockFormsPanel :global(label)
+  display: grid
+  gap: 0.375rem
+  margin: 0
+  color: $skin-gray-11
+
+.heroFormShell :global(label)
+  display: inline-flex
+  align-items: baseline
+  gap: 0.25rem
+  margin: 0
+  flex-wrap: nowrap
+  color: $skin-gray-11
+
+.blockFormsPanel :global([class*='fieldLabel']),
+.heroFormShell :global([class*='fieldLabel'])
+  display: block
+  margin: 0
+  color: $skin-gray-11
+  font-size: 0.65625rem
+  font-weight: 400
+  line-height: 1.25
+  letter-spacing: 0.02em
+  text-transform: uppercase
+
+.blockFormsPanel :global(input),
+.heroFormShell :global(input),
+.blockFormsPanel :global(textarea),
+.heroFormShell :global(textarea)
+  border: 0
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+  padding-inline: 0
+  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.875rem
+
+// Secondary shortcut rows remain compact but no pill silhouette.
+.quickShortcutBtn
+  border-radius: 0.75rem
+
+// Square chevrons — size only. Criar/Editar inherit --stage-accent from the header.
+.sidebarAccordionChevron
+  width: 1.125rem
+  height: 1.125rem
+
+  path
+    stroke-width: 1.5
+
+// Keep headings/content above all beams and avoid top-left clipping.
+.blockFormGroup,
+.canvasOrganizationCard,
+.quickShortcutsCard,
+.stageActionCard,
+.understandSection,
+.progressCard
+  position: relative
+  overflow: visible
+
+.blockFormGroup > *,
+.canvasOrganizationCard > *,
+.quickShortcutsCard > *,
+.stageActionCard > *,
+.understandSection > *,
+.progressCard > *
+  position: relative
+  z-index: 2
+
+@media (max-width: 42rem)
+  .heroTitle,
+  .heroCardCollapsed .heroTitle
+    font-size: 1.5rem
+    line-height: 1.875rem
+    letter-spacing: -0.035rem
+

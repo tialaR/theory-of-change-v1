@@ -1,0 +1,1758 @@
+@use '../../../../shared/styles/tokens' as *
+// TDM progress clean and sidebar elevation v1
+.progressHeader
+  padding: 0
+  border-radius: 1.375rem
+  overflow: hidden
+
+.progressHeaderKicker
+  margin: 0
+  padding: 1.0625rem 1.25rem 0.75rem
+  color: rgba(218, 219, 224, 0.76)
+  font-size: 0.72rem
+  font-weight: 820
+  line-height: 1
+  letter-spacing: 0.34em
+  text-transform: uppercase
+
+.progressHeaderScene,
+.progressHeaderAtmosphere,
+.progressOrbitalSculpture,
+.progressHeaderCard,
+.progressHeaderCardVeil,
+.progressHeaderCardSpecular,
+.progressHeaderCardHighlight,
+.progressHeaderCardEdge,
+.progressHeaderCardNoise,
+.progressHeaderCardDivider,
+.progressHeaderInstruction
+  display: none !important
+
+.progressHeaderCleanCard
+  position: relative
+  display: inline-flex
+  align-items: center
+  gap: 0.625rem
+  margin: 0
+  padding: 0
+  min-height: 2.25rem
+  color: rgba(245, 246, 250, 0.96)
+  background: transparent
+  border: 0
+  box-shadow: none
+
+.progressHeaderCleanCopy
+  display: grid
+  gap: 0.1rem
+  min-width: 0
+
+.progressHeaderCleanCard .progressRing
+  width: 2rem
+  height: 2rem
+  opacity: 0.8
+
+.progressHeaderCleanCard .progressPercent
+  margin: 0
+  color: rgba(247, 248, 252, 0.96)
+  font-size: 1.2rem
+  font-weight: 720
+  line-height: 1
+
+.progressHeaderCleanCard .progressOverviewLabel
+  margin: 0
+  color: rgba(200, 202, 210, 0.84)
+  font-size: 0.78rem
+  font-weight: 600
+  line-height: 1.2
+
+.sidebar
+  overflow: hidden
+  border-radius: 1.65rem 0 0 1.65rem
+  box-shadow: -1.25rem 0 2.75rem rgba(0, 0, 0, 0.34), -0.0625rem 0 0 rgba(255, 255, 255, 0.08), inset 0.0625rem 0 0 rgba(255, 255, 255, 0.07)
+  background-clip: padding-box
+
+.sidebar::before
+  border-radius: inherit
+
+.sidebarInner,
+.sidebarScroll,
+.contentScroll
+  border-radius: inherit
+
+
+// TDM sidebar transparent radius shell fix v1
+.sidebar
+  background: transparent !important
+  border-radius: 1.75rem 0 0 1.75rem
+  overflow: clip
+  box-shadow: -1rem 0 2.5rem rgba(0, 0, 0, 0.28), -0.0625rem 0 0 rgba(255, 255, 255, 0.07)
+  background-clip: padding-box
+
+  &::before,
+  &::after
+    display: none !important
+
+.surface
+  border-radius: inherit
+  overflow: clip
+  background: transparent !important
+  box-shadow: none !important
+  background-clip: padding-box
+
+  &::before,
+  &::after
+    display: none !important
+
+.header
+  background: transparent !important
+  box-shadow: none
+
+.headerScrolled
+  background: transparent !important
+  box-shadow: none
+
+.sidebarInner,
+.sidebarScroll,
+.contentScroll
+  background: transparent !important
+  border-radius: inherit
+
+
+// TDM aside floating shell radius fix v2
+.sidebar
+  isolation: isolate
+  display: flex
+  align-items: stretch
+  box-sizing: border-box
+  padding: 0.625rem 0.625rem 0.625rem 0
+  overflow: visible
+  border-radius: 2rem 0 0 2rem
+  background: linear-gradient(168deg, #111216 0%, #0d0e11 42%, #08090c 100%) !important
+  background-clip: padding-box
+  filter: drop-shadow(-1.25rem 0 2.6rem rgba(0, 0, 0, 0.34))
+
+  &::before,
+  &::after
+    display: none !important
+
+.open
+  width: $sidebar-width
+
+.closed
+  padding: 0
+  overflow: hidden
+  filter: none
+  background: transparent !important
+
+.surface
+  position: relative
+  z-index: 1
+  flex: 1 1 auto
+  width: 100%
+  height: auto
+  min-height: 0
+  overflow: clip
+  border-radius: 1.85rem 0 0 1.85rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.075)
+  border-right: 0
+  background: radial-gradient(ellipse 90% 52% at 50% 0%, rgba(255, 255, 255, 0.07), transparent 48%), radial-gradient(ellipse 65% 38% at 80% 60%, rgba(255, 255, 255, 0.025), transparent 52%), radial-gradient(ellipse 55% 32% at 50% 100%, rgba(255, 255, 255, 0.025), transparent 58%), linear-gradient(180deg, rgba(23, 24, 28, 0.96), rgba(13, 14, 18, 0.94)) !important
+  box-shadow: inset 0.0625rem 0 0 rgba(255, 255, 255, 0.075), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06), 0 1.25rem 2.75rem rgba(0, 0, 0, 0.28) !important
+  backdrop-filter: blur(1.35rem) saturate(1.08)
+  -webkit-backdrop-filter: blur(1.35rem) saturate(1.08)
+  background-clip: padding-box
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0
+    z-index: 0
+    pointer-events: none
+    border-radius: inherit
+    background: radial-gradient(ellipse 70% 30% at 50% 0%, rgba(255, 255, 255, 0.055), transparent 72%)
+    opacity: 0.75
+
+  &::after
+    display: none !important
+
+.header
+  border-radius: 1.85rem 0 0 0
+  background: transparent !important
+
+.headerScrolled
+  background: linear-gradient(180deg, rgba(23, 24, 28, 0.68), rgba(17, 18, 22, 0.18)) !important
+  box-shadow: 0 0.625rem 1.5rem rgba(0, 0, 0, 0.2)
+
+.sidebarInner,
+.sidebarScroll,
+.contentScroll
+  min-height: 0
+  background: transparent !important
+
+
+// TDM sidebar single-layer shell fix v3
+.sidebar
+  padding: 0 !important
+  margin: 0 !important
+  overflow: visible !important
+  background: transparent !important
+  border: 0 !important
+  border-radius: 0 !important
+  box-shadow: none !important
+  filter: none !important
+  backdrop-filter: none !important
+  -webkit-backdrop-filter: none !important
+
+  &::before,
+  &::after
+    display: none !important
+    content: none !important
+
+.open
+  padding: 0 !important
+  margin: 0 !important
+  background: transparent !important
+  box-shadow: none !important
+  filter: none !important
+
+.surface
+  position: relative
+  z-index: 1
+  width: 100% !important
+  height: 100% !important
+  min-height: 100% !important
+  margin: 0 !important
+  padding: 0 !important
+  overflow: clip !important
+  border-radius: 1.75rem 0 0 1.75rem !important
+  border: 0.0625rem solid rgba(255, 255, 255, 0.075) !important
+  border-right: 0 !important
+  background: linear-gradient(180deg, rgba(23, 24, 28, 0.96), rgba(12, 13, 17, 0.965)) !important
+  background-clip: padding-box !important
+  box-shadow: -1.125rem 0 2.35rem rgba(0, 0, 0, 0.34), inset 0.0625rem 0 0 rgba(255, 255, 255, 0.075), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.055) !important
+  filter: none !important
+  backdrop-filter: blur(1.25rem) saturate(1.08)
+  -webkit-backdrop-filter: blur(1.25rem) saturate(1.08)
+
+  &::before,
+  &::after
+    display: none !important
+    content: none !important
+
+.header
+  margin: 0 !important
+  background: transparent !important
+  box-shadow: none !important
+  border-radius: 1.75rem 0 0 0 !important
+
+.headerScrolled
+  background: transparent !important
+  box-shadow: none !important
+
+.sidebarInner,
+.sidebarScroll,
+.contentScroll
+  margin: 0 !important
+  background: transparent !important
+  box-shadow: none !important
+  border-radius: inherit !important
+
+.sidebarScroll,
+.contentScroll
+  overflow-x: hidden
+
+
+// ─── TMD Command Canvas — Coach Inspector atoms ───────────────────────────
+
+$noir-0: #050506
+$noir-1: #08090c
+$noir-2: #101116
+$noir-3: #15161c
+
+$surface-soft: rgba(16, 17, 22, 0.72)
+$surface-mid: rgba(20, 21, 27, 0.82)
+$surface-strong: rgba(24, 25, 31, 0.92)
+
+$border-soft: rgba(255, 255, 255, 0.08)
+$border-mid: rgba(255, 255, 255, 0.12)
+$border-strong: rgba(255, 255, 255, 0.18)
+
+$text-main: rgba(248, 248, 250, 0.94)
+$text-soft: rgba(224, 226, 232, 0.72)
+$text-muted: rgba(190, 193, 204, 0.54)
+$text-faint: rgba(180, 184, 194, 0.38)
+
+$white-light: rgba(255, 255, 255, 0.16)
+$white-light-soft: rgba(255, 255, 255, 0.08)
+
+$stage-inputs: #a78bfa
+$stage-activities: #60a5fa
+$stage-products: #f6b35d
+$stage-results: #5ee0b5
+$danger: #fb7185
+
+$noir-bg: $noir-0
+$surface: $surface-soft
+$text: $text-main
+$tdm-surface: radial-gradient(76% 18% at 50% 0%, rgba(255, 255, 255, 0.13), transparent 72%), linear-gradient(180deg, rgba(22, 23, 28, 0.88) 0%, rgba(13, 14, 18, 0.78) 48%, rgba(5, 5, 7, 0.96) 100%)
+$tdm-field: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015)), rgba(9, 10, 13, 0.72)
+
+.surface
+  background: radial-gradient(72% 20% at 50% 0%, rgba(255, 255, 255, 0.1), transparent 72%), linear-gradient(180deg, rgba(21, 22, 26, 0.96) 0%, rgba(12, 13, 16, 0.98) 48%, rgba(5, 5, 7, 1) 100%)
+  box-shadow: inset 0.0625rem 0 0 rgba(255, 255, 255, 0.06)
+  backdrop-filter: blur(0.75rem) saturate(1.02)
+  -webkit-backdrop-filter: blur(0.75rem) saturate(1.02)
+
+  &::before
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 36%)
+    opacity: 1
+
+.header
+  padding: 0.55rem 0.85rem 0.2rem
+
+.content
+  gap: 0
+  padding: 0 0.9rem 1rem
+
+.heroGlowTop,
+.heroGlowBottom,
+.heroSpecular
+  display: none !important
+
+.heroCard
+  padding: 0.45rem 0 0.55rem
+  border: 0
+  border-radius: 0
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.06)
+  background: transparent
+  box-shadow: none
+  backdrop-filter: none
+  -webkit-backdrop-filter: none
+
+  &::before,
+  &::after
+    display: none
+
+.heroCardCollapsed
+  padding-top: 0.4rem
+  padding-bottom: 0.45rem
+  box-shadow: none
+
+.heroTitle
+  font-size: clamp(0.82rem, 0.9vw + 0.48rem, 0.96rem)
+  font-weight: 620
+  letter-spacing: -0.014em
+  color: $text
+
+.heroDescription
+  color: $text-muted
+  font-size: 0.64rem
+  line-height: 1.35
+  max-width: min(38ch, 100%)
+
+.card
+  gap: 0.45rem
+  padding: 0.7rem 0
+  border: 0
+  border-radius: 0
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.06)
+  background: transparent
+  box-shadow: none
+  backdrop-filter: none
+  -webkit-backdrop-filter: none
+  overflow: visible
+
+  &::before,
+  &::after
+    display: none
+
+.progressCard
+  gap: 0.35rem
+  padding: 0.65rem 0
+
+.progressHeader
+  gap: 0.22rem
+
+.progressCompactLine
+  display: flex
+  align-items: baseline
+  flex-wrap: wrap
+  gap: 0.22rem 0.35rem
+  margin: 0
+  min-height: 1.05rem
+
+.progressCompactPercent
+  color: $text
+  font-size: 0.72rem
+  font-weight: 600
+  letter-spacing: -0.01em
+  font-variant-numeric: tabular-nums
+
+.progressCompactDivider
+  color: $text-faint
+  font-size: 0.66rem
+
+.progressCompactStatus
+  color: $text-muted
+  font-size: 0.64rem
+  font-weight: 450
+  line-height: 1.3
+
+.progressHeaderKicker
+  margin: 0 0 0.22rem
+  padding: 0
+  color: $text-faint
+  font-size: 0.48rem
+  font-weight: 600
+  letter-spacing: 0.1em
+
+.progressHeaderCleanCard,
+.progressRingWrap,
+.progressRing
+  display: none !important
+
+.stageActionCard
+  gap: 0.4rem
+  padding: 0.7rem 0
+  border-color: transparent !important
+  background: transparent !important
+  box-shadow: none !important
+
+  .sectionKicker
+    color: color-mix(in srgb, var(--stage-accent, #{$stage-inputs}) 34%, $text-muted)
+    font-size: 0.48rem
+    letter-spacing: 0.1em
+    font-weight: 620
+
+  .sectionText
+    font-size: 0.7rem
+    line-height: 1.4
+    color: rgba(230, 232, 238, 0.88)
+    max-width: 34ch
+
+  .sectionHintMuted
+    font-size: 0.62rem
+
+.understandSection
+  gap: 0.28rem
+  padding: 0.55rem 0 0.65rem
+
+  .sectionKicker
+    color: $text-faint
+    font-size: 0.48rem
+    letter-spacing: 0.1em
+    font-weight: 620
+
+  .sectionText
+    font-size: 0.66rem
+    line-height: 1.4
+    color: $text-soft
+    max-width: 36ch
+
+.understandTitle
+  margin: 0
+  color: $text
+  font-size: 0.78rem
+  font-weight: 600
+  letter-spacing: -0.01em
+  line-height: 1.25
+
+.understandQuestion
+  margin: 0.08rem 0 0
+  color: rgba(210, 214, 224, 0.72)
+  font-size: 0.62rem
+  font-weight: 500
+  line-height: 1.35
+
+.understandExamples
+  margin: 0.06rem 0 0
+  color: $text-muted
+  font-size: 0.6rem
+  line-height: 1.35
+  max-width: 36ch
+
+.stageActionInnerPanel
+  padding: 0
+  border: 0
+  background: transparent
+  box-shadow: none
+
+  &::after
+    display: none
+
+.stageActionCard .dragCard
+  min-height: 2.45rem
+  padding: 0.55rem 0.7rem
+  border-radius: 0.85rem
+  border-color: color-mix(in srgb, var(--stage-accent, #{$stage-inputs}) 28%, $border-soft)
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12)
+
+  &:hover
+    transform: translateY(-0.0625rem)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.14)
+
+  strong
+    text-transform: none
+    letter-spacing: 0.01em
+    font-size: 0.72rem
+
+  small
+    font-size: 0.58rem
+    letter-spacing: 0
+
+.timeline
+  gap: 0.28rem
+  margin: 0.08rem 0 0.28rem
+
+  &::before
+    width: 0.05rem
+    background: rgba(255, 255, 255, 0.08)
+
+.stageBody
+  gap: 0.2rem
+  padding: 0.04rem 0.45rem 0.45rem 1.85rem
+
+  p
+    font-size: 0.64rem
+    line-height: 1.4
+    color: $text-muted
+
+  ul
+    margin: 0
+    padding-left: 0.95rem
+    font-size: 0.6rem
+    line-height: 1.35
+    color: rgba(180, 184, 194, 0.62)
+
+.stageSummary
+  min-height: 1.9rem
+  padding-block: 0.28rem
+
+.stageSummaryCopy small
+  display: -webkit-box
+  -webkit-line-clamp: 1
+  -webkit-box-orient: vertical
+  overflow: hidden
+  opacity: 0.7
+
+.stageCountBadge
+  min-width: 1.05rem
+  height: 1.05rem
+  border-radius: 0.28rem
+  font-size: 0.5rem
+  background: rgba(255, 255, 255, 0.04)
+  border-color: rgba(255, 255, 255, 0.08)
+  box-shadow: none
+
+.stageUnderstandKicker
+  margin: 0 0 0.14rem
+  color: color-mix(in srgb, var(--stage-accent, #{$stage-inputs}) 32%, $text-muted)
+  font-size: 0.46rem
+  font-weight: 600
+  letter-spacing: 0.08em
+  text-transform: uppercase
+
+.stageGuideQuestion
+  margin: 0.1rem 0 0.06rem
+  color: rgba(210, 214, 224, 0.72)
+  font-size: 0.62rem
+  font-weight: 500
+  line-height: 1.3
+
+.stageAccordion
+  border-color: rgba(255, 255, 255, 0.04)
+  background: transparent
+  box-shadow: none
+
+  // Stage color as a thin left signal — not a full-width top paint.
+  &::before
+    left: 0
+    right: auto
+    top: 0.45rem
+    bottom: 0.45rem
+    width: 0.1rem
+    height: auto
+    border-radius: 0 0.08rem 0.08rem 0
+    opacity: 0.55
+
+.stageAccordion[open]
+  border-color: rgba(255, 255, 255, 0.08)
+  background: rgba(255, 255, 255, 0.012)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04)
+
+.canvasOrganizationCard
+  padding: 0.45rem 0
+  opacity: 0.86
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.05)
+
+.canvasOrganizationHeader
+  min-height: 1.9rem
+  padding: 0.32rem 0
+
+.canvasOrganizationTitle
+  color: $text-faint
+  font-size: 0.48rem
+  letter-spacing: 0.08em
+
+.canvasOrganizationText
+  font-size: 0.64rem
+  line-height: 1.35
+  color: $text-muted
+
+.blockFormsPanel
+  margin-top: 0.1rem
+  padding: 0.65rem 0
+  border: 0
+  border-radius: 0
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.06)
+  background: transparent
+  box-shadow: none
+  backdrop-filter: none
+  -webkit-backdrop-filter: none
+  opacity: 1
+  gap: 0.45rem
+
+  &::before
+    content: none
+    display: none
+
+.blockFormsPanel .blockSidebarAccordion
+  border-color: rgba(255, 255, 255, 0.08)
+  background: rgba(255, 255, 255, 0.012)
+  box-shadow: none
+  border-radius: 0.85rem
+
+.blockFormsPanel .blockSidebarAccordion.sidebarAccordionOpen
+  border-color: rgba(255, 255, 255, 0.12)
+  background: radial-gradient(72% 20% at 50% 0%, rgba(255, 255, 255, 0.06), transparent 72%), linear-gradient(180deg, rgba(21, 22, 26, 0.72) 0%, rgba(12, 13, 16, 0.55) 100%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1)
+
+// Create/edit block fields use TdmField — keep controls transparent; shell owns chrome.
+.blockFormsPanel
+  // Hairline from inherited --stage-accent (set on the accordion for the selected card).
+  --tdm-field-use-mask-border: 0
+  --tdm-field-accent: var(--stage-accent)
+  --tdm-field-accent-rest: color-mix(in srgb, var(--stage-accent) calc(var(--canvas-field-border-rest-opacity) * 100%), transparent)
+
+  :global([class*='controlShell'])
+    --canvas-field-border-rest: color-mix(in srgb, var(--stage-accent) calc(var(--canvas-field-border-rest-opacity) * 100%), transparent)
+    --canvas-field-border-hover: color-mix(in srgb, var(--stage-accent) calc(var(--canvas-field-border-hover-opacity) * 100%), transparent)
+    --canvas-field-border-focus: color-mix(in srgb, var(--stage-accent) calc(var(--canvas-field-border-focus-opacity) * 100%), transparent)
+    border-width: var(--canvas-field-border-width)
+    border-color: var(--canvas-field-border-rest)
+
+    &:hover
+      border-width: var(--canvas-field-border-width)
+      border-color: var(--canvas-field-border-hover)
+
+    &:focus,
+    &:focus-visible,
+    &:focus-within
+      border-width: var(--canvas-field-border-width)
+      border-color: var(--canvas-field-border-focus)
+
+.blockFormsPanel :global(.formInput),
+.blockFormsPanel :global(.formTextarea),
+.blockFormsPanel :global(input),
+.blockFormsPanel :global(textarea)
+  min-height: 0
+  padding-inline: 0
+  font-size: 0.875rem
+  background: transparent
+  border: 0
+  border-radius: 0
+  box-shadow: none
+  color: var(--tdm-fg-primary)
+
+  &::placeholder
+    color: var(--tdm-fg-subtle)
+    font-size: 0.875rem
+
+  &:focus,
+  &:focus-visible
+    border: 0
+    box-shadow: none
+    outline: none
+    background: transparent
+
+.blockFormsPanel :global(.formTextarea),
+.blockFormsPanel :global(textarea)
+  min-height: 3.5rem
+  max-height: 5.5rem
+  resize: none
+
+// Target real <label> only — never [class*='label'], which steals TdmButton .label color.
+.blockFormsPanel :global(label),
+.blockFormsPanel :global([class*='fieldLabel'])
+  font-size: 0.75rem
+  letter-spacing: 0.02em
+  color: var(--tdm-fg-secondary)
+
+// Quick shortcuts — two discrete rows, Exemplos + Guia only
+.quickShortcutsCard
+  padding: 0.55rem 0
+  opacity: 1
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.05)
+  gap: 0.4rem
+
+  &::before
+    content: none
+    display: none
+
+.quickShortcutsHeader
+  margin-bottom: 0
+
+.quickShortcutsTitleRow
+  gap: 0.28rem
+
+  > span
+    width: 1rem
+    height: 1rem
+    opacity: 0.55
+    border-color: transparent
+    background: transparent
+    box-shadow: none
+
+    svg
+      width: 0.62rem
+      height: 0.62rem
+
+.quickShortcutsTitle
+  margin: 0
+  color: $text-faint
+  font-size: 0.48rem
+  font-weight: 600
+  letter-spacing: 0.08em
+  text-transform: uppercase
+
+.quickShortcutsGrid
+  display: flex
+  flex-direction: column
+  flex-wrap: nowrap
+  gap: 0.2rem
+  width: 100%
+  grid-template-columns: none
+
+.quickShortcutBtn
+  appearance: none
+  position: relative
+  isolation: isolate
+  display: inline-flex
+  flex-direction: row
+  align-items: center
+  justify-content: flex-start
+  width: 100%
+  min-width: 0
+  gap: 0.45rem
+  min-height: 1.85rem
+  padding: 0.28rem 0.55rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.07)
+  border-radius: 0.75rem
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
+  color: $text-muted
+  font-size: 0.68rem
+  font-weight: 520
+  letter-spacing: 0.01em
+  line-height: 1.2
+  text-decoration: none
+  text-transform: none
+  white-space: nowrap
+  overflow: hidden
+  cursor: pointer
+  transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease
+
+  &::before
+    display: none
+
+  > *
+    position: relative
+    z-index: 1
+
+  &:hover:not(:disabled),
+  &:focus-visible:not(:disabled)
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03))
+    border-color: rgba(255, 255, 255, 0.12)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1)
+    color: $text
+    outline: none
+    transform: translateY(-0.0625rem)
+
+    .quickShortcutBtnIcon
+      color: $text
+      opacity: 0.92
+      border-color: transparent
+      background: transparent
+
+    .quickShortcutBtnLabel
+      color: $text
+
+.quickShortcutBtnIcon
+  display: inline-grid
+  place-items: center
+  width: 0.95rem
+  height: 0.95rem
+  flex: 0 0 auto
+  border: 0
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+  color: $text-faint
+  opacity: 0.78
+
+  svg
+    width: 0.72rem
+    height: 0.72rem
+    display: block
+
+.quickShortcutBtnLabel
+  display: block
+  flex: 1
+  min-width: 0
+  text-align: left
+  color: inherit
+  font-weight: 520
+  letter-spacing: 0.01em
+  overflow: hidden
+  text-overflow: ellipsis
+
+.resultCard
+  padding: 0.55rem 0 0
+  opacity: 1
+  border-bottom: 0
+  background: transparent
+  box-shadow: none
+  gap: 0.35rem
+
+.finalResultAccent,
+.finalResultGlassVeil,
+.finalResultGlassHighlight,
+.finalResultGlassSpecular,
+.finalResultGlassEdge,
+.finalResultGlassNoise,
+.finalResultGlassHaze,
+.finalResultHazeCore,
+.finalResultHazeBand,
+.finalResultHazeSpread,
+.finalResultSculptureZone,
+.finalResultAtmosphere,
+.finalResultPanelGlassSvg,
+.finalResultPanelGlassBackdrop,
+.finalResultPanelGlassGrain,
+.finalResultPanelGlassRefraction,
+.finalResultPanelGlassDepth,
+.finalResultPanelGlassRimLeft,
+.finalResultPanelGlassRimTop,
+.finalResultPanelVeil,
+.finalResultPanelSpecular,
+.finalResultPanelEdge,
+.finalResultHairline,
+.finalResultKicker
+  display: none !important
+
+.finalResultScene
+  min-height: 0
+  padding: 0
+
+.finalResultComposition
+  gap: 0.2rem
+
+.finalResultGlassPanel
+  padding: 0
+  border: 0
+  background: transparent
+  box-shadow: none
+
+.finalResultEditorial
+  gap: 0.2rem
+
+.finalResultHeadline
+  margin: 0
+  font-size: 0.78rem
+  line-height: 1.25
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+
+.finalResultHeadlineLead,
+.finalResultHeadlineAccent
+  color: $text
+  font-weight: 600
+  font-size: 0.78rem
+  letter-spacing: -0.01em
+
+.finalResultLead
+  margin: 0.2rem 0 0
+  font-size: 0.62rem
+  line-height: 1.35
+  color: $text-muted
+  max-width: 32ch
+
+.finalResultFooter
+  margin-top: 0.45rem
+  gap: 0.3rem
+
+.finalResultHelper
+  font-size: 0.58rem
+  line-height: 1.35
+
+.heroFormShell
+  // Hero theory fields — generic white solid hairline (border tokens from .sidebar).
+  --tdm-field-use-mask-border: 0
+  --tdm-field-accent: initial
+  --tdm-field-accent-rest: initial
+
+  :global(.formInput),
+  :global(.formTextarea),
+  :global(input),
+  :global(textarea)
+    min-height: 0
+    padding-inline: 0
+    font-size: 0.875rem
+    background: transparent
+    border: 0
+    border-radius: 0
+    box-shadow: none
+    color: var(--tdm-fg-primary)
+
+    &::placeholder
+      color: var(--tdm-fg-subtle)
+
+    &:focus,
+    &:focus-visible
+      border: 0
+      box-shadow: none
+      outline: none
+      background: transparent
+
+  :global([class*='fieldLabel']),
+  :global(label)
+    font-size: 0.75rem
+    letter-spacing: 0.02em
+    color: var(--tdm-fg-secondary)
+
+.contextActions
+  gap: 0.4rem
+
+.markerBlock
+  // Connection marker fields — generic white solid hairline (border tokens from .sidebar).
+  --tdm-field-use-mask-border: 0
+  display: grid
+  gap: var(--tdm-space-4)
+  padding: 0.55rem 0
+  border-color: transparent
+  background: transparent
+  box-shadow: none
+
+  :global(.formInput),
+  :global(input),
+  :global(textarea)
+    min-height: 0
+    border: 0
+    border-radius: 0
+    background: transparent
+    box-shadow: none
+    color: var(--tdm-fg-primary)
+    padding-inline: 0
+
+    &:focus,
+    &:focus-visible
+      border: 0
+      box-shadow: none
+      outline: none
+
+.stagecurrent
+  border-color: rgba(255, 255, 255, 0.08)
+  background: rgba(255, 255, 255, 0.02)
+  box-shadow: inset 0.12rem 0 0 color-mix(in srgb, var(--stage-accent) 55%, transparent)
+
+  .stageDot
+    box-shadow: none
+
+  &:hover
+    border-color: rgba(255, 255, 255, 0.1)
+    background: rgba(255, 255, 255, 0.03)
+
+.stageProgressSegment
+  border-radius: 0.05rem
+
+.stageProgressSegmentLit
+  box-shadow: none
+
+.stageDot
+  box-shadow: none !important
+  filter: none
+
+.dragCard
+  &:hover
+    transform: translateY(-0.0625rem) !important
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12) !important
+
+// ─── Canvas skin surgery — 2026-07-15 ───────────────────────────────────────
+
+$skin-gray-11: rgb(161, 164, 165)
+$skin-gray-12: rgb(240, 240, 240)
+$skin-panel: rgba(9, 10, 13, 0.82)
+$skin-border: rgba(255, 255, 255, 0.1)
+
+.sidebar,
+.surface,
+.header,
+.content
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+
+// Hero: aBCFavorit headline and centered editorial rhythm.
+// Sidebar open/close lives once on the Canvas shell — not inside this header.
+.heroCard
+  position: relative
+  isolation: isolate
+  overflow: visible
+  padding: 1.25rem 1rem 1rem
+  border: 0.0625rem solid $skin-border
+  border-radius: 1rem
+  background: radial-gradient(70% 80% at 50% 0%, rgba(255, 255, 255, 0.06) 3%, transparent 70%), linear-gradient(180deg, rgba(20, 21, 25, 0.72), rgba(8, 9, 12, 0.9))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), 0 0.75rem 1.75rem rgba(0, 0, 0, 0.22)
+
+  &::before
+    display: block
+    content: ''
+    position: absolute
+    z-index: 3
+    top: 0
+    left: 50%
+    width: 9.375rem
+    height: 0.0625rem
+    transform: translate(-50%, -50%)
+    background: linear-gradient(90deg, transparent 0%, rgba(143, 143, 143, 0.67) 50%, transparent 100%)
+    pointer-events: none
+
+  &::after
+    display: block
+    content: ''
+    position: absolute
+    z-index: 0
+    inset: 0
+    border-radius: inherit
+    pointer-events: none
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.48) 0%, transparent 20%, transparent 100%)
+
+  > *
+    position: relative
+    z-index: 2
+
+.heroCardCollapsed
+  padding: 1rem 1rem 0.875rem
+
+.heroContent
+  gap: 0.375rem
+
+.heroLead
+  gap: 0.375rem
+  max-width: 100%
+
+.heroTitle,
+.heroCardCollapsed .heroTitle
+  margin: 0
+  color: $skin-gray-12
+  font-family: aBCFavorit, ui-sans-serif, system-ui, sans-serif
+  font-size: 1.75rem
+  font-weight: 500
+  line-height: 2.125rem
+  letter-spacing: -0.045rem
+  text-align: center
+  text-wrap: balance
+
+.heroDescription,
+.heroCardCollapsed .heroDescription
+  margin: 0
+  color: $skin-gray-11
+  font-size: 0.875rem
+  font-weight: 400
+  line-height: 1.25rem
+  text-align: center
+  max-width: 100%
+
+.heroFormShell
+  margin-top: 0.75rem
+
+// Experience headers: one scale, no icon tile, same gradient treatment.
+.blockFormGroupHeader,
+.canvasOrganizationTitleRow,
+.quickShortcutsTitleRow,
+.sectionHeader
+  display: flex
+  align-items: center
+  justify-content: flex-start
+  gap: 0.5rem
+  min-height: 1.125rem
+
+.blockFormGroupHeader
+  padding: 0
+  margin: 0 0 1.5rem
+
+.blockFormGroupTitle,
+.canvasOrganizationTitle,
+.quickShortcutsTitle,
+.sectionKicker
+  margin: 0
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.625rem
+  font-weight: 400
+  line-height: 1rem
+  letter-spacing: 0.04em
+  text-transform: uppercase
+  color: transparent
+  background: linear-gradient(90deg, rgba(240, 240, 240, 0.94) 0%, rgba(161, 164, 165, 0.72) 100%)
+  background-clip: text
+  -webkit-background-clip: text
+  -webkit-text-fill-color: transparent
+
+.canvasOrganizationTitleRow,
+.quickShortcutsTitleRow
+  margin-bottom: 1.5rem
+
+.canvasOrganizationTitleRow > span,
+.quickShortcutsTitleRow > span,
+.blockFormGroupHeader > span
+  width: 1.125rem
+  height: 1.125rem
+  min-width: 1.125rem
+  padding: 0
+  border: 0
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+  color: $skin-gray-11
+  opacity: 1
+
+  svg
+    width: 1.125rem
+    height: 1.125rem
+
+    path,
+    rect,
+    line,
+    polyline,
+    polygon,
+    circle
+      stroke-width: 1.5
+
+// Create/edit accordion: 14px title, stage border on hover and top beam.
+.blockFormsPanel
+  --glow-color: rgba(143, 143, 143, 0.67)
+  --inner-glow: rgba(255, 255, 255, 0.06)
+  overflow: visible
+
+.blockFormsPanel .blockSidebarAccordion
+  position: relative
+  isolation: isolate
+  overflow: visible
+  border: 0.0625rem solid $skin-border
+  border-radius: 1rem
+  background: radial-gradient(70% 80% at 50% 0%, var(--inner-glow) 3%, transparent 70%), linear-gradient(to top, rgba(0, 0, 0, 0.42) 0%, transparent 20%), linear-gradient(180deg, rgba(18, 19, 23, 0.66), $skin-panel)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.065)
+  transition: border-color 200ms ease, background 200ms ease, box-shadow 200ms ease
+
+  &::before
+    display: block
+    content: ''
+    position: absolute
+    z-index: 4
+    top: 0
+    left: 50%
+    width: 9.375rem
+    height: 0.0625rem
+    transform: translate(-50%, -50%)
+    background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--stage-accent, var(--glow-color)) 64%, rgba(255, 255, 255, 0.34)) 50%, transparent 100%)
+    opacity: 0.34
+    pointer-events: none
+
+  &::after
+    display: block
+    content: ''
+    position: absolute
+    z-index: 0
+    inset: 0
+    border-radius: inherit
+    pointer-events: none
+    background: radial-gradient(70% 80% at 50% 0%, color-mix(in srgb, var(--stage-accent, rgba(255, 255, 255, 0.5)) 5%, transparent) 3%, transparent 70%)
+    opacity: 0.65
+
+  > *
+    position: relative
+    z-index: 2
+
+  &:has(.blockAccordionHeader:hover),
+  &:has(.blockAccordionHeader:focus-visible),
+  &.sidebarAccordionOpen
+    border-color: color-mix(in srgb, var(--stage-accent, rgba(255, 255, 255, 0.55)) 52%, rgba(255, 255, 255, 0.16))
+    background: radial-gradient(70% 80% at 50% 0%, color-mix(in srgb, var(--stage-accent, rgba(255, 255, 255, 0.55)) 7%, transparent) 3%, transparent 70%), linear-gradient(to top, rgba(0, 0, 0, 0.44) 0%, transparent 20%), linear-gradient(180deg, rgba(21, 22, 27, 0.72), rgba(8, 9, 12, 0.9))
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.09), 0 0.625rem 1.5rem rgba(0, 0, 0, 0.18)
+
+    &::before
+      opacity: 0.92
+
+.blockFormsPanel .blockAccordionHeader
+  position: relative
+  z-index: 3
+  min-height: 3.5rem
+  padding: 0.9375rem 1rem
+  border-radius: calc(1rem - 0.0625rem)
+  color: rgba(224, 226, 232, 0.84)
+  font-size: 0.875rem
+  font-weight: 500
+  line-height: 1.25rem
+  letter-spacing: 0.08em
+  text-transform: uppercase
+  overflow: visible
+
+.sidebarAccordionTitle
+  display: block
+  padding-top: 0.0625rem
+  color: inherit
+  line-height: 1.25rem
+  overflow: visible
+
+.blockSidebarAccordion.sidebarAccordionOpen .blockAccordionHeader .sidebarAccordionTitle
+  color: rgba(240, 240, 240, 0.96)
+  font-size: 0.875rem
+  font-weight: 500
+  line-height: 1.25rem
+
+.sidebarAccordionPanel,
+.sidebarAccordionContent
+  border-radius: 0 0 calc(1rem - 0.0625rem) calc(1rem - 0.0625rem)
+
+.sidebarAccordionContent
+  overflow: hidden
+
+.blockFormsPanel .sidebarAccordionContent > *
+  padding: 0.25rem 1rem 1rem
+
+// Form wrappers are <label class=field> with display:grid + gap for label→control breath.
+// Never force display:block on the wrapper — that kills the shared field gap.
+// Hero TdmField labels keep inline-flex so the required asterisk stays on the same line.
+.blockFormsPanel :global(label)
+  display: grid
+  gap: 0.375rem
+  margin: 0
+  color: $skin-gray-11
+
+.heroFormShell :global(label)
+  display: inline-flex
+  align-items: baseline
+  gap: 0.25rem
+  margin: 0
+  flex-wrap: nowrap
+  color: $skin-gray-11
+
+.blockFormsPanel :global([class*='fieldLabel']),
+.heroFormShell :global([class*='fieldLabel'])
+  display: block
+  margin: 0
+  color: $skin-gray-11
+  font-size: 0.65625rem
+  font-weight: 400
+  line-height: 1.25
+  letter-spacing: 0.02em
+  text-transform: uppercase
+
+.blockFormsPanel :global(input),
+.heroFormShell :global(input),
+.blockFormsPanel :global(textarea),
+.heroFormShell :global(textarea)
+  border: 0
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+  padding-inline: 0
+  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.875rem
+
+// Secondary shortcut rows remain compact but no pill silhouette.
+.quickShortcutBtn
+  border-radius: 0.75rem
+
+// Square chevrons — size only. Criar/Editar inherit --stage-accent from the header.
+.sidebarAccordionChevron
+  width: 1.125rem
+  height: 1.125rem
+
+  path
+    stroke-width: 1.5
+
+// Keep headings/content above all beams and avoid top-left clipping.
+.blockFormGroup,
+.canvasOrganizationCard,
+.quickShortcutsCard,
+.stageActionCard,
+.understandSection,
+.progressCard
+  position: relative
+  overflow: visible
+
+.blockFormGroup > *,
+.canvasOrganizationCard > *,
+.quickShortcutsCard > *,
+.stageActionCard > *,
+.understandSection > *,
+.progressCard > *
+  position: relative
+  z-index: 2
+
+@media (max-width: 42rem)
+  .heroTitle,
+  .heroCardCollapsed .heroTitle
+    font-size: 1.5rem
+    line-height: 1.875rem
+    letter-spacing: -0.035rem
+
+// ─── SURGERY 02 — reference-led spacing, fading rims and CTA parity ──────────
+
+// Section experience headers: 16px copy, 18x24 icon frame and 24px breathing room.
+.blockFormGroupHeader,
+.canvasOrganizationTitleRow,
+.quickShortcutsTitleRow
+  display: flex
+  align-items: center
+  justify-content: flex-start
+  gap: 0.5rem
+  min-height: 1.5rem
+
+.blockFormGroupHeader
+  margin: 0 0 1.5rem
+
+.quickShortcutsTitleRow
+  margin: 0 0 1.5rem
+
+.canvasOrganizationTitleRow
+  margin: 0
+  min-width: 0
+
+.blockFormGroupTitle,
+.canvasOrganizationTitle,
+.quickShortcutsTitle
+  width: auto
+  height: auto
+  min-width: 0
+  margin: 0
+  padding: 0
+  border: 0
+  border-radius: 0
+  background: linear-gradient(90deg, rgba(240, 240, 240, 0.96) 0%, rgba(161, 164, 165, 0.76) 100%)
+  background-clip: text
+  -webkit-background-clip: text
+  -webkit-text-fill-color: transparent
+  box-shadow: none
+  color: transparent
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 1rem
+  font-weight: 400
+  line-height: 1.5rem
+  letter-spacing: 0.04em
+  text-transform: uppercase
+  white-space: normal
+
+.blockFormGroupHeader > :first-child,
+.canvasOrganizationTitleRow > :first-child,
+.quickShortcutsTitleRow > :first-child
+  width: 1.125rem
+  height: 1.5rem
+  min-width: 1.125rem
+  flex: 0 0 1.125rem
+  padding: 0
+  border: 0
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+  color: rgb(161, 164, 165)
+
+  svg
+    width: 1.125rem
+    height: 1.5rem
+
+.canvasOrganizationTitleRow > .canvasOrganizationTitle
+  display: block
+  width: auto
+  height: auto
+  min-width: 0
+  flex: 1 1 auto
+
+.canvasOrganizationHeader
+  align-items: center
+
+.canvasOrganizationContent
+  padding-top: 0.125rem
+  padding-bottom: 0.875rem
+
+// Hero: a top-weighted rim that dissolves before the lower sides and bottom.
+.heroCard
+  overflow: hidden
+  border: 0
+  border-radius: 1.5rem
+  background: radial-gradient(72% 40% at 50% 0%, rgba(255, 255, 255, 0.065) 0%, transparent 74%), linear-gradient(180deg, rgba(24, 25, 29, 0.82) 0%, rgba(18, 19, 23, 0.76) 34%, rgba(13, 14, 17, 0.94) 72%, rgba(12, 13, 16, 1) 100%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.07), 0 0.75rem 1.75rem rgba(0, 0, 0, 0.2)
+
+  &::before
+    display: block
+    content: ''
+    position: absolute
+    z-index: 4
+    inset: 0
+    width: auto
+    height: auto
+    padding: 0.0625rem
+    border-radius: inherit
+    transform: none
+    background: linear-gradient(180deg, rgba(224, 226, 232, 0.22) 0%, rgba(161, 164, 165, 0.13) 32%, rgba(161, 164, 165, 0.055) 60%, transparent 88%)
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)
+    -webkit-mask-composite: xor
+    mask-composite: exclude
+    opacity: 0.94
+    pointer-events: none
+
+  &::after
+    display: block
+    content: ''
+    position: absolute
+    z-index: 0
+    inset: 0
+    border-radius: inherit
+    background: linear-gradient(180deg, transparent 0%, transparent 56%, rgba(12, 13, 16, 0.18) 76%, rgba(12, 13, 16, 0.72) 100%)
+    pointer-events: none
+
+.heroGlowTop
+  inset: -36% -18% auto -18%
+  height: 58%
+  opacity: 0.34
+
+.heroGlowBottom
+  opacity: 0.08
+
+.heroSpecular
+  opacity: 0.38
+
+.heroFormShell
+  :global(.form)
+    gap: 1.25rem
+
+  :global(label)
+    display: grid
+    gap: 0.375rem
+    margin: 0
+
+  :global(input),
+  :global(textarea)
+    border: 0
+    border-radius: 0
+    background: transparent
+    box-shadow: none
+    padding-inline: 0
+
+// Create/edit: gradient rim only on the top and upper sidewalls; no lower border.
+.blockFormsPanel .blockSidebarAccordion
+  overflow: hidden
+  border: 0
+  border-radius: 1rem
+  background: radial-gradient(82% 32% at 50% 0%, color-mix(in srgb, var(--stage-accent, rgba(255, 255, 255, 0.5)) 4%, transparent) 0%, transparent 72%), linear-gradient(180deg, rgba(19, 20, 24, 0.78) 0%, rgba(12, 13, 16, 0.91) 56%, rgba(8, 9, 12, 0.98) 100%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.055), 0 0.625rem 1.5rem rgba(0, 0, 0, 0.14)
+
+  &::before
+    display: block
+    content: ''
+    position: absolute
+    z-index: 4
+    inset: 0
+    width: auto
+    height: auto
+    padding: 0.0625rem
+    border-radius: inherit
+    transform: none
+    background: linear-gradient(180deg, color-mix(in srgb, var(--stage-accent, rgba(224, 226, 232, 0.8)) 42%, rgba(224, 226, 232, 0.18)) 0%, color-mix(in srgb, var(--stage-accent, rgba(161, 164, 165, 0.55)) 22%, rgba(161, 164, 165, 0.08)) 42%, rgba(161, 164, 165, 0.025) 68%, transparent 90%)
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)
+    -webkit-mask-composite: xor
+    mask-composite: exclude
+    opacity: 0.48
+    pointer-events: none
+
+  &::after
+    display: block
+    content: ''
+    position: absolute
+    z-index: 0
+    inset: 0
+    border-radius: inherit
+    background: radial-gradient(ellipse 82% 34% at 50% 0%, color-mix(in srgb, var(--stage-accent, rgba(255, 255, 255, 0.5)) 5%, transparent) 0%, transparent 72%)
+    opacity: 0.42
+    pointer-events: none
+
+  &:has(.blockAccordionHeader:hover),
+  &:has(.blockAccordionHeader:focus-visible),
+  &.sidebarAccordionOpen
+    border: 0
+    background: radial-gradient(82% 34% at 50% 0%, color-mix(in srgb, var(--stage-accent, rgba(255, 255, 255, 0.5)) 6%, transparent) 0%, transparent 72%), linear-gradient(180deg, rgba(21, 22, 26, 0.8) 0%, rgba(12, 13, 16, 0.92) 58%, rgba(8, 9, 12, 0.99) 100%)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.075), 0 0.75rem 1.65rem rgba(0, 0, 0, 0.17)
+
+    &::before
+      opacity: 0.82
+
+    &::after
+      opacity: 0.5
+
+.blockFormsPanel
+  :global(.form)
+    gap: var(--tdm-space-3)
+
+  :global(.field) + :global(.field)
+    margin-top: 0
+
+  :global(label),
+  :global(.fieldLabel)
+    margin-bottom: 0
+
+  :global(.formInput),
+  :global(.formTextarea),
+  :global(input),
+  :global(textarea)
+    border-radius: 0
+    border: 0
+    background: transparent
+    box-shadow: none
+
+// ─── SURGERY 03 — route /canvas visual corrections from Archive(7) ──────────
+
+// Experience headings: compact editorial scale requested for create, edit,
+// organization and shortcuts. Keep the existing markup and behavior intact.
+.blockFormGroupHeader,
+.canvasOrganizationTitleRow,
+.quickShortcutsTitleRow
+  gap: 0.5rem
+  min-height: 1.35rem
+  margin-bottom: 0.5rem
+
+.blockFormGroupHeader
+  margin-top: 0
+
+.blockFormGroupTitle,
+.canvasOrganizationTitle,
+.quickShortcutsTitle
+  display: inline-block
+  width: auto
+  min-width: 0
+  visibility: visible
+  opacity: 1
+  color: transparent !important
+  background: linear-gradient(90deg, rgba(240, 240, 240, 0.94) 0%, rgba(161, 164, 165, 0.76) 100%) !important
+  background-clip: text !important
+  -webkit-background-clip: text !important
+  -webkit-text-fill-color: transparent !important
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.78125rem
+  font-weight: 400
+  line-height: 1.1rem
+  letter-spacing: 0.04em
+  text-transform: uppercase
+  white-space: normal
+
+.canvasOrganizationTitleRow
+  flex: 1 1 auto
+  overflow: visible
+
+.canvasOrganizationTitleRow .canvasOrganizationTitle
+  flex: 1 1 auto
+  overflow: visible
+  text-overflow: clip
+
+.blockFormGroupHeader > :first-child,
+.canvasOrganizationTitleRow > :first-child,
+.quickShortcutsTitleRow > :first-child
+  width: 1.35rem
+  height: 1.35rem
+  min-width: 1.35rem
+  flex: 0 0 1.35rem
+
+  svg
+    width: 1.35rem
+    height: 1.35rem
+
+// The hero is a top-lit editorial surface that dissolves into the sidebar.
+// No dark container wall or rounded lower corners remain in either state.
+.heroCard,
+.heroCardCollapsed
+  overflow: hidden
+  border: 0
+  border-radius: 1.5rem 1.5rem 0 0
+  background: radial-gradient(80% 44% at 50% 0%, rgba(255, 255, 255, 0.075) 0%, transparent 72%), linear-gradient(180deg, rgba(27, 28, 32, 0.82) 0%, rgba(21, 22, 26, 0.62) 30%, rgba(17, 18, 22, 0.32) 58%, rgba(14, 15, 18, 0.08) 82%, rgba(14, 15, 18, 0) 100%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.075)
+
+  &::before
+    display: block
+    content: ''
+    position: absolute
+    z-index: 4
+    inset: 0
+    width: auto
+    height: auto
+    padding: 0.0625rem
+    border-radius: 1.5rem 1.5rem 0 0
+    transform: none
+    background: linear-gradient(180deg, rgba(224, 226, 232, 0.22) 0%, rgba(161, 164, 165, 0.12) 30%, rgba(161, 164, 165, 0.035) 58%, transparent 78%)
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)
+    -webkit-mask-composite: xor
+    mask-composite: exclude
+    opacity: 0.82
+    pointer-events: none
+
+  &::after
+    display: block
+    content: ''
+    position: absolute
+    z-index: 4
+    left: 0
+    right: 0
+    bottom: 0
+    height: 0.0625rem
+    border-radius: 0
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.055) 12%, rgba(255, 255, 255, 0.09) 50%, rgba(255, 255, 255, 0.055) 88%, transparent 100%)
+    pointer-events: none
+
+.heroGlowBottom
+  display: none
+
+.heroGlowTop
+  opacity: 0.26
+
+.heroSpecular
+  opacity: 0.22
+
+.heroFormShell
+  padding-bottom: 0.875rem
+
+.heroFormShellCollapsed
+  padding-bottom: 0
+
+// Expanded create/edit forms dissolve into the sidebar instead of becoming a
+// second dark card. Closed accordions keep their existing compact surface.
+.blockFormsPanel .blockSidebarAccordion.sidebarAccordionOpen
+  overflow: hidden
+  border: 0
+  border-radius: 1rem 1rem 0 0
+  background: radial-gradient(82% 34% at 50% 0%, color-mix(in srgb, var(--stage-accent, rgba(255, 255, 255, 0.5)) 4%, transparent) 0%, transparent 72%), linear-gradient(180deg, rgba(22, 23, 28, 0.54) 0%, rgba(17, 18, 22, 0.28) 30%, rgba(12, 13, 16, 0.08) 58%, transparent 82%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.055)
+
+  &::before
+    inset: 0
+    padding: 0.0625rem
+    border-radius: 1rem 1rem 0 0
+    background: linear-gradient(180deg, color-mix(in srgb, var(--stage-accent, rgba(224, 226, 232, 0.8)) 40%, rgba(224, 226, 232, 0.16)) 0%, color-mix(in srgb, var(--stage-accent, rgba(161, 164, 165, 0.55)) 16%, rgba(161, 164, 165, 0.05)) 34%, rgba(161, 164, 165, 0.018) 58%, transparent 78%)
+    opacity: 0.58
+
+  &::after
+    display: none
+
+.blockFormsPanel .blockSidebarAccordion.sidebarAccordionOpen .sidebarAccordionPanel,
+.blockFormsPanel .blockSidebarAccordion.sidebarAccordionOpen .sidebarAccordionContent
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+
+.blockFormsPanel .blockSidebarAccordion.sidebarAccordionOpen .sidebarAccordionContent > *
+  background: transparent
+
+// Exact field rhythm requested for hero, create and edit forms.
+.blockFormsPanel :global(.form),
+.heroFormShell :global(.form)
+  gap: 1.25rem
+
+.blockFormsPanel :global(.field) + :global(.field),
+.heroFormShell :global(.field) + :global(.field)
+  margin-top: 0
+
+.blockFormsPanel :global(label)
+  display: grid
+  gap: 0.375rem
+  margin: 0
+
+.heroFormShell :global(label)
+  display: inline-flex
+  align-items: baseline
+  gap: 0.25rem
+  margin: 0
+  flex-wrap: nowrap
+
+.blockFormsPanel :global(input),
+.heroFormShell :global(input),
+.blockFormsPanel :global(textarea),
+.heroFormShell :global(textarea)
+  border: 0
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+  padding-inline: 0
+
+// Shortcuts become compact editorial rows, not rounded dashboard tiles.
+.quickShortcutsGrid
+  gap: 0
+
+.quickShortcutBtn
+  min-height: 2.25rem
+  padding: 0.375rem 0
+  gap: 0.5rem
+  border: 0
+  border-bottom: 0.0625rem solid rgba(161, 164, 165, 0.18)
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+  color: rgba(161, 164, 165, 0.58)
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.75rem
+  font-weight: 500
+  line-height: 1.125rem
+  opacity: 0.78
+  overflow: visible
+  transition: color 180ms ease, opacity 180ms ease, border-color 180ms ease, background 180ms ease
+
+  &::after
+    content: '→'
+    margin-left: auto
+    color: currentColor
+    font-size: 1rem
+    font-weight: 400
+    line-height: 1
+    opacity: 0.82
+    transform: translateX(-0.125rem)
+    transition: transform 180ms ease, opacity 180ms ease
+
+  &:hover,
+  &:focus-visible
+    transform: none
+    border-color: rgba(224, 226, 232, 0.32)
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.018), transparent 72%)
+    box-shadow: none
+    color: rgba(224, 226, 232, 0.94)
+    opacity: 1
+
+    &::after
+      opacity: 1
+      transform: translateX(0)
+
+.quickShortcutBtnIcon
+  width: 1rem
+  height: 1rem
+  color: currentColor
+  opacity: 0.72
+
+  svg
+    width: 0.875rem
+    height: 0.875rem
+
+.quickShortcutBtnLabel
+  font-weight: 500
+  color: inherit
+
+@media (prefers-reduced-motion: reduce)
+  .quickShortcutBtn,
+  .quickShortcutBtn::after
+    transition: none
+
+

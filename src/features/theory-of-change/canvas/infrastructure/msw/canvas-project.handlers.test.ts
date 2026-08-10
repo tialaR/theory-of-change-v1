@@ -2,7 +2,7 @@ import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
 import { TDM_MOCK_API_ORIGIN } from '@/mocks/mock-api.constants';
 import { createCanvasProject } from '../../application/create-canvas-project';
 import { createHttpCanvasProjectRepository } from '../http/http-canvas-project.repository';
-import { canvasProjectMockStore } from './canvas-project.mock-store';
+import { canvasProjectMockStore } from '../memory/canvas-project.mock-store';
 import { canvasProjectTestServer } from './canvas-project.test-server';
 
 beforeAll(() => canvasProjectTestServer.listen({ onUnhandledRequest: 'error' }));

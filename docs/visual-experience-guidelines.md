@@ -95,7 +95,7 @@ Paleta: fundo quase preto, texto branco/cinza, verde só como acento. Sem roxo/a
 
 ### Exceção: `/canvas`
 
-A rota `/canvas` permanece com o DS antigo e será migrada por último. Não alterar visual do canvas nesta fase.
+A experiência visual homologada do `/canvas` permanece protegida. A arquitetura interna já foi modularizada e é governada por ADR-008 e SharkOps; mudanças visuais devem acontecer apenas em ondas visuais explícitas, sem reabrir silenciosamente as fronteiras arquiteturais.
 
 ### Conteúdo
 

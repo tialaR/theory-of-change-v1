@@ -1,0 +1,9 @@
+{
+  "id": "SO-011",
+  "codename": "React Flow Isolation",
+  "wave": "closeout-compatibility-hotfix",
+  "status": "COMPLETE",
+  "revision": 12,
+  "purpose": "Keep historical SO-010 and SO-011 closeout gates compatible with the official completed handoff to SO-012 without weakening layer boundaries",
+  "updatedAt": "2026-08-06T07:20:00.000Z"
+}

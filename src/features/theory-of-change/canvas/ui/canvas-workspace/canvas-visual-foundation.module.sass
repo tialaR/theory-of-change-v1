@@ -1,0 +1,104 @@
+// Visual Foundation Wave 02: interaction hierarchy and stage-aware focus.
+.node
+  isolation: isolate
+
+  &::after
+    content: ''
+    position: absolute
+    z-index: -1
+    inset: 0.4rem
+    border-radius: 0.82rem
+    background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--stage-color) 10%, transparent), transparent 68%)
+    opacity: 0
+    pointer-events: none
+    transition: opacity 180ms ease
+
+  &:hover::after,
+  &[data-selected='true']::after
+    opacity: 1
+
+  &[data-selected='true']
+    transform: translateY(-0.0625rem)
+
+  &:focus-within
+    border-color: color-mix(in srgb, var(--stage-color) 42%, var(--v2-stroke-strong))
+
+.nodeHandle
+  opacity: 0.44
+  transform: translateY(-50%) scale(0.86)
+  transition: opacity 160ms ease, transform 160ms ease, box-shadow 160ms ease
+
+  &:focus-visible
+    opacity: 1
+    outline: 0.125rem solid color-mix(in srgb, var(--stage-color) 44%, transparent)
+    outline-offset: 0.18rem
+
+.node:hover > .nodeHandle,
+.node[data-selected='true'] > .nodeHandle,
+.node[data-connecting='true'] > .nodeHandle
+  opacity: 1
+  transform: translateY(-50%) scale(1)
+  box-shadow: 0 0 0 0.0625rem color-mix(in srgb, var(--stage-color) 66%, transparent), 0 0 0.8rem color-mix(in srgb, var(--stage-color) 24%, transparent)
+
+.connectionGroup path
+  transition: stroke 160ms ease, stroke-width 160ms ease, filter 160ms ease
+
+.connectionGroup[data-selected='true'] path
+  stroke-width: 1.7
+  filter: drop-shadow(0 0 0.3rem color-mix(in srgb, white 14%, transparent))
+
+.edgeAction
+  backdrop-filter: blur(0.75rem)
+
+  &:focus-visible
+    outline: 0.125rem solid color-mix(in srgb, white 28%, transparent)
+    outline-offset: 0.18rem
+
+.topActions > button,
+.rail button
+  &:focus-visible
+    outline: 0.125rem solid color-mix(in srgb, white 24%, transparent)
+    outline-offset: 0.16rem
+
+.stageGuide span
+  box-shadow: inset 0 0.0625rem 0 color-mix(in srgb, white 4%, transparent)
+
+@media (prefers-reduced-motion: reduce)
+  .node::after,
+  .nodeHandle,
+  .connectionGroup path
+    transition: none
+
+// Visual Foundation Wave 04: final surface alignment and quiet depth.
+.topbar
+  box-shadow: inset 0 -0.0625rem 0 color-mix(in srgb, white 5%, transparent), 0 1rem 2.4rem color-mix(in srgb, black 18%, transparent)
+
+.rail
+  box-shadow: inset -0.0625rem 0 0 color-mix(in srgb, white 5%, transparent), 0.75rem 0 2rem color-mix(in srgb, black 14%, transparent)
+
+.stageGuide
+  letter-spacing: 0.015em
+
+  span
+    border-color: color-mix(in srgb, var(--stage-color) 20%, var(--v2-stroke))
+    background: color-mix(in srgb, var(--v2-raised) 88%, transparent)
+
+.node
+  box-shadow: inset 0 0.0625rem 0 color-mix(in srgb, white 5%, transparent), 0 0.9rem 2.1rem color-mix(in srgb, black 18%, transparent)
+
+  &[data-selected='true']
+    box-shadow: inset 0 0.0625rem 0 color-mix(in srgb, white 8%, transparent), 0 0 0 0.0625rem color-mix(in srgb, var(--stage-color) 46%, transparent), 0 1.1rem 2.6rem color-mix(in srgb, black 24%, transparent)
+
+.inspector
+  box-shadow: inset 0.0625rem 0 0 color-mix(in srgb, white 5%, transparent), -0.9rem 0 2.3rem color-mix(in srgb, black 16%, transparent)
+
+.connectionGroup path
+  stroke-linecap: round
+  stroke-linejoin: round
+
+@media (prefers-reduced-motion: reduce)
+  .topbar,
+  .rail,
+  .node,
+  .inspector
+    transition: none

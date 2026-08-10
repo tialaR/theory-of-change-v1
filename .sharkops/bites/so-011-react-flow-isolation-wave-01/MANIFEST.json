@@ -1,0 +1,12 @@
+{
+  "id": "SO-011",
+  "codename": "React Flow Isolation",
+  "wave": "01",
+  "status": "ACTIVE",
+  "purpose": "Freeze the current @xyflow/react import surface before extracting adapter contracts",
+  "createdAt": "2026-08-06T00:58:00.000Z",
+  "gates": [
+    "check:tdm:react-flow",
+    "check:tdm:react-flow-isolation:wave01"
+  ]
+}

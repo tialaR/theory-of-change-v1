@@ -1,0 +1,8 @@
+{
+  "id": "SO-007",
+  "codename": "God Hooks Slayer",
+  "wave": 1,
+  "status": "ACTIVE",
+  "revision": 1,
+  "purpose": "Split node CRUD coordination into editor, creation, mutation and accordion owners"
+}

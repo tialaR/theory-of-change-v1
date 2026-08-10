@@ -1,0 +1,6 @@
+.sharkops/bites/so-009-narrative-god-slayer-closeout/verify.sh
+.sharkops/bites/so-009-narrative-god-slayer-closeout/apply.sh
+.sharkops/bites/so-009-narrative-god-slayer-closeout/README.md
+.sharkops/bites/so-009-narrative-god-slayer-closeout/MANIFEST.json
+.sharkops/bites/so-009-narrative-god-slayer-closeout/rollback.sh
+scripts/tdm-contract-v3/check-narrative-god-slayer-closeout.mjs

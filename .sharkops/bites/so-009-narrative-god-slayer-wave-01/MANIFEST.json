@@ -1,0 +1,7 @@
+{
+  "id": "SO-009",
+  "codename": "Narrative God Slayer",
+  "status": "ACTIVE",
+  "revision": 1,
+  "gate": "check:tdm:narrative-god-slayer:wave01"
+}

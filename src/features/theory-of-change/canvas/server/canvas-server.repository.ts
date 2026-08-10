@@ -1,5 +1,5 @@
 import type { CanvasProjectRepository } from '../domain/canvas-project';
-import { canvasProjectMockStore } from '../infrastructure/msw/canvas-project.mock-store';
+import { canvasProjectMockStore } from '../infrastructure/memory/canvas-project.mock-store';
 
 export function createServerCanvasProjectRepository(): CanvasProjectRepository {
   return {

@@ -1,0 +1,273 @@
+// Canvas stability wave 03: authoritative geometry and overlay contract.
+.page
+  display: grid
+  grid-template-rows: 4.75rem minmax(0, 1fr)
+  transition: grid-template-rows 320ms cubic-bezier(0.22, 1, 0.36, 1)
+
+.page[data-full-canvas='true']
+  grid-template-rows: 0 minmax(0, 1fr)
+
+.topbar
+  position: relative
+  inset: auto
+  grid-row: 1
+  height: 4.5rem
+  min-height: 0
+  overflow: visible
+  pointer-events: auto
+  visibility: visible
+
+.page[data-full-canvas='true'] .topbar
+  visibility: visible
+  pointer-events: none
+
+.workspace
+  position: relative
+  inset: auto
+  grid-row: 2
+  width: 100%
+  height: 100%
+  min-height: 0
+
+.canvasViewport,
+.canvas,
+.reactFlow
+  width: 100%
+  height: 100%
+  min-width: 0
+  min-height: 0
+
+.canvasViewport
+  overflow: hidden
+
+.canvas
+  overflow: hidden
+
+.rail
+  top: 1.25rem
+  bottom: auto
+  height: auto
+  align-content: start
+
+.workspace[data-full-canvas='true'] .rail
+  top: auto
+  bottom: 1.25rem
+
+.inspector
+  display: grid !important
+  top: 1rem
+  right: 1rem
+  bottom: 1rem
+  transform: none
+  transition: none
+
+.inspector[data-open='false']
+  display: grid !important
+
+.workspaceTopRightControls
+  top: 1.25rem
+
+.fullCanvasActions
+  top: 1.25rem
+
+.creator
+  top: 1.25rem
+  left: 1.25rem
+
+.notice:empty
+  display: none
+
+.backButton,
+.headerIconButton,
+.headerActionButton,
+.topActions .resultButton,
+.topActions .saveButton
+  width: 2.25rem
+  min-width: 2.25rem
+  height: 2.25rem
+  padding: 0
+  border: 0.0625rem solid var(--v2-stroke)
+  border-radius: 0.68rem
+  background: color-mix(in srgb, var(--v2-raised) 68%, transparent)
+  color: var(--v2-muted)
+
+.backButton:hover,
+.backButton:focus-visible,
+.headerIconButton:hover:not(:disabled),
+.headerIconButton:focus-visible,
+.headerActionButton:hover:not(:disabled),
+.headerActionButton:focus-visible
+  border-color: var(--v2-stroke-strong)
+  color: var(--v2-text)
+
+.reactFlow
+  :global(.react-flow__edgelabel-renderer)
+    pointer-events: none
+
+.reactFlowEdgeLabel
+  pointer-events: auto
+
+.edgeAction,
+.reactFlowEdgePopover
+  pointer-events: auto
+
+@media (prefers-reduced-motion: reduce)
+  .page
+    transition: none
+
+
+// Stability wave 04: overlay hierarchy, persistent relation editing and anchored controls.
+.rail
+  z-index: 72
+  top: auto !important
+  bottom: 1.25rem !important
+
+.workspace[data-full-canvas='true'] .rail
+  top: auto !important
+  bottom: 1.25rem !important
+
+.creator
+  z-index: 74
+  top: 1.25rem
+  bottom: auto
+
+.inspector
+  z-index: 96
+  will-change: transform, opacity
+
+.workspace[data-full-canvas='true'] .inspector
+  pointer-events: none
+
+.workspaceTopRightControls
+  z-index: 95
+
+.reactFlow
+  :global(.react-flow__edgelabel-renderer)
+    z-index: 108
+    pointer-events: none
+
+.reactFlowEdgeLabel
+  z-index: 110
+  pointer-events: auto
+
+.edgeAction
+  z-index: 112
+
+.reactFlowEdgePopover
+  z-index: 120
+  pointer-events: auto
+
+.nodeToolbar
+  z-index: 114
+
+.notice
+  z-index: 92
+
+@media (prefers-reduced-motion: reduce)
+  .inspector
+    transition: none
+
+// Canvas convergence wave 05: stable overlays, spacing and consistent icon controls.
+.backButton,
+.headerIconButton,
+.headerActionButton,
+.topActions .resultButton,
+.topActions .saveButton
+  border: 0.0625rem solid var(--v2-stroke) !important
+  border-radius: 0.68rem !important
+  background: color-mix(in srgb, var(--v2-raised) 68%, transparent) !important
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease
+
+  &:hover:not(:disabled),
+  &:focus-visible
+    transform: translateY(-0.08rem)
+    border-color: var(--v2-stroke-strong) !important
+    background: color-mix(in srgb, var(--v2-raised) 82%, white 5%) !important
+
+  &:disabled
+    border-color: color-mix(in srgb, var(--v2-stroke) 58%, transparent) !important
+    background: color-mix(in srgb, var(--v2-raised) 34%, transparent) !important
+    opacity: 0.48
+
+.reactFlow
+  :global(.react-flow__edgelabel-renderer)
+    z-index: 1000 !important
+    overflow: visible !important
+
+.reactFlowEdgeLabel
+  position: absolute
+  overflow: visible
+  isolation: isolate
+
+.reactFlowEdgePopover
+  z-index: 1002 !important
+  isolation: isolate
+  box-shadow: 0 1rem 2.6rem rgba(0, 0, 0, 0.52)
+
+.edgeAction
+  z-index: 2
+
+.nodeToolbar
+  z-index: 1001 !important
+
+.workspaceTopRightControls
+  z-index: 90
+
+.inspector
+  z-index: 100
+
+.fullCanvasActions
+  gap: 0.42rem
+
+.creator
+  transition: width 180ms ease, opacity 180ms ease, transform 180ms ease
+
+// Canvas convergence wave 06: relation transaction, overlay priority and anchored history.
+.inspectorRelationActions
+  display: grid
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)
+  gap: 0.5rem
+
+  > button
+    min-height: 2.5rem
+    border: 0.0625rem solid var(--v2-stroke)
+    border-radius: 0.72rem
+    background: var(--v2-raised)
+    color: var(--v2-muted)
+    cursor: pointer
+    transition: transform 160ms ease, border-color 160ms ease, color 160ms ease
+
+    &:hover
+      transform: translateY(-0.0625rem)
+      border-color: color-mix(in srgb, white 24%, var(--v2-stroke))
+      color: var(--v2-text)
+
+  .inspectorAction
+    margin: 0
+    color: var(--v2-text)
+
+.reactFlowEdgeLabel
+  pointer-events: none
+
+  > .edgeAction,
+  > .edgePopover
+    pointer-events: auto
+
+.reactFlowEdgeLabel:has(.edgePopover)
+  z-index: 5000 !important
+
+.edgePopover
+  position: absolute
+  z-index: 5001
+  isolation: isolate
+  box-shadow: 0 1rem 2.6rem color-mix(in srgb, black 58%, transparent)
+
+.historyPanel
+  position: fixed
+  right: auto
+  z-index: 6200
+
+@media (max-width: 48rem)
+  .historyPanel
+    width: min(17.5rem, calc(100vw - 2rem))
+

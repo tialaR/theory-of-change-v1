@@ -1,0 +1,15 @@
+{
+  "id": "SO-010",
+  "codename": "Application Slayer",
+  "wave": 6,
+  "title": "Auth Application Boundary",
+  "status": "ACTIVE",
+  "purpose": "Move credential validation and authentication outcome decisions into framework-neutral Application while preserving localized server-action behavior",
+  "createdAt": "2026-08-05T23:55:00.000Z",
+  "contracts": [
+    "Application owns credential validation and authentication outcome orchestration",
+    "Application returns stable result codes instead of localized UI copy",
+    "Server action retains delay, localization, cookies and redirect effects",
+    "Login action state remains a serializable adapter DTO with no framework imports"
+  ]
+}

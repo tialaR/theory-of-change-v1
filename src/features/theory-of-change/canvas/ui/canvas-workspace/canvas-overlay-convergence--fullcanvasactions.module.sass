@@ -1,0 +1,55 @@
+.fullCanvasActions
+  gap: 0.42rem
+
+.creator
+  transition: width 180ms ease, opacity 180ms ease, transform 180ms ease
+
+// Canvas convergence wave 06: relation transaction, overlay priority and anchored history.
+.inspectorRelationActions
+  display: grid
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)
+  gap: 0.5rem
+
+  > button
+    min-height: 2.5rem
+    border: 0.0625rem solid var(--v2-stroke)
+    border-radius: 0.72rem
+    background: var(--v2-raised)
+    color: var(--v2-muted)
+    cursor: pointer
+    transition: transform 160ms ease, border-color 160ms ease, color 160ms ease
+
+    &:hover
+      transform: translateY(-0.0625rem)
+      border-color: color-mix(in srgb, white 24%, var(--v2-stroke))
+      color: var(--v2-text)
+
+  .inspectorAction
+    margin: 0
+    color: var(--v2-text)
+
+.reactFlowEdgeLabel
+  pointer-events: none
+
+  > .edgeAction,
+  > .edgePopover
+    pointer-events: auto
+
+.reactFlowEdgeLabel:has(.edgePopover)
+  z-index: 5000 !important
+
+.edgePopover
+  position: absolute
+  z-index: 5001
+  isolation: isolate
+  box-shadow: 0 1rem 2.6rem color-mix(in srgb, black 58%, transparent)
+
+.historyPanel
+  position: fixed
+  right: auto
+  z-index: 6200
+
+@media (max-width: 48rem)
+  .historyPanel
+    width: min(17.5rem, calc(100vw - 2rem))
+

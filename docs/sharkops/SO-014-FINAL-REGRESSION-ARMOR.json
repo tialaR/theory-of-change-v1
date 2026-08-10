@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "owner": "SO-014 Final Architecture Closeout",
+  "purpose": "Executable final regression armor before explicit SO-014 closeout",
+  "matrix": "docs/sharkops/SO-014-FINAL-GATE-MATRIX.json",
+  "execution": [
+    {
+      "group": "architecture-closeouts",
+      "strategy": "all",
+      "reason": "Each completed initiative closeout remains independently executable."
+    },
+    {
+      "group": "so014-sealing-waves",
+      "strategy": "latest-transitive",
+      "latest": "wave09",
+      "reason": "The latest SO-014 gate proves its mandatory predecessor chain; executing all waves would duplicate the same transitive chain."
+    },
+    {
+      "group": "repository-regression",
+      "strategy": "all",
+      "reason": "Repository behavior armor must run typecheck, Canvas lint, unit tests, Canvas E2E and SharkOps verification."
+    }
+  ],
+  "invariants": [
+    "No gate is removed from the canonical matrix.",
+    "SO-014 transitive predecessor verification remains mandatory.",
+    "Repository regression gates execute as real npm scripts, not textual placeholders.",
+    "A failing gate stops the final regression run with a non-zero exit code.",
+    "SO-014 remains ACTIVE until the explicit closeout wave."
+  ]
+}

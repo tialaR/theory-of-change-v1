@@ -1,0 +1,221 @@
+// React Flow physical renderer. These rules only adapt the homologated skin to the library DOM.
+.reactFlow
+  width: 100%
+  height: 100%
+  background: transparent
+
+  :global(.react-flow__renderer),
+  :global(.react-flow__pane),
+  :global(.react-flow__viewport)
+    width: 100%
+    height: 100%
+
+  :global(.react-flow__pane)
+    cursor: default
+
+  :global(.react-flow__node)
+    width: auto
+    border: 0
+    background: transparent
+    box-shadow: none
+
+  :global(.react-flow__node:focus-visible)
+    outline: none
+
+  :global(.react-flow__selection),
+  :global(.react-flow__nodesselection-rect)
+    display: none
+
+.reactFlowNode
+  position: relative
+  top: auto
+  left: auto
+  transform: none
+
+.reactFlowConnectionPath
+  fill: none
+  stroke: color-mix(in srgb, white 34%, transparent)
+  stroke-width: 1.25
+  vector-effect: non-scaling-stroke
+
+.reactFlowEdgeLabel
+  position: absolute
+  z-index: 8
+  width: 2.25rem
+  height: 2.25rem
+  pointer-events: all
+
+.reactFlowEdgePopover
+  top: auto
+  right: auto
+  bottom: calc(100% + 0.72rem)
+  left: 50%
+  transform: translateX(-50%)
+
+@media (prefers-reduced-motion: reduce)
+  .reactFlowConnectionPath,
+  .reactFlowEdgeLabel
+    transition: none
+
+// Stability wave 01: the work surface navigates by pan/zoom while native scrollbars stay invisible.
+.canvasViewport
+  scrollbar-width: none
+  overscroll-behavior: none
+
+  &::-webkit-scrollbar
+    width: 0
+    height: 0
+
+.canvas
+  width: 100%
+  height: 100%
+
+.reactFlow
+  width: 100%
+  height: 100%
+
+  :global(.react-flow__selection)
+    border: 0.0625rem solid color-mix(in srgb, var(--stage-activity) 58%, transparent)
+    background: color-mix(in srgb, var(--stage-activity) 8%, transparent)
+
+
+// Surgical wave 02: stable viewport, explicit inspector, compact overlays.
+.page
+  position: relative
+  display: block
+  width: 100vw
+  height: 100vh
+  overflow: hidden
+
+.topbar
+  position: absolute
+  z-index: 60
+  top: 0
+  right: 0
+  left: 0
+  height: 4.5rem
+  transition: opacity 220ms ease, transform 260ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear
+
+.page[data-full-canvas='true'] .topbar
+  opacity: 0
+  visibility: hidden
+  pointer-events: none
+  transform: translateY(-0.8rem)
+  transition-delay: 0s, 0s, 220ms
+
+.workspace
+  position: absolute
+  inset: 0
+  width: 100%
+  height: 100%
+
+.canvasViewport
+  overflow: hidden
+
+.canvas
+  width: 100%
+  height: 100%
+  min-width: 100%
+  min-height: 100%
+
+.rail
+  top: 5.7rem
+  padding: 0.25rem
+  gap: 0.18rem
+
+  button
+    width: 2.15rem
+    height: 2.15rem
+
+.workspace[data-full-canvas='true'] .rail
+  top: auto
+  bottom: 1.25rem
+
+.inspector
+  z-index: 45
+  top: 5.5rem
+  will-change: transform, opacity
+
+.historyPanel
+  z-index: 46
+  top: 5.5rem
+
+.workspaceTopRightControls
+  z-index: 44
+  top: 5.7rem
+
+.workspaceTopRightControls [data-tooltip]::after
+  top: 50%
+  right: calc(100% + 0.5rem)
+  left: auto
+  bottom: auto
+  transform: translateY(-50%) translateX(0.18rem)
+  white-space: nowrap
+
+.workspaceTopRightControls [data-tooltip]:hover::after,
+.workspaceTopRightControls [data-tooltip]:focus-visible::after
+  transform: translateY(-50%) translateX(0)
+
+.fullCanvasActions
+  z-index: 70
+
+.topActions
+  gap: 0.42rem
+
+.headerActionButton,
+.topActions .resultButton,
+.topActions .saveButton,
+.headerIconButton
+  width: 2.25rem
+  min-width: 2.25rem
+  height: 2.25rem
+  padding: 0
+  flex: 0 0 auto
+
+.headerActionButton > span:not(.eyeIcon),
+.topActions .resultButton > span:not(.eyeIcon),
+.topActions .saveButton > span
+  display: none
+
+.reactFlow
+  :global(.react-flow__pane)
+    cursor: grab
+
+  :global(.react-flow__pane.dragging)
+    cursor: grabbing
+
+  :global(.react-flow__edgelabel-renderer)
+    pointer-events: none
+
+.reactFlowEdgeLabel
+  z-index: 65
+  pointer-events: auto
+
+.edgeAction
+  position: relative
+  z-index: 2
+  pointer-events: auto
+
+.creator
+  z-index: 22
+  width: 3.65rem
+
+  &[data-open='true']
+    width: 18.5rem
+
+.creatorToggle
+  min-height: 3.55rem
+  padding: 0.48rem
+
+.creatorIcon
+  width: 2.55rem
+  height: 2.55rem
+
+.notice
+  z-index: 42
+
+@media (prefers-reduced-motion: reduce)
+  .topbar
+    transition: none
+
+

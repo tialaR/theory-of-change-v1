@@ -1,0 +1,11 @@
+.sharkops/state/bite-ledger.json
+.sharkops/state/current-state.json
+.sharkops/bites/so-009-narrative-god-slayer-wave-03/verify.sh
+.sharkops/bites/so-009-narrative-god-slayer-wave-03/apply.sh
+.sharkops/bites/so-009-narrative-god-slayer-wave-03/README.md
+.sharkops/bites/so-009-narrative-god-slayer-wave-03/MANIFEST.json
+.sharkops/bites/so-009-narrative-god-slayer-wave-03/rollback.sh
+package.json
+scripts/tdm-contract-v3/check-narrative-god-slayer-wave03.mjs
+src/features/theory-of-change/components/result-view/result-theory-narrative/narrative-mapping/theory-condition-builders.ts
+src/features/theory-of-change/components/result-view/result-theory-narrative/theory-narrative.mapper.ts

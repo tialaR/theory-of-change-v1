@@ -2,11 +2,10 @@
 
 import { getTranslations } from 'next-intl/server';
 import { redirect } from 'next/navigation';
-import { authenticateUser } from '../application/authenticate-user';
+import { attemptUserLogin } from '../application/attempt-user-login';
 import { AUTH_LOGIN_DELAY_MS, AUTH_PASSWORD_MIN_LENGTH } from '../domain/auth.constants';
 import type { AuthFieldErrors } from '../domain/auth.validation';
 import type { LoginActionState } from '../application/login-action-state';
-import { validateAuthCredentials } from '../domain/auth.validation';
 import { createServerAuthRepository } from './auth-server.repository';
 import { sanitizeReturnTo, writeAuthSessionCookie } from './auth-session';
 
@@ -28,25 +27,24 @@ export async function loginAction(_previousState: LoginActionState, formData: Fo
   const t = await getTranslations('Auth.login');
   await wait(AUTH_LOGIN_DELAY_MS);
 
-  const validation = validateAuthCredentials({
+  const result = await attemptUserLogin(createServerAuthRepository(), {
     name: String(formData.get('name') ?? ''),
     email: String(formData.get('email') ?? ''),
     password: String(formData.get('password') ?? '')
   });
 
-  if (!validation.valid) {
+  if (result.status === 'invalid-fields') {
     return {
       status: 'error',
       message: t('feedback.reviewFields'),
-      fieldErrors: localizeFieldErrors(validation.errors, t)
+      fieldErrors: localizeFieldErrors(result.fieldErrors, t)
     };
   }
 
-  const authenticated = await authenticateUser(createServerAuthRepository(), validation.credentials);
-  if (!authenticated) {
+  if (result.status === 'invalid-credentials') {
     return { status: 'error', message: t('feedback.invalidCredentials'), fieldErrors: {} };
   }
 
-  await writeAuthSessionCookie(authenticated.session.id);
+  await writeAuthSessionCookie(result.authenticatedSession.session.id);
   redirect(sanitizeReturnTo(String(formData.get('returnTo') ?? '')));
 }

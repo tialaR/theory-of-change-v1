@@ -100,11 +100,13 @@ if (exists(`${featureRoot}/ui/components/canvas-causal-edge.tsx`)) {
 
 if (exists(`${featureRoot}/ui/hooks/use-canvas-flow-controller.ts`)) {
   const source = read(`${featureRoot}/ui/hooks/use-canvas-flow-controller.ts`);
+  const edgeCommandsPath = `${featureRoot}/ui/hooks/canvas-flow/use-canvas-edge-commands.ts`;
+  const edgeCommands = exists(edgeCommandsPath) ? read(edgeCommandsPath) : '';
   requireCondition(source.includes('useNodesState'), 'estado de nós não pertence ao React Flow');
   requireCondition(source.includes('useEdgesState'), 'estado de edges não pertence ao React Flow');
-  requireCondition(source.includes('evaluateCanvasConnection'), 'conexões não consomem a política única de domínio');
-  requireCondition(!source.includes('allowedRelation'), 'regra causal duplicada detectada');
-  requireCondition(!source.includes('canConnect'), 'regra causal local duplicada detectada');
+  requireCondition(source.includes('evaluateCanvasConnection') || edgeCommands.includes('evaluateCanvasConnection'), 'conexões não consomem a política única de domínio');
+  requireCondition(!source.includes('allowedRelation') && !edgeCommands.includes('allowedRelation'), 'regra causal duplicada detectada');
+  requireCondition(!source.includes('canConnect') && !edgeCommands.includes('canConnect'), 'regra causal local duplicada detectada');
 }
 
 const sourceFiles = [];

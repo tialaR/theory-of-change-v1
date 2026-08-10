@@ -1,0 +1,8 @@
+{
+  "id": "SO-009",
+  "codename": "Narrative God Slayer",
+  "wave": "06-hotfix",
+  "status": "ACTIVE",
+  "ownership": ["transitive narrative ownership gates"],
+  "gate": "check:tdm:narrative-god-slayer:wave01"
+}

@@ -12,7 +12,7 @@ import { TdmButton } from '@/shared/ui/tdm-button';
 import { TdmKicker } from '@/shared/ui/tdm-kicker';
 import { TdmPublicFeatureCard } from '@/shared/ui/tdm-public-feature-card';
 import { HomeBrandLogo } from './home-brand-logo';
-import { HomeOnboardingPreview } from './home-onboarding-preview';
+import { HomeOnboardingPreview } from './guided-story';
 import { CtaChevronIcon } from './public-page-icons';
 import { HOME_FEATURES } from './public-page-data';
 import styles from './public-pages.module.sass';

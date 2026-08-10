@@ -1,0 +1,11 @@
+{
+  "id": "SO-013",
+  "codename": "Infrastructure Cleanup",
+  "wave": "07-v1.1-closeout",
+  "status": "COMPLETE",
+  "revision": 9,
+  "purpose": "Close Infrastructure Cleanup and make slim, reproducible SharkOps handoff packaging an executable contract",
+  "supersedes": "SO-013 Infrastructure Cleanup Wave 07 v1 (not applied)",
+  "updatedAt": "2026-08-07T04:20:00.000Z",
+  "completedAt": "2026-08-07T04:20:00.000Z"
+}

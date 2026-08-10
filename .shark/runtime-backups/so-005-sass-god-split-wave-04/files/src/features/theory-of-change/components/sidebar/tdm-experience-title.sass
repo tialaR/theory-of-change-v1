@@ -1,0 +1,23 @@
+// Tipografia dos cabeçalhos de experiência da sidebar (/canvas):
+// “Criar bloco”, “Editar bloco” e inspectors de conexão / risco / hipótese.
+
+@mixin experience-title-text
+  margin: 0
+  font-family: var(--tdm-font-sans)
+  font-size: 0.78125rem
+  font-weight: 400
+  line-height: 1.1rem
+  letter-spacing: 0.04em
+  text-transform: uppercase
+  color: transparent
+  background: linear-gradient(90deg, rgba(240, 240, 240, 0.94) 0%, rgba(161, 164, 165, 0.76) 100%)
+  background-clip: text
+  -webkit-background-clip: text
+  -webkit-text-fill-color: transparent
+
+@mixin experience-title-header
+  display: flex
+  align-items: center
+  justify-content: flex-start
+  gap: var(--tdm-space-2)
+  min-height: 1.35rem

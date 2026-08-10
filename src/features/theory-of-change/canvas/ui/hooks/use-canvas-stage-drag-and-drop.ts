@@ -1,27 +1,28 @@
 'use client';
 
 import { useCallback, type DragEvent as ReactDragEvent } from 'react';
-import type { ReactFlowInstance, XYPosition } from '@xyflow/react';
 import { isCanvasStageId } from '../../domain/canvas-stage.constants';
 import type { CanvasStageId } from '../../domain/canvas-project';
 import {
   CANVAS_DIMENSIONS,
   CANVAS_DRAG_STAGE_MIME
 } from '../../domain/canvas-ui.constants';
+import { constrainCanvasEngineDropPosition } from '../../engine/canvas-engine';
+import type { CanvasStageNode } from '../../react-flow/canvas-flow.types';
 import type {
-  CanvasCausalEdge,
-  CanvasStageNode
-} from '../../react-flow/canvas-flow.types';
+  CanvasFlowPosition,
+  CanvasStageDropRuntime
+} from '../../react-flow/canvas-flow.contracts';
 import type {
   CanvasStageCopy,
   CanvasTranslator
 } from '../canvas-copy';
 
 type UseCanvasStageDragAndDropOptions = {
-  reactFlow: ReactFlowInstance<CanvasStageNode, CanvasCausalEdge>;
+  stageDropRuntime: CanvasStageDropRuntime;
   createNode: (
     stage: CanvasStageId,
-    position: XYPosition
+    position: CanvasFlowPosition
   ) => CanvasStageNode;
   selectNode: (nodeId: string) => void;
   setCreatorOpen: (open: boolean) => void;
@@ -31,31 +32,8 @@ type UseCanvasStageDragAndDropOptions = {
   stageCopy: (stage: CanvasStageId) => CanvasStageCopy;
 };
 
-function constrainStagePosition(position: XYPosition): XYPosition {
-  return {
-    x: Math.max(
-      CANVAS_DIMENSIONS.nodeEdgeGap,
-      Math.min(
-        CANVAS_DIMENSIONS.width
-          - CANVAS_DIMENSIONS.nodeWidth
-          - CANVAS_DIMENSIONS.nodeEdgeGap,
-        position.x - CANVAS_DIMENSIONS.nodeWidth / 2
-      )
-    ),
-    y: Math.max(
-      72,
-      Math.min(
-        CANVAS_DIMENSIONS.height
-          - CANVAS_DIMENSIONS.nodeHeight
-          - CANVAS_DIMENSIONS.nodeEdgeGap,
-        position.y - 40
-      )
-    )
-  };
-}
-
 export function useCanvasStageDragAndDrop({
-  reactFlow,
+  stageDropRuntime,
   createNode,
   selectNode,
   setCreatorOpen,
@@ -102,14 +80,23 @@ export function useCanvasStageDragAndDrop({
 
     event.preventDefault();
 
-    const rawPosition = reactFlow.screenToFlowPosition({
+    const rawPosition = stageDropRuntime.screenToFlowPosition({
       x: event.clientX,
       y: event.clientY
     });
 
     const node = createNode(
       stageValue,
-      constrainStagePosition(rawPosition)
+      constrainCanvasEngineDropPosition(rawPosition, {
+        width: CANVAS_DIMENSIONS.width,
+        height: CANVAS_DIMENSIONS.height,
+        nodeWidth: CANVAS_DIMENSIONS.nodeWidth,
+        nodeHeight: CANVAS_DIMENSIONS.nodeHeight,
+        edgeGap: CANVAS_DIMENSIONS.nodeEdgeGap,
+        topGap: 72,
+        anchorOffsetX: CANVAS_DIMENSIONS.nodeWidth / 2,
+        anchorOffsetY: 40
+      })
     );
 
     selectNode(node.id);
@@ -125,7 +112,7 @@ export function useCanvasStageDragAndDrop({
     createNode,
     markDirty,
     notify,
-    reactFlow,
+    stageDropRuntime,
     selectNode,
     setCreatorOpen,
     stageCopy,

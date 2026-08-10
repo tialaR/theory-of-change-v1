@@ -1,0 +1,10 @@
+{
+  "phase": "Architecture Diamond Infrastructure Cleanup active",
+  "lastBite": "SO-013 | Infrastructure Cleanup Wave 04",
+  "nextBite": "SO-013 | Infrastructure Cleanup Wave 05 Audit",
+  "architecture": "SO-012 remains closed; SO-013 Waves 01-03 plus the Wave 02 lint-gate hotfix remain intact; Wave 04 removes the duplicate ResultExperienceData contract alias and consolidates consumers on canonical ResultExperienceProps without changing runtime behavior",
+  "knowledge": "repository-backed",
+  "updatedAt": "2026-08-07T04:30:00.000Z",
+  "activeBite": "SO-013 | Infrastructure Cleanup",
+  "activeBiteStatus": "ACTIVE"
+}

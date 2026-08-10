@@ -1,0 +1,9 @@
+{
+  "id": "SO-012",
+  "codename": "Canvas Engine",
+  "wave": "08-interaction-boundary",
+  "status": "ACTIVE",
+  "revision": 9,
+  "purpose": "Move pure connection and stage-drop interaction decisions into the framework-neutral Canvas Engine while browser events and UI effects remain outside",
+  "updatedAt": "2026-08-06T18:00:00.000Z"
+}

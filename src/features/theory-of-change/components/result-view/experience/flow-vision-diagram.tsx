@@ -6,7 +6,8 @@ import type { TdmEdge, TdmNode } from '@/features/theory-of-change/domain/tdm-ty
 import { groupNodesByStage } from '../result-view-utils';
 import { ResultConnectionsLayer } from '../result-connections-layer/result-connections-layer';
 import type { CardRect, ConnectedFlow } from '../result-view.types';
-import { areCardRectsEqual, getConnectedFlowFromNode, getLayoutRectRelativeTo } from '../result-view.utils';
+import { areCardRectsEqual, getLayoutRectRelativeTo } from '../result-view-utils';
+import { getConnectedFlowFromNode } from './result-experience-data';
 import {
   FLOW_VISION_CARD_WIDTH,
   getFlowVisionBoardSize,

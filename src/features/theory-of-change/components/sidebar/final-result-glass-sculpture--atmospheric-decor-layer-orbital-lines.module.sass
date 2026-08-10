@@ -1,0 +1,217 @@
+@use '../../../../shared/styles/tokens' as *
+
+// ─── Atmospheric decor layer (orbital lines, haze, glass laminas) ─────────────
+
+.decorLayer
+  position: absolute
+  inset: 0
+  overflow: hidden
+  pointer-events: none
+
+.decorHazeCore
+  position: absolute
+  left: -8%
+  top: -4%
+  width: 62%
+  height: 78%
+  border-radius: 50%
+  background: radial-gradient(ellipse 74% 68% at 42% 48%, rgba(252, 252, 255, 0.32), rgba(168, 170, 176, 0.12) 38%, rgba(88, 90, 96, 0.05) 58%, transparent 76%)
+  filter: blur(1.5rem)
+  opacity: 0.98
+  animation: decorHazeBreath 14s ease-in-out infinite
+
+.decorHazeSpread
+  position: absolute
+  left: 8%
+  top: 12%
+  width: 88%
+  height: 58%
+  border-radius: 50%
+  background: radial-gradient(ellipse 82% 62% at 22% 52%, rgba(236, 238, 244, 0.22), rgba(120, 122, 128, 0.08) 38%, transparent 72%)
+  filter: blur(1.625rem)
+  opacity: 0.9
+  animation: decorHazeDrift 18s ease-in-out infinite
+
+.decorHazeBand
+  position: absolute
+  left: -6%
+  top: 28%
+  width: 112%
+  height: 38%
+  border-radius: 50%
+  background: linear-gradient(98deg, rgba(214, 216, 222, 0.16) 0%, rgba(252, 252, 255, 0.24) 28%, rgba(196, 198, 204, 0.14) 52%, rgba(228, 230, 236, 0.1) 78%, transparent 100%)
+  filter: blur(1.375rem)
+  opacity: 0.92
+  animation: decorHazeBand 20s ease-in-out infinite
+
+.decorHazeTrail
+  position: absolute
+  right: -4%
+  bottom: 18%
+  width: 52%
+  height: 42%
+  border-radius: 50%
+  background: radial-gradient(ellipse 72% 68% at 58% 42%, rgba(228, 230, 236, 0.16), rgba(148, 150, 156, 0.06) 48%, transparent 68%)
+  filter: blur(1.125rem)
+  opacity: 0.82
+  animation: decorHazeTrail 18s ease-in-out infinite
+
+.decorGlassLamina
+  position: absolute
+  top: 8%
+  left: 4%
+  width: clamp(3.25rem, 24vw, 5rem)
+  height: clamp(1.5rem, 10vw, 2.25rem)
+  border-radius: 0.375rem
+  border: 0.0625rem solid rgba(214, 216, 222, 0.14)
+  background: linear-gradient(138deg, rgba(252, 252, 255, 0.14) 0%, rgba(148, 150, 156, 0.06) 48%, rgba(24, 25, 28, 0.14) 100%)
+  transform: rotate(-14deg) skewX(-4deg)
+  opacity: 0.68
+  backdrop-filter: blur(0.375rem)
+  -webkit-backdrop-filter: blur(0.375rem)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12), 0 0.25rem 0.75rem rgba(0, 0, 0, 0.18)
+
+.decorGlassLaminaAlt
+  position: absolute
+  top: 32%
+  left: 14%
+  width: clamp(2.25rem, 16vw, 3.25rem)
+  height: clamp(1.125rem, 8vw, 1.625rem)
+  border-radius: 0.3125rem
+  border: 0.0625rem solid rgba(196, 198, 204, 0.12)
+  background: linear-gradient(152deg, rgba(228, 230, 236, 0.12), rgba(48, 50, 54, 0.1))
+  transform: rotate(12deg) skewX(3deg)
+  opacity: 0.52
+  backdrop-filter: blur(0.25rem)
+  -webkit-backdrop-filter: blur(0.25rem)
+
+.decorGlassLaminaFine
+  position: absolute
+  top: 18%
+  left: 28%
+  width: clamp(1.5rem, 10vw, 2.125rem)
+  height: clamp(0.75rem, 5vw, 1.125rem)
+  border-radius: 0.25rem
+  border: 0.0625rem solid rgba(168, 170, 176, 0.1)
+  background: linear-gradient(160deg, rgba(236, 238, 244, 0.1), rgba(32, 33, 37, 0.08))
+  transform: rotate(-6deg)
+  opacity: 0.42
+
+.decorSpecular
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  height: 48%
+  background: radial-gradient(ellipse 90% 72% at 28% 0%, rgba(255, 255, 255, 0.08), transparent 68%)
+  opacity: 0.72
+  pointer-events: none
+
+.decorSvg
+  position: absolute
+  left: -8%
+  right: -4%
+  top: -2%
+  height: 88%
+  width: 112%
+  opacity: 1
+  animation: decorBreath 12s ease-in-out infinite, decorDrift 16s ease-in-out infinite
+
+.decorPath
+  vector-effect: non-scaling-stroke
+
+.decorOrbitOuter
+  animation: decorOrbitDrift 26s ease-in-out infinite
+
+.decorOrbitMid
+  animation: decorOrbitDrift 32s ease-in-out infinite reverse
+
+.decorOrbitInner
+  animation: decorOrbitDrift 22s ease-in-out infinite
+
+.decorSatellite
+  animation: decorSatelliteDrift 18s ease-in-out infinite
+
+.decorSatelliteAlt
+  animation: decorSatelliteDrift 24s ease-in-out infinite reverse
+
+@keyframes decorHazeBreath
+  0%, 100%
+    opacity: 0.86
+    transform: scale(1)
+  50%
+    opacity: 1
+    transform: scale(1.06)
+
+@keyframes decorHazeDrift
+  0%, 100%
+    transform: translate(0, 0)
+  50%
+    transform: translate(0.375rem, -0.25rem)
+
+@keyframes decorHazeBand
+  0%, 100%
+    opacity: 0.82
+    transform: translateX(0)
+  50%
+    opacity: 0.98
+    transform: translateX(0.5rem)
+
+@keyframes decorHazeTrail
+  0%, 100%
+    opacity: 0.72
+  50%
+    opacity: 0.92
+
+@keyframes decorBreath
+  0%, 100%
+    opacity: 0.84
+  50%
+    opacity: 1
+
+@keyframes decorDrift
+  0%, 100%
+    transform: translateY(0)
+  50%
+    transform: translateY(-0.375rem)
+
+@keyframes decorOrbitDrift
+  0%, 100%
+    opacity: 0.78
+    transform: rotate(0deg)
+  50%
+    opacity: 1
+    transform: rotate(3.5deg)
+
+@keyframes decorSatelliteDrift
+  0%, 100%
+    opacity: 0.42
+    transform: translate(0, 0)
+  50%
+    opacity: 0.62
+    transform: translate(0.1875rem, -0.1875rem)
+
+// ─── Stacked glass sculpture (dominant visual anchor) ─────────────────────────
+
+.sculpture
+  --sculpture-size: clamp(6.75rem, 34vw, 9.25rem)
+  position: relative
+  display: block
+  width: var(--sculpture-size)
+  height: calc(var(--sculpture-size) * 1.14)
+  flex: 0 0 auto
+  overflow: visible
+  pointer-events: none
+  isolation: isolate
+  filter: drop-shadow(0 0.625rem 1.5rem rgba(0, 0, 0, 0.38)) drop-shadow(0 0.25rem 0.625rem rgba(236, 238, 244, 0.12))
+  animation: sculptureBreath 10s ease-in-out infinite
+
+.ambientCore
+  position: absolute
+  inset: -22% -24% -18% -18%
+  border-radius: 50%
+  background: radial-gradient(ellipse 76% 66% at 50% 44%, rgba(252, 252, 255, 0.38), rgba(168, 170, 176, 0.14) 38%, transparent 76%)
+  filter: blur(1.125rem)
+  opacity: 1
+  animation: ambientBreath 12s ease-in-out infinite
+

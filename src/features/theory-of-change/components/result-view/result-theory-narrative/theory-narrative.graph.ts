@@ -1,6 +1,6 @@
 import { TDM_STAGE_ORDER } from '@/features/theory-of-change/domain/tdm-stages';
 import type { TdmEdge, TdmNode } from '@/features/theory-of-change/domain/tdm-types';
-import { getConnectedFlowFromNode, getEdgeBadges } from '../result-view.utils';
+import { getConnectedFlowFromNode, getEdgeBadges } from '../experience/result-experience-data';
 import { trimField } from './theory-narrative.normalizers';
 import type {
   NarrativeEdgeMarkers,

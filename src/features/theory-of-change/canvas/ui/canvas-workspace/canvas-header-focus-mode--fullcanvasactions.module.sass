@@ -1,0 +1,87 @@
+.fullCanvasActions
+  position: absolute
+  z-index: 34
+  top: 1.25rem
+  right: 1.25rem
+  display: inline-flex
+  align-items: center
+  gap: 0.35rem
+  padding: 0.35rem
+  border: 0.0625rem solid color-mix(in srgb, white 10%, transparent)
+  border-radius: 0.92rem
+  background: var(--canvas-panel)
+  box-shadow: 0 1rem 2.4rem color-mix(in srgb, black 34%, transparent), inset 0 0.0625rem 0 color-mix(in srgb, white 11%, transparent)
+  backdrop-filter: blur(1.35rem) saturate(1.08)
+
+  button
+    width: 2.35rem
+    height: 2.35rem
+    display: grid
+    place-items: center
+    padding: 0
+    border: 0.0625rem solid transparent
+    border-radius: 0.62rem
+    background: transparent
+    color: var(--v2-muted)
+    cursor: pointer
+    transition: background 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease
+
+    &:hover:not(:disabled),
+    &:focus-visible
+      border-color: var(--v2-stroke)
+      background: color-mix(in srgb, var(--v2-raised) 82%, transparent)
+      color: var(--v2-text)
+      transform: translateY(-0.0625rem)
+
+    &:disabled
+      opacity: 0.28
+      cursor: default
+
+  [data-tooltip]::after
+    top: calc(100% + 0.45rem)
+    right: 0
+    left: auto
+    transform: translateY(-0.2rem)
+
+  [data-tooltip]:hover::after,
+  [data-tooltip]:focus-visible::after
+    transform: translateY(0)
+
+.rail button svg
+  width: 1rem
+  height: 1rem
+  fill: none
+  stroke: currentColor
+  stroke-width: 1.45
+  stroke-linecap: round
+  stroke-linejoin: round
+
+.inspectorReopen
+  width: 2.35rem
+  min-width: 2.35rem
+  height: 2.35rem
+  padding: 0
+  display: grid
+  place-items: center
+  border-radius: 0.68rem
+
+  span
+    display: none
+
+  svg
+    width: 1rem
+    height: 1rem
+
+  &::after
+    right: 0
+    left: auto
+
+@media (max-width: 72rem)
+  .projectTitle
+    width: min(18rem, 30vw)
+
+@media (max-width: 58rem)
+  .projectTitle
+    width: min(12rem, 28vw)
+
+

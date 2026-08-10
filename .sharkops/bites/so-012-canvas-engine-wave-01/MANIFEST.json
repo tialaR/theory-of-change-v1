@@ -1,0 +1,9 @@
+{
+  "id": "SO-012",
+  "codename": "Canvas Engine",
+  "wave": "01-boundary-armor",
+  "status": "ACTIVE",
+  "revision": 1,
+  "purpose": "Establish a framework-neutral engine contract and freeze orchestration boundaries before state-kernel extraction",
+  "updatedAt": "2026-08-06T15:20:00.000Z"
+}

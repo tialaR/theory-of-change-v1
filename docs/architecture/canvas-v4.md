@@ -1,3 +1,7 @@
+# Historical status
+
+> This document is a migration-era record. `/canvas-v4` and the folder topology described below are not the current architecture source. Preserve it for historical context only. Current Canvas ownership is defined by ADR-008 and executable SharkOps gates.
+
 # Canvas V4 — baseline e direção arquitetural
 
 A rota `/canvas-v4` nasce como cópia integral e isolada de `/canvas/tdm-command-preview-v2`.

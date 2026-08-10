@@ -1,0 +1,9 @@
+{
+  "id": "SO-012",
+  "codename": "Canvas Engine",
+  "wave": "04-history-orchestration",
+  "status": "ACTIVE",
+  "revision": 5,
+  "purpose": "Move capture, undo and redo timeline transitions into a framework-neutral Canvas Engine history kernel without changing behavior",
+  "updatedAt": "2026-08-06T15:42:00.000Z"
+}

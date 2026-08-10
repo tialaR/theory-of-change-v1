@@ -1,8 +1,8 @@
 'use client';
 
-import { ReactFlowProvider } from '@xyflow/react';
 import type { AuthUser } from '@/features/auth';
 import type { CanvasProject } from '../../domain/canvas-project';
+import { CanvasFlowProvider } from '../../react-flow/canvas-flow-provider';
 import styles from './canvas-workspace.module.sass';
 import { CanvasCreatorPanel } from '../components/canvas-creator-panel';
 import { CanvasFlowSurface } from '../components/canvas-flow-surface';
@@ -42,8 +42,8 @@ function CanvasWorkspaceContent({ initialProject, user }: CanvasWorkspaceProps) 
 
 export function CanvasWorkspace(props: CanvasWorkspaceProps) {
   return (
-    <ReactFlowProvider>
+    <CanvasFlowProvider>
       <CanvasWorkspaceContent {...props} />
-    </ReactFlowProvider>
+    </CanvasFlowProvider>
   );
 }

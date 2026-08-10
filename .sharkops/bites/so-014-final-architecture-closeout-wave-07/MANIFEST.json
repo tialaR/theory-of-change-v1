@@ -1,0 +1,1 @@
+{"id":"SO-014","codename":"Final Architecture Closeout","wave":"07","title":"Documentation & ADR Consistency","status":"ACTIVE","runtimeChanges":false,"gate":"npm run check:tdm:final-architecture:wave07","next":"SO-014 Wave 08 | Gate Matrix Consolidation"}

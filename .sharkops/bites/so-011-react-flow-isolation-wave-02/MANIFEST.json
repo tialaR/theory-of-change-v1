@@ -1,0 +1,13 @@
+{
+  "id": "SO-011",
+  "codename": "React Flow Isolation",
+  "wave": "02",
+  "status": "ACTIVE",
+  "purpose": "Replace direct XYFlow value-type imports in leaf canvas commands with framework-neutral contracts",
+  "createdAt": "2026-08-06T01:20:00.000Z",
+  "gates": [
+    "check:tdm:react-flow",
+    "check:tdm:react-flow-isolation:wave01",
+    "check:tdm:react-flow-isolation:wave02"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "SO-013",
+  "codename": "Infrastructure Cleanup",
+  "wave": "02",
+  "status": "ACTIVE",
+  "revision": 2,
+  "purpose": "Collapse the proven duplicate result-view utility facade into canonical utility modules without changing runtime behavior",
+  "updatedAt": "2026-08-07T01:20:00.000Z"
+}

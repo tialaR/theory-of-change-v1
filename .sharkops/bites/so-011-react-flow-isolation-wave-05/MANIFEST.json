@@ -1,0 +1,9 @@
+{
+  "id": "SO-011",
+  "codename": "React Flow Isolation",
+  "wave": "05",
+  "title": "Workspace Event Contracts",
+  "status": "ACTIVE",
+  "purpose": "Remove XYFlow event and connection types from workspace action orchestration without changing behavior",
+  "createdAt": "2026-08-06T03:20:00.000Z"
+}

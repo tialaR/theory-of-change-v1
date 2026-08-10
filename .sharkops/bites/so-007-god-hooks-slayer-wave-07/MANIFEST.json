@@ -1,0 +1,7 @@
+{
+  "id": "SO-007",
+  "wave": 7,
+  "codename": "God Hooks Slayer",
+  "status": "ACTIVE",
+  "ownership": ["flow history", "node commands", "edge commands", "layout commands", "thin flow facade"]
+}

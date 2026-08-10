@@ -1,0 +1,8 @@
+.sharkops/bites/so-005-sass-god-split-wave-01/README.md
+.sharkops/bites/so-005-sass-god-split-wave-01/MANIFEST.json
+.sharkops/bites/so-005-sass-god-split-wave-01/apply.sh
+.sharkops/bites/so-005-sass-god-split-wave-01/verify.sh
+.sharkops/bites/so-005-sass-god-split-wave-01/rollback.sh
+scripts/tdm-contract-v3/check-sass-god-split-wave01.mjs
+src/features/theory-of-change/canvas/ui/canvas-workspace/canvas-workspace-visual-overrides.module.sass
+src/features/theory-of-change/components/sidebar/tdm-sidebar-visual-surgery.module.sass

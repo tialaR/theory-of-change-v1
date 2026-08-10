@@ -1,0 +1,405 @@
+// BEGIN CANVAS SIDEBAR SURGERY MICROFIX 18
+// Somente casca visual da sidebar em /canvas. Sem lógica, sem animação nova.
+
+// 1) Hero title — troca de cor sólida por gradiente branco/prata (tipografia intacta).
+.heroTitle,
+.heroCardCollapsed .heroTitle
+  color: transparent !important
+  background: linear-gradient(185deg, rgba(255, 255, 255, 0.98) 0%, rgba(236, 238, 244, 0.94) 42%, rgba(176, 180, 188, 0.82) 100%) !important
+  background-clip: text !important
+  -webkit-background-clip: text !important
+  -webkit-text-fill-color: transparent !important
+  filter: drop-shadow(0 0.03125rem 0.0625rem rgba(255, 255, 255, 0.14))
+
+// 2) Labels e fields — ritmo e radius finais.
+// Causa raiz: :global(label){display:block} matava o gap do wrapper;
+// :global(input){border-radius:1rem !important} pillava inputs de 2.1rem.
+.blockFormsPanel :global(label)
+  display: grid !important
+  gap: 0.375rem !important
+  margin: 0 !important
+
+// TdmField label = text + optional asterisk — keep on one line (not a field wrapper grid).
+.heroFormShell :global(label)
+  display: inline-flex !important
+  align-items: baseline
+  gap: 0.25rem !important
+  margin: 0 !important
+  flex-wrap: nowrap
+
+.blockFormsPanel :global([class*='fieldLabel']),
+.heroFormShell :global([class*='fieldLabel'])
+  margin: 0 !important
+  font-size: 0.65625rem
+  line-height: 1.25
+  letter-spacing: 0.02em
+
+.blockFormsPanel :global(input),
+.heroFormShell :global(input),
+.blockFormsPanel :global(textarea),
+.heroFormShell :global(textarea)
+  border: 0
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+  padding-inline: 0
+
+// 3–4) Atalhos + Organização — casca do anexo: linha única, fundo transparente, sem card.
+.canvasOrganizationCard,
+.quickShortcutsCard
+  width: 100% !important
+  max-width: 100% !important
+  min-width: 0
+  padding: 0 !important
+  margin: 0
+  border: 0 !important
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.055) !important
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.055) !important
+  border-radius: 0 !important
+  background: transparent !important
+  box-shadow: none !important
+  backdrop-filter: none !important
+  -webkit-backdrop-filter: none !important
+  overflow: visible !important
+  opacity: 1
+
+  &::before,
+  &::after
+    content: none !important
+    display: none !important
+
+.canvasOrganizationHeader,
+.quickShortcutsHeader
+  appearance: none
+  display: flex
+  align-items: center
+  justify-content: space-between
+  gap: 0.5rem
+  width: 100%
+  min-width: 0
+  min-height: 1.5rem
+  margin: 0
+  padding: 0.875rem 0
+  border: 0
+  border-radius: 0
+  background: transparent !important
+  box-shadow: none !important
+  color: rgba(161, 164, 165, 0.72)
+  font: inherit
+  text-align: left
+  cursor: pointer
+  opacity: 0.86
+  transition: color 180ms ease, opacity 180ms ease
+
+  &:hover,
+  &:focus-visible
+    background: transparent !important
+    box-shadow: none !important
+    color: rgba(224, 226, 232, 0.92)
+    opacity: 1
+
+    .canvasOrganizationTitle,
+    .quickShortcutsTitle
+      color: rgba(224, 226, 232, 0.92) !important
+      -webkit-text-fill-color: rgba(224, 226, 232, 0.92) !important
+      background: none !important
+      background-clip: border-box !important
+      -webkit-background-clip: border-box !important
+
+    .canvasOrganizationTitleRow > :first-child,
+    .quickShortcutsTitleRow > :first-child,
+    .sidebarAccordionChevron,
+    .quickShortcutsChevron
+      color: rgba(224, 226, 232, 0.9) !important
+      opacity: 1 !important
+      filter: none
+
+  &:focus-visible
+    outline: 0.0625rem solid rgba(255, 255, 255, 0.16)
+    outline-offset: 0.25rem
+
+.canvasOrganizationCard .canvasOrganizationHeader,
+.quickShortcutsCard .quickShortcutsHeader,
+.quickShortcutsCard button.quickShortcutsHeader,
+.canvasOrganizationCard button.canvasOrganizationHeader
+  background: transparent !important
+  background-image: none !important
+  box-shadow: none !important
+  border-color: transparent !important
+  color: rgba(161, 164, 165, 0.72) !important
+
+  &:hover,
+  &:focus-visible
+    background: transparent !important
+    background-image: none !important
+    box-shadow: none !important
+    border-color: transparent !important
+    color: rgba(224, 226, 232, 0.92) !important
+
+.canvasOrganizationTitleRow,
+.quickShortcutsTitleRow
+  display: flex
+  align-items: center
+  justify-content: flex-start
+  gap: 0.5rem !important
+  width: auto
+  min-width: 0
+  min-height: 1.5rem
+  flex: 1 1 auto
+  margin: 0 !important
+  padding: 0
+  overflow: visible
+
+.canvasOrganizationTitle,
+.quickShortcutsTitle
+  display: block
+  width: auto
+  min-width: 0
+  margin: 0
+  padding: 0
+  border: 0
+  border-radius: 0
+  background: none !important
+  background-clip: border-box !important
+  -webkit-background-clip: border-box !important
+  -webkit-text-fill-color: rgba(168, 172, 180, 0.86) !important
+  box-shadow: none
+  color: rgba(168, 172, 180, 0.86) !important
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.78125rem
+  font-weight: 400
+  line-height: 1.25rem
+  letter-spacing: 0.04em
+  text-align: left
+  text-transform: uppercase
+  white-space: nowrap
+  overflow: visible
+  text-overflow: clip
+
+.canvasOrganizationTitleRow > :first-child,
+.quickShortcutsTitleRow > :first-child
+  width: 1.125rem !important
+  height: 1.5rem !important
+  min-width: 1.125rem !important
+  flex: 0 0 1.125rem !important
+  padding: 0 !important
+  border: 0 !important
+  border-radius: 0 !important
+  background: transparent !important
+  box-shadow: none !important
+  color: rgba(161, 164, 165, 0.82) !important
+  opacity: 0.9 !important
+  filter: none
+
+  svg
+    display: block
+    width: 1.125rem !important
+    height: 1.5rem !important
+
+.canvasOrganizationHeader .sidebarAccordionChevron,
+.quickShortcutsHeader .quickShortcutsChevron
+  display: block
+  width: 1.125rem
+  height: 1.125rem
+  min-width: 1.125rem
+  flex: 0 0 1.125rem
+  margin-left: auto
+  color: rgba(161, 164, 165, 0.74) !important
+  opacity: 0.88
+  filter: none
+  transform-origin: 50% 50%
+
+.canvasOrganizationContent,
+.quickShortcutsContent
+  padding-top: 0.125rem
+  padding-bottom: 0.875rem
+  background: transparent !important
+
+.canvasOrganizationContent
+  display: grid
+  gap: 0.5rem
+
+.quickShortcutsContent
+  display: grid
+  gap: 0
+
+.quickShortcutsGrid
+  display: flex !important
+  flex-direction: column
+  gap: 0
+  width: 100%
+  margin-top: 0.125rem
+
+.quickShortcutBtn
+  display: inline-flex !important
+  flex-direction: row
+  align-items: center
+  justify-content: flex-start
+  width: 100%
+  min-height: 2rem
+  padding: 0.25rem 0
+  gap: 0.5rem
+  border: 0
+  border-bottom: 0.0625rem solid rgba(161, 164, 165, 0.18)
+  border-radius: 0 !important
+  background: transparent !important
+  box-shadow: none !important
+  color: rgba(161, 164, 165, 0.54)
+  opacity: 0.78
+  transform: none
+  text-decoration: none
+  transition: color 180ms ease, opacity 180ms ease, border-color 180ms ease
+
+  &::before
+    display: none !important
+
+  &::after
+    content: '↗'
+    display: grid
+    place-items: center
+    width: 1.25rem
+    height: 1.25rem
+    margin-left: auto
+    color: currentColor
+    font-size: 1rem
+    font-weight: 400
+    line-height: 1
+    opacity: 0.72
+    transform: translate(-0.0625rem, 0.0625rem)
+
+  &:hover,
+  &:focus-visible
+    background: transparent !important
+    border-color: rgba(224, 226, 232, 0.36)
+    box-shadow: none !important
+    color: rgba(224, 226, 232, 0.9)
+    opacity: 1
+    outline: none
+    transform: none
+
+    &::after
+      opacity: 1
+
+    .quickShortcutBtnIcon,
+    .quickShortcutBtnLabel
+      color: inherit
+      opacity: 1
+
+.quickShortcutBtnIcon
+  width: 0.875rem
+  height: 0.875rem
+  flex: 0 0 0.875rem
+  background: transparent !important
+  box-shadow: none !important
+  color: inherit
+  opacity: 0.78
+
+  svg
+    width: 0.75rem
+    height: 0.75rem
+
+.quickShortcutBtnLabel
+  color: inherit
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.75rem
+  font-weight: 500
+  line-height: 1.125rem
+
+// Breathing room between Organization / Atalhos / Resultado without stacked dividers fighting.
+.canvasOrganizationCard
+  margin-bottom: 0.25rem
+
+.quickShortcutsCard
+  margin-top: 0.25rem
+  margin-bottom: 0.75rem
+
+.canvasOrganizationCard:has(.canvasOrganizationContent)
+  padding-bottom: 0.25rem
+
+.quickShortcutsCard:has(.quickShortcutsContent)
+  padding-bottom: 0.25rem
+  margin-bottom: 0.875rem
+
+// 5) Resultado — header editorial: ícone + bloco textual (título/subtítulo no mesmo eixo).
+// Título reutiliza tokens visuais de “Editar bloco” (.blockFormGroupTitle / SURGERY 03).
+.resultCard .finalResultEditorial
+  display: block
+  width: 100%
+  max-width: 100%
+  min-width: 0
+  text-align: left
+
+.resultCard .finalResultHeadline.blockFormGroupHeader,
+.resultCard .blockFormGroupHeader
+  display: flex
+  align-items: flex-start
+  justify-content: flex-start
+  gap: 0.5rem
+  margin: 0
+  padding: 0
+  padding-left: 0
+  min-height: 0
+  width: 100%
+  max-width: 100%
+  white-space: normal
+  overflow: visible
+  text-overflow: clip
+
+.resultCard .finalResultCopy
+  display: grid
+  gap: 0.3125rem
+  min-width: 0
+  flex: 1 1 auto
+  text-align: left
+
+.resultCard .blockFormGroupTitle
+  display: block
+  width: auto !important
+  height: auto !important
+  min-width: 0
+  margin: 0
+  padding: 0
+  white-space: normal
+  overflow: visible
+  text-overflow: clip
+  text-align: left
+  // Tokens de .blockFormGroupTitle / SURGERY 03 (“Editar bloco”)
+  color: transparent !important
+  background: linear-gradient(90deg, rgba(240, 240, 240, 0.94) 0%, rgba(161, 164, 165, 0.76) 100%) !important
+  background-clip: text !important
+  -webkit-background-clip: text !important
+  -webkit-text-fill-color: transparent !important
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.78125rem
+  font-weight: 400
+  line-height: 1.1rem
+  letter-spacing: 0.04em
+  text-transform: uppercase
+
+.resultCard .blockFormGroupHeader > :first-child
+  align-self: flex-start
+  margin-top: 0
+
+.resultCard .finalResultLead
+  margin: 0
+  padding: 0
+  padding-left: 0
+  max-width: 36ch
+  text-align: left
+  text-transform: none
+  color: rgba(148, 150, 156, 0.94) !important
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.71875rem !important
+  font-weight: 400
+  line-height: 1.45
+
+.finalResultFooter
+  background: transparent !important
+  box-shadow: none !important
+  backdrop-filter: none !important
+  -webkit-backdrop-filter: none !important
+
+  &::before
+    opacity: 0.9
+// END CANVAS SIDEBAR SURGERY MICROFIX 18
+

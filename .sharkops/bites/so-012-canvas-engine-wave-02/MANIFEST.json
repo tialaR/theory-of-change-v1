@@ -1,0 +1,9 @@
+{
+  "id": "SO-012",
+  "codename": "Canvas Engine",
+  "wave": "02-engine-state-kernel",
+  "status": "ACTIVE",
+  "revision": 3,
+  "purpose": "Move state snapshot cloning and bounded history policy into a framework-neutral Canvas Engine kernel without changing behavior",
+  "updatedAt": "2026-08-06T16:10:00.000Z"
+}

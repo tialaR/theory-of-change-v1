@@ -1,0 +1,4 @@
+.sharkops/bites/so-003-god-slayer-wave-03
+scripts/tdm-contract-v3/check-god-slayer-wave03.mjs
+src/features/theory-of-change/canvas/ui/hooks/use-canvas-selection.ts
+src/features/theory-of-change/canvas/ui/hooks/use-canvas-workspace-navigation.ts

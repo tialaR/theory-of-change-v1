@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { decideCanvasSaveState, saveCanvasUntilClean } from '../../application/canvas-save-policy';
 import type { CanvasProject, CanvasViewport } from '../../domain/canvas-project';
 import { CANVAS_DIMENSIONS } from '../../domain/canvas-ui.constants';
 import type { CanvasCausalEdge, CanvasStageNode } from '../../react-flow/canvas-flow.types';
@@ -59,13 +60,20 @@ export function useCanvasSaveController({
 
     try {
       await saveProject();
-      const changedWhileSaving = revisionRef.current !== revisionAtStart;
-      setSaveState(changedWhileSaving ? 'dirty' : 'saved');
+      const nextSaveState = decideCanvasSaveState({
+        revisionAtStart,
+        revisionAfterSave: revisionRef.current
+      });
+      setSaveState(nextSaveState);
 
       if (feedback === 'manual') notify(t('notices.saved'));
-      return { ok: true as const, clean: !changedWhileSaving };
+      return { ok: true as const, clean: nextSaveState === 'saved' };
     } catch {
-      setSaveState('error');
+      setSaveState(decideCanvasSaveState({
+        revisionAtStart,
+        revisionAfterSave: revisionRef.current,
+        failed: true
+      }));
       notify(t('notices.saveError'), 'warning');
       return { ok: false as const, clean: false };
     }
@@ -88,16 +96,16 @@ export function useCanvasSaveController({
   const navigateAfterSave = useCallback(async (href: string) => {
     cancelPending();
 
-    for (let attempt = 0; attempt < 3; attempt += 1) {
-      const result = await executeSave('silent');
-      if (!result.ok) return false;
-      if (result.clean) {
-        router.push(href);
-        return true;
-      }
+    const result = await saveCanvasUntilClean({
+      save: () => executeSave('silent')
+    });
+
+    if (result.status === 'clean') {
+      router.push(href);
+      return true;
     }
 
-    notify(t('notices.saveError'), 'warning');
+    if (result.status === 'exhausted') notify(t('notices.saveError'), 'warning');
     return false;
   }, [cancelPending, executeSave, notify, router, t]);
 

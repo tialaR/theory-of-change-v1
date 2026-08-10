@@ -1,0 +1,8 @@
+{
+  "id": "SO-005",
+  "codename": "Sass God Split",
+  "revision": 2,
+  "status": "ACTIVE",
+  "scope": "Canvas and Sidebar Sass ownership decomposition",
+  "verify": "npm run check:tdm:sass-god-split:wave02"
+}

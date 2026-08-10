@@ -1,6 +1,13 @@
 'use client';
 
 import { useCallback } from 'react';
+import type { CanvasEditableNodeField } from '../../application/canvas-node-actions';
+import {
+  deleteCanvasNode,
+  duplicateCanvasNode,
+  saveCanvasNodeDraft,
+  updateSelectedCanvasNode
+} from '../../application/canvas-node-actions';
 import type { CanvasStageId } from '../../domain/canvas-project';
 import type { CanvasStageNode } from '../../react-flow/canvas-flow.types';
 import type {
@@ -61,29 +68,30 @@ export function useCanvasNodeActions({
   stageCopy
 }: UseCanvasNodeActionsOptions) {
   const updateSelectedNode = useCallback((
-    field: keyof CanvasNodeData,
+    field: CanvasEditableNodeField,
     value: string
   ) => {
-    if (!selectedNodeId) {
-      return;
+    const updated = updateSelectedCanvasNode(
+      selectedNodeId,
+      field,
+      value,
+      updateNode
+    );
+
+    if (updated) {
+      markDirty();
     }
-
-    updateNode(selectedNodeId, {
-      [field]: value
-    });
-
-    markDirty();
   }, [markDirty, selectedNodeId, updateNode]);
 
   const duplicateNode = useCallback((nodeId: string) => {
-    const duplicate = duplicateFlowNode(nodeId);
+    const result = duplicateCanvasNode(nodeId, duplicateFlowNode);
 
-    if (!duplicate) {
+    if (result.status === 'not-found') {
       return;
     }
 
-    selectNode(duplicate.id);
-    setActiveToolbarNodeId(duplicate.id);
+    selectNode(result.node.id);
+    setActiveToolbarNodeId(result.node.id);
     markDirty();
     notify(t('notices.duplicated'));
   }, [
@@ -96,9 +104,9 @@ export function useCanvasNodeActions({
   ]);
 
   const deleteNode = useCallback((nodeId: string) => {
-    const node = deleteFlowNode(nodeId);
+    const result = deleteCanvasNode(nodeId, deleteFlowNode);
 
-    if (!node) {
+    if (result.status === 'not-found') {
       return;
     }
 
@@ -109,7 +117,7 @@ export function useCanvasNodeActions({
 
     notify(
       t('notices.deleted', {
-        stage: stageCopy(node.data.stage).singular
+        stage: stageCopy(result.node.data.stage).singular
       })
     );
   }, [
@@ -124,20 +132,16 @@ export function useCanvasNodeActions({
   ]);
 
   const saveNodeEditor = useCallback((nodeId: string) => {
-    if (!nodeDraft) {
-      return;
-    }
-
-    const node = nodes.find((item) => item.id === nodeId);
-
-    if (!node) {
-      return;
-    }
-
-    saveNodeDraft(nodeId, {
-      ...node.data,
-      ...nodeDraft
+    const result = saveCanvasNodeDraft({
+      nodes,
+      nodeId,
+      draft: nodeDraft,
+      saveNodeDraft
     });
+
+    if (result.status === 'not-found') {
+      return;
+    }
 
     closeNodeEditor();
     markDirty();

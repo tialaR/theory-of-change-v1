@@ -1,0 +1,10 @@
+{
+  "phase": "Architecture Diamond Infrastructure Cleanup active",
+  "lastBite": "SO-013 | Infrastructure Cleanup Wave 05",
+  "nextBite": "SO-013 | Infrastructure Cleanup Wave 06 Audit",
+  "architecture": "SO-012 remains closed; SO-013 Waves 01-04 plus the Wave 02 lint-gate hotfix remain intact; Wave 05 removes the server-to-MSW boundary violation by relocating the shared in-memory project store to infrastructure/memory without changing repository behavior",
+  "knowledge": "repository-backed",
+  "updatedAt": "2026-08-07T03:45:00.000Z",
+  "activeBite": "SO-013 | Infrastructure Cleanup",
+  "activeBiteStatus": "ACTIVE"
+}

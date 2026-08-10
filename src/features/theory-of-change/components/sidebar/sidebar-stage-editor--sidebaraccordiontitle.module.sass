@@ -1,0 +1,197 @@
+@use '../../../../shared/styles/tokens' as *
+
+=sidebar-glass-surface
+  +ds-sidebar-shell
+
+=sidebar-inner-surface
+  +ds-sidebar-inner-panel
+
+.sidebarAccordionTitle
+  line-height: 1.35
+  transition: color 200ms ease
+
+.sidebarAccordionChevron
+  flex: 0 0 auto
+  width: 0.9375rem
+  height: 0.9375rem
+  color: rgba(148, 148, 154, 0.88)
+  opacity: 0.92
+  transition: transform 220ms ease, opacity 180ms ease, color 180ms ease
+
+.sidebarAccordionChevronOpen
+  transform: rotate(180deg)
+
+.blockFormsPanel .blockSidebarAccordion.sidebarAccordionOpen .sidebarAccordionChevron,
+.blockFormsPanel .blockSidebarAccordion.sidebarAccordionOpen .sidebarAccordionChevronOpen
+  color: inherit
+  opacity: 1
+
+.sidebarAccordionChevronAccent
+  color: rgba(200, 200, 206, 0.96) !important
+  opacity: 1 !important
+
+.sidebarAccordionPanel
+  display: grid
+  grid-template-rows: 0fr
+  opacity: 0
+  transition: grid-template-rows 260ms ease, opacity 220ms ease
+
+.sidebarAccordionPanelOpen
+  grid-template-rows: 1fr
+  opacity: 1
+
+.sidebarAccordionContent
+  overflow: hidden
+  min-height: 0
+
+  > *
+    padding: 0 0.8125rem 0.8125rem
+
+// ─── Context panels ────────────────────────────────────────────────────────────
+
+.detailLabel
+  margin: 0
+  color: rgba(148, 148, 154, 0.92)
+  font-size: 0.625rem
+  font-weight: 800
+  letter-spacing: 0.14em
+  text-transform: uppercase
+
+.detailValue
+  margin: 0
+  color: $ds-text-primary
+  font-size: 0.8125rem
+  line-height: 1.55
+
+.edgeDetails,
+.markerBlock
+  display: grid
+  gap: 0.5625rem
+
+.connectionLine
+  margin: 0
+  color: $ds-text-primary
+  font-size: 0.875rem
+  font-weight: 500
+  line-height: 1.45
+
+.connectionStatus
+  display: inline-flex
+  align-items: flex-start
+  gap: 0.4rem
+  margin: 0
+  color: var(--tdm-fg-secondary)
+  font-size: 0.8125rem
+  line-height: 1.45
+
+.connectionStatusIcon
+  flex: 0 0 auto
+  color: var(--tdm-fg-secondary)
+  font-size: 0.75rem
+  line-height: 1.45
+
+.detailHint
+  margin: 0
+  color: var(--tdm-fg-muted)
+  font-size: 0.75rem
+  line-height: 1.4
+
+.sidebarCtaRow
+  display: flex
+  width: 100%
+  gap: 0.5625rem
+
+  > *
+    flex: 1
+    min-width: 0
+
+.sidebarCtaSpaced
+  margin-top: 0.5625rem
+
+.contextActions
+  display: flex
+  flex-wrap: wrap
+  gap: 0.5625rem
+  margin-top: 0.25rem
+
+  > *
+    width: auto
+    flex: 1 1 calc(50% - 0.28125rem)
+    min-width: 0
+
+// ─── Quick shortcuts (auxiliary — low visual hierarchy, premium glass finish) ──
+
+.quickShortcutsCard
+  position: relative
+  isolation: isolate
+  gap: 0.4375rem
+  padding: 0.5625rem 0.75rem 0.6875rem
+  border-color: rgba(255, 255, 255, 0.058)
+  background: radial-gradient(ellipse 112% 82% at 50% -14%, rgba(255, 255, 255, 0.048), transparent 58%), radial-gradient(ellipse 72% 48% at 100% 42%, rgba(255, 255, 255, 0.018), transparent 54%), linear-gradient(168deg, rgba(30, 31, 35, 0.68) 0%, rgba(24, 25, 29, 0.74) 46%, rgba(18, 19, 22, 0.8) 100%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.058), inset 0 0.125rem 0.4375rem rgba(255, 255, 255, 0.014), inset 0 -0.0625rem 0.3125rem rgba(0, 0, 0, 0.16), 0 0.25rem 0.75rem rgba(0, 0, 0, 0.14)
+  backdrop-filter: blur(0.625rem) saturate(1.04)
+  -webkit-backdrop-filter: blur(0.625rem) saturate(1.04)
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0
+    border-radius: inherit
+    pointer-events: none
+    background: linear-gradient(132deg, rgba(255, 255, 255, 0.055) 0%, transparent 24%, transparent 76%, rgba(255, 255, 255, 0.018) 100%)
+    opacity: 0.72
+    z-index: 0
+
+  &::after
+    content: ''
+    position: absolute
+    top: 0
+    left: 0.75rem
+    right: 0.75rem
+    height: 0.0625rem
+    border-radius: 0 0 0.0625rem 0.0625rem
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.11) 32%, rgba(255, 255, 255, 0.13) 50%, rgba(255, 255, 255, 0.11) 68%, transparent)
+    pointer-events: none
+    opacity: 0.5
+    z-index: 0
+
+.quickShortcutsHeader
+  display: flex
+  align-items: center
+  gap: 0.25rem
+  margin-bottom: 0.125rem
+
+.quickShortcutsTitleRow
+  display: flex
+  align-items: center
+  gap: 0.3125rem
+  min-width: 0
+  justify-content: flex-start
+
+  > span
+    width: 1.125rem
+    height: 1.125rem
+    flex: 0 0 auto
+    opacity: 0.62
+    border-color: rgba(255, 255, 255, 0.07)
+    background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04), transparent 62%), rgba(255, 255, 255, 0.018)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04)
+
+    svg
+      width: 0.6875rem
+      height: 0.6875rem
+
+.quickShortcutsTitle
+  margin: 0
+  color: rgba(156, 158, 164, 0.72)
+  font-size: 0.5625rem
+  font-weight: 600
+  letter-spacing: 0.11em
+  text-transform: uppercase
+
+.quickShortcutsGrid
+  display: grid
+  grid-template-columns: repeat(2, minmax(0, 1fr))
+  gap: 0.625rem
+  width: 100%
+

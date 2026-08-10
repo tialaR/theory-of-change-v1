@@ -1,0 +1,22 @@
+{
+  "id": "SO-011",
+  "codename": "React Flow Isolation",
+  "wave": "closeout",
+  "status": "COMPLETE",
+  "purpose": "Close React Flow Isolation with aggregate executable boundaries and handoff to the Canvas Engine audit",
+  "completedAt": "2026-08-06T06:45:00.000Z",
+  "approvedDirectImporters": 8,
+  "gates": [
+    "check:tdm:react-flow-isolation:wave01",
+    "check:tdm:react-flow-isolation:wave02",
+    "check:tdm:react-flow-isolation:wave03",
+    "check:tdm:react-flow-isolation:wave04",
+    "check:tdm:react-flow-isolation:wave05",
+    "check:tdm:react-flow-isolation:wave06",
+    "check:tdm:react-flow-isolation:wave07",
+    "check:tdm:react-flow-isolation:wave08",
+    "check:tdm:react-flow-isolation:wave08-hotfix",
+    "check:tdm:react-flow-isolation:wave08-hotfix2",
+    "check:tdm:react-flow-isolation:closeout"
+  ]
+}

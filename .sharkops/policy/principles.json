@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "identity": {
+    "name": "SharkOps",
+    "type": "opinionated architecture recovery and governance framework",
+    "mission": "reduce technical decision load so users can focus on product"
+  },
+  "authority": {
+    "assumedOnInstall": true,
+    "governsHooks": true,
+    "legacyIsNotSovereignByDefault": true,
+    "userCanRollback": true,
+    "userCanUninstall": true
+  },
+  "operation": [
+    "IDENTIFY",
+    "DECIDE",
+    "ATTACK",
+    "VERIFY",
+    "REGISTER",
+    "ROLLBACK"
+  ],
+  "nonNegotiables": {
+    "reduceHumanDecisionLoad": true,
+    "noSilentDeviation": true,
+    "noUnregisteredDecision": true,
+    "rollbackRequired": true,
+    "verificationRequired": true,
+    "legacyFailureDoesNotAutomaticallyBlock": true
+  },
+  "interruptOnlyWhen": [
+    "IRREVERSIBLE_RISK_WITHOUT_ROLLBACK",
+    "ESSENTIAL_INFORMATION_CANNOT_BE_INFERRED",
+    "SOVEREIGN_POLICY_CONFLICT",
+    "ACTION_OUTSIDE_AUTHORIZED_SCOPE"
+  ]
+}

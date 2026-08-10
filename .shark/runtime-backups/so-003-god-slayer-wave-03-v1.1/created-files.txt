@@ -1,0 +1,1 @@
+scripts/tdm-contract-v3/check-god-slayer-wave03-hotfix.mjs

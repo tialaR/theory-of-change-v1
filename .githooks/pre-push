@@ -1,3 +1,4 @@
 #!/bin/sh
 set -eu
-npm run validate:release
+
+npm run shark:gate:push

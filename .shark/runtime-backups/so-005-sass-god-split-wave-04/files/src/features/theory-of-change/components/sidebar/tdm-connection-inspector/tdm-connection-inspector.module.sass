@@ -1,0 +1,123 @@
+@use '../tdm-experience-title' as experience-title
+
+.inspector
+  // Risk / hypothesis / connection fields — generic white solid hairline (tokens from .sidebar).
+  --tdm-field-use-mask-border: 0
+  --tdm-field-accent: initial
+  --tdm-field-accent-rest: initial
+  display: grid
+  gap: var(--tdm-space-4)
+  min-width: 0
+
+.header
+  @include experience-title.experience-title-header
+  min-width: 0
+
+.headerIcon
+  display: inline-grid
+  place-items: center
+  width: 1.25rem
+  height: 1.25rem
+  flex: 0 0 auto
+  color: var(--tdm-fg-secondary)
+
+  svg
+    width: 1.0625rem
+    height: 1.0625rem
+
+.title
+  @include experience-title.experience-title-text
+
+// Read-only route summary — never looks like an input.
+.route
+  display: grid
+  grid-template-columns: minmax(0, 1fr) 2.5rem minmax(0, 1fr)
+  align-items: center
+  gap: 0.75rem
+  margin: 0
+  padding: 0.875rem 1rem
+  border: 0.5px solid var(--tdm-border-strong)
+  border-radius: var(--tdm-radius-md)
+  background: transparent
+  box-shadow: none
+
+.routeNode
+  min-width: 0
+  color: var(--tdm-fg-primary)
+  font-size: 0.875rem
+  font-weight: 500
+  line-height: 1.35
+  text-align: center
+  overflow-wrap: anywhere
+
+.routeArrow
+  display: inline-grid
+  place-items: center
+  width: 2.5rem
+  color: var(--tdm-fg-muted)
+
+.routeArrowIcon
+  display: block
+  width: 1.875rem
+  height: 0.75rem
+
+.status
+  display: grid
+  grid-template-columns: 1.125rem minmax(0, 1fr)
+  gap: var(--tdm-space-2)
+  align-items: start
+
+.statusIcon
+  display: inline-grid
+  place-items: center
+  width: 1.125rem
+  height: 1.125rem
+  margin-block-start: 0.1rem
+  color: var(--tdm-fg-secondary)
+
+  svg
+    width: 1rem
+    height: 1rem
+
+.statusCopy
+  display: grid
+  gap: 0.2rem
+  min-width: 0
+
+.statusTitle
+  margin: 0
+  color: var(--tdm-fg-primary)
+  font-size: 0.875rem
+  font-weight: 500
+  line-height: 1.3
+
+.statusSupport
+  margin: 0
+  color: var(--tdm-fg-secondary)
+  font-size: 0.8125rem
+  line-height: 1.4
+
+.actions
+  display: grid
+  grid-template-columns: repeat(2, minmax(0, 1fr))
+  gap: 0.75rem
+  min-width: 0
+
+.actionButton
+  --tdm-button-sm-height: 2.75rem
+  --tdm-button-sm-radius: 0.875rem
+  min-width: 0
+  width: 100%
+  justify-content: center
+  white-space: nowrap
+
+.markerField
+  min-width: 0
+
+.inspector[data-marker-type='risk']
+  .headerIcon
+    color: color-mix(in srgb, var(--tdm-fg-danger) 72%, var(--tdm-fg-secondary))
+
+.inspector[data-marker-type='hypothesis']
+  .headerIcon
+    color: color-mix(in srgb, var(--tdm-border-interactive) 70%, var(--tdm-fg-secondary))

@@ -1,0 +1,12 @@
+{
+  "id": "SO-012",
+  "codename": "Canvas Engine",
+  "wave": "09-hotfix",
+  "name": "Facade Test Contract Hotfix",
+  "status": "ACTIVE",
+  "revision": 11,
+  "purpose": "Align the Wave 09 public facade test with the real interaction and selection kernel signatures without changing production behavior.",
+  "previous": "SO-012 Canvas Engine Wave 09 Engine Facade",
+  "next": "SO-012 Canvas Engine Wave 10 Canvas Engine Closeout",
+  "updatedAt": "2026-08-06T21:35:00.000Z"
+}
