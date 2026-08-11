@@ -1,0 +1,9 @@
+{
+  "id": "SO-021",
+  "codename": "Application-Wide Regression Armor",
+  "status": "ACTIVE",
+  "revision": 2,
+  "wave": "02",
+  "runtimeChanges": false,
+  "target": "REGRESSION-001"
+}

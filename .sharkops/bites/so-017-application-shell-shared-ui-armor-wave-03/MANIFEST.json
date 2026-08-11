@@ -1,0 +1,10 @@
+{
+  "id": "SO-017",
+  "codename": "Application Shell & Shared UI Armor",
+  "wave": 3,
+  "revision": 3,
+  "status": "ACTIVE",
+  "runtimeChanges": true,
+  "finding": "SHELL-002",
+  "next": "SHELL-003"
+}

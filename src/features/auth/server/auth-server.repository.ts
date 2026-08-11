@@ -1,19 +1,7 @@
+import { TDM_MOCK_API_ORIGIN } from '@/mocks/mock-api.constants';
 import type { AuthRepository } from '../domain/auth.types';
-import { authMockStore } from '../infrastructure/msw/auth.mock-store';
+import { createHttpAuthRepository } from '../infrastructure/http/http-auth.repository';
 
 export function createServerAuthRepository(): AuthRepository {
-  return {
-    async createSession(credentials) {
-      return authMockStore.createSession(credentials);
-    },
-    async findSession(sessionId) {
-      return authMockStore.readSession(sessionId);
-    },
-    async updateUserAvatar(sessionId, avatarUrl) {
-      return authMockStore.updateUserAvatar(sessionId, avatarUrl);
-    },
-    async deleteSession(sessionId) {
-      authMockStore.deleteSession(sessionId);
-    }
-  };
+  return createHttpAuthRepository({ baseUrl: TDM_MOCK_API_ORIGIN });
 }

@@ -1,0 +1,9 @@
+{
+  "id": "SO-017",
+  "codename": "Application Shell & Shared UI Armor",
+  "wave": 1,
+  "status": "ACTIVE",
+  "mode": "audit-only",
+  "runtimeChanges": false,
+  "nextBite": "SO-017 Wave 02 | Shared UI Style Ownership Contract"
+}

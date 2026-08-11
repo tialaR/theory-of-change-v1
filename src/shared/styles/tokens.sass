@@ -1,3 +1,17 @@
+// TDM LEGACY TOKEN COMPATIBILITY BOUNDARY
+//
+// This file is NOT a second Design System authority. It exists only to keep
+// established Sass consumers stable while token families are migrated in
+// evidence-backed SharkOps waves.
+//
+// Governance:
+// - canonical global CSS custom properties live under shared/styles/tdm/
+// - this compatibility layer may expose legacy Sass variables/mixins only
+// - importing this file from canonical shared/styles/tdm modules is forbidden
+// - new consumers are forbidden; the consumer count may only decrease
+// - top-level selectors / :root emission are forbidden
+// - legacy DS/noir/stage nomenclature may shrink, never expand
+//
 $color-bg: #07090f
 $color-border: rgba(255, 255, 255, 0.1)
 $color-border-strong: rgba(255, 255, 255, 0.16)

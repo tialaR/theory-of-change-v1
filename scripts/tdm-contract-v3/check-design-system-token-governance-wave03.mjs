@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+import fs from 'node:fs'; import path from 'node:path';
+const root=process.cwd(), errors=[]; const read=r=>fs.readFileSync(path.join(root,r),'utf8'); const json=r=>JSON.parse(read(r)); const req=(x,m)=>{if(!x)errors.push(m)};
+const audit=json('docs/sharkops/SO-018-DESIGN-SYSTEM-TOKEN-GOVERNANCE-AUDIT.json'); const inventory=json('docs/sharkops/SO-018-LEGACY-TOKEN-FAMILY-INVENTORY.json'); const ledger=json('.sharkops/state/bite-ledger.json'); const state=json('.sharkops/state/current-state.json'); const so18=(ledger.bites??[]).find(b=>b.id==='SO-018'); const ds002=(audit.findings??[]).find(f=>f.id==='DS-002');
+req((so18?.status==='ACTIVE' && (so18?.revision??0)>=3) || (so18?.status==='COMPLETE' && (so18?.revision??0)>=5),'SO-018 deve estar ACTIVE apos a Wave 03 ou COMPLETE no closeout'); req(String(ds002?.status).startsWith('RESOLVED-'),'DS-002 deve permanecer resolvido'); req((so18?.status==='ACTIVE' && state.activeBite==='SO-018 | Design System & Token Governance' && state.activeBiteStatus==='ACTIVE') || (so18?.status==='COMPLETE' && state.activeBite===null && state.activeBiteStatus==='NONE'),'current-state perdeu ownership SO-018'); req(state.goldenStateStatus==='COMPLETE' && state.goldenStateId==='GOLDEN-STATE-v1','Golden State deixou de estar selado');
+const legacy=read('src/shared/styles/tokens.sass');
+const topLevelDefinitions=legacy.split(/\r?\n/).filter((line)=>line.startsWith('$') && line.includes(':')); const def=(prefix)=>topLevelDefinitions.filter((line)=>line.startsWith('$'+prefix)).length;
+req(def('ds-')===19,`baseline de definicoes $ds-* mudou: ${def('ds-')} != 19`); req(def('noir-')===29,`baseline de definicoes $noir-* mudou: ${def('noir-')} != 29`); req(def('stage-')===12,`baseline de definicoes $stage-* mudou: ${def('stage-')} != 12`);
+req(inventory.definitionCounts?.ds===19 && inventory.definitionCounts?.noir===29 && inventory.definitionCounts?.stage===12,'inventario de definicoes legacy divergiu');
+req(inventory.governance?.renameAuthorized===false && inventory.governance?.massMigrationAuthorized===false,'Wave 03 nao pode autorizar rename/migracao em massa');
+const names=(family)=>(inventory.families?.[family]??[]).map(x=>x.name); req(names('ds').length===19 && names('noir').length===29 && names('stage').length===12,'familias inventariadas incompletas');
+req(audit.evidence?.legacyNomenclature?.clarification?.includes('occurrence counts included internal references'),'audit deve registrar correcao semantica de contagem');
+req((so18?.revision??0)===3 ? audit.nextBite?.targetFinding==='DS-003' : ((so18?.revision??0)>3 && String((audit.findings??[]).find(f=>f.id==='DS-003')?.status).startsWith('RESOLVED-')),'Wave 03 deve apontar DS-003 ou reconhecer sua resolucao posterior');
+if(errors.length){console.error('\nSO-018 WAVE 03 LEGACY TOKEN FAMILY INVENTORY: FAIL\n'); errors.forEach((e,i)=>console.error(`${i+1}. ${e}.`)); process.exit(1)}
+console.log('PASS SO-018 Wave 03: legacy $ds/$noir/$stage families are inventoried by top-level definition and semantic group, prior occurrence counts are explicitly disambiguated, and no rename or mass migration is authorized.');

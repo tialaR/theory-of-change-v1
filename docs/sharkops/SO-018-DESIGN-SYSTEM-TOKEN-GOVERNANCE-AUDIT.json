@@ -1,0 +1,84 @@
+{
+  "initiative": "SO-018",
+  "title": "Design System & Token Governance",
+  "wave": "CLOSEOUT",
+  "mode": "closeout-audit",
+  "runtimeChanges": false,
+  "evidence": {
+    "canonicalAggregator": "src/shared/styles/tdm/tdm-tokens.sass",
+    "legacyCompatibilityFile": "src/shared/styles/tokens.sass",
+    "canonicalAggregatorRuntimeConsumers": 1,
+    "legacyCompatibilityConsumers": 39,
+    "globalsImportsBothLayers": true,
+    "legacyNomenclature": {
+      "definitionCounts": {
+        "dsVariables": 19,
+        "noirVariables": 29,
+        "stageAliases": 12
+      },
+      "previousOccurrenceCounts": {
+        "dsOccurrences": 33,
+        "noirOccurrences": 74,
+        "stageOccurrences": 25
+      },
+      "clarification": "Wave 01 occurrence counts included internal references. Wave 03 freezes top-level definition counts as the governance baseline."
+    }
+  },
+  "findings": [
+    {
+      "id": "DS-001",
+      "severity": "HIGH",
+      "status": "RESOLVED-WAVE-02",
+      "title": "Canonical TDM tokens and legacy Sass compatibility layer form a split-brain token authority",
+      "evidence": "tdm-tokens.sass publishes the canonical --tdm-* vocabulary while tokens.sass remains imported by 39 source files; globals.sass imports both systems.",
+      "decision": "Do not delete or mass-migrate the legacy file. First define and gate its compatibility-only boundary, then migrate evidence-backed token families incrementally.",
+      "resolution": "tokens.sass is explicitly compatibility-only: it may not emit global selectors, feed canonical tdm modules, gain consumers, or expand legacy DS/noir/stage families. Canonical global CSS custom properties remain owned by shared/styles/tdm/."
+    },
+    {
+      "id": "DS-002",
+      "severity": "MEDIUM",
+      "status": "RESOLVED-WAVE-03",
+      "title": "Legacy Sass token file still carries historical DS/noir/stage naming",
+      "evidence": "tokens.sass contains $ds-*, $noir-* and $stage-* aliases alongside comments marking some legacy/deprecated roles.",
+      "decision": "Inventory semantic families before any rename. Do not perform a mass nomenclature rewrite.",
+      "resolution": "Legacy nomenclature is now inventoried by top-level definition and semantic group; no rename or mass migration is authorized."
+    },
+    {
+      "id": "DS-003",
+      "severity": "MEDIUM",
+      "status": "RESOLVED-WAVE-04",
+      "title": "Canonical token modules contain raw values by design",
+      "evidence": "tdm color/surface/border/cta/public-action modules define primitive and semantic values directly.",
+      "decision": "Raw values inside token-definition modules are legitimate. Hardcoded-value gates must distinguish token authority from component consumption.",
+      "resolution": "Canonical hardcode authority is structural, not folder-based: only modules explicitly aggregated by tdm-tokens.sass and values defined inside their @mixin tokens blocks receive the token-authority exemption. Consumer styles, behavior mixins and the legacy compatibility layer do not inherit that exemption."
+    },
+    {
+      "id": "DS-004",
+      "severity": "LOW",
+      "status": "PRESERVED-CLOSEOUT",
+      "title": "Local Sass mixins remain legitimate shared styling contracts",
+      "evidence": "focus and anchored-tooltip surface mixins are consumed by shared UI and feature-owned styles without becoming global CSS cascade.",
+      "decision": "Preserve Sass Modules and explicit mixin imports; governance must not force all styling semantics into CSS custom properties.",
+      "resolution": "Evidence-based promotion remains mandatory: promote visual language to shared/DS only with real reuse or shared semantics. No compulsory centralization is authorized."
+    }
+  ],
+  "nextBite": {
+    "id": "SO-019",
+    "title": "Cross-Feature Boundaries",
+    "mode": "audit-first",
+    "reason": "SO-018 is complete; cross-feature coupling must be proven before any boundary refactor."
+  },
+  "closeout": {
+    "status": "COMPLETE",
+    "openFindings": [],
+    "resolvedFindings": [
+      "DS-001",
+      "DS-002",
+      "DS-003"
+    ],
+    "preservedFindings": [
+      "DS-004"
+    ],
+    "verdict": "No additional Design System / token-governance runtime bite is proven necessary."
+  }
+}

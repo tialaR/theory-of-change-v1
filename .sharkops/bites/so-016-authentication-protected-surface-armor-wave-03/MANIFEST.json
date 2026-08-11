@@ -1,0 +1,21 @@
+{
+  "id": "SO-016",
+  "codename": "Authentication & Protected Surface Armor",
+  "wave": "03",
+  "title": "Protected Route Ownership Contract",
+  "status": "ACTIVE",
+  "runtimeChanges": true,
+  "gate": "npm run check:tdm:auth-protected-surfaces:wave03",
+  "predecessor": "SO-016 Wave 02 v1.1",
+  "targetFinding": "AUTH-002",
+  "next": "SO-016 | Redirect Policy Contract",
+  "patchVersion": "v1",
+  "scope": [
+    "/canvas route-entry authentication",
+    "/canvas/resultado exact returnTo ownership",
+    "explicit AuthUser handoff into Canvas feature",
+    "project loader de-authentication",
+    "Wave 01 gate evolution",
+    "SharkOps state and audit resolution"
+  ]
+}

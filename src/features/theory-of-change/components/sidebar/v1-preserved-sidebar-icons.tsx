@@ -1,4 +1,3 @@
-import buttonStyles from '@/shared/ui/tdm-button/tdm-button.module.sass';
 import styles from './tdm-sidebar.module.sass';
 
 export function AccordionChevron({ isOpen, className }: { isOpen: boolean; className?: string }) {
@@ -22,7 +21,7 @@ export function AccordionChevron({ isOpen, className }: { isOpen: boolean; class
 
 export function ColumnsAlignIcon() {
   return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" className={buttonStyles.icon} fill="none">
+    <svg viewBox="0 0 32 32" aria-hidden="true" fill="none">
       <rect x="6" y="5" width="20" height="22" rx="6" stroke="currentColor" strokeWidth="2.2" />
       <path d="M12 10V22" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
       <path d="M16 10V22" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
@@ -33,7 +32,7 @@ export function ColumnsAlignIcon() {
 
 export function FinalResultCtaArrowIcon() {
   return (
-    <svg aria-hidden="true" viewBox="0 0 16 16" className={buttonStyles.icon}>
+    <svg aria-hidden="true" viewBox="0 0 16 16">
       <path
         d="M4.5 11.5 11.5 4.5M11.5 4.5H6.25M11.5 4.5V9.75"
         fill="none"

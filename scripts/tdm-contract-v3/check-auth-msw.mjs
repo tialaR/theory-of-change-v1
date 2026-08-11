@@ -26,7 +26,7 @@ const requiredFiles = [
   'src/features/auth/ui/login/login-form.tsx',
   'src/features/theory-of-change/canvas/server/save-canvas-project.action.ts',
   'src/features/theory-of-change/canvas/server/get-current-canvas-project.ts',
-  'src/features/theory-of-change/canvas/infrastructure/msw/canvas-project.mock-store.ts',
+  'src/features/theory-of-change/canvas/infrastructure/memory/canvas-project.mock-store.ts',
   'src/features/theory-of-change/canvas/infrastructure/msw/canvas-project.handlers.ts',
   'src/features/theory-of-change/canvas/infrastructure/http/http-canvas-project.repository.ts'
 ];
@@ -86,8 +86,12 @@ if (exists('src/features/auth/infrastructure/msw/auth.mock-store.ts')) {
   ]) requireCondition(source.includes(value), `persona ou store auth ausente: ${value}`);
 }
 
-if (exists('src/features/theory-of-change/canvas/infrastructure/msw/canvas-project.mock-store.ts')) {
-  const source = read('src/features/theory-of-change/canvas/infrastructure/msw/canvas-project.mock-store.ts');
+const legacyCanvasStore = 'src/features/theory-of-change/canvas/infrastructure/msw/canvas-project.mock-store.ts';
+const neutralCanvasStore = 'src/features/theory-of-change/canvas/infrastructure/memory/canvas-project.mock-store.ts';
+requireCondition(!exists(legacyCanvasStore), 'store Canvas legado reapareceu dentro da boundary MSW; SO-013 exige infrastructure/memory neutra');
+
+if (exists(neutralCanvasStore)) {
+  const source = read(neutralCanvasStore);
   requireCondition(source.includes("Symbol.for('tdm.mock.canvas.projects-by-owner')"), 'Canvas store não usa chave global estável por processo');
   requireCondition(source.includes('Map<string, Map<string, CanvasProject>>'), 'Canvas não está particionado por ownerId e projectId');
   for (const method of ['list(', 'read(', 'create(', 'replace(', 'patch(', 'delete(']) {

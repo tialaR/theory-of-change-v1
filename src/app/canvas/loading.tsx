@@ -1,4 +1,4 @@
-import { CanvasWorkspaceLoading } from '@/features/theory-of-change/canvas/ui/canvas-workspace/canvas-workspace.loading';
+import { CanvasWorkspaceLoading } from '@/features/theory-of-change/canvas';
 
 export default function Loading() {
   return <CanvasWorkspaceLoading />;

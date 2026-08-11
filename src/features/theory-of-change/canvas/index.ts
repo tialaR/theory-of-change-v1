@@ -13,3 +13,5 @@ export type {
   CanvasRelationKind,
   CanvasStageId
 } from './domain/canvas-project';
+
+export { CanvasWorkspaceLoading } from './ui/canvas-workspace/canvas-workspace.loading';

@@ -2,7 +2,7 @@
 
 import type { MouseEvent, SyntheticEvent } from 'react';
 import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
-import { TdmField, TdmInput, TdmTextarea } from '@/shared/ui/tdm-field/tdm-field';
+import { TdmField, TdmInput, TdmTextarea } from '@/shared/ui/tdm-field';
 import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
 import type { TdmStage } from '../../../domain/tdm-stages';
 import type { TdmNodeDraft } from '../../../domain/tdm-types';

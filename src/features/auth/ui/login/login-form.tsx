@@ -3,7 +3,7 @@
 import { useActionState } from 'react';
 import { useTranslations } from 'next-intl';
 import { TdmButton } from '@/shared/ui/tdm-button';
-import { TdmField, TdmInput } from '@/shared/ui/tdm-field/tdm-field';
+import { TdmField, TdmInput } from '@/shared/ui/tdm-field';
 import { INITIAL_LOGIN_ACTION_STATE } from '../../application/login-action-state';
 import { loginAction } from '../../server/login.action';
 import styles from './login-page.module.sass';

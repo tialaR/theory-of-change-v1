@@ -1,0 +1,100 @@
+{
+  "initiative": "SO-019",
+  "title": "Cross-Feature Boundaries",
+  "wave": "CLOSEOUT",
+  "mode": "closeout-audit",
+  "runtimeChanges": false,
+  "baseline": {
+    "crossFeatureImportCount": 7,
+    "pairCounts": {
+      "theory-of-change -> auth": 7
+    },
+    "imports": [
+      {
+        "source": "src/features/theory-of-change/canvas/canvas-page.tsx",
+        "ownerFeature": "theory-of-change",
+        "targetFeature": "auth",
+        "specifier": "@/features/auth"
+      },
+      {
+        "source": "src/features/theory-of-change/canvas/canvas-result-page.tsx",
+        "ownerFeature": "theory-of-change",
+        "targetFeature": "auth",
+        "specifier": "@/features/auth"
+      },
+      {
+        "source": "src/features/theory-of-change/canvas/server/save-canvas-project.action.ts",
+        "ownerFeature": "theory-of-change",
+        "targetFeature": "auth",
+        "specifier": "@/features/auth/server/auth-session"
+      },
+      {
+        "source": "src/features/theory-of-change/canvas/ui/canvas-result/canvas-result-view.tsx",
+        "ownerFeature": "theory-of-change",
+        "targetFeature": "auth",
+        "specifier": "@/features/auth"
+      },
+      {
+        "source": "src/features/theory-of-change/canvas/ui/canvas-workspace/canvas-workspace.tsx",
+        "ownerFeature": "theory-of-change",
+        "targetFeature": "auth",
+        "specifier": "@/features/auth"
+      },
+      {
+        "source": "src/features/theory-of-change/canvas/ui/canvas-workspace/canvas-client-entry.tsx",
+        "ownerFeature": "theory-of-change",
+        "targetFeature": "auth",
+        "specifier": "@/features/auth"
+      },
+      {
+        "source": "src/features/theory-of-change/canvas/ui/components/canvas-header.tsx",
+        "ownerFeature": "theory-of-change",
+        "targetFeature": "auth",
+        "specifier": "@/features/auth"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "BOUNDARY-001",
+      "status": "RESOLVED-WAVE-02",
+      "title": "Direct cross-feature imports require boundary classification",
+      "evidenceCount": 7,
+      "smallestNextBite": "Classify the highest-evidence feature pair and freeze an explicit allowed/forbidden boundary before refactoring.",
+      "resolution": "Six imports were already valid through @/features/auth. The single deep server import now uses the explicit @/features/auth/server entrypoint."
+    }
+  ],
+  "nextBite": {
+    "id": "SO-020",
+    "title": "Application Infrastructure & Runtime Armor",
+    "mode": "audit-first",
+    "reason": "SO-019 is complete; runtime/infrastructure risks must be proven before refactor."
+  },
+  "constraints": [
+    "No runtime refactor is authorized by Wave 01.",
+    "GOLDEN-STATE-v1 remains sealed.",
+    "Cross-feature imports must be classified before any move, facade, or shared extraction.",
+    "Existing feature identity must not be flattened into shared merely to reduce import counts."
+  ],
+  "classification": {
+    "pair": "theory-of-change -> auth",
+    "totalImports": 7,
+    "publicFacadeImports": 6,
+    "serverFacadeImports": 1,
+    "forbiddenDeepImportsAfterWave02": 0,
+    "rules": [
+      "Client-safe/domain-safe Auth consumption from other features uses @/features/auth.",
+      "Server-only Auth session capabilities use @/features/auth/server.",
+      "Cross-feature deep imports beneath either public entrypoint are forbidden.",
+      "Auth remains feature-owned; no move to shared is authorized."
+    ]
+  },
+  "closeout": {
+    "status": "COMPLETE",
+    "openFindings": [],
+    "resolvedFindings": [
+      "BOUNDARY-001"
+    ],
+    "verdict": "The only proven cross-feature pair is classified and sealed; no additional boundary refactor is justified."
+  }
+}

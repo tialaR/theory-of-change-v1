@@ -1,0 +1,10 @@
+{
+  "id": "SO-019",
+  "wave": "01",
+  "status": "ACTIVE",
+  "revision": 1,
+  "mode": "audit-only",
+  "runtimeChanges": false,
+  "baselineCrossFeatureImports": 7,
+  "codename": "Cross-Feature Boundaries"
+}

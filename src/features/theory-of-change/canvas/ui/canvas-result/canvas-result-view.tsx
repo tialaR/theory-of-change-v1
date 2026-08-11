@@ -1,8 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import type { AuthUser } from '@/features/auth/domain/auth.types';
-import { UserMenu } from '@/features/auth/ui/user-menu/user-menu';
+import { UserMenu, type AuthUser } from '@/features/auth';
 import { ResultExperience } from '@/features/theory-of-change/components/result-view/result-experience';
 import type { CanvasProject } from '../../domain/canvas-project';
 import { mapCanvasProjectToResultViewModel } from './canvas-result.mapper';

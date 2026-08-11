@@ -146,26 +146,6 @@ export function canCreateHypothesis(sourceStage: TdmStage, targetStage: TdmStage
   return getAllowedMarkerTypesForConnection(sourceStage, targetStage).includes('hypothesis');
 }
 
-/** Report invalid legacy markers without mutating stored data. */
-export function reportInvalidConnectionCondition(params: {
-  edgeId: string;
-  sourceStage: TdmStage;
-  targetStage: TdmStage;
-  conditionKind: TdmMarkerType;
-}): void {
-  if (process.env.NODE_ENV === 'production') {
-    return;
-  }
-
-  if (isConditionAllowed(params)) {
-    return;
-  }
-
-  console.info(
-    `[tdm-interpreter] ignored invalid ${params.conditionKind} on ${params.sourceStage}→${params.targetStage} (edge ${params.edgeId})`
-  );
-}
-
 export function canConnectStages(sourceStage: TdmStage, targetStage: TdmStage): boolean {
   return isAllowedTdmConnection(sourceStage, targetStage);
 }

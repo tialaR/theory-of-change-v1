@@ -165,6 +165,83 @@
       "createdAt": "2026-08-10T23:10:00.000Z",
       "updatedAt": "2026-08-11T05:30:00.000Z",
       "completedAt": "2026-08-11T05:30:00.000Z"
+    },
+    {
+      "id": "SO-016",
+      "codename": "Authentication & Protected Surface Armor",
+      "purpose": "Audit and progressively seal authentication, session, protected-route and mock/runtime boundaries without regressing the Canvas Golden State or public routes",
+      "status": "COMPLETE",
+      "revision": 6,
+      "path": ".sharkops/bites/so-016-authentication-protected-surface-armor-closeout",
+      "createdAt": "2026-08-11T06:00:00.000Z",
+      "updatedAt": "2026-08-11T06:58:00.000Z",
+      "completedAt": "2026-08-11T06:58:00.000Z"
+    },
+    {
+      "id": "SO-017",
+      "codename": "Application Shell & Shared UI Armor",
+      "purpose": "Audit and progressively seal application shell, shared UI ownership, public entrypoints and styling boundaries without flattening feature identity or regressing public routes, Auth armor or Canvas Golden State",
+      "status": "COMPLETE",
+      "revision": 5,
+      "path": ".sharkops/bites/so-017-application-shell-shared-ui-armor-closeout",
+      "createdAt": "2026-08-11T07:12:00.000Z",
+      "updatedAt": "2026-08-11T07:59:00.000Z",
+      "completedAt": "2026-08-11T07:59:00.000Z"
+    },
+    {
+      "id": "SO-018",
+      "codename": "Design System & Token Governance",
+      "purpose": "Audit and progressively govern canonical TDM tokens, legacy compatibility boundaries, semantic promotion and token consumption without flattening existing visual identity or weakening prior Golden State armor",
+      "status": "COMPLETE",
+      "revision": 5,
+      "path": ".sharkops/bites/so-018-design-system-token-governance-closeout",
+      "createdAt": "2026-08-11T08:07:00.000Z",
+      "updatedAt": "2026-08-11T08:45:00.000Z",
+      "completedAt": "2026-08-11T08:45:00.000Z"
+    },
+    {
+      "id": "SO-019",
+      "codename": "Cross-Feature Boundaries",
+      "purpose": "Audit and progressively seal cross-feature dependency boundaries without flattening feature ownership or weakening prior Golden State armor",
+      "status": "COMPLETE",
+      "revision": 3,
+      "path": ".sharkops/bites/so-019-cross-feature-boundaries-closeout",
+      "createdAt": "2026-08-11T08:56:00.000Z",
+      "updatedAt": "2026-08-11T09:25:00.000Z",
+      "completedAt": "2026-08-11T09:25:00.000Z"
+    },
+    {
+      "id": "SO-020",
+      "codename": "Application Infrastructure & Runtime Armor",
+      "purpose": "Audit and progressively seal runtime configuration, instrumentation, mocks, server adapters and infrastructure ownership",
+      "status": "COMPLETE",
+      "revision": 3,
+      "path": ".sharkops/bites/so-020-application-infrastructure-runtime-armor-closeout",
+      "createdAt": "2026-08-11T14:20:00.000Z",
+      "updatedAt": "2026-08-11T14:45:00.000Z",
+      "completedAt": "2026-08-11T14:45:00.000Z"
+    },
+    {
+      "id": "SO-021",
+      "codename": "Application-Wide Regression Armor",
+      "purpose": "Compose existing targeted regression armor into one deterministic application-wide contract without duplicating or weakening responsibilities",
+      "status": "COMPLETE",
+      "revision": 3,
+      "path": ".sharkops/bites/so-021-application-wide-regression-armor-closeout",
+      "createdAt": "2026-08-11T15:50:00.000Z",
+      "updatedAt": "2026-08-11T16:20:00.000Z",
+      "completedAt": "2026-08-11T16:20:00.000Z"
+    },
+    {
+      "id": "SO-022",
+      "codename": "Final Application Architecture Closeout",
+      "purpose": "Verify the complete application architecture and seal an Application Golden State only after all predecessor armor is proven green",
+      "status": "COMPLETE",
+      "revision": 3,
+      "path": ".sharkops/bites/so-022-final-application-architecture-closeout",
+      "createdAt": "2026-08-11T17:05:00.000Z",
+      "updatedAt": "2026-08-11T18:00:00.000Z",
+      "completedAt": "2026-08-11T18:00:00.000Z"
     }
   ]
 }

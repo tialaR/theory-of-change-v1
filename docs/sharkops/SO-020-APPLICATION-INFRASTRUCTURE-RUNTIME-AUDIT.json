@@ -1,0 +1,172 @@
+{
+  "initiative": "SO-020",
+  "title": "Application Infrastructure & Runtime Armor",
+  "wave": "CLOSEOUT",
+  "mode": "closeout-audit",
+  "runtimeChanges": false,
+  "inventory": {
+    "processEnvFiles": [
+      "src/features/auth/server/auth-session.ts",
+      "src/features/theory-of-change/domain/tdm-connection-rules.ts",
+      "src/instrumentation.ts"
+    ],
+    "envReads": [
+      {
+        "file": "src/features/auth/server/auth-session.ts",
+        "name": "NODE_ENV",
+        "owner": "server-runtime"
+      },
+      {
+        "file": "src/features/theory-of-change/domain/tdm-connection-rules.ts",
+        "name": "NODE_ENV",
+        "owner": "unclassified-runtime"
+      },
+      {
+        "file": "src/instrumentation.ts",
+        "name": "NEXT_RUNTIME",
+        "owner": "runtime-bootstrap"
+      }
+    ],
+    "serverFiles": [
+      "src/features/auth/server/auth-server.repository.test.ts",
+      "src/features/auth/server/auth-server.repository.ts",
+      "src/features/auth/server/auth-session.test.ts",
+      "src/features/auth/server/auth-session.ts",
+      "src/features/auth/server/index.ts",
+      "src/features/auth/server/login.action.ts",
+      "src/features/auth/server/logout.action.ts",
+      "src/features/auth/server/update-user-avatar.action.ts",
+      "src/features/theory-of-change/canvas/server/canvas-server.repository.ts",
+      "src/features/theory-of-change/canvas/server/get-current-canvas-project.ts",
+      "src/features/theory-of-change/canvas/server/save-canvas-project.action.ts"
+    ],
+    "infrastructureFiles": [
+      "src/features/auth/infrastructure/http/auth-api.contract.ts",
+      "src/features/auth/infrastructure/http/http-auth.repository.test.ts",
+      "src/features/auth/infrastructure/http/http-auth.repository.ts",
+      "src/features/auth/infrastructure/msw/auth.handlers.test.ts",
+      "src/features/auth/infrastructure/msw/auth.handlers.ts",
+      "src/features/auth/infrastructure/msw/auth.mock-store.ts",
+      "src/features/auth/infrastructure/msw/auth.test-server.ts",
+      "src/features/theory-of-change/canvas/infrastructure/http/canvas-project-api.contract.ts",
+      "src/features/theory-of-change/canvas/infrastructure/http/http-canvas-project.repository.test.ts",
+      "src/features/theory-of-change/canvas/infrastructure/http/http-canvas-project.repository.ts",
+      "src/features/theory-of-change/canvas/infrastructure/memory/canvas-project.mock-store.ts",
+      "src/features/theory-of-change/canvas/infrastructure/msw/canvas-project.handlers.test.ts",
+      "src/features/theory-of-change/canvas/infrastructure/msw/canvas-project.handlers.ts",
+      "src/features/theory-of-change/canvas/infrastructure/msw/canvas-project.test-server.ts"
+    ],
+    "mockFiles": [
+      "src/mocks/browser.ts",
+      "src/mocks/ensure-browser-mocks.ts",
+      "src/mocks/handlers.ts",
+      "src/mocks/mock-api.constants.ts",
+      "src/mocks/server.ts"
+    ],
+    "instrumentationFiles": [
+      "src/instrumentation.ts"
+    ]
+  },
+  "findings": [
+    {
+      "id": "RUNTIME-001",
+      "status": "RESOLVED-WAVE-02",
+      "severity": "HIGH",
+      "title": "Runtime environment reads need explicit ownership boundaries",
+      "evidence": [
+        {
+          "file": "src/features/auth/server/auth-session.ts",
+          "name": "NODE_ENV",
+          "owner": "server-runtime"
+        },
+        {
+          "file": "src/features/theory-of-change/domain/tdm-connection-rules.ts",
+          "name": "NODE_ENV",
+          "owner": "unclassified-runtime"
+        },
+        {
+          "file": "src/instrumentation.ts",
+          "name": "NEXT_RUNTIME",
+          "owner": "runtime-bootstrap"
+        }
+      ],
+      "smallestNextBite": "Classify and gate the existing process.env reads by runtime owner before centralizing or moving them.",
+      "resolution": "Moved the only domain process.env read into a feature-owned runtime diagnostics adapter and sealed the exact authorized env-read set."
+    },
+    {
+      "id": "RUNTIME-002",
+      "status": "PRESERVED-CLOSEOUT",
+      "severity": "MEDIUM",
+      "title": "Instrumentation and mock bootstrap coexist",
+      "evidence": [
+        "src/instrumentation.ts",
+        "src/mocks/browser.ts",
+        "src/mocks/ensure-browser-mocks.ts",
+        "src/mocks/handlers.ts",
+        "src/mocks/mock-api.constants.ts",
+        "src/mocks/server.ts"
+      ],
+      "decision": "Preserve until a concrete bootstrap defect is proven.",
+      "resolution": "Instrumentation and mock bootstrap remain explicit and legitimate; no consolidation was proven necessary."
+    },
+    {
+      "id": "RUNTIME-003",
+      "status": "PRESERVED-CLOSEOUT",
+      "severity": "INFO",
+      "title": "Feature-owned infrastructure remains legitimate",
+      "evidenceCount": 14,
+      "decision": "Do not centralize solely because files are infrastructure.",
+      "resolution": "Feature-owned infrastructure remains intentionally feature-owned; centralization requires future evidence."
+    }
+  ],
+  "nextBite": {
+    "id": "SO-021",
+    "title": "Application-Wide Regression Armor",
+    "mode": "audit-first",
+    "reason": "SO-020 is complete; regression coverage must be inventoried before adding or changing gates."
+  },
+  "constraints": [
+    "No runtime refactor is authorized by Wave 01.",
+    "GOLDEN-STATE-v1 remains sealed.",
+    "Feature-owned infrastructure must not be centralized without proven reuse.",
+    "Mock/MSW behavior must not be weakened to satisfy a gate."
+  ],
+  "classification": {
+    "authorizedEnvReads": [
+      {
+        "file": "src/features/auth/server/auth-session.ts",
+        "name": "NODE_ENV",
+        "owner": "auth-server-runtime",
+        "reason": "secure cookie policy is a server runtime adapter concern"
+      },
+      {
+        "file": "src/features/theory-of-change/runtime/report-invalid-connection-condition.ts",
+        "name": "NODE_ENV",
+        "owner": "theory-of-change-runtime-diagnostics",
+        "reason": "environment only controls optional diagnostic logging, outside domain rules"
+      },
+      {
+        "file": "src/instrumentation.ts",
+        "name": "NEXT_RUNTIME",
+        "owner": "next-runtime-bootstrap",
+        "reason": "Next instrumentation selects the node runtime before starting MSW server mocks"
+      }
+    ],
+    "forbiddenOwnership": [
+      "src/features/**/domain/** must not read process.env"
+    ],
+    "policy": "Runtime env access stays at explicit runtime/server/bootstrap adapters; domain code remains environment-free."
+  },
+  "closeout": {
+    "status": "COMPLETE",
+    "openFindings": [],
+    "resolvedFindings": [
+      "RUNTIME-001"
+    ],
+    "preservedFindings": [
+      "RUNTIME-002",
+      "RUNTIME-003"
+    ],
+    "verdict": "No additional runtime/infrastructure refactor is proven necessary."
+  }
+}

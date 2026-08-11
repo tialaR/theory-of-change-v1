@@ -1,2 +1,2 @@
-export { AuthPage } from './auth-page';
 export type { AuthUser, AuthenticatedSession } from './domain/auth.types';
+export { UserMenu } from './ui/user-menu/user-menu';

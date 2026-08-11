@@ -1,0 +1,28 @@
+{
+  "id": "APPLICATION-GOLDEN-STATE-v1",
+  "status": "COMPLETE",
+  "sealedBy": "SO-022 Final Application Architecture Closeout",
+  "predecessorRange": "SO-001..SO-022",
+  "canvasGoldenState": {
+    "id": "GOLDEN-STATE-v1",
+    "status": "COMPLETE"
+  },
+  "regressionContract": "check:tdm:application-wide-regression",
+  "candidateId": "APPLICATION-GOLDEN-STATE-v1-CANDIDATE",
+  "sealPolicy": {
+    "immutableAfterSeal": true,
+    "requiresExplicitSuccessorEvolution": true,
+    "requiresFailClosedRegression": true,
+    "canvasGoldenStateRemainsIndependent": true
+  },
+  "architecturePrinciples": [
+    "Feature ownership defines scope, not lower quality.",
+    "Shared code requires real reuse or shared semantics.",
+    "Application routes consume feature public entrypoints.",
+    "Cross-feature dependencies use explicit facades.",
+    "Runtime environment access stays at explicit adapters; domain remains environment-free.",
+    "Design tokens have canonical authority and legacy compatibility may only shrink.",
+    "Application-wide regression composes authoritative checks without duplicating them.",
+    "Architectural decisions become executable gates when mechanically enforceable."
+  ]
+}

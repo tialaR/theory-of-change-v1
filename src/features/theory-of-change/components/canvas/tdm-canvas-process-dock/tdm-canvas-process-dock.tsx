@@ -15,7 +15,7 @@ import { Panel } from '@xyflow/react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
 import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
-import { TdmAnchoredTooltip } from '@/shared/ui/tooltip/tdm-anchored-tooltip';
+import { TdmAnchoredTooltip } from '@/shared/ui/tooltip';
 import { TDM_STAGE_LABELS, TDM_STAGE_ORDER, type TdmStage } from '../../../domain/tdm-stages';
 import { TDM_STAGE_THEME, TDM_THEORY_NEUTRAL } from '../../../domain/tdm-theme';
 import {

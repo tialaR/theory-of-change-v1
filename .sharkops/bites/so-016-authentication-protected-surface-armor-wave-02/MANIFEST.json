@@ -1,0 +1,22 @@
+{
+  "id": "SO-016",
+  "codename": "Authentication & Protected Surface Armor",
+  "wave": "02",
+  "title": "Server Auth Repository Boundary",
+  "status": "ACTIVE",
+  "runtimeChanges": true,
+  "gate": "npm run check:tdm:auth-protected-surfaces:wave02",
+  "predecessor": "SO-016 Wave 01 audit",
+  "targetFinding": "AUTH-001",
+  "next": "SO-016 | Protected Route Ownership Contract",
+  "patchVersion": "v1.1",
+  "scope": [
+    "server Auth repository composition",
+    "canonical HTTP/MSW infrastructure boundary",
+    "server auth repository contract test",
+    "anti-bypass executable gate",
+    "SharkOps state and audit resolution",
+    "legacy auth/MSW gate evolution aligned with SO-013 Infrastructure Cleanup"
+  ],
+  "hotfix": "Align legacy check:tdm:auth-msw with SO-013 neutral Canvas in-memory store ownership without weakening MSW/Auth invariants."
+}

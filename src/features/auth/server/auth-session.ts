@@ -10,6 +10,10 @@ import { createServerAuthRepository } from './auth-server.repository';
 
 export function sanitizeReturnTo(value: string | null | undefined) {
   if (!value?.startsWith('/') || value.startsWith('//')) return AUTH_DEFAULT_RETURN_TO;
+
+  const [pathname] = value.split(/[?#]/, 1);
+  if (pathname === '/login') return AUTH_DEFAULT_RETURN_TO;
+
   return value;
 }
 

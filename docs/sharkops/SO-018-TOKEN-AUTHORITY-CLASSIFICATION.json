@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "canonicalAggregator": "src/shared/styles/tdm/tdm-tokens.sass",
+  "authorityDefinition": "A canonical token authority module must be explicitly aggregated by tdm-tokens.sass and expose @mixin tokens. Raw literals are legitimate only as token definitions inside that mixin; directory location alone grants no exemption.",
+  "canonicalAuthorityModules": [
+    "src/shared/styles/tdm/tdm-color.sass",
+    "src/shared/styles/tdm/tdm-surface.sass",
+    "src/shared/styles/tdm/tdm-border.sass",
+    "src/shared/styles/tdm/tdm-radius.sass",
+    "src/shared/styles/tdm/tdm-shadow.sass",
+    "src/shared/styles/tdm/tdm-icon.sass",
+    "src/shared/styles/tdm/tdm-focus.sass",
+    "src/shared/styles/tdm/tdm-motion.sass",
+    "src/shared/styles/tdm/tdm-font.sass",
+    "src/shared/styles/tdm/tdm-foreground.sass",
+    "src/shared/styles/tdm/tdm-spacing.sass",
+    "src/shared/styles/tdm/tdm-measure.sass",
+    "src/shared/styles/tdm/tdm-cta.sass",
+    "src/shared/styles/tdm/tdm-public-action.sass",
+    "src/shared/styles/tdm/tdm-route.sass",
+    "src/shared/styles/tdm/tdm-guide.sass",
+    "src/shared/styles/tdm/tdm-status.sass",
+    "src/shared/styles/tdm/tdm-menu.sass",
+    "src/shared/styles/tdm/tdm-stage.sass"
+  ],
+  "nonAuthorityExamples": [
+    "src/shared/styles/tdm/tdm-anchored-tooltip-surface.sass",
+    "src/shared/styles/tokens.sass",
+    "**/*.module.sass"
+  ],
+  "consumerRule": "Raw values outside canonical @mixin tokens blocks remain consumer/style evidence and cannot be globally waived by a hardcode gate.",
+  "legacyCompatibility": "src/shared/styles/tokens.sass remains governed by the Wave 02 compatibility boundary and is not canonical authority.",
+  "decision": "Classification only. No raw value, token value, component style, or visual output changes are authorized by Wave 04."
+}

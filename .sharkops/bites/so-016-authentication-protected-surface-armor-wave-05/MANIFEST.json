@@ -1,0 +1,20 @@
+{
+  "id": "SO-016",
+  "codename": "Authentication & Protected Surface Armor",
+  "wave": "05",
+  "title": "Auth Facade Consumption Boundary",
+  "status": "ACTIVE",
+  "runtimeChanges": true,
+  "gate": "npm run check:tdm:auth-protected-surfaces:wave05",
+  "predecessor": "SO-016 Wave 04",
+  "targetFinding": "AUTH-004",
+  "next": "SO-016 | Authentication & Protected Surface Closeout Audit",
+  "patchVersion": "v1",
+  "scope": [
+    "Auth client-safe facade export for UserMenu",
+    "Canvas UI cross-feature import normalization",
+    "executable anti-internal-import gate",
+    "server-only boundary preservation",
+    "SharkOps state and handoff"
+  ]
+}
