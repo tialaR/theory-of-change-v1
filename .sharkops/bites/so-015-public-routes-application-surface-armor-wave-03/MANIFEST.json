@@ -1,0 +1,14 @@
+{
+  "id": "SO-015",
+  "codename": "Public Routes & Application Surface Armor",
+  "wave": "03",
+  "title": "Public Route Rendering & Loading Policy",
+  "status": "ACTIVE",
+  "runtimeChanges": true,
+  "behaviorChanges": true,
+  "gate": "npm run check:tdm:public-routes:wave03",
+  "predecessor": "SO-015 Wave 02 | Public Routes Boundary & Composition",
+  "next": "SO-015 | Public Visual Language & Design System Foundations",
+  "patchVersion": "v1",
+  "scope": ["static public route rendering policy", "artificial route latency removal", "loading boundary preservation", "Canvas Golden State preservation"]
+}

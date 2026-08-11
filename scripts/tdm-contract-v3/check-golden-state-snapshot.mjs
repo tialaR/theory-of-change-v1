@@ -23,19 +23,30 @@ const ledger=json('.sharkops/state/bite-ledger.json');
 const state=json('.sharkops/state/current-state.json');
 const pkg=json('package.json');
 const so14=ledger.bites.find(b=>b.id==='SO-014');
+const foundational=ledger.bites.filter(b=>/^SO-0(0[1-9]|1[0-4])$/.test(b.id));
+const downstream=ledger.bites.filter(b=>Number(b.id?.slice(3))>14);
 const active=ledger.bites.filter(b=>b.status==='ACTIVE');
-const complete=ledger.bites.filter(b=>b.status==='COMPLETE');
 if(!so14||so14.status!=='COMPLETE'||so14.revision!==11||!so14.completedAt) errors.push('SO-014 deve permanecer COMPLETE na revisao 11');
-if(active.length!==0) errors.push('Golden State deve preservar zero bites ACTIVE');
-if(complete.length!==14) errors.push('Golden State exige SO-001 a SO-014 COMPLETE');
-if(state.activeBite||state.activeBiteStatus) errors.push('current-state Golden State nao pode reabrir activeBite');
-if(state.phase!=='Golden State Snapshot Complete'||state.goldenStateStatus!=='COMPLETE'||state.goldenStateId!=='GOLDEN-STATE-v1') errors.push('current-state nao registra Golden State terminal');
-if(state.lastBite!=='SO-014 | Final Architecture Closeout') errors.push('Golden State nao pode substituir o ultimo bite de arquitetura');
-if(state.nextBite!=='No active bite | Start a new scoped SharkOps initiative for future runtime work') errors.push('proxima acao terminal do Golden State invalida');
+if(foundational.length!==14||foundational.some(b=>b.status!=='COMPLETE'||!b.completedAt)) errors.push('Golden State exige SO-001 a SO-014 COMPLETE');
+if(active.length>1) errors.push('SharkOps nao pode possuir mais de um bite ACTIVE');
+if(state.goldenStateStatus!=='COMPLETE'||state.goldenStateId!=='GOLDEN-STATE-v1') errors.push('current-state deve preservar a identidade Golden State');
+
+if(downstream.length===0){
+  if(active.length!==0) errors.push('Golden State terminal deve preservar zero bites ACTIVE');
+  if(state.activeBite||state.activeBiteStatus) errors.push('current-state Golden State terminal nao pode possuir activeBite');
+  if(state.phase!=='Golden State Snapshot Complete') errors.push('current-state nao registra Golden State terminal');
+  if(state.lastBite!=='SO-014 | Final Architecture Closeout') errors.push('Golden State terminal nao pode substituir o ultimo bite de arquitetura');
+  if(state.nextBite!=='No active bite | Start a new scoped SharkOps initiative for future runtime work') errors.push('proxima acao terminal do Golden State invalida');
+}else{
+  const activeDownstream=active[0];
+  if(activeDownstream && Number(activeDownstream.id.slice(3))<=14) errors.push('bite ACTIVE posterior ao Golden State deve ser uma nova iniciativa');
+  if(activeDownstream && state.activeBite!==`${activeDownstream.id} | ${activeDownstream.codename}`) errors.push('current-state nao espelha a nova iniciativa ACTIVE');
+  if(activeDownstream && state.activeBiteStatus!=='ACTIVE') errors.push('current-state deve marcar a nova iniciativa como ACTIVE');
+}
 
 const snapshot=json('docs/sharkops/GOLDEN-STATE-SNAPSHOT.json');
 if(snapshot.snapshotId!=='GOLDEN-STATE-v1'||snapshot.status!=='COMPLETE'||snapshot.runtimeChanges!==false) errors.push('snapshot canonico invalido');
-if(snapshot.terminalGovernance?.completedInitiatives!==14||snapshot.terminalGovernance?.activeBites!==0||snapshot.terminalGovernance?.so014Status!=='COMPLETE') errors.push('governanca terminal do snapshot invalida');
+if(snapshot.terminalGovernance?.completedInitiatives!==14||snapshot.terminalGovernance?.activeBites!==0||snapshot.terminalGovernance?.so014Status!=='COMPLETE') errors.push('fotografia terminal original do snapshot foi alterada');
 if(snapshot.regressionProof?.status!=='PASS'||snapshot.regressionProof?.testFiles!==36||snapshot.regressionProof?.tests!==119||snapshot.regressionProof?.canvasE2E!==1||snapshot.regressionProof?.sharkops!=='NO REGRESSION DETECTED') errors.push('prova de regressao Golden State invalida');
 if(snapshot.packaging?.command!=='npm run shark:golden'||snapshot.packaging?.checksum!=='SHA-256'||snapshot.packaging?.slim!==true) errors.push('contrato de empacotamento Golden State invalido');
 
@@ -45,7 +56,7 @@ if(pkg.scripts?.['check:tdm:golden-state']!=='node scripts/tdm-contract-v3/check
 if(pkg.scripts?.['shark:golden']!=='bash tools/sharkops/golden-state-pack.sh') errors.push('npm script shark:golden ausente/invalido');
 
 const wave11=read('scripts/tdm-contract-v3/check-final-architecture-wave11.mjs');
-if(!wave11.includes("goldenStateStatus==='COMPLETE'")||!wave11.includes("Golden State Snapshot Complete")) errors.push('Wave 11 nao aceita progressao terminal para Golden State');
+if(!wave11.includes("goldenStateStatus==='COMPLETE'")||!wave11.includes('Golden State Snapshot Complete')) errors.push('Wave 11 nao preserva a progressao terminal para Golden State');
 const handoff=read('docs/sharkops/HANDOFF.md');
 if(!handoff.includes('Golden State Snapshot v1')||!handoff.includes('npm run shark:golden')) errors.push('HANDOFF principal nao registra Golden State');
 
@@ -54,4 +65,4 @@ if(errors.length){
   errors.forEach((e,i)=>console.error(`${i+1}. ${e}.`));
   process.exit(1);
 }
-console.log('PASS TDM Golden State Snapshot v1: SO-001 through SO-014 remain COMPLETE, zero bites are active, final regression proof is sealed and portable Golden State packaging is executable without runtime changes.');
+console.log('PASS TDM Golden State Snapshot v1: the SO-014 terminal snapshot remains immutable and valid while authorized downstream SharkOps initiatives may proceed without reopening or weakening the Canvas Golden State.');

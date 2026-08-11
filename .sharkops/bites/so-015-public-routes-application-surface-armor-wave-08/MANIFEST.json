@@ -1,0 +1,22 @@
+{
+  "id": "SO-015",
+  "wave": "08",
+  "codename": "Public Routes & Application Surface Armor",
+  "status": "ACTIVE",
+  "runtimeChanges": false,
+  "behaviorChanges": false,
+  "createdAt": "2026-08-11T03:30:00.000Z",
+  "gate": "npm run check:tdm:public-routes:wave08",
+  "next": "SO-015 | Legacy Route & Public Exposure Decision",
+  "title": "Public Error, Loading & Status Surface Contracts",
+  "activeGate": "npm run check:tdm:public-routes:active",
+  "predecessor": "SO-015 Wave 07 | Public Route Responsive & Motion Contracts",
+  "patchVersion": "v1",
+  "scope": [
+    "public error/loading/not-found ownership contract",
+    "canonical route error boundary props",
+    "shared status feature agnosticism",
+    "rolling active SO-015 gate",
+    "Canvas Golden State preservation"
+  ]
+}

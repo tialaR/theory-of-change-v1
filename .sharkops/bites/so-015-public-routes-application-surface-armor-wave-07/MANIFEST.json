@@ -1,0 +1,21 @@
+{
+  "id": "SO-015",
+  "codename": "Public Routes & Application Surface Armor",
+  "wave": "07",
+  "title": "Public Route Responsive & Motion Contracts",
+  "status": "ACTIVE",
+  "runtimeChanges": false,
+  "behaviorChanges": false,
+  "gate": "npm run check:tdm:public-routes:wave07",
+  "activeGate": "npm run check:tdm:public-routes:active",
+  "predecessor": "SO-015 Wave 06 | Public Header, Navigation & Route Shell",
+  "next": "SO-015 | Public Error, Loading & Status Surface Contracts",
+  "patchVersion": "v1",
+  "scope": [
+    "responsive evidence contract",
+    "motion and reduced-motion contract",
+    "shared and feature-owned responsibility parity",
+    "mandatory active SO-015 SharkOps hook gate",
+    "Canvas Golden State preservation"
+  ]
+}

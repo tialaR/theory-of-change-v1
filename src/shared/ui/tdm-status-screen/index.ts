@@ -3,5 +3,5 @@ export type { TdmStatusScreenProps, TdmStatusScreenTone } from './tdm-status-scr
 export { TdmRouteLoading } from './tdm-route-loading';
 export type { TdmRouteLoadingProps } from './tdm-route-loading';
 export { TdmRouteError } from './tdm-route-error';
-export type { TdmRouteErrorProps } from './tdm-route-error';
+export type { TdmRouteErrorBoundaryProps, TdmRouteErrorProps } from './tdm-route-error';
 export { TdmRouteNotFound } from './tdm-route-not-found';

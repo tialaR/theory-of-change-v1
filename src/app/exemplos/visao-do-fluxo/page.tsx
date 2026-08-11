@@ -1,10 +1,5 @@
-import { FlowPage } from '@/features/theory-of-change/components/public-pages';
-import { simulatePublicRouteDelay } from '@/features/theory-of-change/components/public-pages/simulate-public-route-delay';
+import { FlowPage } from '@/features/theory-of-change/public-routes';
 
-export const dynamic = 'force-dynamic';
-
-export default async function VisaoDoFluxoPage() {
-  await simulatePublicRouteDelay();
-
+export default function VisaoDoFluxoPage() {
   return <FlowPage />;
 }

@@ -1,0 +1,16 @@
+{
+  "id": "SO-015",
+  "codename": "Public Routes & Application Surface Armor",
+  "wave": 11,
+  "title": "Public E2E Harness & Regression Armor",
+  "status": "ACTIVE",
+  "runtimeChanges": false,
+  "scope": [
+    "environment-safe public Playwright runner",
+    "public-route behavior coverage",
+    "mandatory SharkOps pre-push E2E armor"
+  ],
+  "goldenState": "SEALED",
+  "patchVersion": "v1.1",
+  "hotfix": "System browser executable path is injected through Playwright launchOptions so the environment-safe fallback is actually honored."
+}

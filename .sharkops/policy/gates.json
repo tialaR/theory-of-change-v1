@@ -8,13 +8,18 @@
         "pre-commit": [
           "shark:verify",
           "shark:principles",
-          "check:tdm:canvas-armor"
+          "check:tdm:canvas-armor",
+          "check:tdm:public-routes:active",
+          "check:tdm:release-e2e-harness"
         ],
         "pre-push": [
           "shark:verify",
           "shark:principles",
           "check:tdm:canvas-armor",
-          "test:e2e:canvas"
+          "test:e2e:canvas",
+          "check:tdm:public-routes:active",
+          "test:e2e:public-routes",
+          "check:tdm:release-e2e-harness"
         ]
       },
       "advisory": {
@@ -33,7 +38,10 @@
     "validate:release": "LEGACY_ADVISORY",
     "shark:principles": "MANDATORY",
     "check:tdm:canvas-armor": "MANDATORY",
-    "test:e2e:canvas": "MANDATORY_PRE_PUSH"
+    "test:e2e:canvas": "MANDATORY_PRE_PUSH",
+    "check:tdm:public-routes:active": "MANDATORY",
+    "test:e2e:public-routes": "MANDATORY_PRE_PUSH",
+    "check:tdm:release-e2e-harness": "MANDATORY"
   },
   "policy": {
     "sharkOpsIsSovereign": true,

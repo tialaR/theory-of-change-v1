@@ -1,0 +1,19 @@
+{
+  "id": "SO-015",
+  "codename": "Public Routes & Application Surface Armor",
+  "wave": "02",
+  "title": "Public Routes Boundary & Composition",
+  "status": "ACTIVE",
+  "runtimeChanges": true,
+  "behaviorChanges": false,
+  "gate": "npm run check:tdm:public-routes:wave02",
+  "predecessor": "SO-015 Wave 01 | Route Inventory & Risk Map",
+  "next": "SO-015 | Public Route Rendering & Loading Policy",
+  "patchVersion": "v1",
+  "scope": [
+    "public App Router page composition",
+    "theory-of-change public route facade",
+    "interactive example route wrappers",
+    "Canvas Golden State preservation"
+  ]
+}

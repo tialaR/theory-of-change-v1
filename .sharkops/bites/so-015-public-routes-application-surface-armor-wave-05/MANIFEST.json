@@ -1,0 +1,14 @@
+{
+  "id": "SO-015",
+  "codename": "Public Routes & Application Surface Armor",
+  "wave": "05",
+  "title": "Shared Public Primitives & Composition Contracts",
+  "status": "ACTIVE",
+  "runtimeChanges": true,
+  "behaviorChanges": false,
+  "gate": "npm run check:tdm:public-routes:wave05",
+  "predecessor": "SO-015 Wave 04 | Public Visual Language & Design System Foundations",
+  "next": "SO-015 | Public Header, Navigation & Route Shell",
+  "patchVersion": "v1",
+  "scope": ["public composition ownership", "one-off recipe decomposition", "God Component prevention", "Design System promotion boundaries", "Canvas Golden State preservation"]
+}

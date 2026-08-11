@@ -6,6 +6,11 @@ import { TdmButton } from '@/shared/ui/tdm-button';
 import { TdmAlertIcon } from '@/shared/ui/tdm-icons';
 import { TdmStatusScreen } from './tdm-status-screen';
 
+export type TdmRouteErrorBoundaryProps = {
+  error: Error & { digest?: string };
+  reset: () => void;
+};
+
 export type TdmRouteErrorProps = {
   error: Error & { digest?: string };
   reset: () => void;

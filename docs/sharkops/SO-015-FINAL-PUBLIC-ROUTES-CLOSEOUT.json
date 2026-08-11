@@ -1,0 +1,15 @@
+{
+  "initiative": "SO-015",
+  "title": "Public Routes & Application Surface Armor",
+  "status": "COMPLETE",
+  "revision": 12,
+  "closedAt": "2026-08-11T05:30:00.000Z",
+  "publicE2E": "ARMORED",
+  "legacyCanvasRoute": "RETIRED",
+  "canvasGoldenState": "SEALED",
+  "persistentArmor": [
+    "check:tdm:public-routes:active",
+    "test:e2e:public-routes"
+  ],
+  "next": "Start a new scoped SharkOps initiative for remaining application surfaces"
+}

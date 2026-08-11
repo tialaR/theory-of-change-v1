@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "initiative": "SO-015",
+  "wave": 8,
+  "name": "Public Error, Loading & Status Surface Contracts",
+  "principles": {
+    "routeBoundaryOwnsContextualCopy": true,
+    "sharedStatusOwnsBehaviorAccessibilityAndVisualTreatment": true,
+    "errorBoundariesUseCanonicalBoundaryProps": true,
+    "loadingBoundariesMustNotManufactureLatency": true,
+    "statusPrimitivesMustRemainFeatureAgnostic": true,
+    "canvasGoldenStateRemainsSealed": true
+  },
+  "publicErrorBoundaries": [
+    "src/app/error.tsx",
+    "src/app/exemplos/error.tsx",
+    "src/app/exemplos/resultado/error.tsx",
+    "src/app/exemplos/resultado/interativo/error.tsx",
+    "src/app/exemplos/visao-do-fluxo/error.tsx",
+    "src/app/exemplos/visao-do-fluxo/interativo/error.tsx",
+    "src/app/guia-de-aprendizado/error.tsx",
+    "src/app/referencias/error.tsx"
+  ],
+  "publicLoadingBoundaries": [
+    "src/app/loading.tsx",
+    "src/app/exemplos/loading.tsx",
+    "src/app/exemplos/resultado/loading.tsx",
+    "src/app/exemplos/resultado/interativo/loading.tsx",
+    "src/app/exemplos/visao-do-fluxo/loading.tsx",
+    "src/app/exemplos/visao-do-fluxo/interativo/loading.tsx",
+    "src/app/guia-de-aprendizado/loading.tsx",
+    "src/app/referencias/loading.tsx"
+  ],
+  "notFoundBoundary": "src/app/not-found.tsx",
+  "sharedOwner": "src/shared/ui/tdm-status-screen",
+  "excludedLockedSurface": "src/app/canvas"
+}

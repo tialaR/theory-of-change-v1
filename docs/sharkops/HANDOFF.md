@@ -1,3 +1,34 @@
+# SO-015 Public Routes & Application Surface Armor — Wave 07
+
+SO-015 is ACTIVE.
+
+Wave 07 implemented:
+- formalized evidence-backed responsive contracts without flattening route personality;
+- formalized canonical shared motion versus feature-owned storytelling motion;
+- made user reduced-motion support a mandatory product behavior contract;
+- confirmed shared and feature-owned components obey the same responsibility rules and that line count alone is never a decomposition criterion;
+- introduced `check:tdm:public-routes:active` as the rolling SO-015 architecture gate;
+- wired the active gate as MANDATORY in SharkOps pre-commit and pre-push policy so accepted decisions block future regressions automatically;
+- introduced no application runtime or visual behavior changes;
+- gate: `npm run check:tdm:public-routes:wave07`.
+
+Next: SO-015 Wave 08 — Public Error, Loading & Status Surface Contracts.
+
+# SO-015 Public Routes & Application Surface Armor — Wave 02
+
+SO-015 is ACTIVE.
+
+Wave 02 implemented:
+- added the deliberate route-facing facade `@/features/theory-of-change/public-routes`;
+- moved public App Router composition away from Theory of Change implementation deep imports;
+- moved interactive example assembly behind feature-owned wrappers;
+- preserved existing loading-delay behavior for a dedicated rendering policy wave;
+- preserved `/canvas`, `/canvas/resultado`, `/login` and `/canvas-legado` boundaries;
+- preserved `GOLDEN-STATE-v1` and all completed SO-001 through SO-014 initiatives;
+- gate: `npm run check:tdm:public-routes:wave02`.
+
+Next: SO-015 Wave 03 — Public Route Rendering & Loading Policy.
+
 # TDM Golden State Snapshot v1
 
 The Shark Attack architecture war is COMPLETE.
@@ -412,3 +443,108 @@ SO-014 is COMPLETE when Wave 11 and Final Regression Armor pass.
 - final regression armor remains the mandatory executable proof;
 - no runtime code changed;
 - next step: Wave 12 Golden State Snapshot / Project Handoff, a post-closeout packaging step that must not reopen SO-014.
+
+
+# SO-015 Public Routes & Application Surface Armor — Wave 01
+
+Wave 01 Route Inventory & Risk Map is ACTIVE and audit-only.
+
+- canonical route inventory: `docs/sharkops/SO-015-ROUTE-INVENTORY.json`;
+- 12 App Router page entrypoints are classified by exposure, owner and risk;
+- Canvas Golden State remains locked and outside SO-015 runtime refactoring;
+- no route or runtime code changed;
+- `/canvas-legado`, artificial dynamic delays, route deep imports and the general Playwright browser harness are explicit follow-up findings, not silently modified;
+- gate: `npm run check:tdm:public-routes:wave01`;
+- next attack: SO-015 Wave 02 Public Routes Boundary & Composition.
+
+## SO-015 Public Routes & Application Surface Armor — Wave 03
+
+Public content routes now use their natural static rendering policy. Artificial 900ms route latency, forced dynamic rendering and async wrappers used only to manufacture loading UI were removed from five content routes. Existing loading boundaries remain available for genuine future suspension. Canvas, auth and legacy route boundaries remain outside this change. Next: Public Visual Language & Design System Foundations.
+## SO-015 Wave 04 — Public Visual Language & Design System Foundations
+
+- Public routes are an independent visual source of truth; Canvas is not the universal visual template.
+- Existing visual personality must be preserved while repeated semantics are progressively formalized as tokens, primitives and shared components.
+- Promotion to the Design System requires evidence of repeated semantic role or cross-route behavior; visual similarity alone is insufficient.
+- Shared public foundations must not depend on Canvas or public-page implementation details.
+- No runtime or visual behavior changes were introduced in this wave.
+
+
+## SO-015 Wave 05 — Shared Public Primitives & Composition Contracts
+- Unique public visual personality remains feature-owned, but one-off usage never excuses God Components.
+- TheoryFlowBoard was split by responsibility without visual or behavioral change.
+- Shared primitive promotion still requires repeated semantic evidence.
+- Next: Public Header, Navigation & Route Shell.
+
+## SO-015 Wave 06 — Public Header, Navigation & Route Shell
+
+- Decomposes the shared PublicHeader by responsibility without visual or behavioral change.
+- Moves route visibility and active-navigation rules into an explicit policy module.
+- Moves scroll observation into a dedicated hook.
+- Keeps brand, navigation and CTA rendering as explicit shared public-layout pieces.
+- Formalizes that shared and feature-owned components obey the same responsibility rules; uniqueness never authorizes God Components or God Logic.
+- Preserves the SO-014 Canvas Golden State.
+
+
+## SO-015 Wave 07 — Public Route Responsive & Motion Contracts
+
+- Responsive and motion behavior remains personality-preserving and evidence-backed.
+- Reduced-motion support is mandatory.
+- The rolling SO-015 gate is mandatory in SharkOps pre-commit and pre-push.
+
+## SO-015 Wave 08 — Public Error, Loading & Status Surface Contracts
+
+- App Router route-state boundaries own contextual copy.
+- `src/shared/ui/tdm-status-screen` owns shared status behavior, accessibility, actions and visual treatment.
+- Non-Canvas error boundaries consume the canonical shared error-boundary props contract.
+- Loading boundaries cannot manufacture latency.
+- Shared status primitives remain feature- and Canvas-agnostic.
+- No visual or runtime behavior changed.
+- Next: Legacy Route & Public Exposure Decision.
+
+## SO-015 Wave 09 — Legacy Route & Public Exposure Decision
+
+- `/canvas-legado` is RETIRED after repository-wide consumer proof found no runtime links, tests, navigation consumers or product dependency.
+- The App Router entrypoint and legacy-only XYFlow layout are removed.
+- Historical migration references remain truthful documentation.
+- `.tdm/contract-v3.json` and Canvas lockdown now forbid silent route resurrection.
+- Reintroduction requires a new explicit SharkOps initiative.
+- Next bite: SO-015 | Public Route Regression & Closeout Matrix.
+
+## SO-015 Wave 10 — Public Route Regression & Closeout Matrix
+
+- Canonical closeout matrix: `docs/sharkops/SO-015-PUBLIC-ROUTE-CLOSEOUT-MATRIX.json`.
+- Waves 01–10, rolling public-route gate, SharkOps and Golden State are consolidated as architecture governance.
+- Sass policy, type generation, typecheck, unit tests and build are registered as repository quality gates.
+- Public-route E2E remains an explicit closeout blocker because the generic Playwright command lacks the environment-safe browser preflight already proven by the Canvas runner.
+- Tooling failure is not product failure, but the tooling gap cannot be ignored to claim closeout.
+- No runtime code changes.
+- Next: SO-015 Wave 11 Public E2E Harness & Regression Armor.
+
+## SO-015 Wave 11 — Public E2E Harness & Regression Armor
+
+- Public behavior now has a dedicated environment-safe Playwright runner.
+- Bundled Chromium is used when available; installed system Chrome/Chromium is an explicit fallback.
+- Every inventoried public route is covered for unauthenticated exposure, alongside auth/public separation, 404 behavior and the retired `/canvas-legado` contract.
+- `test:e2e:public-routes` is mandatory in SharkOps pre-push.
+- The Wave 10 closeout blocker is resolved; SO-015 is now closeout-ready pending final closeout proof.
+- No product runtime behavior changed.
+- Next: SO-015 Final Public Routes Closeout.
+
+## Wave 11 v1.1 — Playwright system-browser launch hotfix
+
+- Corrects the environment-safe fallback so `TDM_PLAYWRIGHT_EXECUTABLE_PATH` is passed through Playwright `launchOptions.executablePath`.
+- The v1 runner already detected the system browser correctly, but the config placed `executablePath` at the wrong level and Playwright silently fell back to its missing bundled Chromium.
+- No route, UI, product runtime or architectural ownership changed.
+- Wave 11 remains revision 11; this hotfix only makes the already-approved E2E contract executable on the target macOS ARM environment.
+
+## SO-015 Wave 12 — Final Public Routes Closeout
+
+SO-015 is COMPLETE. Public-route architecture, Design System promotion rules, route-state ownership, responsive/motion contracts, legacy-route retirement and environment-safe public E2E armor are sealed. Zero bites remain active. Future application work must open a new scoped SharkOps initiative; SO-015 must not be silently reopened.
+
+## SO-015 post-closeout hotfix — Release E2E Harness
+
+- SO-015 remains COMPLETE and is not reopened.
+- `test:e2e` now uses an environment-safe full-suite runner instead of raw `playwright test`.
+- `validate:release` keeps proving the full E2E suite through `npm run test:e2e`, but can now use installed system Chrome/Chromium when bundled Playwright Chromium is unavailable.
+- `check:tdm:release-e2e-harness` is mandatory in SharkOps pre-commit and pre-push and blocks silent regression to raw browser-dependent execution.
+- No product runtime, route, UI or architecture ownership changed.

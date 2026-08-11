@@ -1,0 +1,20 @@
+{
+  "id": "SO-015",
+  "codename": "Public Routes & Application Surface Armor",
+  "wave": "06",
+  "title": "Public Header, Navigation & Route Shell",
+  "status": "ACTIVE",
+  "runtimeChanges": true,
+  "behaviorChanges": false,
+  "gate": "npm run check:tdm:public-routes:wave06",
+  "predecessor": "SO-015 Wave 05 | Shared Public Primitives & Composition Contracts",
+  "next": "SO-015 | Public Route Responsive & Motion Contracts",
+  "patchVersion": "v1",
+  "scope": [
+    "public header decomposition",
+    "navigation policy ownership",
+    "scroll behavior ownership",
+    "shared and feature-owned component responsibility parity",
+    "Canvas Golden State preservation"
+  ]
+}
