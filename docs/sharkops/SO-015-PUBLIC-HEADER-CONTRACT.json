@@ -1,0 +1,13 @@
+{
+  "id": "SO-015-PUBLIC-HEADER-CONTRACT-v1",
+  "scope": "public header, navigation and route shell composition",
+  "rules": [
+    "feature-owned and shared components follow the same responsibility rules; scope changes reuse reach, not engineering quality",
+    "line count is not a decomposition criterion; responsibilities, change reasons and coupling are the criteria",
+    "route visibility and active-navigation policy must not be embedded in presentational header composition",
+    "scroll observation behavior must remain isolated from brand, navigation and CTA rendering",
+    "public visual personality may remain unique while implementation responsibilities stay explicit and bounded",
+    "shared public layout must not depend on theory-of-change feature implementation details",
+    "Canvas Golden State remains outside SO-015 runtime ownership"
+  ]
+}

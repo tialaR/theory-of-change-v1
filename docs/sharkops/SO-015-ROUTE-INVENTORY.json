@@ -1,0 +1,192 @@
+{
+  "initiative": "SO-015",
+  "wave": "01",
+  "status": "ACTIVE",
+  "runtimeChanges": false,
+  "source": "repository-backed",
+  "goldenStateBaseline": "GOLDEN-STATE-v1",
+  "routePages": [
+    {
+      "route": "/",
+      "file": "src/app/page.tsx",
+      "class": "PUBLIC",
+      "risk": "LOW",
+      "owner": "theory-of-change/public-pages",
+      "notes": [
+        "thin route entrypoint"
+      ]
+    },
+    {
+      "route": "/login",
+      "file": "src/app/login/page.tsx",
+      "class": "PUBLIC_AUTH",
+      "risk": "MEDIUM",
+      "owner": "auth",
+      "notes": [
+        "accepts sanitized returnTo through AuthPage"
+      ]
+    },
+    {
+      "route": "/exemplos",
+      "file": "src/app/exemplos/page.tsx",
+      "class": "PUBLIC",
+      "risk": "MEDIUM",
+      "owner": "theory-of-change/public-pages",
+      "notes": [
+        "force-dynamic used with simulated route delay"
+      ]
+    },
+    {
+      "route": "/exemplos/resultado",
+      "file": "src/app/exemplos/resultado/page.tsx",
+      "class": "PUBLIC",
+      "risk": "MEDIUM",
+      "owner": "theory-of-change/public-pages",
+      "notes": [
+        "force-dynamic used with simulated route delay"
+      ]
+    },
+    {
+      "route": "/exemplos/resultado/interativo",
+      "file": "src/app/exemplos/resultado/interativo/page.tsx",
+      "class": "PUBLIC_INTERACTIVE",
+      "risk": "MEDIUM",
+      "owner": "theory-of-change/result-view",
+      "notes": [
+        "route deep-imports ResultExperience implementation"
+      ]
+    },
+    {
+      "route": "/exemplos/visao-do-fluxo",
+      "file": "src/app/exemplos/visao-do-fluxo/page.tsx",
+      "class": "PUBLIC",
+      "risk": "MEDIUM",
+      "owner": "theory-of-change/public-pages",
+      "notes": [
+        "force-dynamic used with simulated route delay"
+      ]
+    },
+    {
+      "route": "/exemplos/visao-do-fluxo/interativo",
+      "file": "src/app/exemplos/visao-do-fluxo/interativo/page.tsx",
+      "class": "PUBLIC_INTERACTIVE",
+      "risk": "MEDIUM",
+      "owner": "theory-of-change/result-view",
+      "notes": [
+        "route deep-imports FlowVisionInteractiveWorkspace implementation"
+      ]
+    },
+    {
+      "route": "/guia-de-aprendizado",
+      "file": "src/app/guia-de-aprendizado/page.tsx",
+      "class": "PUBLIC",
+      "risk": "MEDIUM",
+      "owner": "theory-of-change/public-experience",
+      "notes": [
+        "force-dynamic used with simulated route delay",
+        "direct implementation import instead of package entrypoint"
+      ]
+    },
+    {
+      "route": "/referencias",
+      "file": "src/app/referencias/page.tsx",
+      "class": "PUBLIC",
+      "risk": "MEDIUM",
+      "owner": "theory-of-change/public-pages",
+      "notes": [
+        "force-dynamic used with simulated route delay"
+      ]
+    },
+    {
+      "route": "/canvas",
+      "file": "src/app/canvas/page.tsx",
+      "class": "PROTECTED_GOLDEN",
+      "risk": "LOCKED",
+      "owner": "canvas",
+      "notes": [
+        "protected by Canvas Golden State; out of SO-015 runtime scope"
+      ]
+    },
+    {
+      "route": "/canvas/resultado",
+      "file": "src/app/canvas/resultado/page.tsx",
+      "class": "PROTECTED_GOLDEN",
+      "risk": "LOCKED",
+      "owner": "canvas",
+      "notes": [
+        "protected by Canvas Golden State; out of SO-015 runtime scope"
+      ]
+    },
+    {
+      "route": "/canvas-legado",
+      "file": "src/app/canvas-legado/page.tsx",
+      "class": "RETIRED",
+      "risk": "NONE",
+      "owner": "retired-route-record",
+      "notes": [
+        "retired by SO-015 Wave 09 after repository-wide consumer audit found no runtime links, tests or product consumers",
+        "historical references remain documentation-only; reintroduction requires a new explicit SharkOps initiative"
+      ]
+    }
+  ],
+  "routeInfrastructure": [
+    {
+      "surface": "root-layout",
+      "file": "src/app/layout.tsx",
+      "risk": "MEDIUM"
+    },
+    {
+      "surface": "root-loading",
+      "file": "src/app/loading.tsx",
+      "risk": "LOW"
+    },
+    {
+      "surface": "root-error",
+      "file": "src/app/error.tsx",
+      "risk": "LOW"
+    },
+    {
+      "surface": "root-not-found",
+      "file": "src/app/not-found.tsx",
+      "risk": "LOW"
+    },
+    {
+      "surface": "public-status-boundaries",
+      "pattern": "src/app/{exemplos,guia-de-aprendizado,referencias}/**/{loading,error}.tsx",
+      "risk": "LOW"
+    }
+  ],
+  "findings": [
+    {
+      "id": "PR-001",
+      "severity": "MEDIUM",
+      "topic": "simulated-dynamic-routes",
+      "summary": "Five public content routes are force-dynamic solely to execute a simulated delay used to expose loading UX."
+    },
+    {
+      "id": "PR-002",
+      "severity": "MEDIUM",
+      "topic": "route-deep-imports",
+      "summary": "Interactive example routes and learning guide import implementation files instead of a deliberate public route-facing API."
+    },
+    {
+      "id": "PR-003",
+      "severity": "CLOSED",
+      "topic": "canvas-legado-decision",
+      "summary": "Resolved in SO-015 Wave 09: /canvas-legado had no runtime consumers and was retired by explicit deletion patch."
+    },
+    {
+      "id": "PR-004",
+      "severity": "MEDIUM",
+      "topic": "general-e2e-browser-harness",
+      "summary": "General Playwright E2E depends on a bundled Chromium unavailable on the current macOS ARM environment while the Canvas runner already supports system Chrome."
+    },
+    {
+      "id": "PR-005",
+      "severity": "LOW",
+      "topic": "route-status-consistency",
+      "summary": "Public sections already share TdmRouteLoading/TdmRouteError patterns and should be sealed rather than rewritten without evidence."
+    }
+  ],
+  "nextAttack": "SO-015 Wave 10 | Public Route Regression & Closeout Matrix"
+}

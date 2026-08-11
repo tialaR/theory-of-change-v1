@@ -10,7 +10,7 @@ alwaysApply: true
 # Canvas executable lockdown
 
 - `/canvas` is the only official current Canvas route; `/canvas-v4` and preview routes must remain absent.
-- `/canvas-legado` remains available until an explicit deletion patch.
+- `/canvas-legado` was explicitly retired by SO-015 Wave 09 and must remain absent unless a new SharkOps initiative authorizes reintroduction.
 - `src/app/canvas` only routes, lays out and composes Server Components.
 - The interactive Canvas is a dynamically loaded Client island inside the Canvas feature.
 - `<ReactFlow />` is the only Canvas renderer. Custom cards are React Flow nodes with real `<Handle />` ports; causal relations are custom React Flow edges.

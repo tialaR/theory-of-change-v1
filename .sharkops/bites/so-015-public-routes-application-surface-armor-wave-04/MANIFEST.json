@@ -1,0 +1,20 @@
+{
+  "id": "SO-015",
+  "codename": "Public Routes & Application Surface Armor",
+  "wave": "04",
+  "title": "Public Visual Language & Design System Foundations",
+  "status": "ACTIVE",
+  "runtimeChanges": false,
+  "behaviorChanges": false,
+  "gate": "npm run check:tdm:public-routes:wave04",
+  "predecessor": "SO-015 Wave 03 | Public Route Rendering & Loading Policy",
+  "next": "SO-015 | Shared Public Primitives & Composition Contracts",
+  "patchVersion": "v1",
+  "scope": [
+    "public visual language inventory",
+    "Design System promotion policy",
+    "personality-preservation contract",
+    "shared visual foundation boundary",
+    "Canvas Golden State preservation"
+  ]
+}

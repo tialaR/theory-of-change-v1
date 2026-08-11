@@ -1,10 +1,5 @@
-import { ReferencesPage } from '@/features/theory-of-change/components/public-pages';
-import { simulatePublicRouteDelay } from '@/features/theory-of-change/components/public-pages/simulate-public-route-delay';
+import { ReferencesPage } from '@/features/theory-of-change/public-routes';
 
-export const dynamic = 'force-dynamic';
-
-export default async function ReferenciasPage() {
-  await simulatePublicRouteDelay();
-
+export default function ReferenciasPage() {
   return <ReferencesPage />;
 }

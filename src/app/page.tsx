@@ -1,4 +1,4 @@
-import { HomePage } from '@/features/theory-of-change/components/public-pages';
+import { HomePage } from '@/features/theory-of-change/public-routes';
 
 export default function Page() {
   return <HomePage />;

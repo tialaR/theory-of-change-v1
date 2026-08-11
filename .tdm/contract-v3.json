@@ -25,8 +25,7 @@
     "maxRoutePageLines": 10
   },
   "protectedVisualPatterns": [
-    "src/features/theory-of-change/canvas/ui/canvas-workspace/canvas-workspace.module.sass",
-    "src/app/canvas-legado/**"
+    "src/features/theory-of-change/canvas/ui/canvas-workspace/canvas-workspace.module.sass"
   ],
   "protectedVisualHashes": {
     "canvasWorkspaceSass": "92ca880af2f6cb4dec78b87f61e028234d370a8a937423c834d97f207e299a46"
@@ -54,13 +53,15 @@
   "canvasTarget": {
     "route": "/canvas",
     "resultRoute": "/canvas/resultado",
-    "legacyRoute": "/canvas-legado",
+    "legacyRoute": null,
     "serverComposition": "src/features/theory-of-change/canvas/canvas-page.tsx",
     "clientBoundary": "src/features/theory-of-change/canvas/ui/canvas-workspace/canvas-client-entry.tsx",
     "renderer": "@xyflow/react ReactFlow with custom nodes, handles and custom edges",
     "domainPolicy": "evaluateCanvasConnection",
     "persistence": "Server Action -> typed HTTP repository -> MSW Node module store partitioned by ownerId/projectId",
-    "locale": "pt-BR"
+    "locale": "pt-BR",
+    "retiredLegacyRoute": "/canvas-legado",
+    "legacyRoutePolicy": "retired by SO-015 Wave 09; reintroduction requires explicit SharkOps initiative"
   },
   "authTarget": {
     "route": "/login",
@@ -94,5 +95,5 @@
     "functionsVariablesHooks": "camelCase",
     "sassPartials": "no-leading-underscore"
   },
-  "updatedAt": "2026-07-28T06:31:42.401Z"
+  "updatedAt": "2026-08-11T04:00:00.000Z"
 }

@@ -1,0 +1,10 @@
+{
+  "id": "SO-015",
+  "codename": "Public Routes & Application Surface Armor",
+  "wave": 10,
+  "title": "Public Route Regression & Closeout Matrix",
+  "status": "ACTIVE",
+  "runtimeChange": false,
+  "decision": "CONSOLIDATE CLOSEOUT MATRIX AND KEEP PUBLIC E2E HARNESS GAP BLOCKING",
+  "goldenState": "SEALED"
+}

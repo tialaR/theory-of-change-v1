@@ -1,14 +1,8 @@
 'use client';
 
-import { TdmRouteError } from '@/shared/ui/tdm-status-screen';
+import { TdmRouteError, type TdmRouteErrorBoundaryProps } from '@/shared/ui/tdm-status-screen';
 
-export default function GuideError({
-  error,
-  reset
-}: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) {
+export default function GuideError({ error, reset }: TdmRouteErrorBoundaryProps) {
   return (
     <TdmRouteError
       error={error}

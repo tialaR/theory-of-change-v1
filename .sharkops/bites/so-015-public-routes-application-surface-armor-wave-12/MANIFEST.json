@@ -1,0 +1,16 @@
+{
+  "id": "SO-015",
+  "codename": "Public Routes & Application Surface Armor",
+  "wave": 12,
+  "title": "Final Public Routes Closeout",
+  "status": "COMPLETE",
+  "runtimeChanges": false,
+  "scope": [
+    "final public-route closeout",
+    "terminal SharkOps state",
+    "permanent public-route regression armor"
+  ],
+  "goldenState": "SEALED",
+  "patchVersion": "v1",
+  "requiresPreCloseoutProof": true
+}

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "route": "/canvas-legado",
+  "decision": "RETIRED",
+  "decisionWave": "SO-015 Wave 09",
+  "evidence": {
+    "runtimeLinks": 0,
+    "tests": 0,
+    "navigationConsumers": 0,
+    "applicationConsumers": 0,
+    "remainingReferences": "contracts, migration history and SharkOps documentation only"
+  },
+  "rules": {
+    "routeMustRemainAbsent": true,
+    "silentReintroductionForbidden": true,
+    "historicalDocumentationMayRemain": true,
+    "reintroductionRequiresNewExplicitSharkOpsInitiative": true,
+    "canvasGoldenStateRemainsSealed": true
+  }
+}

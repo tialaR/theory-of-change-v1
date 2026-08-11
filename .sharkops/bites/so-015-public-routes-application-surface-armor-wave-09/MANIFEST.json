@@ -1,0 +1,11 @@
+{
+  "id": "SO-015",
+  "codename": "Public Routes & Application Surface Armor",
+  "wave": 9,
+  "title": "Legacy Route & Public Exposure Decision",
+  "status": "ACTIVE",
+  "runtimeChange": true,
+  "decision": "RETIRE /canvas-legado",
+  "reason": "Repository-wide audit found no runtime links, tests, navigation consumers or product dependency. The route only duplicated legacy Canvas exposure and remained solely because prior contracts required an explicit deletion patch.",
+  "goldenState": "SEALED"
+}

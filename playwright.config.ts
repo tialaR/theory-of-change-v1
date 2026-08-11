@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 const useSystemChrome = process.env.TDM_PLAYWRIGHT_BROWSER === 'system-chrome';
+const executablePath = process.env.TDM_PLAYWRIGHT_EXECUTABLE_PATH;
 
 export default defineConfig({
   testDir: './src',
@@ -20,6 +21,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         ...(useSystemChrome ? { channel: 'chrome' as const } : {}),
+        ...(executablePath ? { launchOptions: { executablePath } } : {}),
         viewport: { width: 1440, height: 900 }
       }
     }
