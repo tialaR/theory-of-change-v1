@@ -1,0 +1,31 @@
+{
+  "id": "APPLICATION-GOLDEN-STATE-v1-CANDIDATE",
+  "status": "CANDIDATE",
+  "initiative": "SO-022",
+  "createdFrom": "SO-022 Wave 01 green terminal audit",
+  "canvasGoldenState": {
+    "id": "GOLDEN-STATE-v1",
+    "status": "COMPLETE"
+  },
+  "predecessorRange": "SO-001..SO-021",
+  "predecessorCount": 21,
+  "regressionContract": "check:tdm:application-wide-regression",
+  "semanticState": {
+    "canvasGoldenStateId": "GOLDEN-STATE-v1",
+    "canvasGoldenStateStatus": "COMPLETE",
+    "predecessorComplete": true,
+    "applicationRegressionScript": "node scripts/sharkops/application-wide-regression.mjs",
+    "applicationRegressionCloseoutScript": "node scripts/tdm-contract-v3/check-application-wide-regression-closeout.mjs"
+  },
+  "evidenceHashes": {
+    "package.json": "1f050a17516d8a68df4e8ad8fd1cfb67ba7f25f2603ac8c175c5729473776b95",
+    ".sharkops/state/bite-ledger.json": "f9d3db310b222328df861b229bddc32175aa26b64ce5a1e88b3ab3cf2c05123d",
+    "docs/sharkops/SO-022-FINAL-APPLICATION-ARCHITECTURE-AUDIT.json": "8ebd5e42a5e896a40e3b07dd48c8aee7cc19e90bfa294f1e9775896f9a64d0be"
+  },
+  "sealPolicy": {
+    "candidateIsNotFinal": true,
+    "requiresApplicationWideRegressionGreen": true,
+    "requiresSO022FinalCloseout": true,
+    "canvasGoldenStateMustRemainImmutable": true
+  }
+}

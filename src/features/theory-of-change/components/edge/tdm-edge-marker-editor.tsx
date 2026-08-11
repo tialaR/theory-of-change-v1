@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
-import { TdmField, TdmTextarea } from '@/shared/ui/tdm-field/tdm-field';
+import { TdmField, TdmTextarea } from '@/shared/ui/tdm-field';
 import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
 import { TdmSurface } from '@/shared/ui/tdm-surface/tdm-surface';
 import type { TdmMarkerType } from '../../domain/tdm-types';

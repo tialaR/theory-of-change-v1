@@ -1,0 +1,10 @@
+{
+  "id": "SO-018",
+  "codename": "Design System & Token Governance",
+  "status": "ACTIVE",
+  "revision": 2,
+  "wave": 2,
+  "runtimeChanges": false,
+  "targetFinding": "DS-001",
+  "nextFinding": "DS-002"
+}

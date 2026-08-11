@@ -548,3 +548,178 @@ SO-015 is COMPLETE. Public-route architecture, Design System promotion rules, ro
 - `validate:release` keeps proving the full E2E suite through `npm run test:e2e`, but can now use installed system Chrome/Chromium when bundled Playwright Chromium is unavailable.
 - `check:tdm:release-e2e-harness` is mandatory in SharkOps pre-commit and pre-push and blocks silent regression to raw browser-dependent execution.
 - No product runtime, route, UI or architecture ownership changed.
+
+## SO-016 Authentication & Protected Surface Armor — Wave 01
+
+- Audit-only wave. No runtime behavior changed.
+- Canonical audit: `docs/sharkops/SO-016-AUTH-PROTECTED-SURFACE-AUDIT.json`.
+- Both `/canvas` and `/canvas/resultado` are currently protected through `getCurrentCanvasProject(...) -> requireAuthenticatedSession(...)`.
+- Proven high-severity finding AUTH-001: the server Auth repository bypasses the declared HTTP/MSW boundary by importing the mock store directly.
+- Next bite: **SO-016 | Server Auth Repository Boundary**.
+- Golden State remains `GOLDEN-STATE-v1`.
+
+## SO-016 Authentication & Protected Surface Armor — Wave 02
+
+- `AUTH-001` is resolved without broad Auth refactoring.
+- The server Auth repository now composes the existing HTTP repository against `TDM_MOCK_API_ORIGIN`; it no longer reaches into `auth.mock-store` directly.
+- A focused test proves the server factory composes the canonical HTTP repository and mock origin; existing Auth handler tests retain the HTTP/MSW lifecycle proof.
+- The Wave 02 gate forbids server runtime code from silently reintroducing direct mock-store access.
+- The Wave 01 audit gate was evolved explicitly rather than weakened: the original finding must remain documented and may only be marked resolved from SO-016 revision 2 onward.
+- Canvas Golden State remains `GOLDEN-STATE-v1`.
+- Next bite: **SO-016 | Protected Route Ownership Contract**.
+
+## SO-016 Wave 02 v1.1 — Auth/MSW legacy gate alignment hotfix
+
+- Wave 02 remains revision 2 and remains the active SO-016 bite; no progression to Wave 03 occurred.
+- `check:tdm:auth-msw` was stale: it still required `canvas-project.mock-store.ts` inside `infrastructure/msw`, although SO-013 Infrastructure Cleanup explicitly moved that shared store to neutral `infrastructure/memory` and later Golden State gates forbid resurrection of the MSW-owned path.
+- The gate now requires the neutral memory store, preserves its owner/project partition and CRUD invariants, keeps MSW handler requirements intact, and explicitly fails if the retired MSW store path reappears.
+- No product runtime, Auth behavior, Canvas behavior, route ownership or Golden State contract changed.
+
+
+## SO-016 Wave 03 — Protected Route Ownership Contract
+
+AUTH-002 is resolved. `/canvas` and `/canvas/resultado` now authenticate at their App Router entries with exact returnTo values before handing an authenticated user into the Canvas feature. The Canvas project loader no longer owns route/session redirect policy. Next bite: Redirect Policy Contract (AUTH-003).
+# SO-016 Authentication & Protected Surface Armor — Wave 04
+
+SO-016 remains ACTIVE.
+
+Wave 04 implemented:
+- resolved AUTH-003 without broad redirect-policy expansion;
+- `sanitizeReturnTo` continues accepting local single-slash application paths;
+- external/protocol-relative targets and the `/login` self-target fall back to `/canvas`;
+- query/hash variants of `/login` are also rejected while legitimate protected destinations remain unchanged;
+- added focused unit coverage for redirect-policy inputs and an executable gate requiring all auth redirect consumers to keep using the canonical sanitizer;
+- normalized AUTH-005 as resolved by the already-green Wave 03 protected-route ownership gate;
+- no visual, styling, persistence, Canvas Engine or public-route behavior was changed.
+
+Gate: `npm run check:tdm:auth-protected-surfaces:wave04`.
+
+Next: SO-016 Wave 05 — Auth Facade Consumption Boundary, targeting AUTH-004.
+
+
+## SO-016 Wave 05 — Auth Facade Consumption Boundary
+
+- AUTH-004 is resolved with an auth-specific, client-safe cross-feature facade boundary.
+- `src/features/auth/index.ts` is the approved Canvas UI entrypoint for `AuthUser` and `UserMenu`.
+- Canvas UI may not import Auth domain, UI, application, infrastructure or server internals directly.
+- Server-side Canvas actions keep explicit `@/features/auth/server/auth-session` access; the server contract is intentionally not re-exported through the client-safe facade.
+- No styling, Canvas behavior, session semantics, redirect behavior or persistence behavior changed.
+- Next: **SO-016 Authentication & Protected Surface Closeout Audit**. All original Wave 01 findings are now resolved; re-audit before declaring COMPLETE.
+
+
+## SO-016 COMPLETE — Authentication & Protected Surface Armor
+
+SO-016 closed at revision 6 after five proven findings were resolved and a terminal closeout audit found no additional auth/protected-surface runtime bite justified. GOLDEN-STATE-v1 remains sealed. Next: SO-017 Application Shell & Shared UI Armor, audit-first.
+
+## SO-017 ACTIVE — Application Shell & Shared UI Armor
+
+Wave 01 is audit-only. Application shell, shared UI ownership, route-state surfaces and public entrypoint consistency were inventoried without runtime refactor. The smallest proven next bite is SHELL-001: shared UI style ownership. SO-015, SO-016 and GOLDEN-STATE-v1 remain sealed.
+
+
+## SO-017 Wave 02 — Shared UI Style Ownership
+
+SHELL-001 resolved. TdmAnchoredTooltip is confirmed live; its reusable Sass surface now belongs to shared/styles/tdm, while shared UI component styles remain module-owned. Cross-feature imports of internal shared UI CSS Modules are forbidden. Next: SHELL-002 public entrypoints.
+
+
+## SO-017 Wave 03 — Shared UI Public Entrypoints Contract
+
+SHELL-002 resolved. tdm-field and tooltip expose canonical local entrypoints; deep implementation imports are gated. Next: SHELL-003 route adapter boundary.
+
+
+## SO-017 Wave 04 — App Route Adapter Boundary Contract
+
+SHELL-003 resolved. App route adapters must consume Canvas through the feature facade; deep Canvas implementation imports from src/app are forbidden. Next bite is SO-017 closeout audit because remaining findings are preserve-only observations.
+
+
+## SO-017 COMPLETE — Application Shell & Shared UI Armor
+
+SO-017 closed at revision 5. SHELL-001..003 are resolved; SHELL-004..005 are explicit preserve-only findings. No active bite remains. Next: SO-018 Design System & Token Governance, audit-first. GOLDEN-STATE-v1 remains sealed.
+
+## SO-018 ACTIVE — Design System & Token Governance
+
+Wave 01 is audit-only. The canonical `--tdm-*` token aggregator and the legacy Sass compatibility layer are both active. The legacy `src/shared/styles/tokens.sass` is still consumed by 39 source files and must not be deleted or mass-migrated without family-by-family evidence. DS-001 is the smallest proven next bite: define and gate the compatibility boundary first. SO-017 remains COMPLETE and GOLDEN-STATE-v1 remains sealed.
+
+
+## SO-018 Wave 02 — Legacy Token Compatibility Boundary
+
+DS-001 resolved: legacy tokens.sass is sealed as a non-growing Sass compatibility layer. Canonical shared/styles/tdm cannot depend on it; global CSS emission from the legacy file is forbidden. Next: DS-002 family inventory, no mass rename.
+
+
+## SO-018 Wave 03 — Legacy Token Family Inventory
+
+DS-002 resolved by classifying top-level legacy token definitions and correcting occurrence-count semantics. No token value, runtime style, rename or mass migration changed. Next: DS-003 token-authority hardcode classification.
+
+
+## SO-018 Wave 04 — Token Authority Hardcode Classification
+
+DS-003 resolved. Canonical raw-value authority is structural: tdm-tokens aggregator + @mixin tokens. Next bite: SO-018 closeout audit.
+
+
+## SO-018 COMPLETE — Design System & Token Governance
+
+SO-018 closed at revision 5. DS-001..003 are resolved; DS-004 is explicitly preserve-only. Legacy token compatibility may only shrink, canonical hardcode authority remains structural, and evidence-based Design System promotion remains mandatory. No active bite remains. Next: SO-019 Cross-Feature Boundaries, audit-first. GOLDEN-STATE-v1 remains sealed.
+
+
+## SO-019 ACTIVE — Cross-Feature Boundaries
+
+Wave 01 audit-only baseline: 7 direct cross-feature imports across 1 feature pairs. Next bite: SO-019-WAVE-02. No runtime refactor is authorized yet. GOLDEN-STATE-v1 remains sealed.
+
+
+## SO-019 Wave 02 — Auth Boundary Contract
+
+The only proven feature pair, theory-of-change -> auth, is classified: six root facade imports are legitimate; the single server capability now uses `@/features/auth/server`; deeper cross-feature Auth imports are forbidden. Next: SO-019 closeout audit.
+
+
+## SO-019 COMPLETE — Cross-Feature Boundaries
+
+SO-019 closed at revision 3. The only proven pair, theory-of-change -> auth, is sealed through explicit root/server feature facades. No second pair justified refactor. No active bite remains. Next: SO-020 Application Infrastructure & Runtime Armor, audit-first. GOLDEN-STATE-v1 remains sealed.
+
+
+## SO-020 ACTIVE — Application Infrastructure & Runtime Armor
+
+Wave 01 audit-only: 3 process.env files, 11 server/action files, 14 infrastructure files. Next: SO-020-WAVE-02. No runtime refactor is authorized yet. GOLDEN-STATE-v1 remains sealed.
+
+
+## SO-020 Wave 02 — Runtime Environment Boundary
+
+The only environment read inside domain code moved to a feature-owned runtime diagnostics adapter. Authorized process.env reads are now exactly Auth server NODE_ENV, Theory of Change runtime diagnostics NODE_ENV, and Next instrumentation NEXT_RUNTIME. Next: SO-020 closeout audit.
+
+
+## SO-020 COMPLETE — Application Infrastructure & Runtime Armor
+
+SO-020 closed at revision 3. RUNTIME-001 is resolved; RUNTIME-002..003 are preserve-only. No active bite remains. Next: SO-021 Application-Wide Regression Armor, audit-first. GOLDEN-STATE-v1 remains sealed.
+
+
+## SO-021 ACTIVE — Application-Wide Regression Armor
+
+Wave 01 audit-only inventories 156 contract gates, 7 test scripts and 53 test/spec files. REGRESSION-001 proves no single application-wide composition contract exists yet. Next: SO-021 Wave 02 Application-Wide Regression Contract. GOLDEN-STATE-v1 remains sealed.
+
+
+## SO-021 Wave 02 — Application-Wide Regression Contract
+
+REGRESSION-001 is resolved. `npm run check:tdm:application-wide-regression` now composes existing authoritative architecture closeouts, Golden State, typecheck, scoped lint, unit tests and SharkOps verification. It does not duplicate their implementation. Next: SO-021 closeout audit.
+
+
+## SO-021 COMPLETE — Application-Wide Regression Armor
+
+SO-021 closed at revision 3. REGRESSION-001 is resolved; REGRESSION-002..003 are preserve-only. `check:tdm:application-wide-regression` remains the fail-closed aggregate contract. No active bite remains. Next: SO-022 Final Application Architecture Closeout, audit-first. GOLDEN-STATE-v1 remains sealed.
+
+
+## SO-022 ACTIVE — Final Application Architecture Closeout
+
+Wave 01 audit-only verifies SO-001..SO-021 COMPLETE, terminal verification entrypoints present, and GOLDEN-STATE-v1 still sealed. FINAL-003 is the remaining terminal finding: the Application Golden State has not yet been sealed. Next: SO-022 Wave 02 Application Golden State Candidate Contract.
+
+
+## SO-022 Wave 02 — Application Golden State Candidate
+
+`APPLICATION-GOLDEN-STATE-v1-CANDIDATE` is now explicit and non-final. It binds predecessor completion, Canvas GOLDEN-STATE-v1, the application-wide regression contract and deterministic governance evidence. Next: SO-022 terminal closeout, which must run the complete application-wide regression contract before sealing the final Application Golden State.
+
+
+## SO-022 COMPLETE — APPLICATION GOLDEN STATE
+
+`APPLICATION-GOLDEN-STATE-v1` is sealed. SO-001..SO-022 are COMPLETE. Canvas `GOLDEN-STATE-v1` remains independently sealed. No active bite remains. Next work is explicitly post-Golden: V1 hardening, dead-artifact audit, gate tsunami testing, docs/repository contribution readiness, deploy/GitHub polish, use-case flowcharts and product-facing presentation.
+
+
+## Pre-commit integrity hotfix — Auth RSC boundary
+
+Manual smoke testing after the SO-022 seal found a real regression blind spot: the Auth root barrel mixed `AuthPage` (server-only transitively through `next/headers`) with client-safe exports consumed by Canvas client modules. The root facade is now client/domain-safe, `AuthPage` moves to the explicit server facade, and `check:tdm:application-wide-regression` now includes both `check:tdm:auth-rsc-boundary` and production `build`. `APPLICATION-GOLDEN-STATE-v1.json` remains immutable; the correction is recorded in `APPLICATION-GOLDEN-STATE-v1-INTEGRITY-ADDENDUM.md`.

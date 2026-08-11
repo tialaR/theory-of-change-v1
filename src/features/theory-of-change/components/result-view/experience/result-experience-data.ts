@@ -1,7 +1,5 @@
-import {
-  isConditionAllowed,
-  reportInvalidConnectionCondition
-} from '../../../domain/tdm-connection-rules';
+import { isConditionAllowed } from '../../../domain/tdm-connection-rules';
+import { reportInvalidConnectionCondition } from '../../../runtime/report-invalid-connection-condition';
 import { TDM_STAGE_ORDER, type TdmStage } from '../../../domain/tdm-stages';
 import { TDM_STAGE_LABELS } from '../../../domain/tdm-stages';
 import type { TdmEdge, TdmNode, TdmMarkerType } from '../../../domain/tdm-types';

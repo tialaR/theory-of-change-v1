@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 import { TdmButton } from '@/shared/ui/tdm-button/tdm-button';
-import { TdmField, TdmInput } from '@/shared/ui/tdm-field/tdm-field';
+import { TdmField, TdmInput } from '@/shared/ui/tdm-field';
 import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
 import styles from './tdm-connection-inspector.module.sass';
 

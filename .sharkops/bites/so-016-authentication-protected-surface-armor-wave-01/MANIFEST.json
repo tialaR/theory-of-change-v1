@@ -1,0 +1,23 @@
+{
+  "id": "SO-016",
+  "codename": "Authentication & Protected Surface Armor",
+  "wave": "01",
+  "title": "Authentication & Protected Surface Audit",
+  "status": "ACTIVE",
+  "runtimeChanges": false,
+  "gate": "npm run check:tdm:auth-protected-surfaces:wave01",
+  "predecessor": "SO-015 COMPLETE + GOLDEN-STATE-v1",
+  "next": "SO-016 | Server Auth Repository Boundary",
+  "patchVersion": "v1",
+  "scope": [
+    "/login",
+    "/canvas",
+    "/canvas/resultado",
+    "auth application/domain/infrastructure/server boundaries",
+    "MSW/mock mode and sessions",
+    "route protection and redirects",
+    "auth/shared status UI ownership",
+    "E2E and executable gates",
+    "Canvas Golden State preservation"
+  ]
+}

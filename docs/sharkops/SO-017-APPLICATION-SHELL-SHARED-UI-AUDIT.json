@@ -1,0 +1,123 @@
+{
+  "initiative": "SO-017",
+  "title": "Application Shell & Shared UI Armor",
+  "wave": "CLOSEOUT",
+  "mode": "closeout-audit",
+  "runtimeChanges": false,
+  "baseline": {
+    "predecessor": "SO-016 COMPLETE",
+    "goldenState": "GOLDEN-STATE-v1",
+    "appShell": [
+      "src/app/layout.tsx",
+      "src/app/globals.sass",
+      "src/app/global-error.tsx",
+      "src/app/loading.tsx",
+      "src/app/not-found.tsx",
+      "src/app/canvas/layout.tsx"
+    ],
+    "sharedUiRoot": "src/shared/ui",
+    "publicShell": "src/shared/ui/tdm-public-layout"
+  },
+  "invariants": [
+    "Do not flatten public-route personality into generic shared UI.",
+    "Shared and feature-owned components obey the same architectural quality rules.",
+    "Component-level styles remain Sass Modules with .module.sass.",
+    "Promote shared primitives only with reuse or shared semantic evidence.",
+    "SO-015 public-route armor, SO-016 Auth armor and GOLDEN-STATE-v1 remain sealed."
+  ],
+  "findings": [
+    {
+      "id": "SHELL-001",
+      "severity": "HIGH",
+      "status": "RESOLVED-WAVE-02",
+      "title": "Shared UI style ownership has legacy boundary leaks",
+      "evidence": [
+        "src/shared/ui/tooltip/tdm-anchored-tooltip-surface.sass is the only plain .sass file under src/shared/ui.",
+        "src/features/theory-of-change/components/sidebar/tdm-sidebar-primitives.tsx imports tdm-button.module.sass directly.",
+        "src/features/theory-of-change/components/sidebar/v1-preserved-sidebar-icons.tsx imports tdm-button.module.sass directly."
+      ],
+      "decision": "First proven bite. Seal component-level shared styles behind .module.sass ownership and forbid feature imports of internal shared UI CSS Modules.",
+      "resolution": [
+        "The tooltip Sass mixin remains live and was moved from shared/ui component ownership to shared/styles/tdm as a reusable Sass styling contract.",
+        "Feature-owned SVG glyphs no longer import the internal TdmButton CSS Module; TdmButton/TdmIconButton own icon sizing through their wrappers.",
+        "Executable gate forbids plain .sass files below src/shared/ui and imports of shared UI .module.sass files outside their owning shared component."
+      ]
+    },
+    {
+      "id": "SHELL-002",
+      "severity": "MEDIUM",
+      "status": "RESOLVED-WAVE-03",
+      "title": "Shared UI public entrypoints are inconsistent",
+      "evidence": [
+        "src/shared/ui/tdm-field has no index.ts while consumers import its implementation file directly.",
+        "src/shared/ui/tooltip has no index.ts while Canvas consumers import tdm-anchored-tooltip directly."
+      ],
+      "decision": "Audit finding only. Address after SHELL-001 unless subsequent evidence changes priority.",
+      "resolution": [
+        "tdm-field exposes its public React API from src/shared/ui/tdm-field/index.ts.",
+        "tooltip exposes TdmAnchoredTooltip from src/shared/ui/tooltip/index.ts.",
+        "All inventoried feature/Auth consumers use the package entrypoint instead of implementation-file deep imports.",
+        "Executable gate forbids deep imports into these two shared UI implementation files outside their owning directories."
+      ]
+    },
+    {
+      "id": "SHELL-003",
+      "severity": "MEDIUM",
+      "status": "RESOLVED-WAVE-04",
+      "title": "App route adapters still contain selected deep feature imports",
+      "evidence": [
+        "src/app/canvas/loading.tsx imports CanvasWorkspaceLoading from a deep canvas UI path."
+      ],
+      "decision": "Audit finding only. Determine whether a feature facade is semantically justified before changing.",
+      "resolution": [
+        "CanvasWorkspaceLoading is exported by the existing Canvas feature facade.",
+        "src/app/canvas/loading.tsx consumes the Canvas feature through its public facade instead of a deep UI path.",
+        "Executable gate forbids src/app from deep-importing Canvas implementation paths while allowing the canonical feature entrypoint."
+      ]
+    },
+    {
+      "id": "SHELL-004",
+      "severity": "LOW",
+      "status": "PRESERVED-CLOSEOUT",
+      "title": "Public shell owns deliberate body-scroll specialization",
+      "evidence": [
+        "PublicBodyClassController manages public-page-scroll.",
+        "globals.sass contains public-page-specific body selectors established by SO-015."
+      ],
+      "decision": "Preserve. This is existing SO-015 architecture, not a refactor target without new evidence.",
+      "resolution": "Root app shell metadata/providers ownership remains intentionally thin; no broad shell refactor was proven necessary."
+    },
+    {
+      "id": "SHELL-005",
+      "severity": "LOW",
+      "status": "PRESERVED-CLOSEOUT",
+      "title": "Route status surfaces are already substantially centralized",
+      "evidence": [
+        "Root and public route loading/error/not-found wrappers use tdm-status-screen.",
+        "Canvas keeps a feature-specific workspace loading surface."
+      ],
+      "decision": "Preserve ownership distinction. No genericization is authorized by this audit.",
+      "resolution": "Shared public-route status/layout ownership remains legitimate and intentionally preserved."
+    }
+  ],
+  "nextBite": {
+    "id": "SO-018",
+    "title": "Design System & Token Governance",
+    "mode": "audit-first",
+    "reason": "SO-017 is complete; continue the application-wide sequence without pre-authorizing token refactors."
+  },
+  "closeout": {
+    "status": "COMPLETE",
+    "openFindings": [],
+    "resolvedFindings": [
+      "SHELL-001",
+      "SHELL-002",
+      "SHELL-003"
+    ],
+    "preservedFindings": [
+      "SHELL-004",
+      "SHELL-005"
+    ],
+    "verdict": "No additional Application Shell / Shared UI runtime refactor is proven necessary."
+  }
+}

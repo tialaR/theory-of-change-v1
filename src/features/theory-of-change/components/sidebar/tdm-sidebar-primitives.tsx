@@ -1,6 +1,5 @@
 import type { RefObject } from 'react';
-import { TdmAnchoredTooltip } from '@/shared/ui/tooltip/tdm-anchored-tooltip';
-import buttonStyles from '@/shared/ui/tdm-button/tdm-button.module.sass';
+import { TdmAnchoredTooltip } from '@/shared/ui/tooltip';
 import { TdmSectionIcon } from '../tdm-section-icon/tdm-section-icon';
 import styles from './tdm-sidebar.module.sass';
 
@@ -95,7 +94,7 @@ export function TimelineLockIcon({
 
 export function DuplicateIcon() {
   return (
-    <svg aria-hidden="true" viewBox="0 0 16 16" className={buttonStyles.icon}>
+    <svg aria-hidden="true" viewBox="0 0 16 16">
       <rect x="5.5" y="5.5" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.35" />
       <path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5" fill="none" stroke="currentColor" strokeWidth="1.35" />
     </svg>
@@ -104,7 +103,7 @@ export function DuplicateIcon() {
 
 export function TrashIcon() {
   return (
-    <svg aria-hidden="true" viewBox="0 0 16 16" className={buttonStyles.icon}>
+    <svg aria-hidden="true" viewBox="0 0 16 16">
       <path d="M3.5 4.5h9M6 4.5V3.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
       <path d="M4.5 4.5l.5 7.5a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1l.5-7.5" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
@@ -113,7 +112,7 @@ export function TrashIcon() {
 
 export function BackArrowIcon() {
   return (
-    <svg aria-hidden="true" viewBox="0 0 16 16" className={buttonStyles.icon}>
+    <svg aria-hidden="true" viewBox="0 0 16 16">
       <path d="M10 3.5 5.5 8 10 12.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
@@ -122,7 +121,7 @@ export function BackArrowIcon() {
 
 export function AdvanceArrowIcon() {
   return (
-    <svg aria-hidden="true" viewBox="0 0 16 16" className={buttonStyles.icon}>
+    <svg aria-hidden="true" viewBox="0 0 16 16">
       <path
         d="M3.5 8h9M9 4.5 12.5 8 9 11.5"
         fill="none"

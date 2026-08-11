@@ -1,0 +1,11 @@
+{
+  "id": "SO-018",
+  "codename": "Design System & Token Governance",
+  "status": "ACTIVE",
+  "revision": 1,
+  "wave": 1,
+  "mode": "audit-only",
+  "runtimeChanges": false,
+  "targetFinding": "DS-001",
+  "next": "SO-018 | Legacy Token Compatibility Boundary"
+}

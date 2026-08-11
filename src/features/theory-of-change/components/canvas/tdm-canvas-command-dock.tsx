@@ -3,7 +3,7 @@
 import type { ReactElement } from 'react';
 import { Panel } from '@xyflow/react';
 import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
-import { TdmAnchoredTooltip } from '@/shared/ui/tooltip/tdm-anchored-tooltip';
+import { TdmAnchoredTooltip } from '@/shared/ui/tooltip';
 import styles from './tdm-canvas-command-dock.module.sass';
 
 type DockActionId = 'fit' | 'columns' | 'flow' | 'guide' | 'clear';

@@ -1,0 +1,21 @@
+{
+  "id": "SO-016",
+  "codename": "Authentication & Protected Surface Armor",
+  "wave": "04",
+  "title": "Redirect Policy Contract",
+  "status": "ACTIVE",
+  "runtimeChanges": true,
+  "gate": "npm run check:tdm:auth-protected-surfaces:wave04",
+  "predecessor": "SO-016 Wave 03",
+  "targetFinding": "AUTH-003",
+  "next": "SO-016 | Auth Facade Consumption Boundary",
+  "patchVersion": "v1.1",
+  "scope": [
+    "canonical returnTo self-target rejection",
+    "redirect-policy unit tests",
+    "auth redirect-consumer gate",
+    "AUTH-005 audit normalization from Wave 03 evidence",
+    "SharkOps state and handoff"
+  ],
+  "hotfix": "apply baseline validation now compares cumulative predecessor content instead of git dirty status"
+}

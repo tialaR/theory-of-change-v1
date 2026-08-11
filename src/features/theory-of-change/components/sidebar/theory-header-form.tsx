@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { TdmField, TdmInput, TdmTextarea } from '@/shared/ui/tdm-field/tdm-field';
+import { TdmField, TdmInput, TdmTextarea } from '@/shared/ui/tdm-field';
 import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
 import styles from './theory-header-form.module.sass';
 

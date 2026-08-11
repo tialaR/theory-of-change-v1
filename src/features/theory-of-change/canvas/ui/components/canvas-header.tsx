@@ -3,8 +3,7 @@
 import Image from 'next/image';
 import { motion } from 'motion/react';
 import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
-import type { AuthUser } from '@/features/auth/domain/auth.types';
-import { UserMenu } from '@/features/auth/ui/user-menu/user-menu';
+import { UserMenu, type AuthUser } from '@/features/auth';
 import { canvasIcons as icons } from '../canvas-icons';
 import styles from '../canvas-workspace/canvas-workspace.module.sass';
 import { useCanvasRuntime } from '../runtime/canvas-runtime-context';

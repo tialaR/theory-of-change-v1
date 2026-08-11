@@ -1,7 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { requireAuthenticatedSession } from '@/features/auth/server/auth-session';
+import { requireAuthenticatedSession } from '@/features/auth/server';
 import type { CanvasProject } from '../domain/canvas-project';
 import { saveCanvasProject } from '../application/save-canvas-project';
 import { createServerCanvasProjectRepository } from './canvas-server.repository';
