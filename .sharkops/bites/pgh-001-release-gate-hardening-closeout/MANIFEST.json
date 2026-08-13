@@ -1,0 +1,13 @@
+{
+  "id": "PGH-001",
+  "codename": "Release Gate False-Green Hardening",
+  "status": "COMPLETE",
+  "revision": 4,
+  "wave": "CLOSEOUT",
+  "runtimeChanges": false,
+  "applicationGoldenState": "APPLICATION-GOLDEN-STATE-v1",
+  "canvasGoldenState": "GOLDEN-STATE-v1",
+  "finding": "OBSOLETE_BOOTSTRAP_EXCEPTION / GOLDEN-STATE GOVERNANCE BREACH",
+  "remediation": "post-golden-hardening profile makes validate:release mandatory at pre-push and protects the rule with an executable negative-regression contract",
+  "next": "PGH-002 | E2E Determinism & Isolation Audit"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "PGH-002",
+  "name": "E2E Determinism & Isolation Hardening",
+  "status": "COMPLETE",
+  "mode": "FAST_TRACK_REMEDIATION_CLOSEOUT",
+  "finding": "SHARED_SERVER_SEQUENCE_SENSITIVE / ORDER_SENSITIVE",
+  "decisiveEvidence": "public-routes predecessor can contaminate Canvas when sharing one long-lived dev server",
+  "remediation": "fresh Playwright invocation and owned server per E2E file, workers=1, browser fallback parity",
+  "timeoutChanged": false,
+  "applicationRuntimeChanged": false,
+  "goldenStatesPreserved": true,
+  "next": "PGH-003+PGH-004 Repository Hygiene & Offline Build Determinism Fast-Track"
+}

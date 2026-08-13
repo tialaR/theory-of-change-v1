@@ -299,6 +299,9 @@ export function TdmAnchoredTooltip({
     'aria-describedby'?: string;
   };
 
+  /* eslint-disable react-hooks/refs -- Intentional composed-ref interoperability:
+   * the trigger must retain the child's forwarded ref while also exposing the DOM anchor
+   * to the tooltip positioning system. No ref.current value is read during render here. */
   const trigger = cloneElement(children, {
     ref: mergeRefs(triggerRef, childProps.ref),
     onMouseEnter: (event: React.MouseEvent<HTMLElement>) => {
@@ -319,6 +322,7 @@ export function TdmAnchoredTooltip({
     },
     'aria-describedby': visible ? tooltipId : childProps['aria-describedby']
   } as Record<string, unknown>);
+  /* eslint-enable react-hooks/refs */
 
   const tooltipStyle: CSSProperties = {
     top: position?.top ?? -9999,

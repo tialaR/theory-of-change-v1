@@ -225,13 +225,13 @@ export function FlowCausalOverlay({
   }, [cardRefs, containerRef, edges, hasFocus, relatedEdgeIds]);
 
   useEffect(() => {
-    if (!hasFocus) {
-      setPaths([]);
-      return;
-    }
-
     let raf2 = 0;
     const raf1 = window.requestAnimationFrame(() => {
+      if (!hasFocus) {
+        setPaths([]);
+        return;
+      }
+
       raf2 = window.requestAnimationFrame(recalculatePaths);
     });
 

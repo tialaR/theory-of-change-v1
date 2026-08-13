@@ -23,7 +23,10 @@ const files = {
   workspaceController: 'src/features/theory-of-change/canvas/ui/hooks/use-canvas-workspace-controller.ts',
   workspaceFoundation: 'src/features/theory-of-change/canvas/ui/hooks/use-canvas-workspace-foundation.ts',
   workspaceActions: 'src/features/theory-of-change/canvas/ui/hooks/use-canvas-workspace-actions.ts',
-  viewportActions: 'src/features/theory-of-change/canvas/ui/hooks/use-canvas-viewport-actions.ts'
+  viewportActions: 'src/features/theory-of-change/canvas/ui/hooks/use-canvas-viewport-actions.ts',
+  nodeCommands: 'src/features/theory-of-change/canvas/ui/hooks/canvas-flow/use-canvas-node-commands.ts',
+  edgeCommands: 'src/features/theory-of-change/canvas/ui/hooks/canvas-flow/use-canvas-edge-commands.ts',
+  enginePersistence: 'src/features/theory-of-change/canvas/engine/canvas-engine-persistence.ts'
 };
 
 Object.values(files).forEach((file) => requireCondition(exists(file), `arquivo de continuidade ausente: ${file}`));
@@ -38,9 +41,21 @@ if (exists(files.id)) {
 if (exists(files.flow)) {
   const source = read(files.flow);
   requireCondition(source.includes('crypto.randomUUID()'), 'IDs persistidos não usam token estável e não sequencial');
-  requireCondition(source.includes('createCanvasNodeId'), 'criação de node não consome a fábrica única');
-  requireCondition(source.includes('createCanvasEdgeId'), 'criação de edge não consome a fábrica única');
+  requireCondition(source.includes('useCanvasNodeCommands'), 'controller não delega criação de nodes ao owner atual');
+  requireCondition(source.includes('useCanvasEdgeCommands'), 'controller não delega criação de edges ao owner atual');
   requireCondition(!source.includes('idCounterRef'), 'contador de IDs reiniciado por montagem voltou ao Canvas');
+}
+
+if (exists(files.nodeCommands)) {
+  const source = read(files.nodeCommands);
+  requireCondition(source.includes('createCanvasNodeId'), 'criação de node não consome a fábrica única');
+  requireCondition(source.includes('occupiedIds'), 'node commands não protege colisão contra o grafo hidratado');
+}
+
+if (exists(files.edgeCommands)) {
+  const source = read(files.edgeCommands);
+  requireCondition(source.includes('createCanvasEdgeId'), 'criação de edge não consome a fábrica única');
+  requireCondition(source.includes('occupiedIds'), 'edge commands não protege colisão contra o grafo hidratado');
 }
 
 if (exists(files.constants)) {
@@ -59,7 +74,17 @@ if (exists(files.queue)) {
   const source = read(files.queue);
   requireCondition(source.includes('queue.then'), 'gravações não estão serializadas');
   requireCondition(source.includes('persistedSignature'), 'gravações idênticas não são deduplicadas');
-  requireCondition(source.includes('structuredClone'), 'fila não captura snapshot imutável da mudança');
+  requireCondition(
+    source.includes('createCanvasEnginePersistenceSnapshot'),
+    'fila não captura snapshot imutável da mudança pelo engine'
+  );
+}
+
+if (exists(files.enginePersistence)) {
+  const source = read(files.enginePersistence);
+  requireCondition(source.includes('structuredClone(content.nodes)'), 'snapshot do engine não clona nodes');
+  requireCondition(source.includes('structuredClone(content.connections)'), 'snapshot do engine não clona connections');
+  requireCondition(source.includes('structuredClone(content.viewport)'), 'snapshot do engine não clona viewport quando presente');
 }
 
 if (exists(files.saveController)) {

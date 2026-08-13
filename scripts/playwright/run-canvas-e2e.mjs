@@ -5,29 +5,37 @@ import { chromium } from '@playwright/test';
 
 const canvasTest = 'src/features/theory-of-change/canvas/ui/canvas-workspace/canvas-workspace.e2e.ts';
 const bundledChromium = chromium.executablePath();
-const macChrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
-const macUserChrome = `${process.env.HOME ?? ''}/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`;
+const candidates = [
+  '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+  `${process.env.HOME ?? ''}/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`,
+  '/usr/bin/google-chrome',
+  '/usr/bin/google-chrome-stable',
+  '/usr/bin/chromium',
+  '/usr/bin/chromium-browser'
+];
 
 let browserMode = 'playwright-chromium';
-const env = { ...process.env };
+const env = {
+  ...process.env,
+  TDM_PLAYWRIGHT_REUSE_EXISTING_SERVER: '0'
+};
 
 if (!existsSync(bundledChromium)) {
-  if (existsSync(macChrome) || existsSync(macUserChrome)) {
-    browserMode = 'system-chrome';
-    env.TDM_PLAYWRIGHT_BROWSER = 'system-chrome';
-  } else {
+  const systemBrowser = candidates.find((candidate) => candidate && existsSync(candidate));
+  if (!systemBrowser) {
     console.error('FAIL: nenhum navegador compatível foi encontrado.');
-    console.error('Instale o Chromium com: npx playwright install chromium');
-    console.error('Ou instale o Google Chrome no macOS.');
+    console.error('Instale Google Chrome/Chromium no sistema ou um browser suportado pelo Playwright.');
     process.exit(1);
   }
+  browserMode = 'system-browser';
+  env.TDM_PLAYWRIGHT_EXECUTABLE_PATH = systemBrowser;
 }
 
-console.log(`TDM E2E PREFLIGHT: usando ${browserMode}.`);
+console.log(`TDM CANVAS E2E PREFLIGHT: usando ${browserMode}; servidor próprio; workers=1.`);
 
 const result = spawnSync(
   process.execPath,
-  ['./node_modules/@playwright/test/cli.js', 'test', canvasTest],
+  ['./node_modules/@playwright/test/cli.js', 'test', canvasTest, '--workers=1'],
   { cwd: process.cwd(), env, stdio: 'inherit' }
 );
 

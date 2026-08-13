@@ -66,3 +66,8 @@ output/
 
 # Local patch rollback snapshots
 .patch-backups/
+
+# Playwright generated reports
+playwright-report/
+test-results/
+blob-report/
