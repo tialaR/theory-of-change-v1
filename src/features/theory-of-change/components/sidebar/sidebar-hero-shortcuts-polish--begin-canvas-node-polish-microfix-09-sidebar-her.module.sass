@@ -1,0 +1,193 @@
+// BEGIN CANVAS NODE POLISH MICROFIX 09 — SIDEBAR HERO AND TEXT CLIPPING
+// Visual only. Adds the hero divider and prevents compact section copy from clipping.
+.header
+  overflow: visible
+
+  &::after
+    content: ''
+    position: absolute
+    left: 1rem
+    right: calc(1rem + 0.375rem)
+    bottom: 0.125rem
+    height: 0.0625rem
+    border-radius: 999rem
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.11) 12%, rgba(255, 255, 255, 0.16) 50%, rgba(255, 255, 255, 0.11) 88%, rgba(255, 255, 255, 0.02) 100%)
+    opacity: 0.88
+    pointer-events: none
+
+.headerScrolled
+  &::after
+    opacity: 0.94
+
+// "ETAPAS DA TEORIA" and its compact status line stay fully visible.
+.progressHeader
+  overflow: visible
+  padding-left: 0.125rem
+  padding-right: 0.0625rem
+
+.progressHeaderKicker,
+.progressCompactLine
+  min-width: 0
+  max-width: 100%
+  overflow: visible
+  text-overflow: clip
+
+// The sculpture is hidden in compact mode, so the editorial copy must own the full row.
+.finalResultComposition
+  grid-template-columns: minmax(0, 1fr)
+  width: 100%
+  padding-left: 0.75rem
+  padding-right: 0.75rem
+
+.finalResultGlassPanel
+  width: 100%
+  max-width: 100%
+  margin-left: 0
+  overflow: visible
+
+.finalResultEditorial
+  width: 100%
+  max-width: 100%
+  overflow: visible
+
+.finalResultHeadline
+  width: 100%
+  max-width: 100%
+  padding-left: 0.0625rem
+  white-space: normal
+  overflow: visible
+  text-overflow: clip
+  overflow-wrap: normal
+  text-wrap: balance
+
+.finalResultHeadlineLead
+  display: block
+  max-width: 100%
+
+.finalResultLead
+  max-width: 100%
+  padding-left: 0.0625rem
+// END CANVAS NODE POLISH MICROFIX 09 — SIDEBAR HERO AND TEXT CLIPPING
+
+// BEGIN CANVAS QUICK SHORTCUTS ACCORDION MICROFIX 10
+// Atalhos usa o mesmo ritmo editorial do acordeão Organização do canvas.
+.quickShortcutsCard
+  display: grid
+  gap: 0
+  width: 100%
+  max-width: 100%
+  padding: 0
+  border: 0
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.055)
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.055)
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+  overflow: visible
+  opacity: 1
+
+  &::before,
+  &::after
+    content: none
+    display: none
+
+.quickShortcutsHeader
+  appearance: none
+  display: flex
+  align-items: center
+  justify-content: space-between
+  gap: 0.75rem
+  width: 100%
+  min-height: 4rem
+  margin: 0
+  padding: 0.75rem 0.5rem
+  border: 0
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+  color: rgba(191, 194, 202, 0.82)
+  font: inherit
+  text-align: left
+  cursor: pointer
+  transition: color 180ms ease
+
+  &:hover
+    background: transparent
+    color: rgba(235, 237, 243, 0.96)
+
+    .quickShortcutsTitle,
+    .quickShortcutsChevron,
+    .quickShortcutsTitleRow > :first-child
+      color: rgba(235, 237, 243, 0.96)
+      opacity: 1
+
+  &:focus-visible
+    outline: 0.0625rem solid rgba(255, 255, 255, 0.18)
+    outline-offset: -0.0625rem
+
+.quickShortcutsTitleRow
+  display: flex
+  align-items: center
+  gap: 0.75rem
+  min-width: 0
+  margin: 0
+
+  > :first-child
+    width: 1.35rem
+    height: 1.35rem
+    min-width: 1.35rem
+    flex: 0 0 1.35rem
+    padding: 0
+    border: 0
+    border-radius: 0
+    background: transparent
+    box-shadow: none
+    color: rgba(191, 194, 202, 0.78)
+    opacity: 0.9
+    transition: color 180ms ease, opacity 180ms ease
+
+    svg
+      width: 1.35rem
+      height: 1.35rem
+
+.quickShortcutsTitle
+  display: block
+  min-width: 0
+  margin: 0
+  color: rgba(203, 205, 212, 0.86)
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.78125rem
+  font-weight: 400
+  line-height: 1.25rem
+  letter-spacing: 0.075em
+  text-transform: uppercase
+  white-space: nowrap
+  transition: color 180ms ease, opacity 180ms ease
+
+.quickShortcutsChevron
+  width: 1.125rem
+  height: 1.125rem
+  flex: 0 0 1.125rem
+  color: rgba(161, 164, 165, 0.74)
+  opacity: 0.82
+  transform: rotate(0deg)
+  transition: color 180ms ease, opacity 180ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1)
+
+.quickShortcutsChevronOpen
+  transform: rotate(180deg)
+  color: rgba(224, 226, 232, 0.9)
+  opacity: 1
+
+.quickShortcutsContent
+  display: grid
+  gap: 0.5rem
+  width: 100%
+  min-width: 0
+  padding: 0 0.5rem 0.75rem
+
+.quickShortcutsGrid
+  display: flex
+  flex-direction: column
+  gap: 0
+  width: 100%
+

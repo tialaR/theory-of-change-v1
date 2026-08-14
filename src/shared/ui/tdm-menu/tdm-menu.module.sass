@@ -1,0 +1,96 @@
+@use '../../styles/tdm/tdm-focus' as focus
+
+.root
+  display: inline-flex
+
+.menu
+  position: fixed
+  top: 0
+  left: 0
+  visibility: hidden
+  z-index: var(--tdm-menu-z-index)
+  min-width: var(--tdm-menu-min-width)
+  max-width: min(var(--tdm-menu-max-width), calc(100vw - var(--tdm-space-6)))
+  padding: var(--tdm-menu-padding)
+  overflow: hidden
+  border: var(--tdm-border-width-hairline) solid var(--tdm-menu-border)
+  border-radius: var(--tdm-menu-radius)
+  background: var(--tdm-menu-background)
+  box-shadow: var(--tdm-menu-shadow)
+  backdrop-filter: var(--tdm-menu-backdrop)
+  -webkit-backdrop-filter: var(--tdm-menu-backdrop)
+
+.positioned
+  visibility: visible
+
+.heading
+  padding: var(--tdm-menu-heading-padding-block) var(--tdm-menu-heading-padding-inline)
+  color: var(--tdm-menu-heading-color)
+  font-size: var(--tdm-menu-heading-size)
+  font-weight: var(--tdm-menu-heading-weight)
+  line-height: 1.35
+
+.items
+  display: grid
+  gap: var(--tdm-space-1)
+
+.item
+  display: grid
+  grid-template-columns: var(--tdm-menu-item-icon-size) minmax(0, 1fr) auto
+  align-items: center
+  width: 100%
+  min-height: var(--tdm-menu-item-height)
+  padding: 0 var(--tdm-menu-item-padding-inline)
+  gap: var(--tdm-menu-item-gap)
+  border: 0
+  border-radius: var(--tdm-menu-item-radius)
+  background: transparent
+  color: var(--tdm-menu-item-color)
+  font-family: inherit
+  font-size: var(--tdm-menu-item-size)
+  font-weight: var(--tdm-menu-item-weight)
+  line-height: 1.25
+  text-align: left
+  cursor: pointer
+  transition: color var(--tdm-duration-fast) var(--tdm-ease-standard), opacity var(--tdm-duration-fast) var(--tdm-ease-standard)
+  +focus.focus-visible
+
+  &:hover:not(:disabled),
+  &:focus-visible:not(:disabled)
+    background: transparent
+    color: var(--tdm-menu-item-color-hover)
+
+  &:disabled
+    opacity: var(--tdm-menu-item-disabled-opacity)
+    cursor: not-allowed
+
+.itemDanger:hover:not(:disabled),
+.itemDanger:focus-visible:not(:disabled)
+  color: var(--tdm-fg-danger)
+
+.itemIcon
+  display: inline-grid
+  place-items: center
+  width: var(--tdm-menu-item-icon-size)
+  height: var(--tdm-menu-item-icon-size)
+  opacity: 0.78
+
+  :global(svg)
+    width: 100%
+    height: 100%
+    fill: none
+    stroke: currentColor
+    stroke-width: var(--tdm-icon-stroke-default)
+    stroke-linecap: round
+    stroke-linejoin: round
+
+.itemLabel
+  min-width: 0
+
+.trailing
+  color: var(--tdm-fg-muted)
+  font-size: var(--tdm-font-label-size)
+
+@media (prefers-reduced-motion: reduce)
+  .item
+    transition: none

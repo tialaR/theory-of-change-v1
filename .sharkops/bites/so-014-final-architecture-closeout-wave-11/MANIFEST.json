@@ -1,0 +1,13 @@
+{
+  "id": "SO-014",
+  "codename": "Final Architecture Closeout",
+  "wave": "11",
+  "title": "Final Architecture Closeout",
+  "status": "COMPLETE",
+  "runtimeChanges": false,
+  "gate": "npm run check:tdm:final-architecture:wave11",
+  "regression": "npm run check:tdm:final-regression:armor",
+  "next": "Golden State Snapshot | Project Handoff",
+  "patchVersion": "v1",
+  "closeout": true
+}

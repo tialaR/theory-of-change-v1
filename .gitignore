@@ -11,3 +11,63 @@ build
 .DS_Store
 *.log
 .vercel
+
+.next
+.DS_Store
+.cursor/screenshots
+.audit-screenshots
+.playwright-cli
+.validation-screenshots
+.sidebar-polish-screenshots
+tsconfig.tsbuildinfo
+.migration-screenshots
+
+# TDM generated/local artifacts
+.next/
+node_modules/
+*.tsbuildinfo
+.DS_Store
+__MACOSX/
+tdm-backups/
+.tdm-patch-backups/
+.tdm-patches/
+.tmp-phase-5a/
+.tmp-*/
+/tdm-*/
+*.before-*
+*.zip
+
+# Local QA / Playwright artifacts
+output/
+.playwright-cli/
+
+# TDM local patch backups
+.tdm-backup/
+
+# >>> TDM SHARK MIGRATION GENERATED ARTIFACTS >>>
+.next/
+*.tsbuildinfo
+.playwright-cli/
+.validation-screenshots/
+.canvas-surgery-backup/
+.tdm-backup/
+.tdm-backups/
+.tdm-patch-backups/
+.tdm-patches/
+__MACOSX/
+output/
+# <<< TDM SHARK MIGRATION GENERATED ARTIFACTS <<<
+
+# SharkOps local recovery artifacts
+.sharkops/bootstrap-backup/
+.sharkops/installer-backup/
+
+.sharkops/runtime/
+
+# Local patch rollback snapshots
+.patch-backups/
+
+# Playwright generated reports
+playwright-report/
+test-results/
+blob-report/

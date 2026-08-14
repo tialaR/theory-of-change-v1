@@ -1,0 +1,13 @@
+{
+  "id": "SO-006",
+  "codename": "Component God Slayer",
+  "wave": 5,
+  "status": "ACTIVE",
+  "purpose": "Decompose TdmCanvasInner into orchestration, workspace view and view-model adapters without changing behavior",
+  "rules": [
+    "TdmCanvasInner must not render ReactFlow directly",
+    "Workspace view owns visual composition only",
+    "React Flow and Sidebar adapters own presentation mapping",
+    "No SCSS"
+  ]
+}

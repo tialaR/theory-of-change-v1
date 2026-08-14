@@ -1,0 +1,50 @@
+@use '../../../../shared/styles/tokens' as *
+@media (prefers-reduced-motion: reduce)
+  .sidebarAccordionChevron
+    transition-duration: 1ms !important
+
+  .progressOrbitalAmbient,
+  .progressOrbitalNucleusGlow,
+  .progressOrbitalHazeEmit,
+  .progressOrbitalHazeField,
+  .progressOrbitalSvg,
+  .progressOrbitalHalo,
+  .progressOrbitalSmoke,
+  .progressOrbitalRingOuter,
+  .progressOrbitalRingMid,
+  .progressOrbitalSatellite,
+  .progressOrbitalSatelliteAlt,
+  .progressHeaderHazeCore,
+  .progressHeaderHazeBand,
+  .progressHeaderHazeSpread,
+  .progressHeaderHazeTrail,
+  .progressHeaderHazeProgressive
+    animation: none !important
+
+  .finalResultGlassHaze,
+  .finalResultHazeCore,
+  .finalResultHazeBand,
+  .finalResultHazeSpread
+    animation: none !important
+
+  .timelineChevronIcon
+    transition-duration: 1ms !important
+
+  .stageAccordion
+    transition-duration: 1ms !important
+
+    &::details-content
+      transition-duration: 1ms !important
+      transform: none !important
+      height: auto !important
+      opacity: 1 !important
+
+  .heroCard,
+  .heroContent,
+  .heroLead,
+  .heroTitle,
+  .heroDescription,
+  .heroFormShell
+    transition-duration: 1ms !important
+
+

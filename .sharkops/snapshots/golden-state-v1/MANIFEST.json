@@ -1,0 +1,12 @@
+{
+  "id": "GOLDEN-STATE-v1",
+  "title": "TDM Construtor Golden State Snapshot",
+  "status": "COMPLETE",
+  "sourceInitiative": "SO-014",
+  "sourceWave": "11",
+  "runtimeChanges": false,
+  "architectureScope": "/canvas and directly supporting architecture boundaries",
+  "createdAt": "2026-08-08T00:41:00.000Z",
+  "gate": "npm run check:tdm:golden-state",
+  "pack": "npm run shark:golden"
+}

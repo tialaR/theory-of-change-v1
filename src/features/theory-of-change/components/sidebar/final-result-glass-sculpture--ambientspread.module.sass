@@ -1,0 +1,150 @@
+@use '../../../../shared/styles/tokens' as *
+
+.ambientSpread
+  position: absolute
+  inset: -12% -16% -10% -8%
+  border-radius: 50%
+  background: radial-gradient(ellipse 82% 72% at 48% 52%, rgba(236, 238, 244, 0.24), rgba(108, 110, 116, 0.08) 48%, transparent 78%)
+  filter: blur(0.875rem)
+  opacity: 0.96
+  animation: ambientBreath 16s ease-in-out infinite reverse
+
+.ambientTrail
+  position: absolute
+  left: -8%
+  right: -12%
+  bottom: 8%
+  height: 42%
+  border-radius: 50%
+  background: linear-gradient(92deg, transparent, rgba(228, 230, 236, 0.16) 32%, rgba(252, 252, 255, 0.22) 52%, rgba(196, 198, 204, 0.12) 72%, transparent)
+  filter: blur(1rem)
+  opacity: 0.9
+  animation: ambientBreath 14s ease-in-out infinite
+
+.horizonRing
+  position: absolute
+  left: -4%
+  right: -4%
+  bottom: 4%
+  height: 0.3125rem
+  border-radius: 999rem
+  background: linear-gradient(90deg, transparent, rgba(168, 170, 176, 0.14), rgba(236, 238, 244, 0.38), rgba(168, 170, 176, 0.14), transparent)
+  filter: blur(0.125rem)
+  opacity: 0.9
+
+.silverVeil
+  position: absolute
+  inset: 2% 4% 6% 0%
+  border-radius: 0.625rem
+  background: linear-gradient(148deg, rgba(252, 252, 255, 0.08) 0%, transparent 42%, rgba(18, 19, 22, 0.1) 100%)
+  opacity: 0.78
+
+.sculptureBackdrop
+  position: absolute
+  inset: 4% 0% 8% -4%
+  border-radius: 50%
+  background: radial-gradient(ellipse 84% 76% at 50% 56%, rgba(88, 90, 96, 0.38), rgba(48, 50, 54, 0.18) 48%, transparent 72%)
+  filter: blur(0.625rem)
+  opacity: 0.92
+
+.sculptureSvg
+  position: absolute
+  inset: -4% -6% -2% -4%
+  width: 108%
+  height: 108%
+  display: block
+
+.sculptureRefraction
+  position: absolute
+  top: 10%
+  right: 4%
+  width: 32%
+  height: 26%
+  border-radius: 50%
+  background: radial-gradient(circle, rgba(252, 252, 255, 0.34), transparent 72%)
+  filter: blur(0.25rem)
+  opacity: 0.88
+
+.sculptureSpecular
+  position: absolute
+  top: 6%
+  left: 12%
+  width: 38%
+  height: 28%
+  border-radius: 50%
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255, 255, 255, 0.2), transparent 70%)
+  filter: blur(0.1875rem)
+  opacity: 0.78
+
+.sculptureOrbitOuter
+  animation: sculptureOrbitDrift 24s ease-in-out infinite
+
+.sculptureOrbitMid
+  animation: sculptureOrbitDrift 30s ease-in-out infinite reverse
+
+@keyframes sculptureBreath
+  0%, 100%
+    opacity: 0.92
+    transform: translateY(0)
+  50%
+    opacity: 1
+    transform: translateY(-0.25rem)
+
+@keyframes ambientBreath
+  0%, 100%
+    opacity: 0.88
+    transform: scale(1)
+  50%
+    opacity: 1
+    transform: scale(1.05)
+
+@keyframes sculptureOrbitDrift
+  0%, 100%
+    opacity: 0.82
+    transform: rotate(0deg)
+  50%
+    opacity: 1
+    transform: rotate(4deg)
+
+@media (prefers-reduced-motion: reduce)
+  .decorSvg,
+  .decorHazeCore,
+  .decorHazeSpread,
+  .decorHazeBand,
+  .decorHazeTrail,
+  .decorOrbitOuter,
+  .decorOrbitMid,
+  .decorOrbitInner,
+  .decorSatellite,
+  .decorSatelliteAlt
+    animation: none
+
+  .decorSvg
+    opacity: 0.92
+
+  .sculpture,
+  .ambientCore,
+  .ambientSpread,
+  .ambientTrail,
+  .sculptureOrbitOuter,
+  .sculptureOrbitMid
+    animation: none
+
+  .sculpture
+    opacity: 0.96
+
+@media (max-width: 30rem)
+  .sculpture
+    --sculpture-size: clamp(5.5rem, 28vw, 7rem)
+
+  .decorGlassLamina
+    width: clamp(2.5rem, 20vw, 3.75rem)
+    height: clamp(1.25rem, 8vw, 1.75rem)
+
+@media (max-width: 24.375rem)
+  .sculpture
+    --sculpture-size: clamp(4.75rem, 26vw, 6rem)
+
+  .decorHazeBand
+    top: 24%
+    height: 42%

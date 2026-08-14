@@ -1,0 +1,16 @@
+{
+  "id": "TDM-PUBLIC-COMPOSITION-CONTRACT-v1",
+  "principle": "unique personality does not exempt a component from responsibility boundaries",
+  "rules": [
+    "route-specific visual signatures remain feature-owned",
+    "shared primitives are promoted only with repeated semantic evidence",
+    "a one-off experience must still be decomposed when it mixes independent rendering, interaction, data-derivation or orchestration responsibilities",
+    "shared UI cannot depend on public-page feature implementation",
+    "public-page recipes may compose shared primitives without becoming shared primitives themselves"
+  ],
+  "currentRecipes": {
+    "guided-story": "feature-owned and already decomposed across data, scheduler, hook, scenes and shared visual pieces",
+    "theory-flow-board": "feature-owned and decomposed into board composition, edge layer, stage labels, node cards and relation utilities"
+  },
+  "storybookReadiness": "public APIs should remain explicit and composable so shared primitives can later be documented independently without moving domain-specific recipes into shared UI"
+}

@@ -1,0 +1,39 @@
+name: TDM Post-Golden Release
+
+on:
+  pull_request:
+    branches: [dev]
+  push:
+    branches: [dev]
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    name: tdm-post-golden-release
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Install Playwright FFmpeg
+        run: npx playwright install ffmpeg
+
+      - name: Post-Golden governance truth
+        run: npm run check:tdm:post-golden-current
+
+      - name: Full release proof
+        run: npm run validate:release

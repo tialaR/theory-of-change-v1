@@ -1,0 +1,19 @@
+---
+description: Contrato obrigatório dos componentes públicos de prévia animada.
+globs: ["src/features/theory-of-change/components/public-experience/example-previews/**/*", "src/features/theory-of-change/components/public-pages/**/*"]
+alwaysApply: false
+---
+
+- `docs/design-system/public-example-previews-v2.md` é a especificação escrita.
+- `docs/design-system/previews/tdm-public-example-previews-v2-existing-motion.html` é a referência visual da moldura (não do motion).
+- Antes de editar prévias públicas animadas, leia ambos.
+- Preserve integralmente o motion existente (duração, easing, paths, nodes, cores, reduced motion).
+- Use `ExamplePreviewFrame` como única moldura; não duplique wrappers.
+- Não crie background, borda, radius, padding externo ou aspect-ratio locais nos componentes migrados.
+- `/canvas`, React Flow, nodes, edges, handles e sidebar do canvas estão proibidos.
+- Não altere `viewBox`, paths ou coordenadas sem aprovação explícita e necessidade comprovada.
+- Qualquer mudança visual exige atualização simultânea de:
+  1. componente;
+  2. documentação;
+  3. preview;
+  4. gate.

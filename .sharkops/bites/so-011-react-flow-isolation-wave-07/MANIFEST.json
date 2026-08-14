@@ -1,0 +1,7 @@
+{
+  "id": "SO-011",
+  "codename": "React Flow Isolation",
+  "wave": "07",
+  "purpose": "Confine ReactFlowProvider to an explicit adapter without changing workspace behavior",
+  "status": "ACTIVE"
+}

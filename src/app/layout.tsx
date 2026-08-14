@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import '@xyflow/react/dist/style.css';
+import { NextIntlClientProvider } from 'next-intl';
+import { TdmMotionProvider } from '@/shared/motion/tdm-motion';
 import './globals.sass';
 
 export const metadata: Metadata = {
@@ -15,7 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body>{children}</body>
+      <body>
+        <NextIntlClientProvider>
+          <TdmMotionProvider>{children}</TdmMotionProvider>
+        </NextIntlClientProvider>
+      </body>
     </html>
   );
 }

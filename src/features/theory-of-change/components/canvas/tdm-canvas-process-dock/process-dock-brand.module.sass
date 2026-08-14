@@ -1,0 +1,76 @@
+@use 'sass:math'
+
+// Canonical header mark: /assets/brand/tmd-construtor-header-canonical.png
+// Diamond (left) is colorized via mask + --stage-accent (same var as stageDot).
+// Wordmark (right) keeps the asset’s native white via --tdm-fg-primary.
+//
+// Asset anatomy (1184×247):
+// - diamond opaque ~219×207 (nearly full frame height)
+// - wordmark opaque 932×75 (≈30% of frame height — vertical whitespace)
+// Wordmark box uses content aspect 932:75 and zoomed mask-size so glyphs fill
+// the element height instead of inheriting the tall diamond frame.
+
+$canonical-logo: '/assets/brand/tmd-construtor-header-canonical.png'
+$canonical-height: 247
+$wordmark-content-width: 932
+$wordmark-content-height: 75
+$wordmark-content-aspect: math.div($wordmark-content-width, $wordmark-content-height)
+$wordmark-mask-height-zoom: math.div($canonical-height, $wordmark-content-height)
+
+$diamond-size: 2.0625rem
+$wordmark-height: 0.9375rem
+$brand-gap: 0.5rem
+$compact-diamond: 1.875rem
+
+.brand
+  display: flex
+  align-items: center
+  gap: $brand-gap
+  min-width: 0
+  max-width: 100%
+  height: $diamond-size
+  flex: 1
+  pointer-events: none
+
+.diamond
+  display: block
+  flex-shrink: 0
+  width: $diamond-size
+  height: $diamond-size
+  background-color: var(--stage-accent)
+  -webkit-mask-image: url(#{$canonical-logo})
+  mask-image: url(#{$canonical-logo})
+  -webkit-mask-size: auto 100%
+  mask-size: auto 100%
+  -webkit-mask-position: left center
+  mask-position: left center
+  -webkit-mask-repeat: no-repeat
+  mask-repeat: no-repeat
+
+.wordmark
+  display: block
+  flex-shrink: 0
+  height: $wordmark-height
+  width: calc(#{$wordmark-height} * #{$wordmark-content-aspect})
+  background-color: var(--tdm-fg-primary)
+  -webkit-mask-image: url(#{$canonical-logo})
+  mask-image: url(#{$canonical-logo})
+  // Zoom past vertical transparent padding so “TMD construtor” fills the box.
+  -webkit-mask-size: auto calc(100% * #{$wordmark-mask-height-zoom})
+  mask-size: auto calc(100% * #{$wordmark-mask-height-zoom})
+  -webkit-mask-position: right center
+  mask-position: right center
+  -webkit-mask-repeat: no-repeat
+  mask-repeat: no-repeat
+
+.compact
+  display: grid
+  place-items: center
+  flex: none
+  width: $compact-diamond
+  height: $compact-diamond
+  pointer-events: none
+
+  .diamond
+    width: 100%
+    height: 100%

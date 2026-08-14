@@ -1,0 +1,41 @@
+name: TDM Bundle Analysis
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    name: tdm-bundle-analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Post-Golden governance truth
+        run: npm run check:tdm:post-golden-current
+
+      - name: Production build
+        run: npm run build
+
+      - name: Generate Turbopack bundle analysis
+        run: npm run analyze:bundle:output
+
+      - name: Upload analysis
+        uses: actions/upload-artifact@v4
+        with:
+          name: tdm-turbopack-bundle-analysis
+          path: .next/diagnostics/analyze
+          if-no-files-found: error

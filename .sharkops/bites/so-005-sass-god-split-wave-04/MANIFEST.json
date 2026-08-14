@@ -1,0 +1,7 @@
+{
+  "id": "SO-005",
+  "codename": "Sass God Split",
+  "wave": 4,
+  "status": "COMPLETE",
+  "purpose": "Finish the Sidebar and Canvas Sass God split into bounded ownership modules without changing visual behavior."
+}

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TDM Performance Boundaries V1</title>
+  <style>
+    :root { color-scheme: dark; font-family: Inter, ui-sans-serif, system-ui, sans-serif; background:#070809; color:#f5f7fa; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:3rem 1.5rem 5rem; background:radial-gradient(circle at 18% 0%,rgba(139,124,255,.12),transparent 32rem),#070809; }
+    main { width:min(72rem,100%); margin:auto; }
+    h1 { font-size:clamp(2rem,5vw,4rem); line-height:1; letter-spacing:-.05em; margin:0 0 1rem; }
+    .lead { max-width:48rem; color:#aeb4bd; line-height:1.7; margin-bottom:2.5rem; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(16rem,1fr)); gap:1rem; }
+    article { min-height:13rem; padding:1.25rem; border:1px solid rgba(255,255,255,.08); border-radius:1rem; background:rgba(255,255,255,.025); }
+    article strong { display:block; margin-bottom:.8rem; font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; color:#d9dde3; }
+    article h2 { margin:0 0 .75rem; font-size:1.15rem; }
+    article p { margin:0; color:#999fa8; line-height:1.55; }
+    .pass { color:#77d7a6; }
+    .warn { color:#f2a65a; }
+    code { color:#d8d0ff; }
+    footer { margin-top:2rem; padding-top:1.2rem; border-top:1px solid rgba(255,255,255,.07); color:#777e88; font-size:.85rem; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Performance sem tocar no miolo.</h1>
+  <p class="lead">Esta rodada move peso para os lugares certos. Nenhuma geometria, animação validada ou comportamento das experiências protegidas foi redesenhado.</p>
+  <section class="grid">
+    <article><strong class="pass">Server boundary</strong><h2>PublicShell</h2><p>O shell público volta a renderizar no servidor. Apenas o efeito da classe do <code>body</code> permanece em uma ilha cliente mínima.</p></article>
+    <article><strong class="pass">CSS boundary</strong><h2>React Flow</h2><p>O stylesheet externo deixa o root layout e passa a carregar somente em <code>/canvas</code> e <code>/exemplos/canvas</code>.</p></article>
+    <article><strong class="pass">On demand</strong><h2>Exportadores</h2><p>PNG, SVG, PDF e DOCX entram em chunks acionados pelo clique, em vez de viajar no JavaScript inicial.</p></article>
+    <article><strong class="pass">Dependency hygiene</strong><h2>Three removido</h2><p><code>three</code> e seus tipos não tinham consumidores no código-fonte e foram retirados do manifesto e lockfile.</p></article>
+    <article><strong class="pass">Measurement</strong><h2>Turbopack Analyzer</h2><p><code>npm run analyze:bundle:output</code> gera um relatório comparável em <code>.next/diagnostics/analyze</code>.</p></article>
+    <article><strong class="warn">Protegido</strong><h2>Imagens da narrativa</h2><p>Dois elementos <code>&lt;img&gt;</code> continuam como warning. A troca foi adiada porque pertencem à experiência visual protegida.</p></article>
+  </section>
+  <footer>TDM Design System V2 · Patch E · Performance e boundaries</footer>
+</main>
+</body>
+</html>

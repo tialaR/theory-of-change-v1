@@ -1,0 +1,71 @@
+.surface
+  --glass-radius: 8px
+  --glass-opacity: 1
+  --glass-brightness: 50%
+  --glass-blur: 11px
+  --glass-background-opacity: .02
+  --glass-saturation: 1
+  --glass-filter: blur(var(--glass-blur))
+  --glass-accent: transparent
+  --glass-background: hsl(0 0% 0% / var(--glass-background-opacity))
+  --glass-border-color: rgba(255, 255, 255, .08)
+  --glass-highlight: rgba(255, 255, 255, .06)
+  position: relative
+  isolation: isolate
+  overflow: hidden
+  width: 100%
+  min-width: 0
+  border: 1px solid var(--glass-border-color)
+  border-radius: var(--glass-radius)
+  background: var(--glass-background)
+  opacity: var(--glass-opacity)
+  backdrop-filter: var(--glass-filter)
+  -webkit-backdrop-filter: var(--glass-filter)
+  transform: translateZ(0)
+
+.surfaceSvg
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .035), 0 3px 10px rgba(0, 0, 0, .14)
+
+.surfaceFallback
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .03), 0 4px 12px rgba(0, 0, 0, .12)
+
+.filterSvg
+  position: absolute
+  width: 0
+  height: 0
+  overflow: hidden
+  pointer-events: none
+
+.content
+  position: relative
+  z-index: 4
+  width: 100%
+  height: 100%
+
+.liquidLight,
+.specular,
+.edgeLight
+  position: absolute
+  pointer-events: none
+  border-radius: inherit
+
+.liquidLight
+  z-index: 1
+  inset: -40% -30%
+  background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, .018), transparent 42%)
+  filter: blur(1.25rem)
+  opacity: .18
+  transform: none
+
+.specular
+  z-index: 2
+  inset: -1px
+  background: radial-gradient(circle at 50% 12%, rgba(255, 255, 255, .035) 0%, rgba(255, 255, 255, .012) 16%, transparent 38%), linear-gradient(145deg, rgba(255, 255, 255, .018), transparent 34%)
+  opacity: .12
+
+.edgeLight
+  z-index: 3
+  inset: 0
+  background: linear-gradient(145deg, rgba(255, 255, 255, .02), transparent 22%, transparent 78%)
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .01)
+  opacity: .14

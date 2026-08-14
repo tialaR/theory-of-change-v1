@@ -1,0 +1,7 @@
+{
+  "id": "SO-007",
+  "wave": 5,
+  "codename": "God Hooks Slayer",
+  "status": "ACTIVE",
+  "ownership": ["marker mutation", "marker editor", "selected-edge marker actions"]
+}

@@ -1,0 +1,47 @@
+// Moldura compartilhada das prévias públicas animadas.
+// Controla somente superfície, borda, padding, aspect-ratio e alinhamento.
+// Motion permanece nos componentes filhos.
+// Tokens: --tdm-public-preview-* em _tdm-public-action.sass
+
+.frame
+  display: block
+  inline-size: 100%
+  min-inline-size: 0
+  min-block-size: 0
+  margin: 0
+  padding: var(--tdm-public-preview-padding)
+  aspect-ratio: var(--tdm-public-preview-aspect-ratio)
+  overflow: hidden
+  border: var(--tdm-public-action-border-width) solid var(--tdm-public-preview-border)
+  border-radius: var(--tdm-public-preview-radius)
+  background: var(--tdm-public-preview-surface)
+  box-shadow: none
+  transition: border-color var(--tdm-public-preview-transition)
+
+  &:hover
+    border-color: var(--tdm-public-preview-border-hover)
+
+.viewport
+  display: grid
+  place-items: center
+  inline-size: 100%
+  block-size: 100%
+  min-inline-size: 0
+  min-block-size: 0
+  margin: 0
+  padding: 0
+  overflow: hidden
+
+  > *
+    inline-size: 100%
+    block-size: 100%
+    min-inline-size: 0
+    min-block-size: 0
+
+@media (max-width: 48rem)
+  .frame
+    padding: var(--tdm-public-preview-padding-compact)
+
+@media (prefers-reduced-motion: reduce)
+  .frame
+    transition-duration: 0.01ms

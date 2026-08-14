@@ -1,0 +1,73 @@
+.topbar
+  position: relative
+  display: grid
+  grid-template-columns: minmax(var(--tdm-icon-container-md), 1fr) auto minmax(var(--tdm-icon-container-md), 1fr)
+  align-items: center
+  gap: var(--tdm-space-4)
+  min-block-size: 4rem
+  padding: var(--tdm-space-2) var(--tdm-space-3)
+  border: var(--tdm-border-width-hairline) solid var(--tdm-public-header-shell-border)
+  border-radius: var(--tdm-radius-md)
+  background: var(--tdm-public-header-shell-bg)
+  backdrop-filter: var(--tdm-public-header-shell-backdrop)
+  -webkit-backdrop-filter: var(--tdm-public-header-shell-backdrop)
+  z-index: 20
+
+.start
+  display: flex
+  align-items: center
+  justify-content: flex-start
+  min-inline-size: var(--tdm-icon-container-md)
+
+.identity
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  gap: var(--tdm-space-2)
+  min-inline-size: 0
+  pointer-events: none
+
+.brandMark
+  inline-size: 1.5rem
+  block-size: 1.5rem
+  object-fit: contain
+  flex: 0 0 auto
+
+.heading
+  margin: 0
+  max-inline-size: min(30rem, 52vw)
+  overflow: hidden
+  color: var(--tdm-fg-primary)
+  font-size: var(--tdm-font-label-size)
+  font-weight: 600
+  letter-spacing: var(--tdm-font-label-tracking)
+  line-height: 1.2
+  text-align: center
+  text-overflow: ellipsis
+  text-transform: uppercase
+  white-space: nowrap
+
+.actions
+  display: flex
+  align-items: center
+  justify-content: flex-end
+  gap: var(--tdm-space-2)
+  min-inline-size: 0
+
+@media (max-width: 56rem)
+  .topbar
+    grid-template-columns: auto minmax(0, 1fr) auto
+    gap: var(--tdm-space-2)
+
+  .heading
+    max-inline-size: 42vw
+
+@media (max-width: 40rem)
+  .topbar
+    padding-inline: var(--tdm-space-2)
+
+  .brandMark
+    display: none
+
+  .heading
+    max-inline-size: 32vw

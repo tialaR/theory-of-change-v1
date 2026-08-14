@@ -1,0 +1,56 @@
+.root
+  display: grid
+  place-items: center
+  inline-size: 100%
+  block-size: 100%
+  min-inline-size: 0
+  min-block-size: 0
+  margin: 0
+  overflow: hidden
+  isolation: isolate
+
+.svg
+  display: block
+  inline-size: 100%
+  block-size: 100%
+  margin: 0
+  overflow: hidden
+  transform-origin: center
+
+.connectionsLayer
+  opacity: .92
+
+.nodesLayer
+  filter: drop-shadow(0 .9rem 1.6rem rgba(0, 0, 0, .22))
+
+.nodeSurface
+  fill: var(--tdm-surface-hover)
+  stroke: var(--tdm-border-subtle)
+  stroke-width: .75
+
+.nodeTile
+  fill: var(--tdm-surface-disabled)
+  stroke: var(--tdm-border-disabled)
+  stroke-width: .65
+
+.nodeTitleLine
+  fill: var(--tdm-fg-subtle)
+
+.nodeCopyLine
+  fill: var(--tdm-fg-disabled)
+
+.nodeCopyLineSoft
+  fill: var(--tdm-surface-disabled)
+
+.connection
+  fill: none
+  stroke: color-mix(in srgb, var(--connection-color) 32%, var(--tdm-fg-subtle))
+  stroke-width: 1.05
+  stroke-dasharray: 2 8
+  stroke-linecap: round
+  stroke-linejoin: round
+  pointer-events: none
+
+@media (prefers-reduced-motion: reduce)
+  .connection
+    stroke-dashoffset: 0

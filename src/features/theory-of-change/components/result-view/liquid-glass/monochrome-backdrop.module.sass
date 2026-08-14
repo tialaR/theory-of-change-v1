@@ -1,0 +1,262 @@
+.backdrop
+  --backdrop-intensity: 1
+  --backdrop-light-duration: 18s
+  --backdrop-fog-duration: 32s
+  --backdrop-topography-duration: 25s
+  --backdrop-noise-duration: 42s
+  --backdrop-plate-duration: 15s
+  --backdrop-layer-duration: 26s
+  --backdrop-column-duration: 38s
+  position: relative
+  isolation: isolate
+  min-height: 100vh
+  overflow: hidden
+  color: rgba(244, 244, 247, .94)
+  background: #050608
+
+.blackBase,
+.lightField,
+.fogField,
+.noise
+  position: absolute
+  pointer-events: none
+  inset: 0
+
+.blackBase
+  z-index: -10
+  background: linear-gradient(180deg, #050608 0%, #0d0e12 44%, #06070a 100%)
+
+.lightField
+  z-index: -9
+  inset: -22%
+  background: radial-gradient(ellipse at 48% 7%, rgba(255, 255, 255, calc(.28 * var(--backdrop-intensity))) 0%, rgba(220, 223, 230, calc(.1 * var(--backdrop-intensity))) 22%, transparent 48%), radial-gradient(ellipse at 3% 53%, rgba(255, 255, 255, calc(.08 * var(--backdrop-intensity))) 0%, transparent 35%), radial-gradient(ellipse at 98% 60%, rgba(239, 241, 247, calc(.09 * var(--backdrop-intensity))) 0%, transparent 36%)
+  filter: blur(34px)
+  opacity: .84
+  transform: translate3d(0, 0, 0) scale(1.04)
+  animation: light-breathe var(--backdrop-light-duration) ease-in-out infinite
+
+.fogField
+  z-index: -8
+  inset: -20%
+  background: conic-gradient(from 210deg at 48% 42%, transparent 0 14%, rgba(255, 255, 255, calc(.05 * var(--backdrop-intensity))) 22%, transparent 36% 60%, rgba(255, 255, 255, calc(.04 * var(--backdrop-intensity))) 74%, transparent 90% 100%)
+  filter: blur(54px)
+  opacity: .66
+  animation: fog-orbit var(--backdrop-fog-duration) linear infinite
+
+.noise
+  z-index: 3
+  opacity: .12
+  background-image: radial-gradient(circle, rgba(255, 255, 255, .16) 0 .62px, transparent .8px), radial-gradient(circle, rgba(255, 255, 255, .07) 0 .5px, transparent .72px)
+  background-position: 0 0, 15px 19px
+  background-size: 33px 39px, 47px 51px
+  mix-blend-mode: soft-light
+  mask-image: linear-gradient(to bottom, black, rgba(0, 0, 0, .74) 75%, transparent)
+  animation: noise-drift var(--backdrop-noise-duration) linear infinite
+
+.content
+  position: relative
+  z-index: 5
+  min-height: inherit
+
+.overlay
+  position: absolute
+  inset: 0
+  min-height: 100%
+  height: 100%
+  pointer-events: none
+  overflow: hidden
+  background: transparent
+
+.grayLayers,
+.grayColumns
+  position: absolute
+  pointer-events: none
+  inset: -12%
+
+.grayColumns
+  z-index: -7
+  overflow: hidden
+
+.grayColumn
+  position: absolute
+  top: -10%
+  bottom: -10%
+  left: var(--column-left)
+  width: clamp(150px, 18vw, 330px)
+  border-radius: 50%
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, var(--column-light-top)) 16%, rgba(210, 213, 219, var(--column-light-mid)) 47%, rgba(255, 255, 255, var(--column-light-bottom)) 74%, transparent 100%)
+  filter: blur(var(--column-blur))
+  opacity: var(--column-opacity)
+  transform: translate3d(var(--column-x-start), 0, 0) skewX(-7deg)
+  animation: column-drift var(--column-duration) ease-in-out infinite alternate
+
+.grayLayers
+  z-index: -6
+  overflow: hidden
+  transform: rotate(-4deg) scale(1.08)
+
+.grayLayer
+  position: absolute
+  top: var(--layer-top)
+  left: -44%
+  width: 188%
+  height: clamp(92px, 12vw, 190px)
+  border: 1px solid rgba(255, 255, 255, var(--layer-border-alpha))
+  border-radius: 48% 52% 46% 54% / 58% 42% 58% 42%
+  background: linear-gradient(90deg, transparent 0%, rgba(180, 183, 190, var(--layer-light-a)) 14%, rgba(245, 246, 248, var(--layer-light-b)) 43%, rgba(160, 164, 172, var(--layer-light-c)) 67%, transparent 100%)
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06), 0 0 58px rgba(255, 255, 255, var(--layer-glow-alpha))
+  filter: blur(var(--layer-blur))
+  opacity: var(--layer-opacity)
+  transform: translate3d(-8%, 0, 0) rotate(var(--layer-rotate-a)) scaleY(var(--layer-scale-a))
+  animation: gray-layer-flow var(--layer-duration) cubic-bezier(.45, .05, .55, .95) infinite alternate
+  animation-delay: var(--layer-delay)
+
+.grayLayer:nth-child(even)
+  animation-name: gray-layer-flow-reverse
+  background: linear-gradient(90deg, transparent 0%, rgba(235, 236, 239, var(--layer-even-a)) 30%, rgba(120, 124, 132, var(--layer-even-b)) 61%, rgba(255, 255, 255, var(--layer-even-c)) 80%, transparent 100%)
+
+.gray-layers
+  .lightField
+    opacity: .62
+
+  .fogField
+    opacity: .4
+
+.topographySvg
+  position: absolute
+  z-index: -4
+  top: -8%
+  left: 50%
+  width: max(900px, 110vw)
+  height: 122%
+  opacity: calc(.9 * var(--backdrop-intensity))
+  transform: translate3d(-50%, 0, 0) scale(1.02)
+  animation: topography-drift var(--backdrop-topography-duration) ease-in-out infinite
+
+.contourLines,
+.contourGlow
+  fill: none
+  stroke-linecap: round
+  stroke-linejoin: round
+
+.contourLines path
+  stroke: url(#topography-line)
+  stroke-width: calc(1.25px + (var(--line-index) * .02px))
+  opacity: calc(.42 + (var(--line-index) * .018))
+  vector-effect: non-scaling-stroke
+
+.contourGlow path
+  stroke: rgba(255, 255, 255, .26)
+  stroke-width: 6px
+  opacity: .55
+  vector-effect: non-scaling-stroke
+
+.stack
+  position: absolute
+  z-index: -4
+  top: 50%
+  left: 50%
+  width: min(660px, 82vw)
+  height: min(900px, 86vh)
+  transform: translate(-50%, -50%)
+
+.stackPlate
+  --plate-index: 0
+  position: absolute
+  top: calc(var(--plate-index) * 10.2%)
+  left: 50%
+  width: 88%
+  height: 25%
+  border: 1px solid rgba(255, 255, 255, calc(.18 + (var(--plate-index) * .018)))
+  border-radius: 17% / 35%
+  background: radial-gradient(ellipse at 50% 36%, rgba(255, 255, 255, calc(.5 - (var(--plate-index) * .045))) 0%, rgba(255, 255, 255, calc(.16 - (var(--plate-index) * .012))) 42%, rgba(255, 255, 255, .018) 72%, rgba(0, 0, 0, .16) 100%)
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .34), inset 0 -24px 46px rgba(0, 0, 0, .18), 0 30px 54px rgba(0, 0, 0, .24)
+  filter: blur(calc(var(--plate-index) * .13px))
+  opacity: calc(.92 - (var(--plate-index) * .045))
+  transform: translateX(-50%) scale(calc(1 - (var(--plate-index) * .018)))
+  animation: plate-breathe var(--backdrop-plate-duration) ease-in-out infinite alternate
+
+.soft-beam
+  .lightField
+    background: radial-gradient(ellipse at 52% 31%, rgba(255, 255, 255, calc(.5 * var(--backdrop-intensity))) 0%, rgba(224, 226, 232, calc(.19 * var(--backdrop-intensity))) 21%, transparent 46%), radial-gradient(ellipse at 18% 69%, rgba(255, 255, 255, calc(.17 * var(--backdrop-intensity))) 0%, transparent 38%), radial-gradient(ellipse at 89% 73%, rgba(255, 255, 255, calc(.12 * var(--backdrop-intensity))) 0%, transparent 31%)
+
+  .fogField
+    opacity: .48
+
+@keyframes gray-layer-flow
+  0%
+    transform: translate3d(-9%, -2%, 0) rotate(var(--layer-rotate-a)) scaleY(var(--layer-scale-a))
+  50%
+    transform: translate3d(1%, 2.2%, 0) rotate(var(--layer-rotate-b)) scaleY(var(--layer-scale-b))
+  100%
+    transform: translate3d(10%, -1%, 0) rotate(var(--layer-rotate-c)) scaleY(var(--layer-scale-c))
+
+@keyframes gray-layer-flow-reverse
+  0%
+    transform: translate3d(9%, 1%, 0) rotate(var(--layer-rotate-even-a)) scaleY(var(--layer-scale-even-a))
+  50%
+    transform: translate3d(-1%, -2.5%, 0) rotate(var(--layer-rotate-even-b)) scaleY(var(--layer-scale-even-b))
+  100%
+    transform: translate3d(-10%, 1.5%, 0) rotate(var(--layer-rotate-even-c)) scaleY(var(--layer-scale-even-c))
+
+@keyframes column-drift
+  0%
+    transform: translate3d(var(--column-x-start), -3%, 0) skewX(-7deg) scaleX(.92)
+  100%
+    transform: translate3d(var(--column-x-end), 4%, 0) skewX(5deg) scaleX(1.08)
+
+@keyframes light-breathe
+  0%, 100%
+    transform: translate3d(-2%, -1%, 0) scale(1.02)
+  50%
+    transform: translate3d(2.5%, 1.5%, 0) scale(1.08)
+
+@keyframes fog-orbit
+  from
+    transform: rotate(0deg) scale(1.04)
+  to
+    transform: rotate(360deg) scale(1.04)
+
+@keyframes topography-drift
+  0%, 100%
+    transform: translate3d(-51%, -1%, 0) scale(1.02) rotate(-.4deg)
+  50%
+    transform: translate3d(-49%, 1.4%, 0) scale(1.045) rotate(.45deg)
+
+@keyframes plate-breathe
+  from
+    transform: translateX(-50%) translateY(-2px) scale(calc(1 - (var(--plate-index) * .018)))
+  to
+    transform: translateX(-50%) translateY(5px) scale(calc(1.012 - (var(--plate-index) * .018)))
+
+@keyframes noise-drift
+  from
+    background-position: 0 0, 15px 19px
+  to
+    background-position: 33px 39px, 62px 70px
+
+@media (max-width: 720px)
+  .grayLayers,
+  .grayColumns
+    inset: -6% -24%
+
+  .grayLayer
+    height: clamp(86px, 22vw, 150px)
+    filter: blur(var(--layer-mobile-blur))
+
+  .topographySvg
+    width: 150vw
+    height: 118%
+
+  .stack
+    width: 94vw
+
+@media (prefers-reduced-motion: reduce)
+  .lightField,
+  .fogField,
+  .noise,
+  .grayLayer,
+  .grayColumn,
+  .topographySvg,
+  .stackPlate
+    animation: none

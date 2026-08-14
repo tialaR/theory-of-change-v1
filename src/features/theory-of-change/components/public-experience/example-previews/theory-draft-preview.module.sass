@@ -1,0 +1,57 @@
+.root
+  inline-size: 100%
+  block-size: 100%
+  min-block-size: 0
+  display: grid
+  place-items: center
+  overflow: hidden
+  isolation: isolate
+
+.svg
+  display: block
+  inline-size: 100%
+  block-size: 100%
+  max-inline-size: 100%
+  max-block-size: 100%
+  overflow: visible
+
+.columnSurface
+  fill: var(--tdm-surface-hover)
+  stroke: var(--tdm-border-subtle)
+  stroke-width: 0.75
+
+.columnDivider
+  stroke: var(--tdm-border-disabled)
+  stroke-width: 0.65
+
+.cardSurface
+  fill: var(--tdm-surface-pressed)
+  stroke: var(--tdm-border-subtle)
+  stroke-width: 0.75
+
+.dotTile
+  fill: var(--tdm-surface-disabled)
+  stroke: var(--tdm-border-disabled)
+  stroke-width: 0.65
+
+.titleLine
+  fill: var(--tdm-fg-subtle)
+
+.copyLine
+  fill: var(--tdm-fg-disabled)
+
+.copyLineSoft
+  fill: var(--tdm-surface-disabled)
+
+.connection
+  fill: none
+  stroke: var(--tdm-fg-subtle)
+  stroke-width: 1.05
+  stroke-dasharray: 2 8
+  stroke-linecap: round
+  stroke-linejoin: round
+  pointer-events: none
+
+@media (prefers-reduced-motion: reduce)
+  .connection
+    stroke-dashoffset: 0

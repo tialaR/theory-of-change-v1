@@ -1,0 +1,8 @@
+{
+  "id": "SO-009",
+  "codename": "Narrative God Slayer",
+  "wave": "02",
+  "status": "ACTIVE",
+  "purpose": "Split narrative graph traversal and scope preparation from the mapper facade",
+  "gate": "check:tdm:narrative-god-slayer:wave02"
+}

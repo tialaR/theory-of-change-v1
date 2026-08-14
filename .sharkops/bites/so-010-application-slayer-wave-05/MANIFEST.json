@@ -1,0 +1,15 @@
+{
+  "id": "SO-010",
+  "codename": "Application Slayer",
+  "wave": 5,
+  "title": "Save Policy Extraction",
+  "status": "ACTIVE",
+  "purpose": "Move save-state decisions and bounded navigation retry policy from UI into framework-neutral Application without changing behavior",
+  "createdAt": "2026-08-06T00:25:00.000Z",
+  "contracts": [
+    "Application owns revision-to-save-state decisions",
+    "Application owns the bounded save-until-clean retry policy",
+    "UI retains browser lifecycle, routing, translation and notification effects",
+    "No React, Next, React Flow, infrastructure or server dependencies enter Application"
+  ]
+}

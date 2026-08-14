@@ -1,0 +1,99 @@
+{
+  "version": "3.6.0",
+  "name": "TDM Executable Contract",
+  "activePhase": "canvas-continuity-release",
+  "phases": [
+    "foundation",
+    "shark-cleanup",
+    "canvas-engine",
+    "validation-release",
+    "hardening-release",
+    "react-flow-release",
+    "auth-msw-release"
+  ],
+  "gateState": "closed",
+  "migrationBranch": "refactor/shark-cleanup-and-canvas-v1",
+  "mergeAllowed": true,
+  "mockPersistenceScope": "single-next-server-process",
+  "strictThresholds": {
+    "nestedTernaries": 0,
+    "important": 0,
+    "forbiddenBrowserPersistence": 0,
+    "legacyCanvasNames": 0,
+    "maxCanvasComponentLines": 260,
+    "maxCanvasHookLines": 360,
+    "maxRoutePageLines": 10
+  },
+  "protectedVisualPatterns": [
+    "src/features/theory-of-change/canvas/ui/canvas-workspace/canvas-workspace.module.sass"
+  ],
+  "protectedVisualHashes": {
+    "canvasWorkspaceSass": "92ca880af2f6cb4dec78b87f61e028234d370a8a937423c834d97f207e299a46"
+  },
+  "forbiddenTrackedPatterns": [
+    "node_modules/**",
+    ".next/**",
+    "coverage/**",
+    "playwright-report/**",
+    "test-results/**",
+    "**/.DS_Store",
+    "**/*.tsbuildinfo",
+    "**/*.zip"
+  ],
+  "forbiddenNewCode": [
+    "localStorage",
+    "sessionStorage",
+    "window.location",
+    "!important",
+    "tdm-command-preview-v2",
+    "canvas-v4",
+    "allowedRelation",
+    "canConnect"
+  ],
+  "canvasTarget": {
+    "route": "/canvas",
+    "resultRoute": "/canvas/resultado",
+    "legacyRoute": null,
+    "serverComposition": "src/features/theory-of-change/canvas/canvas-page.tsx",
+    "clientBoundary": "src/features/theory-of-change/canvas/ui/canvas-workspace/canvas-client-entry.tsx",
+    "renderer": "@xyflow/react ReactFlow with custom nodes, handles and custom edges",
+    "domainPolicy": "evaluateCanvasConnection",
+    "persistence": "Server Action -> typed HTTP repository -> MSW Node module store partitioned by ownerId/projectId",
+    "locale": "pt-BR",
+    "retiredLegacyRoute": "/canvas-legado",
+    "legacyRoutePolicy": "retired by SO-015 Wave 09; reintroduction requires explicit SharkOps initiative"
+  },
+  "authTarget": {
+    "route": "/login",
+    "protectedRoutes": [
+      "/canvas",
+      "/canvas/resultado"
+    ],
+    "publicRoutesRemainPublic": true,
+    "session": "httpOnly cookie backed by MSW Node module store",
+    "personas": [
+      "user-tiala-rocha",
+      "user-rodger-rocha"
+    ]
+  },
+  "routeStates": {
+    "notFoundCode": "404",
+    "genericErrorUses404": false,
+    "sharedComposition": "src/shared/ui/tdm-status-screen"
+  },
+  "ownershipRule": "Each test, hook, component, adapter, fixture and mock remains inside the owning feature scope; app only routes and composes.",
+  "releasedAt": "2026-07-28T00:00:00-03:00",
+  "canvasAutosaveDebounceMs": 1200,
+  "canvasIdStrategy": "collision-safe-random-uuid",
+  "canvasSaveOrdering": "serialized",
+  "manualCanvasSavePreserved": true,
+  "canvasNavigationFlush": true,
+  "userFacingCopyPolicy": "next-intl-json",
+  "namingPolicy": {
+    "filesAndFolders": "kebab-case",
+    "reactComponents": "PascalCase",
+    "functionsVariablesHooks": "camelCase",
+    "sassPartials": "no-leading-underscore"
+  },
+  "updatedAt": "2026-08-11T04:00:00.000Z"
+}

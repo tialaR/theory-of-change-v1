@@ -1,0 +1,57 @@
+{
+  "initiative": "SO-015",
+  "title": "Public Route Regression & Closeout Matrix",
+  "revision": 11,
+  "closeoutReady": true,
+  "architectureGates": [
+    "check:tdm:public-routes:wave01",
+    "check:tdm:public-routes:wave02",
+    "check:tdm:public-routes:wave03",
+    "check:tdm:public-routes:wave04",
+    "check:tdm:public-routes:wave05",
+    "check:tdm:public-routes:wave06",
+    "check:tdm:public-routes:wave07",
+    "check:tdm:public-routes:wave08",
+    "check:tdm:public-routes:wave09",
+    "check:tdm:public-routes:wave10",
+    "check:tdm:public-routes:wave11",
+    "check:tdm:public-routes:active",
+    "shark:verify",
+    "check:tdm:golden-state"
+  ],
+  "repositoryQualityGates": [
+    "check:tdm:sass-module-policy",
+    "typegen",
+    "typecheck",
+    "test:unit",
+    "build"
+  ],
+  "behaviorGates": {
+    "canvas": {
+      "script": "test:e2e:canvas",
+      "status": "SEALED_BY_GOLDEN_STATE"
+    },
+    "publicRoutes": {
+      "script": "test:e2e:public-routes",
+      "status": "ARMORED",
+      "closeoutBlocking": false,
+      "coverage": [
+        "registered public routes",
+        "public access without session",
+        "auth/public separation",
+        "404 status surface",
+        "retired /canvas-legado"
+      ],
+      "browserPolicy": "Use Playwright bundled Chromium when available; otherwise use an installed system Chrome/Chromium executable."
+    }
+  },
+  "rules": {
+    "canvasGoldenStateMustRemainSealed": true,
+    "legacyCanvasRouteMustRemainRetired": true,
+    "activePublicRouteArchitectureGateMustRemainMandatory": true,
+    "closeoutCannotIgnoreKnownHarnessGap": true,
+    "toolingFailureMustNotBeMisreportedAsProductFailure": true,
+    "productFailureMustNotBeHiddenAsToolingFailure": true,
+    "environmentSafePublicE2EMustRemainMandatory": true
+  }
+}

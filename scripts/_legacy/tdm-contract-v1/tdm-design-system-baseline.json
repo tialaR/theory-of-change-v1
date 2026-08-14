@@ -1,0 +1,1261 @@
+{
+  "version": 1,
+  "generatedBy": "scripts/check-tdm-design-system.mjs --write-baseline",
+  "note": "Baseline congelada na V1 RC (Fase 5A). Novas violações não entram automaticamente. Preferir reduzir allowCount quando o arquivo for limpo. Remoções planejadas: Fase 5B.",
+  "entries": [
+    {
+      "rule": "TDM-DS-001",
+      "path": "src/app/canvas/tdm-command-preview/tdm-command-preview.module.sass",
+      "allowCount": 2,
+      "reason": "Débito pré-existente de especificidade; limpeza em fase de hardening visual.",
+      "removeIn": "Fase 5B — hardening CSS"
+    },
+    {
+      "rule": "TDM-DS-001",
+      "path": "src/app/globals.sass",
+      "allowCount": 3,
+      "reason": "Débito pré-existente de especificidade; limpeza em fase de hardening visual.",
+      "removeIn": "Fase 5B — hardening CSS"
+    },
+    {
+      "rule": "TDM-DS-001",
+      "path": "src/features/theory-of-change/components/canvas/tdm-canvas-command-dock.module.sass",
+      "allowCount": 16,
+      "reason": "Débito pré-existente de especificidade; limpeza em fase de hardening visual.",
+      "removeIn": "Fase 5B — hardening CSS"
+    },
+    {
+      "rule": "TDM-DS-001",
+      "path": "src/features/theory-of-change/components/canvas/tdm-canvas-process-dock/tdm-canvas-process-dock.module.sass",
+      "allowCount": 8,
+      "reason": "Débito pré-existente de especificidade; limpeza em fase de hardening visual.",
+      "removeIn": "Fase 5B — hardening CSS"
+    },
+    {
+      "rule": "TDM-DS-001",
+      "path": "src/features/theory-of-change/components/canvas/tdm-canvas.module.sass",
+      "allowCount": 20,
+      "reason": "Débito pré-existente de especificidade; limpeza em fase de hardening visual.",
+      "removeIn": "Fase 5B — hardening CSS"
+    },
+    {
+      "rule": "TDM-DS-001",
+      "path": "src/features/theory-of-change/components/canvas/tdm-connection-guide.module.sass",
+      "allowCount": 8,
+      "reason": "Débito pré-existente de especificidade; limpeza em fase de hardening visual.",
+      "removeIn": "Fase 5B — hardening CSS"
+    },
+    {
+      "rule": "TDM-DS-001",
+      "path": "src/features/theory-of-change/components/public-experience/public-experience.module.sass",
+      "allowCount": 3,
+      "reason": "Débito pré-existente de especificidade; limpeza em fase de hardening visual.",
+      "removeIn": "Fase 5B — hardening CSS"
+    },
+    {
+      "rule": "TDM-DS-001",
+      "path": "src/features/theory-of-change/components/result-view/result-experience-shell/result-experience-shell.module.sass",
+      "allowCount": 1,
+      "reason": "Débito pré-existente de especificidade; limpeza em fase de hardening visual.",
+      "removeIn": "Fase 5B — hardening CSS"
+    },
+    {
+      "rule": "TDM-DS-001",
+      "path": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.module.sass",
+      "allowCount": 4,
+      "reason": "Débito pré-existente de especificidade; limpeza em fase de hardening visual.",
+      "removeIn": "Fase 5B — hardening CSS"
+    },
+    {
+      "rule": "TDM-DS-001",
+      "path": "src/features/theory-of-change/components/result-view/result-view-grainient-backdrop.module.sass",
+      "allowCount": 1,
+      "reason": "Débito pré-existente de especificidade; limpeza em fase de hardening visual.",
+      "removeIn": "Fase 5B — hardening CSS"
+    },
+    {
+      "rule": "TDM-DS-001",
+      "path": "src/features/theory-of-change/components/result-view/result-view.module.sass",
+      "allowCount": 7,
+      "reason": "Débito pré-existente de especificidade; limpeza em fase de hardening visual.",
+      "removeIn": "Fase 5B — hardening CSS"
+    },
+    {
+      "rule": "TDM-DS-001",
+      "path": "src/features/theory-of-change/components/result-view/tdm-glass-surface.module.sass",
+      "allowCount": 6,
+      "reason": "Débito pré-existente de especificidade; limpeza em fase de hardening visual.",
+      "removeIn": "Fase 5B — hardening CSS"
+    },
+    {
+      "rule": "TDM-DS-001",
+      "path": "src/features/theory-of-change/components/sidebar/change-theory-orb.module.sass",
+      "allowCount": 1,
+      "reason": "Débito pré-existente de especificidade; limpeza em fase de hardening visual.",
+      "removeIn": "Fase 5B — hardening CSS"
+    },
+    {
+      "rule": "TDM-DS-001",
+      "path": "src/features/theory-of-change/components/sidebar/logo-animated-sprite/logo-animated-sprite.module.sass",
+      "allowCount": 5,
+      "reason": "Débito pré-existente de especificidade; limpeza em fase de hardening visual.",
+      "removeIn": "Fase 5B — hardening CSS"
+    },
+    {
+      "rule": "TDM-DS-001",
+      "path": "src/features/theory-of-change/components/sidebar/tdm-sidebar.module.sass",
+      "allowCount": 544,
+      "reason": "Débito pré-existente de especificidade; limpeza em fase de hardening visual.",
+      "removeIn": "Fase 5B — hardening CSS"
+    },
+    {
+      "rule": "TDM-DS-001",
+      "path": "src/features/theory-of-change/components/sidebar/theory-change-sculpture.module.sass",
+      "allowCount": 2,
+      "reason": "Débito pré-existente de especificidade; limpeza em fase de hardening visual.",
+      "removeIn": "Fase 5B — hardening CSS"
+    },
+    {
+      "rule": "TDM-DS-001",
+      "path": "src/features/theory-of-change/components/stage-crystal-icon/tdm-stage-crystal-icon.module.sass",
+      "allowCount": 3,
+      "reason": "Débito pré-existente de especificidade; limpeza em fase de hardening visual.",
+      "removeIn": "Fase 5B — hardening CSS"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/app/canvas/tdm-command-preview/page.tsx",
+      "allowCount": 6,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/app/canvas/tdm-command-preview/tdm-command-preview.module.sass",
+      "allowCount": 104,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/app/exemplos/exemplos-client.tsx",
+      "allowCount": 1,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/app/exemplos/exemplos.module.sass",
+      "allowCount": 10,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/app/globals.sass",
+      "allowCount": 3,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/app/guia-de-aprendizado/guia-de-aprendizado.module.sass",
+      "allowCount": 3,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/app/home-color-bends-background.tsx",
+      "allowCount": 1,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/app/page.module.sass",
+      "allowCount": 7,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/app/referencias/referencias.module.sass",
+      "allowCount": 3,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/canvas/tdm-canvas-command-dock.module.sass",
+      "allowCount": 47,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/canvas/tdm-canvas-inner.tsx",
+      "allowCount": 6,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/canvas/tdm-canvas-node/tdm-canvas-node-stage.ts",
+      "allowCount": 8,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/canvas/tdm-canvas-node/tdm-canvas-node.module.sass",
+      "allowCount": 10,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/canvas/tdm-canvas-process-dock/tdm-canvas-process-dock.module.sass",
+      "allowCount": 22,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/canvas/tdm-canvas.module.sass",
+      "allowCount": 70,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/canvas/tdm-connection-guide.module.sass",
+      "allowCount": 23,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/canvas/tdm-connection-guide.tsx",
+      "allowCount": 4,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/edge/tdm-edge-marker-editor.module.sass",
+      "allowCount": 32,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/edge/tdm-edge.module.sass",
+      "allowCount": 2,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/edge/tdm-theory-edge.module.sass",
+      "allowCount": 27,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/floating-header/floating-header.module.sass",
+      "allowCount": 2,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/form-field/tdm-form-actions.module.sass",
+      "allowCount": 13,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/form-field/tdm-form-field.module.sass",
+      "allowCount": 21,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/public-pages/home-brand-logo/home-brand-logo.module.sass",
+      "allowCount": 2,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/public-pages/home-onboarding-preview.module.sass",
+      "allowCount": 15,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/public-pages/home-onboarding-preview.tsx",
+      "allowCount": 4,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/public-pages/public-pages.module.sass",
+      "allowCount": 45,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/public-pages/theory-flow-board.tsx",
+      "allowCount": 1,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/editorial-preview-primitives.tsx",
+      "allowCount": 1,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.module.sass",
+      "allowCount": 1,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/flow-draft-preview.tsx",
+      "allowCount": 5,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/theory-draft-preview.tsx",
+      "allowCount": 5,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/public-experience/example-previews/stage-colors.ts",
+      "allowCount": 5,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/public-experience/guide-stage-card/guide-stage-card.module.sass",
+      "allowCount": 7,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/public-experience/guide-stage-card/guide-stage-card.tsx",
+      "allowCount": 1,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/public-experience/public-experience.module.sass",
+      "allowCount": 120,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/public-experience/public-experience.tsx",
+      "allowCount": 18,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-preview/tdm-result-preview.module.sass",
+      "allowCount": 1,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/experience/result-diagram.tsx",
+      "allowCount": 2,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/experience/result-experience-data.ts",
+      "allowCount": 1,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/experience/result-experience-helpers.ts",
+      "allowCount": 5,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/experience/result-experience.module.sass",
+      "allowCount": 168,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/experience/result-flow-board.tsx",
+      "allowCount": 1,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/experience/result-stage-board.tsx",
+      "allowCount": 1,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/experience/types.ts",
+      "allowCount": 8,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/liquid-glass/glass-surface.module.sass",
+      "allowCount": 9,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/liquid-glass/glass-surface.tsx",
+      "allowCount": 1,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/liquid-glass/monochrome-backdrop.module.sass",
+      "allowCount": 17,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/liquid-glass/monochrome-backdrop.tsx",
+      "allowCount": 4,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/liquid-glass/resource-card.module.sass",
+      "allowCount": 17,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/liquid-glass/resource-card.tsx",
+      "allowCount": 6,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/liquid-glass/resources-panel.module.sass",
+      "allowCount": 16,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/liquid-glass/resources-panel.tsx",
+      "allowCount": 9,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/liquid-glass/result-liquid-card.module.sass",
+      "allowCount": 13,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/liquid-glass/result-liquid-card.tsx",
+      "allowCount": 5,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/liquid-glass/result-liquid-column.module.sass",
+      "allowCount": 10,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/liquid-glass/result-liquid-column.tsx",
+      "allowCount": 9,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/liquid-glass/stage-theme.ts",
+      "allowCount": 13,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/result-connections-layer/result-connections-layer.tsx",
+      "allowCount": 1,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/result-stage-column/result-stage-column.module.sass",
+      "allowCount": 8,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-document-figure.module.sass",
+      "allowCount": 16,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/result-theory-narrative/theory-narrative-flowchart.module.sass",
+      "allowCount": 15,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/result-view-blueprint-layer.module.sass",
+      "allowCount": 2,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/result-view-blueprint-layer.tsx",
+      "allowCount": 2,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.module.sass",
+      "allowCount": 22,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/result-view-grainient-backdrop.module.sass",
+      "allowCount": 6,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/result-view-grainient-backdrop.tsx",
+      "allowCount": 3,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/result-view-utils.ts",
+      "allowCount": 20,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/result-view.constants.ts",
+      "allowCount": 8,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/result-view.module.sass",
+      "allowCount": 166,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/result-view.tsx",
+      "allowCount": 13,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/result-workspace/result-workspace.module.sass",
+      "allowCount": 4,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/tdm-glass-surface.module.sass",
+      "allowCount": 30,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/result-view/tdm-glass-surface.tsx",
+      "allowCount": 1,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/sidebar/change-theory-orb.module.sass",
+      "allowCount": 18,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/sidebar/final-result-glass-sculpture.module.sass",
+      "allowCount": 21,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/sidebar/final-result-glass-sculpture.tsx",
+      "allowCount": 63,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/sidebar/final-result-visual.tsx",
+      "allowCount": 27,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/sidebar/liquid-glass-logo-infinite-loop/liquid-glass-logo-infinite-loop.module.sass",
+      "allowCount": 1,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/sidebar/liquid-glass-logo-infinite-loop/LiquidGlassLogoInfiniteLoop.tsx",
+      "allowCount": 6,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/sidebar/logo-animated-sprite/logo-animated-sprite.module.sass",
+      "allowCount": 4,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/sidebar/logo-animated-sprite/logo-animated-sprite.tsx",
+      "allowCount": 4,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/sidebar/tdm-sidebar.module.sass",
+      "allowCount": 629,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx",
+      "allowCount": 15,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/sidebar/theory-change-sculpture.module.sass",
+      "allowCount": 3,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/sidebar/theory-change-sculpture.tsx",
+      "allowCount": 30,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/sidebar/v1-preserved-sidebar-sections.tsx",
+      "allowCount": 30,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/stage-crystal-icon/tdm-stage-crystal-icon.tsx",
+      "allowCount": 4,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/stage-gate/stage-gate.module.sass",
+      "allowCount": 6,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/tdm-section-icon/tdm-section-icon.module.sass",
+      "allowCount": 2,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/features/theory-of-change/components/toast/tdm-toast.module.sass",
+      "allowCount": 19,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/shared/ui/tdm-public-design-system/tdm-public-design-system.module.sass",
+      "allowCount": 10,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-003",
+      "path": "src/shared/ui/tooltip/tdm-anchored-tooltip.module.sass",
+      "allowCount": 7,
+      "reason": "Hardcodes pré-existentes em superfície migrada parcialmente; trocar por --tdm-* na fase de tokens de produto.",
+      "removeIn": "Fase 5B — tokens de produto"
+    },
+    {
+      "rule": "TDM-DS-004",
+      "path": "src/features/theory-of-change/components/floating-header/floating-header.module.sass",
+      "allowCount": 2,
+      "reason": "font-size px legado em módulo ainda ativo; migrar para rem.",
+      "removeIn": "Fase 5B — cleanup DS"
+    },
+    {
+      "rule": "TDM-DS-004",
+      "path": "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-document-figure.module.sass",
+      "allowCount": 5,
+      "reason": "font-size px legado em módulo ainda ativo; migrar para rem.",
+      "removeIn": "Fase 5B — cleanup DS"
+    },
+    {
+      "rule": "TDM-DS-004",
+      "path": "src/features/theory-of-change/components/result-view/result-theory-narrative/theory-narrative-flowchart.module.sass",
+      "allowCount": 3,
+      "reason": "font-size px legado em módulo ainda ativo; migrar para rem.",
+      "removeIn": "Fase 5B — cleanup DS"
+    },
+    {
+      "rule": "TDM-DS-004",
+      "path": "src/features/theory-of-change/components/stage-gate/stage-gate.module.sass",
+      "allowCount": 4,
+      "reason": "font-size px legado em módulo ainda ativo; migrar para rem.",
+      "removeIn": "Fase 5B — cleanup DS"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/app/canvas/tdm-command-preview/tdm-command-preview.module.sass",
+      "allowCount": 13,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/app/exemplos/exemplos.module.sass",
+      "allowCount": 1,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/app/guia-de-aprendizado/guia-de-aprendizado.module.sass",
+      "allowCount": 1,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/app/page.module.sass",
+      "allowCount": 2,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/app/referencias/referencias.module.sass",
+      "allowCount": 1,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/features/theory-of-change/components/canvas/tdm-canvas-process-dock/tdm-canvas-process-dock.module.sass",
+      "allowCount": 1,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/features/theory-of-change/components/canvas/tdm-canvas.module.sass",
+      "allowCount": 1,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/features/theory-of-change/components/canvas/tdm-connection-guide.module.sass",
+      "allowCount": 5,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/features/theory-of-change/components/edge/tdm-edge-marker-editor.module.sass",
+      "allowCount": 1,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/features/theory-of-change/components/edge/tdm-theory-edge.module.sass",
+      "allowCount": 5,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/features/theory-of-change/components/form-field/tdm-form-actions.module.sass",
+      "allowCount": 1,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/features/theory-of-change/components/form-field/tdm-form-field.module.sass",
+      "allowCount": 1,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/features/theory-of-change/components/public-pages/home-onboarding-preview.module.sass",
+      "allowCount": 3,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/features/theory-of-change/components/public-experience/public-experience.module.sass",
+      "allowCount": 12,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/features/theory-of-change/components/result-view/experience/result-experience.module.sass",
+      "allowCount": 22,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/features/theory-of-change/components/result-view/liquid-glass/resource-card.module.sass",
+      "allowCount": 2,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/features/theory-of-change/components/result-view/liquid-glass/resources-panel.module.sass",
+      "allowCount": 2,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/features/theory-of-change/components/result-view/liquid-glass/result-liquid-card.module.sass",
+      "allowCount": 1,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/features/theory-of-change/components/result-view/liquid-glass/result-liquid-column.module.sass",
+      "allowCount": 1,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/features/theory-of-change/components/result-view/result-theory-narrative/theory-narrative-flowchart.module.sass",
+      "allowCount": 1,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.module.sass",
+      "allowCount": 9,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/features/theory-of-change/components/result-view/result-view.module.sass",
+      "allowCount": 19,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/features/theory-of-change/components/sidebar/tdm-sidebar.module.sass",
+      "allowCount": 72,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/shared/ui/tdm-public-design-system/tdm-public-design-system.module.sass",
+      "allowCount": 1,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-006",
+      "path": "src/shared/ui/tooltip/tdm-anchored-tooltip.module.sass",
+      "allowCount": 1,
+      "reason": "Texto < 0.75rem legado; elevar para escala tipográfica TDM.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-007",
+      "path": "src/app/exemplos/exemplos.module.sass",
+      "allowCount": 1,
+      "reason": "Peso > 600 legado; reduzir para ≤ 600.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-007",
+      "path": "src/app/guia-de-aprendizado/guia-de-aprendizado.module.sass",
+      "allowCount": 1,
+      "reason": "Peso > 600 legado; reduzir para ≤ 600.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-007",
+      "path": "src/app/page.module.sass",
+      "allowCount": 2,
+      "reason": "Peso > 600 legado; reduzir para ≤ 600.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-007",
+      "path": "src/app/referencias/referencias.module.sass",
+      "allowCount": 1,
+      "reason": "Peso > 600 legado; reduzir para ≤ 600.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-007",
+      "path": "src/features/theory-of-change/components/public-pages/home-onboarding-preview.module.sass",
+      "allowCount": 1,
+      "reason": "Peso > 600 legado; reduzir para ≤ 600.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-007",
+      "path": "src/features/theory-of-change/components/public-experience/public-experience.module.sass",
+      "allowCount": 11,
+      "reason": "Peso > 600 legado; reduzir para ≤ 600.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-007",
+      "path": "src/features/theory-of-change/components/result-view/experience/result-experience.module.sass",
+      "allowCount": 16,
+      "reason": "Peso > 600 legado; reduzir para ≤ 600.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-007",
+      "path": "src/features/theory-of-change/components/result-view/liquid-glass/result-liquid-card.module.sass",
+      "allowCount": 2,
+      "reason": "Peso > 600 legado; reduzir para ≤ 600.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-007",
+      "path": "src/features/theory-of-change/components/result-view/liquid-glass/result-liquid-column.module.sass",
+      "allowCount": 1,
+      "reason": "Peso > 600 legado; reduzir para ≤ 600.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-007",
+      "path": "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-document-figure.module.sass",
+      "allowCount": 4,
+      "reason": "Peso > 600 legado; reduzir para ≤ 600.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-007",
+      "path": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.module.sass",
+      "allowCount": 5,
+      "reason": "Peso > 600 legado; reduzir para ≤ 600.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-007",
+      "path": "src/features/theory-of-change/components/result-view/result-view.module.sass",
+      "allowCount": 18,
+      "reason": "Peso > 600 legado; reduzir para ≤ 600.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-007",
+      "path": "src/features/theory-of-change/components/sidebar/tdm-sidebar.module.sass",
+      "allowCount": 24,
+      "reason": "Peso > 600 legado; reduzir para ≤ 600.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-007",
+      "path": "src/features/theory-of-change/components/stage-gate/stage-gate.module.sass",
+      "allowCount": 1,
+      "reason": "Peso > 600 legado; reduzir para ≤ 600.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-007",
+      "path": "src/features/theory-of-change/components/toast/tdm-toast.module.sass",
+      "allowCount": 1,
+      "reason": "Peso > 600 legado; reduzir para ≤ 600.",
+      "removeIn": "Fase 5B — tipografia"
+    },
+    {
+      "rule": "TDM-DS-009",
+      "path": "src/features/theory-of-change/components/canvas/tdm-canvas-command-dock.tsx",
+      "allowCount": 1,
+      "reason": "Ainda consome TdmAnchoredTooltip em shared/ui/tooltip; migrar para tdm-tooltip.",
+      "removeIn": "Fase 5B — consolidar tooltip ancorado"
+    },
+    {
+      "rule": "TDM-DS-009",
+      "path": "src/features/theory-of-change/components/canvas/tdm-canvas-process-dock/tdm-canvas-process-dock.tsx",
+      "allowCount": 1,
+      "reason": "Ainda consome TdmAnchoredTooltip em shared/ui/tooltip; migrar para tdm-tooltip.",
+      "removeIn": "Fase 5B — consolidar tooltip ancorado"
+    },
+    {
+      "rule": "TDM-DS-009",
+      "path": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx",
+      "allowCount": 1,
+      "reason": "Ainda consome TdmAnchoredTooltip em shared/ui/tooltip; migrar para tdm-tooltip.",
+      "removeIn": "Fase 5B — consolidar tooltip ancorado"
+    },
+    {
+      "rule": "TDM-DS-010",
+      "path": "src/shared/ui/tooltip/tdm-anchored-tooltip.module.sass",
+      "allowCount": 1,
+      "reason": "Styles do pacote paralelo shared/ui/tooltip; mover com o componente canônico.",
+      "removeIn": "Fase 5B — consolidar tooltip ancorado"
+    },
+    {
+      "rule": "TDM-DS-010",
+      "path": "src/shared/ui/tooltip/tdm-anchored-tooltip.tsx",
+      "allowCount": 1,
+      "reason": "Pacote paralelo shared/ui/tooltip ainda ativo; fundir no tdm-tooltip canônico.",
+      "removeIn": "Fase 5B — consolidar tooltip ancorado"
+    },
+    {
+      "rule": "TDM-DS-011",
+      "path": "src/features/theory-of-change/components/public-pages/home-brand-logo/home-brand-logo.module.sass",
+      "allowCount": 1,
+      "reason": "Loop decorativo pré-autorizado (escultura/logo/backdrop); remover ou justificar na fase motion.",
+      "removeIn": "Fase 5B — motion decorativo"
+    },
+    {
+      "rule": "TDM-DS-011",
+      "path": "src/features/theory-of-change/components/result-view/liquid-glass/monochrome-backdrop.module.sass",
+      "allowCount": 7,
+      "reason": "Loop decorativo pré-autorizado (escultura/logo/backdrop); remover ou justificar na fase motion.",
+      "removeIn": "Fase 5B — motion decorativo"
+    },
+    {
+      "rule": "TDM-DS-011",
+      "path": "src/features/theory-of-change/components/result-view/result-view-grainient-backdrop.module.sass",
+      "allowCount": 1,
+      "reason": "Loop decorativo pré-autorizado (escultura/logo/backdrop); remover ou justificar na fase motion.",
+      "removeIn": "Fase 5B — motion decorativo"
+    },
+    {
+      "rule": "TDM-DS-011",
+      "path": "src/features/theory-of-change/components/sidebar/change-theory-orb.module.sass",
+      "allowCount": 8,
+      "reason": "Loop decorativo pré-autorizado (escultura/logo/backdrop); remover ou justificar na fase motion.",
+      "removeIn": "Fase 5B — motion decorativo"
+    },
+    {
+      "rule": "TDM-DS-011",
+      "path": "src/features/theory-of-change/components/sidebar/final-result-glass-sculpture.module.sass",
+      "allowCount": 16,
+      "reason": "Loop decorativo pré-autorizado (escultura/logo/backdrop); remover ou justificar na fase motion.",
+      "removeIn": "Fase 5B — motion decorativo"
+    },
+    {
+      "rule": "TDM-DS-011",
+      "path": "src/features/theory-of-change/components/sidebar/tdm-sidebar.module.sass",
+      "allowCount": 20,
+      "reason": "Loop decorativo pré-autorizado (escultura/logo/backdrop); remover ou justificar na fase motion.",
+      "removeIn": "Fase 5B — motion decorativo"
+    },
+    {
+      "rule": "TDM-DS-011",
+      "path": "src/features/theory-of-change/components/sidebar/theory-change-sculpture.module.sass",
+      "allowCount": 5,
+      "reason": "Loop decorativo pré-autorizado (escultura/logo/backdrop); remover ou justificar na fase motion.",
+      "removeIn": "Fase 5B — motion decorativo"
+    },
+    {
+      "rule": "TDM-DS-011",
+      "path": "src/features/theory-of-change/components/stage-crystal-icon/tdm-stage-crystal-icon.module.sass",
+      "allowCount": 5,
+      "reason": "Loop decorativo pré-autorizado (escultura/logo/backdrop); remover ou justificar na fase motion.",
+      "removeIn": "Fase 5B — motion decorativo"
+    },
+    {
+      "rule": "TDM-DS-011",
+      "path": "src/features/theory-of-change/components/stage-crystal-icon/tdm-stage-crystal-icon.tsx",
+      "allowCount": 5,
+      "reason": "Loop decorativo pré-autorizado (escultura/logo/backdrop); remover ou justificar na fase motion.",
+      "removeIn": "Fase 5B — motion decorativo"
+    },
+    {
+      "rule": "TDM-DS-012",
+      "path": "src/app/canvas/tdm-command-preview/tdm-command-preview.module.sass",
+      "allowCount": 7,
+      "reason": "Alias/token local pré-existente; apontar só para --tdm-* e remover escala paralela.",
+      "removeIn": "Fase 5B — aliases públicos"
+    },
+    {
+      "rule": "TDM-DS-012",
+      "path": "src/features/theory-of-change/components/canvas/tdm-canvas-command-dock.module.sass",
+      "allowCount": 3,
+      "reason": "Alias/token local pré-existente; apontar só para --tdm-* e remover escala paralela.",
+      "removeIn": "Fase 5B — aliases públicos"
+    },
+    {
+      "rule": "TDM-DS-012",
+      "path": "src/features/theory-of-change/components/canvas/tdm-canvas-process-dock/tdm-canvas-process-dock.module.sass",
+      "allowCount": 3,
+      "reason": "Alias/token local pré-existente; apontar só para --tdm-* e remover escala paralela.",
+      "removeIn": "Fase 5B — aliases públicos"
+    },
+    {
+      "rule": "TDM-DS-012",
+      "path": "src/features/theory-of-change/components/canvas/tdm-canvas.module.sass",
+      "allowCount": 3,
+      "reason": "Alias/token local pré-existente; apontar só para --tdm-* e remover escala paralela.",
+      "removeIn": "Fase 5B — aliases públicos"
+    },
+    {
+      "rule": "TDM-DS-012",
+      "path": "src/features/theory-of-change/components/canvas/tdm-connection-guide.module.sass",
+      "allowCount": 3,
+      "reason": "Alias/token local pré-existente; apontar só para --tdm-* e remover escala paralela.",
+      "removeIn": "Fase 5B — aliases públicos"
+    },
+    {
+      "rule": "TDM-DS-012",
+      "path": "src/features/theory-of-change/components/edge/tdm-theory-edge.module.sass",
+      "allowCount": 3,
+      "reason": "Alias/token local pré-existente; apontar só para --tdm-* e remover escala paralela.",
+      "removeIn": "Fase 5B — aliases públicos"
+    },
+    {
+      "rule": "TDM-DS-012",
+      "path": "src/features/theory-of-change/components/form-field/tdm-form-actions.module.sass",
+      "allowCount": 3,
+      "reason": "Alias/token local pré-existente; apontar só para --tdm-* e remover escala paralela.",
+      "removeIn": "Fase 5B — aliases públicos"
+    },
+    {
+      "rule": "TDM-DS-012",
+      "path": "src/features/theory-of-change/components/form-field/tdm-form-field.module.sass",
+      "allowCount": 2,
+      "reason": "Alias/token local pré-existente; apontar só para --tdm-* e remover escala paralela.",
+      "removeIn": "Fase 5B — aliases públicos"
+    },
+    {
+      "rule": "TDM-DS-012",
+      "path": "src/features/theory-of-change/components/sidebar/tdm-sidebar.module.sass",
+      "allowCount": 3,
+      "reason": "Alias/token local pré-existente; apontar só para --tdm-* e remover escala paralela.",
+      "removeIn": "Fase 5B — aliases públicos"
+    },
+    {
+      "rule": "TDM-DS-015",
+      "path": "src/features/theory-of-change/components/public-pages/home-onboarding-preview.tsx",
+      "allowCount": 1,
+      "reason": "Inline style visual legado; mover para tokens/classes.",
+      "removeIn": "Fase 5B — inline styles"
+    },
+    {
+      "rule": "TDM-DS-011",
+      "path": "src/shared/ui/tdm-public-feature-card/tdm-public-feature-card.module.sass",
+      "allowCount": 1,
+      "reason": "Fase 5B.10 — borda luminosa perimetral só em :hover/:focus-visible de cards públicos interativos (ref-09); idle permanece estático e prefers-reduced-motion desliga o loop.",
+      "removeIn": "Fase 5C — motion interaction tokens"
+    }
+  ],
+  "reviewedIn": "Fase 5A — V1 release candidate"
+}

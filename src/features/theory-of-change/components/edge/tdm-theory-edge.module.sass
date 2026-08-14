@@ -1,0 +1,193 @@
+@use '../../../../shared/styles/tokens' as *
+@use '../../../../shared/styles/tdm/tdm-anchored-tooltip-surface' as tooltip-surface
+
+// TMD Command Canvas — local atoms
+$border-soft: rgba(255, 255, 255, 0.08)
+$border-mid: rgba(255, 255, 255, 0.12)
+$border-strong: rgba(255, 255, 255, 0.18)
+
+$text-main: rgba(248, 248, 250, 0.94)
+$text-soft: rgba(224, 226, 232, 0.72)
+$text-muted: rgba(190, 193, 204, 0.54)
+$text-faint: rgba(180, 184, 194, 0.38)
+
+$danger: #fb7185
+
+.edge
+  transition: stroke 160ms ease, opacity 160ms ease, stroke-width 160ms ease
+  stroke-width: 1.15
+  opacity: 0.58
+  stroke-dasharray: none
+  stroke-dashoffset: 0
+  filter: none
+
+.selected
+  opacity: 1
+  stroke-width: 1.4
+
+.hovered
+  opacity: 0.92
+
+.recentlyUpdated
+  animation: edgeOpacityFade 180ms ease
+
+@keyframes edgeOpacityFade
+  from
+    opacity: 1
+  to
+    opacity: 0.58
+
+.labelLayer
+  position: absolute
+  pointer-events: all
+  transform: translate(-50%, -50%)
+  z-index: 50
+
+.markerWrap
+  position: relative
+  display: inline-flex
+  flex-direction: column
+  align-items: center
+
+  // Tooltip visibility: hover or keyboard focus-visible on marker / tooltip set.
+  &:hover .markerPreviewHost,
+  &:has(:focus-visible) .markerPreviewHost
+    opacity: 1
+    visibility: visible
+    pointer-events: auto
+    transform: translateX(-50%) translateY(0)
+
+.markerPreviewHost
+  position: absolute
+  bottom: calc(100% + 0.5rem)
+  left: 50%
+  // Above cards / handles / node toolbars (ViewportPortal + local stack).
+  z-index: 50
+  opacity: 0
+  visibility: hidden
+  pointer-events: none
+  transform: translateX(-50%) translateY(0.15rem)
+  transition: opacity 160ms ease, visibility 160ms ease, transform 160ms ease
+
+  // Bridge the 0.5rem gap so hover persists while moving onto the tooltip.
+  &::before
+    content: ''
+    position: absolute
+    left: 0
+    right: 0
+    top: 100%
+    height: 0.5rem
+
+.markerPreview
+  position: relative
+  display: block
+  margin: 0
+  padding: 0
+  border: 0
+  background: transparent
+  cursor: pointer
+  text-align: left
+  font: inherit
+  color: inherit
+  @include tooltip-surface.tdm-anchored-tooltip-surface
+  @include tooltip-surface.tdm-anchored-tooltip-size-compact
+  @include tooltip-surface.tdm-anchored-tooltip-arrow
+  @include tooltip-surface.tdm-anchored-tooltip-arrow-top
+
+  &:focus-visible
+    outline: 0.1rem solid rgba(250, 250, 250, 0.32)
+    outline-offset: 0.125rem
+
+.markerPreviewTitle
+  @include tooltip-surface.tdm-anchored-tooltip-title
+
+.markerPreviewHint
+  @include tooltip-surface.tdm-anchored-tooltip-description
+
+.editorLayer
+  position: absolute
+  pointer-events: all
+  transform: translate(-50%, -50%)
+  z-index: 12
+
+.marker
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  min-width: 1.15rem
+  height: 1.15rem
+  padding: 0 0.26rem
+  border: 0.0625rem solid $border-mid
+  border-radius: 0.75rem
+  background: rgba(14, 15, 18, 0.92)
+  color: $text-soft
+  font-size: 0.54rem
+  font-weight: 600
+  letter-spacing: 0.02em
+  cursor: pointer
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), 0 0.12rem 0.35rem rgba(0, 0, 0, 0.2)
+  transition: border-color 140ms ease, opacity 140ms ease, background 140ms ease
+
+  &:hover
+    border-color: $border-strong
+    background: rgba(20, 21, 26, 0.94)
+    color: $text-main
+
+.markerRisk
+  border-color: rgba(251, 113, 133, 0.32)
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)), rgba(14, 15, 18, 0.92)
+  color: rgba(251, 113, 133, 0.92)
+
+  &:hover
+    border-color: rgba(251, 113, 133, 0.42)
+    color: rgba(253, 164, 175, 1)
+
+.markerHypothesis
+  border-color: $border-mid
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)), rgba(14, 15, 18, 0.92)
+  color: $text-soft
+
+  &:hover
+    border-color: $border-strong
+    color: $text-main
+
+.markerHighlighted
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1), 0 0.15rem 0.45rem rgba(0, 0, 0, 0.22)
+
+.markerRisk.markerHighlighted
+  border-color: rgba(251, 113, 133, 0.45)
+
+.markerHypothesis.markerHighlighted
+  border-color: $border-strong
+
+.cta
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  min-height: 1.15rem
+  padding: 0 0.38rem
+  border: 0.0625rem dashed var(--tdm-button-border-rest)
+  border-radius: 0.75rem
+  background: var(--tdm-button-bg-rest)
+  color: var(--tdm-button-text-rest)
+  font-size: 0.54rem
+  font-weight: var(--tdm-button-font-weight)
+  letter-spacing: 0.01em
+  cursor: pointer
+  box-shadow: var(--tdm-button-shadow-rest)
+  transform: translateY(0)
+  transition: border-color var(--tdm-button-duration) var(--tdm-button-ease), color var(--tdm-button-duration) var(--tdm-button-ease), transform var(--tdm-button-duration) var(--tdm-button-ease)
+
+  &:hover
+    border-color: var(--tdm-button-border-hover)
+    color: var(--tdm-button-text-hover)
+    background: var(--tdm-button-bg-rest)
+    box-shadow: var(--tdm-button-shadow-rest)
+    transform: translateY(-0.0625rem)
+
+@media (prefers-reduced-motion: reduce)
+  .cta
+    transition: none
+
+    &:hover
+      transform: none

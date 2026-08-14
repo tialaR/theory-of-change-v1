@@ -1,0 +1,9 @@
+{
+  "id": "SO-012",
+  "codename": "Canvas Engine",
+  "wave": "05-layout-command-boundary",
+  "status": "ACTIVE",
+  "revision": 6,
+  "purpose": "Move generic canvas layout algorithms into the framework-neutral Canvas Engine while Application retains the product layout policy",
+  "updatedAt": "2026-08-06T16:20:00.000Z"
+}

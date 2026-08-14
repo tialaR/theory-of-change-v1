@@ -1,0 +1,8 @@
+{
+  "id": "SO-007",
+  "codename": "God Hooks Slayer",
+  "wave": 2,
+  "status": "ACTIVE",
+  "revision": 2,
+  "purpose": "Split navigation coordination into snapshot, example, restore and view owners"
+}

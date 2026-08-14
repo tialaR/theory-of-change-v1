@@ -1,0 +1,9 @@
+{
+  "id": "SO-010",
+  "codename": "Application Slayer",
+  "wave": 2,
+  "revision": 2,
+  "status": "ACTIVE",
+  "purpose": "Move Canvas node command decisions and draft assembly out of the UI hook into framework-neutral Application use cases",
+  "gate": "check:tdm:application-slayer:wave02"
+}

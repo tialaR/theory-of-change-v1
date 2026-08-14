@@ -1,0 +1,14 @@
+{
+  "id": "SO-002",
+  "codename": "Canvas Armor",
+  "revision": 2,
+  "status": "ACTIVE",
+  "purpose": "Protect canvas behavior before structural refactoring",
+  "gates": [
+    "check:tdm:canvas-armor",
+    "check:tdm:canvas-continuity",
+    "check:tdm:canvas-stability",
+    "test:unit",
+    "test:e2e:canvas"
+  ]
+}

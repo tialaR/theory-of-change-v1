@@ -1,0 +1,10 @@
+{
+  "id": "SO-003",
+  "codename": "God Slayer Wave 01",
+  "status": "ACTIVE",
+  "scope": [
+    "canvas workspace orchestration",
+    "viewport and framing extraction",
+    "local patch backup cleanup"
+  ]
+}

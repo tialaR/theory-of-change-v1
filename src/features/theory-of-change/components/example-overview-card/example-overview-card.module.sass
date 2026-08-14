@@ -1,0 +1,49 @@
+$card-radius: 2rem
+$card-padding: 3rem
+
+.card
+  display: flex
+  flex-direction: column
+  gap: var(--tdm-stack-compact-title-body)
+  min-inline-size: 0
+  block-size: 100%
+  padding: $card-padding
+  border-radius: $card-radius
+  border: var(--tdm-border-width-hairline) solid color-mix(in srgb, var(--tdm-fg-primary) 15%, transparent)
+  background: radial-gradient(120% 100% at 50% 0%, color-mix(in srgb, var(--tdm-fg-primary) 4%, transparent), transparent 54%), linear-gradient(180deg, color-mix(in srgb, var(--tdm-neutral-950) 99%, var(--tdm-neutral-1000)) 0%, color-mix(in srgb, var(--tdm-neutral-975) 99%, var(--tdm-neutral-1000)) 100%)
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--tdm-fg-primary) 4.5%, transparent), 0 1.5rem 4rem color-mix(in srgb, var(--tdm-neutral-1000) 20%, transparent)
+
+.eyebrow
+  margin: 0
+  color: var(--tdm-fg-muted)
+  font-size: var(--tdm-font-label-size)
+  font-weight: 600
+  letter-spacing: var(--tdm-font-label-tracking)
+  text-transform: uppercase
+
+.title
+  margin: 0
+  color: var(--tdm-fg-primary)
+  font-size: var(--tdm-font-section-title-size)
+  font-weight: var(--tdm-font-section-title-weight)
+  line-height: var(--tdm-font-section-title-line)
+
+.description
+  margin: 0
+  max-inline-size: var(--tdm-measure-body)
+  color: var(--tdm-fg-secondary)
+  font-size: var(--tdm-font-body-size)
+  line-height: var(--tdm-font-body-line)
+
+  p
+    margin: 0
+
+.actions
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  align-items: center
+  justify-content: flex-start
+  gap: var(--tdm-space-3)
+  margin-block-start: auto
+  padding-block-start: var(--tdm-stack-description-actions)

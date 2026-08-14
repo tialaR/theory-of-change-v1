@@ -1,0 +1,60 @@
+@use 'tdm-color' as color
+@use 'tdm-surface' as surface
+@use 'tdm-border' as border
+@use 'tdm-radius' as radius
+@use 'tdm-shadow' as shadow
+@use 'tdm-icon' as icon
+@use 'tdm-focus' as focus
+@use 'tdm-motion' as motion
+@use 'tdm-font' as font
+@use 'tdm-foreground' as fg
+@use 'tdm-spacing' as space
+@use 'tdm-measure' as measure
+@use 'tdm-cta' as cta
+@use 'tdm-public-action' as publicAction
+@use 'tdm-route' as route
+@use 'tdm-guide' as guide
+@use 'tdm-status' as status
+@use 'tdm-menu' as menu
+@use 'tdm-stage' as stage
+
+// Agregador canônico TDM — publica --tdm-* em :root.
+:root
+  // Cor primitiva + suporte
+  +color.tokens
+  // Superfícies semânticas
+  +surface.tokens
+  // Bordas
+  +border.tokens
+  // Radius
+  +radius.tokens
+  // Elevação
+  +shadow.tokens
+  // Ícones
+  +icon.tokens
+  // Foco
+  +focus.tokens
+  // Motion CSS
+  +motion.tokens
+  // Tipografia
+  +font.tokens
+  // Foreground
+  +fg.tokens
+  // Spacing + recipes
+  +space.tokens
+  // Medidas de leitura
+  +measure.tokens
+  // CTA roles (font/fg/height/padding)
+  +cta.tokens
+  // CTAs / icon buttons / header públicos
+  +publicAction.tokens
+  +route.tokens
+  +guide.tokens
+  +status.tokens
+  +menu.tokens
+  +stage.tokens
+
+// Mobile — ritmo entre seções (TDM-PUBLIC-SECTION-RHYTHM-V1)
+@media (max-width: 48rem)
+  :root
+    --tdm-public-section-gap: clamp(4.5rem, 14vw, 5.5rem)

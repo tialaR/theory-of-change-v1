@@ -1,0 +1,211 @@
+.progressRow
+  --stage-color: var(--stage-input)
+  min-height: 2rem
+  display: grid
+  grid-template-columns: auto 1fr auto
+  align-items: center
+  gap: 0.58rem
+
+  &[data-stage='activity']
+    --stage-color: var(--stage-activity)
+
+  &[data-stage='product']
+    --stage-color: var(--stage-product)
+
+  &[data-stage='outcome']
+    --stage-color: var(--stage-outcome)
+
+  > span
+    width: 0.38rem
+    height: 0.38rem
+    border-radius: 50%
+    background: var(--stage-color)
+
+  strong
+    color: var(--v2-muted)
+    font-size: 0.68rem
+    font-weight: 480
+
+  em
+    color: var(--v2-text)
+    font-size: 0.68rem
+    font-style: normal
+
+.inspectorReopen
+  position: absolute
+  z-index: 20
+  top: 1.25rem
+  right: 1.25rem
+  min-height: 2.4rem
+  padding: 0 0.72rem
+  display: inline-flex
+  align-items: center
+  gap: 0.4rem
+  border: 0.0625rem solid var(--v2-stroke)
+  border-radius: 0.72rem
+  background: color-mix(in srgb, var(--v2-shell) 92%, transparent)
+  color: var(--v2-muted)
+  cursor: pointer
+  backdrop-filter: blur(1rem)
+
+  span
+    font-size: 0.68rem
+
+.historyPanel
+  position: absolute
+  z-index: 24
+  top: 1rem
+  right: 22rem
+  width: 17.5rem
+  max-height: calc(100% - 2rem)
+  border: 0.0625rem solid var(--v2-stroke)
+  border-radius: 1rem
+  background: color-mix(in srgb, var(--v2-shell) 97%, transparent)
+  box-shadow: 0 1.2rem 3rem color-mix(in srgb, black 42%, transparent)
+  backdrop-filter: blur(1rem)
+  overflow: hidden
+
+  ol
+    max-height: 24rem
+    margin: 0
+    padding: 0.5rem
+    list-style: none
+    overflow-y: auto
+
+  li
+    min-height: 3.2rem
+    padding: 0.55rem
+    display: grid
+    grid-template-columns: auto 1fr
+    align-items: center
+    gap: 0.62rem
+    border-radius: 0.68rem
+
+    &:hover
+      background: var(--v2-card)
+
+    > span
+      width: 1.6rem
+      height: 1.6rem
+      display: grid
+      place-items: center
+      border: 0.0625rem solid var(--v2-stroke)
+      border-radius: 50%
+      color: var(--v2-muted)
+      font-size: 0.6rem
+
+      svg
+        width: 0.75rem
+        height: 0.75rem
+
+    > div
+      display: grid
+
+      strong
+        font-size: 0.68rem
+        font-weight: 540
+
+      small
+        margin-top: 0.14rem
+        color: var(--v2-subtle)
+        font-size: 0.6rem
+
+.emptyInspector
+  padding: 1rem
+  color: var(--v2-muted)
+  font-size: 0.72rem
+
+@keyframes savePulse
+  from
+    opacity: 0.35
+  to
+    opacity: 1
+
+@media (max-width: 70rem)
+  .inspector
+    width: 18rem
+
+  .historyPanel
+    right: 20rem
+
+@media (max-width: 56rem)
+  .topbar
+    grid-template-columns: 1fr auto
+
+  .documentState
+    display: none
+
+  .topActions button span
+    display: none
+
+  .inspector
+    width: min(20rem, calc(100vw - 2rem))
+
+  .historyPanel
+    right: 1rem
+    top: 5.5rem
+
+@media (prefers-reduced-motion: reduce)
+  .creator,
+  .inspector,
+  .topActions button,
+  .creatorBody > button
+    transition: none
+
+  .documentState[data-state='saving'] .stateDot
+    animation: none
+
+.connectionGroup
+  pointer-events: none
+
+  &[data-selected='true'] path
+    stroke: color-mix(in srgb, white 64%, transparent)
+
+  foreignObject
+    overflow: visible
+    pointer-events: auto
+
+.edgeAction
+  width: 2.25rem
+  height: 2.25rem
+  display: grid
+  place-items: center
+  border: 0.0625rem solid color-mix(in srgb, white 24%, transparent)
+  border-radius: 50%
+  background: color-mix(in srgb, #0c0e12 92%, white 8%)
+  color: var(--v2-text)
+  font: inherit
+  font-size: 0.72rem
+  font-weight: 620
+  cursor: pointer
+  box-shadow: 0 0.45rem 1.4rem color-mix(in srgb, black 52%, transparent)
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease
+
+  &:hover
+    transform: scale(1.05)
+    border-color: color-mix(in srgb, white 42%, transparent)
+
+  &[data-kind='risk']
+    border-color: color-mix(in srgb, var(--stage-product) 56%, var(--v2-stroke))
+    background: color-mix(in srgb, var(--stage-product) 12%, #0c0e12)
+
+  &[data-kind='hypothesis']
+    border-color: color-mix(in srgb, white 32%, var(--v2-stroke))
+    background: color-mix(in srgb, white 7%, #0c0e12)
+    color: color-mix(in srgb, white 88%, transparent)
+
+.inspectorContent[data-stage='neutral']
+  --stage-color: color-mix(in srgb, white 58%, transparent)
+
+.relationRemove
+  min-height: 2.3rem
+  border: 0.0625rem solid var(--v2-stroke)
+  border-radius: 0.72rem
+  background: transparent
+  color: var(--v2-muted)
+  cursor: pointer
+
+  &:hover
+    border-color: var(--v2-stroke-strong)
+    color: var(--v2-text)
+

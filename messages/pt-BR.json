@@ -1,0 +1,268 @@
+{
+  "Canvas": {
+    "project": {
+      "defaultTitle": "Minha teoria da mudança",
+      "titleLabel": "Título da teoria",
+      "clearTitle": "Apagar título da teoria",
+      "editTitle": "Editar título da teoria",
+      "titlePlaceholder": "ex: Programa de desenvolvimento territorial"
+    },
+    "stages": {
+      "input": {
+        "label": "Insumos",
+        "singular": "Insumo",
+        "hint": "Recursos disponíveis",
+        "titlePlaceholder": "ex: Equipe técnica disponível",
+        "descriptionPlaceholder": "ex: Profissionais, orçamento e estrutura necessários",
+        "advancedPlaceholder": "ex: Fontes, evidências ou observações sobre os recursos"
+      },
+      "activity": {
+        "label": "Atividades",
+        "singular": "Atividade",
+        "hint": "Ações realizadas",
+        "titlePlaceholder": "ex: Realizar oficinas de formação",
+        "descriptionPlaceholder": "ex: Encontros práticos com as pessoas participantes",
+        "advancedPlaceholder": "ex: Metodologia, responsáveis ou frequência das ações"
+      },
+      "product": {
+        "label": "Produtos",
+        "singular": "Produto",
+        "hint": "Entregas concretas",
+        "titlePlaceholder": "ex: Material formativo produzido",
+        "descriptionPlaceholder": "ex: Entrega concreta gerada pelas atividades",
+        "advancedPlaceholder": "ex: Critérios de qualidade, quantidade ou prazo de entrega"
+      },
+      "outcome": {
+        "label": "Resultados",
+        "singular": "Resultado",
+        "hint": "Mudanças esperadas",
+        "titlePlaceholder": "ex: Maior adesão ao programa",
+        "descriptionPlaceholder": "ex: Mudança esperada após a entrega dos produtos",
+        "advancedPlaceholder": "ex: Indicadores, evidências ou prazo esperado para a mudança"
+      }
+    },
+    "relations": {
+      "risk": "Risco",
+      "hypothesis": "Hipótese",
+      "riskConnectionTitle": "Risco da conexão",
+      "hypothesisConnectionTitle": "Hipótese da conexão",
+      "riskPlaceholder": "ex: Baixa participação pode reduzir o alcance da atividade",
+      "hypothesisPlaceholder": "ex: O material será utilizado pelo público como planejado"
+    },
+    "tooltips": {
+      "undo": "Desfazer última alteração",
+      "redo": "Refazer alteração",
+      "history": "Abrir histórico",
+      "save": "Salvar teoria",
+      "select": "Selecionar blocos",
+      "zoomIn": "Aproximar visualização",
+      "zoomOut": "Afastar visualização",
+      "fit": "Centralizar visualização",
+      "more": "Abrir ações do card",
+      "closeToolbar": "Fechar toolbar",
+      "edit": "Editar card",
+      "duplicate": "Duplicar card",
+      "delete": "Excluir card",
+      "closeInspector": "Fechar inspector",
+      "source": "Definir como origem da conexão",
+      "target": "Definir como destino da conexão",
+      "closeRelation": "Fechar ações da conexão",
+      "deleteConnection": "Excluir conexão",
+      "addRisk": "Adicionar risco",
+      "editRisk": "Editar risco",
+      "removeRisk": "Excluir risco",
+      "addHypothesis": "Adicionar hipótese",
+      "editHypothesis": "Editar hipótese",
+      "removeHypothesis": "Excluir hipótese",
+      "back": "Voltar para o início",
+      "result": "Visualizar resultado",
+      "columns": "Centralizar em colunas",
+      "frame": "Enquadrar visualização",
+      "guide": "Visualizar guia da teoria",
+      "examples": "Visualizar exemplos",
+      "flow": "Organizar fluxo",
+      "fullCanvas": "Expandir canvas em tela cheia",
+      "closeFullCanvas": "Fechar tela cheia",
+      "openInspector": "Abrir inspector",
+      "openCreator": "Arrastar etapas para o canvas",
+      "closeCreator": "Fechar painel de etapas"
+    },
+    "header": {
+      "history": "Histórico",
+      "result": "Resultado",
+      "save": "Salvar"
+    },
+    "creator": {
+      "title": "Adicionar ao canvas",
+      "subtitle": "Arraste qualquer etapa",
+      "toolbarLabel": "Organização e apoio do canvas",
+      "rule": "Riscos e hipóteses permanecem disponíveis somente entre relações válidas.",
+      "dragAria": "Arrastar {stage} para o canvas"
+    },
+    "toolbar": {
+      "fullActionsLabel": "Ações do canvas completo",
+      "toolsLabel": "Ferramentas do canvas"
+    },
+    "history": {
+      "title": "Histórico",
+      "session": "Esta sessão",
+      "close": "Fechar histórico",
+      "current": "Estado atual",
+      "change": "Alteração registrada",
+      "version": "Versão {version}"
+    },
+    "node": {
+      "more": "Mais opções",
+      "title": "Título",
+      "description": "Descrição",
+      "advanced": "Detalhes avançados",
+      "clearTitle": "Apagar título",
+      "clearDescription": "Apagar descrição",
+      "clearAdvanced": "Apagar detalhes avançados",
+      "cancel": "Cancelar",
+      "save": "Salvar",
+      "connect": "Conectar",
+      "drag": "Arraste para mover",
+      "duplicateTitle": "{title} cópia",
+      "actionsAria": "Ações de {title}",
+      "targetAria": "Conectar a {title}",
+      "sourceAria": "Conectar a partir de {title}"
+    },
+    "inspector": {
+      "selectedBlock": "Bloco selecionado",
+      "causalLogic": "Lógica causal",
+      "validConnections": "{count} conexões construídas",
+      "causalHelp": "Use o dot direito como origem e o dot esquerdo como destino. Quando uma ligação não segue o encadeamento causal, o canvas orienta o próximo caminho sem alterar o mapa.",
+      "save": "Salvar",
+      "duplicate": "Duplicar",
+      "delete": "Excluir",
+      "deleteRelation": "Excluir {relation}",
+      "deleteConnection": "Excluir conexão",
+      "structure": "Estrutura da teoria",
+      "structureSummary": "{nodes} blocos · {edges} conexões",
+      "connection": "Conexão",
+      "canvas": "Canvas",
+      "title": "Inspector",
+      "close": "Fechar inspector",
+      "empty": "Selecione um bloco ou uma conexão."
+    },
+    "relation": {
+      "actions": "Ações da conexão",
+      "description": "Descrição",
+      "cancel": "Cancelar",
+      "save": "Salvar",
+      "select": "Selecionar conexão"
+    },
+    "notices": {
+      "empty": "Canvas vazio. Arraste qualquer etapa para começar.",
+      "connectionStarted": "Ligação iniciada. Leve a linha até o dot esquerdo de um card da próxima etapa causal.",
+      "connectionCancelled": "A ligação ainda não foi concluída. Tente soltar a linha no dot esquerdo de um card da próxima etapa.",
+      "connectionCreated": "“{source}” agora contribui para “{target}”. Esse elo mostra como uma etapa sustenta a próxima.",
+      "invalidTarget": "A ligação iniciada em “{source}” precisa terminar em outro bloco da etapa seguinte.",
+      "missingCards": "Não foi possível reconhecer um dos blocos dessa ligação. Tente iniciar o elo novamente.",
+      "duplicateConnection": "“{source}” e “{target}” já estão ligados. Selecione a conexão para revisar o risco ou a hipótese registrada.",
+      "sameStage": "“{source}” e “{target}” pertencem à mesma etapa. Para manter o caminho causal claro, conecte o primeiro bloco à etapa seguinte.",
+      "backward": "“{source}” não pode contribuir para “{target}” nessa direção. O caminho causal parte das condições disponíveis e avança até as mudanças esperadas.",
+      "skipStage": "A ligação entre “{source}” e “{target}” pula uma etapa necessária. Conecte primeiro o bloco à etapa seguinte para deixar claro como a mudança será produzida.",
+      "outcomeSource": "“{source}” já representa uma mudança esperada. Neste mapa, resultados recebem contribuições das etapas anteriores e encerram esse caminho causal.",
+      "dragStage": "Arraste {stage} para a posição desejada no canvas.",
+      "stageAdded": "{stage} adicionado. Você pode posicioná-lo livremente.",
+      "duplicated": "Card duplicado sem alterar o original.",
+      "deleted": "{stage} excluído.",
+      "nodeUpdated": "Card atualizado no próprio canvas.",
+      "connectionSelected": "Ligação entre “{source}” e “{target}” selecionada. Registre o que pode dificultar esse elo ou a condição necessária para ele funcionar.",
+      "riskRequired": "Descreva o que pode dificultar a contribuição de “{source}” para “{target}”.",
+      "hypothesisRequired": "Descreva o que precisa ser verdadeiro para que “{source}” contribua para “{target}”.",
+      "riskSaved": "Risco “{relation}” registrado entre “{source}” e “{target}”.",
+      "hypothesisSaved": "Hipótese “{relation}” registrada entre “{source}” e “{target}”.",
+      "markerRemoved": "O registro entre “{source}” e “{target}” foi removido, e a ligação causal foi preservada.",
+      "connectionDeleted": "A ligação entre “{source}” e “{target}” foi removida. Os blocos continuam no mapa.",
+      "undo": "Última alteração desfeita.",
+      "redo": "Alteração refeita.",
+      "columns": "As etapas foram centralizadas em colunas.",
+      "organized": "O fluxo foi organizado para facilitar a leitura das conexões.",
+      "viewCentered": "A visualização foi centralizada.",
+      "viewFramed": "A teoria foi enquadrada na área de trabalho.",
+      "saving": "Salvando teoria…",
+      "saved": "Tudo salvo.",
+      "saveError": "Não foi possível salvar agora. Tente novamente.",
+      "preparingResult": "Preparando resultado…",
+      "resultError": "Não foi possível abrir o resultado agora. Tente novamente.",
+      "stageUpdated": "{stage} atualizado.",
+      "unknownBlock": "este bloco"
+    },
+    "result": {
+      "kicker": "Revisão final",
+      "subtitle": "Revise a síntese das etapas, conexões, riscos e hipóteses antes de exportar.",
+      "back": "Voltar ao canvas",
+      "exports": "Exportações",
+      "exportPending": "A exportação será conectada após a validação final do resultado.",
+      "summary": "Síntese da teoria",
+      "blocks": "{count} blocos",
+      "connections": "{count} conexões",
+      "revision": "Revisão {revision}",
+      "emptyStage": "Nenhum bloco adicionado.",
+      "exportDOCX": "Exportar DOCX",
+      "exportPDF": "Exportar PDF",
+      "exportPNG": "Exportar PNG",
+      "exportSVG": "Exportar SVG"
+    },
+    "loading": "Carregando canvas",
+    "brand": {
+      "alt": "TMD Construtor"
+    }
+  },
+  "Auth": {
+    "login": {
+      "title": "Entrar no TMD Construtor",
+      "description": "Acesse seu espaço de trabalho e continue construindo sua teoria da mudança.",
+      "back": "Voltar",
+      "backAriaLabel": "Voltar para a página inicial",
+      "nameLabel": "Nome",
+      "namePlaceholder": "Digite seu nome completo",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "nome@tdmconstrutor.com.br",
+      "passwordLabel": "Senha",
+      "passwordPlaceholder": "Digite sua senha",
+      "submit": "Entrar",
+      "submitting": "Entrando…",
+      "helper": "Acesso restrito às personas de validação do TMD Construtor.",
+      "validation": {
+        "nameRequired": "Informe seu nome.",
+        "emailInvalid": "Informe um e-mail válido.",
+        "passwordTooShort": "A senha deve ter no mínimo {min} caracteres."
+      },
+      "feedback": {
+        "reviewFields": "Revise os campos indicados.",
+        "invalidCredentials": "Nome, e-mail ou senha não correspondem a um usuário existente."
+      }
+    },
+    "userMenu": {
+      "open": "Abrir menu do usuário",
+      "changePhoto": "Trocar foto",
+      "logout": "Sair",
+      "photoUpdated": "Foto atualizada.",
+      "errors": {
+        "invalid-file": "Escolha uma imagem PNG, JPEG ou WebP.",
+        "file-too-large": "A imagem deve ter no máximo 1,5 MB.",
+        "session-expired": "Sua sessão expirou. Entre novamente."
+      }
+    }
+  },
+  "RouteState": {
+    "notFound": {
+      "eyebrow": "Caminho não encontrado",
+      "title": "Esta página não existe.",
+      "description": "O endereço pode ter mudado ou nunca ter feito parte desta experiência.",
+      "action": "Voltar ao início",
+      "codeAriaLabel": "Erro 404"
+    },
+    "error": {
+      "eyebrow": "Erro inesperado",
+      "title": "A experiência não conseguiu continuar",
+      "description": "Tente novamente. Se o problema persistir, volte ao início sem perder a referência da rota.",
+      "retry": "Tentar novamente",
+      "home": "Voltar ao início"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "SO-013",
+  "codename": "Infrastructure Cleanup",
+  "wave": "02",
+  "hotfix": "v1.1 Lint Gate Hotfix",
+  "status": "ACTIVE",
+  "revision": 3,
+  "purpose": "Restore the established Shark Attack lint verification scope after Wave 02 unintentionally expanded verification to unrelated full-project lint debt",
+  "updatedAt": "2026-08-07T03:10:00.000Z"
+}

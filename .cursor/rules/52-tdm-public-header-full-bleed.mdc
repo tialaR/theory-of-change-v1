@@ -1,0 +1,17 @@
+---
+description: Contrato canônico do header público full-bleed V4
+alwaysApply: false
+---
+
+# TDM Public Header Full-Bleed V4
+
+Ao alterar o header público:
+
+- background, blur e border-bottom pertencem ao shell externo full-width;
+- o container interno preserva max-width, padding, gaps, filhos e breakpoints;
+- o comportamento de aparecer após scroll não pode mudar;
+- a borda inferior deve ocupar 100% do viewport;
+- remova camadas, pseudo-elementos e reflexos do header anterior;
+- não use overscroll-behavior para esconder artefatos;
+- não crie segundo header ou segunda superfície;
+- não use `!important`, `transition: all` ou hardcodes por rota.

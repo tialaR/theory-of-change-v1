@@ -1,0 +1,31 @@
+@use '../../styles/tdm/tdm-anchored-tooltip-surface' as surface
+
+.tooltip
+  position: fixed
+  z-index: 1100
+  @include surface.tdm-anchored-tooltip-surface
+  @include surface.tdm-anchored-tooltip-size-default
+  pointer-events: none
+  opacity: 0
+  transform: translateY(-0.1875rem) scale(0.98)
+  transition: opacity 140ms ease, transform 180ms cubic-bezier(0.22, 1, 0.36, 1)
+  @include surface.tdm-anchored-tooltip-arrow
+
+.tooltipCompact
+  @include surface.tdm-anchored-tooltip-size-compact
+
+.tooltipVisible
+  opacity: 1
+  transform: translateY(0) scale(1)
+
+.tooltipBottom
+  @include surface.tdm-anchored-tooltip-arrow-bottom
+
+.tooltipTop
+  @include surface.tdm-anchored-tooltip-arrow-top
+
+.tooltipLeft
+  @include surface.tdm-anchored-tooltip-arrow-left
+
+.tooltipRight
+  @include surface.tdm-anchored-tooltip-arrow-right

@@ -1,0 +1,9 @@
+{
+  "id": "SO-010",
+  "codename": "Application Slayer",
+  "wave": 1,
+  "revision": 1,
+  "status": "ACTIVE",
+  "purpose": "Seal the Application boundary and remove React Flow-owned types from canvas layout use cases",
+  "gate": "check:tdm:application-slayer:wave01"
+}

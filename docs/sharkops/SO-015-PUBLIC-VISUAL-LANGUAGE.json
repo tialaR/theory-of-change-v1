@@ -1,0 +1,74 @@
+{
+  "id": "TDM-PUBLIC-VISUAL-LANGUAGE-v1",
+  "status": "ACTIVE",
+  "scope": "public application surfaces outside Canvas runtime ownership",
+  "principle": "preserve personality while formalizing repeatable visual language",
+  "sourcesOfTruth": [
+    "src/shared/styles/tdm/tdm-tokens.sass",
+    "src/shared/ui/tdm-public-layout",
+    "src/shared/motion/tdm-motion",
+    "src/features/theory-of-change/components/public-pages"
+  ],
+  "layers": {
+    "tokens": [
+      "color",
+      "surface",
+      "border",
+      "radius",
+      "shadow",
+      "focus",
+      "motion",
+      "typography",
+      "spacing",
+      "measure",
+      "public-action",
+      "route"
+    ],
+    "primitives": [
+      "button",
+      "icon-button",
+      "surface",
+      "kicker",
+      "context-label",
+      "public-feature-card",
+      "public-layout"
+    ],
+    "featureRecipes": [
+      "guided-story",
+      "flow-board",
+      "interactive-example",
+      "home-brand-logo"
+    ],
+    "uniqueSignatures": "remain feature-owned until repeated semantics justify promotion"
+  },
+  "promotionPolicy": {
+    "observeFirst": true,
+    "minimumEvidence": "repeated semantic role or cross-route behavior, not visual similarity alone",
+    "promotionPath": [
+      "feature recipe",
+      "shared primitive when repeated",
+      "semantic token when stable"
+    ],
+    "forbidden": [
+      "copy Canvas styling as universal truth",
+      "tokenize one-off art direction without evidence",
+      "move domain-specific behavior into shared UI",
+      "replace intentional route personality with generic components"
+    ]
+  },
+  "gateInvariants": [
+    "public visual language is an independent source of truth alongside Canvas",
+    "shared Design System layers cannot depend on Canvas or public-page feature implementation",
+    "component styles remain .module.sass",
+    "existing public tokens and primitives are preserved as canonical foundations",
+    "new abstractions require evidence and must preserve route personality"
+  ],
+  "auditFindings": {
+    "canonicalTokenAggregator": true,
+    "sharedPublicLayout": true,
+    "sharedMotion": true,
+    "sharedPublicPrimitives": true,
+    "featureLocalLiteralRecipesRemain": true,
+    "runtimeRefactorRequiredNow": false
+  }
+}

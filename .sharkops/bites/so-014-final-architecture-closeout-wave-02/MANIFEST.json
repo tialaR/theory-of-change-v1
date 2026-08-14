@@ -1,0 +1,10 @@
+{
+  "id": "SO-014",
+  "codename": "Final Architecture Closeout",
+  "wave": "02",
+  "title": "Final Boundary Verification",
+  "status": "ACTIVE",
+  "runtimeChanges": false,
+  "gate": "npm run check:tdm:final-architecture:wave02",
+  "next": "SO-014 Wave 03 | Dependency Direction Verification"
+}

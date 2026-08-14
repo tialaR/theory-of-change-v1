@@ -1,0 +1,122 @@
+@keyframes tdmStatusSpin
+  to
+    transform: rotate(1turn)
+
+.root
+  position: relative
+  isolation: isolate
+  display: grid
+  box-sizing: border-box
+  min-height: 100dvh
+  overflow: hidden
+  padding: clamp(3rem, 8vw, 7rem) var(--tdm-status-padding-inline)
+  place-items: center
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.035), transparent 34%), var(--tdm-surface-app)
+  color: var(--tdm-fg-primary)
+
+.decorativeLeft,
+.decorativeRight
+  position: absolute
+  z-index: -1
+  width: clamp(18rem, 36vw, 34rem)
+  aspect-ratio: 1
+  border: var(--tdm-border-width-hairline) solid rgba(255, 255, 255, 0.075)
+  background: repeating-radial-gradient(circle at center, transparent 0 10%, rgba(255, 255, 255, 0.018) 10.4% 10.8%, transparent 11.2% 18%)
+  clip-path: polygon(50% 0, 91% 24%, 100% 70%, 66% 100%, 22% 91%, 0 52%, 16% 12%)
+  opacity: 0.7
+  pointer-events: none
+
+.decorativeLeft
+  inset-inline-start: clamp(-18rem, -18vw, -9rem)
+  inset-block-end: clamp(-18rem, -18vw, -8rem)
+  transform: rotate(18deg)
+
+.decorativeRight
+  inset-inline-end: clamp(-18rem, -18vw, -9rem)
+  inset-block-start: clamp(-18rem, -18vw, -8rem)
+  transform: rotate(198deg)
+
+.content
+  display: grid
+  width: min(100%, var(--tdm-route-state-content-max, var(--tdm-status-max-width)))
+  justify-items: center
+  gap: var(--tdm-status-gap)
+  text-align: center
+
+.code
+  margin: 0 0 calc(var(--tdm-space-4) * -1)
+  color: transparent
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.18))
+  background-clip: text
+  -webkit-background-clip: text
+  font-size: clamp(5rem, 18vw, 11rem)
+  font-weight: 620
+  line-height: 0.8
+  letter-spacing: -0.08em
+  opacity: 0.92
+
+.icon
+  display: grid
+  width: clamp(4.5rem, 8vw, 6rem)
+  height: clamp(4.5rem, 8vw, 6rem)
+  place-items: center
+
+  :global(img), :global(svg)
+    width: 100%
+    height: 100%
+    object-fit: contain
+
+  :global(svg)
+    fill: none
+    stroke: currentColor
+    stroke-width: var(--tdm-icon-stroke-default)
+    stroke-linecap: round
+    stroke-linejoin: round
+
+.root[data-busy='true'] .icon
+  animation: tdmStatusSpin 1s linear infinite
+
+.eyebrow
+  margin: 0
+  color: var(--tdm-fg-muted)
+  font-size: var(--tdm-font-label-size)
+  font-weight: 500
+  letter-spacing: 0.08em
+  text-transform: uppercase
+
+.title
+  max-width: 18ch
+  margin: 0
+  font-size: var(--tdm-status-title-size)
+  font-weight: 520
+  line-height: 1.05
+  letter-spacing: -0.035em
+  text-wrap: balance
+
+.description
+  max-width: 46ch
+  margin: 0
+  color: var(--tdm-fg-secondary)
+  font-size: var(--tdm-status-body-size)
+  line-height: 1.65
+  text-wrap: pretty
+
+.actions
+  display: flex
+  flex-wrap: wrap
+  justify-content: center
+  gap: var(--tdm-space-3)
+  padding-block-start: var(--tdm-space-2)
+
+.toneNeutral
+  --tdm-status-accent: var(--tdm-fg-secondary)
+
+.toneDanger
+  --tdm-status-accent: var(--tdm-fg-danger)
+
+  .icon
+    color: var(--tdm-status-accent)
+
+@media (prefers-reduced-motion: reduce)
+  .root[data-busy='true'] .icon
+    animation-duration: 2.5s

@@ -1,0 +1,6 @@
+scripts/tdm-contract-v3/check-visual-foundation-wave02.mjs
+.sharkops/bites/so-004-visual-foundation-wave-02/README.md
+.sharkops/bites/so-004-visual-foundation-wave-02/MANIFEST.json
+.sharkops/bites/so-004-visual-foundation-wave-02/apply.sh
+.sharkops/bites/so-004-visual-foundation-wave-02/rollback.sh
+.sharkops/bites/so-004-visual-foundation-wave-02/verify.sh

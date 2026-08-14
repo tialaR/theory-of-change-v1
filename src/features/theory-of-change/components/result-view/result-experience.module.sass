@@ -1,0 +1,28 @@
+.page
+  position: relative
+  overflow: hidden
+  min-block-size: 100dvh
+  block-size: 100dvh
+  background: radial-gradient(ellipse 70% 46% at 50% 8%, var(--tdm-surface-hover) 0%, transparent 70%), var(--tdm-surface-app)
+  color: var(--tdm-fg-primary)
+  font-family: var(--tdm-font-sans)
+
+.frame
+  position: absolute
+  inset: 0
+  display: grid
+  grid-template-rows: auto minmax(0, 1fr)
+  gap: 0
+  padding: var(--tdm-space-3) var(--tdm-space-4)
+
+.shell
+  min-block-size: 0
+  padding: 0
+  display: flex
+  flex-direction: column
+  overflow: hidden
+  border: 0
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+  flex: 1

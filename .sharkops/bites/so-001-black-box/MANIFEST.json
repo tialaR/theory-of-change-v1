@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "SO-001",
+  "codename": "Black Box",
+  "purpose": "Knowledge as Code",
+  "status": "COMPLETE",
+  "revision": 1,
+  "lifecycle": {
+    "apply": "PASS",
+    "verify": "PASS",
+    "rollback": "PASS",
+    "reapply": "PASS",
+    "finalVerify": "PASS"
+  },
+  "completionEvidence": ".sharkops/reports/so-001-completion.json",
+  "updatedAt": "2026-07-31T02:46:18.595Z",
+  "completedAt": "2026-07-31T02:46:18.595Z"
+}

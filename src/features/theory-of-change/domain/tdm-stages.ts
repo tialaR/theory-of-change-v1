@@ -5,10 +5,10 @@ export type TdmStage = (typeof TDM_STAGE_ORDER)[number];
 export type TdmStageId = TdmStage;
 
 export const TDM_STAGE_LABELS: Record<TdmStage, string> = {
-  input: 'Insumos',
-  activity: 'Atividades',
-  output: 'Produtos',
-  outcome: 'Resultados'
+  input: 'Insumo',
+  activity: 'Atividade',
+  output: 'Produto',
+  outcome: 'Resultado'
 };
 
 export const TDM_STAGE_DESCRIPTIONS: Record<TdmStage, string> = {

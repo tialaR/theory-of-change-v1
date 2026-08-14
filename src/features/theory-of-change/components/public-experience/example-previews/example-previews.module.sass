@@ -1,0 +1,50 @@
+// Contrato A — hub experience cards (surface via TdmPublicFeatureCard size=choice)
+// Intro editorial reutiliza PublicSection (mesma régua de /exemplos/visao-do-fluxo).
+$card-gap-desktop: 1.25rem
+
+.previewGrid
+  display: grid
+  grid-template-columns: repeat(2, minmax(0, 1fr))
+  gap: $card-gap-desktop
+  align-items: stretch
+
+.experienceCard
+  min-inline-size: 0
+  block-size: 100%
+
+.previewCanvas
+  display: grid
+  place-items: center
+  inline-size: 100%
+  block-size: 100%
+  min-block-size: 0
+
+  svg
+    display: block
+    inline-size: 100%
+    block-size: 100%
+    max-inline-size: 100%
+    max-block-size: 100%
+
+.editorialConnectionBase
+  fill: none
+  stroke: var(--tdm-fg-subtle)
+  stroke-width: 1.05
+  stroke-linecap: round
+  stroke-linejoin: round
+  opacity: 1
+  vector-effect: non-scaling-stroke
+
+.editorialConnectionReveal
+  fill: none
+  stroke: var(--tdm-fg-secondary)
+  stroke-width: 1.15
+  stroke-linecap: round
+  stroke-linejoin: round
+  pointer-events: none
+  vector-effect: non-scaling-stroke
+
+@media (max-width: 56rem)
+  .previewGrid
+    grid-template-columns: minmax(0, 1fr)
+    gap: var(--tdm-space-5)

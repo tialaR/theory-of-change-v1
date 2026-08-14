@@ -1,131 +1,145 @@
-import { useMemo, useState } from 'react';
+'use client';
+
+import { useRef } from 'react';
+import { useReducedMotion } from 'motion/react';
 import type { TdmEdge, TdmNode } from '../../domain/tdm-types';
-import { TDM_STAGE_LABELS, type TdmStage } from '../../domain/tdm-stages';
+import { canViewTdmResult } from '../../utils/tdm-result';
+import { useResultViewFocusController } from './result-view-focus-controller/use-result-view-focus-controller';
+import { ResultViewGrainientBackdrop } from './result-view-grainient-backdrop';
+import { TdmGlassSurface } from './tdm-glass-surface';
+import { ResultViewHero } from './result-view-hero/result-view-hero';
+import { useResultViewHeroController } from './result-view-hero/use-result-view-hero-controller';
+import { ResultTheoryFlow } from './result-theory-flow/result-theory-flow';
+import { useResultViewExportController } from './result-view-export-controller/use-result-view-export-controller';
 import styles from './result-view.module.sass';
+
+function ResultEmptyState({ onBack, backLabel }: { onBack: () => void; backLabel: string }) {
+  return (
+    <section className={styles.emptyState}>
+      <TdmGlassSurface variant="strong" stage="neutral" className={styles.emptyStateGlass} contentClassName={styles.emptyStateGlassContent}>
+        <p className={styles.emptyStateKicker}>Resultado da Teoria da Mudança</p>
+        <h2 className={styles.emptyStateTitle}>Sua teoria ainda está em construção.</h2>
+        <p className={styles.emptyStateMessage}>Crie itens no canvas para visualizar a teoria organizada.</p>
+        <TdmGlassSurface variant="strong" stage="neutral" interactive className={styles.backButtonGlass}>
+          <button type="button" className={styles.backButtonInner} onClick={onBack}>
+            {backLabel}
+          </button>
+        </TdmGlassSurface>
+      </TdmGlassSurface>
+    </section>
+  );
+}
 
 export function ResultView({
   title,
+  description,
   nodes,
   edges,
-  backLabel = 'Voltar ao canvas',
+  backLabel = 'Voltar para minha teoria',
   showExportActions = false,
-  onExport,
+  onExport: _legacyOnExport,
   onBack
 }: {
   title: string;
+  description?: string;
   nodes: TdmNode[];
   edges: TdmEdge[];
   backLabel?: string;
   showExportActions?: boolean;
+  /** Mantido por compatibilidade com o canvas; exportação é tratada internamente. */
   onExport?: (format: 'pdf' | 'png' | 'jpeg' | 'svg') => void;
   onBack: () => void;
 }) {
-  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
-  const selectedNode = useMemo(() => nodes.find((node) => node.id === selectedNodeId) ?? null, [nodes, selectedNodeId]);
-  const relatedIds = useMemo(() => {
-    if (!selectedNode) {
-      return new Set<string>();
-    }
+  const viewRef = useRef<HTMLElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const isComplete = canViewTdmResult(nodes, edges);
+  const { isHeroCompact } = useResultViewHeroController({ viewRef, isComplete });
+  const {
+    focusedNodeId,
+    focusedEdgeId,
+    relatedNodeIds,
+    relatedEdgeIds,
+    flowInspectorContent,
+    edgeEndpointIds,
+    flowInspectorSlotRef,
+    flowInspectorMobileRef,
+    cardRefs,
+    registerCardRef,
+    handleSelectNode,
+    handleSelectEdge,
+    clearFocus
+  } = useResultViewFocusController({ nodes, edges, shouldReduceMotion });
 
-    const connectedEdges = edges.filter((edge) => edge.source === selectedNode.id || edge.target === selectedNode.id);
-    const ids = new Set<string>([selectedNode.id]);
+  const {
+    exportMenuOpen,
+    isExporting,
+    exportStatus,
+    resultExportRef,
+    handleExport,
+    toggleExportMenu,
+    closeExportMenu
+  } = useResultViewExportController({ title, nodes, edges, clearFocus });
 
-    connectedEdges.forEach((edge) => {
-      ids.add(edge.source);
-      ids.add(edge.target);
-    });
 
-    return ids;
-  }, [edges, selectedNode]);
-
-  const groupedNodes = useMemo(() => {
-    return (Object.keys(TDM_STAGE_LABELS) as TdmStage[]).reduce<Record<TdmStage, TdmNode[]>>(
-      (accumulator, stage) => {
-        accumulator[stage] = nodes.filter((node) => node.stage === stage);
-        return accumulator;
-      },
-      {
-        input: [],
-        activity: [],
-        output: [],
-        outcome: []
-      }
+  if (!isComplete) {
+    return (
+      <main ref={viewRef} className={styles.view}>
+        <ResultViewGrainientBackdrop />
+        <ResultEmptyState onBack={onBack} backLabel={backLabel} />
+      </main>
     );
-  }, [nodes]);
+  }
 
   return (
-    <main className={styles.view}>
-      <section className={styles.card}>
-        <div className={styles.topRow}>
-          <div>
-            <p className={styles.kicker}>Resultado final</p>
-            <h1 className={styles.title}>{title}</h1>
-            <p className={styles.description}>Clique em um bloco para realçar suas conexões diretas.</p>
-          </div>
-          <button className={styles.backButton} type="button" onClick={onBack}>
-            {backLabel}
-          </button>
-        </div>
-        <div className={styles.grid}>
-          {(Object.keys(TDM_STAGE_LABELS) as TdmStage[]).map((stage) => (
-            <section key={stage} className={styles.column}>
-              <p className={styles.columnKicker}>{TDM_STAGE_LABELS[stage]}</p>
-              <div className={styles.columnList}>
-                {groupedNodes[stage].map((node) => {
-                  const isActive = selectedNodeId === null || relatedIds.has(node.id);
-                  return (
-                    <button
-                      key={node.id}
-                      type="button"
-                      className={[styles.nodeItem, isActive ? '' : styles.dimmed, selectedNodeId === node.id ? styles.active : '']
-                        .filter(Boolean)
-                        .join(' ')}
-                      onClick={() => setSelectedNodeId((current) => (current === node.id ? null : node.id))}
-                    >
-                      <strong>{node.title}</strong>
-                      <span>{node.shortNotes || node.description}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </section>
-          ))}
-        </div>
-        <aside className={styles.sideNote}>
-          <p className={styles.sideNoteTitle}>Conexões e marcadores</p>
-          <p className={styles.sideNoteText}>
-            {selectedNode
-              ? `Este bloco está em ${TDM_STAGE_LABELS[selectedNode.stage].toLowerCase()}. As conexões diretas ficam destacadas acima.`
-              : 'Selecione um bloco para ver o destaque das relações diretas.'}
-          </p>
-          <div className={styles.edgeList}>
-            {edges.map((edge) => (
-              <div key={edge.id} className={styles.edgeRow}>
-                <span>
-                  {TDM_STAGE_LABELS[edge.sourceStage]} → {TDM_STAGE_LABELS[edge.targetStage]}
-                </span>
-                <span>{edge.markerType ? edge.markerType : 'sem marcador'}</span>
-              </div>
-            ))}
-          </div>
-          {showExportActions && onExport ? (
-            <div className={styles.exportActions}>
-              <button type="button" className={styles.exportButton} onClick={() => onExport('pdf')}>
-                PDF
-              </button>
-              <button type="button" className={styles.exportButton} onClick={() => onExport('png')}>
-                PNG
-              </button>
-              <button type="button" className={styles.exportButton} onClick={() => onExport('jpeg')}>
-                JPEG
-              </button>
-              <button type="button" className={styles.exportButton} onClick={() => onExport('svg')}>
-                SVG
-              </button>
-            </div>
+    <main ref={viewRef} className={styles.view}>
+      <ResultViewGrainientBackdrop />
+
+      <div className={[styles.resultShell, styles.content, styles.resultContent].join(' ')}>
+        <div
+          ref={resultExportRef}
+          className={styles.exportTarget}
+          aria-busy={isExporting || undefined}
+        >
+          {exportStatus ? (
+            <p className={styles.noPrint} role="status" aria-live="polite">
+              {exportStatus}
+            </p>
           ) : null}
-        </aside>
-      </section>
+          <ResultViewHero
+            nodes={nodes}
+            edges={edges}
+            description={description}
+            backLabel={backLabel}
+            showExportActions={showExportActions}
+            exportMenuOpen={exportMenuOpen}
+            isExporting={isExporting}
+            isHeroCompact={isHeroCompact}
+            shouldReduceMotion={shouldReduceMotion}
+            flowInspectorContent={flowInspectorContent}
+            flowInspectorSlotRef={flowInspectorSlotRef}
+            flowInspectorMobileRef={flowInspectorMobileRef}
+            onToggleExportMenu={toggleExportMenu}
+            onCloseExportMenu={closeExportMenu}
+            onExport={handleExport}
+            onBack={onBack}
+          />
+
+          <ResultTheoryFlow
+            nodes={nodes}
+            edges={edges}
+            focusedNodeId={focusedNodeId}
+            focusedEdgeId={focusedEdgeId}
+            relatedNodeIds={relatedNodeIds}
+            relatedEdgeIds={relatedEdgeIds}
+            edgeEndpointIds={edgeEndpointIds}
+            cardRefs={cardRefs}
+            registerCardRef={registerCardRef}
+            onSelectNode={handleSelectNode}
+            onSelectEdge={handleSelectEdge}
+            shouldReduceMotion={shouldReduceMotion}
+          />
+        </div>
+      </div>
     </main>
   );
 }

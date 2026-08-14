@@ -1,0 +1,181 @@
+$noir-0: #050506
+$noir-1: #08090c
+$noir-2: #101116
+$noir-3: #15161c
+
+$surface-soft: rgba(16, 17, 22, 0.72)
+$surface-mid: rgba(20, 21, 27, 0.82)
+$surface-strong: rgba(24, 25, 31, 0.92)
+
+$border-soft: rgba(255, 255, 255, 0.08)
+$border-mid: rgba(255, 255, 255, 0.12)
+$border-strong: rgba(255, 255, 255, 0.18)
+
+$text-main: rgba(248, 248, 250, 0.94)
+$text-soft: rgba(224, 226, 232, 0.72)
+$text-muted: rgba(190, 193, 204, 0.54)
+$text-faint: rgba(180, 184, 194, 0.38)
+
+$white-light: rgba(255, 255, 255, 0.16)
+$white-light-soft: rgba(255, 255, 255, 0.08)
+
+$stage-inputs: #a78bfa
+$stage-activities: #60a5fa
+$stage-products: #f6b35d
+$stage-results: #5ee0b5
+$danger: #fb7185
+
+$noir-bg: $noir-0
+$surface: $surface-soft
+$text: $text-main
+$tdm-surface: radial-gradient(76% 18% at 50% 0%, rgba(255, 255, 255, 0.13), transparent 72%), linear-gradient(180deg, rgba(22, 23, 28, 0.88) 0%, rgba(13, 14, 18, 0.78) 48%, rgba(5, 5, 7, 0.96) 100%)
+$tdm-field: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015)), rgba(9, 10, 13, 0.72)
+
+.stageActionCard .dragCard
+  min-height: 2.45rem
+  padding: 0.55rem 0.7rem
+  border-radius: 0.85rem
+  border-color: color-mix(in srgb, var(--stage-accent, #{$stage-inputs}) 28%, $border-soft)
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12)
+
+  &:hover
+    transform: translateY(-0.0625rem)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.14)
+
+  strong
+    text-transform: none
+    letter-spacing: 0.01em
+    font-size: 0.72rem
+
+  small
+    font-size: 0.58rem
+    letter-spacing: 0
+
+.timeline
+  gap: 0.28rem
+  margin: 0.08rem 0 0.28rem
+
+  &::before
+    width: 0.05rem
+    background: rgba(255, 255, 255, 0.08)
+
+.stageBody
+  gap: 0.2rem
+  padding: 0.04rem 0.45rem 0.45rem 1.85rem
+
+  p
+    font-size: 0.64rem
+    line-height: 1.4
+    color: $text-muted
+
+  ul
+    margin: 0
+    padding-left: 0.95rem
+    font-size: 0.6rem
+    line-height: 1.35
+    color: rgba(180, 184, 194, 0.62)
+
+.stageSummary
+  min-height: 1.9rem
+  padding-block: 0.28rem
+
+.stageSummaryCopy small
+  display: -webkit-box
+  -webkit-line-clamp: 1
+  -webkit-box-orient: vertical
+  overflow: hidden
+  opacity: 0.7
+
+.stageCountBadge
+  min-width: 1.05rem
+  height: 1.05rem
+  border-radius: 0.28rem
+  font-size: 0.5rem
+  background: rgba(255, 255, 255, 0.04)
+  border-color: rgba(255, 255, 255, 0.08)
+  box-shadow: none
+
+.stageUnderstandKicker
+  margin: 0 0 0.14rem
+  color: color-mix(in srgb, var(--stage-accent, #{$stage-inputs}) 32%, $text-muted)
+  font-size: 0.46rem
+  font-weight: 600
+  letter-spacing: 0.08em
+  text-transform: uppercase
+
+.stageGuideQuestion
+  margin: 0.1rem 0 0.06rem
+  color: rgba(210, 214, 224, 0.72)
+  font-size: 0.62rem
+  font-weight: 500
+  line-height: 1.3
+
+.stageAccordion
+  border-color: rgba(255, 255, 255, 0.04)
+  background: transparent
+  box-shadow: none
+
+  // Stage color as a thin left signal — not a full-width top paint.
+  &::before
+    left: 0
+    right: auto
+    top: 0.45rem
+    bottom: 0.45rem
+    width: 0.1rem
+    height: auto
+    border-radius: 0 0.08rem 0.08rem 0
+    opacity: 0.55
+
+.stageAccordion[open]
+  border-color: rgba(255, 255, 255, 0.08)
+  background: rgba(255, 255, 255, 0.012)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04)
+
+.canvasOrganizationCard
+  padding: 0.45rem 0
+  opacity: 0.86
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.05)
+
+.canvasOrganizationHeader
+  min-height: 1.9rem
+  padding: 0.32rem 0
+
+.canvasOrganizationTitle
+  color: $text-faint
+  font-size: 0.48rem
+  letter-spacing: 0.08em
+
+.canvasOrganizationText
+  font-size: 0.64rem
+  line-height: 1.35
+  color: $text-muted
+
+.blockFormsPanel
+  margin-top: 0.1rem
+  padding: 0.65rem 0
+  border: 0
+  border-radius: 0
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.06)
+  background: transparent
+  box-shadow: none
+  backdrop-filter: none
+  -webkit-backdrop-filter: none
+  opacity: 1
+  gap: 0.45rem
+
+  &::before
+    content: none
+    display: none
+
+.blockFormsPanel .blockSidebarAccordion
+  border-color: rgba(255, 255, 255, 0.08)
+  background: rgba(255, 255, 255, 0.012)
+  box-shadow: none
+  border-radius: 0.85rem
+
+.blockFormsPanel .blockSidebarAccordion.sidebarAccordionOpen
+  border-color: rgba(255, 255, 255, 0.12)
+  background: radial-gradient(72% 20% at 50% 0%, rgba(255, 255, 255, 0.06), transparent 72%), linear-gradient(180deg, rgba(21, 22, 26, 0.72) 0%, rgba(12, 13, 16, 0.55) 100%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1)
+

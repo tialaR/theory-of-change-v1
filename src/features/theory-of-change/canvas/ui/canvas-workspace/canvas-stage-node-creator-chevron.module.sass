@@ -1,0 +1,114 @@
+.creatorChevron
+  width: 1.8rem
+  display: grid
+  place-items: center
+  color: var(--v2-muted)
+
+.creatorBody
+  padding: 0 0.6rem 0.65rem
+  display: grid
+  gap: 0.34rem
+
+  > button
+    --stage-color: var(--stage-input)
+    width: 100%
+    min-height: 3.25rem
+    padding: 0.52rem 0.55rem
+    display: grid
+    grid-template-columns: auto 1fr auto
+    align-items: center
+    gap: 0.65rem
+    border: 0.0625rem solid transparent
+    border-radius: 0.72rem
+    background: transparent
+    text-align: left
+    cursor: pointer
+    transition: border-color 180ms ease, background 180ms ease, transform 180ms ease
+
+    &[data-stage='activity']
+      --stage-color: var(--stage-activity)
+
+    &[data-stage='product']
+      --stage-color: var(--stage-product)
+
+    &[data-stage='outcome']
+      --stage-color: var(--stage-outcome)
+
+    &:hover
+      border-color: color-mix(in srgb, var(--stage-color) 24%, var(--v2-stroke))
+      background: color-mix(in srgb, var(--stage-color) 5%, var(--v2-raised))
+      transform: translateY(-0.0625rem)
+
+    > span:nth-child(2)
+      display: grid
+
+      strong
+        font-size: 0.72rem
+        font-weight: 560
+
+      small
+        margin-top: 0.1rem
+        color: var(--v2-muted)
+        font-size: 0.62rem
+
+    em
+      min-width: 1.5rem
+      height: 1.5rem
+      display: grid
+      place-items: center
+      border-radius: 999rem
+      background: color-mix(in srgb, var(--stage-color) 10%, transparent)
+      color: var(--stage-color)
+      font-size: 0.64rem
+      font-style: normal
+
+  > p
+    margin: 0.25rem 0 0
+    padding: 0.65rem
+    display: flex
+    gap: 0.5rem
+    border-top: 0.0625rem solid var(--v2-stroke)
+    color: var(--v2-subtle)
+    font-size: 0.61rem
+    line-height: 1.45
+
+    svg
+      width: 0.84rem
+      height: 0.84rem
+      flex: 0 0 auto
+
+.stageGlyph
+  width: 2rem
+  height: 2rem
+  display: grid
+  place-items: center
+  border: 0.0625rem solid color-mix(in srgb, var(--stage-color) 26%, var(--v2-stroke))
+  border-radius: 0.58rem
+  background: color-mix(in srgb, var(--stage-color) 8%, var(--v2-card))
+  color: var(--stage-color)
+
+.notice
+  position: absolute
+  z-index: 9
+  left: 50%
+  bottom: 1.3rem
+  max-width: 28rem
+  padding: 0.58rem 0.78rem
+  display: inline-flex
+  align-items: center
+  gap: 0.52rem
+  border: 0.0625rem solid var(--v2-stroke)
+  border-radius: 999rem
+  background: color-mix(in srgb, var(--v2-shell) 92%, transparent)
+  color: var(--v2-muted)
+  font-size: 0.66rem
+  box-shadow: 0 0.8rem 2rem color-mix(in srgb, black 30%, transparent)
+  backdrop-filter: blur(1rem)
+  transform: translateX(-50%)
+
+  span
+    width: 0.36rem
+    height: 0.36rem
+    border-radius: 50%
+    background: var(--stage-outcome)
+

@@ -1,149 +1,1790 @@
 @use '../../../../shared/styles/tokens' as *
 
-.view
-  min-height: 100vh
-  padding: 0
-  background: $color-bg
-  color: $color-text
+$result-ease: cubic-bezier(0.22, 1, 0.36, 1)
+$result-transition: 280ms $result-ease
 
-.card
-  min-height: 100vh
-  padding: 24px
-  background: radial-gradient(circle at top left, rgba(167, 139, 250, 0.11), transparent 32%), linear-gradient(180deg, rgba(10, 14, 22, 1), rgba(6, 8, 13, 1))
+@mixin glass-edge
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.14), inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.04)
+
+@mixin result-scrollbar
+  scrollbar-width: thin
+  scrollbar-color: rgba(245, 245, 242, 0.16) transparent
+
+  &::-webkit-scrollbar
+    width: 0.375rem
+    height: 0.375rem
+
+  &::-webkit-scrollbar-track
+    background: transparent
+
+  &::-webkit-scrollbar-thumb
+    border-radius: 999px
+    background: rgba(245, 245, 242, 0.14)
+
+  &:hover::-webkit-scrollbar-thumb
+    background: rgba(245, 245, 242, 0.24)
+
+// ─── Page — scroll vertical real (nunca preso em card) ────────────────────────
+
+.view
+  position: fixed
+  inset: 0
+  isolation: isolate
+  box-sizing: border-box
+  inline-size: 100%
+  max-inline-size: 100%
+  min-block-size: 100dvh
+  block-size: 100dvh
+  overflow-y: auto
+  overflow-x: hidden
+  overscroll-behavior: contain
+  scrollbar-gutter: stable
+  scroll-behavior: smooth
+  z-index: 1
+  padding-block-end: 8rem
+  background: #050506
+  color: rgba(245, 245, 242, 0.94)
+
+  &::before
+    content: ''
+    position: fixed
+    inset: 0
+    z-index: 0
+    pointer-events: none
+    background: radial-gradient(ellipse 70% 42% at 50% 18%, rgba(255, 255, 255, 0.12), transparent 62%), radial-gradient(ellipse 42% 28% at 16% 72%, rgba(255, 255, 255, 0.06), transparent 66%), radial-gradient(ellipse 48% 30% at 88% 62%, rgba(255, 255, 255, 0.05), transparent 68%), linear-gradient(180deg, #050506 0%, #090a0d 46%, #050506 100%)
+    opacity: 1
+
+  *,
+  *::before,
+  *::after
+    box-sizing: inherit
+
+.resultContent
+  position: relative
+  z-index: 1
+  padding-block-end: 8rem
+
+.resultShell,
+.content
+  position: relative
+  z-index: 1
+  inline-size: min(100%, 96rem)
+  max-inline-size: 96rem
+  min-inline-size: 0
+  min-block-size: auto
+  margin-inline: auto
+  padding-block: 2rem
+  padding-inline: 2rem
+
+.exportTarget
+  position: relative
+  display: grid
+  gap: 2.5rem
+  min-block-size: 42rem
+
+// ─── Hero / Header fluido — sem caixa retangular ───────────────────────────────
+
+.hero
+  position: sticky
+  top: 0
+  isolation: isolate
+  display: grid
+  gap: 0.875rem
+  padding: 1rem 0
+  margin-block-end: 0
+  border: 1px solid rgba(255, 255, 255, 0.1)
+  border-radius: 0
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)), rgba(10, 11, 14, 0.58)
+  backdrop-filter: blur(1.375rem) saturate(1.18)
+  -webkit-backdrop-filter: blur(1.375rem) saturate(1.18)
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.12)
+  z-index: 24
+  overflow: hidden
+  transition: transform 180ms $result-ease, opacity 180ms $result-ease, background 180ms $result-ease, box-shadow 180ms $result-ease
+
+  &::before
+    content: ''
+    position: absolute
+    top: -2rem
+    left: -8%
+    right: -8%
+    height: 14rem
+    pointer-events: none
+    background: radial-gradient(ellipse 68% 72% at 72% 28%, rgba(255, 255, 255, 0.045), transparent 62%), radial-gradient(ellipse 52% 48% at 18% 42%, rgba(210, 214, 222, 0.028), transparent 58%)
+    filter: blur(1.75rem)
+    opacity: 0.35
+    transition: opacity 180ms $result-ease
+
+  &::after
+    content: ''
+    position: absolute
+    left: 0
+    right: 0
+    bottom: 0
+    height: 1px
+    pointer-events: none
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.07) 24%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.07) 76%, transparent)
+    opacity: 0.45
+    transition: opacity 180ms $result-ease
+
+.heroCompact
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.03)), rgba(10, 11, 14, 0.72)
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.14)
+
+  &::before
+    opacity: 0.08
+
+  &::after
+    opacity: 0.32
+
+  .heroRibbon
+    opacity: 0
+    visibility: hidden
+
+  .kicker
+    opacity: 0.72
+    transform: scale(0.92)
+    transform-origin: left center
+
+  .heroEditorialLine
+    opacity: 0.16
+
+  .heroTitleShell
+    block-size: 1.375rem
+
+  .title
+    transform: scale(0.36)
+    transform-origin: left top
+
+  .heroExpandable
+    position: absolute
+    inset: auto
+    opacity: 0
+    visibility: hidden
+    pointer-events: none
+    transform: translateY(-0.375rem)
+
+  .heroInner
+    gap: 0.5rem
+    align-items: center
+
+  .heroRight
+    gap: 0.25rem
+
+.heroEvilEye
+  position: absolute
+  inset: 0
+  z-index: 0
+  pointer-events: none
+  transition: opacity 220ms $result-ease, visibility 220ms $result-ease
+
+.heroRibbon
+  position: absolute
+  top: 1.5rem
+  right: 10rem
+  inline-size: 7rem
+  block-size: 0.0625rem
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08), transparent)
+  transform: rotate(-11deg)
+  pointer-events: none
+  opacity: 0.72
+
+.heroInner
+  position: relative
+  z-index: 1
+  display: grid
+  grid-template-columns: minmax(0, 1fr) minmax(16rem, 24rem)
+  gap: 1.5rem
+  align-items: start
+
+.heroLeft
+  position: relative
+  isolation: isolate
+  min-inline-size: 0
+  z-index: 2
+
+.heroRight
+  position: relative
+  z-index: 2
+  display: flex
+  flex-direction: column
+  align-items: flex-end
+  gap: 0.625rem
+  min-inline-size: 0
+  max-inline-size: 24rem
+  justify-self: end
+
+.flowInspectorSlot
+  inline-size: 100%
+  max-inline-size: 24rem
+  min-inline-size: 0
+  transition: opacity 180ms $result-ease
+
+.heroTitleShell
+  position: relative
+  z-index: 1
+  block-size: clamp(2.5rem, 5.8vw, 4.75rem)
+  overflow: hidden
+  transition: block-size 180ms $result-ease
+
+.heroExpandable
+  display: grid
+  gap: 0
+  transition: opacity 180ms $result-ease, transform 180ms $result-ease, visibility 0s linear 0s
+
+.heroRhMicro
+  align-self: flex-end
+  margin-block-start: 0.125rem
+
+.flowInspectorMobile
+  display: none
+
+.heroCopy
+  position: relative
+  isolation: isolate
+  min-inline-size: 0
+  z-index: 2
+
+.heroEditorialLine
+  position: absolute
+  top: 0.25rem
+  left: 0
+  z-index: 0
+  inline-size: min(14rem, 36vw)
+  block-size: 0.0625rem
+  pointer-events: none
+  background: linear-gradient(90deg, rgba(245, 245, 242, 0.22), rgba(245, 245, 242, 0.06) 72%, transparent)
+  opacity: 0.48
+
+.heroMetaRow
+  display: flex
+  flex-wrap: wrap
+  align-items: center
+  gap: 0.625rem
+  margin-top: 0.75rem
+
+.heroActions
+  position: relative
+  z-index: 2
+  display: flex
+  flex-wrap: wrap
+  gap: 0.5rem
+  justify-content: flex-end
+  align-items: center
+  flex-shrink: 0
+  inline-size: 100%
 
 .kicker
-  margin: 0 0 10px
-  color: $color-text-soft
-  font-size: 11px
+  position: relative
+  z-index: 1
+  margin: 0 0 0.5rem
+  color: rgba(160, 166, 176, 0.82)
+  font-size: 0.6875rem
+  font-weight: 700
+  letter-spacing: 0.2em
+  text-transform: uppercase
+  transition: opacity 180ms $result-ease, transform 180ms $result-ease
+
+.title
+  position: relative
+  z-index: 1
+  margin: 0
+  max-inline-size: 44rem
+  font-size: clamp(2.625rem, 5.8vw, 4.75rem)
+  font-weight: 820
+  line-height: 0.98
+  letter-spacing: -0.052em
+  text-wrap: balance
+  overflow-wrap: anywhere
+  color: rgba(250, 250, 247, 0.99)
+  text-shadow: 0 0.0625rem 0 rgba(255, 255, 255, 0.05)
+  transform-origin: left top
+  transition: transform 180ms $result-ease, opacity 180ms $result-ease
+
+.subtitle
+  position: relative
+  z-index: 1
+  max-inline-size: 52ch
+  margin: 0.5rem 0 0
+  color: rgba(220, 224, 230, 0.76)
+  font-size: 1rem
+  font-weight: 400
+  line-height: 1.55
+  transition: opacity 180ms $result-ease, transform 180ms $result-ease
+
+.instruction
+  position: relative
+  z-index: 1
+  display: flex
+  align-items: flex-start
+  gap: 0.5rem
+  max-inline-size: 52ch
+  margin: 0.625rem 0 0
+  padding: 0
+  border: none
+  border-radius: 0
+  background: transparent
+  color: rgba(160, 166, 176, 0.88)
+  font-size: 0.8125rem
+  line-height: 1.55
+  transition: opacity 180ms $result-ease, transform 180ms $result-ease
+
+.instructionDot
+  width: 0.3125rem
+  height: 0.3125rem
+  margin-top: 0.45em
+  border-radius: 50%
+  background: rgba(255, 255, 255, 0.38)
+  flex-shrink: 0
+
+.statusGlassTray
+  margin-top: 0
+  padding: 0
+  border: none
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+  backdrop-filter: none
+  transition: opacity 180ms $result-ease
+
+.statusGrid
+  display: flex
+  flex-wrap: wrap
+  gap: 0.4375rem
+
+.statusStat
+  display: inline-flex
+  align-items: center
+  gap: 0.4375rem
+  padding: 0.375rem 0.6875rem
+  border: 1px solid rgba(255, 255, 255, 0.08)
+  border-radius: 0.5rem
+  background: rgba(16, 17, 20, 0.42)
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05)
+  backdrop-filter: blur(0.75rem)
+  transition: border-color $result-transition, background $result-transition, box-shadow $result-transition, padding $result-transition
+
+  &:hover
+    border-color: rgba(255, 255, 255, 0.12)
+    background: rgba(22, 23, 26, 0.52)
+
+.statusStatValue
+  color: var(--stage-accent, #f4f4f1)
+  font-size: 0.8125rem
+  font-weight: 700
+  line-height: 1
+  font-variant-numeric: tabular-nums
+
+.statusStatLabel
+  color: #6f737c
+  font-size: 0.6875rem
+  font-weight: 600
+  letter-spacing: 0.04em
+  text-transform: uppercase
+
+.statusStatMarker
+  .statusStatValue
+    color: rgba(224, 164, 96, 0.72)
+
+.statusStatHypothesis
+  .statusStatValue
+    color: rgba(184, 195, 208, 0.82)
+
+// ─── Actions (glass via TdmGlassSurface) ───────────────────────────────────────
+
+.backButtonGlass,
+.backButtonSecondaryGlass,
+.exportTriggerGlass
+  inline-size: auto
+
+.backButtonInner,
+.exportTriggerInner
+  display: inline-flex
+  align-items: center
+  gap: 0.5rem
+  inline-size: 100%
+  padding: 0.6875rem 0.9375rem
+  border: none
+  border-radius: inherit
+  background: transparent
+  box-shadow: none
+  backdrop-filter: none
+  color: #f4f4f1
+  cursor: pointer
+  font-size: 0.8125rem
+  font-weight: 600
+  letter-spacing: 0.02em
+  white-space: nowrap
+  transition: color $result-transition, transform $result-transition, opacity $result-transition
+
+.backButtonIcon
+  inline-size: 1rem
+  block-size: 1rem
+  flex-shrink: 0
+  opacity: 0.82
+
+  &:focus-visible
+    outline: none
+
+.backButtonSecondaryGlass
+  .backButtonInner
+    color: #b8babf
+
+.backButtonGlass:hover .backButtonInner,
+.exportTriggerGlass:hover .exportTriggerInner
+  color: #f4f4f1
+  transform: translateY(-0.0625rem)
+
+.backButtonSecondaryGlass:hover .backButtonInner
+  color: #f4f4f1
+  transform: translateY(-0.0625rem)
+
+.exportTriggerGlassOpen
+  .exportTriggerInner
+    transform: translateY(-0.0625rem)
+
+.exportMenuWrap
+  position: relative
+
+.exportTriggerGlass
+  .exportTriggerInner
+    padding: 0.75rem 1.125rem
+
+.exportTriggerIcon
+  width: 1rem
+  height: 1rem
+  opacity: 0.72
+
+.exportTriggerChevron
+  width: 0.875rem
+  height: 0.875rem
+  opacity: 0.6
+  transition: transform $result-transition
+
+.exportTriggerChevronOpen
+  transform: rotate(180deg)
+
+.exportMenuMotion
+  position: absolute
+  top: calc(100% + 0.5rem)
+  right: 0
+  z-index: 6
+  inline-size: min(18.5rem, 100%)
+
+.exportMenuGlass
+  inline-size: 100%
+
+.exportMenuContent
+  display: grid
+  gap: 0.125rem
+  padding: 0.375rem
+
+.exportOption
+  display: flex
+  align-items: flex-start
+  gap: 0.75rem
+  width: 100%
+  padding: 0.625rem 0.75rem
+  border: 0.0625rem solid transparent
+  border-radius: $noir-radius-field
+  background: transparent
+  color: $ds-text-primary
+  cursor: pointer
+  text-align: left
+  transition: background $result-transition, border-color $result-transition
+
+  &:hover:not(:disabled)
+    background: rgba(255, 255, 255, 0.04)
+    border-color: $noir-stroke-hairline
+
+  &:focus-visible
+    outline: 0.125rem solid rgba(255, 255, 255, 0.24)
+    outline-offset: -0.125rem
+
+.exportOptionDisabled
+  opacity: 0.48
+  cursor: not-allowed
+
+.exportOptionIcon
+  width: 1.125rem
+  height: 1.125rem
+  flex-shrink: 0
+  margin-top: 0.125rem
+  opacity: 0.72
+
+.exportOptionCopy
+  display: grid
+  gap: 0.125rem
+
+.exportOptionLabel
+  font-size: 0.8125rem
+  font-weight: 600
+
+.exportOptionDescription
+  color: $ds-text-muted
+  font-size: 0.75rem
+  line-height: 1.45
+
+// ─── Body layout — fluxo estável com camadas fixas ───────────────────────────
+
+.flowSection
+  position: relative
+  min-inline-size: 0
+  min-block-size: 44rem
+  padding-block-start: 0.375rem
+
+.flowViewport
+  position: relative
+  isolation: isolate
+  inline-size: 100%
+  max-inline-size: 100%
+  min-inline-size: 0
+  overflow: visible
+  background: radial-gradient(ellipse 70% 42% at 50% 18%, rgba(255, 255, 255, 0.12), transparent 62%), radial-gradient(ellipse 42% 28% at 16% 72%, rgba(255, 255, 255, 0.06), transparent 66%), radial-gradient(ellipse 48% 30% at 88% 62%, rgba(255, 255, 255, 0.05), transparent 68%), linear-gradient(180deg, #050506 0%, #090a0d 46%, #050506 100%)
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0
+    z-index: 0
+    pointer-events: none
+    background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.07) 34%, rgba(255, 255, 255, 0.2) 46%, rgba(255, 255, 255, 0.055) 57%, transparent 74%), linear-gradient(72deg, transparent 8%, rgba(255, 255, 255, 0.03) 38%, rgba(255, 255, 255, 0.11) 48%, transparent 68%)
+    opacity: 0.7
+    filter: blur(0.4px)
+
+  &::after
+    content: ''
+    position: absolute
+    inset: 0
+    z-index: 0
+    pointer-events: none
+    background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 5rem)
+    opacity: 0.2
+
+.flowMonochromeLayer
+  position: absolute
+  inset: 0
+  z-index: 1
+  opacity: 0.64
+  pointer-events: none
+
+.connectionLayer
+  position: absolute
+  inset: 0
+  z-index: 2
+  pointer-events: none
+  overflow: visible
+
+.flowOverlaySvg
+  position: absolute
+  inset: 0
+  inline-size: 100%
+  block-size: 100%
+  max-inline-size: 100%
+  overflow: visible
+  pointer-events: none
+
+.flowOverlayGroup
+  pointer-events: none
+
+.flowOverlayPathHit
+  pointer-events: stroke
+
+.flowOverlayPathActive
+  filter: none
+  pointer-events: none
+
+.pathMarker
+  display: grid
+  place-items: center
+  inline-size: 1.625rem
+  block-size: 1.625rem
+  padding: 0
+  border-radius: 0.4375rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.2)
+  background: rgba(10, 11, 14, 0.92)
+  box-shadow: 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.28), 0 0.0625rem 0 rgba(255, 255, 255, 0.06), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1)
+  cursor: pointer
+  transform: translateY(-0.125rem)
+  transition: border-color $result-transition, box-shadow $result-transition, transform $result-transition
+
+.pathMarkerFocused
+  border-color: rgba(255, 255, 255, 0.28)
+  box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.32), 0 0.0625rem 0 rgba(255, 255, 255, 0.08), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12)
+  transform: translateY(-0.1875rem) scale(1.05)
+
+.pathMarkerGlyph
+  font-size: 0.6875rem
+  font-weight: 800
+  line-height: 1
+
+.pathMarkerRisk
+  .pathMarkerGlyph
+    color: rgba(210, 198, 180, 0.86)
+
+.pathMarkerHypothesis
+  .pathMarkerGlyph
+    color: rgba(196, 202, 210, 0.88)
+
+.causalLensShell
+  position: absolute
+  z-index: 4
+  inline-size: min(100%, 22rem)
+  max-inline-size: 22rem
+  min-inline-size: 0
+  pointer-events: auto
+
+.causalLensGlass
+  inline-size: 100%
+
+.causalLensContent
+  padding: 0.875rem 1rem
+  gap: 0
+
+.causalLensRoute
+  position: relative
+  z-index: 1
+  margin: 0 0 0.375rem
+  color: #6f737c
+  font-size: 0.6875rem
+  font-weight: 600
+  letter-spacing: 0.04em
+  line-height: 1.4
+
+.causalLensCount
+  position: relative
+  z-index: 1
+  margin: 0 0 0.375rem
+  color: rgba(255, 255, 255, 0.48)
+  font-size: 0.6875rem
+  font-weight: 600
+  letter-spacing: 0.06em
+  text-transform: uppercase
+
+.causalLensTitle
+  position: relative
+  z-index: 1
+  margin: 0 0 0.375rem
+  color: #f4f4f1
+  font-size: 0.875rem
+  font-weight: 650
+  line-height: 1.35
+  letter-spacing: -0.01em
+
+.causalLensBody
+  position: relative
+  z-index: 1
+  margin: 0
+  color: #b8babf
+  font-size: 0.8125rem
+  line-height: 1.6
+
+.causalLensMarker
+  position: relative
+  z-index: 1
+  display: flex
+  align-items: flex-start
+  gap: 0.5rem
+  margin-top: 0.625rem
+  padding: 0.5rem 0.625rem
+  border-radius: 0.625rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.06)
+  background: rgba(255, 255, 255, 0.025)
+
+.causalLensMarkerRisk
+  border-color: rgba(224, 164, 96, 0.14)
+
+  .causalLensMarkerGlyph
+    color: rgba(224, 164, 96, 0.82)
+
+.causalLensMarkerHypothesis
+  border-color: rgba(184, 195, 208, 0.14)
+
+  .causalLensMarkerGlyph
+    color: rgba(184, 195, 208, 0.84)
+
+.causalLensMarkerGlyph
+  display: inline-grid
+  place-items: center
+  inline-size: 1.25rem
+  block-size: 1.25rem
+  flex-shrink: 0
+  border-radius: 0.375rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1)
+  background: rgba(255, 255, 255, 0.03)
+  font-size: 0.625rem
+  font-weight: 800
+  line-height: 1
+
+.causalLensMarkerText
+  margin: 0
+  color: #b8babf
+  font-size: 0.75rem
+  line-height: 1.55
+
+.lensLeft
+  top: 18%
+  left: 1.25rem
+
+.lensCenter
+  top: 22%
+  left: 50%
+  margin-inline-start: calc(min(11rem, 50%) * -1)
+
+.lensRight
+  top: 20%
+  right: 1.25rem
+  left: auto
+
+.stageGrid
+  position: relative
+  z-index: 3
+  display: grid
+  grid-template-columns: minmax(13rem, 1fr) minmax(1.75rem, 2rem) minmax(13rem, 1fr) minmax(1.75rem, 2rem) minmax(13rem, 1fr) minmax(1.75rem, 2rem) minmax(13rem, 1fr)
+  gap: 1.25rem
+  inline-size: 100%
+  min-inline-size: 0
+  min-block-size: 40rem
+  align-items: start
+  padding-block-start: 0.5rem
+
+.flowSegment
+  display: contents
+
+// ─── Colunas liquid glass ─────────────────────────────────────────────────────
+
+.stageColumnShell
+  position: relative
+  z-index: 3
+  isolation: isolate
+  min-inline-size: 0
+
+.stageColumnHalo
+  position: absolute
+  inset: 4% -10% -4%
+  z-index: 0
+  border-radius: 1.5rem
+  background: radial-gradient(ellipse 82% 72% at 50% 36%, rgba(255, 255, 255, 0.02) 0%, rgba(210, 214, 222, 0.01) 28%, transparent 70%)
+  filter: blur(1.8rem)
+  opacity: 0.08
+  pointer-events: none
+
+.stageColumn
+  position: relative
+  z-index: 1
+  isolation: isolate
+  overflow: hidden
+  min-inline-size: 0
+  max-block-size: none
+  block-size: auto
+  min-block-size: clamp(28rem, 52dvh, 40rem)
+  display: flex
+  flex-direction: column
+  border-radius: 0.5rem
+  background: transparent
+  box-shadow: none
+  transition: opacity 280ms $result-ease, filter 280ms $result-ease
+
+.stageColumnDimmed
+  opacity: 0.48
+  filter: saturate(0.62)
+
+.stageColumnContent
+  display: flex
+  flex-direction: column
+  flex: 1
+  min-block-size: auto
+  padding: 1.125rem
+
+.stageInsumos
+  .columnTitle
+    color: rgba(196, 181, 253, 0.96)
+
+  .columnCount
+    border-color: rgba(167, 139, 250, 0.28)
+    background: rgba(167, 139, 250, 0.08)
+    color: rgba(196, 181, 253, 0.78)
+
+.stageAtividades
+  .columnTitle
+    color: rgba(147, 197, 253, 0.96)
+
+  .columnCount
+    border-color: rgba(96, 165, 250, 0.28)
+    background: rgba(96, 165, 250, 0.08)
+    color: rgba(147, 197, 253, 0.78)
+
+.stageProdutos
+  .columnTitle
+    color: rgba(253, 186, 116, 0.96)
+
+  .columnCount
+    border-color: rgba(245, 158, 66, 0.28)
+    background: rgba(245, 158, 66, 0.08)
+    color: rgba(253, 186, 116, 0.78)
+
+.stageResultados
+  .columnTitle
+    color: rgba(110, 231, 183, 0.96)
+
+  .columnCount
+    border-color: rgba(72, 211, 165, 0.28)
+    background: rgba(72, 211, 165, 0.08)
+    color: rgba(110, 231, 183, 0.78)
+
+.columnHeader
+  position: relative
+  z-index: 2
+  display: flex
+  align-items: flex-start
+  justify-content: space-between
+  gap: 0.75rem
+  flex-shrink: 0
+  margin-bottom: 0.875rem
+  padding-top: 0.125rem
+  padding-bottom: 0.75rem
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.08)
+  transition: opacity 280ms $result-ease, filter 280ms $result-ease
+
+  &::before
+    content: ''
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    height: 0.125rem
+    border-radius: 0.0625rem
+    background: linear-gradient(90deg, transparent, var(--stage-accent), transparent)
+    opacity: 0.52
+    pointer-events: none
+
+.columnHeaderDimmed
+  opacity: 0.4
+  filter: saturate(0.52)
+
+.columnHeaderSelected
+  opacity: 1
+
+  .columnTitle
+    text-shadow: 0 0 0.75rem rgba(255, 255, 255, 0.1)
+    color: rgba(250, 250, 247, 0.98)
+
+.stageItemsViewport
+  position: relative
+  z-index: 2
+  display: grid
+  gap: 0.875rem
+  flex: 1
+  min-block-size: auto
+  max-block-size: none
+  overflow: visible
+  padding-inline-end: 0.375rem
+  padding-block-end: 0.25rem
+
+.columnTitleRow
+  display: flex
+  align-items: center
+  gap: 0.5rem
+
+.columnAccentDot
+  width: 0.5rem
+  height: 0.5rem
+  border-radius: 50%
+  background: var(--stage-accent)
+  box-shadow: 0 0 0.75rem var(--stage-glow), 0 0 0 0.0625rem rgba(255, 255, 255, 0.12)
+
+.columnTitle
+  margin: 0
+  font-size: 0.9375rem
+  font-weight: 780
+  letter-spacing: 0.2em
+  text-transform: uppercase
+
+.columnCount
+  padding: 0.25rem 0.5625rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1)
+  border-radius: 0.375rem
+  font-size: 0.75rem
+  font-weight: 650
+  white-space: nowrap
+
+.stageList
+  position: relative
+  z-index: 2
+  display: grid
+  gap: 0.875rem
+  overflow: visible
+
+.stageListScrollable
+  max-block-size: none
+  overflow: visible
+  padding-inline-end: 0.125rem
+
+// ─── Cards de leitura (Liquid Glass) ──────────────────────────────────────────
+
+.readingCardShell
+  position: relative
+  z-index: 2
+  transform-origin: center top
+  will-change: transform, opacity
+  outline: none
+  cursor: pointer
+  overflow: visible
+  min-block-size: auto
+
+  &:focus-visible
+    outline: 0.125rem solid rgba(255, 255, 255, 0.28)
+    outline-offset: 0.125rem
+
+.readingCardGlass
+  border-left: 1px solid color-mix(in srgb, var(--stage-accent) 36%, transparent)
+  box-shadow: none
+  transition: border-color $result-transition
+
+.cardRipple
+  position: absolute
+  width: 1.25rem
+  height: 1.25rem
+  margin-left: -0.625rem
+  margin-top: -0.625rem
+  border-radius: 50%
+  pointer-events: none
+  z-index: 2
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 42%, transparent 72%)
+
+.readingCardFocused
+  z-index: 3
+
+  .readingCardGlass
+    border-left-color: var(--stage-accent)
+    box-shadow: none
+
+  .readingCardTitle
+    color: rgba(252, 252, 249, 0.99)
+
+.readingCardHighlighted
+  opacity: 1
+
+  .readingCardGlass
+    border-left-color: color-mix(in srgb, var(--stage-accent) 52%, rgba(255, 255, 255, 0.14))
+
+.readingCardDimmed
+  opacity: 0.45
+  filter: saturate(0.55)
+
+.readingCardDisabled
+  cursor: default
+  filter: saturate(0.38)
+  opacity: 0.34
+
+  .readingCardGlass
+    border-left-color: rgba(255, 255, 255, 0.08)
+
+  &:not(.readingCardFocused):hover
+    .readingCardGlass
+      border-left-color: rgba(255, 255, 255, 0.08)
+
+.readingCardHeader
+  position: relative
+  z-index: 2
+  display: flex
+  align-items: flex-start
+  justify-content: space-between
+  gap: 0.625rem
+
+.readingCardTitleRow
+  display: flex
+  align-items: flex-start
+  gap: 0.5rem
+  min-width: 0
+  flex: 1
+
+.stageAccentTile
+  display: inline-grid
+  place-items: center
+  width: 1.375rem
+  height: 1.375rem
+  flex-shrink: 0
+  margin-top: 0.125rem
+  border: 0.0625rem solid color-mix(in srgb, var(--stage-accent) 38%, $noir-stroke-hairline)
+  border-radius: 0.375rem
+  background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--stage-accent) 18%, transparent), transparent 58%), rgba(255, 255, 255, 0.03)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.06)
+
+.stageAccentTileCore
+  width: 0.375rem
+  height: 0.375rem
+  border-radius: 50%
+  background: var(--stage-accent)
+  box-shadow: none
+  transition: box-shadow $result-transition
+
+.connectionBadge
+  display: inline-flex
+  align-items: center
+  padding: 0.125rem 0.375rem
+  border-radius: 0.5rem
+  border: 0.0625rem solid color-mix(in srgb, var(--stage-accent) 28%, rgba(255, 255, 255, 0.08))
+  background: color-mix(in srgb, var(--stage-accent) 8%, rgba(255, 255, 255, 0.03))
+  color: rgba(245, 245, 242, 0.72)
+  font-size: 0.6875rem
+  font-weight: 600
+  letter-spacing: 0.04em
+
+.readingCardTitle
+  margin: 0
+  color: rgba(245, 245, 242, 0.96)
+  font-size: 0.9375rem
+  font-weight: 680
+  line-height: 1.38
+  letter-spacing: -0.012em
+
+.readingCardConnections
+  display: flex
+  flex-wrap: wrap
+  gap: 0.25rem
+  justify-content: flex-end
+
+.readingCardDescription
+  position: relative
+  z-index: 2
+  margin: 0
+  color: rgba(245, 245, 242, 0.72)
+  font-size: 0.8125rem
+  line-height: 1.6
+  overflow-wrap: anywhere
+
+.readingCardMeta
+  position: relative
+  z-index: 2
+  display: grid
+  gap: 0.25rem
+  padding-top: 0.375rem
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.05)
+
+.readingCardMetaLabel
+  margin: 0
+  color: rgba(245, 245, 242, 0.52)
+  font-size: 0.6875rem
+  font-weight: 700
+  letter-spacing: 0.1em
+  text-transform: uppercase
+
+.readingCardMetaText
+  margin: 0
+  color: rgba(245, 245, 242, 0.68)
+  font-size: 0.75rem
+  line-height: 1.55
+  overflow-wrap: anywhere
+
+// ─── Conectores entre colunas ─────────────────────────────────────────────────
+
+.flowBridge
+  position: relative
+  min-width: 0
+  width: 100%
+  display: flex
+  align-items: center
+  justify-content: center
+  align-self: stretch
+  padding: 0.5rem 0
+  z-index: 3
+  pointer-events: none
+
+.flowBridgeSvg
+  position: absolute
+  inset: 1.25rem 0
+  width: 100%
+  height: calc(100% - 2.5rem)
+  overflow: visible
+  pointer-events: none
+
+.flowBridgeLineDrawn
+  filter: none
+
+.flowBridgeLit
+  .flowBridgeArrow
+    border-color: rgba(255, 255, 255, 0.32)
+    box-shadow: none
+
+.flowBridgeActive
+  .flowBridgeArrow
+    opacity: 0.88
+
+.flowBridgeArrow
+  position: absolute
+  top: 50%
+  left: 50%
+  z-index: 1
+  width: 0.4375rem
+  height: 0.4375rem
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.24)
+  border-right: 0.0625rem solid rgba(255, 255, 255, 0.24)
+  transform: translate(-30%, -50%) rotate(45deg)
+  transition: border-color $result-transition, box-shadow $result-transition, opacity $result-transition
+  opacity: 0.62
+
+.flowBridgeMarkers
+  position: relative
+  z-index: 1
+  display: grid
+  gap: 0.625rem
+  justify-items: center
+  pointer-events: auto
+
+.markerWrap
+  position: relative
+
+.markerIconOnly
+  display: inline-grid
+  place-items: center
+  inline-size: 1.625rem
+  block-size: 1.625rem
+  padding: 0
+  border: 0.0625rem solid rgba(255, 255, 255, 0.18)
+  border-radius: 0.4375rem
+  background: rgba(10, 11, 14, 0.92)
+  box-shadow: 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.26), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08)
+  font-size: 0.625rem
+  font-weight: 800
+  line-height: 1
+  color: rgba(210, 214, 222, 0.88)
+  cursor: pointer
+  transform: translateY(-0.125rem)
+  transition: border-color $result-transition, box-shadow $result-transition, transform $result-transition, opacity $result-transition
+
+  &:focus-visible
+    outline: 0.125rem solid rgba(255, 255, 255, 0.24)
+    outline-offset: 0.125rem
+
+.markerIconOnlyFocused
+  border-color: rgba(255, 255, 255, 0.22)
+  box-shadow: 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.26), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08)
+  transform: translateY(-0.125rem) scale(1.05)
+
+.markerIconOnlyRisk
+  color: rgba(210, 198, 180, 0.82)
+
+.markerIconOnlyHypothesis
+  color: rgba(196, 202, 210, 0.84)
+
+.markerIconOnlyHighlighted
+  border-color: rgba(255, 255, 255, 0.18)
+  background: rgba(18, 19, 22, 0.94)
+
+.markerButton
+  display: grid
+  gap: 0.125rem
+  justify-items: center
+  min-width: 2.125rem
+  padding: 0.375rem 0.3125rem
+  border: 0.0625rem solid rgba(245, 245, 242, 0.12)
+  border-radius: 0.75rem
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.06) 0%, rgba(18, 19, 22, 0.92) 100%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.08), inset 0 0 0.75rem rgba(0, 0, 0, 0.12)
+  backdrop-filter: blur(0.625rem)
+  color: rgba(245, 245, 242, 0.92)
+  cursor: pointer
+  transition: border-color $result-transition, box-shadow $result-transition, opacity $result-transition, background $result-transition, transform $result-transition
+  outline: none
+
+  &:hover,
+  &.markerOpen
+    background: radial-gradient(ellipse 100% 72% at 50% 0%, rgba(255, 255, 255, 0.08), transparent 58%), rgba(24, 25, 29, 0.98)
+    transform: translateY(-0.0625rem)
+
+  &:focus-visible
+    outline: 0.125rem solid rgba(255, 255, 255, 0.24)
+    outline-offset: 0.125rem
+
+.markerRisk
+  border-color: rgba(224, 164, 96, 0.18)
+
+  &.markerHighlighted,
+  &.markerOpen
+    border-color: rgba(224, 164, 96, 0.32)
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06)
+
+  .markerGlyph
+    color: rgba(224, 164, 96, 0.78)
+
+.markerHypothesis
+  border-color: rgba(184, 195, 208, 0.18)
+
+  &.markerHighlighted,
+  &.markerOpen
+    border-color: rgba(184, 195, 208, 0.32)
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06)
+
+  .markerGlyph
+    color: rgba(184, 195, 208, 0.82)
+
+.markerGlyph
+  font-size: 0.6875rem
+  font-weight: 800
+  line-height: 1
+
+.markerKind
+  color: $ds-text-muted
+  font-size: 0.5625rem
+  font-weight: 700
+  letter-spacing: 0.08em
+  text-transform: uppercase
+
+.markerPopover
+  position: absolute
+  top: calc(100% + 0.375rem)
+  left: 50%
+  z-index: 4
+  width: max-content
+  max-width: 16rem
+  padding: 0.625rem 0.75rem
+  border: 0.0625rem solid $noir-stroke-medium
+  border-radius: $noir-radius-field
+  background: rgba(16, 17, 20, 0.97)
+  box-shadow: $noir-shadow-floating
+  transform: translateX(-50%)
+
+.markerPopoverRoute
+  margin: 0 0 0.375rem
+  color: $ds-text-muted
+  font-size: 0.6875rem
+  line-height: 1.4
+
+.markerPopoverText
+  margin: 0
+  color: $ds-text-secondary
+  font-size: 0.75rem
+  line-height: 1.55
+
+// ─── Painel lateral (glass via TdmGlassSurface) ───────────────────────────────
+
+.sidePanelShell
+  position: sticky
+  top: 1.25rem
+  align-self: start
+  min-inline-size: 0
+  max-inline-size: 100%
+  max-block-size: calc(100dvh - 2.5rem)
+  overflow-y: auto
+  overflow-x: hidden
+  z-index: 5
+  @include result-scrollbar
+
+.sidePanelGlass
+  inline-size: 100%
+  min-block-size: 100%
+
+.sidePanelGlassContent
+  padding: 1rem
+
+.sidePanelContent
+  position: relative
+  display: grid
+  gap: 0.875rem
+
+.sidePanelFocusHeader
+  display: flex
+  align-items: flex-start
+  justify-content: space-between
+  gap: 0.75rem
+
+.sidePanelTitle
+  margin: 0
+  color: $ds-text-primary
+  font-size: 0.9375rem
+  font-weight: 600
+  line-height: 1.35
+
+.sidePanelBlockTitle
+  margin: 0
+  color: $ds-text-primary
+  font-size: 1.0625rem
+  font-weight: 600
+  line-height: 1.3
+
+.sidePanelLead
+  margin: 0
+  color: $ds-text-secondary
+  font-size: 0.8125rem
+  line-height: 1.6
+
+.sidePanelHint
+  margin: 0
+  color: $ds-text-muted
+  font-size: 0.8125rem
+  line-height: 1.55
+
+.sidePanelEditNote
+  margin: 0
+  padding: 0.5rem 0.625rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.06)
+  border-radius: $noir-radius-field
+  background: rgba(255, 255, 255, 0.025)
+  color: $ds-text-muted
+  font-size: 0.75rem
+  line-height: 1.5
+
+.sidePanelStats
+  display: grid
+  grid-template-columns: repeat(2, minmax(0, 1fr))
+  gap: 0.625rem
+  margin: 0
+
+  div
+    display: grid
+    gap: 0.125rem
+    padding: 0.5rem 0.625rem
+    border: 0.0625rem solid rgba(255, 255, 255, 0.05)
+    border-radius: $noir-radius-field
+    background: rgba(255, 255, 255, 0.02)
+
+  dt
+    margin: 0
+    color: $ds-text-muted
+    font-size: 0.6875rem
+    font-weight: 700
+    letter-spacing: 0.08em
+    text-transform: uppercase
+
+  dd
+    margin: 0
+    color: $ds-text-primary
+    font-size: 0.8125rem
+    font-weight: 600
+    line-height: 1.35
+
+.sidePanelSection
+  display: grid
+  gap: 0.375rem
+  padding-top: 0.5rem
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.06)
+
+.sidePanelMiniCard
+  padding: 0.625rem 0.75rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.06)
+  border-radius: $noir-radius-field
+  background: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(255, 255, 255, 0.04), transparent 62%), rgba(255, 255, 255, 0.018)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.04)
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.06)
+
+.sidePanelSectionLabel
+  margin: 0
+  color: $ds-text-muted
+  font-size: 0.6875rem
+  font-weight: 700
+  letter-spacing: 0.1em
+  text-transform: uppercase
+
+.sidePanelSectionText
+  margin: 0
+  color: $ds-text-secondary
+  font-size: 0.8125rem
+  line-height: 1.55
+
+.sidePanelList
+  display: grid
+  gap: 0.3125rem
+  margin: 0
+  padding: 0
+  list-style: none
+
+  li
+    position: relative
+    padding-left: 0.875rem
+    color: $ds-text-secondary
+    font-size: 0.8125rem
+    line-height: 1.5
+
+    &::before
+      content: ''
+      position: absolute
+      left: 0
+      top: 0.55em
+      width: 0.3125rem
+      height: 0.3125rem
+      border-radius: 50%
+      background: rgba(255, 255, 255, 0.28)
+
+.sidePanelMarkerList
+  display: grid
+  gap: 0.625rem
+  margin: 0
+  padding: 0
+  list-style: none
+
+  li
+    display: flex
+    align-items: flex-start
+    gap: 0.625rem
+
+.sidePanelMarkerRoute
+  margin: 0 0 0.25rem
+  color: $ds-text-muted
+  font-size: 0.6875rem
+  line-height: 1.4
+
+.clearFocusButton
+  flex-shrink: 0
+  padding: 0.3125rem 0.5rem
+  border: 0.0625rem solid $noir-stroke-hairline
+  border-radius: $noir-radius-chip
+  background: rgba(255, 255, 255, 0.03)
+  color: $ds-text-muted
+  cursor: pointer
+  font-size: 0.6875rem
+  font-weight: 600
+  letter-spacing: 0.04em
+  transition: background $result-transition, border-color $result-transition, color $result-transition
+
+  &:hover
+    background: rgba(255, 255, 255, 0.06)
+    border-color: $noir-stroke-medium
+    color: $ds-text-secondary
+
+  &:focus-visible
+    outline: 0.125rem solid rgba(255, 255, 255, 0.24)
+    outline-offset: 0.125rem
+
+// ─── Legenda / insight strip ──────────────────────────────────────────────────
+
+.insightStrip
+  display: flex
+  flex-wrap: wrap
+  align-items: center
+  gap: 0.625rem 1rem
+  padding: 0.625rem 0.875rem
+  border: 0.0625rem solid rgba(255, 255, 255, 0.08)
+  border-radius: 0.625rem
+  background: rgba(11, 12, 15, 0.72)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05)
+  backdrop-filter: blur(0.625rem)
+  transition: border-color $result-transition, background $result-transition, box-shadow $result-transition
+
+.insightStripFocused
+  border-color: rgba(255, 255, 255, 0.12)
+  background: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(255, 255, 255, 0.07), transparent 58%), rgba(255, 255, 255, 0.028)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.07), 0 0 0.875rem rgba(255, 255, 255, 0.03)
+
+.insightStripItemActive
+  color: $ds-text-secondary
+
+.legendMarkerFocus
+  border-color: rgba(255, 255, 255, 0.2)
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02))
+
+.legendFocusDot
+  width: 0.375rem
+  height: 0.375rem
+  border-radius: 50%
+  background: rgba(255, 255, 255, 0.82)
+  box-shadow: none
+
+.insightStripItemActive .legendMarkerFocus
+  border-color: rgba(255, 255, 255, 0.24)
+  box-shadow: none
+
+.insightStripLabel
+  margin: 0
+  color: $ds-text-muted
+  font-size: 0.6875rem
+  font-weight: 700
+  letter-spacing: 0.1em
+  text-transform: uppercase
+
+.insightStripItems
+  display: flex
+  flex-wrap: wrap
+  gap: 0.5rem 0.875rem
+  margin: 0
+  padding: 0
+  list-style: none
+
+.insightStripItem
+  display: inline-flex
+  align-items: center
+  gap: 0.375rem
+  color: $ds-text-muted
+  font-size: 0.75rem
+  line-height: 1.4
+
+.legendMarker
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  width: 1.375rem
+  height: 1.375rem
+  flex-shrink: 0
+  border-radius: $noir-radius-field
+  font-size: 0.6875rem
+  font-weight: 800
+  border: 0.0625rem solid $noir-stroke-soft
+  background: rgba(21, 22, 26, 0.94)
+
+.legendMarkerRisk
+  border-color: rgba(255, 255, 255, 0.14)
+  color: rgba(255, 255, 255, 0.88)
+
+.legendMarkerHypothesis
+  border-color: rgba(184, 195, 208, 0.2)
+  color: rgba(184, 195, 208, 0.82)
+
+// ─── Empty state ──────────────────────────────────────────────────────────────
+
+.emptyState
+  position: relative
+  z-index: 1
+  display: grid
+  place-items: center
+  min-block-size: calc(100dvh - 4rem)
+  padding: 2rem
+
+.emptyStateGlass
+  inline-size: min(100%, 40rem)
+  text-align: center
+
+.emptyStateGlassContent
+  display: grid
+  gap: 0
+  padding: clamp(1.5rem, 3vw, 2.5rem)
+
+.emptyStateKicker
+  margin: 0 0 0.75rem
+  color: $ds-text-muted
+  font-size: 0.6875rem
   font-weight: 700
   letter-spacing: 0.18em
   text-transform: uppercase
 
-.title
+.emptyStateTitle
   margin: 0
-  color: $color-text
-  font-size: clamp(28px, 4vw, 42px)
-  line-height: 1.08
+  color: $ds-text-primary
+  font-size: clamp(1.5rem, 3vw, 2rem)
+  line-height: 1.15
 
-.description
-  max-width: 54ch
-  margin: 16px 0 0
-  color: $color-text-muted
-  font-size: 16px
-  line-height: 1.7
+.emptyStateMessage
+  max-width: 36ch
+  margin: 0.875rem auto 1.5rem
+  color: $ds-text-secondary
+  font-size: 0.9375rem
+  line-height: 1.65
 
-.topRow
-  display: flex
-  align-items: flex-start
-  justify-content: space-between
-  gap: 20px
+.noPrint
+  // hidden in print via @media print below
 
-.backButton,
-.columnList .nodeItem,
-.edgeRow
-  border: 1px solid $color-border
-  border-radius: 16px
-  background: rgba(255, 255, 255, 0.03)
+// ─── Responsive ───────────────────────────────────────────────────────────────
 
-.backButton
-  padding: 12px 16px
-  color: $color-text
-  cursor: pointer
+@media (max-width: 80rem)
+  .stageGrid
+    grid-template-columns: minmax(0, 1fr)
+    inline-size: 100%
 
-.grid
-  display: grid
-  grid-template-columns: repeat(4, minmax(0, 1fr))
-  gap: 14px
-  margin-top: 24px
+  .flowSegment
+    display: grid
+    gap: 0.75rem
 
-.column
-  padding: 16px
-  border: 1px solid $color-border
-  border-radius: 18px
-  background: rgba(255, 255, 255, 0.02)
+  .stageListScrollable
+    max-block-size: none
+    overflow-y: visible
 
-.columnKicker
-  margin: 0 0 12px
-  color: $color-text-soft
-  font-size: 11px
-  font-weight: 700
-  letter-spacing: 0.16em
-  text-transform: uppercase
+  .stageItemsViewport
+    max-block-size: none
+    overflow-y: visible
 
-.columnList
-  display: grid
-  gap: 10px
+  .flowBridge
+    min-block-size: 3rem
+    padding-block: 0.25rem
 
-.nodeItem
-  display: grid
-  gap: 6px
-  padding: 12px
-  color: $color-text
-  text-align: left
-  cursor: pointer
+  .flowBridgeSvg
+    inset: auto 1.25rem
+    inline-size: calc(100% - 2.5rem)
+    block-size: 0.0625rem
+    top: 50%
+    transform: translateY(-50%)
 
-  strong
-    font-size: 14px
+  .flowBridgeArrow
+    top: auto
+    left: 50%
+    bottom: -0.125rem
+    transform: translateX(-50%) rotate(135deg)
 
-  span
-    color: $color-text-muted
-    font-size: 12px
-    line-height: 1.5
+  .flowBridgeMarkers
+    grid-auto-flow: column
+    justify-content: center
 
-.active
-  border-color: rgba(167, 139, 250, 0.5)
-  box-shadow: 0 0 0 1px rgba(167, 139, 250, 0.18)
+@media (max-width: 64rem)
+  .resultShell,
+  .content
+    padding-block: 1.5rem
+    padding-inline: 1.5rem
 
-.dimmed
-  opacity: 0.35
+  .stageGrid
+    gap: 1rem
 
-.sideNote
-  margin-top: 18px
-  padding: 18px
-  border: 1px solid $color-border
-  border-radius: 18px
-  background: rgba(255, 255, 255, 0.02)
+  .title
+    font-size: clamp(2.25rem, 5vw, 3.5rem)
 
-.sideNoteTitle
-  margin: 0 0 8px
-  color: $color-text
-  font-size: 14px
-  font-weight: 600
+@media (max-width: 64rem)
+  .heroInner
+    grid-template-columns: minmax(0, 1fr) minmax(14rem, 20rem)
 
-.sideNoteText
-  margin: 0
-  color: $color-text-muted
-  font-size: 13px
-  line-height: 1.6
+  .heroRight
+    max-inline-size: 20rem
 
-.edgeList
-  display: grid
-  gap: 8px
-  margin-top: 14px
+@media (max-width: 48rem)
+  .resultShell,
+  .content
+    padding-block: 1.25rem
+    padding-inline: 1.25rem
 
-.edgeRow
-  display: flex
-  justify-content: space-between
-  gap: 12px
-  padding: 10px 12px
-  color: $color-text-muted
-  font-size: 12px
+  .hero
+    padding: 1rem 0
 
-.exportActions
-  display: grid
-  grid-template-columns: repeat(2, minmax(0, 1fr))
-  gap: 10px
-  margin-top: 16px
+  .heroInner
+    grid-template-columns: 1fr
+    gap: 1rem
 
-.exportButton
-  border: 1px solid $color-border
-  border-radius: 14px
-  padding: 10px 12px
-  background: rgba(255, 255, 255, 0.03)
-  color: $color-text
-  cursor: pointer
+  .heroRight
+    inline-size: 100%
+    max-inline-size: none
+    align-items: stretch
 
-.backButton,
-.exportButton
-  text-transform: uppercase
-  letter-spacing: 0.06em
+  .flowInspectorSlot
+    display: none
+
+  .flowInspectorMobile
+    display: block
+    margin-block-end: 1rem
+
+  .heroActions
+    inline-size: 100%
+    justify-content: stretch
+
+  .exportMenuWrap,
+  .exportTriggerGlass,
+  .backButtonGlass,
+  .backButtonSecondaryGlass
+    inline-size: 100%
+
+  .exportMenuMotion
+    left: 0
+    right: 0
+    inline-size: auto
+
+  .statusGrid
+    gap: 0.375rem
+
+  .title
+    font-size: clamp(1.875rem, 8vw, 2.5rem)
+
+  .heroCompact .heroTitleShell
+    block-size: 1.25rem
+
+  .heroCompact .title
+    transform: scale(0.42)
+
+  .stageItemsViewport
+    max-block-size: none
+    overflow-y: visible
+
+  .markerPopover
+    left: auto
+    right: 0
+    transform: none
+
+@media (prefers-reduced-motion: reduce)
+  .view
+    scroll-behavior: auto
+
+  .readingCardShell,
+  .markerButton,
+  .backButtonInner,
+  .exportTriggerInner,
+  .exportOption,
+  .statusStat,
+  .flowBridgeArrow,
+  .connectionBadge,
+  .clearFocusButton,
+  .exportTriggerChevron,
+  .insightStrip,
+  .causalLensShell,
+  .pathMarker
+    transition: none
+
+@media print
+  .view
+    block-size: auto
+    min-block-size: auto
+    overflow: visible
+    padding: 0
+    background: #fff
+    color: #111
+
+  .stageColumnHalo,
+  .heroEditorialLine,
+  .noPrint
+    display: none !important
+
+  .stageColumn,
+  .readingCardGlass,
+  .sidePanelGlass
+    border-color: #ddd
+    background: #fff
+    box-shadow: none
+    backdrop-filter: none
+
+  .title,
+  .readingCardTitle,
+  .columnTitle,
+  .sidePanelTitle,
+  .sidePanelBlockTitle
+    color: #111
+
+  .subtitle,
+  .instruction,
+  .readingCardDescription,
+  .readingCardMetaText,
+  .sidePanelLead,
+  .sidePanelSectionText,
+  .markerPopoverText
+    color: #333
+
+  .kicker,
+  .statusStatLabel,
+  .readingCardMetaLabel,
+  .sidePanelSectionLabel,
+  .markerPopoverRoute,
+  .insightStripLabel
+    color: #666
+
+  .readingCardDimmed
+    opacity: 1 !important
+    filter: none !important
+
+  .readingCardFocused
+    border-color: #999
+    box-shadow: none
+
+  .flowGrid,
+  .stageGrid
+    overflow: visible
+
+  .stageList,
+  .stageListScrollable
+    max-block-size: none
+    overflow: visible
+
+  .flowBridgeSvg
+    opacity: 0.5 !important
+
+  .flowOverlaySvg
+    display: none !important
+
+  .causalLensShell
+    position: static !important
+    transform: none !important
+
+  .markerButton
+    border-color: #ccc
+    background: #f7f7f7
+    color: #111

@@ -1,0 +1,8 @@
+{
+  "id": "SO-006",
+  "codename": "Component God Slayer",
+  "wave": "08",
+  "status": "ACTIVE",
+  "purpose": "Extract connection validation, edge lifecycle and marker editing from TdmCanvasInner",
+  "revision": 9
+}

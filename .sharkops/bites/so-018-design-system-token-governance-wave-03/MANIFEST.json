@@ -1,0 +1,10 @@
+{
+  "id": "SO-018",
+  "codename": "Design System & Token Governance",
+  "status": "ACTIVE",
+  "revision": 3,
+  "wave": 3,
+  "runtimeChanges": false,
+  "finding": "DS-002",
+  "next": "SO-018 | Token Authority Hardcode Classification Contract"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "SO-017",
+  "codename": "Application Shell & Shared UI Armor",
+  "status": "COMPLETE",
+  "revision": 5,
+  "wave": "CLOSEOUT",
+  "runtimeChanges": false,
+  "next": "SO-018 | Design System & Token Governance Audit"
+}

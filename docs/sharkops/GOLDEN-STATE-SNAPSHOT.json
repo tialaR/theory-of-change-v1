@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "snapshotId": "GOLDEN-STATE-v1",
+  "project": "TDM Construtor",
+  "status": "COMPLETE",
+  "source": {
+    "initiative": "SO-014",
+    "wave": "11",
+    "closeout": "docs/sharkops/SO-014-FINAL-ARCHITECTURE-CLOSEOUT.json",
+    "architectureConstitution": "docs/architecture/adr/ADR-008-final-canvas-architecture-constitution.md",
+    "gateMatrix": "docs/sharkops/SO-014-FINAL-GATE-MATRIX.json",
+    "governance": "docs/sharkops/SO-014-SHARKOPS-CONSOLIDATED-STATE.json"
+  },
+  "terminalGovernance": {
+    "completedInitiatives": 14,
+    "activeBites": 0,
+    "so014Status": "COMPLETE"
+  },
+  "regressionProof": {
+    "command": "npm run check:tdm:final-regression:armor",
+    "status": "PASS",
+    "typecheck": "PASS",
+    "canvasLint": "PASS",
+    "testFiles": 36,
+    "tests": 119,
+    "canvasE2E": 1,
+    "sharkops": "NO REGRESSION DETECTED",
+    "sealedBy": ".sharkops/state/so-014-wave-11-precloseout-proof.json"
+  },
+  "packaging": {
+    "command": "npm run shark:golden",
+    "artifact": "<project>-GOLDEN-STATE-<timestamp>.zip",
+    "checksum": "SHA-256",
+    "sidecarManifest": true,
+    "slim": true
+  },
+  "runtimeChanges": false,
+  "createdAt": "2026-08-08T00:41:00.000Z"
+}

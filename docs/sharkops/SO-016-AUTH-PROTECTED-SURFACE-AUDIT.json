@@ -1,0 +1,141 @@
+{
+  "initiative": "SO-016",
+  "title": "Authentication & Protected Surface Armor",
+  "wave": "CLOSEOUT",
+  "mode": "closeout-audit",
+  "runtimeChanges": false,
+  "baseline": {
+    "branch": "refactor/auth-protected-surfaces-sharkops",
+    "baseCommit": "a94f940",
+    "canvasGoldenState": "GOLDEN-STATE-v1",
+    "sharkOpsVerdict": "NO REGRESSION DETECTED"
+  },
+  "protectedRoutes": [
+    {
+      "route": "/canvas",
+      "entry": "src/app/canvas/page.tsx",
+      "protectionOwner": "src/app/canvas/page.tsx -> requireAuthenticatedSession('/canvas')",
+      "currentStatus": "protected-route-entry-owned"
+    },
+    {
+      "route": "/canvas/resultado",
+      "entry": "src/app/canvas/resultado/page.tsx",
+      "protectionOwner": "src/app/canvas/resultado/page.tsx -> requireAuthenticatedSession('/canvas/resultado')",
+      "currentStatus": "protected-route-entry-owned"
+    }
+  ],
+  "publicAuthRoute": {
+    "route": "/login",
+    "entry": "src/app/login/page.tsx",
+    "facade": "src/features/auth/auth-page.tsx"
+  },
+  "findings": [
+    {
+      "id": "AUTH-001",
+      "severity": "HIGH",
+      "status": "RESOLVED-WAVE-02",
+      "title": "Server auth repository bypasses the declared HTTP/MSW boundary",
+      "evidence": [
+        "src/features/auth/server/auth-server.repository.ts imports ../infrastructure/msw/auth.mock-store directly",
+        "src/features/auth/infrastructure/http/http-auth.repository.ts already implements the AuthRepository contract over /api/v1/auth/sessions",
+        "src/instrumentation.ts starts the MSW Node server and the architecture rule declares it authoritative"
+      ],
+      "decision": "Next bite must align server auth repository resolution with the declared infrastructure boundary without changing authentication behavior.",
+      "resolution": [
+        "src/features/auth/server/auth-server.repository.ts now composes createHttpAuthRepository with TDM_MOCK_API_ORIGIN",
+        "server runtime code is forbidden from importing auth.mock-store directly by the Wave 02 gate",
+        "src/features/auth/server/auth-server.repository.test.ts proves the server factory composes the canonical HTTP adapter/origin while existing Auth handler tests prove the adapter over MSW Node"
+      ]
+    },
+    {
+      "id": "AUTH-002",
+      "severity": "MEDIUM",
+      "status": "RESOLVED-WAVE-03",
+      "title": "Protected-route ownership is leaf-feature based rather than route-boundary based",
+      "evidence": [
+        "src/app/canvas/layout.tsx only returns children",
+        "CanvasPage protects /canvas while loading the authenticated project",
+        "CanvasResultPage separately protects /canvas/resultado"
+      ],
+      "decision": "Do not move protection yet. First preserve the two existing contracts with an executable gate; evaluate route-layout ownership in a dedicated wave.",
+      "resolution": [
+        "src/app/canvas/page.tsx now owns requireAuthenticatedSession('/canvas') before entering the Canvas feature",
+        "src/app/canvas/resultado/page.tsx now owns requireAuthenticatedSession('/canvas/resultado') and preserves its exact returnTo contract",
+        "Canvas feature pages now receive AuthUser explicitly and the project loader accepts ownerId instead of owning route authentication",
+        "Wave 03 gate forbids route protection from drifting back into Canvas feature loaders"
+      ]
+    },
+    {
+      "id": "AUTH-003",
+      "severity": "MEDIUM",
+      "status": "RESOLVED-WAVE-04",
+      "title": "returnTo sanitization permits the login route itself",
+      "evidence": [
+        "sanitizeReturnTo accepts any single-slash-prefixed path",
+        "AuthPage redirects an already authenticated user to the sanitized returnTo"
+      ],
+      "decision": "Add explicit redirect-policy tests before changing sanitizer behavior.",
+      "resolution": [
+        "sanitizeReturnTo preserves local single-slash return targets but rejects the /login route itself, including query/hash variants, back to AUTH_DEFAULT_RETURN_TO",
+        "src/features/auth/server/auth-session.test.ts freezes accepted and rejected redirect targets",
+        "Wave 04 gate requires AuthPage, loginAction and requireAuthenticatedSession to continue consuming the canonical sanitizer instead of growing independent redirect policy"
+      ]
+    },
+    {
+      "id": "AUTH-004",
+      "severity": "MEDIUM",
+      "status": "RESOLVED-WAVE-05",
+      "title": "Cross-feature auth consumption is not consistently facade-based",
+      "evidence": [
+        "Canvas UI imports AuthUser from auth/domain in multiple files",
+        "Canvas UI imports UserMenu from auth/ui/user-menu directly",
+        "Other Canvas files already consume AuthUser through @/features/auth"
+      ],
+      "decision": "Defer broad cross-feature boundary cleanup; SO-019 owns application-wide boundary governance unless SO-016 needs a smaller auth-specific facade bite.",
+      "resolution": [
+        "src/features/auth/index.ts exports AuthUser and UserMenu as the approved client-safe cross-feature facade surface",
+        "Canvas UI imports AuthUser/UserMenu only through @/features/auth; direct auth domain/ui/application/infrastructure/server imports are forbidden there by the Wave 05 gate",
+        "Canvas server actions keep explicit @/features/auth/server/auth-session imports so server-only session code is not leaked through the client-safe facade"
+      ]
+    },
+    {
+      "id": "AUTH-005",
+      "severity": "MEDIUM",
+      "status": "RESOLVED-WAVE-03",
+      "title": "Existing auth gate does not fully prove protected-route coverage",
+      "evidence": [
+        "check-auth-msw.mjs checks that auth-session contains a server redirect",
+        "it does not assert that both /canvas and /canvas/resultado resolve through requireAuthenticatedSession with their own returnTo values"
+      ],
+      "decision": "Wave 01 introduces an audit gate that freezes current protected-route coverage before runtime refactors.",
+      "resolution": [
+        "Wave 03 executable gate proves /canvas and /canvas/resultado route entries call requireAuthenticatedSession with exact returnTo values",
+        "Canvas feature loaders are forbidden from regaining route-auth ownership"
+      ]
+    }
+  ],
+  "nextBite": {
+    "id": "SO-017",
+    "title": "Application Shell & Shared UI Armor",
+    "targetFinding": "application-wide-shell-audit",
+    "reason": "SO-016 is complete; continue the application-wide armor sequence with an audit-first SO-017."
+  },
+  "closeout": {
+    "status": "COMPLETE",
+    "openFindings": [],
+    "resolvedFindings": [
+      "AUTH-001",
+      "AUTH-002",
+      "AUTH-003",
+      "AUTH-004",
+      "AUTH-005"
+    ],
+    "verdict": "No additional auth/protected-surface runtime bite is proven necessary. SO-016 may close without broad refactor.",
+    "preserved": [
+      "GOLDEN-STATE-v1",
+      "SO-015 public-route armor",
+      "MSW/mock-mode contracts",
+      "exact /canvas and /canvas/resultado returnTo contracts"
+    ]
+  }
+}

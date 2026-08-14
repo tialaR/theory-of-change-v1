@@ -1,0 +1,1424 @@
+$ease-out: cubic-bezier(.22, 1, .36, 1)
+
+.resultPage,
+.interactivePage
+  --result-bg: #050506
+  --result-ink: #f7f7f8
+  --result-muted: rgba(247,247,248,.6)
+  --result-line: rgba(255,255,255,.1)
+  --result-line-strong: rgba(255,255,255,.18)
+  --result-panel: rgba(255,255,255,.035)
+  --risk: #f6b35f
+  --hypothesis: #a8a3ff
+  position: fixed
+  inset: 0
+  color: var(--result-ink)
+  background: radial-gradient(ellipse 56rem 22rem at 50% -8%, rgba(255,255,255,.13), transparent 68%), radial-gradient(ellipse 36rem 24rem at 10% 32%, rgba(255,255,255,.05), transparent 72%), radial-gradient(ellipse 34rem 22rem at 92% 34%, rgba(255,255,255,.045), transparent 72%), linear-gradient(180deg, #030304 0%, #08090b 52%, #040405 100%)
+  overflow-y: auto
+  overflow-x: hidden
+  isolation: isolate
+
+  &::before
+    content: ''
+    position: fixed
+    inset: 0
+    z-index: -1
+    pointer-events: none
+    opacity: .34
+    background-image: linear-gradient(rgba(255,255,255,.028) .0625rem, transparent .0625rem), linear-gradient(90deg, rgba(255,255,255,.022) .0625rem, transparent .0625rem)
+    background-size: 4.5rem 4.5rem
+    mask-image: radial-gradient(ellipse 78% 58% at 50% 28%, black, transparent 82%)
+
+.resultInner
+  width: min(100%, 92rem)
+  margin-inline: auto
+  padding: 1rem clamp(1rem, 3vw, 2rem) 5rem
+
+.resultHeader
+  position: sticky
+  top: .75rem
+  z-index: 60
+  display: flex
+  justify-content: space-between
+  align-items: center
+  gap: 1rem
+  min-block-size: 3.4rem
+  padding: .48rem .58rem .48rem 1rem
+  margin: 0 auto clamp(4rem, 8vw, 7rem)
+  border: .0625rem solid rgba(255,255,255,.11)
+  border-radius: 999rem
+  background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.032)), rgba(8,9,11,.74)
+  backdrop-filter: blur(1.7rem) saturate(1.16)
+  -webkit-backdrop-filter: blur(1.7rem) saturate(1.16)
+  box-shadow: 0 1.2rem 4rem rgba(0,0,0,.35), inset 0 .0625rem 0 rgba(255,255,255,.13)
+
+.headerBrand
+  display: flex
+  align-items: center
+  gap: .72rem
+  min-inline-size: 0
+
+.headerLogo
+  inline-size: 2.1rem
+  block-size: 2.1rem
+  display: grid
+  place-items: center
+  border-radius: 999rem
+  border: .0625rem solid rgba(255,255,255,.14)
+  background: radial-gradient(circle at 35% 25%, #fff, rgba(255,255,255,.28) 28%, transparent 29%), rgba(255,255,255,.04)
+  font-size: .68rem
+  font-weight: 760
+
+.headerTitle
+  display: block
+  color: rgba(255,255,255,.9)
+  font-size: .92rem
+  font-weight: 650
+  letter-spacing: -.02em
+
+.headerMeta
+  display: block
+  color: rgba(255,255,255,.42)
+  font-size: .72rem
+
+.headerActions
+  display: flex
+  align-items: center
+  gap: .45rem
+
+.button,
+.buttonGhost,
+.exportButton,
+.toolButton
+  min-block-size: 2.45rem
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  border-radius: 999rem
+  border: .0625rem solid rgba(255,255,255,.12)
+  text-decoration: none
+  background: rgba(255,255,255,.04)
+  color: rgba(255,255,255,.86)
+  padding-inline: 1rem
+  transition: transform 180ms $ease-out, background 180ms $ease-out, border-color 180ms $ease-out, opacity 180ms $ease-out
+
+  &:hover
+    transform: translateY(-.0625rem)
+    background: rgba(255,255,255,.07)
+    border-color: rgba(255,255,255,.2)
+
+.button
+  color: #09090a
+  background: #f7f7f5
+  border-color: rgba(255,255,255,.86)
+  font-weight: 700
+
+.toolButton
+  inline-size: 2.55rem
+  padding-inline: 0
+
+.resultHero
+  display: grid
+  grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr)
+  gap: clamp(2rem, 6vw, 6rem)
+  align-items: center
+  min-block-size: clamp(32rem, 78vh, 48rem)
+  padding-block-end: 5rem
+
+.heroEyebrow
+  margin: 0 0 1rem
+  color: rgba(255,255,255,.43)
+  font-size: .78rem
+  letter-spacing: .24em
+  text-transform: uppercase
+  font-weight: 760
+
+.heroTitle
+  margin: 0
+  max-inline-size: 44rem
+  font-size: clamp(4.3rem, 9.5vw, 9.2rem)
+  line-height: .86
+  letter-spacing: -.09em
+
+.heroText
+  margin: 1.4rem 0 0
+  max-inline-size: 38rem
+  color: rgba(255,255,255,.62)
+  font-size: clamp(1.05rem, 1.4vw, 1.26rem)
+  line-height: 1.54
+
+.metrics
+  display: flex
+  flex-wrap: wrap
+  gap: .5rem
+  margin-block-start: 1.6rem
+
+.metric
+  display: inline-flex
+  gap: .4rem
+  align-items: baseline
+  padding: .5rem .7rem
+  border-radius: 999rem
+  border: .0625rem solid rgba(255,255,255,.09)
+  background: rgba(255,255,255,.035)
+  color: rgba(255,255,255,.52)
+  font-size: .78rem
+
+.metric strong
+  color: rgba(255,255,255,.95)
+  font-size: 1rem
+
+.previewSection
+  display: grid
+  grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr)
+  gap: 1rem
+  align-items: stretch
+
+.previewContext,
+.previewShell,
+.reportCard,
+.workspaceShell,
+.inspector
+  border: .0625rem solid rgba(255,255,255,.1)
+  border-radius: 1.8rem
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.018)), rgba(255,255,255,.026)
+  box-shadow: inset 0 .0625rem 0 rgba(255,255,255,.11), 0 1.5rem 4rem rgba(0,0,0,.25)
+
+.previewContext
+  padding: clamp(1.3rem, 3vw, 2.1rem)
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+
+.previewTitle
+  margin: 0
+  font-size: clamp(2rem, 4vw, 4rem)
+  line-height: .94
+  letter-spacing: -.065em
+
+.previewText
+  color: rgba(255,255,255,.58)
+  line-height: 1.55
+
+.previewShell
+  position: relative
+  min-block-size: 31rem
+  padding: 1.2rem
+  overflow: hidden
+
+.previewHeader
+  display: flex
+  align-items: center
+  justify-content: space-between
+  gap: 1rem
+  margin-block-end: 1rem
+
+.previewHeader p
+  margin: 0
+  color: rgba(255,255,255,.46)
+  font-size: .76rem
+  letter-spacing: .2em
+  text-transform: uppercase
+
+.flowMini,
+.flowWorkspace
+  position: relative
+  min-block-size: 24rem
+  width: 100%
+
+.flowMini
+  border-radius: 1.3rem
+  background: radial-gradient(ellipse at center, rgba(255,255,255,.06), transparent 62%), rgba(0,0,0,.16)
+  overflow: hidden
+
+.flowSvg
+  position: absolute
+  inset: 0
+  width: 100%
+  height: 100%
+  pointer-events: none
+  overflow: visible
+
+.stageColumn
+  position: absolute
+  inline-size: min(18rem, 22vw)
+  display: grid
+  gap: .7rem
+
+.stageHeading
+  display: flex
+  justify-content: space-between
+  align-items: center
+  margin-block-end: .2rem
+  color: var(--stage-color)
+  font-size: .78rem
+  letter-spacing: .24em
+  text-transform: uppercase
+  font-weight: 780
+
+.stageCount
+  color: rgba(255,255,255,.6)
+  letter-spacing: 0
+  text-transform: none
+
+.flowCard
+  position: relative
+  display: block
+  width: 100%
+  min-block-size: 4.6rem
+  padding: .85rem .95rem
+  text-align: left
+  border: .0625rem solid color-mix(in srgb, var(--stage-color) 38%, rgba(255,255,255,.12))
+  border-radius: .9rem
+  background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.018)), rgba(255,255,255,.024)
+  color: rgba(255,255,255,.9)
+  box-shadow: inset 0 .0625rem 0 rgba(255,255,255,.08)
+  transition: transform 200ms $ease-out, opacity 200ms $ease-out, border-color 200ms $ease-out, background 200ms $ease-out, filter 200ms $ease-out
+  cursor: pointer
+
+  &:hover
+    transform: translateY(-.125rem)
+    border-color: color-mix(in srgb, var(--stage-color) 70%, white)
+
+.flowCardTitle
+  display: block
+  font-size: .88rem
+  font-weight: 720
+  line-height: 1.18
+
+.flowCardText
+  display: block
+  margin-block-start: .28rem
+  color: rgba(255,255,255,.48)
+  font-size: .74rem
+  line-height: 1.28
+
+.flowCardActive
+  transform: translateY(-.35rem) scale(1.035)
+  border-color: color-mix(in srgb, var(--stage-color) 86%, white)
+  background: linear-gradient(180deg, color-mix(in srgb, var(--stage-color) 17%, transparent), rgba(255,255,255,.028)), rgba(255,255,255,.035)
+  box-shadow: 0 1rem 2.8rem color-mix(in srgb, var(--stage-color) 18%, transparent), inset 0 .0625rem 0 rgba(255,255,255,.16)
+  z-index: 4
+
+.flowCardMuted
+  opacity: .24
+  filter: grayscale(.8)
+
+.flowCardRelated
+  opacity: 1
+  transform: translateY(-.18rem)
+
+.edgePath
+  fill: none
+  stroke: rgba(255,255,255,.22)
+  stroke-width: .12rem
+  vector-effect: non-scaling-stroke
+
+.edgePathActive
+  stroke: rgba(255,255,255,.68)
+  stroke-width: .16rem
+
+.edgeBadge
+  position: absolute
+  display: grid
+  place-items: center
+  inline-size: 1.45rem
+  block-size: 1.45rem
+  border-radius: 999rem
+  border: .0625rem solid rgba(255,255,255,.18)
+  background: rgba(12,12,14,.78)
+  color: rgba(255,255,255,.9)
+  font-size: .66rem
+  font-weight: 780
+  transform: translate(-50%, -50%)
+  z-index: 6
+
+.edgeBadgeRisk
+  color: var(--risk)
+
+.edgeBadgeHypothesis
+  color: var(--hypothesis)
+
+.exportRow
+  display: flex
+  flex-wrap: wrap
+  gap: .55rem
+  margin-block-start: 1.3rem
+
+.exportButton
+  font-size: .82rem
+
+.report
+  padding-block: clamp(4rem, 8vw, 7rem)
+
+.reportHeader
+  display: grid
+  grid-template-columns: minmax(0, .75fr) minmax(0, 1fr)
+  gap: clamp(2rem, 5vw, 5rem)
+  margin-block-end: 2rem
+  align-items: end
+
+.reportTitle
+  margin: 0
+  font-size: clamp(3rem, 6vw, 6.5rem)
+  line-height: .88
+  letter-spacing: -.08em
+
+.reportText
+  margin: 0
+  color: rgba(255,255,255,.58)
+  line-height: 1.55
+
+.reportGrid
+  display: grid
+  grid-template-columns: repeat(3, minmax(0, 1fr))
+  gap: 1rem
+
+.reportCard
+  min-block-size: 18rem
+  padding: 1.25rem
+
+.reportCard span
+  color: rgba(255,255,255,.42)
+  font-size: .78rem
+  letter-spacing: .18em
+  text-transform: uppercase
+
+.reportCard h3
+  margin: 1rem 0 .8rem
+  font-size: clamp(1.45rem, 2vw, 2.1rem)
+  line-height: 1
+  letter-spacing: -.045em
+
+.reportCard p
+  margin: 0
+  color: rgba(255,255,255,.56)
+  line-height: 1.5
+
+.interactivePage
+  overflow: hidden
+
+.interactiveExperience
+  overflow: hidden
+  background: radial-gradient(ellipse 52rem 18rem at 50% -6%, rgba(255,255,255,.11), transparent 70%), radial-gradient(ellipse 30rem 20rem at 8% 28%, rgba(255,255,255,.04), transparent 72%), radial-gradient(ellipse 28rem 18rem at 94% 30%, rgba(255,255,255,.035), transparent 72%), linear-gradient(180deg, #020203 0%, #060708 54%, #030304 100%)
+
+  .interactiveFrame
+    inset: 0
+    gap: 0
+    padding: .75rem clamp(.75rem, 1.4vw, 1rem)
+
+  .interactiveTopbar
+    position: relative
+    display: flex
+    align-items: center
+    justify-content: space-between
+    gap: 1rem
+    min-block-size: 3rem
+    padding: .35rem .35rem .55rem .45rem
+    z-index: 2
+
+  .interactiveTopbarStart
+    display: flex
+    align-items: center
+    gap: .7rem
+    min-inline-size: 2.35rem
+    z-index: 2
+
+  .interactiveBackButton
+    flex-shrink: 0
+    inline-size: 2.35rem
+    block-size: 2.35rem
+    display: grid
+    place-items: center
+    border-radius: .72rem
+    border: .0625rem solid rgba(255,255,255,.1)
+    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(255,255,255,.03)
+    color: rgba(255,255,255,.78)
+    text-decoration: none
+    transition: transform 180ms $ease-out, border-color 180ms $ease-out, background 180ms $ease-out
+
+    &:hover
+      transform: translateY(-.0625rem)
+      border-color: rgba(255,255,255,.2)
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.03)), rgba(255,255,255,.04)
+
+  .interactiveTopbarHeading
+    position: absolute
+    left: 50%
+    top: 50%
+    transform: translate(-50%, -50%)
+    margin: 0
+    max-inline-size: min(28rem, calc(100% - 18rem))
+    color: rgba(246, 248, 252, .92)
+    background-image: linear-gradient(105deg, rgba(255, 255, 255, .55) 0%, rgba(255, 255, 255, .96) 38%, rgba(198, 205, 216, .78) 52%, rgba(255, 255, 255, .94) 72%, rgba(230, 234, 240, .82) 100%)
+    -webkit-background-clip: text
+    background-clip: text
+    -webkit-text-fill-color: transparent
+    font-size: .72rem
+    font-weight: 650
+    letter-spacing: .16em
+    text-transform: uppercase
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+    line-height: 1.2
+    pointer-events: none
+    text-align: center
+    z-index: 1
+    filter: drop-shadow(0 0 .55rem rgba(255, 255, 255, .12))
+
+  .interactiveToolbar
+    display: flex
+    align-items: center
+    gap: .55rem
+    flex-shrink: 0
+    z-index: 2
+
+  .interactiveToolbarCluster
+    display: flex
+    align-items: center
+    gap: .42rem
+    padding: .32rem .38rem
+    border-radius: .55rem
+    border: .0625rem solid rgba(255,255,255,.08)
+    background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.015)), rgba(255,255,255,.02)
+    backdrop-filter: blur(1rem)
+    -webkit-backdrop-filter: blur(1rem)
+
+  .interactiveZoomLabel
+    inline-size: 2.15rem
+    block-size: 2.15rem
+    display: grid
+    place-items: center
+    border-radius: .45rem
+    border: .0625rem solid rgba(255,255,255,.06)
+    background: rgba(255,255,255,.02)
+    color: rgba(255,255,255,.46)
+    font-size: .68rem
+    font-variant-numeric: tabular-nums
+
+  .interactiveToolbarDivider
+    inline-size: .0625rem
+    block-size: 1.2rem
+    margin-inline: .4rem
+    background: rgba(255,255,255,.1)
+
+  .interactiveCloseButton
+    inline-size: auto
+    min-inline-size: 2.15rem
+    block-size: 2.15rem
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    padding-inline: .72rem
+    border-radius: .45rem
+    border: .0625rem solid rgba(255,255,255,.82)
+    background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(240,240,242,.94))
+    color: #09090a
+    font-size: .74rem
+    font-weight: 700
+    text-decoration: none
+    box-shadow: 0 .35rem 1.2rem rgba(255,255,255,.08), inset 0 .0625rem 0 rgba(255,255,255,.9)
+    transition: transform 180ms $ease-out, box-shadow 180ms $ease-out
+
+    &:hover
+      transform: translateY(-.0625rem)
+      box-shadow: 0 .55rem 1.6rem rgba(255,255,255,.12), inset 0 .0625rem 0 rgba(255,255,255,.95)
+
+  .toolButton
+    inline-size: 2.15rem
+    block-size: 2.15rem
+    min-block-size: 2.15rem
+    padding-inline: 0
+    border-radius: .45rem
+    border-color: rgba(255,255,255,.08)
+    background: rgba(255,255,255,.03)
+
+  .workspaceShell
+    min-block-size: 0
+    padding: 0
+    display: flex
+    flex-direction: column
+    overflow: hidden
+    border: 0
+    border-radius: 0
+    background: transparent
+    box-shadow: none
+
+  .workspaceViewport
+    flex: 1
+    min-block-size: 0
+    border-radius: 1.1rem
+    border: .0625rem solid rgba(255,255,255,.06)
+    background: #0a0b0d
+    overflow: auto
+    scrollbar-width: thin
+    scrollbar-color: rgba(255, 255, 255, .28) rgba(255, 255, 255, .025)
+
+    &::-webkit-scrollbar
+      width: .45rem
+      height: .45rem
+
+    &::-webkit-scrollbar-track
+      background: rgba(255, 255, 255, .025)
+
+    &::-webkit-scrollbar-thumb
+      border-radius: 999rem
+      background: linear-gradient(180deg, rgba(255, 255, 255, .18), rgba(255, 255, 255, .42), rgba(255, 255, 255, .18))
+      box-shadow: 0 0 1.25rem rgba(255, 255, 255, .12)
+
+      &:hover
+        background: linear-gradient(180deg, rgba(255, 255, 255, .26), rgba(255, 255, 255, .52), rgba(255, 255, 255, .26))
+        box-shadow: 0 0 1.4rem rgba(255, 255, 255, .16)
+
+    &::before
+      background-color: #0a0b0d
+      background-image: linear-gradient(rgba(255,255,255,.042) .0625rem, transparent .0625rem), linear-gradient(90deg, rgba(255,255,255,.042) .0625rem, transparent .0625rem), linear-gradient(rgba(255,255,255,.018) .0625rem, transparent .0625rem), linear-gradient(90deg, rgba(255,255,255,.018) .0625rem, transparent .0625rem)
+      background-size: 4.25rem 4.25rem, 4.25rem 4.25rem, 1.0625rem 1.0625rem, 1.0625rem 1.0625rem
+      box-shadow: inset 0 0 7rem rgba(0,0,0,.48)
+
+    &::after
+      opacity: .06
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,.022) 0, rgba(255,255,255,.022) .0625rem, transparent .0625rem, transparent .3125rem)
+
+  .flowTranslator
+    top: auto
+    bottom: 1.35rem
+    right: 1.35rem
+    width: min(19rem, calc(100% - 2.7rem))
+    border-color: rgba(255,255,255,.14)
+    border-radius: 1rem
+    background: linear-gradient(165deg, rgba(255,255,255,.1) 0%, rgba(255,255,255,.03) 38%, rgba(255,255,255,.015) 100%), rgba(8,9,11,.72)
+    box-shadow: inset 0 .0625rem 0 rgba(255,255,255,.16), 0 1rem 2.4rem rgba(0,0,0,.38), 0 0 0 .0625rem rgba(255,255,255,.04)
+
+    &::before
+      content: ''
+      position: absolute
+      inset: 0
+      border-radius: inherit
+      pointer-events: none
+      background: linear-gradient(180deg, rgba(255,255,255,.12), transparent 38%)
+      opacity: .55
+
+  .flowTranslatorMeta span b
+    color: rgba(255,255,255,.82)
+
+  .diagramColumns
+    gap: clamp(1.75rem, 3.2vw, 3.25rem)
+
+  .diagramColumnGlass
+    border-color: color-mix(in srgb, var(--stage-color) 10%, rgba(255, 255, 255, .06))
+
+  .diagramColumnHeader small
+    border-color: color-mix(in srgb, var(--stage-color) 22%, rgba(255, 255, 255, .05))
+    background: color-mix(in srgb, var(--stage-color) 5%, rgba(255, 255, 255, .015))
+    color: color-mix(in srgb, var(--stage-accent-soft) 72%, rgba(255, 255, 255, .7))
+
+  .diagramColumnCards
+    gap: .75rem
+
+  .diagramCard
+    &:not(.diagramCardDisabled):hover .diagramCardGlass
+      transform: translateY(-1px)
+      border-color: color-mix(in srgb, var(--stage-color) 24%, rgba(255, 255, 255, .08))
+
+  .diagramCardGlass
+    border-color: color-mix(in srgb, var(--stage-color) 10%, rgba(255, 255, 255, .05))
+    border-left-color: color-mix(in srgb, var(--stage-color) 36%, transparent)
+
+  .diagramCardInner
+    padding: .9rem .9rem .8rem
+
+  .diagramCardGlassSelected
+    border-color: color-mix(in srgb, var(--stage-color) 22%, rgba(255, 255, 255, .1))
+    border-left-color: var(--stage-color)
+
+  .diagramCardGlassRelated
+    border-color: color-mix(in srgb, var(--stage-color) 16%, rgba(255, 255, 255, .07))
+    border-left-color: color-mix(in srgb, var(--stage-color) 52%, rgba(255, 255, 255, .14))
+
+
+.interactiveFrame
+  position: absolute
+  inset: 1rem
+  display: grid
+  grid-template-rows: auto minmax(0, 1fr)
+  gap: .85rem
+
+.workspaceViewport
+  position: relative
+  flex: 1
+  min-block-size: 0
+  overflow: hidden
+  border-radius: 1.4rem
+  isolation: isolate
+  background: #121316
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0
+    z-index: 0
+    pointer-events: none
+    border-radius: inherit
+    background-color: #121316
+    background-image: linear-gradient(rgba(255,255,255,.038) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.038) 1px, transparent 1px), linear-gradient(rgba(255,255,255,.016) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.016) 1px, transparent 1px)
+    background-size: 4.5rem 4.5rem, 4.5rem 4.5rem, 1.125rem 1.125rem, 1.125rem 1.125rem
+    box-shadow: inset 0 0 8rem rgba(0,0,0,.42)
+
+  &::after
+    content: ''
+    position: absolute
+    inset: 0
+    z-index: 0
+    pointer-events: none
+    border-radius: inherit
+    opacity: .14
+    background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.028) 0, rgba(255,255,255,.028) 1px, transparent 1px, transparent 5px)
+
+.flowWorkspace
+  position: relative
+  z-index: 1
+  min-block-size: 100%
+  width: 100%
+  transform-origin: center top
+
+.workspaceHint
+  color: rgba(255,255,255,.5)
+  line-height: 1.5
+
+.inspector
+  padding: 1.2rem
+  overflow: auto
+
+.flowTranslator
+  position: absolute
+  top: 1rem
+  right: 1rem
+  z-index: 12
+  width: min(20rem, calc(100% - 2rem))
+  border: .0625rem solid rgba(255,255,255,.12)
+  border-radius: 1.1rem
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)), rgba(10,11,13,.78)
+  backdrop-filter: blur(1.4rem) saturate(1.12)
+  -webkit-backdrop-filter: blur(1.4rem) saturate(1.12)
+  box-shadow: inset 0 .0625rem 0 rgba(255,255,255,.12), 0 1.2rem 3rem rgba(0,0,0,.34)
+  touch-action: none
+
+.flowTranslatorHandle
+  display: flex
+  align-items: center
+  gap: .55rem
+  padding: .7rem .85rem .45rem
+  cursor: grab
+  user-select: none
+
+  &:active
+    cursor: grabbing
+
+.flowTranslatorGrip
+  display: grid
+  grid-template-columns: repeat(2, .24rem)
+  gap: .24rem
+  flex-shrink: 0
+
+  span
+    inline-size: .24rem
+    block-size: .24rem
+    border-radius: 50%
+    background: rgba(255,255,255,.34)
+    box-shadow: 0 .0625rem 0 rgba(255,255,255,.08)
+
+.flowTranslatorKicker
+  margin: 0
+  color: rgba(255,255,255,.44)
+  font-size: .68rem
+  letter-spacing: .18em
+  text-transform: uppercase
+  font-weight: 760
+
+.flowTranslatorBody
+  padding: 0 .95rem .95rem
+
+.flowTranslatorBody h2
+  margin: 0 0 .55rem
+  font-size: 1.05rem
+  line-height: 1.2
+
+.flowTranslatorBody > p
+  margin: 0 0 .85rem
+  color: rgba(255,255,255,.58)
+  line-height: 1.45
+  font-size: .82rem
+
+.flowTranslatorMeta
+  display: flex
+  flex-wrap: wrap
+  gap: .4rem
+  margin-block-end: .8rem
+
+.flowTranslatorMeta span
+  display: inline-flex
+  align-items: center
+  gap: .28rem
+  padding: .34rem .5rem
+  border-radius: 999rem
+  border: .0625rem solid rgba(255,255,255,.1)
+  color: rgba(255,255,255,.62)
+  font-size: .72rem
+
+.flowTranslatorBlock
+  margin-block-start: .75rem
+  padding-block-start: .7rem
+  border-top: .0625rem solid rgba(255,255,255,.08)
+
+.flowTranslatorBlock h3
+  margin: 0 0 .45rem
+  color: rgba(255,255,255,.46)
+  font-size: .68rem
+  letter-spacing: .16em
+  text-transform: uppercase
+  font-weight: 760
+
+.flowTranslatorBlock ul
+  margin: 0
+  padding-inline-start: 1rem
+  color: rgba(255,255,255,.58)
+  font-size: .78rem
+  line-height: 1.45
+
+.flowTranslatorBlock li + li
+  margin-block-start: .35rem
+
+.flowTranslatorPath
+  margin: 0
+  color: rgba(255,255,255,.66)
+  font-size: .78rem
+  line-height: 1.5
+
+.diagramWorkspace
+  position: relative
+  width: 100%
+  min-block-size: 100%
+  padding: 1.25rem clamp(.5rem, 1.2vw, .85rem) 1.75rem
+
+.diagramBoard
+  position: relative
+  width: 100%
+  min-block-size: 34rem
+  margin-inline: 0
+
+.diagramConnectionsOverlay
+  position: absolute
+  inset: 0
+  width: 100%
+  height: 100%
+  overflow: visible
+  pointer-events: none
+  z-index: 3
+
+.diagramColumns
+  position: relative
+  z-index: 2
+  display: grid
+  grid-template-columns: repeat(4, minmax(0, 1fr))
+  gap: clamp(1.1rem, 2.2vw, 2rem)
+
+.diagramColumn
+  position: relative
+  display: flex
+  flex-direction: column
+  min-block-size: 28rem
+  min-inline-size: 0
+  isolation: isolate
+
+.diagramColumnHalo
+  position: absolute
+  inset: 4% -10% -4%
+  z-index: 0
+  border-radius: 1.5rem
+  background: radial-gradient(ellipse 82% 72% at 50% 36%, color-mix(in srgb, var(--stage-color) 3%, transparent) 0%, transparent 70%)
+  filter: blur(1.8rem)
+  opacity: .08
+  pointer-events: none
+
+.diagramColumnGlass
+  position: relative
+  z-index: 1
+  width: 100%
+  min-inline-size: 0
+  min-block-size: 28rem
+  display: flex
+  flex-direction: column
+  border-color: color-mix(in srgb, var(--stage-color) 10%, rgba(255, 255, 255, .06))
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .03)
+
+.diagramColumnContent
+  display: flex
+  flex-direction: column
+  flex: 1
+  min-block-size: 0
+  padding: 1.125rem
+
+.diagramColumnHeader
+  position: relative
+  z-index: 2
+  display: flex
+  align-items: flex-start
+  justify-content: space-between
+  gap: .75rem
+  flex-shrink: 0
+  min-block-size: 2.75rem
+  padding-block-start: .125rem
+
+.diagramColumnTopRule
+  position: absolute
+  top: 0
+  left: .125rem
+  right: 0
+  height: 1px
+  border-radius: .0625rem
+  background: linear-gradient(90deg, color-mix(in srgb, var(--stage-color) 48%, white 6%) 0%, color-mix(in srgb, var(--stage-color) 22%, transparent) 78%, transparent 100%)
+  opacity: .42
+  pointer-events: none
+
+.diagramColumnHeadingGroup
+  display: flex
+  align-items: center
+  gap: .5rem
+  padding-block-start: .375rem
+
+.diagramColumnHeader h3
+  margin: 0
+  color: color-mix(in srgb, var(--stage-accent-soft, var(--stage-color)) 96%, white)
+  font-size: .8125rem
+  font-weight: 700
+  line-height: 1.1
+  letter-spacing: .18em
+  text-transform: uppercase
+
+.diagramColumnHeader small
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  min-inline-size: 4.5rem
+  block-size: 1.75rem
+  margin-block-start: .125rem
+  padding: 0 .625rem
+  border-radius: .625rem
+  border: 1px solid color-mix(in srgb, var(--stage-color) 22%, rgba(255, 255, 255, .05))
+  background: color-mix(in srgb, var(--stage-color) 5%, rgba(255, 255, 255, .015))
+  color: color-mix(in srgb, var(--stage-accent-soft, var(--stage-color)) 72%, rgba(255, 255, 255, .7))
+  letter-spacing: .04em
+  text-transform: none
+  font-weight: 600
+  font-size: .75rem
+  white-space: nowrap
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .03)
+
+.diagramColumnDot
+  inline-size: .5rem
+  block-size: .5rem
+  flex: 0 0 auto
+  border-radius: 50%
+  background: color-mix(in srgb, var(--stage-accent-soft, var(--stage-color)) 96%, white)
+  box-shadow: 0 0 .375rem color-mix(in srgb, var(--stage-color) 18%, transparent)
+
+.diagramColumnDivider
+  display: block
+  block-size: 1px
+  margin-block-start: .5rem
+  background: rgba(255, 255, 255, .065)
+  flex-shrink: 0
+
+.diagramColumnCards
+  position: relative
+  z-index: 2
+  display: flex
+  flex-direction: column
+  gap: .875rem
+  margin-block-start: .875rem
+  flex: 1
+  min-block-size: 0
+
+.diagramCard
+  position: relative
+  display: block
+  width: 100%
+  padding: 0
+  border: 0
+  text-align: left
+  color: rgba(255,255,255,.9)
+  background: transparent
+  cursor: pointer
+  isolation: isolate
+  transition: filter 220ms $ease-out
+
+  &:not(.diagramCardDisabled):hover .diagramCardGlass
+    transform: translateY(-1px)
+    border-color: color-mix(in srgb, var(--stage-color) 24%, rgba(255, 255, 255, .08))
+    border-left-color: color-mix(in srgb, var(--stage-color) 52%, rgba(255, 255, 255, .14))
+
+.diagramCardGlass
+  width: 100%
+  min-inline-size: 0
+  border-color: color-mix(in srgb, var(--stage-color) 10%, rgba(255, 255, 255, .05))
+  border-left: 1px solid color-mix(in srgb, var(--stage-color) 36%, transparent)
+  box-shadow: none
+  transition: transform 220ms $ease-out, border-color 220ms $ease-out
+
+.diagramCardInner
+  position: relative
+  z-index: 1
+  display: block
+  width: 100%
+  margin: 0
+  padding: 1rem 1rem .875rem
+  border: 0
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+
+.diagramCardHeader
+  display: grid
+  grid-template-columns: 1.375rem minmax(0, 1fr) auto
+  align-items: start
+  column-gap: .5rem
+  min-block-size: 1.375rem
+
+.diagramCardIcon
+  display: inline-grid
+  place-items: center
+  inline-size: 1.375rem
+  block-size: 1.375rem
+  margin-block-start: .125rem
+  flex-shrink: 0
+  border: .0625rem solid color-mix(in srgb, var(--stage-color) 38%, rgba(255, 255, 255, .08))
+  border-radius: .375rem
+  background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--stage-color) 18%, transparent), transparent 58%), rgba(255, 255, 255, .03)
+  box-shadow: inset 0 .0625rem 0 rgba(255, 255, 255, .06)
+
+.diagramCardDot
+  inline-size: .375rem
+  block-size: .375rem
+  border-radius: 50%
+  background: var(--stage-color)
+
+.diagramCardHeader strong
+  display: block
+  margin-block-start: .125rem
+  font-size: .9375rem
+  font-weight: 680
+  line-height: 1.38
+  letter-spacing: -.012em
+  color: rgba(245, 245, 242, .96)
+
+.diagramCardCounts
+  display: flex
+  flex-wrap: wrap
+  align-items: center
+  justify-content: flex-end
+  gap: .25rem
+
+.diagramCardCountPill
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  padding: .125rem .375rem
+  border-radius: .5rem
+  border: .0625rem solid color-mix(in srgb, var(--stage-color) 28%, rgba(255, 255, 255, .08))
+  background: color-mix(in srgb, var(--stage-color) 8%, rgba(255, 255, 255, .03))
+  color: rgba(245, 245, 242, .72)
+  font-size: .6875rem
+  font-weight: 600
+  letter-spacing: .04em
+  white-space: nowrap
+  line-height: 1
+
+.diagramCardCountArrow
+  margin-inline-end: .2rem
+  font-size: .8rem
+  font-weight: 500
+  transform: translateY(-.5px)
+
+.diagramCardDescription
+  display: block
+  margin-block-start: .625rem
+  color: rgba(245, 245, 242, .72)
+  font-size: .8125rem
+  line-height: 1.6
+  letter-spacing: -.01em
+
+.diagramCardSection
+  display: block
+  margin-block-start: .75rem
+  color: rgba(245, 245, 242, .68)
+  font-size: .75rem
+  line-height: 1.55
+
+.diagramCardSection em
+  display: block
+  margin-block-end: .2rem
+  color: rgba(245, 245, 242, .52)
+  font-size: .6875rem
+  font-style: normal
+  letter-spacing: .1em
+  font-weight: 700
+  text-transform: uppercase
+
+.diagramCardGlassSelected
+  border-color: color-mix(in srgb, var(--stage-color) 22%, rgba(255, 255, 255, .1))
+  border-left-color: var(--stage-color)
+
+  .diagramCardHeader strong
+    color: rgba(252, 252, 249, .99)
+
+.diagramCardGlassRelated
+  border-color: color-mix(in srgb, var(--stage-color) 16%, rgba(255, 255, 255, .07))
+  border-left-color: color-mix(in srgb, var(--stage-color) 52%, rgba(255, 255, 255, .14))
+
+.diagramCardDisabled
+  pointer-events: auto
+  cursor: pointer
+
+  .diagramCardGlass
+    border-left-color: rgba(255, 255, 255, .08)
+
+.diagramCardReceded
+  filter: brightness(0.42) saturate(0.55)
+  transition: filter 360ms $ease-out
+
+  .diagramResourceCard
+    box-shadow: none
+
+.diagramPreview
+  position: relative
+  min-block-size: 18rem
+
+.diagramScale
+  position: relative
+  width: 100%
+  transform-origin: center top
+  transform: scale(var(--diagram-zoom, 1))
+
+.diagramConnections
+  position: absolute
+  inset: 0
+  width: 100%
+  height: 100%
+  overflow: visible
+  pointer-events: none
+
+.diagramCards
+  position: relative
+  min-block-size: 24rem
+
+.diagramCardPreview
+  position: absolute
+  left: var(--x)
+  top: var(--y)
+  width: 11.375rem
+  transform: translate(-50%, -50%)
+  padding: .75rem .85rem
+  border-radius: .75rem
+  border: .0625rem solid color-mix(in srgb, var(--stage-color) 30%, rgba(255,255,255,.1))
+  background: rgba(12,12,13,.82)
+
+.diagramCardPreview strong
+  display: block
+  font-size: .8rem
+
+.diagramCardPreview span
+  display: block
+  margin-block-start: .25rem
+  color: rgba(255,255,255,.5)
+  font-size: .68rem
+
+.edgeGroup .edgePath
+  stroke: rgba(244,244,245,.42)
+
+.edgePathActive
+  stroke: rgba(255,255,255,.58)
+  stroke-width: .09rem
+  filter: drop-shadow(0 0 .2rem rgba(255,255,255,.1))
+
+.edgeDimmed .edgePath
+  stroke: rgba(244,244,245,.05)
+  stroke-width: .07rem
+
+.edgeBadgeGroup
+  pointer-events: none
+
+.edgeBadgeCircle,
+.edgeBadgePill
+  fill: rgba(8,9,11,.88)
+  stroke: rgba(255,255,255,.2)
+  stroke-width: .75
+
+.edgeBadgeRisk
+  fill: rgba(18,12,8,.92)
+  stroke: color-mix(in srgb, var(--risk) 42%, rgba(255,255,255,.22))
+
+.edgeBadgeHypothesis
+  fill: rgba(8,14,12,.92)
+  stroke: color-mix(in srgb, var(--hypothesis) 42%, rgba(255,255,255,.22))
+
+.edgeBadgeText
+  fill: rgba(244,244,245,.9)
+  font-size: .54rem
+  font-weight: 700
+  font-family: inherit
+
+.edgeBadgeTextRisk
+  fill: color-mix(in srgb, var(--risk) 82%, white)
+
+.edgeBadgeTextHypothesis
+  fill: color-mix(in srgb, var(--hypothesis) 82%, white)
+
+.edgeBadgeTextPill
+  font-size: .48rem
+  letter-spacing: -.02em
+
+.inspectorKicker
+  margin: 0 0 .6rem
+  color: rgba(255,255,255,.42)
+  font-size: .72rem
+  letter-spacing: .2em
+  text-transform: uppercase
+  font-weight: 760
+
+.inspector h2
+  margin: 0 0 .8rem
+  font-size: 1.25rem
+
+.inspector p
+  margin: 0 0 1rem
+  color: rgba(255,255,255,.58)
+  line-height: 1.5
+
+.legend
+  display: flex
+  gap: .5rem
+  flex-wrap: wrap
+
+.legend span
+  display: inline-flex
+  align-items: center
+  gap: .35rem
+  padding: .4rem .55rem
+  border-radius: 999rem
+  border: .0625rem solid rgba(255,255,255,.1)
+  color: rgba(255,255,255,.6)
+  font-size: .75rem
+
+@media (max-width: 70rem)
+  .resultHero,
+  .previewSection,
+  .reportHeader
+    grid-template-columns: 1fr
+
+  .resultHeader
+    top: .5rem
+    border-radius: 1.35rem
+    align-items: flex-start
+    flex-direction: column
+
+  .headerActions
+    width: 100%
+    flex-wrap: wrap
+
+  .reportGrid
+    grid-template-columns: 1fr
+
+  .stageColumn
+    inline-size: 14rem
+
+  .diagramColumns
+    grid-template-columns: repeat(2, minmax(0, 1fr))
+    gap: 1.25rem
+
+  .diagramColumnContent
+    padding: .875rem
+
+  .diagramColumnHeader small
+    min-inline-size: 4rem
+    block-size: 1.625rem
+    padding-inline: .5rem
+    font-size: .6875rem
+
+  .diagramCardInner
+    padding: .875rem
+
+  .diagramCardHeader
+    grid-template-columns: 1.375rem minmax(0, 1fr) auto
+    column-gap: .5rem
+
+  .diagramCardCountPill
+    font-size: .6875rem
+
+  .interactiveExperience
+    .interactiveTopbar
+      flex-direction: row
+      align-items: center
+      min-block-size: 3.4rem
+
+    .interactiveTopbarHeading
+      max-inline-size: min(18rem, calc(100% - 12rem))
+      font-size: .6rem
+      letter-spacing: .1em
+
+    .interactiveToolbar
+      justify-content: flex-end
+      flex-wrap: wrap
+
+    .flowTranslator
+      width: min(18rem, calc(100% - 1.5rem))
+
+// TDM_LIQUID_VISUAL_FIX_V1_RESULT_OVERRIDES
+.interactiveExperience
+  --column-card-gap: 0.75rem
+  --column-padding: 0.95rem
+  --column-header-gap: 0.75rem
+  --card-radius: 0.5625rem
+  --diagram-viewport-offset: 7.25rem
+
+  .workspaceViewport
+    overflow: auto
+    min-height: 0
+    max-height: none
+    height: 100%
+
+  .workspaceShell
+    border-width: 0
+    min-height: 0
+    flex: 1
+
+  .flowWorkspace
+    min-block-size: 100%
+    height: auto
+    display: flex
+    flex-direction: column
+    min-height: 100%
+    overflow: visible
+
+  .diagramWorkspace
+    flex: 1
+    min-block-size: 100%
+    height: auto
+    overflow: visible
+    padding: clamp(1.75rem, 3.2vw, 2.75rem) clamp(1.35rem, 2.8vw, 2.5rem) clamp(1.5rem, 2.6vw, 2.25rem)
+
+  .diagramBoard
+    flex: 1
+    inline-size: 100%
+    min-block-size: 0
+    height: auto
+    display: flex
+    flex-direction: column
+    overflow: visible
+
+  .diagramColumns
+    flex: 1
+    grid-template-columns: repeat(4, minmax(0, 1fr))
+    gap: clamp(1.75rem, 3.4vw, 3.35rem)
+    inline-size: 100%
+    min-block-size: 0
+    min-inline-size: 0
+    align-items: stretch
+
+  .diagramColumnPanel
+    min-block-size: 100%
+    max-height: none
+    height: auto
+
+  .diagramColumnPanelContent
+    min-block-size: 0
+    max-height: none
+    overflow: visible
+
+  .diagramCardButton
+    flex-shrink: 0
+    transition: filter 360ms cubic-bezier(.22, 1, .36, 1)
+
+@media (max-width: 70rem)
+  .interactiveExperience
+    --diagram-viewport-offset: 8.5rem
+
+    .interactiveTopbarHeading
+      max-inline-size: min(20rem, calc(100% - 14rem))
+      font-size: .64rem
+      letter-spacing: .12em
+
+    .workspaceViewport
+      overflow: auto
+
+    .diagramColumns
+      grid-template-columns: repeat(4, minmax(0, 1fr))
+      gap: clamp(1.1rem, 2.2vw, 1.75rem)
+
+    .diagramColumnContent
+      padding: 0.85rem
+
+    .diagramCardInner
+      padding: 0.8rem
+
+    .diagramColumnHeader h3
+      font-size: 0.72rem
+      letter-spacing: 0.18em
+
+    .diagramColumnHeader small
+      min-inline-size: 3.6rem
+      font-size: 0.68rem
+
+
+// TDM_COMPONENT_V4_RESULT_RESOURCE_PANEL
+.diagramColumnPanel
+  position: relative
+  z-index: 1
+  width: 100%
+  min-inline-size: 0
+  min-block-size: 0
+  height: 100%
+
+.diagramColumnPanelContent
+  display: flex
+  flex-direction: column
+  flex: 1
+  min-block-size: 0
+  overflow: visible
+  overflow-y: visible
+  max-height: none
+
+.diagramCardButton
+  display: block
+  width: 100%
+  margin: 0
+  padding: 0
+  border: 0
+  color: inherit
+  text-align: left
+  background: transparent
+  cursor: pointer
+  flex-shrink: 0
+
+.diagramResourceCard
+  transition: border-color 220ms cubic-bezier(.22, 1, .36, 1), box-shadow 220ms cubic-bezier(.22, 1, .36, 1), filter 220ms cubic-bezier(.22, 1, .36, 1)
+
+.diagramCardButton:not(.diagramCardDisabled):hover .diagramResourceCard
+  border-color: color-mix(in srgb, var(--stage-color) 28%, rgba(255, 255, 255, .1))
+  box-shadow: inset 0.0625rem 0 0 color-mix(in srgb, var(--stage-color) 48%, transparent), inset 0 0.0625rem 0 rgba(255, 255, 255, .06), 0 0 1rem color-mix(in srgb, var(--stage-color) 10%, transparent)
+
+.diagramResourceCardSelected
+  border-color: color-mix(in srgb, var(--stage-color) 40%, rgba(255, 255, 255, .14))
+  box-shadow: inset 0.0625rem 0 0 color-mix(in srgb, var(--stage-color) 62%, transparent), 0 0 1.35rem color-mix(in srgb, var(--stage-color) 14%, transparent)
+
+.diagramResourceCardRelated
+  border-color: color-mix(in srgb, var(--stage-color) 24%, rgba(255, 255, 255, .09))
+
+.interactiveExperience
+  .diagramResourceCard
+    border-radius: var(--card-radius, 0.5625rem)
+
+@media (max-width: 56rem)
+  .diagramColumnPanel
+    min-block-size: auto

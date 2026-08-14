@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "project": "TDM",
+  "productName": "TDM",
+  "engine": "SharkOps",
+  "identity": {
+    "symbol": "🦈",
+    "tone": "attack-control",
+    "colorMode": "ansi"
+  }
+}

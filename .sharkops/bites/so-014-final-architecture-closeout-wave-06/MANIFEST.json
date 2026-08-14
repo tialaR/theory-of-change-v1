@@ -1,0 +1,1 @@
+{"id":"SO-014","codename":"Final Architecture Closeout","wave":"06","title":"Dead Path & Legacy Residue Verification","status":"ACTIVE","runtimeChanges":false,"gate":"npm run check:tdm:final-architecture:wave06","next":"SO-014 Wave 07 | Documentation & ADR Consistency"}

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "patchId": "canvas-wave-03-lockdown",
+  "state": "closed",
+  "branch": "refactor/shark-cleanup-and-canvas-v1",
+  "closedAt": "2026-07-28T00:00:05.195Z",
+  "officialRoute": "/canvas",
+  "removedRoute": "/canvas-v4",
+  "legacyRoute": "/canvas-legado",
+  "engine": "@xyflow/react",
+  "persistence": "MSW-backed typed HTTP repository",
+  "validation": [
+    "typegen",
+    "typecheck",
+    "vitest",
+    "next-build",
+    "playwright-blocking",
+    "contract-v3-full"
+  ],
+  "visualContract": {
+    "canvasSassSha256": "885b6b9272cadbd6fc109e3b24eec045f3c0e3adbc013f32767a92a713b3aacc",
+    "status": "preserved-after-route-rename"
+  }
+}

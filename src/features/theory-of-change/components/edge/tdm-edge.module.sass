@@ -1,10 +1,14 @@
 @use '../../../../shared/styles/tokens' as *
 
 .edge
-  stroke: var(--edge-stroke, #a78bfa)
-  stroke-width: 2
-  filter: drop-shadow(0 0 10px rgba(167, 139, 250, 0.16))
+  stroke: var(--edge-stroke, rgba(186, 192, 204, 0.34))
+  stroke-width: 1.15
+  stroke-dasharray: 4.5 4
+  filter: none
+  opacity: 0.62
 
 .selected
-  stroke: var(--edge-stroke, #c4b5fd)
-  filter: drop-shadow(0 0 12px rgba(167, 139, 250, 0.28))
+  stroke: var(--edge-stroke, rgba(214, 220, 230, 0.7))
+  stroke-width: 1.4
+  opacity: 1
+  filter: none

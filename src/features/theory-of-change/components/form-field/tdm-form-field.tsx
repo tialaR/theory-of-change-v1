@@ -1,6 +1,8 @@
 'use client';
 
 import type { PointerEvent } from 'react';
+import { TdmField, TdmInput, TdmTextarea } from '@/shared/ui/tdm-field';
+import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
 import type { TdmNodeDraft } from '../../domain/tdm-types';
 import fieldStyles from './tdm-form-field.module.sass';
 
@@ -8,7 +10,7 @@ export const TDM_FIELD_PLACEHOLDERS = {
   title: 'Nome do bloco',
   description: 'Descreva rapidamente este bloco.',
   advancedDetails: 'Detalhes complementares do bloco.',
-  shortNotes: 'Notas de apoio para leitura rápida.'
+  shortNotes: 'Notas de apoio...'
 } as const;
 
 export const TDM_FIELD_CLEAR_LABELS: Record<keyof TdmNodeDraft, string> = {
@@ -27,6 +29,14 @@ export type TdmFormFieldClassNames = {
   clearButton?: string;
   clearIcon?: string;
 };
+
+function ClearFieldIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 12 12">
+      <path d="M3 3l6 6M9 3 3 9" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
 
 export function TdmClearFieldButton({
   ariaLabel,
@@ -86,44 +96,52 @@ export function TdmFormField({
   onChange: (nextValue: string) => void;
   onClear: () => void;
 }) {
-  const controlClassName = [
-    multiline ? classNames?.textarea ?? fieldStyles.formTextarea : classNames?.input ?? fieldStyles.formInput,
-    inputClassName
-  ]
-    .filter(Boolean)
-    .join(' ');
-
   return (
-    <label className={classNames?.field ?? fieldStyles.field}>
-      <span className={classNames?.label ?? fieldStyles.fieldLabel}>{label}</span>
-      <div className={classNames?.control ?? fieldStyles.fieldControl}>
-        {multiline ? (
-          <textarea
-            className={controlClassName}
-            rows={rows}
-            value={value}
-            placeholder={placeholder}
-            onChange={(event) => onChange(event.target.value)}
-          />
-        ) : (
-          <input
-            className={controlClassName}
-            type="text"
-            value={value}
-            placeholder={placeholder}
-            onChange={(event) => onChange(event.target.value)}
-          />
-        )}
-        {value ? (
-          <TdmClearFieldButton
-            ariaLabel={clearAriaLabel}
-            onClear={onClear}
-            className={[classNames?.clearButton, inputClassName].filter(Boolean).join(' ')}
-            iconClassName={classNames?.clearIcon}
-          />
-        ) : null}
-      </div>
-    </label>
+    <TdmField
+      label={label}
+      size="sm"
+      filled={Boolean(value)}
+      className={[fieldStyles.field, classNames?.field].filter(Boolean).join(' ')}
+      trailingAdornment={
+        value ? (
+          <TdmIconButton
+            aria-label={clearAriaLabel}
+            variant="ghost"
+            size="sm"
+            className={classNames?.clearButton}
+            onPointerDown={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+            }}
+            onMouseDown={(event) => event.stopPropagation()}
+            onClick={(event) => {
+              event.stopPropagation();
+              onClear();
+            }}
+          >
+            <ClearFieldIcon />
+          </TdmIconButton>
+        ) : null
+      }
+    >
+      {multiline ? (
+        <TdmTextarea
+          className={[fieldStyles.formTextarea, classNames?.textarea, inputClassName].filter(Boolean).join(' ')}
+          rows={rows}
+          value={value}
+          placeholder={placeholder}
+          onChange={(event) => onChange(event.target.value)}
+        />
+      ) : (
+        <TdmInput
+          className={[fieldStyles.formInput, classNames?.input, inputClassName].filter(Boolean).join(' ')}
+          type="text"
+          value={value}
+          placeholder={placeholder}
+          onChange={(event) => onChange(event.target.value)}
+        />
+      )}
+    </TdmField>
   );
 }
 
@@ -147,7 +165,7 @@ export function TdmBlockFormFields({
   };
 
   return (
-    <>
+    <div className={fieldStyles.form}>
       <TdmFormField
         label="Título"
         value={draft.title}
@@ -190,6 +208,6 @@ export function TdmBlockFormFields({
         onChange={(value) => updateField('shortNotes', value)}
         onClear={() => clearField('shortNotes')}
       />
-    </>
+    </div>
   );
 }

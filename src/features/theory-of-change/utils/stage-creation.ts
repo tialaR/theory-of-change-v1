@@ -25,7 +25,18 @@ const STAGE_X_POSITIONS: Record<TdmStage, number> = {
   outcome: 1140
 };
 
-export const STAGE_ROW_GAP = 118;
+/** Compact canvas card height fallback in React Flow coordinates (px). Matches 6rem shell. */
+export const CANVAS_COMPACT_NODE_HEIGHT = 96;
+/** Free vertical gap between stacked nodes in the same column (min ~4rem). */
+export const CANVAS_COLUMN_ROW_GAP = 64;
+/** @deprecated Prefer measured height + CANVAS_COLUMN_ROW_GAP. Alias kept for callers. */
+export const CANVAS_COLUMN_ROW_STEP = CANVAS_COMPACT_NODE_HEIGHT + CANVAS_COLUMN_ROW_GAP;
+/** @deprecated Prefer measured height + CANVAS_COLUMN_ROW_GAP. */
+export const STAGE_ROW_GAP = CANVAS_COLUMN_ROW_STEP;
+
+export function getNodeLayoutHeight(node: Pick<TdmNode, 'height' | 'measured'>): number {
+  return node.measured?.height ?? node.height ?? CANVAS_COMPACT_NODE_HEIGHT;
+}
 
 export function getStageCreationCopy(stageCreation: StageCreation): string {
   return STAGE_CREATION_COPY[stageCreation];
@@ -46,7 +57,7 @@ export function getStageCreationAdvanceLabel(): string {
 export function getStageCreationPosition(stage: TdmStage, index: number) {
   return {
     x: STAGE_X_POSITIONS[stage],
-    y: 140 + index * STAGE_ROW_GAP
+    y: 140 + index * (CANVAS_COMPACT_NODE_HEIGHT + CANVAS_COLUMN_ROW_GAP)
   };
 }
 

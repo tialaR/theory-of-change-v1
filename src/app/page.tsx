@@ -1,5 +1,5 @@
-import { TdmCanvas } from '@/features/theory-of-change/components/canvas/tdm-canvas';
+import { HomePage } from '@/features/theory-of-change/public-routes';
 
-export default function HomePage() {
-  return <TdmCanvas />;
+export default function Page() {
+  return <HomePage />;
 }

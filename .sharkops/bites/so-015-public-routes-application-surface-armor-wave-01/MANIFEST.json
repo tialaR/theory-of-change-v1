@@ -1,0 +1,19 @@
+{
+  "id": "SO-015",
+  "codename": "Public Routes & Application Surface Armor",
+  "wave": "01",
+  "title": "Route Inventory & Risk Map",
+  "status": "ACTIVE",
+  "runtimeChanges": false,
+  "gate": "npm run check:tdm:public-routes:wave01",
+  "predecessor": "GOLDEN-STATE-v1",
+  "next": "SO-015 | Public Routes Boundary & Composition",
+  "patchVersion": "v1",
+  "scope": [
+    "src/app route surfaces",
+    "public route composition",
+    "route status boundaries",
+    "legacy route classification",
+    "Canvas Golden State preservation"
+  ]
+}

@@ -1,0 +1,237 @@
+// ─── SURGERY 03 — route /canvas visual corrections from Archive(7) ──────────
+
+// Experience headings: compact editorial scale requested for create, edit,
+// organization and shortcuts. Keep the existing markup and behavior intact.
+.blockFormGroupHeader,
+.canvasOrganizationTitleRow,
+.quickShortcutsTitleRow
+  gap: 0.5rem
+  min-height: 1.35rem
+  margin-bottom: 0.5rem
+
+.blockFormGroupHeader
+  margin-top: 0
+
+.blockFormGroupTitle,
+.canvasOrganizationTitle,
+.quickShortcutsTitle
+  display: inline-block
+  width: auto
+  min-width: 0
+  visibility: visible
+  opacity: 1
+  color: transparent !important
+  background: linear-gradient(90deg, rgba(240, 240, 240, 0.94) 0%, rgba(161, 164, 165, 0.76) 100%) !important
+  background-clip: text !important
+  -webkit-background-clip: text !important
+  -webkit-text-fill-color: transparent !important
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.78125rem
+  font-weight: 400
+  line-height: 1.1rem
+  letter-spacing: 0.04em
+  text-transform: uppercase
+  white-space: normal
+
+.canvasOrganizationTitleRow
+  flex: 1 1 auto
+  overflow: visible
+
+.canvasOrganizationTitleRow .canvasOrganizationTitle
+  flex: 1 1 auto
+  overflow: visible
+  text-overflow: clip
+
+.blockFormGroupHeader > :first-child,
+.canvasOrganizationTitleRow > :first-child,
+.quickShortcutsTitleRow > :first-child
+  width: 1.35rem
+  height: 1.35rem
+  min-width: 1.35rem
+  flex: 0 0 1.35rem
+
+  svg
+    width: 1.35rem
+    height: 1.35rem
+
+// The hero is a top-lit editorial surface that dissolves into the sidebar.
+// No dark container wall or rounded lower corners remain in either state.
+.heroCard,
+.heroCardCollapsed
+  overflow: hidden
+  border: 0
+  border-radius: 1.5rem 1.5rem 0 0
+  background: radial-gradient(80% 44% at 50% 0%, rgba(255, 255, 255, 0.075) 0%, transparent 72%), linear-gradient(180deg, rgba(27, 28, 32, 0.82) 0%, rgba(21, 22, 26, 0.62) 30%, rgba(17, 18, 22, 0.32) 58%, rgba(14, 15, 18, 0.08) 82%, rgba(14, 15, 18, 0) 100%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.075)
+
+  &::before
+    display: block
+    content: ''
+    position: absolute
+    z-index: 4
+    inset: 0
+    width: auto
+    height: auto
+    padding: 0.0625rem
+    border-radius: 1.5rem 1.5rem 0 0
+    transform: none
+    background: linear-gradient(180deg, rgba(224, 226, 232, 0.22) 0%, rgba(161, 164, 165, 0.12) 30%, rgba(161, 164, 165, 0.035) 58%, transparent 78%)
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)
+    -webkit-mask-composite: xor
+    mask-composite: exclude
+    opacity: 0.82
+    pointer-events: none
+
+  &::after
+    display: block
+    content: ''
+    position: absolute
+    z-index: 4
+    left: 0
+    right: 0
+    bottom: 0
+    height: 0.0625rem
+    border-radius: 0
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.055) 12%, rgba(255, 255, 255, 0.09) 50%, rgba(255, 255, 255, 0.055) 88%, transparent 100%)
+    pointer-events: none
+
+.heroGlowBottom
+  display: none
+
+.heroGlowTop
+  opacity: 0.26
+
+.heroSpecular
+  opacity: 0.22
+
+.heroFormShell
+  padding-bottom: 0.875rem
+
+.heroFormShellCollapsed
+  padding-bottom: 0
+
+// Expanded create/edit forms dissolve into the sidebar instead of becoming a
+// second dark card. Closed accordions keep their existing compact surface.
+.blockFormsPanel .blockSidebarAccordion.sidebarAccordionOpen
+  overflow: hidden
+  border: 0
+  border-radius: 1rem 1rem 0 0
+  background: radial-gradient(82% 34% at 50% 0%, color-mix(in srgb, var(--stage-accent, rgba(255, 255, 255, 0.5)) 4%, transparent) 0%, transparent 72%), linear-gradient(180deg, rgba(22, 23, 28, 0.54) 0%, rgba(17, 18, 22, 0.28) 30%, rgba(12, 13, 16, 0.08) 58%, transparent 82%)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.055)
+
+  &::before
+    inset: 0
+    padding: 0.0625rem
+    border-radius: 1rem 1rem 0 0
+    background: linear-gradient(180deg, color-mix(in srgb, var(--stage-accent, rgba(224, 226, 232, 0.8)) 40%, rgba(224, 226, 232, 0.16)) 0%, color-mix(in srgb, var(--stage-accent, rgba(161, 164, 165, 0.55)) 16%, rgba(161, 164, 165, 0.05)) 34%, rgba(161, 164, 165, 0.018) 58%, transparent 78%)
+    opacity: 0.58
+
+  &::after
+    display: none
+
+.blockFormsPanel .blockSidebarAccordion.sidebarAccordionOpen .sidebarAccordionPanel,
+.blockFormsPanel .blockSidebarAccordion.sidebarAccordionOpen .sidebarAccordionContent
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+
+.blockFormsPanel .blockSidebarAccordion.sidebarAccordionOpen .sidebarAccordionContent > *
+  background: transparent
+
+// Exact field rhythm requested for hero, create and edit forms.
+.blockFormsPanel :global(.form),
+.heroFormShell :global(.form)
+  gap: 1.25rem
+
+.blockFormsPanel :global(.field) + :global(.field),
+.heroFormShell :global(.field) + :global(.field)
+  margin-top: 0
+
+.blockFormsPanel :global(label)
+  display: grid
+  gap: 0.375rem
+  margin: 0
+
+.heroFormShell :global(label)
+  display: inline-flex
+  align-items: baseline
+  gap: 0.25rem
+  margin: 0
+  flex-wrap: nowrap
+
+.blockFormsPanel :global(input),
+.heroFormShell :global(input),
+.blockFormsPanel :global(textarea),
+.heroFormShell :global(textarea)
+  border: 0
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+  padding-inline: 0
+
+// Shortcuts become compact editorial rows, not rounded dashboard tiles.
+.quickShortcutsGrid
+  gap: 0
+
+.quickShortcutBtn
+  min-height: 2.25rem
+  padding: 0.375rem 0
+  gap: 0.5rem
+  border: 0
+  border-bottom: 0.0625rem solid rgba(161, 164, 165, 0.18)
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+  color: rgba(161, 164, 165, 0.58)
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.75rem
+  font-weight: 500
+  line-height: 1.125rem
+  opacity: 0.78
+  overflow: visible
+  transition: color 180ms ease, opacity 180ms ease, border-color 180ms ease, background 180ms ease
+
+  &::after
+    content: '→'
+    margin-left: auto
+    color: currentColor
+    font-size: 1rem
+    font-weight: 400
+    line-height: 1
+    opacity: 0.82
+    transform: translateX(-0.125rem)
+    transition: transform 180ms ease, opacity 180ms ease
+
+  &:hover,
+  &:focus-visible
+    transform: none
+    border-color: rgba(224, 226, 232, 0.32)
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.018), transparent 72%)
+    box-shadow: none
+    color: rgba(224, 226, 232, 0.94)
+    opacity: 1
+
+    &::after
+      opacity: 1
+      transform: translateX(0)
+
+.quickShortcutBtnIcon
+  width: 1rem
+  height: 1rem
+  color: currentColor
+  opacity: 0.72
+
+  svg
+    width: 0.875rem
+    height: 0.875rem
+
+.quickShortcutBtnLabel
+  font-weight: 500
+  color: inherit
+
+@media (prefers-reduced-motion: reduce)
+  .quickShortcutBtn,
+  .quickShortcutBtn::after
+    transition: none
+
+

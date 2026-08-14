@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "activeProfile": "post-golden-hardening",
+  "profiles": {
+    "bootstrap-recovery": {
+      "description": "SharkOps assumes repository governance while legacy contracts are classified and repaired.",
+      "mandatory": {
+        "pre-commit": [
+          "shark:verify",
+          "shark:principles",
+          "check:tdm:canvas-armor",
+          "check:tdm:public-routes:active",
+          "check:tdm:release-e2e-harness"
+        ],
+        "pre-push": [
+          "shark:verify",
+          "shark:principles",
+          "check:tdm:canvas-armor",
+          "test:e2e:canvas",
+          "check:tdm:public-routes:active",
+          "test:e2e:public-routes",
+          "check:tdm:release-e2e-harness"
+        ]
+      },
+      "advisory": {
+        "pre-commit": [
+          "check:tdm:v3:quick"
+        ],
+        "pre-push": [
+          "validate:release"
+        ]
+      }
+    },
+    "post-golden-hardening": {
+      "description": "Post-Golden governance: Golden States remain protected and release proof is fail-closed before push.",
+      "mandatory": {
+        "pre-commit": [
+          "shark:verify",
+          "shark:principles",
+          "check:tdm:canvas-armor",
+          "check:tdm:public-routes:active",
+          "check:tdm:release-e2e-harness",
+          "check:tdm:post-golden-release-policy",
+          "check:tdm:post-golden-current"
+        ],
+        "pre-push": [
+          "shark:verify",
+          "shark:principles",
+          "check:tdm:canvas-armor",
+          "test:e2e:canvas",
+          "check:tdm:public-routes:active",
+          "test:e2e:public-routes",
+          "check:tdm:release-e2e-harness",
+          "check:tdm:post-golden-release-policy",
+          "validate:release"
+        ]
+      },
+      "advisory": {
+        "pre-commit": [],
+        "pre-push": []
+      }
+    }
+  },
+  "classifications": {
+    "shark:verify": "MANDATORY",
+    "validate:release": "MANDATORY_RELEASE_PROOF",
+    "shark:principles": "MANDATORY",
+    "check:tdm:canvas-armor": "MANDATORY",
+    "test:e2e:canvas": "MANDATORY_PRE_PUSH",
+    "check:tdm:public-routes:active": "MANDATORY",
+    "test:e2e:public-routes": "MANDATORY_PRE_PUSH",
+    "check:tdm:release-e2e-harness": "MANDATORY",
+    "check:tdm:post-golden-release-policy": "MANDATORY",
+    "check:tdm:post-golden-current": "MANDATORY_POST_GOLDEN_TRUTH"
+  },
+  "policy": {
+    "sharkOpsIsSovereign": true,
+    "legacyFailureBlocks": true,
+    "rollbackRequired": true,
+    "silentDeviationAllowed": false
+  }
+}

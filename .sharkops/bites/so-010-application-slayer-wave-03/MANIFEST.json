@@ -1,0 +1,9 @@
+{
+  "id": "SO-010",
+  "codename": "Application Slayer",
+  "wave": 3,
+  "revision": 4,
+  "status": "ACTIVE",
+  "purpose": "Move relation validation, marker removal eligibility and connection deletion decisions out of the UI hook into framework-neutral Application contracts",
+  "gate": "check:tdm:application-slayer:wave03"
+}

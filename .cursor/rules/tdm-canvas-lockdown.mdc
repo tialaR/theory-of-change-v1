@@ -1,0 +1,23 @@
+---
+description: TDM Canvas executable architecture lockdown
+globs:
+  - "src/app/canvas/**"
+  - "src/features/theory-of-change/canvas/**"
+  - "src/features/theory-of-change/components/canvas-resultado/**"
+alwaysApply: true
+---
+
+# Canvas executable lockdown
+
+- `/canvas` is the only official current Canvas route; `/canvas-v4` and preview routes must remain absent.
+- `/canvas-legado` was explicitly retired by SO-015 Wave 09 and must remain absent unless a new SharkOps initiative authorizes reintroduction.
+- `src/app/canvas` only routes, lays out and composes Server Components.
+- The interactive Canvas is a dynamically loaded Client island inside the Canvas feature.
+- `<ReactFlow />` is the only Canvas renderer. Custom cards are React Flow nodes with real `<Handle />` ports; causal relations are custom React Flow edges.
+- Manual SVG connection layers, route-owned state engines and duplicate causal rules are forbidden.
+- `evaluateCanvasConnection` is the single causal policy and invalid actions must not mutate state.
+- Each component, hook, test, adapter and mock remains with its owner. `shared` cannot import private Canvas implementation.
+- Component files may not exceed 260 lines; controller hooks may not exceed 360 lines without an approved contract migration.
+- Persistence crosses explicit application and repository contracts. Browser storage and `window.location` are forbidden.
+- The Canvas visual skin is protected by hash and by the external before/after Playwright screenshot in patch validation.
+- Run `npm run validate:canvas:release` before commit or merge.

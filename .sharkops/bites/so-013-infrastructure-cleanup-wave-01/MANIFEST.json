@@ -1,0 +1,9 @@
+{
+  "id": "SO-013",
+  "codename": "Infrastructure Cleanup",
+  "wave": "01",
+  "status": "ACTIVE",
+  "revision": 1,
+  "purpose": "Audit infrastructure residue and remove only two proven orphan helpers without changing behavior",
+  "updatedAt": "2026-08-07T00:45:00.000Z"
+}

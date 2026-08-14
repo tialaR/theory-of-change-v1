@@ -1,0 +1,141 @@
+@use 'login.tokens' as loginTokens
+
+.page
+  +loginTokens.tokens
+  position: relative
+  isolation: isolate
+  display: grid
+  min-height: 100dvh
+  overflow: hidden
+  place-items: center
+  padding: var(--auth-page-padding-block) var(--auth-page-padding-inline)
+  background: radial-gradient(circle at 50% 55%, rgba(255, 255, 255, 0.035), transparent 32%), var(--tdm-surface-app)
+  color: var(--tdm-fg-primary)
+
+.backLink
+  position: absolute
+  z-index: 4
+  inset-block-start: var(--auth-page-padding-block)
+  inset-inline-start: var(--auth-page-padding-inline)
+  display: inline-flex
+  align-items: center
+  gap: var(--tdm-space-2)
+  min-height: 2.5rem
+  color: var(--tdm-fg-secondary)
+  font-size: var(--tdm-font-body-sm-size)
+  font-weight: 500
+  transition: color var(--tdm-duration-ui) var(--tdm-ease-standard), transform var(--tdm-duration-ui) var(--tdm-ease-standard)
+
+  &:hover,
+  &:focus-visible
+    color: var(--tdm-fg-primary)
+    transform: translateX(-0.125rem)
+    outline: none
+
+.decorativeLeft,
+.decorativeRight
+  position: absolute
+  z-index: -1
+  width: var(--auth-decoration-size)
+  aspect-ratio: 1
+  border: var(--tdm-border-width-hairline) solid var(--auth-decoration-line)
+  background: repeating-radial-gradient(circle at center, transparent 0 10%, var(--auth-decoration-fill) 10.4% 10.8%, transparent 11.2% 18%)
+  clip-path: polygon(50% 0, 91% 24%, 100% 70%, 66% 100%, 22% 91%, 0 52%, 16% 12%)
+  opacity: 0.7
+  transform: rotate(18deg)
+  pointer-events: none
+
+  &::before,
+  &::after
+    content: ''
+    position: absolute
+    inset: 10%
+    border: var(--tdm-border-width-hairline) solid var(--auth-decoration-line)
+    clip-path: inherit
+
+  &::after
+    inset: 22%
+
+.decorativeLeft
+  inset-inline-start: calc(var(--auth-decoration-size) * -0.55)
+  inset-block-end: calc(var(--auth-decoration-size) * -0.48)
+
+.decorativeRight
+  inset-inline-end: calc(var(--auth-decoration-size) * -0.48)
+  inset-block-start: calc(var(--auth-decoration-size) * -0.43)
+  transform: rotate(198deg)
+
+.panel
+  width: min(100%, var(--auth-content-max))
+  padding: var(--auth-panel-padding)
+  border: var(--tdm-border-width-hairline) solid var(--auth-panel-border)
+  border-radius: var(--auth-panel-radius)
+  background: var(--auth-panel-bg)
+  box-shadow: var(--auth-panel-shadow)
+  backdrop-filter: blur(1.25rem)
+
+.header
+  display: grid
+  justify-items: center
+  gap: var(--auth-copy-gap)
+  margin-block-end: var(--tdm-space-8)
+  text-align: center
+
+.mark
+  width: var(--auth-mark-size)
+  height: var(--auth-mark-size)
+  object-fit: contain
+
+.title
+  margin: 0
+  max-width: 18ch
+  font-size: clamp(1.75rem, 4vw, 2.35rem)
+  font-weight: 540
+  line-height: 1.05
+  letter-spacing: -0.04em
+  text-wrap: balance
+
+.description
+  margin: 0
+  color: var(--tdm-fg-secondary)
+  font-size: var(--tdm-font-body-sm-size)
+  line-height: 1.6
+  text-wrap: pretty
+
+.form
+  display: grid
+  gap: var(--auth-form-gap)
+
+.fields
+  display: grid
+  gap: var(--auth-field-gap)
+
+.formError
+  margin: 0
+  color: var(--tdm-fg-danger)
+  font-size: var(--tdm-font-body-sm-size)
+  line-height: 1.45
+  text-align: center
+
+.helper
+  margin: 0
+  color: var(--tdm-fg-muted)
+  font-size: var(--tdm-font-label-size)
+  line-height: 1.5
+  text-align: center
+
+@media (max-width: 40rem)
+  .page
+    align-items: start
+    padding-block-start: 6.5rem
+
+  .panel
+    border-radius: var(--tdm-radius-lg)
+
+@media (prefers-reduced-motion: reduce)
+  .backLink
+    transition: none
+
+  .backLink:hover,
+  .backLink:focus-visible
+    transform: none

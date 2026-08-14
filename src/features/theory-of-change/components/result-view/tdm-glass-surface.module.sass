@@ -1,0 +1,187 @@
+@use '../../../../shared/styles/tokens' as *
+
+$result-ease: cubic-bezier(0.22, 1, 0.36, 1)
+
+// ─── Base (adapted from React Bits GlassSurface.css — dark editorial) ─────────
+
+.surface
+  position: relative
+  display: flex
+  flex-direction: column
+  align-items: stretch
+  justify-content: flex-start
+  inline-size: 100%
+  min-inline-size: 0
+  block-size: auto
+  min-block-size: 0
+  overflow: hidden
+  isolation: isolate
+  transition: border-color 260ms $result-ease, box-shadow 260ms $result-ease, transform 260ms $result-ease
+
+.filterSvg
+  inline-size: 100%
+  block-size: 100%
+  pointer-events: none
+  position: absolute
+  inset: 0
+  opacity: 0
+  z-index: 0
+
+.content
+  position: relative
+  z-index: 2
+  inline-size: 100%
+  min-inline-size: 0
+  block-size: auto
+  min-block-size: 0
+  display: flex
+  flex-direction: column
+  align-items: stretch
+  border-radius: inherit
+
+.edgeHighlight
+  position: absolute
+  top: 0
+  left: 0.75rem
+  right: 0.75rem
+  height: 0.0625rem
+  z-index: 1
+  pointer-events: none
+  border-radius: 0.0625rem
+  background: linear-gradient(90deg, transparent, var(--tdm-glass-accent, rgba(255, 255, 255, 0.22)) 50%, transparent)
+  opacity: 0.72
+
+.stageDot
+  position: absolute
+  top: 0.625rem
+  left: 0.625rem
+  width: 0.3125rem
+  height: 0.3125rem
+  z-index: 1
+  pointer-events: none
+  border-radius: 50%
+  background: var(--tdm-glass-accent, rgba(255, 255, 255, 0.32))
+  box-shadow: 0 0 0.5rem var(--tdm-glass-glow, rgba(255, 255, 255, 0.08))
+  opacity: 0
+
+// ─── SVG filter path (React Bits chromatic displacement) ─────────────────────
+
+.surfaceSvg
+  border: 0.0625rem solid var(--tdm-glass-border, rgba(255, 255, 255, 0.12))
+  background: hsl(0 0% 8% / var(--tdm-glass-frost, 0.03))
+  backdrop-filter: var(--tdm-filter-id) saturate(var(--tdm-glass-saturation, 1.06))
+  -webkit-backdrop-filter: var(--tdm-filter-id) saturate(var(--tdm-glass-saturation, 1.06))
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.14), inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.04), 0 0.75rem 1.75rem rgba(0, 0, 0, 0.2)
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0
+    z-index: 0
+    border-radius: inherit
+    pointer-events: none
+    background: linear-gradient(132deg, rgba(255, 255, 255, 0.06) 0%, transparent 32%, transparent 78%, rgba(255, 255, 255, 0.025) 100%)
+
+.surfaceFallback
+  border: 0.0625rem solid var(--tdm-glass-border, rgba(255, 255, 255, 0.12))
+  background: rgba(14, 15, 18, 0.38)
+  backdrop-filter: blur(0.875rem) saturate(var(--tdm-glass-saturation, 1.06)) brightness(1.03)
+  -webkit-backdrop-filter: blur(0.875rem) saturate(var(--tdm-glass-saturation, 1.06)) brightness(1.03)
+  box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12), inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.04), 0 0.625rem 1.5rem rgba(0, 0, 0, 0.22)
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0
+    z-index: 0
+    border-radius: inherit
+    pointer-events: none
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.06) 0%, transparent 38%, transparent 78%, rgba(255, 255, 255, 0.025) 100%)
+
+@supports not (backdrop-filter: blur(10px))
+  .surfaceFallback
+    background: rgba(16, 17, 20, 0.78)
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.1), 0 0.75rem 1.75rem rgba(0, 0, 0, 0.32)
+
+// ─── Variants ─────────────────────────────────────────────────────────────────
+
+.variantSubtle
+  &.surfaceSvg,
+  &.surfaceFallback
+    backdrop-filter: var(--tdm-filter-id, blur(0.625rem)) saturate(var(--tdm-glass-saturation, 1.06))
+    -webkit-backdrop-filter: var(--tdm-filter-id, blur(0.625rem)) saturate(var(--tdm-glass-saturation, 1.06))
+
+  &.surfaceFallback
+    backdrop-filter: blur(0.625rem) saturate(var(--tdm-glass-saturation, 1.06)) brightness(1.02)
+    -webkit-backdrop-filter: blur(0.625rem) saturate(var(--tdm-glass-saturation, 1.06)) brightness(1.02)
+
+.variantDefault
+  &.surfaceSvg,
+  &.surfaceFallback
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.12), inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.03), 0 0.875rem 2rem rgba(0, 0, 0, 0.24)
+
+.variantStrong
+  &.surfaceSvg,
+  &.surfaceFallback
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.14), inset 0 0 0.75rem rgba(0, 0, 0, 0.1), 0 1rem 2.25rem rgba(0, 0, 0, 0.28)
+
+.stageNeutral
+  --tdm-glass-accent: rgba(210, 214, 222, 0.38)
+  --tdm-glass-border: rgba(255, 255, 255, 0.11)
+  --tdm-glass-glow: transparent
+
+.stageInputs
+  --tdm-glass-accent: rgba(167, 139, 250, 0.42)
+  --tdm-glass-border: rgba(167, 139, 250, 0.12)
+  --tdm-glass-glow: transparent
+
+.stageActivities
+  --tdm-glass-accent: rgba(96, 165, 250, 0.42)
+  --tdm-glass-border: rgba(96, 165, 250, 0.12)
+  --tdm-glass-glow: transparent
+
+.stageOutputs
+  --tdm-glass-accent: rgba(245, 158, 66, 0.42)
+  --tdm-glass-border: rgba(245, 158, 66, 0.12)
+  --tdm-glass-glow: transparent
+
+.stageOutcomes
+  --tdm-glass-accent: rgba(72, 211, 165, 0.42)
+  --tdm-glass-border: rgba(72, 211, 165, 0.12)
+  --tdm-glass-glow: transparent
+
+.withStageDot
+  .stageDot
+    opacity: 1
+
+// ─── Interactive ──────────────────────────────────────────────────────────────
+
+.interactive
+  cursor: pointer
+
+  &:hover
+    border-color: color-mix(in srgb, var(--tdm-glass-border) 72%, rgba(255, 255, 255, 0.16))
+    box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.14), 0 0.625rem 1.5rem rgba(0, 0, 0, 0.26)
+
+  &:focus-within
+    outline: 0.125rem solid rgba(255, 255, 255, 0.24)
+    outline-offset: 0.125rem
+
+@media (prefers-reduced-motion: reduce)
+  .surface
+    transition: none
+
+@media print
+  .surface,
+  .surfaceSvg,
+  .surfaceFallback
+    border-color: #ddd !important
+    background: #fff !important
+    box-shadow: none !important
+    backdrop-filter: none !important
+    -webkit-backdrop-filter: none !important
+
+  .filterSvg,
+  .edgeHighlight,
+  .stageDot
+    display: none !important

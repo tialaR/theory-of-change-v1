@@ -1,0 +1,17 @@
+---
+description: Direciona qualquer alteração de interface para os contratos obrigatórios do Design System TDM.
+alwaysApply: true
+---
+
+Antes de alterar UI, motion, CSS, Sass, tokens, header, botões, icon buttons, cards, campos, tooltips ou previews:
+
+1. leia `docs/design-system/TDM-DESIGN-SYSTEM-CONTRACT-V1.md`;
+2. leia o contrato específico da família afetada;
+3. abra o preview HTML homologado, quando existir;
+4. identifique o componente canônico e todos os consumidores ativos;
+5. preserve callbacks, hrefs, stores, domínio e comportamento;
+6. não crie variante, token ou wrapper paralelo sem atualizar contrato, preview e gate.
+
+A rota `/canvas` e seu motor são denylist em rodadas públicas.
+
+Se runtime, documentação e preview divergirem, pare e reporte. Não invente uma terceira solução.

@@ -1,0 +1,263 @@
+{
+  "source": "src/shared/styles/tokens.sass",
+  "kind": "compatibility-only",
+  "definitionCounts": {
+    "ds": 19,
+    "noir": 29,
+    "stage": 12
+  },
+  "families": {
+    "ds": [
+      {
+        "name": "$ds-glass-stroke-strong",
+        "group": "surface-effect"
+      },
+      {
+        "name": "$ds-text-primary",
+        "group": "typography"
+      },
+      {
+        "name": "$ds-text-secondary",
+        "group": "typography"
+      },
+      {
+        "name": "$ds-text-muted",
+        "group": "typography"
+      },
+      {
+        "name": "$ds-text-subtle",
+        "group": "typography"
+      },
+      {
+        "name": "$ds-stage-input",
+        "group": "stage-semantic"
+      },
+      {
+        "name": "$ds-stage-input-soft",
+        "group": "stage-semantic"
+      },
+      {
+        "name": "$ds-stage-input-line",
+        "group": "stage-semantic"
+      },
+      {
+        "name": "$ds-stage-activity",
+        "group": "stage-semantic"
+      },
+      {
+        "name": "$ds-stage-activity-soft",
+        "group": "stage-semantic"
+      },
+      {
+        "name": "$ds-stage-activity-line",
+        "group": "stage-semantic"
+      },
+      {
+        "name": "$ds-stage-output",
+        "group": "stage-semantic"
+      },
+      {
+        "name": "$ds-stage-output-soft",
+        "group": "stage-semantic"
+      },
+      {
+        "name": "$ds-stage-output-line",
+        "group": "stage-semantic"
+      },
+      {
+        "name": "$ds-stage-outcome",
+        "group": "stage-semantic"
+      },
+      {
+        "name": "$ds-stage-outcome-soft",
+        "group": "stage-semantic"
+      },
+      {
+        "name": "$ds-stage-outcome-line",
+        "group": "stage-semantic"
+      },
+      {
+        "name": "$ds-font-family",
+        "group": "typography"
+      },
+      {
+        "name": "$ds-blur-heavy",
+        "group": "surface-effect"
+      }
+    ],
+    "noir": [
+      {
+        "name": "$noir-radius-section",
+        "group": "radius"
+      },
+      {
+        "name": "$noir-radius-panel",
+        "group": "radius"
+      },
+      {
+        "name": "$noir-radius-field",
+        "group": "radius"
+      },
+      {
+        "name": "$noir-radius-button",
+        "group": "radius"
+      },
+      {
+        "name": "$noir-radius-chip",
+        "group": "radius"
+      },
+      {
+        "name": "$noir-radius-icon-tile",
+        "group": "radius"
+      },
+      {
+        "name": "$noir-surface-page",
+        "group": "surface"
+      },
+      {
+        "name": "$noir-surface-shell",
+        "group": "surface"
+      },
+      {
+        "name": "$noir-surface-card",
+        "group": "surface"
+      },
+      {
+        "name": "$noir-surface-card-raised",
+        "group": "surface"
+      },
+      {
+        "name": "$noir-surface-panel-inset",
+        "group": "surface"
+      },
+      {
+        "name": "$noir-surface-field",
+        "group": "surface"
+      },
+      {
+        "name": "$noir-surface-cta",
+        "group": "surface"
+      },
+      {
+        "name": "$noir-surface-cta-neutral",
+        "group": "surface"
+      },
+      {
+        "name": "$noir-surface-hover",
+        "group": "surface"
+      },
+      {
+        "name": "$noir-surface-active",
+        "group": "surface"
+      },
+      {
+        "name": "$noir-stroke-hairline",
+        "group": "stroke"
+      },
+      {
+        "name": "$noir-stroke-soft",
+        "group": "stroke"
+      },
+      {
+        "name": "$noir-stroke-medium",
+        "group": "stroke"
+      },
+      {
+        "name": "$noir-stroke-strong",
+        "group": "stroke"
+      },
+      {
+        "name": "$noir-stroke-dark-inner",
+        "group": "stroke"
+      },
+      {
+        "name": "$noir-shadow-shell",
+        "group": "shadow"
+      },
+      {
+        "name": "$noir-shadow-card",
+        "group": "shadow"
+      },
+      {
+        "name": "$noir-shadow-inset",
+        "group": "shadow"
+      },
+      {
+        "name": "$noir-shadow-inset-deep",
+        "group": "shadow"
+      },
+      {
+        "name": "$noir-shadow-cta",
+        "group": "shadow"
+      },
+      {
+        "name": "$noir-shadow-floating",
+        "group": "shadow"
+      },
+      {
+        "name": "$noir-glow-edge",
+        "group": "glow"
+      },
+      {
+        "name": "$noir-glow-soft",
+        "group": "glow"
+      }
+    ],
+    "stage": [
+      {
+        "name": "$stage-1",
+        "group": "accent"
+      },
+      {
+        "name": "$stage-1-soft",
+        "group": "soft"
+      },
+      {
+        "name": "$stage-1-line",
+        "group": "line"
+      },
+      {
+        "name": "$stage-2",
+        "group": "accent"
+      },
+      {
+        "name": "$stage-2-soft",
+        "group": "soft"
+      },
+      {
+        "name": "$stage-2-line",
+        "group": "line"
+      },
+      {
+        "name": "$stage-3",
+        "group": "accent"
+      },
+      {
+        "name": "$stage-3-soft",
+        "group": "soft"
+      },
+      {
+        "name": "$stage-3-line",
+        "group": "line"
+      },
+      {
+        "name": "$stage-4",
+        "group": "accent"
+      },
+      {
+        "name": "$stage-4-soft",
+        "group": "soft"
+      },
+      {
+        "name": "$stage-4-line",
+        "group": "line"
+      }
+    ]
+  },
+  "governance": {
+    "renameAuthorized": false,
+    "massMigrationAuthorized": false,
+    "interpretation": "Counts represent top-level Sass variable definitions, not textual occurrences or references.",
+    "nextDecision": "Measure external family usage and semantic overlap with canonical --tdm-* before selecting any migration candidate."
+  }
+}

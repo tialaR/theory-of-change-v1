@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "biteId": "SO-001",
+  "codename": "Black Box",
+  "purpose": "Knowledge as Code",
+  "status": "COMPLETE",
+  "completedAt": "2026-07-31T02:46:18.595Z",
+  "lifecycle": {
+    "apply": "PASS",
+    "verify": "PASS",
+    "rollback": "PASS",
+    "reapply": "PASS",
+    "finalVerify": "PASS"
+  },
+  "governance": {
+    "authority": "SharkOps",
+    "constitution": "PASS",
+    "repositoryScan": "PASS",
+    "stateSynchronization": "PASS",
+    "rollbackProven": true
+  },
+  "outputs": [
+    "docs/sharkops/MANIFESTO.md",
+    "docs/sharkops/ATTENTION-POINTS.md",
+    ".sharkops/policy/principles.json",
+    ".sharkops/state/known-debts.json"
+  ],
+  "knownLimitations": [
+    "Legacy client gates remain advisory during bootstrap recovery.",
+    "Automatic repair planning belongs to a future bite.",
+    "Portable installer packaging is outside SO-001."
+  ]
+}

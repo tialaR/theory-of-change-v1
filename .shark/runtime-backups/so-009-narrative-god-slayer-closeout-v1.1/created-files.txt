@@ -1,0 +1,5 @@
+.sharkops/bites/so-009-narrative-god-slayer-closeout-hotfix/verify.sh
+.sharkops/bites/so-009-narrative-god-slayer-closeout-hotfix/apply.sh
+.sharkops/bites/so-009-narrative-god-slayer-closeout-hotfix/README.md
+.sharkops/bites/so-009-narrative-god-slayer-closeout-hotfix/MANIFEST.json
+.sharkops/bites/so-009-narrative-god-slayer-closeout-hotfix/rollback.sh

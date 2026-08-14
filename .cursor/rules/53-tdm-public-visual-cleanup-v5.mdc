@@ -1,0 +1,14 @@
+---
+description: TDM public visual cleanup V5, legacy footer removal and guided story typography lock
+alwaysApply: true
+---
+
+# TDM Public Visual Cleanup V5
+
+- Preserve all Guided Story timing, chapter, connection, animation, navigation and reduced-motion logic.
+- The approved public copyright is the only copyright allowed in active public footers.
+- Remove legacy footer copy and duplicate separators from the active consumer. Do not hide them with CSS.
+- On `/`, remove only the redundant supporting paragraph immediately before the Guided Story. Preserve its context label and section title.
+- On `/`, the Guided Story header title must be one typographic step smaller than the outer page section title.
+- The Guided Story footer brand mark must match the rendered header brand-mark size, using one semantic size token when technically possible.
+- Do not change Canvas, React Flow, stores, domain, routes, animation data, chapter data, timers, RAF, observers or event handlers.

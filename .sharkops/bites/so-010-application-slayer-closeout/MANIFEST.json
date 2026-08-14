@@ -1,0 +1,18 @@
+{
+  "id": "SO-010",
+  "codename": "Application Slayer",
+  "wave": "closeout",
+  "status": "COMPLETE",
+  "purpose": "Close Application Slayer with aggregate executable contracts and handoff to React Flow Isolation",
+  "completedAt": "2026-08-06T00:05:00.000Z",
+  "gates": [
+    "check:tdm:application-slayer:wave01",
+    "check:tdm:application-slayer:wave02",
+    "check:tdm:application-slayer:wave02-hotfix",
+    "check:tdm:application-slayer:wave03",
+    "check:tdm:application-slayer:wave04",
+    "check:tdm:application-slayer:wave05",
+    "check:tdm:application-slayer:wave06",
+    "check:tdm:application-slayer:closeout"
+  ]
+}

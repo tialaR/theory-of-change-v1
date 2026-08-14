@@ -1,0 +1,44 @@
+{
+  "round": "tdm-public-header-fullbleed-v4",
+  "date": "2026-07-22",
+  "artifactOrigin": {
+    "component": "HomeBrandLogo / PublicHero h1",
+    "asset": "/assets/brand/logo-premium-vortex.png",
+    "mechanism": "Hero content painted through unpainted sticky header regions: transparent padding-top on header + left/right gutters outside inset .headerShell surface inside constrained .shellInner",
+    "fix": "Move surface to outer sticky header; shellInner full-width; preserve content measure on .headerShell and non-header children"
+  },
+  "desktop1280": {
+    "viewport": 1280,
+    "header": { "left": 0, "right": 1280, "width": 1280 },
+    "headerShell": { "left": 32, "right": 1248, "width": 1216 },
+    "headerBar": { "left": 48, "right": 1232, "width": 1184, "height": 48 },
+    "maxSideDiffPx": 0,
+    "barDeltaFromBaselinePx": 0,
+    "overflow": false,
+    "scrolledSurface": {
+      "background": "rgba(7, 8, 9, 0.76)",
+      "backdropFilter": "blur(1.25rem) saturate(120%)",
+      "borderBottom": "0.0625rem solid rgba(255, 255, 255, 0.05)"
+    }
+  },
+  "mobile390": {
+    "viewport": 390,
+    "header": { "left": 0, "right": 390, "width": 390 },
+    "maxSideDiffPx": 0,
+    "overflow": false
+  },
+  "screenshots": [
+    "01-home-top.png",
+    "02-home-scrolled-fullbleed.png",
+    "03-exemplos-scrolled-fullbleed.png",
+    "04-home-overscroll-band.png",
+    "05-home-mobile-scrolled.png",
+    "06-referencias-scrolled.png",
+    "07-referencias-footer-copyright.png",
+    "08-home-overscroll-stress-top.png",
+    "09-exemplos-intro-preserved.png",
+    "10-fluxo-scrolled-fullbleed.png",
+    "11-guia-scrolled-fullbleed.png",
+    "12-resultado-scrolled-fullbleed.png"
+  ]
+}

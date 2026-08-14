@@ -1,0 +1,197 @@
+@use '../../../../shared/styles/tokens' as *
+// BEGIN CANVAS SHORTCUTS VISUAL PARITY MICROFIX 12
+// Atalhos: mesma hierarquia visual do acordeão “Organização do canvas”, sem tocar na lógica.
+.quickShortcutsCard
+  gap: 0
+  width: 100%
+  max-width: 100%
+  padding: 0 !important
+  border: 0 !important
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.055) !important
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.055) !important
+  border-radius: 0 !important
+  background: transparent !important
+  box-shadow: none !important
+  backdrop-filter: none !important
+  -webkit-backdrop-filter: none !important
+  overflow: visible !important
+  isolation: auto
+
+  &::before,
+  &::after
+    content: none !important
+    display: none !important
+
+.quickShortcutsHeader
+  appearance: none
+  display: flex
+  align-items: center
+  justify-content: space-between
+  gap: 0.75rem
+  width: 100%
+  min-height: 2.75rem
+  margin: 0
+  padding: 0.75rem $sidebar-card-padding
+  border: 0
+  border-radius: 0
+  background: transparent !important
+  box-shadow: none !important
+  color: $color-text
+  font: inherit
+  text-align: left
+  cursor: pointer
+  transition: color 180ms ease, background 180ms ease, box-shadow 180ms ease
+
+  &:hover
+    background: transparent !important
+
+  &:focus-visible
+    outline: 0.0625rem solid rgba(255, 255, 255, 0.2)
+    outline-offset: -0.0625rem
+
+.quickShortcutsTitleRow
+  display: flex
+  align-items: center
+  justify-content: flex-start
+  gap: 0.5rem !important
+  min-width: 0
+  flex: 1 1 auto
+  margin: 0 !important
+  padding: 0
+
+  > :first-child
+    width: 1.125rem !important
+    height: 1.5rem !important
+    min-width: 1.125rem !important
+    flex: 0 0 1.125rem !important
+    padding: 0 !important
+    border: 0 !important
+    border-radius: 0 !important
+    background: transparent !important
+    box-shadow: none !important
+    color: rgb(161, 164, 165) !important
+    opacity: 1 !important
+
+    svg
+      width: 1.125rem !important
+      height: 1.5rem !important
+
+.quickShortcutsTitle
+  display: block
+  width: auto
+  height: auto
+  min-width: 0
+  flex: 1 1 auto
+  margin: 0
+  padding: 0
+  border: 0
+  border-radius: 0
+  background: linear-gradient(90deg, rgba(240, 240, 240, 0.96) 0%, rgba(161, 164, 165, 0.76) 100%)
+  background-clip: text
+  -webkit-background-clip: text
+  -webkit-text-fill-color: transparent
+  box-shadow: none
+  color: transparent
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 1rem
+  font-weight: 400
+  line-height: 1.5rem
+  letter-spacing: 0.04em
+  text-transform: uppercase
+  white-space: nowrap
+  overflow: visible
+  text-overflow: clip
+
+.quickShortcutsChevron
+  flex: 0 0 auto
+  width: 0.9375rem
+  height: 0.9375rem
+  color: rgba(148, 148, 154, 0.88)
+  opacity: 0.92
+  transform: rotate(0deg)
+  transition: transform 220ms ease, opacity 180ms ease, color 180ms ease
+
+.quickShortcutsChevronOpen
+  transform: rotate(180deg)
+  color: rgba(148, 148, 154, 0.88)
+  opacity: 1
+
+.quickShortcutsContent
+  display: grid
+  gap: 0
+  width: 100%
+  min-width: 0
+  padding: 0 0 0.125rem
+
+.quickShortcutsGrid
+  display: flex
+  flex-direction: column
+  gap: 0
+  width: 100%
+
+.quickShortcutBtn
+  min-height: 3rem
+  padding: 0.75rem $sidebar-card-padding
+  border: 0
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.055)
+  border-radius: 0
+  background: transparent
+  box-shadow: none
+  color: rgba(161, 164, 165, 0.54)
+  transform: none
+  transition: color 180ms ease, border-color 180ms ease
+
+  &:hover,
+  &:focus-visible
+    border-color: rgba(255, 255, 255, 0.12)
+    background: transparent
+    box-shadow: none
+    color: rgba(224, 226, 232, 0.9)
+    transform: none
+
+    .quickShortcutBtnIcon,
+    .quickShortcutBtnLabel
+      color: inherit
+      opacity: 1
+
+  &::after
+    content: '↗'
+    display: grid
+    place-items: center
+    width: 1.25rem
+    height: 1.25rem
+    margin-left: auto
+    color: currentColor
+    font-size: 1rem
+    line-height: 1
+    transform: translateY(0.0625rem) rotate(-2deg)
+
+.quickShortcutBtnIcon
+  width: 0.75rem
+  height: 0.75rem
+  color: inherit
+  opacity: 0.78
+
+  svg
+    width: 0.75rem
+    height: 0.75rem
+
+.quickShortcutBtnLabel
+  color: inherit
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: 0.75rem
+  font-weight: 520
+  line-height: 1.125rem
+
+.quickShortcutsContent .sidebarCtaSpaced
+  margin: 0.375rem $sidebar-card-padding 0.5rem
+// END CANVAS SHORTCUTS VISUAL PARITY MICROFIX 12
+// BEGIN CANVAS ACCORDION REFERENCE STYLE MICROFIX 14
+// Organização do canvas + Atalhos: réplica do header de referência, somente visual.
+.canvasOrganizationCard,
+.quickShortcutsCard
+  width: 100%
+  max-width: 20.78125rem
+  background-color: transparent !important
+
+.canvasOrganizationHeader,

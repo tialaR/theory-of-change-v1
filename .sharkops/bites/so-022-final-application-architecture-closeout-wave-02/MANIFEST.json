@@ -1,0 +1,10 @@
+{
+  "id": "SO-022",
+  "codename": "Final Application Architecture Closeout",
+  "status": "ACTIVE",
+  "revision": 2,
+  "wave": "02",
+  "mode": "candidate-contract",
+  "runtimeChanges": false,
+  "candidate": "APPLICATION-GOLDEN-STATE-v1-CANDIDATE"
+}

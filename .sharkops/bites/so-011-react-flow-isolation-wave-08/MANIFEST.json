@@ -1,0 +1,7 @@
+{
+  "id": "SO-011",
+  "codename": "React Flow Isolation",
+  "wave": "08",
+  "purpose": "Confine useReactFlow to an explicit runtime adapter without changing workspace behavior",
+  "status": "ACTIVE"
+}

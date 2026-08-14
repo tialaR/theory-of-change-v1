@@ -1,0 +1,291 @@
+{
+  "schemaVersion": 1,
+  "bites": [
+    {
+      "id": "SO-001",
+      "codename": "Black Box",
+      "purpose": "Knowledge as Code",
+      "status": "COMPLETE",
+      "revision": 1,
+      "path": ".sharkops/bites/so-001-black-box",
+      "createdAt": "2026-07-31T01:56:33.757Z",
+      "completedAt": "2026-07-31T02:46:18.595Z",
+      "updatedAt": "2026-07-31T02:46:18.595Z"
+    },
+    {
+      "id": "SO-002",
+      "codename": "Canvas Armor",
+      "purpose": "Protect canvas behavior before structural refactoring",
+      "status": "COMPLETE",
+      "revision": 2,
+      "path": ".sharkops/bites/so-002-canvas-armor",
+      "createdAt": "2026-08-01T04:37:00.000Z",
+      "updatedAt": "2026-08-02T20:55:00.000Z",
+      "completedAt": "2026-08-02T20:55:00.000Z"
+    },
+    {
+      "id": "SO-003",
+      "codename": "God Slayer",
+      "purpose": "Reduce the Canvas workspace controller to a thin orchestration facade without changing behavior",
+      "status": "COMPLETE",
+      "revision": 4,
+      "path": ".sharkops/bites/so-003-god-slayer-wave-04",
+      "createdAt": "2026-08-02T20:55:00.000Z",
+      "updatedAt": "2026-08-02T21:20:00.000Z",
+      "completedAt": "2026-08-02T21:20:00.000Z"
+    },
+    {
+      "id": "SO-004",
+      "codename": "Visual Foundation",
+      "purpose": "Create a calmer, layered and stage-aware Canvas visual foundation without changing behavior",
+      "status": "COMPLETE",
+      "revision": 4,
+      "path": ".sharkops/bites/so-004-visual-foundation-wave-04",
+      "createdAt": "2026-08-02T21:30:00.000Z",
+      "updatedAt": "2026-08-03T01:00:00.000Z",
+      "completedAt": "2026-08-03T01:00:00.000Z"
+    },
+    {
+      "id": "SO-005",
+      "codename": "Sass God Split",
+      "purpose": "Split Canvas and Sidebar Sass Gods by ownership while preserving the homologated visual output",
+      "status": "COMPLETE",
+      "revision": 4,
+      "path": ".sharkops/bites/so-005-sass-god-split-wave-04",
+      "createdAt": "2026-08-03T01:00:00.000Z",
+      "updatedAt": "2026-08-03T02:05:00.000Z",
+      "completedAt": "2026-08-03T02:05:00.000Z"
+    },
+    {
+      "id": "SO-006",
+      "codename": "Component God Slayer",
+      "purpose": "Split React God Components by business responsibility without changing behavior",
+      "status": "COMPLETE",
+      "revision": 15,
+      "path": ".sharkops/bites/so-006-component-god-slayer-wave-14",
+      "createdAt": "2026-08-03T02:30:00.000Z",
+      "updatedAt": "2026-08-04T05:15:00.000Z",
+      "completedAt": "2026-08-04T05:15:00.000Z"
+    },
+    {
+      "id": "SO-007",
+      "codename": "God Hooks Slayer",
+      "purpose": "Split hooks and controllers by lifecycle, contract and ownership without changing behavior",
+      "status": "COMPLETE",
+      "revision": 8,
+      "path": ".sharkops/bites/so-007-god-hooks-slayer-closeout",
+      "createdAt": "2026-08-04T05:20:00.000Z",
+      "updatedAt": "2026-08-04T17:40:00.000Z",
+      "completedAt": "2026-08-04T17:40:00.000Z"
+    },
+    {
+      "id": "SO-008",
+      "codename": "Result View God Slayer",
+      "purpose": "Split the ResultView God Component by presentation and lifecycle ownership without changing behavior",
+      "status": "COMPLETE",
+      "revision": 8,
+      "path": ".sharkops/bites/so-008-result-view-god-slayer-closeout",
+      "createdAt": "2026-08-04T18:00:00.000Z",
+      "updatedAt": "2026-08-05T01:20:00.000Z",
+      "completedAt": "2026-08-05T01:20:00.000Z"
+    },
+    {
+      "id": "SO-009",
+      "codename": "Narrative God Slayer",
+      "purpose": "Split narrative mapping, graph traversal, evidence selection, section assembly and templates by ownership without changing generated documents",
+      "status": "COMPLETE",
+      "revision": 10,
+      "path": ".sharkops/bites/so-009-narrative-god-slayer-closeout-hotfix",
+      "createdAt": "2026-08-05T01:45:00.000Z",
+      "updatedAt": "2026-08-05T16:10:00.000Z",
+      "completedAt": "2026-08-05T16:10:00.000Z"
+    },
+    {
+      "id": "SO-010",
+      "codename": "Application Slayer",
+      "purpose": "Move application policies out of UI hooks and seal framework-neutral boundaries without changing behavior",
+      "status": "COMPLETE",
+      "revision": 8,
+      "path": ".sharkops/bites/so-010-application-slayer-closeout",
+      "createdAt": "2026-08-05T19:43:00.000Z",
+      "updatedAt": "2026-08-06T00:05:00.000Z",
+      "completedAt": "2026-08-06T00:05:00.000Z"
+    },
+    {
+      "id": "SO-011",
+      "codename": "React Flow Isolation",
+      "purpose": "Confine React Flow types, hooks and rendering APIs to explicit adapters and UI boundaries without changing behavior",
+      "status": "COMPLETE",
+      "revision": 12,
+      "path": ".sharkops/bites/so-011-react-flow-isolation-closeout-hotfix",
+      "createdAt": "2026-08-06T00:58:00.000Z",
+      "updatedAt": "2026-08-06T07:20:00.000Z",
+      "completedAt": "2026-08-06T06:45:00.000Z"
+    },
+    {
+      "id": "SO-012",
+      "codename": "Canvas Engine",
+      "purpose": "Separate the canvas state kernel, commands, history, layout and orchestration boundaries without changing behavior",
+      "status": "COMPLETE",
+      "revision": 11,
+      "path": ".sharkops/bites/so-012-canvas-engine-closeout",
+      "createdAt": "2026-08-06T15:20:00.000Z",
+      "updatedAt": "2026-08-06T21:45:00.000Z",
+      "completedAt": "2026-08-06T21:45:00.000Z"
+    },
+    {
+      "id": "SO-013",
+      "codename": "Infrastructure Cleanup",
+      "purpose": "Audit and remove proven infrastructure residue through small regression-armored waves",
+      "status": "COMPLETE",
+      "revision": 9,
+      "path": ".sharkops/bites/so-013-infrastructure-cleanup-closeout-v1-1",
+      "createdAt": "2026-08-07T00:45:00.000Z",
+      "updatedAt": "2026-08-07T04:20:00.000Z",
+      "completedAt": "2026-08-07T04:20:00.000Z"
+    },
+    {
+      "id": "SO-014",
+      "codename": "Final Architecture Closeout",
+      "purpose": "Prove and seal the final architecture state across all completed SharkOps initiatives without changing runtime behavior",
+      "status": "COMPLETE",
+      "revision": 11,
+      "path": ".sharkops/bites/so-014-final-architecture-closeout-wave-11",
+      "createdAt": "2026-08-07T04:45:00.000Z",
+      "updatedAt": "2026-08-07T21:55:00.000Z",
+      "completedAt": "2026-08-07T21:55:00.000Z"
+    },
+    {
+      "id": "SO-015",
+      "codename": "Public Routes & Application Surface Armor",
+      "purpose": "Inventory, classify and progressively seal public application routes and shared route surfaces without regressing the Canvas Golden State",
+      "status": "COMPLETE",
+      "revision": 12,
+      "path": ".sharkops/bites/so-015-public-routes-application-surface-armor-wave-12",
+      "createdAt": "2026-08-10T23:10:00.000Z",
+      "updatedAt": "2026-08-11T05:30:00.000Z",
+      "completedAt": "2026-08-11T05:30:00.000Z"
+    },
+    {
+      "id": "SO-016",
+      "codename": "Authentication & Protected Surface Armor",
+      "purpose": "Audit and progressively seal authentication, session, protected-route and mock/runtime boundaries without regressing the Canvas Golden State or public routes",
+      "status": "COMPLETE",
+      "revision": 6,
+      "path": ".sharkops/bites/so-016-authentication-protected-surface-armor-closeout",
+      "createdAt": "2026-08-11T06:00:00.000Z",
+      "updatedAt": "2026-08-11T06:58:00.000Z",
+      "completedAt": "2026-08-11T06:58:00.000Z"
+    },
+    {
+      "id": "SO-017",
+      "codename": "Application Shell & Shared UI Armor",
+      "purpose": "Audit and progressively seal application shell, shared UI ownership, public entrypoints and styling boundaries without flattening feature identity or regressing public routes, Auth armor or Canvas Golden State",
+      "status": "COMPLETE",
+      "revision": 5,
+      "path": ".sharkops/bites/so-017-application-shell-shared-ui-armor-closeout",
+      "createdAt": "2026-08-11T07:12:00.000Z",
+      "updatedAt": "2026-08-11T07:59:00.000Z",
+      "completedAt": "2026-08-11T07:59:00.000Z"
+    },
+    {
+      "id": "SO-018",
+      "codename": "Design System & Token Governance",
+      "purpose": "Audit and progressively govern canonical TDM tokens, legacy compatibility boundaries, semantic promotion and token consumption without flattening existing visual identity or weakening prior Golden State armor",
+      "status": "COMPLETE",
+      "revision": 5,
+      "path": ".sharkops/bites/so-018-design-system-token-governance-closeout",
+      "createdAt": "2026-08-11T08:07:00.000Z",
+      "updatedAt": "2026-08-11T08:45:00.000Z",
+      "completedAt": "2026-08-11T08:45:00.000Z"
+    },
+    {
+      "id": "SO-019",
+      "codename": "Cross-Feature Boundaries",
+      "purpose": "Audit and progressively seal cross-feature dependency boundaries without flattening feature ownership or weakening prior Golden State armor",
+      "status": "COMPLETE",
+      "revision": 3,
+      "path": ".sharkops/bites/so-019-cross-feature-boundaries-closeout",
+      "createdAt": "2026-08-11T08:56:00.000Z",
+      "updatedAt": "2026-08-11T09:25:00.000Z",
+      "completedAt": "2026-08-11T09:25:00.000Z"
+    },
+    {
+      "id": "SO-020",
+      "codename": "Application Infrastructure & Runtime Armor",
+      "purpose": "Audit and progressively seal runtime configuration, instrumentation, mocks, server adapters and infrastructure ownership",
+      "status": "COMPLETE",
+      "revision": 3,
+      "path": ".sharkops/bites/so-020-application-infrastructure-runtime-armor-closeout",
+      "createdAt": "2026-08-11T14:20:00.000Z",
+      "updatedAt": "2026-08-11T14:45:00.000Z",
+      "completedAt": "2026-08-11T14:45:00.000Z"
+    },
+    {
+      "id": "SO-021",
+      "codename": "Application-Wide Regression Armor",
+      "purpose": "Compose existing targeted regression armor into one deterministic application-wide contract without duplicating or weakening responsibilities",
+      "status": "COMPLETE",
+      "revision": 3,
+      "path": ".sharkops/bites/so-021-application-wide-regression-armor-closeout",
+      "createdAt": "2026-08-11T15:50:00.000Z",
+      "updatedAt": "2026-08-11T16:20:00.000Z",
+      "completedAt": "2026-08-11T16:20:00.000Z"
+    },
+    {
+      "id": "SO-022",
+      "codename": "Final Application Architecture Closeout",
+      "purpose": "Verify the complete application architecture and seal an Application Golden State only after all predecessor armor is proven green",
+      "status": "COMPLETE",
+      "revision": 3,
+      "path": ".sharkops/bites/so-022-final-application-architecture-closeout",
+      "createdAt": "2026-08-11T17:05:00.000Z",
+      "updatedAt": "2026-08-11T18:00:00.000Z",
+      "completedAt": "2026-08-11T18:00:00.000Z"
+    },
+    {
+      "id": "PGH-001",
+      "codename": "Release Gate False-Green Hardening",
+      "purpose": "Prove, classify and close the obsolete bootstrap exception that allowed validate:release to fail while SharkOps still cleared pre-push.",
+      "status": "COMPLETE",
+      "revision": 4,
+      "path": ".sharkops/bites/pgh-001-release-gate-hardening-closeout",
+      "createdAt": "2026-08-11T23:53:00.000Z",
+      "updatedAt": "2026-08-12T23:49:00.000Z",
+      "completedAt": "2026-08-12T23:49:00.000Z"
+    },
+    {
+      "id": "PGH-002",
+      "codename": "E2E Determinism & Isolation Hardening",
+      "purpose": "Prove order-sensitive shared-server E2E contamination and close it for V1 by isolating every release E2E file behind a fresh owned server and deterministic worker/browser policy.",
+      "status": "COMPLETE",
+      "revision": 5,
+      "path": ".sharkops/bites/pgh-002-e2e-determinism-isolation-fast-track-closeout",
+      "createdAt": "2026-08-13T00:05:00.000Z",
+      "updatedAt": "2026-08-13T07:20:00.000Z",
+      "completedAt": "2026-08-13T07:20:00.000Z"
+    },
+    {
+      "id": "PGH-003",
+      "codename": "Repository Hygiene Hardening",
+      "purpose": "Keep generated Playwright reports and test artifacts out of repository state so release validation does not create false dirty-tree noise.",
+      "status": "COMPLETE",
+      "revision": 1,
+      "path": ".sharkops/bites/pgh-003-pgh-004-fast-track-closeout",
+      "createdAt": "2026-08-13T07:30:00.000Z",
+      "updatedAt": "2026-08-13T07:35:00.000Z",
+      "completedAt": "2026-08-13T07:35:00.000Z"
+    },
+    {
+      "id": "PGH-004",
+      "codename": "Offline Build Determinism",
+      "purpose": "Remove remote Google font fetching from the build path while preserving the existing TDM sans-serif typography contract through an offline system stack.",
+      "status": "COMPLETE",
+      "revision": 1,
+      "path": ".sharkops/bites/pgh-003-pgh-004-fast-track-closeout",
+      "createdAt": "2026-08-13T07:30:00.000Z",
+      "updatedAt": "2026-08-13T07:35:00.000Z",
+      "completedAt": "2026-08-13T07:35:00.000Z"
+    }
+  ]
+}

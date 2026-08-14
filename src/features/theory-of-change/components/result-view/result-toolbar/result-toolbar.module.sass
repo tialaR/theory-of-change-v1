@@ -1,0 +1,36 @@
+.toolbarRoot
+  display: flex
+  align-items: center
+  gap: var(--tdm-space-2)
+  flex-wrap: wrap
+  justify-content: flex-end
+
+.cluster
+  display: flex
+  align-items: center
+  gap: var(--tdm-space-1)
+
+.exportError
+  order: 10
+  flex-basis: 100%
+  max-inline-size: 20rem
+  margin-inline-start: auto
+  color: var(--tdm-fg-danger)
+  font-size: var(--tdm-font-label-size)
+  line-height: 1.3
+  text-align: end
+
+.zoomLabel
+  min-inline-size: 3rem
+  block-size: var(--tdm-icon-container-md)
+  display: grid
+  place-items: center
+  color: var(--tdm-fg-muted)
+  font-size: var(--tdm-font-label-size)
+  font-variant-numeric: tabular-nums
+
+.divider
+  inline-size: var(--tdm-border-width-hairline)
+  block-size: 1.2rem
+  margin-inline: var(--tdm-space-1)
+  background: var(--tdm-separator)

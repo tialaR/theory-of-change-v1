@@ -1,0 +1,9 @@
+{
+  "id": "SO-010",
+  "codename": "Application Slayer",
+  "wave": 2,
+  "revision": 3,
+  "status": "ACTIVE",
+  "purpose": "Seal the editable node field type boundary after Wave 02 typecheck exposed technical order metadata leaking into UI command typing",
+  "gate": "check:tdm:application-slayer:wave02-hotfix"
+}

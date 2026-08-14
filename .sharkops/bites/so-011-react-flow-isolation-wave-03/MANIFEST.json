@@ -1,0 +1,14 @@
+{
+  "id": "SO-011",
+  "codename": "React Flow Isolation",
+  "wave": "03",
+  "status": "ACTIVE",
+  "purpose": "Move viewport commands behind a framework-neutral runtime port while keeping XYFlow ownership at the workspace adapter boundary",
+  "createdAt": "2026-08-06T02:05:00.000Z",
+  "gates": [
+    "check:tdm:react-flow",
+    "check:tdm:react-flow-isolation:wave01",
+    "check:tdm:react-flow-isolation:wave02",
+    "check:tdm:react-flow-isolation:wave03"
+  ]
+}

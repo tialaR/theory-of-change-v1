@@ -1,0 +1,422 @@
+@use '../../styles/tdm/tdm-focus' as focus
+
+.button
+  position: relative
+  isolation: isolate
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  min-width: 0
+  overflow: hidden
+  font-family: var(--tdm-font-sans), Inter, ui-sans-serif, system-ui, sans-serif
+  font-size: var(--tdm-button-md-font-size)
+  font-weight: var(--tdm-button-font-weight)
+  line-height: var(--tdm-button-line-height)
+  letter-spacing: var(--tdm-button-letter-spacing)
+  text-transform: none
+  text-decoration: none
+  cursor: pointer
+  -webkit-tap-highlight-color: transparent
+  transition: border-color var(--tdm-button-duration) var(--tdm-button-ease), color var(--tdm-button-duration) var(--tdm-button-ease), background var(--tdm-button-duration) var(--tdm-button-ease), box-shadow var(--tdm-button-duration) var(--tdm-button-ease), opacity var(--tdm-button-duration) var(--tdm-button-ease), filter var(--tdm-button-duration) var(--tdm-button-ease)
+  +focus.focus-visible
+
+  &:disabled,
+  &[aria-disabled='true']
+    cursor: not-allowed
+    opacity: var(--tdm-button-disabled-opacity)
+
+.bordered
+  height: var(--tdm-button-md-height)
+  min-height: var(--tdm-button-md-height)
+  padding: 0 var(--tdm-button-md-padding-inline)
+  border: var(--tdm-button-border-width) solid var(--tdm-button-border-rest)
+  border-radius: var(--tdm-button-md-radius)
+  color: var(--tdm-button-text-rest)
+  background: var(--tdm-button-bg-rest-gradient), var(--tdm-button-bg-rest)
+  box-shadow: var(--tdm-button-shadow-rest)
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0
+    z-index: 0
+    pointer-events: none
+    border-radius: inherit
+    opacity: 0
+    background: var(--tdm-button-wash)
+    transition: opacity var(--tdm-button-duration) var(--tdm-button-ease)
+
+  &::after
+    content: ''
+    position: absolute
+    top: 0
+    left: 14%
+    right: 14%
+    z-index: 1
+    height: 0.0625rem
+    border-radius: 50%
+    opacity: 0.36
+    background: var(--tdm-button-top-light)
+    transition: opacity var(--tdm-button-duration) var(--tdm-button-ease), left var(--tdm-button-duration) var(--tdm-button-ease), right var(--tdm-button-duration) var(--tdm-button-ease)
+
+  &:hover:not(:disabled):not([aria-disabled='true']),
+  &:focus-visible:not(:disabled):not([aria-disabled='true'])
+    border-color: var(--tdm-button-border-hover)
+    color: var(--tdm-button-text-hover)
+    background: var(--tdm-button-bg-rest-gradient), var(--tdm-button-bg-hover)
+    box-shadow: var(--tdm-button-shadow-hover)
+
+    &::before
+      opacity: 1
+
+    &::after
+      left: 8%
+      right: 8%
+      opacity: 0.7
+
+    .content
+      transform: translateY(-0.0625rem)
+
+  &:active:not(:disabled):not([aria-disabled='true'])
+    .content
+      transform: translateY(0)
+
+  &:disabled,
+  &[aria-disabled='true']
+    box-shadow: var(--tdm-shadow-none)
+
+    &::before,
+    &::after
+      opacity: 0
+
+.content
+  position: relative
+  z-index: 2
+  display: inline-flex
+  min-width: 0
+  align-items: center
+  justify-content: center
+  gap: var(--tdm-button-gap)
+  transform: translateY(0)
+  transition: transform var(--tdm-button-duration) var(--tdm-button-ease), color var(--tdm-button-duration) var(--tdm-button-ease)
+  color: inherit
+
+.fullWidth
+  width: 100%
+
+.bordered.sizeSm
+  height: var(--tdm-button-sm-height)
+  min-height: var(--tdm-button-sm-height)
+  padding-inline: var(--tdm-button-sm-padding-inline)
+  border-radius: var(--tdm-button-sm-radius)
+  font-size: var(--tdm-button-sm-font-size)
+
+.bordered.sizeMd
+  height: var(--tdm-button-md-height)
+  min-height: var(--tdm-button-md-height)
+  padding-inline: var(--tdm-button-md-padding-inline)
+  border-radius: var(--tdm-button-md-radius)
+  font-size: var(--tdm-button-md-font-size)
+
+.bordered.sizeLg
+  height: var(--tdm-button-lg-height)
+  min-height: var(--tdm-button-lg-height)
+  padding-inline: var(--tdm-button-lg-padding-inline)
+  border-radius: var(--tdm-button-lg-radius)
+  font-size: var(--tdm-button-lg-font-size)
+
+.variantPrimary,
+.variantSecondary,
+.variantDestructive
+  // Estrutura bordered; tom via .tone*
+
+.variantTertiary
+  height: auto
+  min-height: 0
+  padding: 0.25rem 0.125rem
+  border: 0 solid transparent
+  border-radius: var(--tdm-button-sm-radius)
+  background: transparent
+  color: var(--tdm-button-tertiary-fg)
+  box-shadow: var(--tdm-shadow-none)
+  font-size: var(--tdm-button-sm-font-size)
+
+  &.sizeMd,
+  &.sizeLg
+    font-size: var(--tdm-button-md-font-size)
+
+  &::before,
+  &::after
+    content: none
+
+  &:hover:not(:disabled):not([aria-disabled='true']),
+  &:focus-visible:not(:disabled):not([aria-disabled='true'])
+    background-color: var(--tdm-button-tertiary-bg-hover)
+    color: var(--tdm-button-tertiary-fg-hover)
+    border-color: transparent
+    box-shadow: var(--tdm-shadow-none)
+
+    .content
+      transform: none
+
+.toneNeutral
+  --tdm-button-border-rest: var(--tdm-button-neutral-border-rest)
+  --tdm-button-border-hover: var(--tdm-button-neutral-border-hover)
+  --tdm-button-text-rest: var(--tdm-button-neutral-text-rest)
+  --tdm-button-text-hover: var(--tdm-button-neutral-text-hover)
+  --tdm-button-wash: var(--tdm-button-neutral-wash)
+  --tdm-button-shadow-hover: var(--tdm-button-neutral-shadow-hover)
+  --tdm-button-top-light: var(--tdm-button-neutral-top-light)
+
+  // Mesmo caminho de hover dos tons semânticos (.bordered:hover → gradient + bg-hover).
+  // O fill especial do neutral entra só via --tdm-button-bg-hover (escopo /canvas iguala à superfície).
+  &:hover:not(:disabled):not([aria-disabled='true']),
+  &:focus-visible:not(:disabled):not([aria-disabled='true'])
+    --tdm-button-bg-rest-gradient: transparent
+    --tdm-button-bg-hover: var(--tdm-button-neutral-fill-hover)
+
+.toneDanger
+  --tdm-button-border-rest: var(--tdm-button-danger-border-rest)
+  --tdm-button-border-hover: var(--tdm-button-danger-border-hover)
+  --tdm-button-text-rest: var(--tdm-button-danger-text-rest)
+  --tdm-button-text-hover: var(--tdm-button-danger-text-hover)
+  --tdm-button-wash: var(--tdm-button-danger-wash)
+  --tdm-button-shadow-hover: var(--tdm-button-danger-shadow-hover)
+  --tdm-button-top-light: var(--tdm-button-danger-top-light)
+
+.toneInput
+  --tdm-button-border-rest: var(--tdm-button-input-border-rest)
+  --tdm-button-border-hover: var(--tdm-button-input-border-hover)
+  --tdm-button-text-rest: var(--tdm-button-input-text-rest)
+  --tdm-button-text-hover: var(--tdm-button-input-text-hover)
+  --tdm-button-wash: var(--tdm-button-input-wash)
+  --tdm-button-shadow-hover: var(--tdm-button-input-shadow-hover)
+  --tdm-button-top-light: var(--tdm-button-input-top-light)
+
+.toneActivity
+  --tdm-button-border-rest: var(--tdm-button-activity-border-rest)
+  --tdm-button-border-hover: var(--tdm-button-activity-border-hover)
+  --tdm-button-text-rest: var(--tdm-button-activity-text-rest)
+  --tdm-button-text-hover: var(--tdm-button-activity-text-hover)
+  --tdm-button-wash: var(--tdm-button-activity-wash)
+  --tdm-button-shadow-hover: var(--tdm-button-activity-shadow-hover)
+  --tdm-button-top-light: var(--tdm-button-activity-top-light)
+
+.toneOutput
+  --tdm-button-border-rest: var(--tdm-button-output-border-rest)
+  --tdm-button-border-hover: var(--tdm-button-output-border-hover)
+  --tdm-button-text-rest: var(--tdm-button-output-text-rest)
+  --tdm-button-text-hover: var(--tdm-button-output-text-hover)
+  --tdm-button-wash: var(--tdm-button-output-wash)
+  --tdm-button-shadow-hover: var(--tdm-button-output-shadow-hover)
+  --tdm-button-top-light: var(--tdm-button-output-top-light)
+
+.toneOutcome
+  --tdm-button-border-rest: var(--tdm-button-outcome-border-rest)
+  --tdm-button-border-hover: var(--tdm-button-outcome-border-hover)
+  --tdm-button-text-rest: var(--tdm-button-outcome-text-rest)
+  --tdm-button-text-hover: var(--tdm-button-outcome-text-hover)
+  --tdm-button-wash: var(--tdm-button-outcome-wash)
+  --tdm-button-shadow-hover: var(--tdm-button-outcome-shadow-hover)
+  --tdm-button-top-light: var(--tdm-button-outcome-top-light)
+
+.isLoading
+  cursor: progress
+
+.label
+  min-width: 0
+  white-space: nowrap
+
+.plusIcon
+  font-size: var(--tdm-button-icon-size)
+  line-height: 1
+  font-weight: 400
+  flex: 0 0 auto
+
+.icon
+  display: inline-grid
+  place-items: center
+  width: var(--tdm-button-icon-size)
+  height: var(--tdm-button-icon-size)
+  flex: 0 0 auto
+  color: currentColor
+
+  :global(svg)
+    display: block
+    width: var(--tdm-button-icon-size)
+    height: var(--tdm-button-icon-size)
+    stroke-width: var(--tdm-button-icon-stroke-width)
+
+    :global(*)
+      stroke-width: inherit
+
+.spinner
+  width: var(--tdm-button-icon-size)
+  height: var(--tdm-button-icon-size)
+  flex: 0 0 auto
+  border: var(--tdm-border-width-hairline) solid currentColor
+  border-radius: var(--tdm-radius-round)
+  opacity: 0.72
+
+.srOnly
+  position: absolute
+  width: 0.0625rem
+  height: 0.0625rem
+  padding: 0
+  margin: -0.0625rem
+  overflow: hidden
+  clip: rect(0, 0, 0, 0)
+  white-space: nowrap
+  border: 0
+
+@media (prefers-reduced-motion: reduce)
+  .button,
+  .button::before,
+  .button::after,
+  .content
+    transition: none
+
+
+// Public recipe: exact approved non-canvas action contract.
+// It lives inside the canonical primitive so public routes do not depend on a parallel visual implementation.
+.recipeSystem
+  // Default operational recipe remains unchanged.
+
+.recipePublic
+  --public-action-height: var(--tdm-public-action-height)
+  --public-action-radius: var(--tdm-public-action-radius)
+  --public-action-padding-inline: var(--tdm-public-action-padding-inline)
+  --public-action-font-size: var(--tdm-public-action-font-size)
+  --public-action-font-weight: var(--tdm-public-action-font-weight)
+  min-height: var(--public-action-height)
+  padding: 0 var(--public-action-padding-inline)
+  border: var(--tdm-public-action-border-width) solid var(--tdm-public-action-line)
+  border-radius: var(--public-action-radius)
+  color: var(--tdm-public-action-text)
+  background: transparent
+  box-shadow: none
+  font-family: inherit
+  font-size: var(--public-action-font-size)
+  font-weight: var(--public-action-font-weight)
+  line-height: 1
+  letter-spacing: var(--tdm-public-action-letter-spacing)
+  transition: border-color var(--tdm-public-action-duration) var(--tdm-public-action-ease), color var(--tdm-public-action-duration) var(--tdm-public-action-ease), background-color var(--tdm-public-action-duration) var(--tdm-public-action-ease), opacity var(--tdm-public-action-duration) var(--tdm-public-action-ease)
+
+  &.bordered
+    height: var(--public-action-height)
+    min-height: var(--public-action-height)
+    padding: 0 var(--public-action-padding-inline)
+    border-radius: var(--public-action-radius)
+    font-size: var(--public-action-font-size)
+
+  &.bordered::before,
+  &.bordered::after
+    content: none
+
+  &:hover:not(:disabled):not([aria-disabled='true']),
+  &:focus-visible:not(:disabled):not([aria-disabled='true'])
+    color: var(--tdm-public-action-text-hover)
+    border-color: var(--tdm-public-action-line-hover)
+    background: var(--tdm-public-action-hover-bg)
+    box-shadow: none
+
+    .content
+      transform: none
+
+  &:active:not(:disabled):not([aria-disabled='true'])
+    color: var(--tdm-public-action-text)
+    background: var(--tdm-public-action-pressed-bg)
+
+  .content
+    gap: var(--tdm-public-action-content-gap)
+
+  .icon
+    width: var(--tdm-public-action-icon-size)
+    height: var(--tdm-public-action-icon-size)
+    opacity: 0.78
+
+    :global(svg)
+      width: 100%
+      height: 100%
+      fill: none
+      stroke: currentColor
+      stroke-width: var(--tdm-public-action-icon-stroke)
+      stroke-linecap: round
+      stroke-linejoin: round
+
+  &.variantPrimary
+    color: var(--tdm-public-action-primary-fg)
+    border-color: var(--tdm-public-action-primary-border)
+    background: var(--tdm-public-action-primary-bg)
+    box-shadow: none
+
+    &:hover:not(:disabled):not([aria-disabled='true']),
+    &:focus-visible:not(:disabled):not([aria-disabled='true'])
+      color: var(--tdm-public-action-primary-fg-hover)
+      border-color: var(--tdm-public-action-primary-border-hover)
+      background: var(--tdm-public-action-primary-bg-hover)
+
+    &:active:not(:disabled):not([aria-disabled='true'])
+      color: var(--tdm-public-action-primary-fg-pressed)
+      border-color: var(--tdm-public-action-primary-border-pressed)
+      background: var(--tdm-public-action-primary-bg-pressed)
+
+    &:disabled,
+    &[aria-disabled='true']
+      color: var(--tdm-public-action-primary-fg-disabled)
+      border-color: var(--tdm-public-action-primary-border-disabled)
+      background: var(--tdm-public-action-primary-bg-disabled)
+
+  &.variantTertiary
+    min-height: var(--tdm-public-text-action-height)
+    padding: 0 var(--tdm-public-text-action-padding-inline)
+    border: 0
+    border-radius: var(--tdm-public-text-action-radius)
+    color: var(--tdm-public-action-text-muted)
+    background: transparent
+    box-shadow: none
+    font-size: var(--tdm-public-text-action-font-size)
+    font-weight: var(--tdm-public-text-action-font-weight)
+    letter-spacing: -0.01em
+
+    .content
+      gap: var(--tdm-public-text-action-gap)
+
+    &:hover:not(:disabled):not([aria-disabled='true']),
+    &:focus-visible:not(:disabled):not([aria-disabled='true'])
+      color: var(--tdm-public-action-text-muted-hover)
+      background: transparent
+      border-color: transparent
+
+    &:active:not(:disabled):not([aria-disabled='true'])
+      color: var(--tdm-public-action-text-muted-pressed)
+      background: transparent
+
+    &:disabled,
+    &[aria-disabled='true']
+      opacity: 0.34
+      background: transparent
+
+  &.variantTertiary.sizeSm
+    min-height: var(--tdm-public-header-action-height)
+    padding: 0 var(--tdm-public-header-action-padding-inline)
+    font-size: var(--tdm-public-header-action-font-size)
+    font-weight: var(--tdm-public-header-action-font-weight)
+
+  &.variantSecondary.sizeSm
+    height: var(--tdm-public-action-compact-height)
+    min-height: var(--tdm-public-action-compact-height)
+    padding: 0 var(--tdm-public-action-compact-padding-inline)
+    border-radius: var(--tdm-public-action-compact-radius)
+    font-size: var(--tdm-public-action-compact-font-size)
+    font-weight: var(--tdm-public-action-compact-font-weight)
+    color: var(--tdm-public-action-text)
+    border-color: var(--tdm-public-action-line)
+    background: transparent
+    box-shadow: none
+
+  &.sizeLg
+    --public-action-height: var(--tdm-public-action-hero-height)
+    --public-action-radius: var(--tdm-public-action-hero-radius)
+    --public-action-padding-inline: var(--tdm-public-action-hero-padding-inline)
+    --public-action-font-size: var(--tdm-public-action-hero-font-size)

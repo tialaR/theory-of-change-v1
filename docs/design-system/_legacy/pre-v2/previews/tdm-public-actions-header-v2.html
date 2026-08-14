@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TDM · Preview dos CTAs públicos v2 · TMD-first</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --page: #050506;
+      --surface: #0a0a0b;
+      --surface-raised: #0d0d0f;
+      --line: rgba(255,255,255,.11);
+      --line-hover: rgba(255,255,255,.22);
+      --line-focus: rgba(255,255,255,.72);
+      --text: rgba(250,250,250,.94);
+      --text-secondary: rgba(235,235,238,.67);
+      --text-muted: rgba(226,226,232,.46);
+      --primary-bg: #ededee;
+      --primary-bg-hover: #ffffff;
+      --primary-fg: #09090a;
+      --primary-line: rgba(255,255,255,.92);
+      --focus-ring: rgba(255,255,255,.88);
+      --duration: 160ms;
+      --ease: cubic-bezier(.2,.7,.2,1);
+      --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { font-family: var(--font); background: var(--page); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 50% -16rem, rgba(255,255,255,.035), transparent 30rem),
+        radial-gradient(circle, rgba(255,255,255,.035) .04rem, transparent .05rem) 0 0 / 1.5rem 1.5rem,
+        var(--page);
+    }
+
+    button, a { font: inherit; }
+    button { border: 0; }
+
+    .shell {
+      width: min(74rem, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 2rem 0 5rem;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 1rem;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: minmax(0,1fr) auto;
+      align-items: center;
+      gap: 1rem;
+      padding: .875rem 1rem;
+      border: .0625rem solid var(--line);
+      border-radius: .875rem;
+      background: rgba(7,7,8,.88);
+      backdrop-filter: blur(1rem);
+    }
+
+    .brand { display:flex; align-items:center; gap:.75rem; min-width:0; }
+    .brand-mark {
+      display:grid;
+      place-items:center;
+      width:2.25rem;
+      height:2.25rem;
+      border:.0625rem solid var(--line);
+      border-radius:.625rem;
+      color:rgba(255,255,255,.78);
+      background:transparent;
+    }
+    .brand-mark svg { width:1.25rem; height:1.25rem; }
+    .brand-copy strong { display:block; font-size:.875rem; font-weight:500; letter-spacing:-.015em; }
+    .brand-copy span { display:block; margin-top:.12rem; color:var(--text-muted); font-size:.7rem; }
+
+    .state-switcher { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:.35rem; }
+    .state-button {
+      min-height:2.25rem;
+      padding:0 .68rem;
+      border:.0625rem solid var(--line);
+      border-radius:.5rem;
+      color:var(--text-muted);
+      background:transparent;
+      cursor:pointer;
+      transition:border-color var(--duration) var(--ease), color var(--duration) var(--ease), background var(--duration) var(--ease);
+    }
+    .state-button:hover { color:var(--text-secondary); border-color:var(--line-hover); }
+    .state-button[aria-pressed="true"] { color:var(--text); border-color:rgba(255,255,255,.28); background:rgba(255,255,255,.045); }
+
+    .intro { max-width:52rem; padding:3.5rem .25rem 1.75rem; }
+    .eyebrow { margin:0 0 .75rem; color:var(--text-muted); font-size:.68rem; font-weight:560; letter-spacing:.14em; text-transform:uppercase; }
+    h1 { margin:0; max-width:48rem; font-size:clamp(2.25rem,6vw,4.5rem); line-height:.98; font-weight:440; letter-spacing:-.05em; }
+    .intro p { margin:1rem 0 0; max-width:45rem; color:var(--text-secondary); line-height:1.65; }
+
+    .principles {
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:.75rem;
+      margin:1rem 0 1.25rem;
+    }
+    .principle {
+      padding:1rem;
+      border:.0625rem solid var(--line);
+      border-radius:.875rem;
+      background:rgba(255,255,255,.012);
+    }
+    .principle strong { display:block; font-size:.78rem; font-weight:520; }
+    .principle span { display:block; margin-top:.35rem; color:var(--text-muted); font-size:.72rem; line-height:1.45; }
+
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+    .panel {
+      min-width:0;
+      padding:1.3rem;
+      border:.0625rem solid var(--line);
+      border-radius:1rem;
+      background:rgba(10,10,11,.88);
+    }
+    .panel--wide { grid-column:1/-1; }
+    .panel h2 { margin:0; font-size:.95rem; font-weight:520; letter-spacing:-.015em; }
+    .panel-copy { margin:.42rem 0 1.25rem; color:var(--text-muted); font-size:.78rem; line-height:1.55; }
+    .demo { display:flex; flex-wrap:wrap; align-items:center; gap:.7rem; }
+    .demo--column { flex-direction:column; align-items:flex-start; }
+
+    .cta {
+      --height:2.75rem;
+      --radius:.6875rem;
+      --padding:1rem;
+      --font-size:.875rem;
+      --font-weight:470;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:var(--height);
+      padding:0 var(--padding);
+      border:.0625rem solid var(--line);
+      border-radius:var(--radius);
+      color:rgba(244,244,246,.84);
+      background:transparent;
+      box-shadow:none;
+      font-size:var(--font-size);
+      font-weight:var(--font-weight);
+      line-height:1;
+      letter-spacing:-.012em;
+      text-decoration:none;
+      cursor:pointer;
+      -webkit-tap-highlight-color:transparent;
+      transition:border-color var(--duration) var(--ease), color var(--duration) var(--ease), background var(--duration) var(--ease), opacity var(--duration) var(--ease);
+    }
+    .cta__content { display:inline-flex; align-items:center; justify-content:center; gap:.54rem; }
+    .cta__icon { display:inline-grid; place-items:center; width:.95rem; height:.95rem; flex:0 0 auto; opacity:.78; }
+    .cta__icon svg { display:block; width:100%; height:100%; fill:none; stroke:currentColor; stroke-width:1.35; stroke-linecap:round; stroke-linejoin:round; }
+
+    .cta:hover,
+    .cta.is-hover {
+      color:rgba(255,255,255,.96);
+      border-color:var(--line-hover);
+      background:rgba(255,255,255,.035);
+    }
+    .cta:active,
+    .cta.is-active { color:rgba(255,255,255,.78); background:rgba(255,255,255,.02); }
+    .cta:focus-visible,
+    .cta.is-focus { outline:.125rem solid var(--focus-ring); outline-offset:.1875rem; }
+    .cta[aria-disabled="true"],
+    .cta.is-disabled { opacity:.36; cursor:not-allowed; background:transparent; }
+
+    .cta--primary {
+      color:var(--primary-fg);
+      border-color:var(--primary-line);
+      background:var(--primary-bg);
+    }
+    .cta--primary:hover,
+    .cta--primary.is-hover { color:#000; border-color:#fff; background:var(--primary-bg-hover); }
+    .cta--primary:active,
+    .cta--primary.is-active { color:#0c0c0d; background:#dedee0; border-color:#e5e5e7; }
+    .cta--primary[aria-disabled="true"],
+    .cta--primary.is-disabled { background:rgba(237,237,238,.34); border-color:rgba(255,255,255,.18); color:rgba(8,8,9,.55); }
+
+    .cta--hero { --height:3rem; --radius:.75rem; --padding:1.125rem; --font-size:.9375rem; }
+    .cta--compact { --height:2.75rem; --radius:.625rem; --padding:.875rem; --font-size:.8125rem; --font-weight:450; }
+
+    .text-cta {
+      display:inline-flex;
+      align-items:center;
+      min-height:2.75rem;
+      padding:0 .25rem;
+      border:0;
+      border-radius:.5rem;
+      color:var(--text-muted);
+      background:transparent;
+      font-size:.875rem;
+      font-weight:450;
+      line-height:1;
+      letter-spacing:-.01em;
+      text-decoration:none;
+      cursor:pointer;
+      transition:color var(--duration) var(--ease), opacity var(--duration) var(--ease);
+    }
+    .text-cta__content { display:inline-flex; align-items:center; gap:.52rem; }
+    .text-cta svg { width:.95rem; height:.95rem; fill:none; stroke:currentColor; stroke-width:1.35; stroke-linecap:round; stroke-linejoin:round; }
+    .text-cta:hover,
+    .text-cta.is-hover { color:rgba(248,248,250,.86); }
+    .text-cta:active,
+    .text-cta.is-active { color:rgba(248,248,250,.68); }
+    .text-cta:focus-visible,
+    .text-cta.is-focus { outline:.125rem solid var(--focus-ring); outline-offset:.1875rem; }
+    .text-cta.is-disabled { opacity:.34; cursor:not-allowed; }
+    .arrow { transition:transform var(--duration) var(--ease); }
+    .text-cta:hover .arrow,
+    .text-cta.is-hover .arrow { transform:translateX(.125rem); }
+
+    .header-demo {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      width:100%;
+      min-height:5rem;
+      padding:0 1rem;
+      border:.0625rem solid var(--line);
+      border-radius:.75rem;
+      background:rgba(5,5,6,.78);
+    }
+    .fake-logo { color:rgba(246,246,248,.82); font-size:.78rem; font-weight:520; letter-spacing:.02em; }
+    .header-cta { min-height:2.75rem; padding:0 .45rem; font-size:.8rem; font-weight:450; }
+
+    .comparison {
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:1rem;
+    }
+    .comparison-card {
+      padding:1rem;
+      border:.0625rem solid var(--line);
+      border-radius:.875rem;
+      background:rgba(255,255,255,.012);
+    }
+    .comparison-card h3 { margin:0 0 .75rem; font-size:.78rem; font-weight:520; }
+    .comparison-card p { margin:.75rem 0 0; color:var(--text-muted); font-size:.72rem; line-height:1.5; }
+
+    .legacy-button {
+      display:inline-flex;
+      align-items:center;
+      gap:.55rem;
+      min-height:3rem;
+      padding:0 1rem;
+      border:.0625rem solid rgba(255,255,255,.42);
+      border-radius:.95rem;
+      color:rgba(245,245,247,.84);
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.01)), rgba(18,18,21,.78);
+      box-shadow:inset 0 .0625rem 0 rgba(255,255,255,.06), inset 0 -.0625rem 0 rgba(0,0,0,.24), 0 .7rem 1.5rem rgba(0,0,0,.2);
+      font-size:.9rem;
+      font-weight:440;
+    }
+
+    .route-map { width:100%; border-collapse:collapse; font-size:.78rem; }
+    .route-map th, .route-map td { padding:.72rem .58rem; border-bottom:.0625rem solid var(--line); text-align:left; vertical-align:top; }
+    .route-map th { color:var(--text-muted); font-size:.63rem; font-weight:560; letter-spacing:.08em; text-transform:uppercase; }
+    .route-map td { color:var(--text-secondary); }
+    code { color:rgba(244,244,246,.82); font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.71rem; }
+
+    .note { margin-top:1rem; padding:.9rem 1rem; border-left:.125rem solid rgba(255,255,255,.2); color:var(--text-muted); font-size:.76rem; line-height:1.55; background:rgba(255,255,255,.012); }
+
+    @media (max-width:56rem) {
+      .principles { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    }
+    @media (max-width:48rem) {
+      .topbar { position:static; grid-template-columns:1fr; }
+      .state-switcher { justify-content:flex-start; }
+      .grid, .comparison { grid-template-columns:1fr; }
+      .panel--wide { grid-column:auto; }
+      .route-map { display:block; overflow-x:auto; }
+    }
+    @media (max-width:34rem) {
+      .principles { grid-template-columns:1fr; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      *,*::before,*::after { transition-duration:.01ms !important; animation-duration:.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell" id="preview">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 2 20 7v10l-8 5-8-5V7l8-5Z M12 5.5 17 8.4v7.2l-5 2.9-5-2.9V8.4l5-2.9Z M12 8.5l2.5 1.45v4.1L12 15.5l-2.5-1.45v-4.1L12 8.5Z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+        </span>
+        <span class="brand-copy"><strong>CTAs públicos v2</strong><span>TMD-first · Apple + Material + Figma</span></span>
+      </div>
+      <div class="state-switcher" role="group" aria-label="Simular estado visual">
+        <button class="state-button" aria-pressed="true" data-state="rest">Repouso</button>
+        <button class="state-button" aria-pressed="false" data-state="hover">Hover</button>
+        <button class="state-button" aria-pressed="false" data-state="active">Press</button>
+        <button class="state-button" aria-pressed="false" data-state="focus">Focus</button>
+        <button class="state-button" aria-pressed="false" data-state="disabled">Disabled</button>
+      </div>
+    </header>
+
+    <section class="intro">
+      <p class="eyebrow">Preview v2</p>
+      <h1>Menos armadura.<br>Mais hierarquia.</h1>
+      <p>O peso agora vem da prioridade da ação, não de gradientes, sombras e contornos competindo entre si.</p>
+    </section>
+
+    <section class="principles" aria-label="Princípios do redesign">
+      <article class="principle"><strong>TMD primeiro</strong><span>Superfícies limpas, contraste direto e dupla primária/secundária sem ornamento excessivo.</span></article>
+      <article class="principle"><strong>Apple</strong><span>Alvos confortáveis, clareza, contraste e alinhamento estável.</span></article>
+      <article class="principle"><strong>Material</strong><span>Hierarquia explícita entre filled, outlined e text, sem sombra quando ela não é necessária.</span></article>
+      <article class="principle"><strong>Figma</strong><span>Uma família canônica com variantes, estados e propriedades consistentes.</span></article>
+    </section>
+
+    <section class="grid">
+      <article class="panel">
+        <h2>Ação principal</h2>
+        <p class="panel-copy">Uma única ação de maior impacto por contexto. Clara, sólida e silenciosa.</p>
+        <div class="demo">
+          <a class="cta cta--primary cta--hero preview-target" href="#">
+            <span class="cta__content"><span class="cta__icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>Criar teoria</span>
+          </a>
+          <a class="cta cta--primary preview-target" href="#">Abrir canvas</a>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Ação secundária com borda</h2>
+        <p class="panel-copy">Fundo transparente, hairline discreta e sem profundidade artificial.</p>
+        <div class="demo">
+          <a class="cta cta--hero preview-target" href="#"><span class="cta__content"><span class="cta__icon"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/></svg></span>Ver exemplos</span></a>
+          <a class="cta preview-target" href="#">Abrir visualização interativa</a>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Ações sem borda</h2>
+        <p class="panel-copy">Menor prioridade. Hit target completo, aparência textual e movimento apenas na seta.</p>
+        <div class="demo demo--column">
+          <a class="text-cta preview-target" href="#"><span class="text-cta__content"><span class="cta__icon"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/></svg></span>Ver exemplo</span></a>
+          <a class="text-cta preview-target" href="#"><span class="text-cta__content"><span class="arrow">←</span>Voltar para exemplos</span></a>
+          <a class="text-cta preview-target" href="#"><span class="text-cta__content">Abrir <span class="arrow">→</span></span></a>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Exportações compactas</h2>
+        <p class="panel-copy">Mesma família outline, sem virar chip decorativo e preservando 44 px de alvo.</p>
+        <div class="demo">
+          <button class="cta cta--compact preview-target"><span class="cta__content"><span class="cta__icon"><svg viewBox="0 0 24 24"><path d="M7 3h7l3 3v15H7Z"/><path d="M14 3v4h4M10 12h4M10 16h4"/></svg></span>Exportar PDF</span></button>
+          <button class="cta cta--compact preview-target"><span class="cta__content"><span class="cta__icon"><svg viewBox="0 0 24 24"><path d="M7 3h7l3 3v15H7Z"/><path d="M14 3v4h4M10 12h4M10 16h4"/></svg></span>Exportar PNG</span></button>
+          <button class="cta cta--compact preview-target"><span class="cta__content"><span class="cta__icon"><svg viewBox="0 0 24 24"><path d="M7 3h7l3 3v15H7Z"/><path d="M14 3v4h4M10 12h4M10 16h4"/></svg></span>Exportar SVG</span></button>
+        </div>
+      </article>
+
+      <article class="panel panel--wide">
+        <h2>CTA do header</h2>
+        <p class="panel-copy">Continua sem borda e sem fundo. O ganho é área clicável, contraste e consistência.</p>
+        <div class="header-demo">
+          <span class="fake-logo">TMD construtor</span>
+          <a class="text-cta header-cta preview-target" href="#"><span class="text-cta__content"><span class="cta__icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>Criar teoria</span></a>
+        </div>
+      </article>
+
+      <article class="panel panel--wide">
+        <h2>Antes x depois</h2>
+        <p class="panel-copy">O v2 remove camadas que faziam o botão parecer mais importante do que a própria ação.</p>
+        <div class="comparison">
+          <div class="comparison-card">
+            <h3>V1 · carregado</h3>
+            <span class="legacy-button">+ Criar teoria</span>
+            <p>Gradiente, três sombras, contorno forte e radius alto disputam atenção.</p>
+          </div>
+          <div class="comparison-card">
+            <h3>V2 · TMD-first</h3>
+            <a class="cta cta--primary preview-target" href="#"><span class="cta__content"><span class="cta__icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>Criar teoria</span></a>
+            <p>Uma superfície, uma borda, sem sombra. A hierarquia é percebida instantaneamente.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel panel--wide">
+        <h2>Mapa proposto</h2>
+        <p class="panel-copy">Aplicação futura, excluindo integralmente a rota <code>/canvas</code>.</p>
+        <table class="route-map">
+          <thead><tr><th>Família</th><th>Exemplos</th><th>Variante v2</th><th>Comportamento</th></tr></thead>
+          <tbody>
+            <tr><td>Primária</td><td>Criar teoria, Abrir canvas</td><td><code>filled-neutral</code></td><td>Light fill, sem sombra, hover só clareia.</td></tr>
+            <tr><td>Secundária</td><td>Ver exemplos, Ver guia, Abrir experiência</td><td><code>outlined-neutral</code></td><td>Transparente, uma hairline, hover discreto.</td></tr>
+            <tr><td>Compacta</td><td>Exportar PDF/PNG/SVG/DOCX</td><td><code>outlined-compact</code></td><td>Mesma linguagem, alvo de 44 px.</td></tr>
+            <tr><td>Textual</td><td>Ver exemplo, Voltar, Abrir →</td><td><code>text</code></td><td>Sem caixa; seta se desloca 2 px.</td></tr>
+            <tr><td>Header</td><td>+ Criar teoria</td><td><code>text-compact</code></td><td>Sem borda; área clicável ampliada.</td></tr>
+          </tbody>
+        </table>
+        <p class="note">Este arquivo é somente laboratório visual. Não altera o projeto nem define ainda o plano de migração.</p>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    const stateButtons = [...document.querySelectorAll('.state-button')];
+    const targets = [...document.querySelectorAll('.preview-target')];
+    const stateClasses = ['is-hover','is-active','is-focus','is-disabled'];
+
+    function applyState(state) {
+      targets.forEach((target) => {
+        target.classList.remove(...stateClasses);
+        target.removeAttribute('aria-disabled');
+        if (state !== 'rest') target.classList.add(`is-${state}`);
+        if (state === 'disabled') target.setAttribute('aria-disabled','true');
+      });
+      stateButtons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.state === state)));
+    }
+
+    stateButtons.forEach((button) => button.addEventListener('click', () => applyState(button.dataset.state)));
+    document.querySelectorAll('a[href="#"]').forEach((link) => link.addEventListener('click', (event) => event.preventDefault()));
+  </script>
+</body>
+</html>

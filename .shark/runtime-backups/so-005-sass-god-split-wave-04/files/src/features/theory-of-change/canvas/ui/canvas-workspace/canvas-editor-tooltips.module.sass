@@ -1,0 +1,243 @@
+// Interaction preservation patch v1
+.brandGroup
+  min-width: 13rem
+
+.brandLogo
+  display: block
+  width: 12.5rem
+  max-width: 100%
+  height: 2.7rem
+  object-fit: contain
+  object-position: left center
+
+.canvasViewport,
+.inspectorContent,
+.historyPanel,
+.page
+  scrollbar-width: none
+  -ms-overflow-style: none
+
+.canvasViewport::-webkit-scrollbar,
+.inspectorContent::-webkit-scrollbar,
+.historyPanel::-webkit-scrollbar,
+.page::-webkit-scrollbar
+  width: 0
+  height: 0
+  display: none
+
+.creatorBody
+  > button
+    cursor: grab
+
+    &:active
+      cursor: grabbing
+
+.node[data-editing='true']
+  min-height: 20rem
+  cursor: grab
+
+.nodeToolbar
+  position: absolute
+  z-index: 8
+  left: 50%
+  top: -3.05rem
+  transform: translateX(-50%)
+  display: inline-flex
+  align-items: center
+  gap: 0.35rem
+  padding: 0.35rem
+  border: 0.0625rem solid var(--v2-stroke)
+  border-radius: 0.8rem
+  background: color-mix(in srgb, var(--v2-shell) 94%, transparent)
+  box-shadow: 0 0.85rem 2rem color-mix(in srgb, black 34%, transparent), inset 0 0.0625rem 0 color-mix(in srgb, white 9%, transparent)
+  backdrop-filter: blur(1rem)
+
+  button
+    width: 2rem
+    height: 2rem
+    display: grid
+    place-items: center
+    padding: 0
+    border: 0.0625rem solid transparent
+    border-radius: 0.58rem
+    background: transparent
+    color: var(--v2-muted)
+    cursor: pointer
+    transition: color 180ms ease, border-color 180ms ease, background 180ms ease, transform 180ms ease
+
+    &:hover
+      color: var(--v2-text)
+      border-color: var(--v2-stroke)
+      background: color-mix(in srgb, var(--v2-raised) 82%, transparent)
+      transform: translateY(-0.0625rem)
+
+.nodeEditor
+  display: grid
+  gap: 0.62rem
+  margin-top: 0.72rem
+  user-select: text
+
+  label
+    display: grid
+    gap: 0.3rem
+
+    > span
+      color: var(--v2-muted)
+      font-size: 0.58rem
+
+  input,
+  textarea
+    width: 100%
+    border: 0.0625rem solid var(--v2-stroke)
+    border-radius: 0.62rem
+    background: color-mix(in srgb, var(--v2-card) 94%, black 6%)
+    color: var(--v2-text)
+    outline: none
+
+    &:focus
+      border-color: color-mix(in srgb, var(--stage-color) 42%, var(--v2-stroke-strong))
+
+  input
+    height: 2.15rem
+    padding: 0 0.62rem
+    font-size: 0.68rem
+
+  textarea
+    min-height: 3.6rem
+    padding: 0.58rem
+    resize: vertical
+    font-size: 0.66rem
+    line-height: 1.45
+
+.nodeAdvanced,
+.inspectorAdvanced
+  border: 0.0625rem solid var(--v2-stroke)
+  border-radius: 0.72rem
+  background: color-mix(in srgb, var(--v2-card) 92%, black 8%)
+  overflow: hidden
+
+  summary
+    min-height: 2.35rem
+    display: flex
+    align-items: center
+    padding: 0 0.72rem
+    color: var(--v2-muted)
+    font-size: 0.66rem
+    cursor: pointer
+    list-style: none
+
+  summary::-webkit-details-marker
+    display: none
+
+  summary::before
+    content: '›'
+    margin-right: 0.42rem
+    transition: transform 180ms ease
+
+  &[open] summary::before
+    transform: rotate(90deg)
+
+  textarea
+    width: calc(100% - 1rem)
+    margin: 0 0.5rem 0.5rem
+
+.nodeAdvanced textarea
+  min-height: 4.1rem
+
+.nodeEditorActions
+  display: grid
+  grid-template-columns: 1fr 1fr
+  gap: 0.45rem
+
+  button
+    min-height: 2.2rem
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    gap: 0.38rem
+    border: 0.0625rem solid var(--v2-stroke)
+    border-radius: 0.68rem
+    background: color-mix(in srgb, var(--v2-raised) 82%, transparent)
+    color: var(--v2-muted)
+    cursor: pointer
+
+    &:last-child
+      border-color: color-mix(in srgb, var(--stage-color) 28%, var(--v2-stroke))
+      color: var(--v2-text)
+
+    span
+      font-size: 0.64rem
+
+.inspectorAdvanced
+  textarea
+    min-height: 5.5rem
+    border-top-left-radius: 0.62rem
+    border-top-right-radius: 0.62rem
+
+.inspectorSecondaryActions
+  display: grid
+  grid-template-columns: 1fr 1fr
+  gap: 0.5rem
+
+  button
+    min-height: 2.45rem
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    gap: 0.48rem
+    border: 0.0625rem solid var(--v2-stroke)
+    border-radius: 0.76rem
+    background: color-mix(in srgb, var(--v2-card) 90%, transparent)
+    color: var(--v2-muted)
+    cursor: pointer
+    transition: color 180ms ease, border-color 180ms ease, background 180ms ease
+
+    &:hover
+      color: var(--v2-text)
+      border-color: var(--v2-stroke-strong)
+      background: var(--v2-raised)
+
+    span
+      font-size: 0.7rem
+
+.page [data-tooltip]
+  position: relative
+
+.page [data-tooltip]::after
+  content: attr(data-tooltip)
+  position: absolute
+  z-index: 100
+  left: 50%
+  top: calc(100% + 0.5rem)
+  max-width: 13rem
+  padding: 0.38rem 0.52rem
+  border: 0.0625rem solid var(--v2-stroke)
+  border-radius: 0.48rem
+  background: color-mix(in srgb, var(--v2-shell) 98%, black 2%)
+  color: var(--v2-text)
+  box-shadow: 0 0.5rem 1.2rem color-mix(in srgb, black 34%, transparent)
+  font-size: 0.62rem
+  font-weight: 450
+  line-height: 1.3
+  white-space: nowrap
+  pointer-events: none
+  opacity: 0
+  transform: translate(-50%, -0.2rem)
+  transition: opacity 140ms ease, transform 140ms ease
+
+.page [data-tooltip]:hover::after,
+.page [data-tooltip]:focus-visible::after
+  opacity: 1
+  transform: translate(-50%, 0)
+
+.nodeToolbar [data-tooltip]::after
+  top: auto
+  bottom: calc(100% + 0.45rem)
+
+@media (max-width: 64rem)
+  .brandLogo
+    width: 10.5rem
+
+  .topbar
+    grid-template-columns: minmax(10.5rem, 1fr) auto minmax(12rem, 1fr)
+

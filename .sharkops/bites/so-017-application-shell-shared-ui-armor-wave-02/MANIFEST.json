@@ -1,0 +1,12 @@
+{
+  "id": "SO-017",
+  "wave": 2,
+  "revision": 2,
+  "status": "ACTIVE",
+  "title": "Shared UI Style Ownership Contract",
+  "targetFinding": "SHELL-001",
+  "runtimeChanges": true,
+  "visualChanges": false,
+  "nextFinding": "SHELL-002",
+  "codename": "Application Shell & Shared UI Armor"
+}

@@ -1,0 +1,1 @@
+{"id":"SO-014","codename":"Final Architecture Closeout","wave":"09","title":"SharkOps Final State Consolidation","status":"ACTIVE","runtimeChanges":false,"gate":"npm run check:tdm:final-architecture:wave09","next":"SO-014 Wave 10 | Final Regression Armor"}

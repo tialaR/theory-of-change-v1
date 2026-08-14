@@ -1,0 +1,1504 @@
+{
+  "schemaVersion": 1,
+  "policy": "legacy-debt-may-only-decrease",
+  "findings": [
+    {
+      "key": "src/app/exemplos/error.tsx:attribute:title:A visualização encontrou um problema",
+      "file": "src/app/exemplos/error.tsx",
+      "line": 17,
+      "kind": "attribute:title",
+      "value": "A visualização encontrou um problema"
+    },
+    {
+      "key": "src/app/exemplos/loading.tsx:attribute:title:Preparando a visualização",
+      "file": "src/app/exemplos/loading.tsx",
+      "line": 7,
+      "kind": "attribute:title",
+      "value": "Preparando a visualização"
+    },
+    {
+      "key": "src/app/exemplos/resultado/error.tsx:attribute:title:O resultado não conseguiu continuar",
+      "file": "src/app/exemplos/resultado/error.tsx",
+      "line": 4,
+      "kind": "attribute:title",
+      "value": "O resultado não conseguiu continuar"
+    },
+    {
+      "key": "src/app/exemplos/resultado/interativo/error.tsx:attribute:title:A experiência interativa encontrou um problema",
+      "file": "src/app/exemplos/resultado/interativo/error.tsx",
+      "line": 4,
+      "kind": "attribute:title",
+      "value": "A experiência interativa encontrou um problema"
+    },
+    {
+      "key": "src/app/exemplos/resultado/interativo/loading.tsx:attribute:title:Carregando a experiência interativa",
+      "file": "src/app/exemplos/resultado/interativo/loading.tsx",
+      "line": 3,
+      "kind": "attribute:title",
+      "value": "Carregando a experiência interativa"
+    },
+    {
+      "key": "src/app/exemplos/resultado/loading.tsx:attribute:title:Preparando o resultado",
+      "file": "src/app/exemplos/resultado/loading.tsx",
+      "line": 3,
+      "kind": "attribute:title",
+      "value": "Preparando o resultado"
+    },
+    {
+      "key": "src/app/exemplos/visao-do-fluxo/error.tsx:attribute:title:O fluxo não conseguiu continuar",
+      "file": "src/app/exemplos/visao-do-fluxo/error.tsx",
+      "line": 4,
+      "kind": "attribute:title",
+      "value": "O fluxo não conseguiu continuar"
+    },
+    {
+      "key": "src/app/exemplos/visao-do-fluxo/interativo/error.tsx:attribute:title:A experiência interativa encontrou um problema",
+      "file": "src/app/exemplos/visao-do-fluxo/interativo/error.tsx",
+      "line": 4,
+      "kind": "attribute:title",
+      "value": "A experiência interativa encontrou um problema"
+    },
+    {
+      "key": "src/app/exemplos/visao-do-fluxo/interativo/loading.tsx:attribute:title:Carregando a experiência interativa",
+      "file": "src/app/exemplos/visao-do-fluxo/interativo/loading.tsx",
+      "line": 3,
+      "kind": "attribute:title",
+      "value": "Carregando a experiência interativa"
+    },
+    {
+      "key": "src/app/exemplos/visao-do-fluxo/loading.tsx:attribute:title:Preparando o fluxo",
+      "file": "src/app/exemplos/visao-do-fluxo/loading.tsx",
+      "line": 3,
+      "kind": "attribute:title",
+      "value": "Preparando o fluxo"
+    },
+    {
+      "key": "src/app/global-error.tsx:attribute:title:A aplicação precisa ser recarregada",
+      "file": "src/app/global-error.tsx",
+      "line": 12,
+      "kind": "attribute:title",
+      "value": "A aplicação precisa ser recarregada"
+    },
+    {
+      "key": "src/app/global-error.tsx:jsx-text:Recarregar experiência",
+      "file": "src/app/global-error.tsx",
+      "line": 15,
+      "kind": "jsx-text",
+      "value": "Recarregar experiência"
+    },
+    {
+      "key": "src/app/guia-de-aprendizado/error.tsx:attribute:title:O guia não conseguiu continuar",
+      "file": "src/app/guia-de-aprendizado/error.tsx",
+      "line": 17,
+      "kind": "attribute:title",
+      "value": "O guia não conseguiu continuar"
+    },
+    {
+      "key": "src/app/guia-de-aprendizado/loading.tsx:attribute:title:Preparando as etapas",
+      "file": "src/app/guia-de-aprendizado/loading.tsx",
+      "line": 7,
+      "kind": "attribute:title",
+      "value": "Preparando as etapas"
+    },
+    {
+      "key": "src/app/loading.tsx:attribute:title:Preparando a experiência",
+      "file": "src/app/loading.tsx",
+      "line": 7,
+      "kind": "attribute:title",
+      "value": "Preparando a experiência"
+    },
+    {
+      "key": "src/app/referencias/error.tsx:attribute:title:As referências não puderam ser exibidas",
+      "file": "src/app/referencias/error.tsx",
+      "line": 17,
+      "kind": "attribute:title",
+      "value": "As referências não puderam ser exibidas"
+    },
+    {
+      "key": "src/app/referencias/loading.tsx:attribute:title:Organizando as fontes",
+      "file": "src/app/referencias/loading.tsx",
+      "line": 7,
+      "kind": "attribute:title",
+      "value": "Organizando as fontes"
+    },
+    {
+      "key": "src/features/theory-of-change/components/canvas/tdm-canvas-command-dock.tsx:attribute:aria-label:Atalhos do canvas",
+      "file": "src/features/theory-of-change/components/canvas/tdm-canvas-command-dock.tsx",
+      "line": 129,
+      "kind": "attribute:aria-label",
+      "value": "Atalhos do canvas"
+    },
+    {
+      "key": "src/features/theory-of-change/components/canvas/tdm-canvas-inner.tsx:jsx-text:Voltar",
+      "file": "src/features/theory-of-change/components/canvas/tdm-canvas-inner.tsx",
+      "line": 1421,
+      "kind": "jsx-text",
+      "value": "Voltar"
+    },
+    {
+      "key": "src/features/theory-of-change/components/canvas/tdm-canvas-inner.tsx:jsx-text:Arraste um insumo para começar",
+      "file": "src/features/theory-of-change/components/canvas/tdm-canvas-inner.tsx",
+      "line": 1445,
+      "kind": "jsx-text",
+      "value": "Arraste um insumo para começar"
+    },
+    {
+      "key": "src/features/theory-of-change/components/canvas/tdm-canvas-node-form/tdm-canvas-node-form.tsx:jsx-text:Salvar",
+      "file": "src/features/theory-of-change/components/canvas/tdm-canvas-node-form/tdm-canvas-node-form.tsx",
+      "line": 194,
+      "kind": "jsx-text",
+      "value": "Salvar"
+    },
+    {
+      "key": "src/features/theory-of-change/components/canvas/tdm-canvas-node-form/tdm-canvas-node-form.tsx:jsx-text:Fechar",
+      "file": "src/features/theory-of-change/components/canvas/tdm-canvas-node-form/tdm-canvas-node-form.tsx",
+      "line": 207,
+      "kind": "jsx-text",
+      "value": "Fechar"
+    },
+    {
+      "key": "src/features/theory-of-change/components/canvas/tdm-canvas-node/tdm-canvas-node.tsx:attribute:aria-label:Fechar toolbar",
+      "file": "src/features/theory-of-change/components/canvas/tdm-canvas-node/tdm-canvas-node.tsx",
+      "line": 245,
+      "kind": "attribute:aria-label",
+      "value": "Fechar toolbar"
+    },
+    {
+      "key": "src/features/theory-of-change/components/canvas/tdm-canvas-node/tdm-canvas-node.tsx:attribute:aria-label:Editar bloco",
+      "file": "src/features/theory-of-change/components/canvas/tdm-canvas-node/tdm-canvas-node.tsx",
+      "line": 262,
+      "kind": "attribute:aria-label",
+      "value": "Editar bloco"
+    },
+    {
+      "key": "src/features/theory-of-change/components/canvas/tdm-canvas-node/tdm-canvas-node.tsx:attribute:aria-label:Duplicar bloco",
+      "file": "src/features/theory-of-change/components/canvas/tdm-canvas-node/tdm-canvas-node.tsx",
+      "line": 279,
+      "kind": "attribute:aria-label",
+      "value": "Duplicar bloco"
+    },
+    {
+      "key": "src/features/theory-of-change/components/canvas/tdm-canvas-node/tdm-canvas-node.tsx:attribute:aria-label:Deletar bloco",
+      "file": "src/features/theory-of-change/components/canvas/tdm-canvas-node/tdm-canvas-node.tsx",
+      "line": 296,
+      "kind": "attribute:aria-label",
+      "value": "Deletar bloco"
+    },
+    {
+      "key": "src/features/theory-of-change/components/canvas/tdm-canvas-process-dock/tdm-canvas-process-dock.tsx:jsx-text:Teoria da mudança",
+      "file": "src/features/theory-of-change/components/canvas/tdm-canvas-process-dock/tdm-canvas-process-dock.tsx",
+      "line": 278,
+      "kind": "jsx-text",
+      "value": "Teoria da mudança"
+    },
+    {
+      "key": "src/features/theory-of-change/components/canvas/tdm-canvas-process-dock/tdm-canvas-process-dock.tsx:attribute:aria-label:Fechar progresso da teoria",
+      "file": "src/features/theory-of-change/components/canvas/tdm-canvas-process-dock/tdm-canvas-process-dock.tsx",
+      "line": 280,
+      "kind": "attribute:aria-label",
+      "value": "Fechar progresso da teoria"
+    },
+    {
+      "key": "src/features/theory-of-change/components/canvas/tdm-canvas-process-dock/tdm-canvas-process-dock.tsx:jsx-text:de",
+      "file": "src/features/theory-of-change/components/canvas/tdm-canvas-process-dock/tdm-canvas-process-dock.tsx",
+      "line": 294,
+      "kind": "jsx-text",
+      "value": "de"
+    },
+    {
+      "key": "src/features/theory-of-change/components/canvas/tdm-canvas-process-dock/tdm-canvas-process-dock.tsx:jsx-text:etapas concluídas",
+      "file": "src/features/theory-of-change/components/canvas/tdm-canvas-process-dock/tdm-canvas-process-dock.tsx",
+      "line": 294,
+      "kind": "jsx-text",
+      "value": "etapas concluídas"
+    },
+    {
+      "key": "src/features/theory-of-change/components/canvas/tdm-canvas-process-dock/tdm-canvas-process-dock.tsx:jsx-text:Próxima etapa →",
+      "file": "src/features/theory-of-change/components/canvas/tdm-canvas-process-dock/tdm-canvas-process-dock.tsx",
+      "line": 298,
+      "kind": "jsx-text",
+      "value": "Próxima etapa →"
+    },
+    {
+      "key": "src/features/theory-of-change/components/canvas/tdm-canvas-process-dock/tdm-canvas-process-dock.tsx:attribute:aria-label:Progresso por etapa",
+      "file": "src/features/theory-of-change/components/canvas/tdm-canvas-process-dock/tdm-canvas-process-dock.tsx",
+      "line": 321,
+      "kind": "attribute:aria-label",
+      "value": "Progresso por etapa"
+    },
+    {
+      "key": "src/features/theory-of-change/components/canvas/tdm-canvas-process-dock/tdm-canvas-process-dock.tsx:jsx-text:Visualizar teoria",
+      "file": "src/features/theory-of-change/components/canvas/tdm-canvas-process-dock/tdm-canvas-process-dock.tsx",
+      "line": 343,
+      "kind": "jsx-text",
+      "value": "Visualizar teoria"
+    },
+    {
+      "key": "src/features/theory-of-change/components/canvas/tdm-connection-guide.tsx:attribute:aria-label:Contadores rápidos",
+      "file": "src/features/theory-of-change/components/canvas/tdm-connection-guide.tsx",
+      "line": 137,
+      "kind": "attribute:aria-label",
+      "value": "Contadores rápidos"
+    },
+    {
+      "key": "src/features/theory-of-change/components/canvas/tdm-connection-guide.tsx:attribute:aria-label:Conexões",
+      "file": "src/features/theory-of-change/components/canvas/tdm-connection-guide.tsx",
+      "line": 147,
+      "kind": "attribute:aria-label",
+      "value": "Conexões"
+    },
+    {
+      "key": "src/features/theory-of-change/components/canvas/tdm-connection-guide.tsx:jsx-text:Conexões",
+      "file": "src/features/theory-of-change/components/canvas/tdm-connection-guide.tsx",
+      "line": 149,
+      "kind": "jsx-text",
+      "value": "Conexões"
+    },
+    {
+      "key": "src/features/theory-of-change/components/canvas/tdm-connection-guide.tsx:jsx-text:Próximo",
+      "file": "src/features/theory-of-change/components/canvas/tdm-connection-guide.tsx",
+      "line": 170,
+      "kind": "jsx-text",
+      "value": "Próximo"
+    },
+    {
+      "key": "src/features/theory-of-change/components/edge/tdm-edge-marker-editor.tsx:attribute:aria-label:Fechar",
+      "file": "src/features/theory-of-change/components/edge/tdm-edge-marker-editor.tsx",
+      "line": 127,
+      "kind": "attribute:aria-label",
+      "value": "Fechar"
+    },
+    {
+      "key": "src/features/theory-of-change/components/edge/tdm-theory-edge.tsx:jsx-text:Clique para editar",
+      "file": "src/features/theory-of-change/components/edge/tdm-theory-edge.tsx",
+      "line": 53,
+      "kind": "jsx-text",
+      "value": "Clique para editar"
+    },
+    {
+      "key": "src/features/theory-of-change/components/example-overview-card/example-overview-card.tsx:jsx-text:Voltar para exemplos",
+      "file": "src/features/theory-of-change/components/example-overview-card/example-overview-card.tsx",
+      "line": 43,
+      "kind": "jsx-text",
+      "value": "Voltar para exemplos"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx:jsx-text:PRÉVIA DAS EXPERIÊNCIAS",
+      "file": "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx",
+      "line": 59,
+      "kind": "jsx-text",
+      "value": "PRÉVIA DAS EXPERIÊNCIAS"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx:attribute:title:Escolha como visualizar a teoria.",
+      "file": "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx",
+      "line": 62,
+      "kind": "attribute:title",
+      "value": "Escolha como visualizar a teoria."
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx:attribute:title:Visualização do fluxo",
+      "file": "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx",
+      "line": 68,
+      "kind": "attribute:title",
+      "value": "Visualização do fluxo"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx:attribute:title:Resultado conectado",
+      "file": "src/features/theory-of-change/components/public-experience/example-previews/example-previews-section.tsx",
+      "line": 74,
+      "kind": "attribute:title",
+      "value": "Resultado conectado"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-experience/public-experience.tsx:jsx-text:Guia de aprendizado",
+      "file": "src/features/theory-of-change/components/public-experience/public-experience.tsx",
+      "line": 36,
+      "kind": "jsx-text",
+      "value": "Guia de aprendizado"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-experience/public-experience.tsx:jsx-text:Construa a teoria etapa por etapa.",
+      "file": "src/features/theory-of-change/components/public-experience/public-experience.tsx",
+      "line": 37,
+      "kind": "jsx-text",
+      "value": "Construa a teoria etapa por etapa."
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-experience/public-experience.tsx:jsx-text:Cada etapa revela uma parte da lógica causal, com orientação prática e contexto visual.",
+      "file": "src/features/theory-of-change/components/public-experience/public-experience.tsx",
+      "line": 39,
+      "kind": "jsx-text",
+      "value": "Cada etapa revela uma parte da lógica causal, com orientação prática e contexto visual."
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-experience/public-experience.tsx:attribute:aria-label:Linha do tempo do guia",
+      "file": "src/features/theory-of-change/components/public-experience/public-experience.tsx",
+      "line": 58,
+      "kind": "attribute:aria-label",
+      "value": "Linha do tempo do guia"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-experience/public-experience.tsx:jsx-text:Recomendação",
+      "file": "src/features/theory-of-change/components/public-experience/public-experience.tsx",
+      "line": 177,
+      "kind": "jsx-text",
+      "value": "Recomendação"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-experience/public-experience.tsx:jsx-text:Exemplo",
+      "file": "src/features/theory-of-change/components/public-experience/public-experience.tsx",
+      "line": 181,
+      "kind": "jsx-text",
+      "value": "Exemplo"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-experience/public-experience.tsx:jsx-text:Insumos",
+      "file": "src/features/theory-of-change/components/public-experience/public-experience.tsx",
+      "line": 199,
+      "kind": "jsx-text",
+      "value": "Insumos"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-experience/public-experience.tsx:jsx-text:Atividades",
+      "file": "src/features/theory-of-change/components/public-experience/public-experience.tsx",
+      "line": 200,
+      "kind": "jsx-text",
+      "value": "Atividades"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-experience/public-experience.tsx:jsx-text:Produtos",
+      "file": "src/features/theory-of-change/components/public-experience/public-experience.tsx",
+      "line": 201,
+      "kind": "jsx-text",
+      "value": "Produtos"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-experience/public-experience.tsx:jsx-text:Resultados",
+      "file": "src/features/theory-of-change/components/public-experience/public-experience.tsx",
+      "line": 202,
+      "kind": "jsx-text",
+      "value": "Resultados"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/examples-page.tsx:jsx-text:EXEMPLOS",
+      "file": "src/features/theory-of-change/components/public-pages/examples-page.tsx",
+      "line": 21,
+      "kind": "jsx-text",
+      "value": "EXEMPLOS"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/examples-page.tsx:attribute:title:Explore exemplos guiados.",
+      "file": "src/features/theory-of-change/components/public-pages/examples-page.tsx",
+      "line": 24,
+      "kind": "attribute:title",
+      "value": "Explore exemplos guiados."
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/examples-page.tsx:jsx-text:Ver exemplos",
+      "file": "src/features/theory-of-change/components/public-pages/examples-page.tsx",
+      "line": 32,
+      "kind": "jsx-text",
+      "value": "Ver exemplos"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/flow-page.tsx:jsx-text:Fluxo",
+      "file": "src/features/theory-of-change/components/public-pages/flow-page.tsx",
+      "line": 28,
+      "kind": "jsx-text",
+      "value": "Fluxo"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/flow-page.tsx:attribute:title:Visão do fluxo com prévia viva.",
+      "file": "src/features/theory-of-change/components/public-pages/flow-page.tsx",
+      "line": 31,
+      "kind": "attribute:title",
+      "value": "Visão do fluxo com prévia viva."
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/flow-page.tsx:attribute:title:Rascunho da teoria de mudança",
+      "file": "src/features/theory-of-change/components/public-pages/flow-page.tsx",
+      "line": 38,
+      "kind": "attribute:title",
+      "value": "Rascunho da teoria de mudança"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/flow-page.tsx:jsx-text:Visão do fluxo",
+      "file": "src/features/theory-of-change/components/public-pages/flow-page.tsx",
+      "line": 54,
+      "kind": "jsx-text",
+      "value": "Visão do fluxo"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/flow-page.tsx:attribute:title:O caminho antes da leitura final.",
+      "file": "src/features/theory-of-change/components/public-pages/flow-page.tsx",
+      "line": 57,
+      "kind": "attribute:title",
+      "value": "O caminho antes da leitura final."
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/guided-story-scenes.tsx:attribute:alt:TMD Construtor",
+      "file": "src/features/theory-of-change/components/public-pages/guided-story-scenes.tsx",
+      "line": 11,
+      "kind": "attribute:alt",
+      "value": "TMD Construtor"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/guided-story-shared.tsx:jsx-text:Risco criado",
+      "file": "src/features/theory-of-change/components/public-pages/guided-story-shared.tsx",
+      "line": 193,
+      "kind": "jsx-text",
+      "value": "Risco criado"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/guided-story-shared.tsx:jsx-text:Hipótese criada",
+      "file": "src/features/theory-of-change/components/public-pages/guided-story-shared.tsx",
+      "line": 194,
+      "kind": "jsx-text",
+      "value": "Hipótese criada"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/guided-story.tsx:attribute:aria-label:Experiência completa do TMD Construtor",
+      "file": "src/features/theory-of-change/components/public-pages/guided-story.tsx",
+      "line": 20,
+      "kind": "attribute:aria-label",
+      "value": "Experiência completa do TMD Construtor"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/guided-story.tsx:attribute:aria-label:Controles da narrativa",
+      "file": "src/features/theory-of-change/components/public-pages/guided-story.tsx",
+      "line": 24,
+      "kind": "attribute:aria-label",
+      "value": "Controles da narrativa"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/guided-story.tsx:attribute:aria-label:Capítulo anterior",
+      "file": "src/features/theory-of-change/components/public-pages/guided-story.tsx",
+      "line": 25,
+      "kind": "attribute:aria-label",
+      "value": "Capítulo anterior"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/guided-story.tsx:attribute:title:Capítulo anterior",
+      "file": "src/features/theory-of-change/components/public-pages/guided-story.tsx",
+      "line": 25,
+      "kind": "attribute:title",
+      "value": "Capítulo anterior"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/guided-story.tsx:attribute:aria-label:Próximo capítulo",
+      "file": "src/features/theory-of-change/components/public-pages/guided-story.tsx",
+      "line": 27,
+      "kind": "attribute:aria-label",
+      "value": "Próximo capítulo"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/guided-story.tsx:attribute:title:Próximo capítulo",
+      "file": "src/features/theory-of-change/components/public-pages/guided-story.tsx",
+      "line": 27,
+      "kind": "attribute:title",
+      "value": "Próximo capítulo"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/guided-story.tsx:attribute:aria-label:Reiniciar narrativa",
+      "file": "src/features/theory-of-change/components/public-pages/guided-story.tsx",
+      "line": 28,
+      "kind": "attribute:aria-label",
+      "value": "Reiniciar narrativa"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/guided-story.tsx:attribute:title:Reiniciar",
+      "file": "src/features/theory-of-change/components/public-pages/guided-story.tsx",
+      "line": 28,
+      "kind": "attribute:title",
+      "value": "Reiniciar"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/guided-story.tsx:attribute:aria-label:Capítulos da narrativa",
+      "file": "src/features/theory-of-change/components/public-pages/guided-story.tsx",
+      "line": 34,
+      "kind": "attribute:aria-label",
+      "value": "Capítulos da narrativa"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/home-page.tsx:attribute:title:Desenhe a mudança antes de explicá-la.",
+      "file": "src/features/theory-of-change/components/public-pages/home-page.tsx",
+      "line": 26,
+      "kind": "attribute:title",
+      "value": "Desenhe a mudança antes de explicá-la."
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/home-page.tsx:jsx-text:Comece agora",
+      "file": "src/features/theory-of-change/components/public-pages/home-page.tsx",
+      "line": 37,
+      "kind": "jsx-text",
+      "value": "Comece agora"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/home-page.tsx:jsx-text:Ver exemplo",
+      "file": "src/features/theory-of-change/components/public-pages/home-page.tsx",
+      "line": 45,
+      "kind": "jsx-text",
+      "value": "Ver exemplo"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/home-page.tsx:jsx-text:Por que usar",
+      "file": "src/features/theory-of-change/components/public-pages/home-page.tsx",
+      "line": 53,
+      "kind": "jsx-text",
+      "value": "Por que usar"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/home-page.tsx:attribute:title:Leia o caminho da intervenção.",
+      "file": "src/features/theory-of-change/components/public-pages/home-page.tsx",
+      "line": 56,
+      "kind": "attribute:title",
+      "value": "Leia o caminho da intervenção."
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/home-page.tsx:jsx-text:PRÉVIA GUIADA",
+      "file": "src/features/theory-of-change/components/public-pages/home-page.tsx",
+      "line": 81,
+      "kind": "jsx-text",
+      "value": "PRÉVIA GUIADA"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/home-page.tsx:attribute:title:Veja a teoria ganhar forma.",
+      "file": "src/features/theory-of-change/components/public-pages/home-page.tsx",
+      "line": 84,
+      "kind": "attribute:title",
+      "value": "Veja a teoria ganhar forma."
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/references-page.tsx:jsx-text:Referências",
+      "file": "src/features/theory-of-change/components/public-pages/references-page.tsx",
+      "line": 39,
+      "kind": "jsx-text",
+      "value": "Referências"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/references-page.tsx:attribute:title:Base visual e técnica.",
+      "file": "src/features/theory-of-change/components/public-pages/references-page.tsx",
+      "line": 42,
+      "kind": "attribute:title",
+      "value": "Base visual e técnica."
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/references-page.tsx:jsx-text:Ver guia",
+      "file": "src/features/theory-of-change/components/public-pages/references-page.tsx",
+      "line": 50,
+      "kind": "jsx-text",
+      "value": "Ver guia"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/references-page.tsx:attribute:title:Biblioteca",
+      "file": "src/features/theory-of-change/components/public-pages/references-page.tsx",
+      "line": 56,
+      "kind": "attribute:title",
+      "value": "Biblioteca"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/references-page.tsx:attribute:title:Estrutura pública",
+      "file": "src/features/theory-of-change/components/public-pages/references-page.tsx",
+      "line": 78,
+      "kind": "attribute:title",
+      "value": "Estrutura pública"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/result-page.tsx:jsx-text:Resultado",
+      "file": "src/features/theory-of-change/components/public-pages/result-page.tsx",
+      "line": 27,
+      "kind": "jsx-text",
+      "value": "Resultado"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/result-page.tsx:attribute:title:Leitura executiva com prévia viva.",
+      "file": "src/features/theory-of-change/components/public-pages/result-page.tsx",
+      "line": 30,
+      "kind": "attribute:title",
+      "value": "Leitura executiva com prévia viva."
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/result-page.tsx:jsx-text:Relações causais",
+      "file": "src/features/theory-of-change/components/public-pages/result-page.tsx",
+      "line": 55,
+      "kind": "jsx-text",
+      "value": "Relações causais"
+    },
+    {
+      "key": "src/features/theory-of-change/components/public-pages/result-page.tsx:attribute:title:O que cada seta está dizendo.",
+      "file": "src/features/theory-of-change/components/public-pages/result-page.tsx",
+      "line": 58,
+      "kind": "attribute:title",
+      "value": "O que cada seta está dizendo."
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-preview/tdm-result-preview.tsx:attribute:aria-label:Resultado da sua teoria",
+      "file": "src/features/theory-of-change/components/result-preview/tdm-result-preview.tsx",
+      "line": 82,
+      "kind": "attribute:aria-label",
+      "value": "Resultado da sua teoria"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/experience/interactive-experience-shell.tsx:attribute:aria-label:Voltar",
+      "file": "src/features/theory-of-change/components/result-view/experience/interactive-experience-shell.tsx",
+      "line": 47,
+      "kind": "attribute:aria-label",
+      "value": "Voltar"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/experience/interactive-experience-shell.tsx:attribute:aria-label:Aumentar zoom",
+      "file": "src/features/theory-of-change/components/result-view/experience/interactive-experience-shell.tsx",
+      "line": 56,
+      "kind": "attribute:aria-label",
+      "value": "Aumentar zoom"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/experience/interactive-experience-shell.tsx:attribute:aria-label:Diminuir zoom",
+      "file": "src/features/theory-of-change/components/result-view/experience/interactive-experience-shell.tsx",
+      "line": 58,
+      "kind": "attribute:aria-label",
+      "value": "Diminuir zoom"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/experience/interactive-experience-shell.tsx:attribute:aria-label:Centralizar visualização",
+      "file": "src/features/theory-of-change/components/result-view/experience/interactive-experience-shell.tsx",
+      "line": 60,
+      "kind": "attribute:aria-label",
+      "value": "Centralizar visualização"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/experience/interactive-experience-shell.tsx:attribute:aria-label:Reiniciar visualização",
+      "file": "src/features/theory-of-change/components/result-view/experience/interactive-experience-shell.tsx",
+      "line": 61,
+      "kind": "attribute:aria-label",
+      "value": "Reiniciar visualização"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/experience/interactive-experience-shell.tsx:jsx-text:Fechar",
+      "file": "src/features/theory-of-change/components/result-view/experience/interactive-experience-shell.tsx",
+      "line": 63,
+      "kind": "jsx-text",
+      "value": "Fechar"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/experience/result-experience-header.tsx:jsx-text:Resultado da Teoria da Mudança",
+      "file": "src/features/theory-of-change/components/result-view/experience/result-experience-header.tsx",
+      "line": 43,
+      "kind": "jsx-text",
+      "value": "Resultado da Teoria da Mudança"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/experience/result-experience-header.tsx:jsx-text:Insumos",
+      "file": "src/features/theory-of-change/components/result-view/experience/result-experience-header.tsx",
+      "line": 49,
+      "kind": "jsx-text",
+      "value": "Insumos"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/experience/result-experience-header.tsx:jsx-text:Atividades",
+      "file": "src/features/theory-of-change/components/result-view/experience/result-experience-header.tsx",
+      "line": 50,
+      "kind": "jsx-text",
+      "value": "Atividades"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/experience/result-experience-header.tsx:jsx-text:Produtos",
+      "file": "src/features/theory-of-change/components/result-view/experience/result-experience-header.tsx",
+      "line": 51,
+      "kind": "jsx-text",
+      "value": "Produtos"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/experience/result-experience-header.tsx:jsx-text:Resultados",
+      "file": "src/features/theory-of-change/components/result-view/experience/result-experience-header.tsx",
+      "line": 52,
+      "kind": "jsx-text",
+      "value": "Resultados"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/experience/result-experience-header.tsx:jsx-text:Conexões",
+      "file": "src/features/theory-of-change/components/result-view/experience/result-experience-header.tsx",
+      "line": 53,
+      "kind": "jsx-text",
+      "value": "Conexões"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/experience/result-export-actions.tsx:attribute:aria-label:Exportações",
+      "file": "src/features/theory-of-change/components/result-view/experience/result-export-actions.tsx",
+      "line": 9,
+      "kind": "attribute:aria-label",
+      "value": "Exportações"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/experience/result-export-actions.tsx:jsx-text:Exportar",
+      "file": "src/features/theory-of-change/components/result-view/experience/result-export-actions.tsx",
+      "line": 17,
+      "kind": "jsx-text",
+      "value": "Exportar"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/experience/result-interactive-preview.tsx:jsx-text:Pré-visualização",
+      "file": "src/features/theory-of-change/components/result-view/experience/result-interactive-preview.tsx",
+      "line": 21,
+      "kind": "jsx-text",
+      "value": "Pré-visualização"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/experience/result-interactive-preview.tsx:jsx-text:Um mapa compacto para entender a lógica antes de mergulhar.",
+      "file": "src/features/theory-of-change/components/result-view/experience/result-interactive-preview.tsx",
+      "line": 22,
+      "kind": "jsx-text",
+      "value": "Um mapa compacto para entender a lógica antes de mergulhar."
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/experience/result-interactive-preview.tsx:jsx-text:O preview mostra a estrutura causal sem ocupar toda a página. A interação completa fica na rota dedicada.",
+      "file": "src/features/theory-of-change/components/result-view/experience/result-interactive-preview.tsx",
+      "line": 23,
+      "kind": "jsx-text",
+      "value": "O preview mostra a estrutura causal sem ocupar toda a página. A interação completa fica na rota dedicada."
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/experience/result-interactive-preview.tsx:jsx-text:Abrir visualização interativa",
+      "file": "src/features/theory-of-change/components/result-view/experience/result-interactive-preview.tsx",
+      "line": 25,
+      "kind": "jsx-text",
+      "value": "Abrir visualização interativa"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/experience/result-interactive-preview.tsx:attribute:aria-label:Abrir visualização interativa",
+      "file": "src/features/theory-of-change/components/result-view/experience/result-interactive-preview.tsx",
+      "line": 29,
+      "kind": "attribute:aria-label",
+      "value": "Abrir visualização interativa"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/experience/result-interactive-preview.tsx:attribute:aria-label:Conexões resumidas entre etapas",
+      "file": "src/features/theory-of-change/components/result-view/experience/result-interactive-preview.tsx",
+      "line": 31,
+      "kind": "attribute:aria-label",
+      "value": "Conexões resumidas entre etapas"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/liquid-glass/resource-card.tsx:attribute:aria-label:Conexões do card",
+      "file": "src/features/theory-of-change/components/result-view/liquid-glass/resource-card.tsx",
+      "line": 69,
+      "kind": "attribute:aria-label",
+      "value": "Conexões do card"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/liquid-glass/resource-card.tsx:jsx-text:DETALHES",
+      "file": "src/features/theory-of-change/components/result-view/liquid-glass/resource-card.tsx",
+      "line": 90,
+      "kind": "jsx-text",
+      "value": "DETALHES"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/liquid-glass/resource-card.tsx:jsx-text:NOTAS",
+      "file": "src/features/theory-of-change/components/result-view/liquid-glass/resource-card.tsx",
+      "line": 97,
+      "kind": "jsx-text",
+      "value": "NOTAS"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/liquid-glass/result-liquid-card.tsx:attribute:aria-label:Conexões do card",
+      "file": "src/features/theory-of-change/components/result-view/liquid-glass/result-liquid-card.tsx",
+      "line": 60,
+      "kind": "attribute:aria-label",
+      "value": "Conexões do card"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/liquid-glass/result-liquid-card.tsx:jsx-text:DETALHES",
+      "file": "src/features/theory-of-change/components/result-view/liquid-glass/result-liquid-card.tsx",
+      "line": 95,
+      "kind": "jsx-text",
+      "value": "DETALHES"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/liquid-glass/result-liquid-card.tsx:jsx-text:NOTAS",
+      "file": "src/features/theory-of-change/components/result-view/liquid-glass/result-liquid-card.tsx",
+      "line": 102,
+      "kind": "jsx-text",
+      "value": "NOTAS"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-empty-state/result-empty-state.tsx:jsx-text:Resultado da Teoria da Mudança",
+      "file": "src/features/theory-of-change/components/result-view/result-empty-state/result-empty-state.tsx",
+      "line": 19,
+      "kind": "jsx-text",
+      "value": "Resultado da Teoria da Mudança"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-empty-state/result-empty-state.tsx:jsx-text:Sua teoria ainda está em construção.",
+      "file": "src/features/theory-of-change/components/result-view/result-empty-state/result-empty-state.tsx",
+      "line": 20,
+      "kind": "jsx-text",
+      "value": "Sua teoria ainda está em construção."
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-node-card/result-node-card.tsx:attribute:aria-label:Conexões do card",
+      "file": "src/features/theory-of-change/components/result-view/result-node-card/result-node-card.tsx",
+      "line": 77,
+      "kind": "attribute:aria-label",
+      "value": "Conexões do card"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-node-card/result-node-card.tsx:jsx-text:DETALHES",
+      "file": "src/features/theory-of-change/components/result-view/result-node-card/result-node-card.tsx",
+      "line": 102,
+      "kind": "jsx-text",
+      "value": "DETALHES"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-node-card/result-node-card.tsx:jsx-text:NOTAS",
+      "file": "src/features/theory-of-change/components/result-view/result-node-card/result-node-card.tsx",
+      "line": 109,
+      "kind": "jsx-text",
+      "value": "NOTAS"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-convergence-map-figure.tsx:jsx-text:ATIVIDADES",
+      "file": "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-convergence-map-figure.tsx",
+      "line": 69,
+      "kind": "jsx-text",
+      "value": "ATIVIDADES"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-convergence-map-figure.tsx:jsx-text:PRODUTOS",
+      "file": "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-convergence-map-figure.tsx",
+      "line": 72,
+      "kind": "jsx-text",
+      "value": "PRODUTOS"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-convergence-map-figure.tsx:jsx-text:RESULTADO",
+      "file": "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-convergence-map-figure.tsx",
+      "line": 75,
+      "kind": "jsx-text",
+      "value": "RESULTADO"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-flow-overview-figure.tsx:jsx-text:RISCO",
+      "file": "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-flow-overview-figure.tsx",
+      "line": 96,
+      "kind": "jsx-text",
+      "value": "RISCO"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-flow-overview-figure.tsx:jsx-text:RISCO",
+      "file": "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-flow-overview-figure.tsx",
+      "line": 100,
+      "kind": "jsx-text",
+      "value": "RISCO"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-flow-overview-figure.tsx:jsx-text:HIPÓTESE",
+      "file": "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-flow-overview-figure.tsx",
+      "line": 104,
+      "kind": "jsx-text",
+      "value": "HIPÓTESE"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-resources-map-figure.tsx:jsx-text:INSUMOS",
+      "file": "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-resources-map-figure.tsx",
+      "line": 70,
+      "kind": "jsx-text",
+      "value": "INSUMOS"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-resources-map-figure.tsx:jsx-text:ATIVIDADES",
+      "file": "src/features/theory-of-change/components/result-view/result-theory-narrative/figures/theory-resources-map-figure.tsx",
+      "line": 73,
+      "kind": "jsx-text",
+      "value": "ATIVIDADES"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-theory-narrative/theory-narrative-document.tsx:jsx-text:INTÉRPRETE DA TEORIA",
+      "file": "src/features/theory-of-change/components/result-view/result-theory-narrative/theory-narrative-document.tsx",
+      "line": 66,
+      "kind": "jsx-text",
+      "value": "INTÉRPRETE DA TEORIA"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-toolbar/result-toolbar.tsx:attribute:aria-label:Controles de visualização",
+      "file": "src/features/theory-of-change/components/result-view/result-toolbar/result-toolbar.tsx",
+      "line": 90,
+      "kind": "attribute:aria-label",
+      "value": "Controles de visualização"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-toolbar/result-toolbar.tsx:attribute:aria-label:Aumentar zoom",
+      "file": "src/features/theory-of-change/components/result-view/result-toolbar/result-toolbar.tsx",
+      "line": 91,
+      "kind": "attribute:aria-label",
+      "value": "Aumentar zoom"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-toolbar/result-toolbar.tsx:attribute:aria-label:Diminuir zoom",
+      "file": "src/features/theory-of-change/components/result-view/result-toolbar/result-toolbar.tsx",
+      "line": 95,
+      "kind": "attribute:aria-label",
+      "value": "Diminuir zoom"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-toolbar/result-toolbar.tsx:attribute:aria-label:Centralizar visualização",
+      "file": "src/features/theory-of-change/components/result-view/result-toolbar/result-toolbar.tsx",
+      "line": 100,
+      "kind": "attribute:aria-label",
+      "value": "Centralizar visualização"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-toolbar/result-toolbar.tsx:attribute:aria-label:Reiniciar visualização",
+      "file": "src/features/theory-of-change/components/result-view/result-toolbar/result-toolbar.tsx",
+      "line": 109,
+      "kind": "attribute:aria-label",
+      "value": "Reiniciar visualização"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx:jsx-text:relações",
+      "file": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx",
+      "line": 27,
+      "kind": "jsx-text",
+      "value": "relações"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx:attribute:aria-label:Indicadores de conexão",
+      "file": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx",
+      "line": 36,
+      "kind": "attribute:aria-label",
+      "value": "Indicadores de conexão"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx:jsx-text:R",
+      "file": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx",
+      "line": 38,
+      "kind": "jsx-text",
+      "value": "R"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx:jsx-text:Risco",
+      "file": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx",
+      "line": 39,
+      "kind": "jsx-text",
+      "value": "Risco"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx:jsx-text:H",
+      "file": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx",
+      "line": 42,
+      "kind": "jsx-text",
+      "value": "H"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx:jsx-text:Hipótese",
+      "file": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx",
+      "line": 43,
+      "kind": "jsx-text",
+      "value": "Hipótese"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx:attribute:aria-label:Indicadores de conexão",
+      "file": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx",
+      "line": 51,
+      "kind": "attribute:aria-label",
+      "value": "Indicadores de conexão"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx:attribute:title:R indica risco da relação.",
+      "file": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx",
+      "line": 52,
+      "kind": "attribute:title",
+      "value": "R indica risco da relação."
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx:jsx-text:R",
+      "file": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx",
+      "line": 53,
+      "kind": "jsx-text",
+      "value": "R"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx:jsx-text:Risco",
+      "file": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx",
+      "line": 54,
+      "kind": "jsx-text",
+      "value": "Risco"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx:attribute:title:H indica hipótese da relação.",
+      "file": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx",
+      "line": 56,
+      "kind": "attribute:title",
+      "value": "H indica hipótese da relação."
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx:jsx-text:H",
+      "file": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx",
+      "line": 57,
+      "kind": "jsx-text",
+      "value": "H"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx:jsx-text:Hipótese",
+      "file": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx",
+      "line": 58,
+      "kind": "jsx-text",
+      "value": "Hipótese"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx:attribute:aria-label:Leitura do fluxo",
+      "file": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx",
+      "line": 92,
+      "kind": "attribute:aria-label",
+      "value": "Leitura do fluxo"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx:jsx-text:Leitura do fluxo",
+      "file": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx",
+      "line": 105,
+      "kind": "jsx-text",
+      "value": "Leitura do fluxo"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx:jsx-text:Este bloco ainda não possui conexões.",
+      "file": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx",
+      "line": 111,
+      "kind": "jsx-text",
+      "value": "Este bloco ainda não possui conexões."
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx:jsx-text:Indicadores",
+      "file": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx",
+      "line": 118,
+      "kind": "jsx-text",
+      "value": "Indicadores"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx:jsx-expression:no caminho destacado.",
+      "file": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx",
+      "line": 127,
+      "kind": "jsx-expression",
+      "value": "no caminho destacado."
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx:jsx-text:Marcadores R e H aparecem nas conexões do fluxo.",
+      "file": "src/features/theory-of-change/components/result-view/result-view-flow-inspector.tsx",
+      "line": 130,
+      "kind": "jsx-text",
+      "value": "Marcadores R e H aparecem nas conexões do fluxo."
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view.tsx:jsx-text:Exportar",
+      "file": "src/features/theory-of-change/components/result-view/result-view.tsx",
+      "line": 187,
+      "kind": "jsx-text",
+      "value": "Exportar"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view.tsx:attribute:aria-label:Formatos de exportação",
+      "file": "src/features/theory-of-change/components/result-view/result-view.tsx",
+      "line": 203,
+      "kind": "attribute:aria-label",
+      "value": "Formatos de exportação"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view.tsx:attribute:aria-label:Resumo da teoria",
+      "file": "src/features/theory-of-change/components/result-view/result-view.tsx",
+      "line": 752,
+      "kind": "attribute:aria-label",
+      "value": "Resumo da teoria"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view.tsx:jsx-text:Conexões",
+      "file": "src/features/theory-of-change/components/result-view/result-view.tsx",
+      "line": 776,
+      "kind": "jsx-text",
+      "value": "Conexões"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view.tsx:jsx-text:Riscos",
+      "file": "src/features/theory-of-change/components/result-view/result-view.tsx",
+      "line": 781,
+      "kind": "jsx-text",
+      "value": "Riscos"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view.tsx:jsx-text:Hipóteses",
+      "file": "src/features/theory-of-change/components/result-view/result-view.tsx",
+      "line": 787,
+      "kind": "jsx-text",
+      "value": "Hipóteses"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view.tsx:jsx-text:Resultado da Teoria da Mudança",
+      "file": "src/features/theory-of-change/components/result-view/result-view.tsx",
+      "line": 799,
+      "kind": "jsx-text",
+      "value": "Resultado da Teoria da Mudança"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view.tsx:jsx-text:Sua teoria ainda está em construção.",
+      "file": "src/features/theory-of-change/components/result-view/result-view.tsx",
+      "line": 800,
+      "kind": "jsx-text",
+      "value": "Sua teoria ainda está em construção."
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view.tsx:jsx-text:Crie itens no canvas para visualizar a teoria organizada.",
+      "file": "src/features/theory-of-change/components/result-view/result-view.tsx",
+      "line": 801,
+      "kind": "jsx-text",
+      "value": "Crie itens no canvas para visualizar a teoria organizada."
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view.tsx:jsx-text:Resultado da Teoria da Mudança",
+      "file": "src/features/theory-of-change/components/result-view/result-view.tsx",
+      "line": 1165,
+      "kind": "jsx-text",
+      "value": "Resultado da Teoria da Mudança"
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view.tsx:jsx-text:Selecione um bloco ou conexão para revelar o caminho causal.",
+      "file": "src/features/theory-of-change/components/result-view/result-view.tsx",
+      "line": 1176,
+      "kind": "jsx-text",
+      "value": "Selecione um bloco ou conexão para revelar o caminho causal."
+    },
+    {
+      "key": "src/features/theory-of-change/components/result-view/result-view.tsx:attribute:aria-label:Fluxo da teoria da mudança",
+      "file": "src/features/theory-of-change/components/result-view/result-view.tsx",
+      "line": 1250,
+      "kind": "attribute:aria-label",
+      "value": "Fluxo da teoria da mudança"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/tdm-connection-inspector/tdm-connection-inspector.tsx:jsx-text:Editar conexão entre:",
+      "file": "src/features/theory-of-change/components/sidebar/tdm-connection-inspector/tdm-connection-inspector.tsx",
+      "line": 153,
+      "kind": "jsx-text",
+      "value": "Editar conexão entre:"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/tdm-connection-inspector/tdm-connection-inspector.tsx:jsx-text:Adicionar risco",
+      "file": "src/features/theory-of-change/components/sidebar/tdm-connection-inspector/tdm-connection-inspector.tsx",
+      "line": 178,
+      "kind": "jsx-text",
+      "value": "Adicionar risco"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/tdm-connection-inspector/tdm-connection-inspector.tsx:jsx-text:Adicionar hipótese",
+      "file": "src/features/theory-of-change/components/sidebar/tdm-connection-inspector/tdm-connection-inspector.tsx",
+      "line": 190,
+      "kind": "jsx-text",
+      "value": "Adicionar hipótese"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/tdm-connection-inspector/tdm-connection-inspector.tsx:jsx-text:Excluir conexão",
+      "file": "src/features/theory-of-change/components/sidebar/tdm-connection-inspector/tdm-connection-inspector.tsx",
+      "line": 201,
+      "kind": "jsx-text",
+      "value": "Excluir conexão"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx:jsx-text:Atalhos",
+      "file": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx",
+      "line": 461,
+      "kind": "jsx-text",
+      "value": "Atalhos"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx:jsx-text:Voltar para minha teoria",
+      "file": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx",
+      "line": 505,
+      "kind": "jsx-text",
+      "value": "Voltar para minha teoria"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx:jsx-text:Selecione um bloco no canvas para editar.",
+      "file": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx",
+      "line": 654,
+      "kind": "jsx-text",
+      "value": "Selecione um bloco no canvas para editar."
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx:jsx-text:Salvar alterações",
+      "file": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx",
+      "line": 660,
+      "kind": "jsx-text",
+      "value": "Salvar alterações"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx:jsx-text:Duplicar",
+      "file": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx",
+      "line": 670,
+      "kind": "jsx-text",
+      "value": "Duplicar"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx:jsx-text:Deletar",
+      "file": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx",
+      "line": 673,
+      "kind": "jsx-text",
+      "value": "Deletar"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx:attribute:aria-label:Hero da teoria da mudança",
+      "file": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx",
+      "line": 830,
+      "kind": "attribute:aria-label",
+      "value": "Hero da teoria da mudança"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx:jsx-text:Construtor de Teoria da Mudança",
+      "file": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx",
+      "line": 837,
+      "kind": "jsx-text",
+      "value": "Construtor de Teoria da Mudança"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx:jsx-text:Mapeie como recursos viram ações, entregas e resultados.",
+      "file": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx",
+      "line": 839,
+      "kind": "jsx-text",
+      "value": "Mapeie como recursos viram ações, entregas e resultados."
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx:attribute:aria-label:Progresso da teoria",
+      "file": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx",
+      "line": 872,
+      "kind": "attribute:aria-label",
+      "value": "Progresso da teoria"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx:jsx-text:5",
+      "file": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx",
+      "line": 1018,
+      "kind": "jsx-text",
+      "value": "5"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx:jsx-text:Conectar lógica",
+      "file": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx",
+      "line": 1029,
+      "kind": "jsx-text",
+      "value": "Conectar lógica"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx:jsx-text:Conecte etapas, riscos e hipóteses.",
+      "file": "src/features/theory-of-change/components/sidebar/tdm-sidebar.tsx",
+      "line": 1030,
+      "kind": "jsx-text",
+      "value": "Conecte etapas, riscos e hipóteses."
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/theory-header-form.tsx:attribute:aria-label:Limpar nome da teoria",
+      "file": "src/features/theory-of-change/components/sidebar/theory-header-form.tsx",
+      "line": 47,
+      "kind": "attribute:aria-label",
+      "value": "Limpar nome da teoria"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/theory-header-form.tsx:attribute:placeholder:Nova teoria da mudança",
+      "file": "src/features/theory-of-change/components/sidebar/theory-header-form.tsx",
+      "line": 69,
+      "kind": "attribute:placeholder",
+      "value": "Nova teoria da mudança"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/theory-header-form.tsx:attribute:aria-label:Nome da teoria da mudança",
+      "file": "src/features/theory-of-change/components/sidebar/theory-header-form.tsx",
+      "line": 70,
+      "kind": "attribute:aria-label",
+      "value": "Nome da teoria da mudança"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/theory-header-form.tsx:attribute:aria-label:Limpar descrição da teoria",
+      "file": "src/features/theory-of-change/components/sidebar/theory-header-form.tsx",
+      "line": 90,
+      "kind": "attribute:aria-label",
+      "value": "Limpar descrição da teoria"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/theory-header-form.tsx:attribute:aria-label:Descrição da teoria da mudança",
+      "file": "src/features/theory-of-change/components/sidebar/theory-header-form.tsx",
+      "line": 112,
+      "kind": "attribute:aria-label",
+      "value": "Descrição da teoria da mudança"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/v1-preserved-sidebar-sections.tsx:attribute:aria-label:Prévia do alinhamento por etapas",
+      "file": "src/features/theory-of-change/components/sidebar/v1-preserved-sidebar-sections.tsx",
+      "line": 78,
+      "kind": "attribute:aria-label",
+      "value": "Prévia do alinhamento por etapas"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/v1-preserved-sidebar-sections.tsx:jsx-text:Organização do canvas",
+      "file": "src/features/theory-of-change/components/sidebar/v1-preserved-sidebar-sections.tsx",
+      "line": 174,
+      "kind": "jsx-text",
+      "value": "Organização do canvas"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/v1-preserved-sidebar-sections.tsx:jsx-text:Alinhe os blocos por etapa para ler a teoria com mais clareza.",
+      "file": "src/features/theory-of-change/components/sidebar/v1-preserved-sidebar-sections.tsx",
+      "line": 191,
+      "kind": "jsx-text",
+      "value": "Alinhe os blocos por etapa para ler a teoria com mais clareza."
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/v1-preserved-sidebar-sections.tsx:jsx-text:Prévia do alinhamento",
+      "file": "src/features/theory-of-change/components/sidebar/v1-preserved-sidebar-sections.tsx",
+      "line": 194,
+      "kind": "jsx-text",
+      "value": "Prévia do alinhamento"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/v1-preserved-sidebar-sections.tsx:jsx-text:Centralizar colunas",
+      "file": "src/features/theory-of-change/components/sidebar/v1-preserved-sidebar-sections.tsx",
+      "line": 204,
+      "kind": "jsx-text",
+      "value": "Centralizar colunas"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/v1-preserved-sidebar-sections.tsx:attribute:aria-label:Resultado da sua teoria",
+      "file": "src/features/theory-of-change/components/sidebar/v1-preserved-sidebar-sections.tsx",
+      "line": 326,
+      "kind": "attribute:aria-label",
+      "value": "Resultado da sua teoria"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/v1-preserved-sidebar-sections.tsx:jsx-text:Resultado da sua teoria",
+      "file": "src/features/theory-of-change/components/sidebar/v1-preserved-sidebar-sections.tsx",
+      "line": 356,
+      "kind": "jsx-text",
+      "value": "Resultado da sua teoria"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/v1-preserved-sidebar-sections.tsx:jsx-text:Revise etapas, conexões, riscos e hipóteses.",
+      "file": "src/features/theory-of-change/components/sidebar/v1-preserved-sidebar-sections.tsx",
+      "line": 358,
+      "kind": "jsx-text",
+      "value": "Revise etapas, conexões, riscos e hipóteses."
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/v1-preserved-sidebar-sections.tsx:jsx-text:Visualizar resultado",
+      "file": "src/features/theory-of-change/components/sidebar/v1-preserved-sidebar-sections.tsx",
+      "line": 377,
+      "kind": "jsx-text",
+      "value": "Visualizar resultado"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/v1-progress-and-stage-action.tsx:jsx-text:ETAPAS DA TEORIA",
+      "file": "src/features/theory-of-change/components/sidebar/v1-progress-and-stage-action.tsx",
+      "line": 49,
+      "kind": "jsx-text",
+      "value": "ETAPAS DA TEORIA"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/v1-progress-and-stage-action.tsx:jsx-text:% completo",
+      "file": "src/features/theory-of-change/components/sidebar/v1-progress-and-stage-action.tsx",
+      "line": 53,
+      "kind": "jsx-text",
+      "value": "% completo"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/v1-progress-and-stage-action.tsx:jsx-text:AGORA",
+      "file": "src/features/theory-of-change/components/sidebar/v1-progress-and-stage-action.tsx",
+      "line": 80,
+      "kind": "jsx-text",
+      "value": "AGORA"
+    },
+    {
+      "key": "src/features/theory-of-change/components/sidebar/v1-progress-and-stage-action.tsx:jsx-text:Clique, arraste e solte.",
+      "file": "src/features/theory-of-change/components/sidebar/v1-progress-and-stage-action.tsx",
+      "line": 99,
+      "kind": "jsx-text",
+      "value": "Clique, arraste e solte."
+    },
+    {
+      "key": "src/features/theory-of-change/components/stage-gate/stage-gate.tsx:jsx-text:Guia da etapa",
+      "file": "src/features/theory-of-change/components/stage-gate/stage-gate.tsx",
+      "line": 28,
+      "kind": "jsx-text",
+      "value": "Guia da etapa"
+    },
+    {
+      "key": "src/features/theory-of-change/components/toast/tdm-toast.tsx:attribute:aria-label:Fechar mensagem",
+      "file": "src/features/theory-of-change/components/toast/tdm-toast.tsx",
+      "line": 121,
+      "kind": "attribute:aria-label",
+      "value": "Fechar mensagem"
+    },
+    {
+      "key": "src/features/theory-of-change/export/pdf/theory-pdf-document.tsx:jsx-text:Intérprete da Teoria",
+      "file": "src/features/theory-of-change/export/pdf/theory-pdf-document.tsx",
+      "line": 122,
+      "kind": "jsx-text",
+      "value": "Intérprete da Teoria"
+    },
+    {
+      "key": "src/features/theory-of-change/export/pdf/theory-pdf-document.tsx:jsx-text:Introdução",
+      "file": "src/features/theory-of-change/export/pdf/theory-pdf-document.tsx",
+      "line": 129,
+      "kind": "jsx-text",
+      "value": "Introdução"
+    },
+    {
+      "key": "src/features/theory-of-change/export/pdf/theory-pdf-document.tsx:jsx-text:Referências",
+      "file": "src/features/theory-of-change/export/pdf/theory-pdf-document.tsx",
+      "line": 142,
+      "kind": "jsx-text",
+      "value": "Referências"
+    },
+    {
+      "key": "src/shared/ui/tdm-button/tdm-button.tsx:jsx-text:Carregando",
+      "file": "src/shared/ui/tdm-button/tdm-button.tsx",
+      "line": 204,
+      "kind": "jsx-text",
+      "value": "Carregando"
+    },
+    {
+      "key": "src/shared/ui/tdm-public-layout/public-content.tsx:jsx-text:TMD Construtor. Todos os direitos reservados.",
+      "file": "src/shared/ui/tdm-public-layout/public-content.tsx",
+      "line": 107,
+      "kind": "jsx-text",
+      "value": "TMD Construtor. Todos os direitos reservados."
+    },
+    {
+      "key": "src/shared/ui/tdm-public-layout/public-content.tsx:jsx-text:Ferramenta visual para construir, revisar e comunicar teorias da mudança.",
+      "file": "src/shared/ui/tdm-public-layout/public-content.tsx",
+      "line": 110,
+      "kind": "jsx-text",
+      "value": "Ferramenta visual para construir, revisar e comunicar teorias da mudança."
+    },
+    {
+      "key": "src/shared/ui/tdm-public-layout/public-header.tsx:attribute:aria-label:TMD Construtor — Página inicial",
+      "file": "src/shared/ui/tdm-public-layout/public-header.tsx",
+      "line": 84,
+      "kind": "attribute:aria-label",
+      "value": "TMD Construtor — Página inicial"
+    },
+    {
+      "key": "src/shared/ui/tdm-public-layout/public-header.tsx:attribute:alt:TMD Construtor",
+      "file": "src/shared/ui/tdm-public-layout/public-header.tsx",
+      "line": 87,
+      "kind": "attribute:alt",
+      "value": "TMD Construtor"
+    },
+    {
+      "key": "src/shared/ui/tdm-public-layout/public-header.tsx:attribute:aria-label:Navegação principal",
+      "file": "src/shared/ui/tdm-public-layout/public-header.tsx",
+      "line": 95,
+      "kind": "attribute:aria-label",
+      "value": "Navegação principal"
+    },
+    {
+      "key": "src/shared/ui/tdm-public-layout/public-timeline.tsx:jsx-text:Visualize esta etapa no fluxo da teoria antes de avançar.",
+      "file": "src/shared/ui/tdm-public-layout/public-timeline.tsx",
+      "line": 62,
+      "kind": "jsx-text",
+      "value": "Visualize esta etapa no fluxo da teoria antes de avançar."
+    }
+  ]
+}

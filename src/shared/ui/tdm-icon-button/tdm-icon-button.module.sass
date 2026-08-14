@@ -1,0 +1,100 @@
+@use '../../styles/tdm/tdm-focus' as focus
+
+.button
+  display: inline-grid
+  place-items: center
+  flex: 0 0 auto
+  padding: 0
+  border: var(--tdm-border-width-hairline) solid transparent
+  border-radius: var(--tdm-radius-md)
+  color: var(--tdm-fg-secondary)
+  background: transparent
+  text-decoration: none
+  cursor: pointer
+  transition: background-color var(--tdm-duration-ui) var(--tdm-ease-standard), border-color var(--tdm-duration-ui) var(--tdm-ease-standard), color var(--tdm-duration-ui) var(--tdm-ease-standard), transform var(--tdm-duration-fast) var(--tdm-ease-standard), opacity var(--tdm-duration-ui) var(--tdm-ease-standard)
+  +focus.focus-visible
+
+  &:hover:not(:disabled):not([aria-disabled='true'])
+    color: var(--tdm-fg-primary)
+
+  &:active:not(:disabled):not([aria-disabled='true'])
+    transform: translateY(0.0625rem)
+
+  &:disabled,
+  &[aria-disabled='true']
+    cursor: not-allowed
+    opacity: 0.42
+    color: var(--tdm-fg-disabled)
+    background: transparent
+    border-color: transparent
+    transform: none
+
+.icon
+  display: inline-grid
+  place-items: center
+  color: currentColor
+
+  :global(svg)
+    width: 100%
+    height: 100%
+    fill: none
+    stroke: currentColor
+    stroke-width: var(--tdm-icon-stroke-default)
+    stroke-linecap: round
+    stroke-linejoin: round
+
+.sizeSm
+  min-width: var(--tdm-icon-container-sm)
+  min-height: var(--tdm-icon-container-sm)
+
+  .icon
+    width: var(--tdm-icon-size-sm)
+    height: var(--tdm-icon-size-sm)
+
+.sizeMd
+  min-width: var(--tdm-icon-container-md)
+  min-height: var(--tdm-icon-container-md)
+
+  .icon
+    width: var(--tdm-icon-size-md)
+    height: var(--tdm-icon-size-md)
+
+.sizeLg
+  min-width: var(--tdm-icon-container-lg)
+  min-height: var(--tdm-icon-container-lg)
+
+  .icon
+    width: var(--tdm-icon-size-lg)
+    height: var(--tdm-icon-size-lg)
+
+.variantGhost
+  background: transparent
+  border-color: transparent
+
+.variantSubtle
+  background: transparent
+  border-color: var(--tdm-border-subtle)
+
+  &:hover:not(:disabled):not([aria-disabled='true'])
+    border-color: var(--tdm-border-interactive)
+
+.variantFilled
+  background: var(--tdm-surface-elevated)
+  border-color: var(--tdm-border-default)
+  color: var(--tdm-fg-primary)
+  box-shadow: var(--tdm-highlight-top), var(--tdm-shadow-low)
+
+  &:hover:not(:disabled):not([aria-disabled='true'])
+    background: var(--tdm-surface-hover)
+
+.variantDestructive
+  background: transparent
+  border-color: transparent
+
+  &:hover:not(:disabled):not([aria-disabled='true']),
+  &:focus-visible:not(:disabled):not([aria-disabled='true'])
+    color: var(--tdm-fg-danger)
+
+@media (prefers-reduced-motion: reduce)
+  .button
+    transition: none

@@ -1,0 +1,215 @@
+// Manual connection and mirrored relation editor patch v1
+.nodeHandleTarget
+  left: -0.36rem
+  right: auto
+
+.nodeHandleSource
+  right: -0.36rem
+  left: auto
+
+.node[data-connecting='true']
+  .nodeHandleSource
+    box-shadow: 0 0 0 0.24rem color-mix(in srgb, var(--stage-color) 18%, transparent), 0 0 0 0.0625rem color-mix(in srgb, var(--stage-color) 72%, transparent)
+
+.edgePopover
+  --relation-accent: var(--stage-product)
+  position: absolute
+  z-index: 24
+  width: 18rem
+  padding: 0.8rem
+  border: 0.0625rem solid var(--v2-stroke-strong)
+  border-radius: 0.9rem
+  background: color-mix(in srgb, var(--v2-shell) 96%, transparent)
+  box-shadow: 0 1rem 2.8rem color-mix(in srgb, black 58%, transparent), inset 0 0.0625rem 0 color-mix(in srgb, white 8%, transparent)
+  backdrop-filter: blur(1rem)
+  transform: translate(-50%, calc(-100% - 1.15rem))
+  display: grid
+  gap: 0.65rem
+
+  &[data-kind='hypothesis']
+    --relation-accent: color-mix(in srgb, white 62%, transparent)
+
+  label
+    display: grid
+    gap: 0.3rem
+    color: var(--v2-muted)
+    font-size: 0.62rem
+
+  input,
+  textarea
+    width: 100%
+    border: 0.0625rem solid var(--v2-stroke)
+    border-radius: 0.65rem
+    background: color-mix(in srgb, var(--v2-card) 94%, black 6%)
+    color: var(--v2-text)
+    outline: none
+
+    &:focus
+      border-color: color-mix(in srgb, var(--relation-accent) 44%, var(--v2-stroke-strong))
+
+  input
+    min-height: 2.2rem
+    padding: 0 0.65rem
+
+  textarea
+    min-height: 4.7rem
+    padding: 0.62rem
+    resize: vertical
+
+.edgePopoverHeader
+  display: flex
+  align-items: center
+  justify-content: space-between
+  gap: 0.7rem
+
+  div
+    display: grid
+    gap: 0.15rem
+
+  span
+    color: var(--v2-subtle)
+    font-size: 0.58rem
+    letter-spacing: 0.12em
+    text-transform: uppercase
+
+  strong
+    color: var(--v2-text)
+    font-size: 0.76rem
+
+  button
+    width: 2rem
+    height: 2rem
+    display: grid
+    place-items: center
+    border: 0.0625rem solid var(--v2-stroke)
+    border-radius: 0.62rem
+    background: transparent
+    color: var(--v2-muted)
+    cursor: pointer
+
+.edgePrimaryAction,
+.edgeDeleteAction
+  min-height: 2.45rem
+  border: 0.0625rem solid var(--v2-stroke)
+  border-radius: 0.72rem
+  background: color-mix(in srgb, var(--v2-raised) 86%, transparent)
+  color: var(--v2-text)
+  cursor: pointer
+
+.edgePrimaryAction
+  border-color: color-mix(in srgb, var(--relation-accent) 36%, var(--v2-stroke))
+
+.edgeDeleteAction
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  gap: 0.42rem
+  color: var(--v2-muted)
+
+  svg
+    width: 0.9rem
+    height: 0.9rem
+
+.edgeAdvanced
+  border: 0.0625rem solid var(--v2-stroke)
+  border-radius: 0.72rem
+  overflow: hidden
+
+  summary
+    min-height: 2.35rem
+    display: flex
+    align-items: center
+    padding: 0 0.72rem
+    color: var(--v2-muted)
+    font-size: 0.66rem
+    cursor: pointer
+    list-style: none
+
+  summary::-webkit-details-marker
+    display: none
+
+  summary::before
+    content: '›'
+    margin-right: 0.42rem
+    transition: transform 180ms ease
+
+  &[open] summary::before
+    transform: rotate(90deg)
+
+  textarea
+    width: calc(100% - 1rem)
+    margin: 0 0.5rem 0.5rem
+
+.edgeFormActions
+  display: grid
+  grid-template-columns: 1fr 1fr
+  gap: 0.5rem
+
+  button
+    min-height: 2.35rem
+    border: 0.0625rem solid var(--v2-stroke)
+    border-radius: 0.7rem
+    background: transparent
+    color: var(--v2-muted)
+    cursor: pointer
+
+    &:last-child
+      border-color: color-mix(in srgb, var(--relation-accent) 36%, var(--v2-stroke))
+      background: color-mix(in srgb, var(--relation-accent) 8%, transparent)
+      color: var(--v2-text)
+
+// Controlled advanced-details accordion shared by card editor and inspector.
+// Kept local to canvas-v4 to preserve the current route visual contract.
+.nodeAdvanced,
+.inspectorAdvanced
+  width: 100%
+  display: grid
+  grid-template-rows: auto
+  border: 0.0625rem solid var(--v2-stroke)
+  border-radius: 0.72rem
+  background: color-mix(in srgb, var(--v2-card) 92%, black 8%)
+  overflow: hidden
+
+  &[data-open='true']
+    grid-template-rows: auto auto
+
+.advancedToggle
+  width: 100%
+  min-height: 2.35rem
+  display: flex
+  align-items: center
+  justify-content: flex-start
+  gap: 0.42rem
+  padding: 0 0.72rem
+  border: 0
+  background: transparent
+  color: var(--v2-muted)
+  font: inherit
+  font-size: 0.66rem
+  text-align: left
+  cursor: pointer
+
+  &:hover
+    color: var(--v2-text)
+
+  &:focus-visible
+    outline: 0.0625rem solid var(--stage-color, var(--v2-stroke-strong))
+    outline-offset: -0.125rem
+
+.advancedChevron
+  width: 0.85rem
+  height: 0.85rem
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  flex: 0 0 auto
+  transform: rotate(0deg)
+  transition: transform 180ms ease
+
+  svg
+    width: 100%
+    height: 100%
+
+[data-open='true'] > .advancedToggle .advancedChevron
+  transform: rotate(90deg)
+

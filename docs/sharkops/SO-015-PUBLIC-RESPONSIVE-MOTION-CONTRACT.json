@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "initiative": "SO-015",
+  "wave": 7,
+  "title": "Public Route Responsive & Motion Contracts",
+  "principles": {
+    "personalityPreserving": true,
+    "lineCountIsNotADecompositionCriterion": true,
+    "sharedAndFeatureOwnedFollowSameResponsibilityRules": true,
+    "reducedMotionIsMandatory": true,
+    "promotionRequiresEvidence": true,
+    "rulesMustBeExecutableWhenPractical": true
+  },
+  "responsiveEvidence": {
+    "publicLayout": ["48rem"],
+    "publicPages": ["56rem", "48rem"],
+    "guidedStory": ["72rem", "42rem"],
+    "policy": "Responsive thresholds are preserved from existing visual evidence. They may be consolidated only when multiple surfaces prove the same semantic breakpoint; route personality is not flattened for token uniformity."
+  },
+  "motion": {
+    "sharedProvider": "src/shared/motion/tdm-motion/tdm-motion-provider.tsx",
+    "sharedTransitions": "src/shared/motion/tdm-motion/tdm-motion-transitions.ts",
+    "policy": "Shared interaction motion uses canonical TDM transitions when semantics match. Feature-specific storytelling motion may remain feature-owned, but every animated public experience must honor user reduced-motion preference.",
+    "requiredReducedMotionSurfaces": [
+      "src/shared/ui/tdm-public-layout/public-reveal.tsx",
+      "src/shared/ui/tdm-public-layout/public-home-orb.tsx",
+      "src/shared/ui/tdm-public-layout/public-timeline.tsx",
+      "src/features/theory-of-change/components/public-pages/use-guided-story.ts",
+      "src/features/theory-of-change/components/public-pages/theory-flow-board/theory-flow-board-edge-layer.tsx",
+      "src/features/theory-of-change/components/public-pages/theory-flow-board/theory-flow-board-node-cards.tsx",
+      "src/features/theory-of-change/components/public-pages/home-brand-logo/home-brand-logo.module.sass",
+      "src/shared/ui/tdm-public-layout/tdm-public-layout.module.sass"
+    ]
+  },
+  "governance": {
+    "activeGate": "check:tdm:public-routes:active",
+    "mandatoryStages": ["pre-commit", "pre-push"],
+    "rule": "The active SO-015 gate must remain mandatory in SharkOps hooks so architecture decisions are enforced automatically, not only during manual patch verification."
+  },
+  "componentResponsibility": {
+    "rule": "A component may be unique to one feature and still must have one coherent responsibility. Unrelated state, effects, policy, domain logic, presentation recipes and styling concerns must not be accumulated behind one component merely because it has a single product purpose.",
+    "sharedDifference": "Shared versus feature-owned changes reuse scope, not engineering quality."
+  }
+}

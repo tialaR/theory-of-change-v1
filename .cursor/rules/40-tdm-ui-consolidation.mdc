@@ -1,0 +1,16 @@
+---
+description: TDM canonical primitive consolidation outside Canvas
+alwaysApply: true
+---
+
+# UI consolidation contract
+
+Outside protected Canvas engines:
+
+1. Import `TdmButton`, `TdmIconButton`, `TdmMenu`, `TdmTooltip` and `TdmSurface` only from their canonical folder barrels.
+2. Never recreate `PublicButton`, `PublicIconButton` or another compatibility adapter.
+3. A route may compose primitives, but may not own a second visual implementation of them.
+4. Visible copy never determines icons, variants or behavior. Pass semantic props explicitly.
+5. Remove a legacy component only after its consumers are migrated and zero imports are confirmed.
+6. Protected duplicate tooltip/surface implementations are warnings until their dedicated migration round.
+7. Run `npm run check:tdm:v2:consolidation` and `npm run check:tdm:v2:all` before completion.

@@ -1,0 +1,48 @@
+@use '../../styles/tdm/tdm-focus' as focus
+
+.root
+  display: inline-flex
+  min-inline-size: 0
+
+.tooltip
+  position: fixed
+  top: 0
+  left: 0
+  visibility: hidden
+  z-index: 1600
+  max-inline-size: min(18rem, calc(100vw - var(--tdm-space-6)))
+  padding: var(--tdm-space-2) var(--tdm-space-3)
+  border: var(--tdm-border-width-hairline) solid var(--tdm-border-subtle)
+  border-radius: var(--tdm-radius-sm)
+  background: var(--tdm-surface-overlay)
+  box-shadow: var(--tdm-shadow-overlay)
+  color: var(--tdm-fg-primary)
+  font-size: var(--tdm-font-label-size)
+  font-weight: 500
+  line-height: 1.35
+  opacity: 0
+  pointer-events: none
+  transform: translateY(0.125rem)
+  transition: opacity var(--tdm-duration-fast) var(--tdm-ease-standard), transform var(--tdm-duration-fast) var(--tdm-ease-standard)
+  white-space: normal
+
+  &[data-placement='bottom']
+    transform: translateY(-0.125rem)
+
+  &[data-placement='left']
+    transform: translateX(0.125rem)
+
+  &[data-placement='right']
+    transform: translateX(-0.125rem)
+
+.visible
+  visibility: visible
+  opacity: 1
+  transform: none
+
+.tooltipCanvas
+  background: var(--tdm-surface-overlay)
+
+@media (prefers-reduced-motion: reduce)
+  .tooltip
+    transition: none

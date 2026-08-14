@@ -1,0 +1,8 @@
+{
+  "id": "SO-007",
+  "wave": 8,
+  "codename": "God Hooks Slayer",
+  "status": "COMPLETE",
+  "ownership": ["node CRUD", "navigation", "stage guide", "interaction", "markers", "workspace composition", "React Flow lifecycle and commands"],
+  "gates": ["wave01", "wave02", "wave03", "wave04", "wave05", "wave06", "wave07", "closeout"]
+}
