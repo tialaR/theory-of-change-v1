@@ -20,7 +20,7 @@ if(c.id!=='TDM-PUBLIC-VISUAL-LANGUAGE-v1'||c.status!=='ACTIVE') errors.push('con
 if(c.principle!=='preserve personality while formalizing repeatable visual language') errors.push('principio de preservacao de personalidade ausente');
 if(c.promotionPolicy?.minimumEvidence!=='repeated semantic role or cross-route behavior, not visual similarity alone') errors.push('politica de promocao por evidencia ausente');
 const tokens=read('src/shared/styles/tdm/tdm-tokens.sass');
-for(const module of ['tdm-color','tdm-surface','tdm-border','tdm-radius','tdm-shadow','tdm-focus','tdm-motion','tdm-font','tdm-spacing','tdm-measure','tdm-public-action','tdm-route']) if(!tokens.includes(`@use '${module}'`)) errors.push('fundacao canonica de token ausente: '+module);
+for(const tokenModule of ['tdm-color','tdm-surface','tdm-border','tdm-radius','tdm-shadow','tdm-focus','tdm-motion','tdm-font','tdm-spacing','tdm-measure','tdm-public-action','tdm-route']) if(!tokens.includes(`@use '${tokenModule}'`)) errors.push('fundacao canonica de token ausente: '+tokenModule);
 const layout=read('src/shared/ui/tdm-public-layout/tdm-public-layout.module.sass');
 for(const marker of ['.shell','.header','.navLink','.hero','prefers-reduced-motion']) if(!layout.includes(marker)) errors.push('contrato visual publico ausente no layout: '+marker);
 const sharedRoots=['src/shared/ui/tdm-public-layout','src/shared/motion/tdm-motion'];

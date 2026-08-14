@@ -37,7 +37,7 @@ for (const [owner, test] of ownershipPairs) {
 }
 
 const routeRules = [
-  { root: 'src/app/canvas', allowed: new Set(['layout.tsx', 'loading.tsx', 'page.tsx', 'resultado']) },
+  { root: 'src/app/canvas', allowed: new Set(['error.tsx', 'layout.tsx', 'loading.tsx', 'page.tsx', 'resultado']) },
   { root: 'src/app/login', allowed: new Set(['page.tsx']) }
 ];
 for (const rule of routeRules) {
@@ -51,6 +51,24 @@ for (const page of ['src/app/canvas/page.tsx', 'src/app/canvas/resultado/page.ts
   if (!exists(page)) continue;
   requireCondition(!read(page).includes("'use client'"), `page de rota não pode ser Client Component: ${page}`);
   requireCondition(lines(page) <= 10, `page de rota deixou de ser fina (${lines(page)}/10): ${page}`);
+}
+
+const canvasErrorBoundary = 'src/app/canvas/error.tsx';
+if (exists(canvasErrorBoundary)) {
+  const source = read(canvasErrorBoundary);
+  requireCondition(source.includes("'use client'"), 'error boundary do Canvas precisa permanecer Client Component');
+  requireCondition(
+    source.includes("@/shared/ui/tdm-status-screen"),
+    'error boundary do Canvas deve delegar a apresentação ao status screen compartilhado'
+  );
+  requireCondition(
+    source.includes('<TdmRouteError'),
+    'error boundary do Canvas deixou de delegar para TdmRouteError'
+  );
+  requireCondition(
+    lines(canvasErrorBoundary) <= 16,
+    `error boundary do Canvas deixou de ser fina (${lines(canvasErrorBoundary)}/16)`
+  );
 }
 
 const featureRoots = ['src/features/auth', 'src/features/theory-of-change/canvas'];

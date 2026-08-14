@@ -17,6 +17,7 @@ const requiredFiles = [
   'src/features/auth/index.ts',
   'src/features/auth/auth-page.tsx',
   'src/features/auth/server/login.action.ts',
+  'src/features/auth/server/auth-server.repository.ts',
   'src/features/auth/application/login-action-state.ts',
   'src/features/auth/server/auth-session.ts',
   'src/features/auth/infrastructure/msw/auth.mock-store.ts',
@@ -38,6 +39,12 @@ if (exists('src/features/auth/server/login.action.ts')) {
   requireCondition(!/export\s+(?:const|let|var|class|type|interface)\s+/.test(source), 'arquivo use server exporta estado, constante, classe ou tipo síncrono');
   requireCondition(source.includes('export async function loginAction'), 'login.action.ts não exporta Server Action assíncrona');
   requireCondition(!source.includes('INITIAL_LOGIN_ACTION_STATE'), 'estado inicial do login vazou para a fronteira use server');
+}
+
+if (exists('src/features/auth/server/auth-server.repository.ts')) {
+  const source = read('src/features/auth/server/auth-server.repository.ts');
+  requireCondition(source.includes("@/mocks/server"), 'server auth repository não possui bootstrap explícito do MSW Node');
+  requireCondition(source.includes('startMockApiServer();'), 'server auth repository depende de timing implícito da instrumentation para iniciar o MSW Node');
 }
 
 if (exists('src/features/auth/application/login-action-state.ts')) {

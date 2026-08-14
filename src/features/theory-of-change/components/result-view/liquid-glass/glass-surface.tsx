@@ -128,7 +128,11 @@ export function GlassSurface({
     const isFirefox = navigator.userAgent.includes('Firefox');
     const isSafari = navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome');
     const backdropAvailable = CSS.supports('backdrop-filter', `url(#${filterId})`);
-    setSvgFilterSupported(backdropAvailable && !isFirefox && !isSafari);
+    const frame = window.requestAnimationFrame(() => {
+      setSvgFilterSupported(backdropAvailable && !isFirefox && !isSafari);
+    });
+
+    return () => window.cancelAnimationFrame(frame);
   }, [filterId]);
 
   const useDynamicSvg = svgFilterSupported && !staticFilter;

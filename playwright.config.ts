@@ -2,6 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 const useSystemChrome = process.env.TDM_PLAYWRIGHT_BROWSER === 'system-chrome';
 const executablePath = process.env.TDM_PLAYWRIGHT_EXECUTABLE_PATH;
+const reuseExistingServer = process.env.TDM_PLAYWRIGHT_REUSE_EXISTING_SERVER === '1';
 
 export default defineConfig({
   testDir: './src',
@@ -29,7 +30,7 @@ export default defineConfig({
   webServer: {
     command: 'npm run dev',
     url: 'http://localhost:3000/canvas',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer,
     timeout: 120000
   }
 });

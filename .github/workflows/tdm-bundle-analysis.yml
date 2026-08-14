@@ -18,14 +18,17 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Install
         run: npm ci
 
-      - name: Performance contract
-        run: npm run check:tdm:v2:performance
+      - name: Post-Golden governance truth
+        run: npm run check:tdm:post-golden-current
+
+      - name: Production build
+        run: npm run build
 
       - name: Generate Turbopack bundle analysis
         run: npm run analyze:bundle:output

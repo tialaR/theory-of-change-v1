@@ -213,7 +213,11 @@ export function TdmGlassSurface({
   }, [updateDisplacementMap]);
 
   useEffect(() => {
-    setSvgSupported(supportsSvgBackdropFilter(filterId));
+    const frame = window.requestAnimationFrame(() => {
+      setSvgSupported(supportsSvgBackdropFilter(filterId));
+    });
+
+    return () => window.cancelAnimationFrame(frame);
   }, [filterId]);
 
   const containerStyle = {

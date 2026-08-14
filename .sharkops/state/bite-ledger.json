@@ -242,6 +242,50 @@
       "createdAt": "2026-08-11T17:05:00.000Z",
       "updatedAt": "2026-08-11T18:00:00.000Z",
       "completedAt": "2026-08-11T18:00:00.000Z"
+    },
+    {
+      "id": "PGH-001",
+      "codename": "Release Gate False-Green Hardening",
+      "purpose": "Prove, classify and close the obsolete bootstrap exception that allowed validate:release to fail while SharkOps still cleared pre-push.",
+      "status": "COMPLETE",
+      "revision": 4,
+      "path": ".sharkops/bites/pgh-001-release-gate-hardening-closeout",
+      "createdAt": "2026-08-11T23:53:00.000Z",
+      "updatedAt": "2026-08-12T23:49:00.000Z",
+      "completedAt": "2026-08-12T23:49:00.000Z"
+    },
+    {
+      "id": "PGH-002",
+      "codename": "E2E Determinism & Isolation Hardening",
+      "purpose": "Prove order-sensitive shared-server E2E contamination and close it for V1 by isolating every release E2E file behind a fresh owned server and deterministic worker/browser policy.",
+      "status": "COMPLETE",
+      "revision": 5,
+      "path": ".sharkops/bites/pgh-002-e2e-determinism-isolation-fast-track-closeout",
+      "createdAt": "2026-08-13T00:05:00.000Z",
+      "updatedAt": "2026-08-13T07:20:00.000Z",
+      "completedAt": "2026-08-13T07:20:00.000Z"
+    },
+    {
+      "id": "PGH-003",
+      "codename": "Repository Hygiene Hardening",
+      "purpose": "Keep generated Playwright reports and test artifacts out of repository state so release validation does not create false dirty-tree noise.",
+      "status": "COMPLETE",
+      "revision": 1,
+      "path": ".sharkops/bites/pgh-003-pgh-004-fast-track-closeout",
+      "createdAt": "2026-08-13T07:30:00.000Z",
+      "updatedAt": "2026-08-13T07:35:00.000Z",
+      "completedAt": "2026-08-13T07:35:00.000Z"
+    },
+    {
+      "id": "PGH-004",
+      "codename": "Offline Build Determinism",
+      "purpose": "Remove remote Google font fetching from the build path while preserving the existing TDM sans-serif typography contract through an offline system stack.",
+      "status": "COMPLETE",
+      "revision": 1,
+      "path": ".sharkops/bites/pgh-003-pgh-004-fast-track-closeout",
+      "createdAt": "2026-08-13T07:30:00.000Z",
+      "updatedAt": "2026-08-13T07:35:00.000Z",
+      "completedAt": "2026-08-13T07:35:00.000Z"
     }
   ]
 }
