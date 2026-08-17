@@ -11,11 +11,11 @@ async function fillRodgerCredentials(page: Page, password: string) {
   await page.getByLabel('Senha').fill(password);
 }
 
-test.describe('autenticação mockada do TMD Construtor', () => {
+test.describe('autenticação mockada do TDM Construtor', () => {
   test('protege somente o Canvas, valida credenciais e autentica persona existente', async ({ page }: { page: Page }) => {
     await page.goto('/canvas');
     await expect(page).toHaveURL(/\/login\?returnTo=%2Fcanvas$/);
-    await expect(page.getByRole('heading', { name: 'Entrar no TMD Construtor' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Entrar no TDM Construtor' })).toBeVisible();
 
     await fillRodgerCredentials(page, 'senha-incorreta');
     await page.getByRole('button', { name: 'Entrar' }).click();

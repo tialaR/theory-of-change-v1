@@ -209,12 +209,12 @@
     },
     "loading": "Carregando canvas",
     "brand": {
-      "alt": "TMD Construtor"
+      "alt": "TDM Construtor"
     }
   },
   "Auth": {
     "login": {
-      "title": "Entrar no TMD Construtor",
+      "title": "Entrar no TDM Construtor",
       "description": "Acesse seu espaço de trabalho e continue construindo sua teoria da mudança.",
       "back": "Voltar",
       "backAriaLabel": "Voltar para a página inicial",
@@ -226,7 +226,7 @@
       "passwordPlaceholder": "Digite sua senha",
       "submit": "Entrar",
       "submitting": "Entrando…",
-      "helper": "Acesso restrito às personas de validação do TMD Construtor.",
+      "helper": "Acesso restrito às personas de validação do TDM Construtor.",
       "validation": {
         "nameRequired": "Informe seu nome.",
         "emailInvalid": "Informe um e-mail válido.",

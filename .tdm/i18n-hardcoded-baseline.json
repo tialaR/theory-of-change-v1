@@ -437,11 +437,11 @@
       "value": "O caminho antes da leitura final."
     },
     {
-      "key": "src/features/theory-of-change/components/public-pages/guided-story-scenes.tsx:attribute:alt:TMD Construtor",
+      "key": "src/features/theory-of-change/components/public-pages/guided-story-scenes.tsx:attribute:alt:TDM Construtor",
       "file": "src/features/theory-of-change/components/public-pages/guided-story-scenes.tsx",
       "line": 11,
       "kind": "attribute:alt",
-      "value": "TMD Construtor"
+      "value": "TDM Construtor"
     },
     {
       "key": "src/features/theory-of-change/components/public-pages/guided-story-shared.tsx:jsx-text:Risco criado",
@@ -458,11 +458,11 @@
       "value": "Hipótese criada"
     },
     {
-      "key": "src/features/theory-of-change/components/public-pages/guided-story.tsx:attribute:aria-label:Experiência completa do TMD Construtor",
+      "key": "src/features/theory-of-change/components/public-pages/guided-story.tsx:attribute:aria-label:Experiência completa do TDM Construtor",
       "file": "src/features/theory-of-change/components/public-pages/guided-story.tsx",
       "line": 20,
       "kind": "attribute:aria-label",
-      "value": "Experiência completa do TMD Construtor"
+      "value": "Experiência completa do TDM Construtor"
     },
     {
       "key": "src/features/theory-of-change/components/public-pages/guided-story.tsx:attribute:aria-label:Controles da narrativa",
@@ -1459,11 +1459,11 @@
       "value": "Carregando"
     },
     {
-      "key": "src/shared/ui/tdm-public-layout/public-content.tsx:jsx-text:TMD Construtor. Todos os direitos reservados.",
+      "key": "src/shared/ui/tdm-public-layout/public-content.tsx:jsx-text:TDM Construtor. Todos os direitos reservados.",
       "file": "src/shared/ui/tdm-public-layout/public-content.tsx",
       "line": 107,
       "kind": "jsx-text",
-      "value": "TMD Construtor. Todos os direitos reservados."
+      "value": "TDM Construtor. Todos os direitos reservados."
     },
     {
       "key": "src/shared/ui/tdm-public-layout/public-content.tsx:jsx-text:Ferramenta visual para construir, revisar e comunicar teorias da mudança.",
@@ -1473,18 +1473,18 @@
       "value": "Ferramenta visual para construir, revisar e comunicar teorias da mudança."
     },
     {
-      "key": "src/shared/ui/tdm-public-layout/public-header.tsx:attribute:aria-label:TMD Construtor — Página inicial",
+      "key": "src/shared/ui/tdm-public-layout/public-header.tsx:attribute:aria-label:TDM Construtor — Página inicial",
       "file": "src/shared/ui/tdm-public-layout/public-header.tsx",
       "line": 84,
       "kind": "attribute:aria-label",
-      "value": "TMD Construtor — Página inicial"
+      "value": "TDM Construtor — Página inicial"
     },
     {
-      "key": "src/shared/ui/tdm-public-layout/public-header.tsx:attribute:alt:TMD Construtor",
+      "key": "src/shared/ui/tdm-public-layout/public-header.tsx:attribute:alt:TDM Construtor",
       "file": "src/shared/ui/tdm-public-layout/public-header.tsx",
       "line": 87,
       "kind": "attribute:alt",
-      "value": "TMD Construtor"
+      "value": "TDM Construtor"
     },
     {
       "key": "src/shared/ui/tdm-public-layout/public-header.tsx:attribute:aria-label:Navegação principal",
