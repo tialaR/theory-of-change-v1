@@ -41,7 +41,10 @@
           "check:tdm:public-routes:active",
           "check:tdm:release-e2e-harness",
           "check:tdm:post-golden-release-policy",
-          "check:tdm:post-golden-current"
+          "check:tdm:post-golden-current",
+          "check:tdm:registration",
+          "check:tdm:demo-access",
+          "check:tdm:logo-convergence"
         ],
         "pre-push": [
           "shark:verify",
@@ -52,6 +55,9 @@
           "test:e2e:public-routes",
           "check:tdm:release-e2e-harness",
           "check:tdm:post-golden-release-policy",
+          "check:tdm:registration",
+          "check:tdm:demo-access",
+          "check:tdm:logo-convergence",
           "validate:release"
         ]
       },
@@ -71,7 +77,10 @@
     "test:e2e:public-routes": "MANDATORY_PRE_PUSH",
     "check:tdm:release-e2e-harness": "MANDATORY",
     "check:tdm:post-golden-release-policy": "MANDATORY",
-    "check:tdm:post-golden-current": "MANDATORY_POST_GOLDEN_TRUTH"
+    "check:tdm:post-golden-current": "MANDATORY_POST_GOLDEN_TRUTH",
+    "check:tdm:demo-access": "MANDATORY_DEMO_ACCESS_ISOLATION",
+    "check:tdm:registration": "MANDATORY_REGISTRATION_OWNERSHIP",
+    "check:tdm:logo-convergence": "MANDATORY_BRAND_ASSET_CONVERGENCE"
   },
   "policy": {
     "sharkOpsIsSovereign": true,

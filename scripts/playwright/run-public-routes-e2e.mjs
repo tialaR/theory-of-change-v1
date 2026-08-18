@@ -6,6 +6,7 @@ import { chromium } from '@playwright/test';
 const publicRouteTests = [
   'src/features/theory-of-change/public-routes.e2e.ts',
   'src/features/auth/ui/login/login.e2e.ts',
+  'src/features/auth/ui/register/register.e2e.ts',
   'src/shared/ui/tdm-status-screen/tdm-status-screen.e2e.ts'
 ];
 

@@ -4,26 +4,28 @@ import { useActionState } from 'react';
 import { useTranslations } from 'next-intl';
 import { TdmButton } from '@/shared/ui/tdm-button';
 import { AuthCredentialInput } from '../auth-credential-input/auth-credential-input';
-import { INITIAL_LOGIN_ACTION_STATE } from '../../application/login-action-state';
-import { loginAction } from '../../server/login.action';
-import styles from './login-page.module.sass';
+import { INITIAL_REGISTRATION_ACTION_STATE } from '../../application/registration-action-state';
+import { registerAction } from '../../server/register.action';
+import styles from '../login/login-page.module.sass';
 
-export type LoginFormProps = {
-  returnTo: string;
-};
-
-export function LoginForm({ returnTo }: LoginFormProps) {
-  const t = useTranslations('Auth.login');
-  const [state, formAction, isPending] = useActionState(loginAction, INITIAL_LOGIN_ACTION_STATE);
-  const currentState = state ?? INITIAL_LOGIN_ACTION_STATE;
+export function RegisterForm({ returnTo }: { returnTo: string }) {
+  const t = useTranslations('Auth.register');
+  const [state, formAction, isPending] = useActionState(
+    registerAction,
+    INITIAL_REGISTRATION_ACTION_STATE
+  );
+  const currentState = state ?? INITIAL_REGISTRATION_ACTION_STATE;
 
   return (
     <form className={styles.form} action={formAction} noValidate>
       <input type="hidden" name="returnTo" value={returnTo} />
+
       <div className={styles.fields}>
         <AuthCredentialInput label={t('nameLabel')} error={currentState.fieldErrors.name} name="name" type="text" autoComplete="name" placeholder={t('namePlaceholder')} minLength={4} required />
+
         <AuthCredentialInput label={t('emailLabel')} error={currentState.fieldErrors.email} name="email" type="email" inputMode="email" autoComplete="email" placeholder={t('emailPlaceholder')} required />
-        <AuthCredentialInput label={t('passwordLabel')} error={currentState.fieldErrors.password} name="password" type="password" autoComplete="current-password" placeholder={t('passwordPlaceholder')} minLength={6} required />
+
+        <AuthCredentialInput label={t('passwordLabel')} error={currentState.fieldErrors.password} name="password" type="password" autoComplete="new-password" placeholder={t('passwordPlaceholder')} minLength={6} required />
       </div>
 
       {currentState.message ? (
@@ -43,6 +45,7 @@ export function LoginForm({ returnTo }: LoginFormProps) {
       >
         {isPending ? t('submitting') : t('submit')}
       </TdmButton>
+
       <p className={styles.helper}>{t('helper')}</p>
     </form>
   );

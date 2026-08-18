@@ -4,7 +4,7 @@ export const MIN_READABLE_SCALE = 0.7;
 export const EDGE_GAP = 16;
 export const TICK_MS = 33;
 
-export const BRAND_LOGO_SRC = '/assets/brand/tmd-construtor-guided-story-logo.png';
+export const BRAND_LOGO_SRC = '/assets/brand/tdm-construtor-guided-story-logo.png';
 export const BRAND_MARK_SRC = '/assets/brand/tmd-construtor-guided-story-mark.png';
 
 export type StageKey = 'insumo' | 'atividade' | 'produto' | 'resultado';

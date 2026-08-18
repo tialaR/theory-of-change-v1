@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
+import { TdmButton } from '@/shared/ui/tdm-button';
+import { demoLoginAction } from '../../server/demo-login.action';
 import { LoginForm } from './login-form';
 import styles from './login-page.module.sass';
 
@@ -35,7 +37,37 @@ export async function LoginPage({ returnTo }: LoginPageProps) {
           <h1 className={styles.title} id="login-title">{t('title')}</h1>
           <p className={styles.description}>{t('description')}</p>
         </header>
-        <LoginForm returnTo={returnTo} />
+
+        <div className={styles.accessStack}>
+          <form className={styles.demoForm} action={demoLoginAction}>
+            <input type="hidden" name="returnTo" value={returnTo} />
+            <TdmButton
+              type="submit"
+              recipe="public"
+              variant="primary"
+              size="lg"
+              fullWidth
+            >
+              {t('demo.submit')}
+            </TdmButton>
+            <p className={styles.demoHelper}>{t('demo.helper')}</p>
+          </form>
+
+          <div className={styles.divider} aria-hidden="true">
+            <span>{t('divider')}</span>
+          </div>
+
+          <LoginForm returnTo={returnTo} />
+          <p className={styles.registrationPrompt}>
+            {t('registerPrompt')}{' '}
+            <Link
+              className={styles.registrationLink}
+              href={returnTo === '/canvas' ? '/cadastro' : `/cadastro?returnTo=${encodeURIComponent(returnTo)}`}
+            >
+              {t('registerLink')}
+            </Link>
+          </p>
+        </div>
       </section>
     </main>
   );

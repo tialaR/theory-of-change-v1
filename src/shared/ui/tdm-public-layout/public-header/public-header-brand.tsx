@@ -6,7 +6,7 @@ export function PublicHeaderBrand() {
   return (
     <Link href="/" className={styles.brand} aria-label="TDM Construtor — Página inicial">
       <Image
-        src="/assets/brand/tmd-construtor-header-canonical.png"
+        src="/assets/brand/tdm-construtor-header-canonical.png"
         alt="TDM Construtor"
         width={1184}
         height={247}

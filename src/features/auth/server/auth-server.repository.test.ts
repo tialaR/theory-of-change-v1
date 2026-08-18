@@ -4,6 +4,8 @@ import type { AuthRepository } from '../domain/auth.types';
 const { createHttpAuthRepositoryMock, repositoryStub } = vi.hoisted(() => {
   const repository: AuthRepository = {
     createSession: vi.fn(),
+    createDemoSession: vi.fn(),
+    registerUser: vi.fn(),
     findSession: vi.fn(),
     updateUserAvatar: vi.fn(),
     deleteSession: vi.fn()

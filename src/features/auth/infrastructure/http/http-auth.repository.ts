@@ -1,4 +1,4 @@
-import { AUTH_API_PATH } from '../../domain/auth.constants';
+import { AUTH_API_PATH, AUTH_DEMO_API_PATH, AUTH_REGISTRATION_API_PATH } from '../../domain/auth.constants';
 import type { AuthCredentials, AuthRepository } from '../../domain/auth.types';
 import { isAuthApiEnvelope, type AuthApiEnvelope } from './auth-api.contract';
 
@@ -27,6 +27,26 @@ export function createHttpAuthRepository(options: HttpAuthRepositoryOptions): Au
         cache: 'no-store'
       });
       if (response.status === 401) return null;
+      return (await readEnvelope(response)).data;
+    },
+
+    async createDemoSession() {
+      const response = await fetcher(`${baseUrl}${AUTH_DEMO_API_PATH}`, {
+        method: 'POST',
+        headers: { accept: 'application/json' },
+        cache: 'no-store'
+      });
+      return (await readEnvelope(response)).data;
+    },
+
+    async registerUser(credentials: AuthCredentials) {
+      const response = await fetcher(`${baseUrl}${AUTH_REGISTRATION_API_PATH}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', accept: 'application/json' },
+        body: JSON.stringify(credentials),
+        cache: 'no-store'
+      });
+      if (response.status === 409) return null;
       return (await readEnvelope(response)).data;
     },
 

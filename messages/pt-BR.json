@@ -218,7 +218,7 @@
       "description": "Acesse seu espaço de trabalho e continue construindo sua teoria da mudança.",
       "back": "Voltar",
       "backAriaLabel": "Voltar para a página inicial",
-      "nameLabel": "Nome",
+      "nameLabel": "Nome e sobrenome",
       "namePlaceholder": "Digite seu nome completo",
       "emailLabel": "E-mail",
       "emailPlaceholder": "nome@tdmconstrutor.com.br",
@@ -228,14 +228,22 @@
       "submitting": "Entrando…",
       "helper": "Acesso restrito às personas de validação do TDM Construtor.",
       "validation": {
-        "nameRequired": "Informe seu nome.",
+        "nameRequired": "Informe seu nome e sobrenome.",
+        "nameIncomplete": "Informe nome e sobrenome, com pelo menos 4 caracteres.",
         "emailInvalid": "Informe um e-mail válido.",
         "passwordTooShort": "A senha deve ter no mínimo {min} caracteres."
       },
       "feedback": {
         "reviewFields": "Revise os campos indicados.",
         "invalidCredentials": "Nome, e-mail ou senha não correspondem a um usuário existente."
-      }
+      },
+      "demo": {
+        "submit": "Explorar com conta demo",
+        "helper": "Uma sessão demonstrativa privada para você, válida por até 24 horas."
+      },
+      "divider": "ou entre com seus dados",
+      "registerPrompt": "Ainda não tem uma conta?",
+      "registerLink": "Criar conta"
     },
     "userMenu": {
       "open": "Abrir menu do usuário",
@@ -244,8 +252,39 @@
       "photoUpdated": "Foto atualizada.",
       "errors": {
         "invalid-file": "Escolha uma imagem PNG, JPEG ou WebP.",
-        "file-too-large": "A imagem deve ter no máximo 1,5 MB.",
+        "file-too-large": "Não foi possível otimizar esta imagem. Escolha outra foto.",
         "session-expired": "Sua sessão expirou. Entre novamente."
+      }
+    },
+    "demo": {
+      "label": "Modo demonstração",
+      "ariaLabel": "Você está usando uma sessão demonstrativa privada."
+    },
+    "register": {
+      "title": "Crie sua conta",
+      "description": "Crie seu espaço de trabalho para construir e salvar sua própria teoria da mudança.",
+      "back": "Voltar para entrar",
+      "backAriaLabel": "Voltar para a tela de login",
+      "nameLabel": "Nome e sobrenome",
+      "namePlaceholder": "Digite seu nome completo",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "nome@exemplo.com",
+      "passwordLabel": "Senha",
+      "passwordPlaceholder": "Crie uma senha",
+      "submit": "Criar conta",
+      "submitting": "Criando conta…",
+      "helper": "Sua sessão fica ativa por até 24 horas nesta versão demonstrativa.",
+      "loginPrompt": "Já tem uma conta?",
+      "loginLink": "Entrar",
+      "validation": {
+        "nameRequired": "Informe seu nome e sobrenome.",
+        "nameIncomplete": "Informe nome e sobrenome, com pelo menos 4 caracteres.",
+        "emailInvalid": "Informe um e-mail válido.",
+        "passwordTooShort": "A senha deve ter no mínimo {min} caracteres."
+      },
+      "feedback": {
+        "reviewFields": "Revise os campos indicados.",
+        "emailAlreadyRegistered": "Este e-mail já está cadastrado. Entre com sua conta existente."
       }
     }
   },
