@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { motion } from 'motion/react';
 import { TdmIconButton } from '@/shared/ui/tdm-icon-button/tdm-icon-button';
-import { UserMenu, type AuthUser } from '@/features/auth';
+import { DemoModeBadge, UserMenu, type AuthUser } from '@/features/auth';
 import { canvasIcons as icons } from '../canvas-icons';
 import styles from '../canvas-workspace/canvas-workspace.module.sass';
 import { useCanvasRuntime } from '../runtime/canvas-runtime-context';
@@ -34,13 +34,14 @@ export function CanvasHeader({ user }: { user: AuthUser }) {
         <div className={styles.brandGroup}>
           <Image
             className={styles.brandLogo}
-            src="/brand/tmd-construtor-header-canonical.webp"
+            src="/brand/tdm-construtor-header-canonical.webp"
             alt={runtime.t('brand.alt')}
             width={200}
             height={43}
             priority
           />
         </div>
+        <DemoModeBadge user={user} />
       </div>
 
       <ClearableField

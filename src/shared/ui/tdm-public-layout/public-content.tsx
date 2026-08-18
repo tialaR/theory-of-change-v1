@@ -104,7 +104,7 @@ export function PublicFooter() {
     <footer data-public-chapter="true" className={styles.footer}>
       <div className={styles.footerCopyright}>
         <p className={styles.footerCopyrightPrimary}>
-          © {year} TMD Construtor. Todos os direitos reservados.
+          © {year} TDM Construtor. Todos os direitos reservados.
         </p>
         <p className={styles.footerCopyrightSecondary}>
           Ferramenta visual para construir, revisar e comunicar teorias da mudança.

@@ -5,7 +5,7 @@ import type { AuthUser } from '../domain/auth.types';
 import { getAuthenticatedSession } from './auth-session';
 import { createServerAuthRepository } from './auth-server.repository';
 
-const MAX_AVATAR_BYTES = 1_500_000;
+const MAX_AVATAR_BYTES = 700_000;
 const ALLOWED_AVATAR_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
 
 export type UpdateUserAvatarResult =

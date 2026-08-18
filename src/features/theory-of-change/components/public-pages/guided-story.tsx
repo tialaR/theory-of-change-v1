@@ -17,7 +17,7 @@ export function HomeOnboardingPreview({ density = 'default' }: { density?: 'defa
   const footerStatus = `${String(chapterIndex).padStart(2, '0')} / 06`;
 
   return (
-    <section ref={rootRef} className={cx(styles.storySection, density === 'embedded' && styles.densityEmbedded, reducedMotion && styles.reducedMotion)} aria-label="Experiência completa do TMD Construtor">
+    <section ref={rootRef} className={cx(styles.storySection, density === 'embedded' && styles.densityEmbedded, reducedMotion && styles.reducedMotion)} aria-label="Experiência completa do TDM Construtor">
       <div className={styles.storyShell}>
         <div className={styles.storyHeader}>
           <div className={styles.storyCopy}><ChapterTextSwap swapKey={chapterIndex} className={styles.storyCopySwap}><span className={styles.chapterKicker}>{chapter.label}</span><h2><span key={chapterIndex} className={styles.chapterTitleReveal}>{chapter.title}</span></h2></ChapterTextSwap></div>

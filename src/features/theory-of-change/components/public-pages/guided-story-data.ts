@@ -4,7 +4,7 @@ export const MIN_READABLE_SCALE = 0.7;
 export const EDGE_GAP = 16;
 export const TICK_MS = 33;
 
-export const BRAND_LOGO_SRC = '/assets/brand/tmd-construtor-guided-story-logo.png';
+export const BRAND_LOGO_SRC = '/assets/brand/tdm-construtor-guided-story-logo.png';
 export const BRAND_MARK_SRC = '/assets/brand/tmd-construtor-guided-story-mark.png';
 
 export type StageKey = 'insumo' | 'atividade' | 'produto' | 'resultado';
@@ -60,7 +60,7 @@ export const chapters: Chapter[] = [
     label: 'Prévia',
     title: 'Toda mudança precisa de um caminho.',
     description:
-      'O TMD Construtor apresenta a lógica antes do detalhe e prepara o usuário para compreender a cadeia inteira.',
+      'O TDM Construtor apresenta a lógica antes do detalhe e prepara o usuário para compreender a cadeia inteira.',
     footerTitle: 'Prévia',
     footerDescription:
       'A experiência estabelece a jornada com interação e proporciona a organização de recursos, ações, entregas e mudanças esperadas em uma narrativa causal.',
@@ -121,7 +121,7 @@ export const chapters: Chapter[] = [
     title: 'Do recurso à mudança esperada.',
     description:
       'O fluxo completo permanece visível e estático. A narrativa termina em repouso, pronta para revisão, explicação ou auditoria.',
-    footerTitle: 'O TMD Construtor',
+    footerTitle: 'O TDM Construtor',
     footerDescription:
       'Proporciona a experiência de tornar visível o caminho que conecta recursos, ações, entregas e mudanças esperadas.',
   },

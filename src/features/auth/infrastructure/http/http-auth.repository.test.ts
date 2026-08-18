@@ -29,12 +29,25 @@ describe('createHttpAuthRepository', () => {
       email: 'tialarocha@tdmconstrutor.com.br',
       password: 'tdm123456'
     });
+    await repository.createDemoSession();
+    await repository.registerUser({
+      name: 'Nova Pessoa',
+      email: 'nova@tdm.local',
+      password: 'tdm123456'
+    });
     await repository.findSession('session-1');
     await repository.updateUserAvatar('session-1', 'data:image/png;base64,abc');
 
     expect(fetcher.mock.calls[0]?.[1]?.method).toBe('POST');
-    expect(fetcher.mock.calls[1]?.[1]?.method).toBe('GET');
-    expect(fetcher.mock.calls[2]?.[1]?.method).toBe('PATCH');
-    expect(fetcher.mock.calls[2]?.[0]).toBe('http://tdm.mock.local/api/v1/auth/sessions/session-1/profile');
+    expect(fetcher.mock.calls[1]?.[1]?.method).toBe('POST');
+    expect(fetcher.mock.calls[1]?.[0]).toBe('http://tdm.mock.local/api/v1/auth/demo-sessions');
+
+    expect(fetcher.mock.calls[2]?.[1]?.method).toBe('POST');
+    expect(fetcher.mock.calls[2]?.[0]).toBe('http://tdm.mock.local/api/v1/auth/registrations');
+
+    expect(fetcher.mock.calls[3]?.[1]?.method).toBe('GET');
+
+    expect(fetcher.mock.calls[4]?.[1]?.method).toBe('PATCH');
+    expect(fetcher.mock.calls[4]?.[0]).toBe('http://tdm.mock.local/api/v1/auth/sessions/session-1/profile');
   });
 });

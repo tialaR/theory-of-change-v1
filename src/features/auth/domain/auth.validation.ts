@@ -1,7 +1,7 @@
 import { AUTH_PASSWORD_MIN_LENGTH } from './auth.constants';
 import type { AuthCredentials } from './auth.types';
 
-export type AuthFieldErrorCode = 'nameRequired' | 'emailInvalid' | 'passwordTooShort';
+export type AuthFieldErrorCode = 'nameRequired' | 'nameIncomplete' | 'emailInvalid' | 'passwordTooShort';
 export type AuthFieldErrors = Partial<Record<keyof AuthCredentials, AuthFieldErrorCode>>;
 
 export type AuthValidationResult =
@@ -19,6 +19,7 @@ export function validateAuthCredentials(input: AuthCredentials): AuthValidationR
   const errors: AuthFieldErrors = {};
 
   if (!credentials.name) errors.name = 'nameRequired';
+  else if (credentials.name.length < 4 || credentials.name.split(/\s+/).length < 2) errors.name = 'nameIncomplete';
   if (!EMAIL_PATTERN.test(credentials.email)) errors.email = 'emailInvalid';
   if (credentials.password.length < AUTH_PASSWORD_MIN_LENGTH) errors.password = 'passwordTooShort';
 

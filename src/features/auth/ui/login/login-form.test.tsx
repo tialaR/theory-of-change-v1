@@ -20,7 +20,10 @@ describe('LoginForm', () => {
 
     expect(screen.getByLabelText(/nome/i)).toBeVisible();
     expect(screen.getByLabelText(/e-mail/i)).toBeVisible();
-    expect(screen.getByLabelText(/senha/i)).toBeVisible();
+    expect(
+      screen.getByLabelText(/senha/i, { selector: 'input[name="password"]' })
+    ).toBeVisible();
+    expect(screen.getByRole('button', { name: 'Mostrar senha' })).toBeVisible();
     expect(screen.getByRole('button', { name: 'Entrar' })).toBeVisible();
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });

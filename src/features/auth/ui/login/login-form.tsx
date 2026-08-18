@@ -3,7 +3,7 @@
 import { useActionState } from 'react';
 import { useTranslations } from 'next-intl';
 import { TdmButton } from '@/shared/ui/tdm-button';
-import { TdmField, TdmInput } from '@/shared/ui/tdm-field';
+import { AuthCredentialInput } from '../auth-credential-input/auth-credential-input';
 import { INITIAL_LOGIN_ACTION_STATE } from '../../application/login-action-state';
 import { loginAction } from '../../server/login.action';
 import styles from './login-page.module.sass';
@@ -21,36 +21,9 @@ export function LoginForm({ returnTo }: LoginFormProps) {
     <form className={styles.form} action={formAction} noValidate>
       <input type="hidden" name="returnTo" value={returnTo} />
       <div className={styles.fields}>
-        <TdmField label={t('nameLabel')} error={currentState.fieldErrors.name} required>
-          <TdmInput
-            name="name"
-            type="text"
-            autoComplete="name"
-            placeholder={t('namePlaceholder')}
-            minLength={2}
-            required
-          />
-        </TdmField>
-        <TdmField label={t('emailLabel')} error={currentState.fieldErrors.email} required>
-          <TdmInput
-            name="email"
-            type="email"
-            inputMode="email"
-            autoComplete="email"
-            placeholder={t('emailPlaceholder')}
-            required
-          />
-        </TdmField>
-        <TdmField label={t('passwordLabel')} error={currentState.fieldErrors.password} required>
-          <TdmInput
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            placeholder={t('passwordPlaceholder')}
-            minLength={6}
-            required
-          />
-        </TdmField>
+        <AuthCredentialInput label={t('nameLabel')} error={currentState.fieldErrors.name} name="name" type="text" autoComplete="name" placeholder={t('namePlaceholder')} minLength={4} required />
+        <AuthCredentialInput label={t('emailLabel')} error={currentState.fieldErrors.email} name="email" type="email" inputMode="email" autoComplete="email" placeholder={t('emailPlaceholder')} required />
+        <AuthCredentialInput label={t('passwordLabel')} error={currentState.fieldErrors.password} name="password" type="password" autoComplete="current-password" placeholder={t('passwordPlaceholder')} minLength={6} required />
       </div>
 
       {currentState.message ? (

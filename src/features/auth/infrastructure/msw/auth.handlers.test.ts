@@ -18,6 +18,25 @@ describe('authHandlers', () => {
     });
 
     expect(authenticated?.user.id).toBe('user-tiala-rocha');
+    const registered = await repository.registerUser({
+      name: 'Pessoa Nova',
+      email: 'pessoa.nova@tdm.local',
+      password: 'tdm123456'
+    });
+    expect(registered?.user.email).toBe('pessoa.nova@tdm.local');
+    await expect(repository.registerUser({
+      name: 'Pessoa Repetida',
+      email: 'PESSOA.NOVA@TDM.LOCAL',
+      password: 'outra123'
+    })).resolves.toBeNull();
+
+    const demoA = await repository.createDemoSession();
+    const demoB = await repository.createDemoSession();
+    expect(demoA.user.accessMode).toBe('demo');
+    expect(demoB.user.accessMode).toBe('demo');
+    expect(demoA.user.id).not.toBe(demoB.user.id);
+    expect(demoA.session.id).not.toBe(demoB.session.id);
+
     await expect(repository.findSession(authenticated?.session.id ?? '')).resolves.toEqual(authenticated);
 
     const updated = await repository.updateUserAvatar(authenticated?.session.id ?? '', 'data:image/png;base64,abc');

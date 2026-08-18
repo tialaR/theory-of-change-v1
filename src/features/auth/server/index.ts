@@ -1,3 +1,4 @@
+export { RegistrationPage } from '../registration-page';
 export { AuthPage } from '../auth-page';
 export {
   clearAuthSessionCookie,

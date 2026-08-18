@@ -22,6 +22,8 @@ function createRepository(
 ): AuthRepository {
   return {
     createSession,
+    createDemoSession: vi.fn(),
+    registerUser: vi.fn(),
     findSession: vi.fn(),
     updateUserAvatar: vi.fn(),
     deleteSession: vi.fn()

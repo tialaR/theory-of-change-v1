@@ -3,6 +3,7 @@ export type AuthUser = {
   name: string;
   email: string;
   avatarUrl: string | null;
+  accessMode?: 'standard' | 'demo';
 };
 
 export type AuthCredentials = {
@@ -25,6 +26,8 @@ export type AuthenticatedSession = {
 
 export type AuthRepository = {
   createSession(credentials: AuthCredentials): Promise<AuthenticatedSession | null>;
+  createDemoSession(): Promise<AuthenticatedSession>;
+  registerUser(credentials: AuthCredentials): Promise<AuthenticatedSession | null>;
   findSession(sessionId: string): Promise<AuthenticatedSession | null>;
   updateUserAvatar(sessionId: string, avatarUrl: string): Promise<AuthenticatedSession | null>;
   deleteSession(sessionId: string): Promise<void>;

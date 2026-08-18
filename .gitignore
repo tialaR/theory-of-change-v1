@@ -71,3 +71,10 @@ output/
 playwright-report/
 test-results/
 blob-report/
+
+# Retired local migration / patch debris
+.shark/
+.tdm-integration/
+.tdm-canvas-v3-cta-files.txt
+.tdm-last-clear-button-v3.1-backup
+._*

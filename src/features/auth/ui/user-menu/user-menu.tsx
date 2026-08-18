@@ -9,6 +9,7 @@ import { getUserInitials } from '../../domain/user-initials';
 import { logoutAction } from '../../server/logout.action';
 import { updateUserAvatarAction } from '../../server/update-user-avatar.action';
 import styles from './user-menu.module.sass';
+import { prepareAvatarImage } from './prepare-avatar-image';
 
 const MENU_GAP = 8;
 const VIEWPORT_GAP = 12;
@@ -76,7 +77,13 @@ export function UserMenu({ initialUser }: { initialUser: AuthUser }) {
     setBusy(true);
     setFeedback(null);
     const formData = new FormData();
-    formData.set('avatar', file);
+    try {
+      formData.set('avatar', await prepareAvatarImage(file));
+    } catch (error) {
+      setBusy(false);
+      setFeedback(t(`errors.${error instanceof Error && error.message === 'file-too-large' ? 'file-too-large' : 'invalid-file'}`));
+      return;
+    }
     const result = await updateUserAvatarAction(formData);
     setBusy(false);
     if (result.ok) {
