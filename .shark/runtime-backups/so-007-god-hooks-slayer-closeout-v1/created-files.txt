@@ -1,6 +1,0 @@
-.sharkops/bites/so-007-god-hooks-slayer-closeout/verify.sh
-.sharkops/bites/so-007-god-hooks-slayer-closeout/apply.sh
-.sharkops/bites/so-007-god-hooks-slayer-closeout/README.md
-.sharkops/bites/so-007-god-hooks-slayer-closeout/MANIFEST.json
-.sharkops/bites/so-007-god-hooks-slayer-closeout/rollback.sh
-scripts/tdm-contract-v3/check-god-hooks-slayer-closeout.mjs

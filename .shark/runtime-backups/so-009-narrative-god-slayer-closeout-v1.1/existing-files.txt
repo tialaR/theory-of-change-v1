@@ -1,4 +1,0 @@
-.sharkops/state/bite-ledger.json
-.sharkops/state/current-state.json
-package.json
-scripts/tdm-contract-v3/check-narrative-god-slayer-closeout.mjs
