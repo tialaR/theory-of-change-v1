@@ -4,3 +4,5 @@ export const AUTH_PASSWORD_MIN_LENGTH = 6;
 export const AUTH_LOGIN_DELAY_MS = 650;
 export const AUTH_DEFAULT_RETURN_TO = '/canvas';
 export const AUTH_API_PATH = '/api/v1/auth/sessions';
+export const AUTH_DEMO_API_PATH = '/api/v1/auth/demo-sessions';
+export const AUTH_REGISTRATION_API_PATH = '/api/v1/auth/registrations';

@@ -3,6 +3,7 @@ import { expect, test, type Page } from '@playwright/test';
 const PUBLIC_ROUTES = [
   '/',
   '/login',
+  '/cadastro',
   '/exemplos',
   '/exemplos/resultado',
   '/exemplos/resultado/interativo',

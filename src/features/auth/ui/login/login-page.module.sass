@@ -6,9 +6,10 @@
   isolation: isolate
   display: grid
   min-height: 100dvh
-  overflow: hidden
+  overflow-x: hidden
+  overflow-y: auto
   place-items: center
-  padding: var(--auth-page-padding-block) var(--auth-page-padding-inline)
+  padding: max(var(--auth-page-padding-block), 4.5rem) var(--auth-page-padding-inline)
   background: radial-gradient(circle at 50% 55%, rgba(255, 255, 255, 0.035), transparent 32%), var(--tdm-surface-app)
   color: var(--tdm-fg-primary)
 
@@ -101,6 +102,54 @@
   font-size: var(--tdm-font-body-sm-size)
   line-height: 1.6
   text-wrap: pretty
+
+.accessStack
+  display: grid
+  gap: var(--tdm-space-6)
+
+.demoForm
+  display: grid
+  gap: var(--tdm-space-3)
+
+.demoHelper
+  margin: 0
+  color: var(--tdm-fg-muted)
+  font-size: var(--tdm-font-label-size)
+  line-height: 1.5
+  text-align: center
+
+.divider
+  display: grid
+  grid-template-columns: 1fr auto 1fr
+  align-items: center
+  gap: var(--tdm-space-3)
+  color: var(--tdm-fg-muted)
+  font-size: var(--tdm-font-label-size)
+
+  &::before,
+  &::after
+    content: ''
+    height: 0.0625rem
+    background: color-mix(in srgb, currentColor 22%, transparent)
+
+.registrationPrompt
+  margin: 0
+  color: var(--tdm-fg-muted)
+  font-size: var(--tdm-font-label-size)
+  line-height: 1.5
+  text-align: center
+
+.registrationLink
+  color: var(--tdm-fg-secondary)
+  font-weight: 600
+  text-decoration: underline
+  text-decoration-color: color-mix(in srgb, currentColor 30%, transparent)
+  text-underline-offset: 0.18em
+
+  &:hover,
+  &:focus-visible
+    color: var(--tdm-fg-primary)
+    outline: none
 
 .form
   display: grid

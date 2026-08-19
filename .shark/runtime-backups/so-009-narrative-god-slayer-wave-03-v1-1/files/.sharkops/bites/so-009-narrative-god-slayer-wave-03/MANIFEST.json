@@ -1,8 +1,0 @@
-{
-  "id": "SO-009",
-  "wave": 3,
-  "codename": "Narrative God Slayer",
-  "status": "ACTIVE",
-  "owner": "narrative conditions",
-  "gate": "check:tdm:narrative-god-slayer:wave03"
-}

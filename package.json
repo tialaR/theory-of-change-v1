@@ -26,7 +26,7 @@
     "lint:auth": "eslint src/app/login src/features/auth src/mocks src/instrumentation.ts src/shared/ui/tdm-status-screen",
     "check:tdm:auth-msw": "node scripts/tdm-contract-v3/check-auth-msw.mjs",
     "check:tdm:i18n-routes": "node scripts/tdm-contract-v3/check-i18n-routes.mjs",
-    "validate:release": "npm run check:tdm:sass-module-policy && npm run typegen && npm run typecheck && npm run lint:canvas && npm run lint:auth && npm run test:unit && npm run build && npm run test:e2e && npm run check:tdm:react-flow && npm run check:tdm:ownership && npm run check:tdm:auth-msw && npm run check:tdm:i18n-routes && npm run check:tdm:i18n-copy && npm run check:tdm:canvas-continuity && npm run check:tdm:architecture-naming && npm run check:tdm:post-golden-current",
+    "validate:release": "npm run check:tdm:sass-module-policy && npm run typegen && npm run typecheck && npm run lint:canvas && npm run lint:auth && npm run test:unit && npm run build && npm run test:e2e && npm run check:tdm:react-flow && npm run check:tdm:ownership && npm run check:tdm:auth-msw && npm run check:tdm:i18n-routes && npm run check:tdm:i18n-copy && npm run check:tdm:canvas-continuity && npm run check:tdm:architecture-naming && npm run check:tdm:registration && npm run check:tdm:demo-access && npm run check:tdm:post-golden-current && npm run check:tdm:logo-convergence && npm run check:tdm:repository-hygiene",
     "check:tdm:canvas-continuity": "node scripts/tdm-contract-v3/check-canvas-continuity.mjs",
     "check:tdm:architecture-naming": "node scripts/tdm-contract-v3/check-architecture-naming.mjs",
     "check:tdm:i18n-copy": "node scripts/tdm-contract-v3/check-i18n-copy.mjs",
@@ -201,7 +201,11 @@
     "check:tdm:application-golden-state": "node scripts/tdm-contract-v3/check-final-application-architecture-closeout.mjs",
     "check:tdm:auth-rsc-boundary": "node scripts/tdm-contract-v3/check-auth-rsc-boundary.mjs",
     "check:tdm:post-golden-release-policy": "node scripts/tdm-contract-v3/check-post-golden-release-policy.mjs",
-    "check:tdm:post-golden-current": "node scripts/tdm-contract-v3/check-post-golden-current.mjs"
+    "check:tdm:post-golden-current": "node scripts/tdm-contract-v3/check-post-golden-current.mjs",
+    "check:tdm:demo-access": "node scripts/tdm-contract-v3/check-demo-access.mjs",
+    "check:tdm:registration": "node scripts/tdm-contract-v3/check-registration.mjs",
+    "check:tdm:logo-convergence": "node scripts/tdm-contract-v3/check-logo-convergence.mjs",
+    "check:tdm:repository-hygiene": "node scripts/tdm-contract-v3/check-repository-hygiene.mjs"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.5.1",

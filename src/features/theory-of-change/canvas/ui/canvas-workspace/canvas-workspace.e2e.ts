@@ -61,7 +61,7 @@ async function loginAsTiala(page: Page) {
   await expect(page).toHaveURL(/\/login\?returnTo=%2Fcanvas$/);
   await page.getByLabel('Nome').fill('Tiala Rocha');
   await page.getByLabel('E-mail').fill('tialarocha@tdmconstrutor.com.br');
-  await page.getByLabel('Senha').fill('tdm123456');
+  await page.locator('input[name="password"]').fill('tdm123456');
   await page.getByRole('button', { name: 'Entrar' }).click();
   await expect(page).toHaveURL(/\/canvas$/);
 }
