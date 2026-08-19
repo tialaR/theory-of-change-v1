@@ -44,7 +44,8 @@
           "check:tdm:post-golden-current",
           "check:tdm:registration",
           "check:tdm:demo-access",
-          "check:tdm:logo-convergence"
+          "check:tdm:logo-convergence",
+          "check:tdm:repository-hygiene"
         ],
         "pre-push": [
           "shark:verify",
@@ -58,6 +59,7 @@
           "check:tdm:registration",
           "check:tdm:demo-access",
           "check:tdm:logo-convergence",
+          "check:tdm:repository-hygiene",
           "validate:release"
         ]
       },
@@ -80,7 +82,8 @@
     "check:tdm:post-golden-current": "MANDATORY_POST_GOLDEN_TRUTH",
     "check:tdm:demo-access": "MANDATORY_DEMO_ACCESS_ISOLATION",
     "check:tdm:registration": "MANDATORY_REGISTRATION_OWNERSHIP",
-    "check:tdm:logo-convergence": "MANDATORY_BRAND_ASSET_CONVERGENCE"
+    "check:tdm:logo-convergence": "MANDATORY_BRAND_ASSET_CONVERGENCE",
+    "check:tdm:repository-hygiene": "MANDATORY_REPOSITORY_HYGIENE"
   },
   "policy": {
     "sharkOpsIsSovereign": true,
