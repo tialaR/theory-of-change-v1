@@ -1,8 +1,0 @@
-.sharkops/bites/so-003-god-slayer-wave-04/MANIFEST.json
-.sharkops/bites/so-003-god-slayer-wave-04/README.md
-.sharkops/bites/so-003-god-slayer-wave-04/apply.sh
-.sharkops/bites/so-003-god-slayer-wave-04/rollback.sh
-.sharkops/bites/so-003-god-slayer-wave-04/verify.sh
-scripts/tdm-contract-v3/check-god-slayer-wave04.mjs
-src/features/theory-of-change/canvas/ui/hooks/use-canvas-workspace-foundation.ts
-src/features/theory-of-change/canvas/ui/hooks/use-canvas-workspace-actions.ts

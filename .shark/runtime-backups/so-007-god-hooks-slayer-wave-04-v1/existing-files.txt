@@ -1,4 +1,0 @@
-.sharkops/state/bite-ledger.json
-.sharkops/state/current-state.json
-package.json
-src/features/theory-of-change/components/canvas/tdm-canvas-controllers/use-canvas-interaction-controller.ts

@@ -1,3 +1,0 @@
-.sharkops/state/bite-ledger.json
-.sharkops/state/current-state.json
-package.json

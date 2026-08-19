@@ -1,7 +1,0 @@
-.sharkops/bites/so-008-result-view-god-slayer-wave-07/verify.sh
-.sharkops/bites/so-008-result-view-god-slayer-wave-07/apply.sh
-.sharkops/bites/so-008-result-view-god-slayer-wave-07/README.md
-.sharkops/bites/so-008-result-view-god-slayer-wave-07/MANIFEST.json
-.sharkops/bites/so-008-result-view-god-slayer-wave-07/rollback.sh
-scripts/tdm-contract-v3/check-result-view-god-slayer-wave07.mjs
-src/features/theory-of-change/components/result-view/result-view-export-controller/use-result-view-export-controller.ts
