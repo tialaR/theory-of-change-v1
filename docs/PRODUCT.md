@@ -63,3 +63,30 @@ journey
       Visualizar resultado: 5: Usuário
       Explicar a lógica: 5: Usuário, Gestor
 ```
+
+## Superfícies da V1
+
+| Rota | Experiência |
+| --- | --- |
+| `/` | apresentação do produto |
+| `/login` | acesso existente + entrada imediata como demo |
+| `/cadastro` | criação de conta temporária para experimentar a V1 |
+| `/canvas` | construção visual protegida |
+| `/canvas/resultado` | leitura e exportação do resultado |
+| `/exemplos` | exemplos públicos |
+| `/exemplos/visao-do-fluxo` | leitura visual de fluxo |
+| `/guia-de-aprendizado` | conteúdo guiado sobre Teoria da Mudança |
+| `/referencias` | fundamentos e referências |
+
+## Escopo da V1
+
+A V1 concentra a jornada de construção, interpretação e exportação de uma Teoria da Mudança, além das superfícies públicas de aprendizado e demonstração.
+
+Ficam fora do escopo atual:
+
+- colaboração multiusuário em tempo real;
+- persistência organizacional de longo prazo;
+- fluxos administrativos amplos;
+- integrações corporativas específicas.
+
+A fronteira é intencional: preservar uma V1 completa para o problema central antes de expandir a superfície do produto.
